@@ -1,6 +1,6 @@
 # Levach
 
-Hybrid of anonymous forum and online journal created for anonymous communication in leftist political discourse. Welcome)
+A hybrid media project focused on designing a better future through scientific discussion 
 
 ## Requirements
 
