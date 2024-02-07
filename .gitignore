@@ -1,0 +1,5 @@
+node_modules
+package-lock.json
+public/backend/logs
+public/frontend/css
+public/frontend/js

@@ -1,0 +1,83 @@
+@import 'vars.scss';
+
+.grecaptcha-badge {
+  display: none;
+}
+
+
+::-webkit-scrollbar {
+  width: 17px;
+}
+body.lock-overflow {
+  overflow: hidden;
+  transition: 1s;
+}
+::-webkit-scrollbar-track {
+  background: #121A27;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2) inset;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #494949;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+a
+{
+  text-decoration: none;
+}
+
+a > img {
+  
+  background: #202020;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+form {
+  background: radial-gradient(118.96% 118.96% at 0% 0%, #2A3549 0%, #1E2639 100%);
+}
+
+p,b,h1,h2,h3,h4,h5,h6,a,img,button,label,input,legend,th,td,caption {
+  &::selection{
+    background-color: rgba($color: #616161, $alpha: .2);
+  }
+}
+p, a{
+  font-family: Roboto-Regular;
+}
+input {
+  background-color: #ffffff;
+  outline: none;
+  border: none;
+  padding: 0;
+}
+
+button {
+  outline: none;
+  border: none;
+  padding: 0;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]:hover,
+input[type="number"]:focus {
+  -moz-appearance: number-input;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
