@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/frontend/css/preloader.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
   <link rel="stylesheet" href="/frontend/css/fonts.min.css">
-  <link rel="stylesheet" href="/frontend/css/main.min.css">
   <link rel="stylesheet" href="/frontend/css/body.min.css">
+  <link rel="stylesheet" href="/frontend/css/main.min.css">
   <?php if (isset($style_general)):?>
   <link rel="stylesheet" href = <?= $style_general?>>
   <?php endif;?>
@@ -17,6 +17,7 @@
 <body>
   <?php echo $view;?>
   <script src="/frontend/js/BurgerMenu.min.js" defer></script>
+  <script src="/frontend/js/CustomSelect.min.js" defer></script>
   <script src="<?=$js?>"></script>
 </body>
 </html>

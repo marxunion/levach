@@ -1,10 +1,4 @@
-<?php 
-/*
-  Name Project: lv4
-  Code: Lorki
-  Desing: Lorki
-  Server-Core: Lorki-Engine v0.9 beta
-*/
+<?php
 
 require 'backend/core/ErrorHandler.php';
 

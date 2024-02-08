@@ -4,4 +4,3 @@
     <h1 class="title">An unknown error occurred</h1>
   </div>
 </div>
-<script src="/frontend/js/Animator.min.js"></script>

@@ -5,4 +5,3 @@
   </div>
 
 </div>
-<script src="/frontend/js/Animator.min.js"></script>
