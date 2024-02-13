@@ -26,4 +26,9 @@ class MainController extends Controller
     $title = $this->config['PROJECT_NAME'];
     $this->view->render($title);
   }
+  public function createArticleAction()
+  {
+    $title = $this->config['PROJECT_NAME'];
+    $this->view->render($title);
+  }
 }

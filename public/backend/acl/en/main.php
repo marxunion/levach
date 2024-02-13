@@ -5,7 +5,8 @@ return [
 		'aboutUs',
 		'rules',
 		'donate',
-		'update'
+		'update',
+		'createArticle'
 	],
 	'authorize' => [
 	],

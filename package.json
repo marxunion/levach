@@ -2,12 +2,15 @@
   "name": "Levach",
   "version": "1.0.0",
   "scripts": {
+    "build": "webpack --config webpack.config.ts",
+    "start": "webpack-dev-server --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "marxunion",
   "license": "GPL-3.0",
   "devDependencies": {
     "autoprefixer": "^9.8.6",
+    "css-minimizer-webpack-plugin": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-clean-css": "^4.3.0",
@@ -24,15 +27,23 @@
     "gulp-uglify-es": "^2.0.0",
     "gulp-util": "^3.0.8",
     "gulp-webp-html": "^1.0.2",
-    "sass": "^1.70.0",
     "imagemin": "^7.0.1",
+    "mini-css-extract-plugin": "^2.8.0",
     "rename": "^1.0.4",
-    "svg-sprite": "^1.5.0"
-    
+    "sass": "^1.70.0",
+    "svg-sprite": "^1.5.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.0"
   },
   "dependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
+    "@toast-ui/editor": "^3.2.2",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
+    "@toast-ui/editor-plugin-color-syntax": "^3.1.0",
     "browser-sync": "^2.26.12",
     "chart.js": "^2.9.4",
     "cwebp": "^2.0.5",

@@ -8,7 +8,7 @@
       <a href="/" class="header__bar__search__button"></a>
     </div>
     <div class="header__bar__subbar">
-      <a href="/" class="header__bar__subbar__createarticle"><p>Написать статью</p></a>
+      <a href="/createarticle/ru" class="header__bar__subbar__createarticle"><p>Написать статью</p></a>
       <div class="header__bar__subbar__select custom-select">
         <button
           class="header__bar__subbar__select__button select-button"
