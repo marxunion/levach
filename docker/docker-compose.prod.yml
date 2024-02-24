@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/prod.conf:/etc/nginx/conf.d/default.conf
+      - ./media:/var/www/levach/media
+      - ./frontend:/var/www/levach/frontend
+      - ./backend:/var/www/levach/backend
+    depends_on:
+      - composer
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+  node:
+    image: node:hydrogen-slim
+    working_dir: /var/www/levach/frontend
+    volumes:
+      - ./frontend:/var/www/levach/frontend
+    command: sh -c "npm install && npm run build"
+    networks:
+      - app-network

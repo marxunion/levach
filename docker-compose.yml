@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  php:
+    image: php:fpm
+    volumes:
+      - ./backend:/var/www/levach/backend
+      - ./frontend:/var/www/levach/frontend
+      - ./media:/var/www/levach/media
+    expose:
+      - "9000"
+    depends_on:
+      - node
+    networks:
+      - app-network
+
+  composer:
+    image: composer:latest
+    volumes:
+      - ./backend:/var/www/levach/backend
+    working_dir: /var/www/levach/backend
+    command: install
+    depends_on:
+      - php
+networks:
+  app-network:
+    driver: bridge

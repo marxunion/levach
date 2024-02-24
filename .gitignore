@@ -1,5 +1,14 @@
-node_modules
-package-lock.json
-public/backend/logs
-public/frontend/css
-public/frontend/js
+# Frontend
+frontend/logs
+frontend/node_modules
+frontend/package-lock.json
+frontend/yarn.lock
+frontend/dist
+
+# Backend
+
+backend/logs
+
+# Media
+
+frontend/media

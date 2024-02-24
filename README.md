@@ -12,8 +12,5 @@ A hybrid media project focused on designing a better future through scientific d
 ## How to install and configure
 
 ```bash
-git clone https://github.com/marxunion/levach.git
-composer install
-npm install
-gulp build
+docker-compose -f docker-compose.yml -f docker/docker-compose.dev.yml up -d
 ```
