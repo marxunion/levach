@@ -1,3 +1,9 @@
+<script lang="ts">
+    import './scss/Header.scss';
+    export default {
+        name: "Header",
+    };
+</script>
 <template>    
     <header class="header lock_padding">
         <a class="header__logo" href="/">

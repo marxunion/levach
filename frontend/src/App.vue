@@ -10,12 +10,15 @@ export default defineComponent({
 
 <template>
   <Header />
-  <div id="app">
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 
 <style scoped>
+#app 
+{
+  width: 100%;
+  height: 100%;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

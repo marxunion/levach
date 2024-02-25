@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import Header from './../components/Header.vue'
+  import './scss/Main.scss'
 </script>
 
-
-
 <template>
-    <Header/>
     <h1>Main</h1>
 </template>
   

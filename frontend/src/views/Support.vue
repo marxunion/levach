@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import HelloWorld from './../components/HelloWorld.vue'
+import './scss/Support.scss'
 </script>
 
 
 <template>
-  <HelloWorld msg="Support" />
+  Support
 </template>
 
 <style scoped>
