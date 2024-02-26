@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 
 import Main from './views/Main.vue';
 import createArticle from './views/createArticle.vue';
@@ -12,27 +12,27 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/',
         name: 'Main',
-        component: () => Main,
+        component: Main,
     },
     {
         path: '/createArticle',
         name: 'createArticle',
-        component: () => createArticle,
+        component: createArticle,
     },
     {
         path: '/support',
         name: 'Support',
-        component: () => Support,
+        component: Support,
     },
     {
         path: '/donate',
         name: 'Donate',
-        component: () => Donate,
+        component: Donate,
     },
     {
         path: '/about',
         name: 'About',
-        component: () => About,
+        component: About,
     },
     {
         path: '/:catchAll(.*)',
@@ -42,7 +42,7 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes,
 });
 

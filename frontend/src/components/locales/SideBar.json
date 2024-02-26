@@ -1,0 +1,32 @@
+{
+    "RU": 
+    {
+        "links": 
+        {
+            "editoriallyArticles": "Статьи редакции",
+            "editoriallyApprovedArticles": "Статьи одобренные редакцией",
+            "abyss": "Бездна"
+        },
+        "linksfooter":
+        {
+            "editoriallyArticles": "Статьи редакции",
+            "editoriallyApprovedArticles": "Статьи одобренные редакцией",
+            "abyss": "Бездна"
+        }
+    },
+    "EN":
+    {
+        "links": 
+        {
+            "editoriallyArticles": "Editorially Articles",
+            "editoriallyApprovedArticles": "Editorially Approved Articles",
+            "abyss": "Abyss"
+        },
+        "linksfooter": 
+        {
+            "editoriallyArticles": "Editorially Articles",
+            "editoriallyApprovedArticles": "Editorially Approved Articles",
+            "abyss": "Abyss"
+        }
+    }
+}

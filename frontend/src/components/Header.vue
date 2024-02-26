@@ -1,19 +1,20 @@
-<script lang="ts">
+<script setup lang="ts">
+    import { ref } from 'vue';
     import "./scss/Header.scss";
     import DropDown from "./DropDown.vue";
-
-    export default {
-        name: "Header",
-        components: {
-            DropDown,
-        },
-    };
+    
+    import { LangDataHandler } from "./../ts/LangDataHandler";
+    import langsData from "./locales/Header.json";
+    
+    LangDataHandler.initLangDataHandler("Header", langsData);
+    
+    const langData = ref(LangDataHandler.getLangDataHandler("Header").langData);
 </script>
 
 <template>    
     <header class="header lock_padding">
         <div class="header__block">
-            <a class="header__logo" href="/">
+            <a class="header__logo" href="#/">
                 <img src="../assets/img/logo.png" alt="LOGO" class="header__logo__icon">
             </a>
             <div class="header__bar">
@@ -23,17 +24,17 @@
                         <a href="/" class="header__bar__search__button"></a>
                     </div>
                     <div class="header__bar__subbar">
-                        <a href="/createarticle" class="header__bar__subbar__createarticle"><p>Написать статью</p></a>
+                        <a href="#/createarticle" class="header__bar__subbar__createarticle"><p>{{ langData['createArticle'] }}</p></a>
                         <DropDown
                         :options="['RU', 'EN']"
-                        :default="'RU'"
+                        :default="LangDataHandler.currentLanguage.value"
                         class="header__bar__subbar__select"
-                        @input=""
+                        @input="LangDataHandler.changeLanguage"
                         />
                         <a class="header__bar__subbar__searchmobile">
                             <div class="header__bar__subbar__searchmobile__icon"></div>
                         </a>
-                        <a href="/newarticle" class="header__bar__subbar__createarticlemobile">
+                        <a href="#/createarticle" class="header__bar__subbar__createarticlemobile">
                             <div class="header__bar__subbar__createarticlemobile__icon"></div>
                         </a>
                     </div>

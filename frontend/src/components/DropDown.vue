@@ -53,7 +53,7 @@ export default {
                 @click="
                     selected = option;
                     open = false;
-                    $emit('input', option);">
+                    $emit('input', option as string);">
             {{ option }}
             </div>
         </div>
