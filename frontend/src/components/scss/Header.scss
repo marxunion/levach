@@ -1,4 +1,131 @@
 .header 
 {
+    top: 0;
+    width: 100%;
+    height: 93px;
+    z-index: 20;
     position: absolute;
+    display: flex;
+    background-color: #54A9F8;
+    justify-content: center;
+    &__block
+    {
+        display: flex;
+        justify-content: space-between;
+        width: 95%;
+        height: 100%;
+        margin-left: 2%;
+    }
+    &__logo
+    {
+        width: 7%;
+    }
+    &__bar 
+    {
+        display: flex;
+        height: 100%;
+        width: 93%;
+        &__block
+        {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+        &__search 
+        {
+            width: 80%;
+            height: 45px;
+            position: relative;
+            &__input
+            {
+                width: 100%;
+                height: 100%;
+                border-radius: 30px;
+                font-size: 24px;
+                padding-left: 20px;
+                
+            }
+            &__button 
+            {
+                position: absolute;
+                background: url('../../assets/img/searchicon.svg') no-repeat;
+                width: 30px;
+                height: 34px;
+                top: 7.5px;
+                right: -7px;
+            }
+        }
+        &__subbar
+        {
+            display: flex;
+            justify-content: space-between;
+            width: 18%;
+            &__searchmobile
+            {
+                display: none;
+            }
+            &__createarticlemobile
+            {
+                display: none;
+            }
+            &__createarticle
+            {
+                background-clip: content-box;
+                background-color: #f8f8f8;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 10px;
+                width: 78%;
+                height: 45px;
+                & > p 
+                {
+                font-size: 20px;
+                color: #131313;
+                }
+                transition: .4s;
+                &:hover
+                {
+                    background-color: #e2e2e2;
+                }
+            }
+        }
+    }
+    &__burger {
+        cursor: pointer;
+        z-index: 200000;
+        position: relative;
+        width: 70px;
+        height: 70px;
+        display: none;
+    
+        &__lines,&__lines::after,&__lines::before {
+          position: absolute;
+          width: 45px;
+          height: 5px;
+          background: #ffffff;
+        
+        }
+        &__lines {
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%,-50%);
+        }
+    
+        &__lines::after {
+          content: '';
+          top: 12px;
+        }
+        &__lines::before {
+          content: '';
+          top: -12px;
+        }
+    }
+    &__menu {
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+    }
 }

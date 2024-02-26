@@ -1,0 +1,74 @@
+@import url('../../scss/fonts.scss');
+body {
+  background: STEELBLUE;
+  font-family: 'Roboto';
+}
+
+.aselect 
+{
+    cursor: pointer;
+	width: 70px;
+    margin: 20px auto;
+	.selector 
+    {
+		position: relative;
+		z-index: 1;
+		.arrow 
+        {
+            position: absolute;
+            right: 5px;
+            top: 40%;
+            width: 0;
+            height: 0;
+            transform: rotateZ(0deg) translateY(0px);
+            transition-duration: 0.3s;
+            transition-timing-function: cubic-bezier(.59,1.39,.37,1.01);
+        }
+        .expanded 
+        {
+            transform: rotateZ(180deg) translateY(2px);
+        }
+        .label 
+        {
+            display: block;
+            padding: 12px;
+            font-size: 28px;
+            color: #000000;
+        }
+    }
+    ul 
+    {
+        width: 100%;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        font-size: 28px;
+        border: 1px solid gainsboro;
+        position: absolute;
+        z-index: 1;
+        background: #ffffff;
+        border-radius: 15px;
+    }
+    li 
+    {
+        padding: 8px 6px 8px 6px;
+        border-radius: 15px;
+        color: #111111;
+        text-align: center;
+        &:hover 
+        {
+            background: #cccccc;
+        }
+    }
+    .current 
+    {
+        background: #eaeaea;
+    }
+    .hidden 
+    {
+        visibility: hidden;
+    }
+    .visible {
+        visibility: visible;
+    }
+}

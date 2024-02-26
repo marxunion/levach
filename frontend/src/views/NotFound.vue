@@ -1,9 +1,11 @@
-<!-- NotFound.vue -->
+<script setup lang="ts">
+  import './scss/AboutUs.scss'
+</script>
 <template>
-    <div>
-      <h2>404 - Страница не найдена</h2>
-    </div>
-  </template>
+  <div>
+    <h1>404 - Страница не найдена</h1>
+  </div>
+</template>
   
 <script lang="ts">
 import { defineComponent } from 'vue';

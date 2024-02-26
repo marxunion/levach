@@ -4,7 +4,10 @@ import Header from './components/Header.vue'
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'App'
+  name: 'App',
+  components: {
+    Header,
+  }
 });
 </script>
 

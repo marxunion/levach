@@ -6,6 +6,8 @@ import 'md-editor-v3/lib/style.css';
 
 import RU from '@vavt/cm-extension/dist/locale/ru';
 
+import "./scss/createArticle.scss"
+
 config({
   editorConfig: {
     languageUserDefined: {
@@ -27,7 +29,7 @@ const onUploadImg = async (files: File[], callback: (urls: string[]) => void) =>
         form.append('file', file);
 
         axios
-          .post('/api/img/upload', form, {
+          .post('/media/img/upload', form, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
@@ -46,11 +48,3 @@ const text = ref('');
 <template>
   <MdEditor class="editor" v-model="text" @onUploadImg="onUploadImg" :language="state.language" />
 </template>
-
-<style>
-  .editor 
-  {
-    width: 80%;
-    height: 80%;
-  }
-</style>
