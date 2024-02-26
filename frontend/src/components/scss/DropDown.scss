@@ -1,74 +1,74 @@
-@import url('../../scss/fonts.scss');
-body {
-  background: STEELBLUE;
-  font-family: 'Roboto';
-}
-
-.aselect 
+.custom-select  
 {
-    cursor: pointer;
-	width: 70px;
-    margin: 20px auto;
-	.selector 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    & .selected
     {
-		position: relative;
-		z-index: 1;
-		.arrow 
-        {
-            position: absolute;
-            right: 5px;
-            top: 40%;
-            width: 0;
-            height: 0;
-            transform: rotateZ(0deg) translateY(0px);
-            transition-duration: 0.3s;
-            transition-timing-function: cubic-bezier(.59,1.39,.37,1.01);
-        }
-        .expanded 
-        {
-            transform: rotateZ(180deg) translateY(2px);
-        }
-        .label 
-        {
-            display: block;
-            padding: 12px;
-            font-size: 28px;
-            color: #000000;
-        }
-    }
-    ul 
-    {
+        cursor: pointer;
         width: 100%;
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-        font-size: 28px;
-        border: 1px solid gainsboro;
-        position: absolute;
-        z-index: 1;
-        background: #ffffff;
-        border-radius: 15px;
-    }
-    li 
-    {
-        padding: 8px 6px 8px 6px;
-        border-radius: 15px;
-        color: #111111;
-        text-align: center;
-        &:hover 
+        border-radius: 6px;
+        padding-left: 6px;
+
+        color: #ffffff;
+        font-size: 22px;
+
+        user-select: none;
+        position: relative;
+        &.open 
         {
-            background: #cccccc;
+            border-radius: 6px;
+            &:after
+            {
+                transform: rotateZ(180deg)
+            }
+        }
+        &:after 
+        { 
+            content: "";
+            top: 14px;
+            right: -5px;
+            width: 16px;
+            height: 10px;
+            background: url("./../../assets/img/arrowdown.svg") no-repeat;
+            position: absolute;
+            transition: .8s;
         }
     }
-    .current 
-    {
-        background: #eaeaea;
+    & .items {
+        width: 100%;
+        top: 40px;
+        left: 0;
+        right: 0;
+        
+        border-radius: 6px;
+
+        font-size: 22px;
+        color: #000;
+        
+        background-color: #ddd;
+
+        overflow: hidden;
+        position: absolute;
+        
+        z-index: 1;
+        & div {
+            cursor: pointer;
+            width: 100%;
+            height: 32px;
+            line-height: 32px;
+
+            color: #000;
+
+            text-align: center;
+            user-select: none;
+            &:hover {
+                background-color: #ccc;
+            }
+        }
     }
-    .hidden 
-    {
-        visibility: hidden;
-    }
-    .visible {
-        visibility: visible;
-    }
+}
+.selectHide {
+    display: none !important;
 }

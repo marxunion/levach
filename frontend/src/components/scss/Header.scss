@@ -14,7 +14,7 @@
         justify-content: space-between;
         width: 95%;
         height: 100%;
-        margin-left: 2%;
+        margin-left: 3%;
     }
     &__logo
     {
@@ -35,7 +35,7 @@
         }
         &__search 
         {
-            width: 80%;
+            width: 78%;
             height: 45px;
             position: relative;
             &__input
@@ -61,15 +61,7 @@
         {
             display: flex;
             justify-content: space-between;
-            width: 18%;
-            &__searchmobile
-            {
-                display: none;
-            }
-            &__createarticlemobile
-            {
-                display: none;
-            }
+            width: 20%;
             &__createarticle
             {
                 background-clip: content-box;
@@ -78,12 +70,12 @@
                 justify-content: center;
                 align-items: center;
                 border-radius: 10px;
-                width: 78%;
+                width: 80%;
                 height: 45px;
                 & > p 
                 {
-                font-size: 20px;
-                color: #131313;
+                    font-size: 20px;
+                    color: #131313;
                 }
                 transition: .4s;
                 &:hover
@@ -91,6 +83,39 @@
                     background-color: #e2e2e2;
                 }
             }
+            &__select 
+            {
+                width: 60px;
+                height: 45px;
+                & > .selected
+                {
+                    font-size: 25px !important;
+                    &:after 
+                    {
+                        content: "";
+                        top: 15px !important;
+                        right: 0 !important;
+                    }
+                    
+                }
+                & .items
+                {
+                    & div 
+                    {
+                        height: 42px !important;
+                        line-height: 42px !important;
+                    }
+                }
+            }
+            &__searchmobile
+            {
+                display: none;
+            }
+            &__createarticlemobile
+            {
+                display: none;
+            }
+            
         }
     }
     &__burger {

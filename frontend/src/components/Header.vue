@@ -1,9 +1,15 @@
 <script lang="ts">
     import "./scss/Header.scss";
+    import DropDown from "./DropDown.vue";
+
     export default {
         name: "Header",
+        components: {
+            DropDown,
+        },
     };
 </script>
+
 <template>    
     <header class="header lock_padding">
         <div class="header__block">
@@ -18,10 +24,12 @@
                     </div>
                     <div class="header__bar__subbar">
                         <a href="/createarticle" class="header__bar__subbar__createarticle"><p>Написать статью</p></a>
-                        <select name="select" id="header__bar__subbar__select">
-                            <option value="RU">RU</option>
-                            <option value="EN">EN</option>
-                        </select>
+                        <DropDown
+                        :options="['RU', 'EN']"
+                        :default="'RU'"
+                        class="header__bar__subbar__select"
+                        @input=""
+                        />
                         <a class="header__bar__subbar__searchmobile">
                             <div class="header__bar__subbar__searchmobile__icon"></div>
                         </a>

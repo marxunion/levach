@@ -1,5 +1,6 @@
 <script lang="ts">
-import ".scss/DropDown.vue"
+import "./scss/DropDown.scss"
+
 export default {
   props: 
   {
@@ -21,6 +22,7 @@ export default {
       default: 0,
     },
   },
+  name: "DropDown",
   data() 
   {
     return {
@@ -33,7 +35,6 @@ export default {
         open: false,
     };
   },
-  name: "DropDown",
   mounted() {
     this.$emit("input", this.selected);
   },
