@@ -9,9 +9,10 @@
         },
         "linksfooter":
         {
-            "editoriallyArticles": "Статьи редакции",
-            "editoriallyApprovedArticles": "Статьи одобренные редакцией",
-            "abyss": "Бездна"
+            "aboutUsAndFAQ": "О проекте и FAQ",
+            "rules": "Правила",
+            "donate": "Помощь проекту",
+            "admin": "Администрация"
         }
     },
     "EN":
@@ -24,9 +25,10 @@
         },
         "linksfooter": 
         {
-            "editoriallyArticles": "Editorially Articles",
-            "editoriallyApprovedArticles": "Editorially Approved Articles",
-            "abyss": "Abyss"
+            "aboutUsAndFAQ": "About project and FAQ",
+            "rules": "Rules",
+            "donate": "Sponsoring",
+            "admin": "Admin"
         }
     }
 }

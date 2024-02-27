@@ -10,8 +10,8 @@ $app = AppFactory::create();
 
 $app->addErrorMiddleware(true, true, true);
 
-// Маршрут для обслуживания статических файлов из frontend/dist
-$app->get('/frontend/assets/{file:.*}', function ($request, $response, $args) {
+$app->get('/frontend/assets/{file:.*}', function ($request, $response, $args) 
+{
     $file = __DIR__ . '/../frontend/dist/' . $args['file'];
 
     if (file_exists($file)) {
@@ -21,8 +21,8 @@ $app->get('/frontend/assets/{file:.*}', function ($request, $response, $args) {
     }
 });
 
-// Маршрут для отображения дефолтной страницы
-$app->get('/', function ($request, $response) {
+$app->get('/', function ($request, $response) 
+{
     $file = __DIR__ . '/../frontend/index.html';
     
     if (file_exists($file)) {
@@ -32,9 +32,9 @@ $app->get('/', function ($request, $response) {
     }
 });
 
-// Маршрут для обработки API запросов, например, из папки backend
-$app->group('/api', function (RouteCollectorProxy $group) {
-    // Добавьте здесь ваши маршруты для бэкенда
+$app->group('/api', function (RouteCollectorProxy $group) 
+{
+
 });
 
 $app->run();

@@ -1,0 +1,31 @@
+.sidebar
+{
+    position: absolute;
+    
+    height: 100%;
+    width: 20%;
+    left: 0;
+    &__links 
+    {
+        display: flex;
+        flex-direction: column;
+        margin-top: 120px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        
+        &__link
+        {
+            font-size: 20px;
+            padding-top: 6px;
+            width: 83%;
+            color: #000000;
+            font-family: Roboto-Medium;
+            transition: .2s;
+            &:hover
+            {
+                color: #424242;
+            }
+        }
+    }
+}

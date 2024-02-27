@@ -1,10 +1,12 @@
 {
     "RU": 
     {
-        "createArticle": "Написать статью"
+        "createArticle": "Написать статью",
+        "search": "Поиск..."
     },
     "EN":
     {
-        "createArticle": "Create article"
+        "createArticle": "Create article",
+        "search": "Search..."
     }
 }

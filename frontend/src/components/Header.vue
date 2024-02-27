@@ -2,7 +2,7 @@
     import { ref } from 'vue';
     import "./scss/Header.scss";
     import DropDown from "./DropDown.vue";
-    
+
     import { LangDataHandler } from "./../ts/LangDataHandler";
     import langsData from "./locales/Header.json";
     
@@ -20,13 +20,13 @@
             <div class="header__bar">
                 <div class="header__bar__block">
                     <div class="header__bar__search">
-                        <input placeholder="Поиск..." type="text" class="header__bar__search__input">
+                        <input :placeholder="(langData['search'] as string)" type="text" class="header__bar__search__input">
                         <a href="/" class="header__bar__search__button"></a>
                     </div>
                     <div class="header__bar__subbar">
                         <a href="#/createarticle" class="header__bar__subbar__createarticle"><p>{{ langData['createArticle'] }}</p></a>
                         <DropDown
-                        :options="['RU', 'EN']"
+                        :options="LangDataHandler.langs"
                         :default="LangDataHandler.currentLanguage.value"
                         class="header__bar__subbar__select"
                         @input="LangDataHandler.changeLanguage"

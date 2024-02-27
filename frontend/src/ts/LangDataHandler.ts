@@ -8,6 +8,8 @@ export interface KeyData
 export class LangDataHandler 
 {
     private langsData: KeyData = {};
+
+    public static readonly langs = ['RU', 'EN'];
     public static currentLanguage = ref(localStorage.getItem('language') || 'RU');
     
     private constructor(data: KeyData)

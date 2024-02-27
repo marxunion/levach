@@ -8,7 +8,8 @@ import About from './views/About.vue';
 import NotFound from './views/NotFound.vue';
 
 
-const routes: RouteRecordRaw[] = [
+const routes: RouteRecordRaw[] = 
+[
     {
         path: '/',
         name: 'Main',

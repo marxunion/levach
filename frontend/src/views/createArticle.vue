@@ -1,35 +1,55 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, watch, reactive } from 'vue';
 import axios from 'axios';
-import { MdEditor, config } from 'md-editor-v3';
-import 'md-editor-v3/lib/style.css';
-
-import RU from '@vavt/cm-extension/dist/locale/ru';
 
 import "./scss/createArticle.scss"
 
-config({
-  editorConfig: {
-    languageUserDefined: {
-      'ru': RU
+import { MdEditor, config, en_US } from 'md-editor-v3';
+import 'md-editor-v3/lib/style.css';
+import RU from '@vavt/cm-extension/dist/locale/ru';
+
+import { LangDataHandler } from "./../ts/LangDataHandler";
+import langsData from "./locales/createArticle.json";
+    
+LangDataHandler.initLangDataHandler("createArticle", langsData);
+    
+const langData = ref(LangDataHandler.getLangDataHandler("createArticle").langData);
+
+config(
+{
+  editorConfig: 
+  {
+    languageUserDefined: 
+    {
+      'ru': RU,
+      'en': en_US
     }
   }
 });
 
-const state = reactive({
+let state = reactive(
+{
   text: '',
-  language: 'ru'
+  language: langData.value['editorCode'] as string
 });
 
-const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => {
+watch(langData, () =>
+{
+  state.language = langData.value['editorCode'] as string;
+});
+
+const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
+{
   const res = await Promise.all(
     files.map((file) => {
-      return new Promise<{ data: { url: string } }>((rev, rej) => {
+      return new Promise<{ data: { url: string } }>((rev, rej) => 
+      {
         const form = new FormData();
         form.append('file', file);
 
         axios
-          .post('/media/img/upload', form, {
+          .post('/api/media/img/upload', form, 
+          {
             headers: {
               'Content-Type': 'multipart/form-data'
             }

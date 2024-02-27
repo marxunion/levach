@@ -1,18 +1,11 @@
-<script lang="ts">
+<script setup lang="ts">
 import Header from './components/Header.vue'
-
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'App',
-  components: {
-    Header,
-  }
-});
+import SideBar from './components/SideBar.vue'
 </script>
 
 <template>
   <Header />
+  <SideBar />
   <router-view></router-view>
 </template>
 

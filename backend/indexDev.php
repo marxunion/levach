@@ -54,7 +54,8 @@ $app->group('/media', function (RouteCollectorProxy $group)
     
         $filePath = __DIR__ . '/../media/img/' . $args['file'];
 
-        if (!file_exists($filePath)) {
+        if (!file_exists($filePath)) 
+        {
             return $response->withStatus(404)->withJson(['error' => 'File not found']);
         }
 
@@ -72,7 +73,8 @@ $app->group('/media', function (RouteCollectorProxy $group)
 
 $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function (Request $request, Response $response) 
 {
-    $data = [
+    $data =
+    [
         'apistatus' => "ok"
     ];
     return $response->withJson($data);
