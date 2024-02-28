@@ -1,16 +1,16 @@
 <script setup lang="ts">
-  import './scss/AboutUs.scss'
+  import './scss/NotFound.scss'
+  import { ref } from 'vue';
+
+  import { LangDataHandler } from "./../ts/LangDataHandler";
+  import langsData from "./locales/NotFound.json";
+
+  const langData = ref(LangDataHandler.initLangDataHandler("NotFound", langsData).langData);
+
+
 </script>
 <template>
   <div>
-    <h1>404 - Страница не найдена</h1>
+    <h1>{{ langData['title'] }}</h1>
   </div>
 </template>
-  
-<script lang="ts">
-import { defineComponent } from 'vue';
-  
-export default defineComponent({
-  name: 'NotFound'
-});
-</script>

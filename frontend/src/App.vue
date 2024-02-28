@@ -1,11 +1,14 @@
 <script setup lang="ts">
+import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import Header from './components/Header.vue'
 import SideBar from './components/SideBar.vue'
 </script>
 
 <template>
   <Header />
-  <router-view />
+  <perfect-scrollbar>
+    <router-view />
+  </perfect-scrollbar>
   <SideBar />
 </template>
 

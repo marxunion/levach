@@ -17,9 +17,9 @@ export class LangDataHandler
         this.langsData = data;
     }
 
-    public get langData() : KeyData
+    public get langData()
     {
-        return computed(() => this.langsData[LangDataHandler.currentLanguage.value]);
+        return computed(() => this.langsData[LangDataHandler.currentLanguage.value] as KeyData);
     }
 
     public static initLangDataHandler(componentName: string, data: KeyData)

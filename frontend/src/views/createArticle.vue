@@ -19,50 +19,50 @@ config(
   {
     languageUserDefined: 
     {
-      'ru': RU,
-      'en': en_US
+		'ru': RU,
+		'en': en_US
     }
   }
 });
 
 let state = reactive(
 {
-  text: '',
-  language: langData.value['editorCode'] as string
+	text: '',
+	language: langData.value['editorCode'] as string
 });
 
 watch(langData, () =>
 {
-  state.language = langData.value['editorCode'] as string;
+	state.language = langData.value['editorCode'] as string;
 });
 
 const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 {
-  const res = await Promise.all(
-    files.map((file) => {
-      return new Promise<{ data: { url: string } }>((rev, rej) => 
-      {
-        const form = new FormData();
-        form.append('file', file);
+	const res = await Promise.all(
+		files.map((file) => {
+		return new Promise<{ data: { url: string } }>((rev, rej) => 
+		{
+			const form = new FormData();
+			form.append('file', file);
 
-        axios
-          .post('/api/media/img/upload', form, 
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          })
-          .then((response) => rev(response))
-          .catch((error) => rej(error));
-      });
-    })
-  );
+			axios
+			.post('/api/media/img/upload', form, 
+			{
+				headers: {
+				'Content-Type': 'multipart/form-data'
+				}
+			})
+			.then((response) => rev(response))
+			.catch((error) => rej(error));
+		});
+		})
+	);
 
-  callback(res.map((item) => item.data.url));
+	callback(res.map((item) => item.data.url));
 };
 const text = ref('');
 </script>
 
 <template>
-  <MdEditor class="editor" v-model="text" @onUploadImg="onUploadImg" :language="state.language" />
+  	<MdEditor class="editor" v-model="text" @onUploadImg="onUploadImg" :language="state.language" />
 </template>

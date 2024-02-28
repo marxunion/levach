@@ -44,11 +44,7 @@ $app->group('/api', function (RouteCollectorProxy $group)
         ];
         return $response->withJson($data);
     });
-});
-
-$app->group('/media', function (RouteCollectorProxy $group) 
-{
-    $group->get('/img/{file}', function (Request $request, Response $response, $args) 
+    $group->get('/media/img/{file}', function (Request $request, Response $response, $args) 
     {
         $file = $args['file'];
     

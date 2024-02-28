@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import './scss/Main.scss'
+    import './scss/Abyss.scss'
 </script>
 
 <template>
-    <h1>Main</h1>
+    <h1>Abbys</h1>
 </template>
