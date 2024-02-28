@@ -1,65 +1,75 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 
-import Main from './views/Main.vue';
-import Article from './views/Article.vue';
-import ArticleEdit from './views/ArticleEdit.vue';
-import articlesApproved from './views/articlesApproved.vue';
-import Abyss from './views/Abyss.vue';
-import createArticle from './views/createArticle.vue';
+// Article
+import articleView from './views/article/articleView.vue';
+import articleEdit from './views/article/articleEdit.vue';
+import articleNew from './views/article/articleNew.vue';
+
+// Articles
+import articlesEditorially from './views/articles/articlesEditorially.vue';
+import articlesApprovedEditorially from './views/articles/articlesApprovedEditorially.vue';
+import articlesAbyss from './views/articles/articlesAbyss.vue';
+
+// Other routes
+import aboutProject from './views/aboutProject.vue';
+import Rules from './views/Rules.vue';
 import Support from './views/Support.vue';
 import Donate from './views/Donate.vue';
-import AboutUs from './views/AboutUs.vue';
+
+
 import NotFound from './views/NotFound.vue';
 
 
 const routes: RouteRecordRaw[] = 
 [
-    
     {
         path: '/',
-        name: 'Main',
-        component: Main,
+        component: articlesEditorially,
     },
     {
-        path: '/article/:id',
-        name: 'Article',
-        component: Article
+        path: '/article',
+        children: [
+            { path: 'new', component: articleNew },
+            { path: 'edit/:id', component: articleEdit },
+            { path: ':id', component:  articleView },
+        ], 
     },
     {
-        path: '/articleEdit/:id',
-        name: 'ArticleEdit',
-        component: ArticleEdit
+        path: '/articles',
+        children: [
+          { path: 'editorially', component: articlesEditorially },
+          { path: 'approvedEditorially', component: articlesApprovedEditorially },
+          { path: 'abyss', component: articlesAbyss },
+        ], 
     },
+
     {
-        path: '/articlesApproved',
-        name: 'articlesApproved',
-        component: articlesApproved,
-    },
-    {
-        path: '/abyss',
-        name: 'Abyss',
-        component: Abyss,
-    },
-    {
-        path: '/createArticle',
-        name: 'createArticle',
-        component: createArticle,
+        path: '/rules',
+        component: Rules,
     },
     {
         path: '/support',
-        name: 'Support',
         component: Support,
     },
     {
         path: '/donate',
-        name: 'Donate',
         component: Donate,
     },
+
     {
-        path: '/about',
-        name: 'About',
-        component: AboutUs,
+        path: '/aboutProject',
+        component: aboutProject,
     },
+    {
+        path: '/faq',
+        component: aboutProject,
+    },
+    {
+        path: '/aboutProjectAndFAQ',
+        component: aboutProject,
+    },
+
+
     {
         path: '/:catchAll(.*)',
         name: 'NotFound',

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import './scss/articlesApproved.scss'
+    import './scss/articlesApprovedEditorially.scss'
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-    import './scss/AboutUs.scss'
+    import './scss/Article.scss'
 </script>
 
 <template>
-  <h1>About Us</h1>
+  	<h1>Article</h1>
 </template>

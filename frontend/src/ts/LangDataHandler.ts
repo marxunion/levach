@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue';
+import mainconfig from '../configs/main.json';
 
 export interface KeyData 
 {
@@ -9,7 +10,7 @@ export class LangDataHandler
 {
     private langsData: KeyData = {};
 
-    public static readonly langs = ['RU', 'EN'];
+    public static readonly langs = mainconfig['langs'];
     public static currentLanguage = ref(localStorage.getItem('language') || 'RU');
     
     private constructor(data: KeyData)

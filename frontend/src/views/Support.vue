@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import './scss/Support.scss'
+	import './scss/Support.scss'
 </script>
 
 
 <template>
-  Support
+    <h1>Support</h1>
 </template>

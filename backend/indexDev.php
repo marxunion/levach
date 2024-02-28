@@ -17,8 +17,6 @@ $app->get('/', function ($request, $response)
     exit;
 });
 
-
-
 $app->group('/api', function (RouteCollectorProxy $group) 
 {
     $group->get('/', function (Request $request, Response $response) 

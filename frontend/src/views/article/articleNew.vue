@@ -2,16 +2,16 @@
 import { ref, watch, reactive } from 'vue';
 import axios from 'axios';
 
-import "./scss/createArticle.scss"
+import "./scss/articleNew.scss"
 
 import { MdEditor, config, en_US } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import RU from '@vavt/cm-extension/dist/locale/ru';
 
-import { LangDataHandler } from "./../ts/LangDataHandler";
-import langsData from "./locales/createArticle.json";
+import { LangDataHandler } from "./../../ts/LangDataHandler";
+import langsData from "./locales/articleNew.json";
     
-const langData = ref(LangDataHandler.initLangDataHandler("createArticle", langsData).langData);
+const langData = ref(LangDataHandler.initLangDataHandler("articleNew", langsData).langData);
 
 config(
 {
@@ -61,6 +61,7 @@ const onUploadImg = async (files: File[], callback: (urls: string[]) => void) =>
 	callback(res.map((item) => item.data.url));
 };
 const text = ref('');
+
 </script>
 
 <template>

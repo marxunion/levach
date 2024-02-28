@@ -1,7 +1,8 @@
 <script setup lang="ts">
-    import './scss/Article.scss'
+	import './scss/Rules.scss'
 </script>
 
+
 <template>
-  <h1>Article</h1>
+  	<h1>Rules</h1>
 </template>

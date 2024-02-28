@@ -12,18 +12,22 @@
 
     console.log(route);
     
-    const items = computed(() => [
-        { link: '', text: (langData.value['links'] as KeyData)['editoriallyArticles'] },
-        {
-        link: 'articlesApproved',
-        text: (langData.value['links'] as KeyData)['editoriallyApprovedArticles'],
-        },
-        { link: 'abyss', text: (langData.value['links'] as KeyData)['abyss'] },
+    const links = computed(() => [
+        { uri: '/articles/editorially', checkUris: ['/','/articles/editorially'], text: (langData.value['links'] as KeyData)['editoriallyArticles'] },
+        { uri: '/articles/approvedEditorially', checkUris: ['/articles/approvedEditorially'], text: (langData.value['links'] as KeyData)['editoriallyApprovedArticles'], },
+        { uri: '/articles/abyss', checkUris: ['/articles/abyss'], text: (langData.value['links'] as KeyData)['abyss'] },
+    ]);
+
+    const linksfooter = computed(() => [
+        { uri: '/faq', text: (langData.value['linksfooter'] as KeyData)['aboutProjectAndFAQ'] },
+        { uri: '/rules', text: (langData.value['linksfooter'] as KeyData)['rules'], },
+        { uri: '/donate', text: (langData.value['linksfooter'] as KeyData)['donate'] },
+        { uri: '/admin', text: (langData.value['linksfooter'] as KeyData)['admin'] },
     ]);
     
-    const isCurrentLink = (link: string) => 
+    const isCurrentLink = (checkUris: string[]) => 
     {
-        return route.path === `/${link}`;
+        return checkUris.includes(route.path);
     };
 </script>
 
@@ -32,11 +36,20 @@
         <div class="sidebar__links">
             <a
                 class="sidebar__links__link"
-                v-for="item in items"
-                :href="`#/${item.link}`"
-                :class="{ active: isCurrentLink(item.link) }"
+                v-for="link in links"
+                :href="`#${link.uri}`"
+                :class="{ active: isCurrentLink(link.checkUris) }"
             >
-            {{ item.text }}
+            {{ link.text }}
+            </a>
+        </div>
+        <div class="sidebar__linksfooter">
+            <a
+                class="sidebar__linksfooter__link"
+                v-for="link in linksfooter"
+                :href="`#${link.uri}`"
+            >
+            {{ link.text }}
             </a>
         </div>
     </aside>

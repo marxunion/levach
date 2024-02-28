@@ -22,7 +22,7 @@
                         <a href="/" class="header__bar__search__button"></a>
                     </div>
                     <div class="header__bar__subbar">
-                        <a href="#/createarticle" class="header__bar__subbar__createarticle"><p>{{ langData['createArticle'] }}</p></a>
+                        <a href="#/article/new" class="header__bar__subbar__createarticle"><p>{{ langData['createArticle'] }}</p></a>
                         <DropDown
                         :options="LangDataHandler.langs"
                         :default="LangDataHandler.currentLanguage.value"
@@ -32,7 +32,7 @@
                         <a class="header__bar__subbar__searchmobile">
                             <div class="header__bar__subbar__searchmobile__icon"></div>
                         </a>
-                        <a href="#/createarticle" class="header__bar__subbar__createarticlemobile">
+                        <a href="#/article/new" class="header__bar__subbar__createarticlemobile">
                             <div class="header__bar__subbar__createarticlemobile__icon"></div>
                         </a>
                     </div>

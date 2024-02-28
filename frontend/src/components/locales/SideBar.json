@@ -9,7 +9,7 @@
         },
         "linksfooter":
         {
-            "aboutUsAndFAQ": "О проекте и FAQ",
+            "aboutProjectAndFAQ": "О проекте и FAQ",
             "rules": "Правила",
             "donate": "Помощь проекту",
             "admin": "Администрация"
@@ -25,7 +25,7 @@
         },
         "linksfooter": 
         {
-            "aboutUsAndFAQ": "About project and FAQ",
+            "aboutProjectAndFAQ": "About project and FAQ",
             "rules": "Rules",
             "donate": "Sponsoring",
             "admin": "Admin"

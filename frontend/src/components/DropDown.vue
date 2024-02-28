@@ -47,15 +47,15 @@ export default {
             {{ selected }}
         </div>
         <div class="items" :class="{ selectHide: !open }">
-            <div
-            v-for="(option, i) of options"
-                :key="i"
-                @click="
-                    selected = option;
-                    open = false;
-                    $emit('input', option as string);">
-            {{ option }}
-            </div>
+			<div 
+				v-for="(option, i) of options" 
+				:key="i"
+				@click="
+					selected = option;
+					open = false;
+					$emit('input', option as string);">
+				{{ option }}
+			</div>      
         </div>
     </div>
 </template>
