@@ -11,9 +11,7 @@ import RU from '@vavt/cm-extension/dist/locale/ru';
 import { LangDataHandler } from "./../ts/LangDataHandler";
 import langsData from "./locales/createArticle.json";
     
-LangDataHandler.initLangDataHandler("createArticle", langsData);
-    
-const langData = ref(LangDataHandler.getLangDataHandler("createArticle").langData);
+const langData = ref(LangDataHandler.initLangDataHandler("createArticle", langsData).langData);
 
 config(
 {

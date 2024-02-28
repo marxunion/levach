@@ -17,17 +17,18 @@ export class LangDataHandler
         this.langsData = data;
     }
 
-    public get langData() 
+    public get langData() : KeyData
     {
-        return computed(() => this.langsData[LangDataHandler.currentLanguage.value] as KeyData);
+        return computed(() => this.langsData[LangDataHandler.currentLanguage.value]);
     }
 
-    public static initLangDataHandler(componentName: string, data: KeyData) 
+    public static initLangDataHandler(componentName: string, data: KeyData)
     {
         componentLangDataHandlers[componentName] = new LangDataHandler(data);
+        return componentLangDataHandlers[componentName];
     }
 
-    public static getLangDataHandler(componentName: string) 
+    public static getLangDataHandler(componentName: string)
     {
         return componentLangDataHandlers[componentName];
     }

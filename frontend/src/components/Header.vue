@@ -6,9 +6,7 @@
     import { LangDataHandler } from "./../ts/LangDataHandler";
     import langsData from "./locales/Header.json";
     
-    LangDataHandler.initLangDataHandler("Header", langsData);
-    
-    const langData = ref(LangDataHandler.getLangDataHandler("Header").langData);
+    const langData = ref(LangDataHandler.initLangDataHandler("Header", langsData).langData);
 </script>
 
 <template>    
