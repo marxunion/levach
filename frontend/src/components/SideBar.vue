@@ -3,19 +3,16 @@
     import { useRoute } from 'vue-router';
     import { LangDataHandler, JsonData } from './../ts/LangDataHandler';
     import langsData from './locales/SideBar.json';
-    
-    import './scss/SideBar.scss';
 
     const langData = LangDataHandler.initLangDataHandler("SideBar", langsData).langData;
 
     const route = useRoute();
 
-    console.log(route);
-    
-    const links = computed(() => [
+    const links = computed(() => 
+    [
         { uri: '/articles/editorially', checkUris: ['/','/articles/editorially'], text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
         { uri: '/articles/approvedEditorially', checkUris: ['/articles/approvedEditorially'], text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
-        { uri: '/articles/abyss', checkUris: ['/articles/abyss'], text: (langData.value['links'] as JsonData)['abyss'] },
+        { uri: '/articles/abyss', checkUris: ['/articles/abyss'], text: (langData.value['links'] as JsonData)['abyss'] }
     ]);
 
     const linksfooter = computed(() => [
@@ -54,3 +51,5 @@
         </div>
     </aside>
 </template>
+
+<style lang="scss" scoped src="./scss/SideBar.scss"></style>

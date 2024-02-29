@@ -2,38 +2,38 @@
 import { ref, watch, reactive } from 'vue';
 import axios from 'axios';
 
-import "./scss/articleNew.scss"
-
-import { MdEditor, config, en_US } from 'md-editor-v3';
+import { MdEditor, config } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import RU from '@vavt/cm-extension/dist/locale/ru';
 
 import { LangDataHandler } from "./../../ts/LangDataHandler";
 import langsData from "./locales/articleNew.json";
-    
+
+console.log(langsData);
+
 const langData = ref(LangDataHandler.initLangDataHandler("articleNew", langsData).langData);
+
 
 config(
 {
-  editorConfig: 
-  {
-    languageUserDefined: 
-    {
-		'ru': RU,
-		'en': en_US
-    }
-  }
+  	editorConfig: 
+  	{
+		languageUserDefined: 
+		{
+			'RU': langsData['RU'],
+			'EN': langsData['EN']
+		}
+	}
 });
 
 let state = reactive(
 {
 	text: '',
-	language: langData.value['editorCode'] as string
+	language: LangDataHandler.currentLanguage.value
 });
 
 watch(langData, () =>
 {
-	state.language = langData.value['editorCode'] as string;
+	state.language = LangDataHandler.currentLanguage.value;
 });
 
 const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
@@ -66,8 +66,7 @@ const text = ref('');
 </script>
 
 <template>
-	<KeepAlive>
-		<MdEditor class="editor" v-model="text" @onUploadImg="onUploadImg" :language="state.language" />
-	</KeepAlive>
-  	
+	<MdEditor class="editor" v-model="text" @onUploadImg="onUploadImg" :language="state.language" />
 </template>
+
+<style lang="scss" scoped src="./scss/articleNew.scss"></style>

@@ -1,10 +1,18 @@
 {
     "RU":
     {
-        
+        "title": "Помощь проекту",
+        "titleCrypto": "Криптовалюта",
+        "titleCards": "Карты",
+        "titleWallets": "Кошельки",
+        "cardsMir": "Карты МИР"
     },
     "EN":
     {
-
+        "title": "Sponsoring",
+        "titleCrypto": "Crypto",
+        "titleCards": "Cards",
+        "titleWallets": "Wallets",
+        "cardsMir": "Cards MIR"
     }
 }

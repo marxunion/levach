@@ -59,3 +59,5 @@ export default {
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped src="./scss/Header.scss"></style>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { ref } from 'vue';
-    import "./scss/Header.scss";
     import DropDown from "./DropDown.vue";
 
     import { LangDataHandler } from "./../ts/LangDataHandler";
@@ -44,3 +43,5 @@
         </div>
     </header>
 </template>
+
+<style lang="scss" scoped src="./scss/Header.scss"></style>

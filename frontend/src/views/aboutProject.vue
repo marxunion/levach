@@ -1,19 +1,20 @@
 <script setup lang="ts">
-	import './scss/aboutProject.scss';
 	import { computed } from 'vue';
+
 	import { LangDataHandler, JsonData } from './../ts/LangDataHandler';
 	import langsData from './locales/aboutProject.json';
 
 	const langData = LangDataHandler.initLangDataHandler('aboutProject', langsData).langData;
 
-	const sectionData = computed(() => {
-		const sections = (langData.value as JsonData)['sections'] as JsonData[]
+	const sectionData = computed(() => 
+	{
+		const sections = (langData.value as JsonData)['sections'] as JsonData[];
  		return sections.map((section: JsonData) => 
 		{
 			const title : string = section['title'] as string;
 			const description : string = section['description'] as string;
 			return { title, description };
-		})
+		});
 	});
 </script>
 
@@ -30,3 +31,5 @@
 		</div>
 	</main>
 </template>
+
+<style lang="scss" scoped src="./scss/aboutProject.scss"></style>
