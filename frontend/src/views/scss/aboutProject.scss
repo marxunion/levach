@@ -1,0 +1,39 @@
+@import "../../scss/vars.scss";
+@import "../../scss/mixins.scss";
+
+.main
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 15%;
+
+    &__title
+    {
+        color: $h1Blue;
+        font-family: Roboto-Medium;
+
+        &.titleFAQ
+        {
+            margin-top: 35px;
+        }
+    }
+    &__block
+    {
+        margin-top: 30px;
+        width: 58%;
+        &__title
+        {
+            line-height: 1.5;
+            font-size: 18px;
+            font-family: Roboto-Medium;
+            margin-bottom: 20px;
+        }
+        &__description
+        {
+            line-height: 1.5;
+            font-size: 18px;
+        }
+    }
+}

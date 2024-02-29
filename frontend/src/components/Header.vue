@@ -11,12 +11,12 @@
 
 <template>    
     <header class="header lock_padding">
-        <div class="header__block">
+        <div class="header__container">
             <a class="header__logo" href="#/">
                 <img src="../assets/img/logo.png" alt="LOGO" class="header__logo__icon">
             </a>
             <div class="header__bar">
-                <div class="header__bar__block">
+                <div class="header__bar__container">
                     <div class="header__bar__search">
                         <input :placeholder="(langData['search'] as string)" type="text" class="header__bar__search__input">
                         <a href="/" class="header__bar__search__button"></a>
@@ -24,10 +24,10 @@
                     <div class="header__bar__subbar">
                         <a href="#/article/new" class="header__bar__subbar__createarticle"><p>{{ langData['createArticle'] }}</p></a>
                         <DropDown
-                        :options="LangDataHandler.langs"
-                        :default="LangDataHandler.currentLanguage.value"
-                        class="header__bar__subbar__select"
-                        @input="LangDataHandler.changeLanguage"
+                            :options="LangDataHandler.langs"
+                            :default="LangDataHandler.currentLanguage.value"
+                            class="header__bar__subbar__select"
+                            @input="LangDataHandler.changeLanguage"
                         />
                         <a class="header__bar__subbar__searchmobile">
                             <div class="header__bar__subbar__searchmobile__icon"></div>

@@ -1,29 +1,29 @@
 import { ref, computed } from 'vue';
 import mainconfig from '../configs/main.json';
 
-export interface KeyData 
+export interface JsonData 
 {
-  [key: string]: string | KeyData;
+  [key: string]: string | string[] | JsonData | JsonData[] | number | number[];
 }
 
 export class LangDataHandler 
 {
-    private langsData: KeyData = {};
+    private langsData: JsonData;
 
     public static readonly langs = mainconfig['langs'];
     public static currentLanguage = ref(localStorage.getItem('language') || 'RU');
     
-    private constructor(data: KeyData)
+    private constructor(data: JsonData)
     {
         this.langsData = data;
     }
 
     public get langData()
     {
-        return computed(() => this.langsData[LangDataHandler.currentLanguage.value] as KeyData);
+        return computed(() => this.langsData[LangDataHandler.currentLanguage.value] as JsonData);
     }
 
-    public static initLangDataHandler(componentName: string, data: KeyData)
+    public static initLangDataHandler(componentName: string, data: JsonData)
     {
         componentLangDataHandlers[componentName] = new LangDataHandler(data);
         return componentLangDataHandlers[componentName];

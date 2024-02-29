@@ -1,10 +1,86 @@
 {
     "RU":
     {
-        
+        "titleAboutProject": "Про нас",
+        "descriptionBoldAboutProject": "Левач",
+        "descriptionAboutProject": " — это гибрид анонимного форума и интернет-журнала, предназначенный для анонимного общения в левом политическом дискурсе. Добро пожаловать.",
+        "titleFAQ": "FAQ",
+        "sections": 
+        [
+            {
+                "title": "Что я здесь могу?",
+                "description": "Вы можете публиковать статьи в интернет-журнал, которые проходят жизненный цикл статьи (см. ниже), а также вести на сайте любые разговоры касающиеся или на касающиеся его тематики, в том числе использовать интерфейс отправки статей чтобы просто начинать обсуждения. Совокупность статей и обсуждений называется треды, а комментарии в тредах это посты. Запретов на контент в постах и тредах нет, кроме оговоренных в кратких Правилах."
+            },
+            {
+                "title": "Как зарегистрироваться?",
+                "description": "Никак. Необходимым условием анонимного общения является возможность постинга без регистрации."
+            },
+            {
+                "title": "Жизненный цикл статьи?",
+                "description": "Каждый тред попадает, в начале, на Премодерацию, где мы проверяем возможность опубликовать его на ресурсе. Обратите внимание, что оффтоп (обсуждения не по теме), призывы к обычному разговору и пр. проходят премодерацию и попадают на сайт, в то время как материалы, нарушающие Правила — нет. После прохождения премодерации, тред попадает в Бездну, где за него могут голосовать посетители сайта. Если тред, являющийся полноценной статьёй, набирает достаточное число голосов, администрация переносит его в Одобренные статьи, на главную страницу сайта."
+            },
+            {
+                "title": "Как оставить голос за материал?",
+                "description": "Для этого достаточно оставить под ним осмысленный комментарий, выбрав при этом оценку. Обратите внимание, что комментарии, оставленные только для голосования и содержащие тест вроде «+1» будут удаляться, а эти голоса автоматически сниматься."
+            },
+            {
+                "title": "Как отредактировать отправленный материал?",
+                "description": "При создании треда создаётся также страница с уникальной ссылкой, где вы можете вносить изменения в текст и следить за статистикой. Не потеряйте эту ссылку."
+            },
+            {
+                "title": "Здесь безопасносно?",
+                "description": "Настолько, насколько позволяют сервера за пределами РФ, открытый исходный код, при написании которого гарантировано отсутствие логирования чувствительной информации, и сама концепция анонимного общения."
+            },
+            {
+                "title": "Анонимного? А можно подписаться?",
+                "description": "Это не запрещено, в т.ч. подписи от лица организаций. Однако, вы должны понимать риски добровольной самоидентификации, а с в случае реальной угрозы вам или окружающим администрация имеет право удалить такие сообщения."
+            },
+            {
+                "title": "Кто управляет сайтом?",
+                "description": "Заботящаяся о вас администрация сайта делится на две большие группы: редакционная коллегия и модерационный состав. Редакционная коллегия, прежде всего, отвечает за наполнение Одобренных статей и сама публикует статьи. Модерационный состав предназначен блюсти ваше комфортное пребывание на сайте в виде его свободы от мусорных материалов, нарушающих Правила."
+            }
+        ]
     },
-    "EN":
-    {
-
+    "EN": {
+        "titleAboutProject": "About Us",
+        "descriptionBoldAboutProject": "Levach",
+        "descriptionAboutProject": " - a hybrid of an anonymous forum and an online magazine designed for anonymous communication in the left political discourse. Welcome.",
+        "titleFAQ": "FAQ",
+        "sections": 
+        [
+            {
+                "title": "What can I do here?",
+                "description": "You can publish articles in the online magazine, which go through the article lifecycle (see below), and also engage in any discussions on the site related to or not related to its theme, including using the article submission interface to start discussions. The combination of articles and discussions is called threads, and comments in threads are posts. There are no content restrictions in posts and threads, except those specified in the brief Rules."
+            },
+            {
+                "title": "How to register?",
+                "description": "You can't. The essential condition for anonymous communication is the ability to post without registration."
+            },
+            {
+                "title": "Article lifecycle?",
+                "description": "Each thread goes, at the beginning, to Pre-moderation, where we check the possibility of publishing it on the resource. Please note that off-topic discussions, calls for normal conversation, etc., pass pre-moderation and go to the site, while materials violating the Rules do not. After passing pre-moderation, the thread goes to the Abyss, where site visitors can vote for it. If a thread, being a full-fledged article, gains enough votes, the administration moves it to Approved articles, to the main page of the site."
+            },
+            {
+                "title": "How to vote for a material?",
+                "description": "To do this, simply leave a meaningful comment under it, choosing a rating at the same time. Please note that comments left only for voting and containing text like '+1' will be deleted, and these votes will be automatically removed."
+            },
+            {
+                "title": "How to edit a submitted material?",
+                "description": "When creating a thread, a page with a unique link is also created, where you can make changes to the text and track statistics. Do not lose this link."
+            },
+            {
+                "title": "Is it safe here?",
+                "description": "As much as the servers outside the Russian Federation allow, with open-source code, in the writing of which the absence of logging sensitive information is guaranteed, and the very concept of anonymous communication."
+            },
+            {
+                "title": "Anonymous? Can I subscribe?",
+                "description": "This is not prohibited, including signatures on behalf of organizations. However, you must understand the risks of voluntary self-identification, and in the case of a real threat to you or others, the administration has the right to delete such messages."
+            },
+            {
+                "title": "Who manages the site?",
+                "description": "The caring administration of the site is divided into two large groups: the editorial board and the moderation staff. The editorial board is primarily responsible for filling Approved articles and publishes articles itself. The moderation staff is intended to ensure your comfortable stay on the site in the form of its freedom from garbage materials violating the Rules."
+            }
+        ]
     }
+    
 }

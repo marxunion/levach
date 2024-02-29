@@ -1,6 +1,9 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
 .editor 
 {
-    width: 60% !important;
-    height: 70% !important;
+    width: 60%;
+    height: 70%;
     border-radius: 10px;
 }

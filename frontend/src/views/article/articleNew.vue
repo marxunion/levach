@@ -39,22 +39,23 @@ watch(langData, () =>
 const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 {
 	const res = await Promise.all(
-		files.map((file) => {
-		return new Promise<{ data: { url: string } }>((rev, rej) => 
+		files.map((file) => 
 		{
-			const form = new FormData();
-			form.append('file', file);
-
-			axios
-			.post('/api/media/img/upload', form, 
+			return new Promise<{ data: { url: string } }>((rev, rej) => 
 			{
-				headers: {
-				'Content-Type': 'multipart/form-data'
-				}
-			})
-			.then((response) => rev(response))
-			.catch((error) => rej(error));
-		});
+				const form = new FormData();
+				form.append('file', file);
+
+				axios
+				.post('/api/media/img/upload', form, 
+				{
+					headers: {
+					'Content-Type': 'multipart/form-data'
+					}
+				})
+				.then((response) => rev(response))
+				.catch((error) => rej(error));
+			});
 		})
 	);
 
@@ -65,5 +66,8 @@ const text = ref('');
 </script>
 
 <template>
-  	<MdEditor class="editor" v-model="text" @onUploadImg="onUploadImg" :language="state.language" />
+	<KeepAlive>
+		<MdEditor class="editor" v-model="text" @onUploadImg="onUploadImg" :language="state.language" />
+	</KeepAlive>
+  	
 </template>

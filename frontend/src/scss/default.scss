@@ -1,12 +1,17 @@
+@charset "UTF-8";
+
+@import "vars.scss";
+@import "mixins.scss";
+
 :root 
 {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-	line-height: 1.5;
+	line-height: 1;
 	font-weight: 400;
 
 	color-scheme: light;
-	color: #242424;
 	background-color: #F1F4FF;
+	background-color: $BG;
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -26,23 +31,28 @@ main
 .ps {
 	width: 100vw;
 	height: 100vh;
-	display: grid;
-	place-items: center;
+	@include place-items-center;
 }
 
-.pageOpacity-enter-active,
-.pageOpacity-leave-active {
-  transition: 600ms ease;
+.pageOpacity
+{
+	&-enter-active, &-leave-active {
+		transition: 400ms ease;
+	  }
+	&-enter-from, &-leave-to {
+		opacity: 0;
+  	}
 }
-
-.pageOpacity-enter-from,
-.pageOpacity-leave-to {
-  opacity: 0;
+h1, p
+{
+	padding: 0;
+	margin: 0;
+	color: $text;
 }
 
 a
 {
-  text-decoration: none;
+  	text-decoration: none;
 }
 
 li
@@ -66,29 +76,9 @@ body
 
 h1 
 {
+	color: $h1;
 	font-size: 3.2em;
 	line-height: 1.1;
-}
-
-button 
-{
-	border-radius: 8px;
-	border: 1px solid transparent;
-	padding: 0.6em 1.2em;
-	font-size: 1em;
-	font-weight: 500;
-	font-family: inherit;
-	background-color: #1a1a1a;
-	cursor: pointer;
-	transition: border-color 0.25s;
-	&:hover 
-	{
-		border-color: #646cff;
-	}
-	&:focus, &:focus-visible 
-	{
-		outline: 4px auto -webkit-focus-ring-color;
-	}
 }
 
 .card 
@@ -101,20 +91,5 @@ button
 	width: 100vw;
 	height: 100vh;
 	margin: 0 auto;
-	display: grid;
-	place-items: center;
-}
-
-@media (prefers-color-scheme: light) 
-{
-	:root {
-		color: #213547;
-		background-color: #ffffff;
-	}
-	a:hover {
-		color: #747bff;
-	}
-	button {
-		background-color: #f9f9f9;
-	}
+	@include place-items-center;
 }

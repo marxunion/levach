@@ -1,3 +1,6 @@
+@import "../../scss/vars.scss";
+@import "../../scss/mixins.scss";
+
 .custom-select  
 {
     display: flex;
@@ -11,11 +14,13 @@
         border-radius: 6px;
         padding-left: 6px;
 
-        color: #ffffff;
+        color: $dropDownItemTextSelected;
         font-size: 22px;
 
         user-select: none;
         position: relative;
+
+        line-height: 1.5;
         &.open 
         {
             border-radius: 6px;
@@ -45,9 +50,8 @@
         border-radius: 6px;
 
         font-size: 22px;
-        color: #000;
         
-        background-color: #ddd;
+        background-color: $dropDownBG;
 
         overflow: hidden;
         position: absolute;
@@ -59,26 +63,18 @@
             height: 32px;
             line-height: 32px;
 
-            color: #000;
+            color: $dropDownItemText;
 
             text-align: center;
             user-select: none;
             &:hover {
-                background-color: #ccc;
+                background-color: $dropDownHoverItemBG;
             }
         }
     }
 }
-.selectHide {
+
+.selectHide 
+{
     display: none !important;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }

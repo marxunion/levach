@@ -13,7 +13,6 @@ import articlesAbyss from './views/articles/articlesAbyss.vue';
 // Other routes
 import aboutProject from './views/aboutProject.vue';
 import Rules from './views/Rules.vue';
-import Support from './views/Support.vue';
 import Donate from './views/Donate.vue';
 
 
@@ -46,10 +45,6 @@ const routes: RouteRecordRaw[] =
     {
         path: '/rules',
         component: Rules,
-    },
-    {
-        path: '/support',
-        component: Support,
     },
     {
         path: '/donate',

@@ -1,10 +1,100 @@
 {
     "RU":
     {
-        
+        "title": "Правила",
+        "sections": 
+        [
+            {
+                "title": "1. Глоссарий:",
+                "description": 
+                [ 
+                    "1.1. Тред — ветка для обсуждения, начало которой может являться Статья или Обсуждения (технически не отличаются, различаются по стилистике и посылу как описано ниже).",
+                    "1.2. Статья — такой Тред, начало которого несёт научную или публицистическую значимость и является развёрнутым текстом в научном или публицистическом стиле.",
+                    "1.3. Обсуждение — такой Тред, начало которого несёт посыл призыва к какому-либо обсуждению, написанный в любом стиле.",
+                    "1.4. Пост — комментарий к Треду или другому Посту.",
+                    "1.5. Сообщение — начало Треда или Пост.",
+                    "1.6. Оффтопик — любое Сообщение, которое написано не по непосредственной тематике сайта. Тематикой сайта является политически-левая мысль.",
+                    "1.7. Пользователь — посетитель сайта, не относящийся к Администрации.",
+                    "1.8. Администрация — совокупный коллектив редакторского и модераторского состава сайта."
+                ]
+            },
+            {
+                "title": "2. Права Пользователя:",
+                "description": 
+                [
+                    "2.1. Пользователь имеет право неограниченно, свободно и анонимно размещать на сайте любые Сообщения, не нарушающие нижеследующих правил, в том числе Оффтоп.",
+                    "2.2. Пользователь имеет право пользоваться средствами самоидентификации в целях добровольного ограничения своей анонимности, такими как прикрепление аватаров или размещение подписей от лица организации или отдельного лица, до тех пор пока такие действия не несут угрозу самому Пользователю и сайту, в случаях, когда такой факт установлен Администрацией.",
+                    "2.3. Пользователь имеет право размещать Сообщения имеющие возрастной рейтинг старше 18 лет, как то обсценную лексику или порнографические материалы, за исключением шокирующего контента (фотографии мёртвых тел, отходов жизнедеятельности, вызывающие приступы трипофобии и прочие).",
+                    "2.4. В случае несправедливого применения к нему санкций со стороны Администрации, Пользователь в праве обратиться к Администрации и оспорить её решения с получением извинений."
+                ]
+            },
+            {
+                "title": "3. Обязанности Пользователя:",
+                "description": 
+                [
+                    "3.1. Пользователю строго воспрещается любыми доступными при помощи размещения Сообщений способами злоупотреблять (abuse) инфраструктурой сайта как то:",
+                    "3.1.1. Вайп — попытка размещением большого количества однотипных Сообщений сделать невозможным чтение сайта.",
+                    "3.1.2. Спам — размещение рекламных Сообщений как коммерческого так и некоммерческого характера.",
+                    "3.1.3. Размещение детской порнографии (к которой не относятся любые рисованные изображения).",
+                    "3.1.4. Выдача себя за представителя Администрации.",
+                    "3.2. Пользователю запрещается размещать Сообщения, не несущие в себе никакой смысловой нагрузки.",
+                    "3.3. Пользователям воспрещается выказывание поддержки откровенно шовинистическим позициям.",
+                    "3.4. Пользователям запрещается размещение дискриминационных высказываний, как то по национальному, расовому, гендерному или иному признаку."
+                ]
+            },
+            {
+                "title": "4. В случае нарушения любого из пунктов правил Администрация вправе удалить Сообщение, содержащее нарушение.",
+                "description": [""]
+            }
+        ]
     },
     "EN":
     {
-
+        "title": "Rules",
+        "sections": 
+        [
+            {
+                "title": "1. Glossary:",
+                "description": 
+                [ 
+                    "1.1. Thread — a branch for discussion, the beginning of which can be an Article or Discussion (technically indistinguishable, differing in style and message as described below).",
+                    "1.2. Article — such a Thread, the beginning of which carries scientific or journalistic significance and is an extended text in a scientific or journalistic style.",
+                    "1.3. Discussion — such a Thread, the beginning of which carries the message of calling for discussion, written in any style.",
+                    "1.4. Post — a comment to a Thread or another Post.",
+                    "1.5. Message — the beginning of a Thread or Post.",
+                    "1.6. Offtopic — any Message written not on the direct topic of the site. The theme of the site is politically left thought.",
+                    "1.7. User — a site visitor not related to the Administration.",
+                    "1.8. Administration — the collective editorial and moderator staff of the site."
+                ]
+            },
+            {
+                "title": "2. User Rights:",
+                "description": 
+                [
+                    "2.1. The user has the right to unlimited, freely, and anonymously post any Messages on the site that do not violate the rules below, including Offtopic.",
+                    "2.2. The user has the right to use means of self-identification for the voluntary restriction of their anonymity, such as attaching avatars or placing signatures on behalf of an organization or individual, as long as such actions do not pose a threat to the User and the site, in cases where such a fact is established by the Administration.",
+                    "2.3. The user has the right to post Messages with an age rating older than 18 years, such as obscene language or pornographic materials, except for shocking content (photos of dead bodies, waste, causing trypophobia attacks, etc.).",
+                    "2.4. In case of unfair application of sanctions by the Administration, the User has the right to contact the Administration and challenge its decisions, receiving apologies."
+                ]
+            },
+            {
+                "title": "3. User Obligations:",
+                "description": 
+                [
+                    "3.1. The user is strictly prohibited from abusing the site's infrastructure by any means available through the placement of Messages, such as:",
+                    "3.1.1. Wipe — an attempt to make reading the site impossible by placing a large number of similar Messages.",
+                    "3.1.2. Spam — placing advertising Messages of both commercial and non-commercial nature.",
+                    "3.1.3. Posting child pornography (excluding any drawn images).",
+                    "3.1.4. Posing as a representative of the Administration.",
+                    "3.2. The user is prohibited from posting Messages that do not carry any meaningful load.",
+                    "3.3. Users are prohibited from expressing support for overtly chauvinistic positions.",
+                    "3.4. Users are prohibited from posting discriminatory statements, such as based on national, racial, gender, or other characteristics."
+                ]
+            },
+            {
+                "title": "4. In case of violation of any of the rules, the Administration has the right to delete the Message containing the violation.",
+                "description": [""]
+            }
+        ]
     }
 }

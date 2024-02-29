@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import './scss/Article.scss'
+    import './scss/article.scss'
 </script>
 
 <template>

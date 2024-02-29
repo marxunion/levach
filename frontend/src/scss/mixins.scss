@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+@import "vars.scss";
+
+@mixin place-items-center {
+    display: grid;
+    place-items: center;
+}

@@ -1,3 +1,6 @@
+@import "../../scss/vars.scss";
+@import "../../scss/mixins.scss";
+
 .sidebar
 {
     position: absolute;
@@ -21,18 +24,18 @@
         &__link
         {
             font-size: 20px;
-            padding-top: 6px;
+            line-height: 1.7;
             width: 83%;
-            color: #000000;
+            color: $sideBarLink;
             font-family: Roboto-Medium;
             transition: .2s;
             &:hover
             {
-                color: #424242;
+                color: $sideBarLinkHover;
             }
             &.active
             {
-                color: #575757;
+                color: $sideBarLinkActive;
             }
         }
     }
@@ -48,14 +51,14 @@
         &__link
         {
             font-size: 16px;
-            padding-top: 6px;
+            line-height: 2.1;
             width: 83%;
-            color: #4193f1;
-            font-family: Roboto-Medium;
+            color: $sideBarLinkBlue;
+            font-family: Roboto-Regular;
             transition: .2s;
             &:hover
             {
-                color: #5ca8ff;
+                color: $sideBarLinkBlueHover;
             }
         }
     }

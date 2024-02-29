@@ -1,28 +1,28 @@
 <script setup lang="ts">
-    import { ref, computed } from 'vue';
+    import { computed } from 'vue';
     import { useRoute } from 'vue-router';
-    import { LangDataHandler, KeyData } from './../ts/LangDataHandler';
+    import { LangDataHandler, JsonData } from './../ts/LangDataHandler';
     import langsData from './locales/SideBar.json';
     
     import './scss/SideBar.scss';
 
-    const langData = ref(LangDataHandler.initLangDataHandler("SideBar", langsData).langData);
+    const langData = LangDataHandler.initLangDataHandler("SideBar", langsData).langData;
 
     const route = useRoute();
 
     console.log(route);
     
     const links = computed(() => [
-        { uri: '/articles/editorially', checkUris: ['/','/articles/editorially'], text: (langData.value['links'] as KeyData)['editoriallyArticles'] },
-        { uri: '/articles/approvedEditorially', checkUris: ['/articles/approvedEditorially'], text: (langData.value['links'] as KeyData)['editoriallyApprovedArticles'], },
-        { uri: '/articles/abyss', checkUris: ['/articles/abyss'], text: (langData.value['links'] as KeyData)['abyss'] },
+        { uri: '/articles/editorially', checkUris: ['/','/articles/editorially'], text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
+        { uri: '/articles/approvedEditorially', checkUris: ['/articles/approvedEditorially'], text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
+        { uri: '/articles/abyss', checkUris: ['/articles/abyss'], text: (langData.value['links'] as JsonData)['abyss'] },
     ]);
 
     const linksfooter = computed(() => [
-        { uri: '/faq', text: (langData.value['linksfooter'] as KeyData)['aboutProjectAndFAQ'] },
-        { uri: '/rules', text: (langData.value['linksfooter'] as KeyData)['rules'], },
-        { uri: '/donate', text: (langData.value['linksfooter'] as KeyData)['donate'] },
-        { uri: '/admin', text: (langData.value['linksfooter'] as KeyData)['admin'] },
+        { uri: '/faq', text: (langData.value['linksfooter'] as JsonData)['aboutProjectAndFAQ'] },
+        { uri: '/rules', text: (langData.value['linksfooter'] as JsonData)['rules'], },
+        { uri: '/donate', text: (langData.value['linksfooter'] as JsonData)['donate'] },
+        { uri: '/admin', text: (langData.value['linksfooter'] as JsonData)['admin'] },
     ]);
     
     const isCurrentLink = (checkUris: string[]) => 
