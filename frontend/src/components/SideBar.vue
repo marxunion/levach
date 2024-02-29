@@ -21,7 +21,7 @@
     const linksfooter = computed(() => [
         { uri: '/faq', text: (langData.value['linksfooter'] as JsonData)['aboutProjectAndFAQ'] },
         { uri: '/rules', text: (langData.value['linksfooter'] as JsonData)['rules'], },
-        { uri: '/donate', text: (langData.value['linksfooter'] as JsonData)['donate'] },
+        { uri: '/sponsoring', text: (langData.value['linksfooter'] as JsonData)['sponsoring'] },
         { uri: '/admin', text: (langData.value['linksfooter'] as JsonData)['admin'] },
     ]);
     

@@ -11,7 +11,7 @@
         {
             "aboutProjectAndFAQ": "О проекте и FAQ",
             "rules": "Правила",
-            "donate": "Помощь проекту",
+            "sponsoring": "Помощь проекту",
             "admin": "Администрация"
         }
     },
@@ -27,7 +27,7 @@
         {
             "aboutProjectAndFAQ": "About project and FAQ",
             "rules": "Rules",
-            "donate": "Sponsoring",
+            "sponsoring": "Sponsoring",
             "admin": "Admin"
         }
     }

@@ -13,7 +13,7 @@ import articlesAbyss from './views/articles/articlesAbyss.vue';
 // Other routes
 import aboutProject from './views/aboutProject.vue';
 import Rules from './views/Rules.vue';
-import Donate from './views/Donate.vue';
+import Sponsoring from './views/Sponsoring.vue';
 
 
 import NotFound from './views/NotFound.vue';
@@ -47,8 +47,8 @@ const routes: RouteRecordRaw[] =
         component: Rules,
     },
     {
-        path: '/donate',
-        component: Donate,
+        path: '/sponsoring',
+        component: Sponsoring,
     },
 
     {

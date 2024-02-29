@@ -9,6 +9,8 @@ frontend/dist
 # Backend
 
 backend/logs
+backend/vendor
+backend/composer.lock
 
 # Media
 
