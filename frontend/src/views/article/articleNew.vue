@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch, reactive } from 'vue';
+import { ref, watch, reactive, Ref } from 'vue';
 import axios from 'axios';
 
 import { MdEditor, config } from 'md-editor-v3';
@@ -8,10 +8,25 @@ import 'md-editor-v3/lib/style.css';
 import { LangDataHandler } from "./../../ts/LangDataHandler";
 import langsData from "./locales/articleNew.json";
 
-console.log(langsData);
-
 const langData = LangDataHandler.initLangDataHandler("articleNew", langsData).langData;
 
+
+const newTag = ref('');
+const tags : Ref<string[]>= ref([]);
+
+const addTag = () => 
+{
+  	if (newTag.value.length > 0 && newTag.value.length < 20 && !tags.value.includes(newTag.value.trim())) 
+  	{
+    	tags.value.push(newTag.value.trim());
+    	newTag.value = '';
+  	}
+};
+
+const removeTag = (index: number) => 
+{
+  	tags.value.splice(index, 1);
+};
 
 config(
 {
@@ -68,8 +83,19 @@ const onUploadImg = async (files: File[], callback: (urls: string[]) => void) =>
 	<main class="main">
 		<div class="main__container">
 			<MdEditor class="main__editor" v-model="(state.text as string)" @onUploadImg="onUploadImg" :language="state.language"/>
-			<button class="main__sendButton">Отправить</button>
+			<button class="main__sendButton">{{ langData['sendButton'] }}</button>	
+			<div class="main__editTags">
+					<div class="main__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">
+						<p class="main__editTags__tags__tag__title">{{ tag }}</p>
+						<button class="main__editTags__tags__tag__button" @click="removeTag(index)"><p>+</p></button>
+					</div>
+				<div class="main__editTags__addTag">
+					<input v-model="newTag" class="main__editTags__addTag__input" type="text" :placeholder="(langData['addTagPlaceholder'] as string)">
+					<button @click="addTag" class="main__editTags__addTag__button">+</button>
+				</div>
+			</div>
 		</div>
+		
 	</main>
 </template>
 

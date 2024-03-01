@@ -2,6 +2,8 @@
     "RU":
     {
         "editorDefaultText": "Заголовок статьи",
+        "sendButton": "Создать",
+        "addTagPlaceholder": "Добавить тег...",
         "toolbarTips": 
         {
             "bold": "жирный",
@@ -86,6 +88,8 @@
     "EN":
     {
         "editorDefaultText": "Article title",
+        "sendButton": "Create",
+        "addTagPlaceholder": "Add Tag...",
         "toolbarTips": 
         {
             "bold": "bold",
