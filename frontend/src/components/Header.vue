@@ -21,7 +21,7 @@
                         <a href="/" class="header__bar__search__button"></a>
                     </div>
                     <div class="header__bar__subbar">
-                        <a href="#/article/new" class="header__bar__subbar__createarticle"><p>{{ langData['createArticle'] }}</p></a>
+                        <a href="#/article/new" class="header__bar__subbar__createarticle">{{ langData['createArticle'] }}</a>
                         <DropDown
                             :options="LangDataHandler.langs"
                             :default="LangDataHandler.currentLanguage.value"

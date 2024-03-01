@@ -1,6 +1,7 @@
 {
     "RU":
     {
+        "editorDefaultText": "Заголовок статьи",
         "toolbarTips": 
         {
             "bold": "жирный",
@@ -84,6 +85,7 @@
     },
     "EN":
     {
+        "editorDefaultText": "Article title",
         "toolbarTips": 
         {
             "bold": "bold",

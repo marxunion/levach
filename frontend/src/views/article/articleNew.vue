@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, reactive } from 'vue';
+import { watch, reactive } from 'vue';
 import axios from 'axios';
 
 import { MdEditor, config } from 'md-editor-v3';
@@ -10,7 +10,7 @@ import langsData from "./locales/articleNew.json";
 
 console.log(langsData);
 
-const langData = ref(LangDataHandler.initLangDataHandler("articleNew", langsData).langData);
+const langData = LangDataHandler.initLangDataHandler("articleNew", langsData).langData;
 
 
 config(
@@ -27,12 +27,13 @@ config(
 
 let state = reactive(
 {
-	text: '',
+	text: langData.value['editorDefaultText'],
 	language: LangDataHandler.currentLanguage.value
 });
 
 watch(langData, () =>
 {
+	//state.text = langData.value['editorDefaultText'];
 	state.language = LangDataHandler.currentLanguage.value;
 });
 
@@ -61,12 +62,15 @@ const onUploadImg = async (files: File[], callback: (urls: string[]) => void) =>
 
 	callback(res.map((item) => item.data.url));
 };
-const text = ref('');
-
 </script>
 
 <template>
-	<MdEditor class="editor" v-model="text" @onUploadImg="onUploadImg" :language="state.language" />
+	<main class="main">
+		<div class="main__container">
+			<MdEditor class="main__editor" v-model="(state.text as string)" @onUploadImg="onUploadImg" :language="state.language"/>
+			<button class="main__sendButton">Отправить</button>
+		</div>
+	</main>
 </template>
 
 <style lang="scss" scoped src="./scss/articleNew.scss"></style>
