@@ -17,8 +17,10 @@
 
 	import { StringWithEnds } from "./../../ts/StringWithEnds";
 
-	const langData = LangDataHandler.initLangDataHandler("articleEdit", langsData).langData;
+	import './../../libs/font_2605852_prouiefeic';
 
+
+	const langData = LangDataHandler.initLangDataHandler("articleEdit", langsData).langData;
 
 	//Statistics
 	interface Statistic 
@@ -53,10 +55,12 @@
 		acceptedEditoriallyStatus: 0
 	})
 
-	const statusesTexts = computed(() => ({
-		premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
-		acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
-	}));
+	const statusesTexts = computed(() => 
+		({
+			premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
+			acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
+		})
+	);
 
 
 	//Versions
@@ -76,7 +80,7 @@
 	const changeVersion = (version : string) => 
 	{
 		const match = version.match(/\d+/);
-		return match ? parseInt(match[0]) : 0;
+		currentVersion = match ? Number(match[0]) as number : 0;
 	};
 
 	//Editor
@@ -172,11 +176,11 @@
 							<p>{{ statusesTexts.acceptedEditoriallyStatus }}</p>
 						</div>
 					</div>
-					<DropDown :options="versionsTexts" class="main__article__info__statusesContainer__selectVersion" @input="changeVersion"/>
+					<DropDown :options="versionsTexts" :default="currentVersion" class="main__article__info__statusesContainer__selectVersion" @input="changeVersion"/>
 				</div>
 			</div>
 			<div class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language"/>
+				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" noIconfont/>
 				<button class="main__article__editorContainer__sendButton">{{ langData['sendButton'] }}</button>	
 			</div>
 			<div class="main__article__editTags">

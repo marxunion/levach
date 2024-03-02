@@ -1,15 +1,25 @@
 <script setup lang="ts">
 import "./scss/DropDown.scss";
-import { ref, computed, onMounted, defineProps, defineEmits } from "vue";
+import { ref, onMounted, defineProps, defineEmits, watch } from "vue";
 
-const props = defineProps(["options", "value", "default", "tabindex"]);
+const props = defineProps(["options", "default", "tabindex"]);
 const emits = defineEmits(["input"]);
 
-const selected = computed(() => (props.default || (props.options.length > 0 ? props.options[0] : null)));
+
+const selectedIndex = ref(0);
+const selected = ref(props.default || (props.options.length > 0 ? props.options[0] : null));
+
+//TODO Remove this watch in future
+watch(props, () => 
+{
+	selected.value = props.options[selectedIndex.value];
+});
+
 const open = ref(false);
 
-onMounted(() => {
-  emits("input", selected.value);
+onMounted(() => 
+{
+  	emits("input", selected.value);
 });
 
 </script>
@@ -26,6 +36,7 @@ onMounted(() => {
 				:key="i"
 				@click="
 					selected = option;
+					selectedIndex = i;
 					open = false;
 					$emit('input', option as string);">
 				{{ option }}

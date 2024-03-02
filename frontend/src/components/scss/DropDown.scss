@@ -71,7 +71,7 @@
 
             color: $dropDownItemText;
 
-            text-align: center;
+            padding-left: 12px;
             user-select: none;
             &:hover {
                 background-color: $dropDownHoverItemBG;
