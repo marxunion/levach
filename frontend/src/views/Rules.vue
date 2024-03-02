@@ -1,7 +1,9 @@
 <script setup lang="ts">
 	import { computed } from 'vue';
 
-	import { LangDataHandler, JsonData } from './../ts/LangDataHandler';
+	import { JsonData } from './../ts/JsonHandler';
+
+	import { LangDataHandler, } from './../ts/LangDataHandler';
 	import langsData from './locales/Rules.json';
 
 	const langData = LangDataHandler.initLangDataHandler('Rules', langsData).langData;

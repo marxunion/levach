@@ -1,38 +1,197 @@
 {
     "RU":
     {
+        "editorDefaultText": "Заголовок статьи",
+        "sendButton": "Опубликовать изменения",
+        "addTagPlaceholder": "Добавить тег...",
+
+        "statuses": 
+        {
+            "premoderationStatusText": "Статус премодерации:",
+            "premoderationStatus": 
+            {
+                "0": "Не пройдена",
+                "1": "В процессе премодерации",
+                "2": "Пройдена"
+            },
+            "acceptedEditoriallyStatusText": "Статус одобрения редакции:",
+            "acceptedEditoriallyStatus": 
+            {
+                "0": "Не одобрена",
+                "1": "В процессе одобрения",
+                "2": "Одобрена"
+            }
+        },
+        "versionText": "Версия ",
+        
+        "statistics": 
+        [
+            {
+                "statisticName": "views",
+                "data": 
+                {
+                    "titleWithEnds": 
+                    {
+                        "title": "просмотр",
+                        "ends": 
+                        [
+                            {
+                                "end": "ов",
+                                "endOffsetStart": 0,
+                                "endOffsetEnd": 0
+                            },
+                            {
+                                "end": "",
+                                "endOffsetStart": 1,
+                                "endOffsetEnd": 1
+                            },
+                            {
+                                "end": "а",
+                                "endOffsetStart": 2,
+                                "endOffsetEnd": 3
+                            },
+                            {
+                                "end": "ов",
+                                "endOffsetStart": 4,
+                                "endOffsetEnd": -1
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "statisticName": "likes",
+                "data": 
+                {
+                    "titleWithEnds": 
+                    {
+                        "title": "лайк",
+                        "ends": 
+                        [
+                            {
+                                "end": "ов",
+                                "endOffsetStart": 0,
+                                "endOffsetEnd": 0
+                            },
+                            {
+                                "end": "",
+                                "endOffsetStart": 1,
+                                "endOffsetEnd": 1
+                            },
+                            {
+                                "end": "а",
+                                "endOffsetStart": 2,
+                                "endOffsetEnd": 3
+                            },
+                            {
+                                "end": "ов",
+                                "endOffsetStart": 4,
+                                "endOffsetEnd": -1
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "statisticName": "dislikes",
+                "data": 
+                {
+                    "titleWithEnds": 
+                    {
+                        "title": "дизлайк",
+                        "ends": 
+                        [
+                            {
+                                "end": "ов",
+                                "endOffsetStart": 0,
+                                "endOffsetEnd": 0
+                            },
+                            {
+                                "end": "",
+                                "endOffsetStart": 1,
+                                "endOffsetEnd": 1
+                            },
+                            {
+                                "end": "а",
+                                "endOffsetStart": 2,
+                                "endOffsetEnd": 3
+                            },
+                            {
+                                "end": "ов",
+                                "endOffsetStart": 4,
+                                "endOffsetEnd": -1
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "statisticName": "comments",
+                "data": 
+                {
+                    "titleWithEnds": 
+                    {
+                        "title": "комментар",
+                        "ends": 
+                        [
+                            {
+                                "end": "иев",
+                                "endOffsetStart": 0,
+                                "endOffsetEnd": 0
+                            },
+                            {
+                                "end": "ий",
+                                "endOffsetStart": 1,
+                                "endOffsetEnd": 1
+                            },
+                            {
+                                "end": "ия",
+                                "endOffsetStart": 2,
+                                "endOffsetEnd": 3
+                            },
+                            {
+                                "end": "иев",
+                                "endOffsetStart": 4,
+                                "endOffsetEnd": -1
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
         "toolbarTips": 
         {
-            "bold": "жирный",
-            "underline": "подчёркнутый",
-            "italic": "курсив",
-            "strikeThrough": "зачёркнутый",
-            "title": "заголовок",
-            "sub": "нижний индекс",
-            "sup": "верхний индекс",
-            "quote": "цитата",
-            "unorderedList": "неупорядоченный список",
-            "orderedList": "упорядоченный список",
-            "task": "список задач",
-            "codeRow": "встроенный код",
-            "code": "блочный код",
-            "link": "ссылка",
-            "image": "изображение",
-            "table": "таблица",
-            "mermaid": "диаграмма",
-            "katex": "формула",
-            "revoke": "отмена",
-            "next": "вернуть",
-            "save": "сохранить",
-            "prettier": "форматировать",
-            "pageFullscreen": "на всю страницу",
-            "fullscreen": "на весь экран",
-            "preview": "превью",
-            "htmlPreview": "превью html",
-            "catalog": "каталог",
-            "github": "исходный код"
+            "bold": "Жирный",
+            "underline": "Подчёркнутый",
+            "italic": "Курсив",
+            "strikeThrough": "Зачёркнутый",
+            "title": "Заголовок",
+            "sub": "Нижний индекс",
+            "sup": "Верхний индекс",
+            "quote": "Цитата",
+            "unorderedList": "Неупорядоченный список",
+            "orderedList": "Упорядоченный список",
+            "task": "Список задач",
+            "codeRow": "Встроенный код",
+            "code": "Блочный код",
+            "link": "Ссылка",
+            "image": "Изображение",
+            "table": "Таблица",
+            "mermaid": "Диаграмма",
+            "katex": "Формула",
+            "revoke": "Отмена",
+            "next": "Вернуть",
+            "save": "Сохранить",
+            "prettier": "Форматировать",
+            "pageFullscreen": "На всю страницу",
+            "fullscreen": "На весь экран",
+            "preview": "Превью",
+            "htmlPreview": "Превью html",
+            "catalog": "Каталог",
+            "github": "Исходный код"
         },
-        "titleItem": {
+        "titleItem": 
+        {
             "h1": "Заголовок 1-го ур.",
             "h2": "Заголовок 2-го ур.",
             "h3": "Заголовок 3-го ур.",
@@ -40,12 +199,14 @@
             "h5": "Заголовок 5-го ур.",
             "h6": "Заголовок 6-го ур."
         },
-        "imgTitleItem": {
+        "imgTitleItem":
+        {
             "link": "Добавить ссылку на изображение",
             "upload": "Загрузить изображение",
             "clip2upload": "Из буфера обмена"
         },
-        "linkModalTips": {
+        "linkModalTips": 
+        {
             "linkTitle": "Добавить ссылку",
             "imageTitle": "Добавить изображение",
             "descLabel": "Описание:",
@@ -54,36 +215,178 @@
             "urlLabelPlaceHolder": "Введите ссылку...",
             "buttonOK": "ОК"
         },
-        "clipModalTips": {
+        "clipModalTips": 
+        {
             "title": "Обрезать изображение",
             "buttonUpload": "Загрузить"
         },
-        "copyCode": {
+        "copyCode": 
+        {
             "text": "Скопировать",
             "successTips": "Скопировано!",
             "failTips": "Не удалось скопировать!"
         },
-        "mermaid": {
-            "flow": "цепная",
-            "sequence": "последовательная",
-            "gantt": "временная",
-            "class": "структурная",
-            "state": "статусная",
-            "pie": "круговая",
-            "relationship": "реляционная",
-            "journey": "путешествия"
+        "mermaid": 
+        {
+            "flow": "Цепная",
+            "sequence": "Последовательная",
+            "gantt": "Временная",
+            "class": "Структурная",
+            "state": "Статусная",
+            "pie": "Круговая",
+            "relationship": "Реляционная",
+            "journey": "Путешествия"
         },
-        "katex": {
-            "inline": "встроенная",
-            "block": "блочная"
+        "katex": 
+        {
+            "inline": "Встроенная",
+            "block": "Блочная"
         },
-        "footer": {
+        "footer": 
+        {
             "markdownTotal": "Кол-во слов",
             "scrollAuto": "Автопрокрутка"
         }
     },
     "EN":
     {
+        "statuses": 
+        {
+            "premoderationStatusText": "Premoderation status: ",
+            "premoderationStatus": 
+            {
+                "0": "Not passed",
+                "1": "In process premoderated",
+                "2": "Passed"
+            },
+            "acceptedEditoriallyStatusText": "Editorial approval status: ",
+            "acceptedEditoriallyStatus": 
+            {
+                "0": "Not approved",
+                "1": "In approval process",
+                "2": "Approved"
+            }
+        },
+        "versionText": "Version ",
+
+        "statistics": 
+        [
+            {
+                "statisticName": "views",
+                "data": 
+                {
+                    "titleWithEnds": 
+                    {
+                        "title": "view",
+                        "ends": 
+                        [
+                            {
+                                "end": "s",
+                                "endOffsetStart": 0,
+                                "endOffsetEnd": 0
+                            },
+                            {
+                                "end": "",
+                                "endOffsetStart": 1,
+                                "endOffsetEnd": 1
+                            },
+                            {
+                                "end": "s",
+                                "endOffsetStart": 2,
+                                "endOffsetEnd": -1
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "statisticName": "likes",
+                "data": 
+                {
+                    "titleWithEnds": 
+                    {
+                        "title": "like",
+                        "ends": 
+                        [
+                            {
+                                "end": "s",
+                                "endOffsetStart": 0,
+                                "endOffsetEnd": 0
+                            },
+                            {
+                                "end": "",
+                                "endOffsetStart": 1,
+                                "endOffsetEnd": 1
+                            },
+                            {
+                                "end": "s",
+                                "endOffsetStart": 2,
+                                "endOffsetEnd": -1
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "statisticName": "dislikes",
+                "data": 
+                {
+                    "titleWithEnds": 
+                    {
+                        "title": "dislike",
+                        "ends": 
+                        [
+                            {
+                                "end": "s",
+                                "endOffsetStart": 0,
+                                "endOffsetEnd": 0
+                            },
+                            {
+                                "end": "",
+                                "endOffsetStart": 1,
+                                "endOffsetEnd": 1
+                            },
+                            {
+                                "end": "s",
+                                "endOffsetStart": 2,
+                                "endOffsetEnd": -1
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "statisticName": "comments",
+                "data": 
+                {
+                    "titleWithEnds": 
+                    {
+                        "title": "comment",
+                        "ends": 
+                        [
+                            {
+                                "end": "s",
+                                "endOffsetStart": 0,
+                                "endOffsetEnd": 0
+                            },
+                            {
+                                "end": "",
+                                "endOffsetStart": 1,
+                                "endOffsetEnd": 1
+                            },
+                            {
+                                "end": "s",
+                                "endOffsetStart": 2,
+                                "endOffsetEnd": -1
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "editorDefaultText": "Article title",
+        "sendButton": "Public",
+        "addTagPlaceholder": "Add Tag...",
         "toolbarTips": 
         {
             "bold": "bold",
@@ -115,7 +418,8 @@
             "catalog": "catalog",
             "github": "source code"
         },
-        "titleItem": {
+        "titleItem": 
+        {
             "h1": "Lv1 Heading",
             "h2": "Lv2 Heading",
             "h3": "Lv3 Heading",
@@ -123,12 +427,14 @@
             "h5": "Lv5 Heading",
             "h6": "Lv6 Heading"
         },
-        "imgTitleItem": {
+        "imgTitleItem": 
+        {
             "link": "Add Img Link",
             "upload": "Upload Img",
             "clip2upload": "Clip Upload"
         },
-        "linkModalTips": {
+        "linkModalTips": 
+        {
             "linkTitle": "Add Link",
             "imageTitle": "Add Image",
             "descLabel": "Desc:",
@@ -137,16 +443,19 @@
             "urlLabelPlaceHolder": "Enter a link...",
             "buttonOK": "OK"
         },
-        "clipModalTips": {
+        "clipModalTips": 
+        {
             "title": "Crop Image",
             "buttonUpload": "Upload"
         },
-        "copyCode": {
+        "copyCode": 
+        {
             "text": "Copy",
             "successTips": "Copied!",
             "failTips": "Copy failed!"
         },
-        "mermaid": {
+        "mermaid": 
+        {
             "flow": "flow",
             "sequence": "sequence",
             "gantt": "gantt",
@@ -156,11 +465,13 @@
             "relationship": "relationship",
             "journey": "journey"
         },
-        "katex": {
+        "katex": 
+        {
             "inline": "inline",
             "block": "block"
         },
-        "footer": {
+        "footer": 
+        {
             "markdownTotal": "Character Count",
             "scrollAuto": "Scroll Auto"
         }

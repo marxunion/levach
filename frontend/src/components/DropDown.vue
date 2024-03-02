@@ -1,52 +1,26 @@
-<script lang="ts">
-import "./scss/DropDown.scss"
+<script setup lang="ts">
+import "./scss/DropDown.scss";
+import { ref, computed, onMounted, defineProps, defineEmits } from "vue";
 
-export default {
-  props: 
-  {
-    options: 
-    {
-      type: Array,
-      required: true,
-    },
-    default: 
-    {
-      type: String,
-      required: false,
-      default: null,
-    },
-    tabindex: 
-    {
-      type: Number,
-      required: false,
-      default: 0,
-    },
-  },
-  name: "DropDown",
-  data() 
-  {
-    return {
-        selected: 
-            this.default
-            ? this.default
-            : this.options.length > 0
-            ? this.options[0]
-            : null,
-        open: false,
-    };
-  },
-  mounted() {
-    this.$emit("input", this.selected);
-  },
-};
+const props = defineProps(["options", "value", "default", "tabindex"]);
+const emits = defineEmits(["input"]);
+
+const selected = computed(() => (props.default || (props.options.length > 0 ? props.options[0] : null)));
+const open = ref(false);
+
+onMounted(() => {
+  emits("input", selected.value);
+});
+
 </script>
 
 <template>
-    <div class="custom-select" :tabindex="tabindex" @blur="open = false">
-        <div class="selected" :class="{ open: open }" @click="open = !open">
+    <div class="customSelect" :tabindex="tabindex" @blur="open = false">
+        <div class="customSelect__selected" :class="{ open: open }" @click="open = !open">
             {{ selected }}
+			<span class="customSelect__selected__img"></span>
         </div>
-        <div class="items" :class="{ selectHide: !open }">
+        <div class="customSelect__items" :class="{ selectHide: !open }">
 			<div 
 				v-for="(option, i) of options" 
 				:key="i"
@@ -60,4 +34,4 @@ export default {
     </div>
 </template>
 
-<style lang="scss" scoped src="./scss/Header.scss"></style>
+<style lang="scss" scoped src="./scss/DropDown.scss"></style>

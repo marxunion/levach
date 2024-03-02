@@ -1,9 +1,234 @@
 @import "../../../scss/vars.scss";
 @import "../../../scss/mixins.scss";
 
-.editor 
+.main
 {
-    width: 60%;
-    height: 70%;
-    border-radius: 10px;
+    margin-top: 7%;
+    &__article
+    {
+        
+        width: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        position: relative;
+        &__info
+        {
+            height: 210px;
+            width: 100%;
+            background-color: $articleEditInfoBG;
+            border-radius: 15px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+
+            &__statistics
+            {
+                width: 100%;
+                height: 45%;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                
+                &__statistic
+                {
+                    width: 18%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    
+                    &__title
+                    {
+                        font-size: 20px;
+                    }
+                }
+            }
+            &__statusesContainer
+            {
+                width: 96%;
+                height: 30%;
+                display: flex;
+                justify-content: space-between;
+                &__status
+                {
+                    padding-top: 5px;
+                    display: flex;
+                    align-items: center;
+
+
+                    & > img
+                    {
+                        padding-left: 3px;
+                        width: 25px;
+                        height: 25px;
+                    }
+                    & > p
+                    {
+                        padding-left: 3px;
+                        font-size: 18px;
+                    }
+                }
+                &__selectVersion
+                {
+                    width: 200px;
+                    align-self: flex-end;
+                }
+            }
+        }
+        &__editorContainer
+        {
+            margin-top: 1.4%;
+            height: 620px;
+            width: 100%;
+            border-radius: 15px;
+            position: relative;
+            &__editor
+            {
+                width: 100%;
+                height: 100%;
+                border-radius: 15px;
+            }
+            &__sendButton
+            {
+                position: absolute;
+                right: 20px;
+                bottom: 40px;
+                width: 260px;
+                height: 45px;
+                border-radius: 20px;
+                background-color: $articleEditSendButtonBG;
+                color: $articleEditSendButtonText;
+                font-size: 18px;
+                font-family: Roboto-Regular;
+                transition: .5s;
+                line-height: normal;
+                transform: scale(1.00);
+                &:hover
+                {
+                    cursor: pointer;
+                    transform: scale(1.04);
+                    background-color: $articleEditSendButtonHoverBG;
+                }
+            }
+        }
+        
+        &__editTags
+        {
+            margin-top: 1.4%;
+            margin-bottom: 70px;
+            width: 100%;
+            border-radius: 15px;
+            background-color: $articleEditEditTagsBG;
+            padding: 0px 12px 12px 12px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            &__tags
+            {
+                display: flex;
+                flex-wrap: wrap;
+                &__tag
+                {
+                    height: 40px;
+                    min-width: 80px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    position: relative;
+                    box-sizing: border-box;
+                    background-color: $articleEditEditTagsTagBG;
+                    border-radius: 17px;
+                    margin-right: 10px;
+                    margin-top: 12px;
+                    padding-left: 12px;
+                    
+
+                    &__button
+                    {
+                        & > p
+                        {
+                            font-size: 44px;
+                            line-height: 0;
+                            transform: rotate(45deg);
+                            font-weight: 400;
+                            font-family: Arial, Helvetica, sans-serif;
+                            color: $articleEditEditTagsRemoveTagButtonText;
+                        }
+                        margin-left: 6px;
+                        width: 40px;
+                        height: 40px;
+
+                        border-radius: 17px;
+
+                        background-color: $articleEditEditTagsRemoveTagButtonBG;
+                        text-align: center;
+                        transition: .5s;
+                        
+                        &:hover
+                        {
+                            cursor: pointer;
+                            background-color: $articleEditEditTagsRemoveTagButtonHoverBG;
+                        }
+                    }
+                }
+            }
+            &__addTag
+            {
+                margin-top: 12px;
+                width: 210px;
+                height: 45px;
+                position: relative;
+                border-radius: 20px;
+
+                &__input
+                {
+                    width: 100%;
+                    height: 100%;
+                    background-color: $articleEditEditTagsAddTagInputBG;
+                    border-radius: 20px;
+                    padding-left: 14px;
+                    
+                    color: $articleEditEditTagsAddTagInputText;
+                    font-size: 20px;
+                    font-family: Roboto-Regular;
+
+                    box-sizing: border-box;
+
+                    &::placeholder
+                    {
+                        color: $articleEditEditTagsAddTagInputPlaceholderText;
+                    }
+                }
+                &__button
+                {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 20px;
+                    background-color: $articleEditEditTagsAddTagButtonBG;
+                    color: $articleEditEditTagsAddTagButtonText;
+                    line-height: 0;
+                    text-align: center;
+                    font-size: 44px;
+                    transition: .5s;
+                    font-weight: 400;
+                    font-family: Arial, Helvetica, sans-serif;
+                    &:hover
+                    {
+                        cursor: pointer;
+                        background-color: $articleEditEditTagsAddTagButtonHoverBG;
+                    }
+                }
+            }
+        }
+    }
 }

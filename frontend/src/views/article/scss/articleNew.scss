@@ -4,149 +4,155 @@
 .main
 {
     margin-top: 7%;
-    &__container
+    &__article
     {
         
         width: 60%;
         position: relative;
-        
-    }
-    &__editor 
-    {
-        height: 620px;
-        width: 100%;
-        border-radius: 15px;
-    }
-    &__sendButton
-    {
-        position: absolute;
-        right: 20px;
-        top: 540px;
-        width: 180px;
-        height: 45px;
-        border-radius: 20px;
-        background-color: $articleNewSendButtonBG;
-        color: $articleNewSendButtonText;
-        font-size: 18px;
-        font-family: Roboto-Regular;
-        transition: .5s;
-        line-height: normal;
-        transform: scale(1.00);
-        &:hover
+        &__editorContainer
         {
-            cursor: pointer;
-            transform: scale(1.04);
-            background-color: $articleNewSendButtonHoverBG;
-        }
-    }
-    &__editTags
-    {
-        margin-top: 1.2%;
-        margin-bottom: 70px;
-        width: 100%;
-        border-radius: 15px;
-        background-color: $articleNewEditTagsBG;
-        padding: 0px 12px 12px 12px;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        &__tags
-        {
-            display: flex;
-            flex-wrap: wrap;
-            &__tag
-            {
-                height: 40px;
-                min-width: 80px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                position: relative;
-                box-sizing: border-box;
-                background-color: $articleNewEditTagsTagBG;
-                border-radius: 17px;
-                margin-right: 10px;
-                margin-top: 12px;
-                padding-left: 8px;
-                
-
-                &__button
-                {
-                    & > p
-                    {
-                        font-size: 44px;
-                        line-height: 0;
-                        transform: rotate(45deg);
-                        font-weight: 400;
-                        font-family: Arial, Helvetica, sans-serif;
-                        color: $articleNewEditTagsRemoveTagButtonText;
-                    }
-                    margin-left: 6px;
-                    width: 40px;
-                    height: 40px;
-
-                    border-radius: 17px;
-
-                    background-color: $articleNewEditTagsRemoveTagButtonBG;
-                    text-align: center;
-                    transition: .5s;
-                    
-                    &:hover
-                    {
-                        cursor: pointer;
-                        background-color: $articleNewEditTagsRemoveTagButtonHoverBG;
-                    }
-                }
-            }
-        }
-        &__addTag
-        {
-            margin-top: 12px;
-            width: 210px;
-            height: 45px;
+            height: 620px;
+            width: 100%;
+            border-radius: 15px;
             position: relative;
-            border-radius: 20px;
-
-            &__input
+            &__editor
             {
                 width: 100%;
                 height: 100%;
-                background-color: $articleNewEditTagsAddTagInputBG;
-                border-radius: 20px;
-                padding-left: 14px;
-                
-                color: $articleNewEditTagsAddTagInputText;
-                font-size: 20px;
-                font-family: Roboto-Regular;
-
-                box-sizing: border-box;
-
-                &::placeholder
-                {
-                    color: $articleNewEditTagsAddTagInputPlaceholderText;
-                }
+                border-radius: 15px;
             }
-            &__button
+            &__sendButton
             {
                 position: absolute;
-                right: 0;
-                bottom: 0;
-                width: 45px;
+                right: 20px;
+                bottom: 40px;
+                width: 180px;
                 height: 45px;
                 border-radius: 20px;
-                background-color: $articleNewEditTagsAddTagButtonBG;
-                color: $articleNewEditTagsAddTagButtonText;
-                line-height: 0;
-                text-align: center;
-                font-size: 44px;
+                background-color: $articleNewSendButtonBG;
+                color: $articleNewSendButtonText;
+                font-size: 18px;
+                font-family: Roboto-Regular;
                 transition: .5s;
-                font-weight: 400;
-                font-family: Arial, Helvetica, sans-serif;
+                line-height: normal;
+                transform: scale(1.00);
                 &:hover
                 {
                     cursor: pointer;
-                    background-color: $articleNewEditTagsAddTagButtonHoverBG;
+                    transform: scale(1.04);
+                    background-color: $articleNewSendButtonHoverBG;
+                }
+            }
+        }
+        &__editTags
+        {
+            margin-top: 1.4%;
+            margin-bottom: 70px;
+            width: 100%;
+            border-radius: 15px;
+            background-color: $articleNewEditTagsBG;
+            padding: 0px 12px 12px 12px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            &__tags
+            {
+                display: flex;
+                flex-wrap: wrap;
+                &__tag
+                {
+                    height: 40px;
+                    min-width: 80px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    position: relative;
+                    box-sizing: border-box;
+                    background-color: $articleNewEditTagsTagBG;
+                    border-radius: 17px;
+                    margin-right: 10px;
+                    margin-top: 12px;
+                    padding-left: 12px;
+                    
+
+                    &__button
+                    {
+                        & > p
+                        {
+                            font-size: 44px;
+                            line-height: 0;
+                            transform: rotate(45deg);
+                            font-weight: 400;
+                            font-family: Arial, Helvetica, sans-serif;
+                            color: $articleNewEditTagsRemoveTagButtonText;
+                        }
+                        margin-left: 8px;
+                        width: 40px;
+                        height: 40px;
+
+                        border-radius: 17px;
+
+                        background-color: $articleNewEditTagsRemoveTagButtonBG;
+                        text-align: center;
+                        transition: .5s;
+                        
+                        &:hover
+                        {
+                            cursor: pointer;
+                            background-color: $articleNewEditTagsRemoveTagButtonHoverBG;
+                        }
+                    }
+                }
+            }
+            &__addTag
+            {
+                margin-top: 12px;
+                width: 210px;
+                height: 45px;
+                position: relative;
+                border-radius: 20px;
+
+                &__input
+                {
+                    width: 100%;
+                    height: 100%;
+                    background-color: $articleNewEditTagsAddTagInputBG;
+                    border-radius: 20px;
+                    padding-left: 14px;
+                    
+                    color: $articleNewEditTagsAddTagInputText;
+                    font-size: 20px;
+                    font-family: Roboto-Regular;
+
+                    box-sizing: border-box;
+
+                    &::placeholder
+                    {
+                        color: $articleNewEditTagsAddTagInputPlaceholderText;
+                    }
+                }
+                &__button
+                {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 20px;
+                    background-color: $articleNewEditTagsAddTagButtonBG;
+                    color: $articleNewEditTagsAddTagButtonText;
+                    line-height: 0;
+                    text-align: center;
+                    font-size: 44px;
+                    transition: .5s;
+                    font-weight: 400;
+                    font-family: Arial, Helvetica, sans-serif;
+                    &:hover
+                    {
+                        cursor: pointer;
+                        background-color: $articleNewEditTagsAddTagButtonHoverBG;
+                    }
                 }
             }
         }

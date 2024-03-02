@@ -2,6 +2,8 @@
     import { ref } from 'vue';
     import DropDown from "./DropDown.vue";
 
+    import "./scss/Header.scss"
+
     import { LangDataHandler } from "./../ts/LangDataHandler";
     import langsData from "./locales/Header.json";
     
@@ -22,12 +24,7 @@
                     </div>
                     <div class="header__bar__subbar">
                         <a href="#/article/new" class="header__bar__subbar__createarticle">{{ langData['createArticle'] }}</a>
-                        <DropDown
-                            :options="LangDataHandler.langs"
-                            :default="LangDataHandler.currentLanguage.value"
-                            class="header__bar__subbar__select"
-                            @input="LangDataHandler.changeLanguage"
-                        />
+                        <DropDown :options="LangDataHandler.langs" :default="LangDataHandler.currentLanguage.value" class="header__bar__subbar__select" @input="LangDataHandler.changeLanguage" />
                         <a class="header__bar__subbar__searchmobile">
                             <div class="header__bar__subbar__searchmobile__icon"></div>
                         </a>
@@ -43,5 +40,3 @@
         </div>
     </header>
 </template>
-
-<style lang="scss" scoped src="./scss/Header.scss"></style>

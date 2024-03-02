@@ -1,17 +1,14 @@
 import { ref, computed } from 'vue';
 import mainconfig from '../configs/main.json';
 
-export interface JsonData 
-{
-  [key: string]: string | string[] | JsonData | JsonData[] | number | number[];
-}
+import { JsonData } from './JsonHandler';
 
 export class LangDataHandler 
 {
     private langsData: JsonData;
 
     public static readonly langs = mainconfig['langs'];
-    public static currentLanguage = ref(localStorage.getItem('language') || 'RU');
+    public static readonly currentLanguage = ref(localStorage.getItem('language') || 'RU');
     
     private constructor(data: JsonData)
     {

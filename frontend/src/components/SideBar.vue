@@ -1,7 +1,10 @@
 <script setup lang="ts">
     import { computed } from 'vue';
     import { useRoute } from 'vue-router';
-    import { LangDataHandler, JsonData } from './../ts/LangDataHandler';
+    import { LangDataHandler } from './../ts/LangDataHandler';
+
+    import { JsonData } from '../ts/JsonHandler';
+
     import langsData from './locales/SideBar.json';
 
     const langData = LangDataHandler.initLangDataHandler("SideBar", langsData).langData;
@@ -15,7 +18,8 @@
         { uri: '/articles/abyss', checkUris: ['/articles/abyss'], text: (langData.value['links'] as JsonData)['abyss'] }
     ]);
 
-    const linksfooter = computed(() => [
+    const linksfooter = computed(() => 
+    [
         { uri: '/faq', text: (langData.value['linksfooter'] as JsonData)['aboutProjectAndFAQ'] },
         { uri: '/rules', text: (langData.value['linksfooter'] as JsonData)['rules'], },
         { uri: '/sponsoring', text: (langData.value['linksfooter'] as JsonData)['sponsoring'] },

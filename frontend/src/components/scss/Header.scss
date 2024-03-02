@@ -92,20 +92,38 @@
             {
                 width: 60px;
                 height: 45px;
-                & > .selected
+
+                & .customSelect__selected
                 {
+                    border-radius: 6px;
+                    padding-left: 6px;
                     height: 40px;
                     font-size: 25px !important;
-                    &:after 
+                    background-color: transparent !important;
+                    color: $headerDropDownItemTextSelected !important;
+                    &__img
                     {
+                        width: 16px;
+                        height: 10px;
                         content: "";
-                        top: 15px !important;
+                        background: url("./../../assets/img/arrowdown/white.svg") no-repeat;
+                        top: 16px !important;
                         right: 0 !important;
                     }
-                    
                 }
-                & .items
+
+                &.customSelect.open 
                 {
+                    border-radius: 6px;
+                    & .customSelect__selected__img 
+                    {
+                        transform: rotateZ(180deg)
+                    }
+                }
+                & > .customSelect__items
+                {
+                    top: 40px;
+                    border-radius: 6px;
                     & div 
                     {
                         height: 42px !important;

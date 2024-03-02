@@ -4,7 +4,7 @@
 $BG: #f1f4ff;
 
 // Selection
-$selectionBG: #cecece;
+$selectionBG: #bbbbbb;
 
 // Texts
 $text: #000;
@@ -23,6 +23,8 @@ $headerNewArticleBG: #f8f8f8;
 $headerNewArticleBGHover: #e2e2e2;
 $headerNewArticleText: #131313;
 
+$headerDropDownItemTextSelected: #fff;
+
 $headerBurgerMenuButton: #fff;
 
 // SideBar
@@ -38,8 +40,9 @@ $sideBarLinkBlueHover: #5ca8ff;
 $dropDownBG: #ddd;
 $dropDownHoverItemBG: #ccc;
 
+$dropDownItemBGSelected: #ddd;
 $dropDownItemText: #000;
-$dropDownItemTextSelected: #fff;
+$dropDownItemTextSelected: #000;
 
 
 // ArticleNew
@@ -66,10 +69,26 @@ $articleNewEditTagsAddTagButtonText: #565656;
 
 // ArticleEdit
 $articleEditSendButtonBG: #54A9F8;
-$articleEditSendButtonBGHover: #73bafc;
+$articleEditSendButtonHoverBG: #73bafc;
 $articleEditSendButtonText: #fff;
 
+$articleEditInfoBG: #fff;
+$articleEditInfoText: #fff;
+
 $articleEditEditTagsBG: #fff;
+
+$articleEditEditTagsTagBG: #d9d9d9;
+$articleEditEditTagsTagText: #2c2c2c;
+$articleEditEditTagsRemoveTagButtonBG: #b9b9b9;
+$articleEditEditTagsRemoveTagButtonHoverBG: #afafaf;
+$articleEditEditTagsRemoveTagButtonText: #565656;
+
+$articleEditEditTagsAddTagInputBG: #d9d9d9;
+$articleEditEditTagsAddTagInputText: #2c2c2c;
+$articleEditEditTagsAddTagInputPlaceholderText: #565656;
+$articleEditEditTagsAddTagButtonBG: #b9b9b9;
+$articleEditEditTagsAddTagButtonHoverBG: #afafaf;
+$articleEditEditTagsAddTagButtonText: #565656;
 
 // Sponsoring
 $sponsoringBlockBG: #ececec;
