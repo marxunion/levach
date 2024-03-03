@@ -1,10 +1,192 @@
 {
     "RU":
     {
-        "versionText": "Версия "
+        "versionText": "Версия ",
+        "commentsTitle": "Комментарии",
+        "sortTitle": "Сортировать по:",
+        "sortTypes": 
+        [
+            "популярности",
+            "дате размещения"
+        ],
+        "toolbarTips": 
+        {
+            "bold": "Жирный",
+            "underline": "Подчёркнутый",
+            "italic": "Курсив",
+            "strikeThrough": "Зачёркнутый",
+            "title": "Заголовок",
+            "sub": "Нижний индекс",
+            "sup": "Верхний индекс",
+            "quote": "Цитата",
+            "unorderedList": "Неупорядоченный список",
+            "orderedList": "Упорядоченный список",
+            "task": "Список задач",
+            "codeRow": "Встроенный код",
+            "code": "Блочный код",
+            "link": "Ссылка",
+            "image": "Изображение",
+            "table": "Таблица",
+            "mermaid": "Диаграмма",
+            "katex": "Формула",
+            "revoke": "Отмена",
+            "next": "Вернуть",
+            "save": "Сохранить",
+            "prettier": "Форматировать",
+            "pageFullscreen": "На всю страницу",
+            "fullscreen": "На весь экран",
+            "preview": "Превью",
+            "htmlPreview": "Превью html",
+            "catalog": "Каталог",
+            "github": "Исходный код"
+        },
+        "titleItem": {
+            "h1": "Заголовок 1-го ур.",
+            "h2": "Заголовок 2-го ур.",
+            "h3": "Заголовок 3-го ур.",
+            "h4": "Заголовок 4-го ур.",
+            "h5": "Заголовок 5-го ур.",
+            "h6": "Заголовок 6-го ур."
+        },
+        "imgTitleItem": {
+            "link": "Добавить ссылку на изображение",
+            "upload": "Загрузить изображение",
+            "clip2upload": "Из буфера обмена"
+        },
+        "linkModalTips": {
+            "linkTitle": "Добавить ссылку",
+            "imageTitle": "Добавить изображение",
+            "descLabel": "Описание:",
+            "descLabelPlaceHolder": "Введите описание...",
+            "urlLabel": "Ссылка:",
+            "urlLabelPlaceHolder": "Введите ссылку...",
+            "buttonOK": "ОК"
+        },
+        "clipModalTips": {
+            "title": "Обрезать изображение",
+            "buttonUpload": "Загрузить"
+        },
+        "copyCode": {
+            "text": "Скопировать",
+            "successTips": "Скопировано!",
+            "failTips": "Не удалось скопировать!"
+        },
+        "mermaid": {
+            "flow": "Цепная",
+            "sequence": "Последовательная",
+            "gantt": "Временная",
+            "class": "Структурная",
+            "state": "Статусная",
+            "pie": "Круговая",
+            "relationship": "Реляционная",
+            "journey": "Путешествия"
+        },
+        "katex": {
+            "inline": "Встроенная",
+            "block": "Блочная"
+        },
+        "footer": {
+            "markdownTotal": "Кол-во слов",
+            "scrollAuto": "Автопрокрутка"
+        }
     },
     "EN":
     {
-        "versionText": "Version "
+        "versionText": "Version ",
+        "commentsTitle": "Comments",
+        "sortTitle": "Sort by:",
+        "sortTypes": 
+        [
+            "popularity",
+            "posting date"
+        ],
+        "toolbarTips": 
+        {
+            "bold": "bold",
+            "underline": "underline",
+            "italic": "italic",
+            "strikeThrough": "strikeThrough",
+            "title": "title",
+            "sub": "subscript",
+            "sup": "superscript",
+            "quote": "quote",
+            "unorderedList": "unordered list",
+            "orderedList": "ordered list",
+            "task": "task list",
+            "codeRow": "inline code",
+            "code": "block-level code",
+            "link": "link",
+            "image": "image",
+            "table": "table",
+            "mermaid": "mermaid",
+            "katex": "formula",
+            "revoke": "revoke",
+            "next": "undo revoke",
+            "save": "save",
+            "prettier": "prettier",
+            "pageFullscreen": "fullscreen in page",
+            "fullscreen": "fullscreen",
+            "preview": "preview",
+            "htmlPreview": "html preview",
+            "catalog": "catalog",
+            "github": "source code"
+        },
+        "titleItem": 
+        {
+            "h1": "Lv1 Heading",
+            "h2": "Lv2 Heading",
+            "h3": "Lv3 Heading",
+            "h4": "Lv4 Heading",
+            "h5": "Lv5 Heading",
+            "h6": "Lv6 Heading"
+        },
+        "imgTitleItem": 
+        {
+            "link": "Add Img Link",
+            "upload": "Upload Img",
+            "clip2upload": "Clip Upload"
+        },
+        "linkModalTips": 
+        {
+            "linkTitle": "Add Link",
+            "imageTitle": "Add Image",
+            "descLabel": "Desc:",
+            "descLabelPlaceHolder": "Enter a description...",
+            "urlLabel": "Link:",
+            "urlLabelPlaceHolder": "Enter a link...",
+            "buttonOK": "OK"
+        },
+        "clipModalTips": 
+        {
+            "title": "Crop Image",
+            "buttonUpload": "Upload"
+        },
+        "copyCode": 
+        {
+            "text": "Copy",
+            "successTips": "Copied!",
+            "failTips": "Copy failed!"
+        },
+        "mermaid": 
+        {
+            "flow": "flow",
+            "sequence": "sequence",
+            "gantt": "gantt",
+            "class": "class",
+            "state": "state",
+            "pie": "pie",
+            "relationship": "relationship",
+            "journey": "journey"
+        },
+        "katex": 
+        {
+            "inline": "inline",
+            "block": "block"
+        },
+        "footer": 
+        {
+            "markdownTotal": "Character Count",
+            "scrollAuto": "Scroll Auto"
+        }
     }
 }

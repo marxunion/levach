@@ -34,6 +34,11 @@ main
 	@include place-items-center;
 }
 
+.ps__rail-y
+{
+	z-index: 30;
+}
+
 .pageOpacity
 {
 	&-enter-active, &-leave-active 
