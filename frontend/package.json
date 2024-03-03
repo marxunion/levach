@@ -11,6 +11,7 @@
   "dependencies": {
     "@vavt/cm-extension": "^1.3.0",
     "axios": "^1.6.7",
+    "jenesius-vue-modal": "^1.11.1",
     "md-editor-v3": "^4.11.3",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5",

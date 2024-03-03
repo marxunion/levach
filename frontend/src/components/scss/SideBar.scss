@@ -12,6 +12,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-content: center;
+    z-index: 14;
     &__links 
     {
         display: flex;
@@ -20,7 +21,6 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-        
         &__link
         {
             font-size: 20px;
@@ -50,6 +50,7 @@
         
         &__link
         {
+            cursor: pointer;
             font-size: 16px;
             line-height: 2.1;
             width: 83%;

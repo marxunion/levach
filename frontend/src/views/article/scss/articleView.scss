@@ -1,2 +1,59 @@
 @import "../../../scss/vars.scss";
 @import "../../../scss/mixins.scss";
+
+.main
+{
+    margin-top: 7%;
+    &__article
+    {
+        
+        width: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        position: relative;
+        &__previewContainer
+        {
+            
+           
+            width: 100%;
+            min-height: 620px;
+
+            box-sizing: border-box;
+            border-radius: 15px;
+
+            position: relative;
+            
+            &__preview
+            {
+                padding-top: 0.8%;
+                width: 100%;
+                height: 100%;
+                border-radius: 15px;
+            }
+
+            &__titleTime
+            {
+                position: absolute;
+                width: 220px;
+                line-height: 40px;
+                left: 25px;
+                top: 13px;
+                font-size: 22px;
+                font-family: Roboto-Regular;
+                color: $articleViewArticleTitleTime;
+                z-index: 2;
+            }
+
+            &__selectVersion
+            {
+                position: absolute;
+                width: 220px;
+                right: 25px;
+                top: 15px;
+            }
+        }
+    }
+}

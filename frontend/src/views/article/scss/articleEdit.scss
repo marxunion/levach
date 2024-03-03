@@ -6,7 +6,6 @@
     margin-top: 7%;
     &__article
     {
-        
         width: 60%;
         display: flex;
         justify-content: center;
@@ -84,7 +83,7 @@
         &__editorContainer
         {
             margin-top: 1.4%;
-            height: 620px;
+            min-height: 620px;
             width: 100%;
             border-radius: 15px;
             position: relative;

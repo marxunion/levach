@@ -14,6 +14,11 @@
 	overflow: hidden;
 }
 
+.widget__modal-container__item
+{
+    z-index: 20;
+}
+
 main
 {
 	width: 100%;

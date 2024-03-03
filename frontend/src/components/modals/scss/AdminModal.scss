@@ -1,0 +1,90 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.form
+{
+    width: 440px;
+    height: 520px;
+    background-color: $adminModalBG;
+    
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    border-radius: 15px;
+    z-index: 20;
+    &__title
+    {
+        margin-top: 8%;
+        font-size: 38px;
+        font-family: Roboto-Medium;
+    }
+    
+    &__fields
+    {
+        width: 90%;
+
+        margin-top: 4%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &__field
+        {
+            width: 100%;
+
+            margin-top: 7%;
+
+            display: flex;
+            flex-direction: column;
+
+            &__title
+            {
+                text-align: center;
+                font-size: 30px;
+                font-family: Roboto-Medium;
+                margin-bottom: 1.4%;
+            }
+
+            &__input
+            {
+                width: 100%;
+                height: 40px;
+
+                padding-left: 12px;
+                font-size: 23px;
+
+                background-color: $adminModalInputBG;
+                color: $adminModalInputText;
+
+                border-radius: 15px;
+                box-sizing: border-box;
+            }
+        }
+    }
+    &__button
+    {
+        cursor: pointer;
+        width: 80%;
+        height: 60px;
+
+        margin-top: 22%;
+
+        color: $adminModalButtonText;
+        background-color: transparent;
+        border: 3px solid $adminModalButtonBorder;
+
+        transition: .6s;
+        
+        font-size: 26px;
+        font-family: Roboto-Medium;
+        border-radius: 15px;
+
+        &:hover
+        {
+            transform: scale(1.04);
+        }
+    }
+}

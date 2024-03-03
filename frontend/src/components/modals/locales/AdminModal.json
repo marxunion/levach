@@ -1,0 +1,22 @@
+{
+    "RU":
+    {
+        "formTitle": "Вход в админ панель",
+        "formTitleLogin": "Логин",
+        "formTitlePassword": "Пароль",
+        "formButton": "Войти",
+
+        "userLoginPlaceholder": "admin",
+        "userPasswordPlaceholder": "****"
+    },
+    "EN":
+    {
+        "formTitle": "Admin Panel Login",
+        "formTitleLogin": "Nickname",
+        "formTitlePassword": "Password",
+        "formButton": "Login",
+
+        "userLoginPlaceholder": "admin",
+        "userPasswordPlaceholder": "****"
+    }
+}

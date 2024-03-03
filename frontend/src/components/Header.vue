@@ -24,7 +24,7 @@
                     </div>
                     <div class="header__bar__subbar">
                         <a href="#/article/new" class="header__bar__subbar__createarticle">{{ langData['createArticle'] }}</a>
-                        <DropDown :options="LangDataHandler.langs" :default="LangDataHandler.currentLanguage.value" class="header__bar__subbar__select" @input="LangDataHandler.changeLanguage" />
+                        <DropDown :options="LangDataHandler.langs" :default="LangDataHandler.currentLanguage.value" class="header__bar__subbar__select" @input="LangDataHandler.changeLanguage" @input-on-mounted="LangDataHandler.changeLanguage"/>
                         <a class="header__bar__subbar__searchmobile">
                             <div class="header__bar__subbar__searchmobile__icon"></div>
                         </a>

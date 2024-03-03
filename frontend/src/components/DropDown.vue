@@ -3,7 +3,7 @@ import "./scss/DropDown.scss";
 import { ref, onMounted, defineProps, defineEmits, watch } from "vue";
 
 const props = defineProps(["options", "default", "tabindex"]);
-const emits = defineEmits(["input"]);
+const emits = defineEmits(["inputOnMounted","input","inputIndex"]);
 
 
 const selectedIndex = ref(0);
@@ -19,7 +19,7 @@ const open = ref(false);
 
 onMounted(() => 
 {
-  	emits("input", selected.value);
+  	emits("inputOnMounted", selected.value);
 });
 
 </script>
@@ -38,6 +38,7 @@ onMounted(() =>
 					selected = option;
 					selectedIndex = i;
 					open = false;
+					$emit('inputIndex', i as number);
 					$emit('input', option as string);">
 				{{ option }}
 			</div>      

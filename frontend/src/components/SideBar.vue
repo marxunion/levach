@@ -5,6 +5,9 @@
 
     import { JsonData } from '../ts/JsonHandler';
 
+    import { openModal } from "jenesius-vue-modal";
+    import AdminModal from "./../components/modals/AdminModal.vue";
+
     import langsData from './locales/SideBar.json';
 
     const langData = LangDataHandler.initLangDataHandler("SideBar", langsData).langData;
@@ -22,8 +25,7 @@
     [
         { uri: '/faq', text: (langData.value['linksfooter'] as JsonData)['aboutProjectAndFAQ'] },
         { uri: '/rules', text: (langData.value['linksfooter'] as JsonData)['rules'], },
-        { uri: '/sponsoring', text: (langData.value['linksfooter'] as JsonData)['sponsoring'] },
-        { uri: '/admin', text: (langData.value['linksfooter'] as JsonData)['admin'] },
+        { uri: '/sponsoring', text: (langData.value['linksfooter'] as JsonData)['sponsoring'] }
     ]);
     
     const isCurrentLink = (checkUris: string[]) => 
@@ -35,13 +37,11 @@
 <template>
     <aside class="sidebar">
         <div class="sidebar__links">
-            <a
-                class="sidebar__links__link"
+            <a class="sidebar__links__link"
                 v-for="link in links"
-                :href="`#${link.uri}`"
-                :class="{ active: isCurrentLink(link.checkUris) }"
-            >
-            {{ link.text }}
+                    :href="`#${link.uri}`"
+                    :class="{ active: isCurrentLink(link.checkUris) }">
+                {{ link.text }}
             </a>
         </div>
         <div class="sidebar__linksfooter">
@@ -52,6 +52,9 @@
             >
             {{ link.text }}
             </a>
+            <p class="sidebar__linksfooter__link" @click="openModal(AdminModal)">
+                {{ (langData['linksfooter'] as JsonData)['admin'] }}
+            </p>
         </div>
     </aside>
 </template>
