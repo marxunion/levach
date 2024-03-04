@@ -6,8 +6,12 @@
     import { MdPreview, config } from 'md-editor-v3';
     import 'md-editor-v3/lib/style.css';
 
+    import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
+
+    import langsData from "./locales/articlesEditorially.json";
     import { LangDataHandler } from "./../../ts/LangDataHandler";
-	import langsData from "./locales/articlesEditorially.json";
+
+    import './../../libs/font_2605852_prouiefeic';
 
 	const langData = LangDataHandler.initLangDataHandler("articlesEditorially", langsData).langData;
 
@@ -25,85 +29,92 @@
     const articles = ref([
         {
             title: "Test Editorially Article",
+
             time: "10:36  19.09.2022",
+            tags: "#технологии #айфон #ios",
             versionsIds: 
             [
-                1,
-                2,
-                3,
                 4,
-                5
+                3,
+                2,
+                1
             ],
+            currentVersionIdIndex: 5,
             statistics: 
             {   
-                likes: 60,
-                dislikes: 11,
-                comments: 20
+                likes: 1200,
+                dislikes: 110,
+                comments: 210
             },
-            currentVersionIdIndex: 5,
-            data: "# Test Editorially Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n"
+            
+            currentVersionText: "# Test Editorially Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n"
         },
         {
             title: "Test Editorially Article 2",
+
             time: "08:32  21.09.2022",
+            tags: "#технологии #айфон #ios",
             versionsIds: 
             [
-                1,
+                3,
                 2,
-                3
+                1
             ],
             statistics: 
             {
-                likes: 48,
-                dislikes: 6,
-                comments: 4
+                likes: 4800,
+                dislikes: 600,
+                comments: 40
             },
             currentVersionIdIndex: 3,
-            data: "# Test Editorially Article 2\n## 🤗 Code\n\n```vue\n<template>\n  <MdEditor v-model=\"text\" />\n</template>\n\n\<script setup\>\nimport { ref } from 'vue';\nimport { MdEditor } from 'md-editor-v3';\nimport 'md-editor-v3/lib/style.css';\n\nconst text = ref('Hello Editor!');\n\</script\>\n```"
+            currentVersionText: "# Test Editorially Article 2\n## 🤗 Code\n\n```vue\n<template>\n  <MdEditor v-model=\"text\" />\n</template>\n\n\<script setup\>\nimport { ref } from 'vue';\nimport { MdEditor } from 'md-editor-v3';\nimport 'md-editor-v3/lib/style.css';\n\nconst text = ref('Hello Editor!');\n\</script\>\n```"
         },
         {
             title: "Test Editorially Article 3",
+
             time: "01:33  20.09.2022",
+            tags: "#технологии #айфон #ios",
             versionsIds: 
             [
-                1,
-                2,
-                3,
-                4,
-                5,
+                7,
                 6,
-                7
+                5,
+                4,
+                3,
+                2,
+                1
             ],
             statistics: 
             {
-                likes: 39,
-                dislikes: 12,
-                comments: 5
+                likes: 39000000,
+                dislikes: 120000,
+                comments: 50000
             },
             currentVersionIdIndex: 7,
-            data: "# Test Editorially Article 3 \n 🖨 Text\n\nThe Old Man and the Sea served to reinvigorate Hemingway's literary reputation and prompted a reexamination of his entire body of work.\n\n## 📈 Table\n\n| nickname | from             |\n| -------- | ---------------- |\n| zhijian  | ChongQing, China |\n\n## 📏 Formula\n\nInline: $x+y^{2x}$\n\n$$\n\\sqrt[3]{x}\n$$\n\n## 🧬 Diagram\n\n```mermaid\nflowchart TD\n  Start --> Stop\n```\n\n## 🪄 Alert\n\n!!! note Supported Types\n\nnote、abstract、info、tip、success、question、warning、failure、danger、bug、example、quote、hint、caution、error、attention\n\n!!!\n\n## ☘️ em..."
+            currentVersionText: "# Test Editorially Article 3 \n 🖨 Text\n\nThe Old Man and the Sea served to reinvigorate Hemingway's literary reputation and prompted a reexamination of his entire body of work.\n\n## 📈 Table\n\n| nickname | from             |\n| -------- | ---------------- |\n| zhijian  | ChongQing, China |\n\n## 📏 Formula\n\nInline: $x+y^{2x}$\n\n$$\n\\sqrt[3]{x}\n$$\n\n## 🧬 Diagram\n\n```mermaid\nflowchart TD\n  Start --> Stop\n```\n\n## 🪄 Alert\n\n!!! note Supported Types\n\nnote、abstract、info、tip、success、question、warning、failure、danger、bug、example、quote、hint、caution、error、attention\n\n!!!\n\n## ☘️ em..."
         },
         {
             title: "Test Editorially Article 4",
+
             time: "14:31  20.09.2022",
+            tags: "#технологии #айфон #ios",
             versionsIds: 
             [
-                1,
-                2,
-                3,
-                4,
-                5,
                 6,
-                7
+                5,
+                4,
+                3,
+                2,
+                1
             ],
             statistics: 
             {
-                likes: 39,
-                dislikes: 12,
-                comments: 5
+                likes: 39000,
+                dislikes: 1200,
+                comments: 500
             },
             currentVersionIdIndex: 7,
-            data: "# Test Editorially Article 4 \n ![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)"
+            currentVersionText: "# Test Editorially Article 4 \n ![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)"
         }
     ]);
 
@@ -144,21 +155,22 @@
 		</div>
 		<article class="main__article" v-for="article in articles">
             <p class="main__article__titleTime">{{ article['time'] }}</p>
-            <MdPreview class="main__article__preview" :modelValue="article['data']" :language="previewState.language"/>
+            <MdPreview class="main__article__preview" :modelValue="article['currentVersionText']" :language="previewState.language"/>
+            <p class="main__article__tags">{{ article['tags'] }}</p>
             <div class="main__article__buttons">
                 <a href="#/article/testarticle" class="main__article__buttons__button">{{ langData['readAllButton'] }}</a>
             </div>
             <div class="main__article__reactions">
                 <div class="main__article__reactions__statistics">
                     <img src="../../assets/img/article/like.svg" alt="Likes: " class="main__article__reactions__statistics__icon likeIcon">
-                    <p class="main__article__reactions__statistics__title likeCounter">{{ article['statistics']['likes'] }}</p>
+                    <p class="main__article__reactions__statistics__title likeCounter">{{ abbreviateNumber(article['statistics']['likes']) }}</p>
                     <img src="../../assets/img/article/dislike.svg" alt="Dislikes: " class="main__article__reactions__statistics__icon dislikeIcon">
-                    <p class="main__article__reactions__statistics__title dislikeCounter">{{ article['statistics']['dislikes'] }}</p>
+                    <p class="main__article__reactions__statistics__title dislikeCounter">{{ abbreviateNumber(article['statistics']['dislikes']) }}</p>
                     <img src="../../assets/img/article/Share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                 </div>
                 <div class="main__article__reactions__comments">
                     <img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
-                    <p class="main__article__reactions__comments__title commentsCounter">{{ article['statistics']['comments'] }}</p>
+                    <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article['statistics']['comments']) }}</p>
                 </div>
             </div>
             <DropDown 

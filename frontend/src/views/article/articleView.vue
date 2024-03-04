@@ -7,46 +7,46 @@
 	import { MdPreview, MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
-	import langsData from "./locales/articleView.json";
+	import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
 
+	import langsData from "./locales/articleView.json";
 	import { LangDataHandler } from "./../../ts/LangDataHandler";
 	
 	import './../../libs/font_2605852_prouiefeic';
 
 	const langData = LangDataHandler.initLangDataHandler("articleView", langsData).langData;
 
-	const texts = [
-		"# Version 1 \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n###",
-		
-		"# Version 2 \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n",
-		
-		"# Version 3 \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n🤗 Code\n\n```vue\n<template>\n  <MdEditor v-model=\"text\" />\n</template>\n\n\<script setup\>\nimport { ref } from 'vue';\nimport { MdEditor } from 'md-editor-v3';\nimport 'md-editor-v3/lib/style.css';\n\nconst text = ref('Hello Editor!');\n\</script\>\n```\n\n## 🖨 Text\n\nThe Old Man and the Sea served to reinvigorate Hemingway's literary reputation and prompted a reexamination of his entire body of work.\n\n## ",
-		
-		"# Version 4 \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n🤗 Code\n\n```vue\n<template>\n  <MdEditor v-model=\"text\" />\n</template>\n\n\<script setup\>\nimport { ref } from 'vue';\nimport { MdEditor } from 'md-editor-v3';\nimport 'md-editor-v3/lib/style.css';\n\nconst text = ref('Hello Editor!');\n\</script\>\n```\n\n## 🖨 Text\n\nThe Old Man and the Sea served to reinvigorate Hemingway's literary reputation and prompted a reexamination of his entire body of work.\n\n## 📈 Table\n\n| nickname | from             |\n| -------- | ---------------- |\n| zhijian  | ChongQing, China |\n\n## 📏 Formula\n\nInline: $x+y^{2x}$\n\n$$\n\\sqrt[3]{x}\n$$\n\n## 🧬 Diagram\n\n```mermaid\nflowchart TD\n  Start --> Stop\n```\n\n## 🪄 Alert\n\n!!! note Supported Types\n\nnote、abstract、info、tip、success、question、warning、failure、danger、bug、example、quote、hint、caution、error、attention\n\n!!!\n\n## ☘️ em..."
-	]
+	const articleInfo = 
+	reactive({
+		title: "Test Editorially Article",
 
-	
-	// Versions
+		time: "10:36  19.09.2022",
+		tags: "#технологии #айфон #ios",
 
-	const currentVersionIdIndex = ref(0);
-
-	let versionsIds = ref([
-		1,
-		2,
-		3,
-		4
-	].reverse())
-
-	const versionsTexts = computed(
-		() => versionsIds.value.map((version) => langData.value['versionText'] as string + version)
-	);
-	
-	const changeVersion = (version : number) => 
-	{
-		currentVersionIdIndex.value = version;
-	};
-
-
+		versionsIds: 
+		[
+			4,
+			3,
+			2,
+			1
+		],
+		currentVersionIdIndex: 1,
+		statistics: 
+        {
+            likes: 48,
+            dislikes: 6,
+            comments: 4
+        },
+		texts: [
+			"# Test Editorially Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n###",
+			
+			"# Test Editorially Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n",
+			
+			"# Test Editorially Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n🤗 Code\n\n```vue\n<template>\n  <MdEditor v-model=\"text\" />\n</template>\n\n\<script setup\>\nimport { ref } from 'vue';\nimport { MdEditor } from 'md-editor-v3';\nimport 'md-editor-v3/lib/style.css';\n\nconst text = ref('Hello Editor!');\n\</script\>\n```\n\n## 🖨 Text\n\nThe Old Man and the Sea served to reinvigorate Hemingway's literary reputation and prompted a reexamination of his entire body of work.\n\n## ",
+			
+			"# Test Editorially Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n🤗 Code\n\n```vue\n<template>\n  <MdEditor v-model=\"text\" />\n</template>\n\n\<script setup\>\nimport { ref } from 'vue';\nimport { MdEditor } from 'md-editor-v3';\nimport 'md-editor-v3/lib/style.css';\n\nconst text = ref('Hello Editor!');\n\</script\>\n```\n\n## 🖨 Text\n\nThe Old Man and the Sea served to reinvigorate Hemingway's literary reputation and prompted a reexamination of his entire body of work.\n\n## 📈 Table\n\n| nickname | from             |\n| -------- | ---------------- |\n| zhijian  | ChongQing, China |\n\n## 📏 Formula\n\nInline: $x+y^{2x}$\n\n$$\n\\sqrt[3]{x}\n$$\n\n## 🧬 Diagram\n\n```mermaid\nflowchart TD\n  Start --> Stop\n```\n\n## 🪄 Alert\n\n!!! note Supported Types\n\nnote、abstract、info、tip、success、question、warning、failure、danger、bug、example、quote、hint、caution、error、attention\n\n!!!\n\n## ☘️ em..."
+		]
+	});
 	// Preview
 
 	config(
@@ -66,11 +66,6 @@
 		language: LangDataHandler.currentLanguage.value
 	});
 
-	
-	const text = computed(() => 
-	{
-		return texts[versionsIds.value[currentVersionIdIndex.value]-1];
-	});
 	
 	// Comments 
 
@@ -130,23 +125,27 @@
 	<main class="main">
 		<article class="main__article">
 			<div class="main__article__previewContainer">
-				<p class="main__article__previewContainer__titleTime">10:36  19.09.2022</p>
-				<MdPreview class="main__article__previewContainer__preview" :modelValue="text" :language="previewState.language"/>
-				<p class="main__article__previewContainer__tags">#технологии #айфон #ios</p>
+				<p class="main__article__previewContainer__titleTime">{{ articleInfo['time'] }}</p>
+				<MdPreview class="main__article__previewContainer__preview" :modelValue="articleInfo.texts[articleInfo.versionsIds[articleInfo.currentVersionIdIndex]-1]" :language="previewState.language"/>
+				<p class="main__article__previewContainer__tags">{{ articleInfo['tags'] }}</p>
 				<div class="main__article__previewContainer__reactions">
 					<div class="main__article__previewContainer__reactions__statistics">
 						<img src="../../assets/img/article/like.svg" alt="Likes: " class="main__article__previewContainer__reactions__statistics__icon likeIcon">
-						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">43</p>
+						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(articleInfo['statistics']['likes']) }}</p>
 						<img src="../../assets/img/article/dislike.svg" alt="Dislikes: " class="main__article__previewContainer__reactions__statistics__icon dislikeIcon">
-						<p class="main__article__previewContainer__reactions__statistics__title dislikeCounter">11</p>
+						<p class="main__article__previewContainer__reactions__statistics__title dislikeCounter">{{ abbreviateNumber(articleInfo['statistics']['dislikes']) }}</p>
 						<img src="../../assets/img/article/Share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
 					</div>
 					<div class="main__article__previewContainer__reactions__comments">
 						<img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__previewContainer__reactions__comments__icon commentIcon">
-						<p class="main__article__previewContainer__reactions__comments__title commentsCounter">20</p>
+						<p class="main__article__previewContainer__reactions__comments__title commentsCounter">{{ abbreviateNumber(articleInfo['statistics']['comments']) }}</p>
 					</div>
 				</div>
-				<DropDown :options="versionsTexts" :default="versionsTexts[currentVersionIdIndex]" class="main__article__previewContainer__selectVersion" @inputIndex="changeVersion" />
+				<DropDown 
+				:options="articleInfo.versionsIds.map((versionsId) => (langData['versionText'] as string) + versionsId)" 
+				:default="(langData['versionText'] as string) + articleInfo.versionsIds[articleInfo.currentVersionIdIndex]" 
+				class="main__article__previewContainer__selectVersion" 
+				@inputIndex="(version : number) => articleInfo['currentVersionIdIndex'] = version" />
 			</div>
 			<div class="main__article__comments">
 				<div class="main__article__comments__header">
