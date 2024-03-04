@@ -1,6 +1,6 @@
 # Levach
 
-![](https://github.com/marxunion/levach/blob/main/frontend/src/assets/img/logo.png?raw=true)
+![](https://github.com/marxunion/levach/blob/main/frontend/src/assets/img/logo/logo.png?raw=true)
 
 A hybrid media project focused on designing a better future through scientific discussion 
 
