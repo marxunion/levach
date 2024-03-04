@@ -13,24 +13,25 @@
         align-items: center;
         flex-direction: column;
 
+        
+        border-radius: 15px;
+
         position: relative;
         &__previewContainer
         {
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 620px;
+
+            background-color: $articleViewArticleBG;
 
             box-sizing: border-box;
             border-radius: 15px;
 
+
             position: relative;
-            
-            &__preview
-            {
-                padding-top: 0.8%;
-                width: 100%;
-                height: 100%;
-                border-radius: 15px;
-            }
 
             &__titleTime
             {
@@ -43,6 +44,70 @@
                 font-family: Roboto-Regular;
                 color: $articleViewArticleTitleTime;
                 z-index: 2;
+            }
+
+            &__preview
+            {
+                padding-top: 0.8%;
+                width: 100%;
+                height: 100%;
+                border-radius: 15px;
+            }
+
+            &__tags
+            {
+                width: 95%;
+                font-size: 20px;
+                color: $articleViewTagsText;
+            }
+
+            &__reactions
+            {
+                width: 94%;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                &__statistics
+                {
+                    display: flex;
+                    align-items: center;
+                    &__title
+                    {
+                        margin-left: 10px;
+                        margin-right: 10px;
+                        font-size: 20px;
+                        font-family: Roboto-Regular;
+                    }
+                    &__icon
+                    {
+                        cursor: pointer;
+                    }
+                    & .dislikeIcon
+                    {
+                        margin-left: 17px;
+                    }
+                    & .shareIcon
+                    {
+                        margin-left: 3px;
+                    }
+                }
+                &__comments
+                {
+                    display: flex;
+                    align-items: center;
+                    &__icon
+                    {
+                        cursor: pointer;
+                    }
+                    &__title
+                    {
+                        margin-left: 8px;
+                        font-size: 20px;
+                        font-family: Roboto-Regular;
+                    }
+                }
             }
 
             &__selectVersion

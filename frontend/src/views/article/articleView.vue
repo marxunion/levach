@@ -27,6 +27,7 @@
 
 	
 	// Versions
+
 	const currentVersionIdIndex = ref(0);
 
 	let versionsIds = ref([
@@ -42,8 +43,6 @@
 	
 	const changeVersion = (version : number) => 
 	{
-		console.log(version);
-		
 		currentVersionIdIndex.value = version;
 	};
 
@@ -82,8 +81,6 @@
 
 	const onChangeSortType = (version : number) => 
 	{
-		console.log(version);
-		
 		currentSortType.value = version;
 	};
 
@@ -135,6 +132,20 @@
 			<div class="main__article__previewContainer">
 				<p class="main__article__previewContainer__titleTime">10:36  19.09.2022</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="text" :language="previewState.language"/>
+				<p class="main__article__previewContainer__tags">#технологии #айфон #ios</p>
+				<div class="main__article__previewContainer__reactions">
+					<div class="main__article__previewContainer__reactions__statistics">
+						<img src="../../assets/img/article/like.svg" alt="Likes: " class="main__article__previewContainer__reactions__statistics__icon likeIcon">
+						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">43</p>
+						<img src="../../assets/img/article/dislike.svg" alt="Dislikes: " class="main__article__previewContainer__reactions__statistics__icon dislikeIcon">
+						<p class="main__article__previewContainer__reactions__statistics__title dislikeCounter">11</p>
+						<img src="../../assets/img/article/Share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
+					</div>
+					<div class="main__article__previewContainer__reactions__comments">
+						<img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__previewContainer__reactions__comments__icon commentIcon">
+						<p class="main__article__previewContainer__reactions__comments__title commentsCounter">20</p>
+					</div>
+				</div>
 				<DropDown :options="versionsTexts" :default="versionsTexts[currentVersionIdIndex]" class="main__article__previewContainer__selectVersion" @inputIndex="changeVersion" />
 			</div>
 			<div class="main__article__comments">
