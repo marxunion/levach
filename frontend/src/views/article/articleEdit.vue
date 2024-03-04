@@ -22,6 +22,8 @@
 
 	const langData = LangDataHandler.initLangDataHandler("articleEdit", langsData).langData;
 
+
+	//TODO Refactor this code later
 	// Statistics
 	interface Statistic 
 	{
@@ -61,6 +63,8 @@
 			acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
 		})
 	);
+	
+
 
 	const texts = 
 	[

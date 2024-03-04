@@ -8,20 +8,13 @@
     height: 93px;
     z-index: 20;
     position: absolute;
-    display: flex;
+    display: grid;
+    grid-template-columns: 11% 89%;
     background-color: $headerBG;
-    justify-content: center;
-    &__container
-    {
-        display: flex;
-        justify-content: space-between;
-        width: 94.6%;
-        height: 100%;
-        margin-left: 3%;
-    }
+    justify-items: center;
     &__logo
     {
-        width: 7%;
+        height: 100%;
         transition: .5s;
         &:hover{
             transform: scale(1.03);
@@ -29,20 +22,14 @@
     }
     &__bar 
     {
-        display: flex;
+        display: grid;
+        grid-template-columns: 79% 20%;
+        align-items: center;
+        width: 100%;
         height: 100%;
-        width: 93%;
-        &__container
-        {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            justify-content: space-between;
-            align-items: center;
-        }
         &__search 
         {
-            width: 78%;
+            width: 97%;
             height: 45px;
             position: relative;
             &__input
@@ -66,9 +53,11 @@
         }
         &__subbar
         {
+            
+            height: 100%;
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            width: 20%;
             &__createarticle
             {
                 font-family: Roboto-Regular;
