@@ -10,11 +10,11 @@
     const langData = ref(LangDataHandler.initLangDataHandler("Header", langsData).langData);
 </script>
 
-<template>    
+<template>
     <header class="header lock_padding">
         <div class="header__container">
             <a class="header__logo" href="#/">
-                <img src="../assets/img/logo.png" alt="LOGO" class="header__logo__icon">
+                <img src="../assets/img/logo/logo.png" alt="LOGO" class="header__logo__icon">
             </a>
             <div class="header__bar">
                 <div class="header__bar__container">

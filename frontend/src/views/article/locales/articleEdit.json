@@ -27,39 +27,6 @@
         "statistics": 
         [
             {
-                "statisticName": "views",
-                "data": 
-                {
-                    "titleWithEnds": 
-                    {
-                        "title": "просмотр",
-                        "ends": 
-                        [
-                            {
-                                "end": "ов",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": 0
-                            },
-                            {
-                                "end": "",
-                                "endOffsetStart": 1,
-                                "endOffsetEnd": 1
-                            },
-                            {
-                                "end": "а",
-                                "endOffsetStart": 2,
-                                "endOffsetEnd": 3
-                            },
-                            {
-                                "end": "ов",
-                                "endOffsetStart": 4,
-                                "endOffsetEnd": -1
-                            }
-                        ]
-                    }
-                }
-            },
-            {
                 "statisticName": "likes",
                 "data": 
                 {
@@ -271,34 +238,6 @@
 
         "statistics": 
         [
-            {
-                "statisticName": "views",
-                "data": 
-                {
-                    "titleWithEnds": 
-                    {
-                        "title": "view",
-                        "ends": 
-                        [
-                            {
-                                "end": "s",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": 0
-                            },
-                            {
-                                "end": "",
-                                "endOffsetStart": 1,
-                                "endOffsetEnd": 1
-                            },
-                            {
-                                "end": "s",
-                                "endOffsetStart": 2,
-                                "endOffsetEnd": -1
-                            }
-                        ]
-                    }
-                }
-            },
             {
                 "statisticName": "likes",
                 "data": 

@@ -57,7 +57,7 @@
             &__button 
             {
                 position: absolute;
-                background: url('../../assets/img/searchicon.svg') no-repeat;
+                background: url('../../assets/img/header/searchicon.svg') no-repeat;
                 width: 30px;
                 height: 34px;
                 top: 7.5px;
@@ -106,7 +106,7 @@
                         width: 16px;
                         height: 10px;
                         content: "";
-                        background: url("./../../assets/img/arrowdown/white.svg") no-repeat;
+                        background: url("./../../assets/img/dropdown/arrowdown/white.svg") no-repeat;
                         top: 16px !important;
                         right: 0 !important;
                     }

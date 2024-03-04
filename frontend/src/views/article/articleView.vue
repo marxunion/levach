@@ -86,8 +86,8 @@
 		
 		currentSortType.value = version;
 	};
-	// NewComment
 
+	// NewComment
 	let newCommentEditorState = reactive(
 	{
 		text: "",
@@ -127,9 +127,6 @@
 
 		callback(res.map((item) => item.data.url));
 	};
-
-
-	
 </script>
 
 <template>
@@ -151,7 +148,7 @@
 
 				<div class="main__article__comments__newComment">
 					<MdEditor class="main__article__comments__newComment__editor" v-model="(newCommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImg" :language="newCommentEditorState.language" noIconfont/>
-					<img src="./../../assets/img/sendCommentButton.svg" alt="Send Button" class="main__article__comments__newComment__sendButton">
+					<img src="./../../assets/img/article/sendCommentButton.svg" alt="Send Button" class="main__article__comments__newComment__sendButton">
 				</div>
 			</div>
 		</article>

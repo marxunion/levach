@@ -36,12 +36,13 @@ const routes: RouteRecordRaw[] =
     {
         path: '/articles',
         children: [
-          { path: 'editorially', component: articlesEditorially },
-          { path: 'approvedEditorially', component: articlesApprovedEditorially },
-          { path: 'abyss', component: articlesAbyss },
-        ], 
+            { path: '', component: articlesEditorially },
+            { path: 'editorially', component: articlesEditorially },
+            { path: 'approvedEditorially', component: articlesApprovedEditorially },
+            { path: 'abyss', component: articlesAbyss },
+        ],
+        
     },
-
     {
         path: '/rules',
         component: Rules,

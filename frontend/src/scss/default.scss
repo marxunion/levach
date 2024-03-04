@@ -14,6 +14,14 @@
 	overflow: hidden;
 }
 
+#md-editor-v3
+{
+	* 
+	{
+		overflow: hidden;
+	}
+}
+
 .widget__modal-container__item
 {
     z-index: 20;
@@ -28,15 +36,15 @@ main
 	justify-content: center;
 }
 
-.ps {
+.ps 
+{
 	width: 100vw;
 	height: 100vh;
 	@include place-items-center;
-}
-
-.ps__rail-y
-{
-	z-index: 30;
+	&__rail-y
+	{
+		z-index: 30;
+	}
 }
 
 .pageOpacity
@@ -50,6 +58,7 @@ main
 		opacity: 0;
   	}
 }
+
 h1, p, a
 {
 	padding: 0;
@@ -76,7 +85,8 @@ input, button
 	margin: 0;
 }
 
-img::selection {
+img::selection 
+{
     background: transparent;
 }
 
@@ -91,6 +101,7 @@ img::selection {
 	width: 100%;
 	height: 100%;
 }
+
 body 
 {
 	margin: 0;

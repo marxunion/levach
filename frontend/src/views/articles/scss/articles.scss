@@ -1,0 +1,166 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.main
+{
+    flex-direction: column;
+    align-items: center;
+    &__header
+    {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 60%;
+        position: relative;
+        &__title
+        {
+            font-size: 21px;
+            font-family: Roboto-Regular;
+        }
+        &__sort
+        {
+            display: flex;
+            align-items: center;
+            &__title
+            {
+                font-size: 20px;
+                font-family: Roboto-Regular;
+
+                margin-right: 8px;
+            }
+            &__select
+            {
+                width: 240px;
+            }
+        }
+    }
+    &__article
+    {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        width: 60%;
+        margin-top: 1.4%;
+        
+        
+        background-color: $articlesArticleBG;
+
+        border-radius: 15px;
+        
+        &__titleTime
+        {
+            position: absolute;
+            top: 17px;
+            left: 17px;
+            
+            z-index: 2;
+
+            font-size: 20px;
+            font-family: Roboto-Regular;
+
+            color: $articlesArticleTitleTime;
+
+        }
+
+        &__preview
+        {
+            max-height: 700px;
+
+            border-radius: 15px;
+            * 
+            {
+                overflow: hidden;
+            }
+        }
+
+        &__buttons
+        {
+            display: grid;
+            width: 95%;
+            
+            &__button
+            {
+                display: block;
+                width: 220px;
+                height: 40px;
+                justify-self: end;
+
+                border-radius: 15px;
+                font-size: 20px;
+                background-color: transparent;
+
+                text-align: center;
+                line-height: 40px;
+                
+                color: $articlesReadAllButtonText;
+                border: 2px solid $articlesReadAllButtonBorder;
+                transition: .4s;
+                transform: scale(1.00);
+                &:hover
+                {
+                    transform: scale(1.05);
+                }
+            }
+        }
+        &__reactions
+        {
+            width: 94%;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            &__statistics
+            {
+                display: flex;
+                align-items: center;
+                &__title
+                {
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    font-size: 20px;
+                    font-family: Roboto-Regular;
+                }
+                &__icon
+                {
+                    cursor: pointer;
+                }
+                & .dislikeIcon
+                {
+                    margin-left: 17px;
+                }
+                & .shareIcon
+                {
+                    margin-left: 3px;
+                }
+            }
+            &__comments
+            {
+                display: flex;
+                align-items: center;
+                &__icon
+                {
+                    cursor: pointer;
+                }
+                &__title
+                {
+                    margin-left: 8px;
+                    font-size: 20px;
+                    font-family: Roboto-Regular;
+                }
+            }
+        }
+
+        &__select
+        {
+            position: absolute !important;
+            top: 15px !important;
+            right: 15px !important;
+           
+            width: 240px !important;
+        }
+    }
+}

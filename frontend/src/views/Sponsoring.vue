@@ -12,67 +12,67 @@
 		<div class="main__blockgrid">
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/crypto/BTC.png" alt="BTC">
+					<img src="../assets/img/sponsoring/crypto/BTC.png" alt="BTC">
 				</div>
 				<p class="main__blockgrid__block__title">Bitcoin</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/crypto/XMR.png" alt="XMR">
+					<img src="../assets/img/sponsoring/crypto/XMR.png" alt="XMR">
 				</div>
 				<p class="main__blockgrid__block__title">Monero</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/crypto/ETH.png" alt="ETH" class="main__blockgrid__block__img">
+					<img src="../assets/img/sponsoring/crypto/ETH.png" alt="ETH" class="main__blockgrid__block__img">
 				</div>
 				<p class="main__blockgrid__block__title">Ethereum</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/crypto/ETC.png" alt="ETC" class="main__blockgrid__block__img">
+					<img src="../assets/img/sponsoring/crypto/ETC.png" alt="ETC" class="main__blockgrid__block__img">
 				</div>
 				<p class="main__blockgrid__block__title">Ethereum Classic</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/crypto/DASH.png" alt="DASH">
+					<img src="../assets/img/sponsoring/crypto/DASH.png" alt="DASH">
 				</div>
 				<p class="main__blockgrid__block__title">Dash</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/crypto/BCH.png" alt="BCH">
+					<img src="../assets/img/sponsoring/crypto/BCH.png" alt="BCH">
 				</div>
 				<p class="main__blockgrid__block__title">Bitcoin Cash</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/crypto/DOGE.png" alt="DOGE">
+					<img src="../assets/img/sponsoring/crypto/DOGE.png" alt="DOGE">
 				</div>
 				<p class="main__blockgrid__block__title">Dogecoin</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/crypto/LTC.png" alt="LTC">
+					<img src="../assets/img/sponsoring/crypto/LTC.png" alt="LTC">
 				</div>
 				<p class="main__blockgrid__block__title">Litecoin</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/crypto/BNB.png" alt="BNB">
+					<img src="../assets/img/sponsoring/crypto/BNB.png" alt="BNB">
 				</div>
 				<p class="main__blockgrid__block__title">BNB</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/crypto/TRX.png" alt="TRX">
+					<img src="../assets/img/sponsoring/crypto/TRX.png" alt="TRX">
 				</div>
 				<p class="main__blockgrid__block__title">Tron</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/crypto/USDT.png" alt="USDT">
+					<img src="../assets/img/sponsoring/crypto/USDT.png" alt="USDT">
 				</div>
 				<p class="main__blockgrid__block__title">USD Tether</p>
 			</div>
@@ -81,19 +81,19 @@
 		<div class="main__blockgrid">
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/cards/visa.png" alt="BNB">
+					<img src="../assets/img/sponsoring/cards/visa.png" alt="BNB">
 				</div>
 				<p class="main__blockgrid__block__title">Visa</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/cards/mastercard.svg" alt="MasterCard">
+					<img src="../assets/img/sponsoring/cards/mastercard.svg" alt="MasterCard">
 				</div>
 				<p class="main__blockgrid__block__title">MasterCard</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/cards/mir.svg" alt="Mir">
+					<img src="../assets/img/sponsoring/cards/mir.svg" alt="Mir">
 				</div>
 				<p class="main__blockgrid__block__title">{{ langData['cardsMir'] }}</p>
 			</div>
@@ -102,19 +102,19 @@
 		<div class="main__blockgrid">
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/wallets/paypal.svg" alt="PayPal">
+					<img src="../assets/img/sponsoring/wallets/paypal.svg" alt="PayPal">
 				</div>
 				<p class="main__blockgrid__block__title">PayPal</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/wallets/payeer.svg" alt="Payeer">
+					<img src="../assets/img/sponsoring/wallets/payeer.svg" alt="Payeer">
 				</div>
 				<p class="main__blockgrid__block__title">Payeer</p>
 			</div>
 			<div class="main__blockgrid__block">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/wallets/yoomoney.svg" alt="YooMoney">
+					<img src="../assets/img/sponsoring/wallets/yoomoney.svg" alt="YooMoney">
 				</div>
 				<p class="main__blockgrid__block__title">YooMoney</p>
 			</div>
