@@ -1,0 +1,48 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.form
+{
+    width: 90%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $SearchMobileModalBG;
+    border-radius: 20px;
+    position: absolute;
+    top: 120px;
+
+    &__search
+    {
+        width: 95%;
+        position: relative;
+        height: 45px;
+        &__input
+        {
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+            font-size: 24px;
+            padding-left: 20px;
+            background-color: $SearchMobileModalInputBG;
+            box-sizing: border-box;
+
+            color: $SearchMobileModalInputText;
+
+            &::placeholder
+            {
+                color: $SearchMobileModalInputPlaceholderText;
+            }
+        }
+        &__button 
+        {
+            position: absolute;
+            background: url('../../../assets/img/header/searchicon.svg') no-repeat;
+            width: 30px;
+            height: 34px;
+            top: 6px;
+            right: 14px;
+        }
+    }
+}

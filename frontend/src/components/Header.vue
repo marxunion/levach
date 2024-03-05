@@ -4,6 +4,9 @@
 
     import "./scss/Header.scss"
 
+    import { openModal } from "jenesius-vue-modal";
+    import SearchMobileModal from "./../components/modals/SearchMobileModal.vue";
+
     import { LangDataHandler } from "./../ts/LangDataHandler";
     import langsData from "./locales/Header.json";
     
@@ -22,14 +25,14 @@
         <div class="header__bar">
             <div class="header__bar__search">
                 <input :placeholder="(langData['search'] as string)" type="text" class="header__bar__search__input">
-                <a href="/" class="header__bar__search__button"></a>
+                <a href="#/" class="header__bar__search__button"></a>
             </div>
             <div class="header__bar__subbar">
                 <a href="#/article/new" class="header__bar__subbar__createarticle">{{ langData['createArticle'] }}</a>
                 <DropDown :options="LangDataHandler.langs" :default="LangDataHandler.currentLanguage.value" class="header__bar__subbar__select" @input="LangDataHandler.changeLanguage" @input-on-mounted="LangDataHandler.changeLanguage"/>
-                <a href="#/articles/" class="header__bar__subbar__searchmobile">
+                <p class="header__bar__subbar__searchmobile" @click="openModal(SearchMobileModal)">
                     <img src="../assets/img/header/searchiconsmall.svg" alt="Search" class="header__bar__subbar__searchmobile__icon">
-                </a>
+                </p>
                 <a href="#/article/new" class="header__bar__subbar__createarticlemobile">
                     <img src="../assets/img/header/createarticle.svg" alt="Create Article" class="header__bar__subbar__createarticlemobile__icon">
                 </a>

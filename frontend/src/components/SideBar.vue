@@ -1,13 +1,13 @@
 <script setup lang="ts">
     import { computed } from 'vue';
     import { useRoute } from 'vue-router';
-    import { LangDataHandler } from './../ts/LangDataHandler';
-
+    
     import { JsonData } from '../ts/JsonHandler';
 
     import { openModal } from "jenesius-vue-modal";
     import AdminModal from "./../components/modals/AdminModal.vue";
 
+    import { LangDataHandler } from './../ts/LangDataHandler';
     import langsData from './locales/SideBar.json';
 
     const langData = LangDataHandler.initLangDataHandler("SideBar", langsData).langData;
