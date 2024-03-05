@@ -14,7 +14,7 @@
         position: relative;
         &__title
         {
-            font-size: 21px;
+            font-size: 18px;
             font-family: Roboto-Regular;
         }
         &__sort
@@ -23,14 +23,14 @@
             align-items: center;
             &__title
             {
-                font-size: 20px;
+                font-size: 17px;
                 font-family: Roboto-Regular;
 
                 margin-right: 8px;
             }
             &__select
             {
-                width: 240px;
+                width: 220px;
             }
         }
     }
@@ -43,7 +43,7 @@
         align-items: center;
 
         width: 60%;
-        margin-top: 1.4%;
+        margin-top: 22px;
         
         
         background-color: $articlesArticleBG;
@@ -87,12 +87,7 @@
         {
             display: grid;
             width: 95%;
-            &__tags
-            {
-                width: 95%;
-                font-size: 20px;
-                color: $articlesArticleTagsText;
-            }
+            margin-top: 15px;
             &__button
             {
                 display: block;
@@ -169,10 +164,378 @@
         &__select
         {
             position: absolute !important;
-            top: 15px !important;
-            right: 15px !important;
+            top: 10px !important;
+            right: 10px !important;
            
             width: 240px !important;
+        }
+    }
+}
+
+@media(min-width: 2000px)
+{
+    .main
+    {
+        &__header
+        {
+            width: 62%;
+        }
+        &__article
+        {
+            &__tags
+            {
+                width: 95%;
+            }
+            &__buttons
+            {
+                width: 95%;
+            }
+            &__reactions
+            {
+                width: 95%;
+            }
+            width: 62%;
+        }
+    }
+}
+
+@media(min-width: 2200px)
+{
+    .main
+    {
+        &__header
+        {
+            width: 63%;
+        }
+        &__article
+        {
+            &__tags
+            {
+                width: 96%;
+            }
+            &__buttons
+            {
+                width: 96%;
+            }
+            &__reactions
+            {
+                width: 96%;
+            }
+            width: 63%;
+        }
+    }
+}
+
+@media(min-width: 2440px)
+{
+    .main
+    {
+        &__header
+        {
+            width: 64%;
+        }
+        &__article
+        {
+            &__tags
+            {
+                width: 97%;
+            }
+            &__buttons
+            {
+                width: 97%;
+            }
+            &__reactions
+            {
+                width: 97%;
+            }
+            width: 64%;
+        }
+    }
+}
+
+@media(min-width: 2640px)
+{
+    .main
+    {
+        &__header
+        {
+            width: 65%;
+        }
+        &__article
+        {
+            width: 65%;
+        }
+    }
+}
+
+@media(min-width: 2840px)
+{
+    .main
+    {
+        &__header
+        {
+            width: 68%;
+        }
+        &__article
+        {
+            &__tags
+            {
+                width: 98%;
+            }
+            &__buttons
+            {
+                width: 98%;
+            }
+            &__reactions
+            {
+                width: 98%;
+            }
+            width: 68%;
+        }
+    }
+}
+
+@media(min-width: 3040px)
+{
+    .main
+    {
+        &__header
+        {
+            width: 70%;
+        }
+        &__article
+        {
+            width: 70%;
+        }
+    }
+}
+
+@media(min-width: 3240px)
+{
+    .main
+    {
+        &__header
+        {
+            width: 72%;
+        }
+        &__article
+        {
+            width: 72%;
+        }
+    }
+}
+
+@media(min-width: 3440px)
+{
+    .main
+    {
+        &__header
+        {
+            width: 74%;
+        }
+        &__article
+        {
+            width: 74%;
+        }
+    }
+}
+
+@media(max-width: 1050px)
+{
+    .main
+    {
+        &__header
+        {
+            width: 90%;
+            &__title
+            {
+                font-size: 18px;
+            }
+            &__sort
+            {
+                &__title
+                {
+                    font-size: 18px;
+                }
+                &__select
+                {
+                    width: 190px;
+                }
+            }
+        }
+        &__article
+        {
+            width: 90%;
+            &__titleTime
+            {
+                font-size: 18px !important;
+            }
+            &__select
+            {
+                position: absolute !important;
+                top: 8px !important;
+                right: 8px !important;
+            
+                width: 180px !important;
+            }
+        }
+    }
+}
+
+@media(max-width: 650px)
+{
+    .main
+    {
+        &__header
+        {
+            justify-content: end;
+            &__title
+            {
+                display: none;
+            }
+            &__sort
+            {
+                &__title
+                {
+                    font-size: 17px;
+                }
+                &__select
+                {
+                    width: 190px;
+                }
+            }
+        }
+        &__article
+        {
+            &__buttons
+            {
+                &__button
+                {
+                    width: 180px;
+                    height: 40px;
+                    line-height: 40px;
+                    
+                    font-size: 18px;
+                }
+            }
+            &__reactions
+            {
+                width: 94%;
+                &__statistics
+                {
+                    &__title
+                    {
+                        font-size: 18px;
+                    }
+                    & .dislikeIcon
+                    {
+                        margin-left: 8px;
+                    }
+                    &__icon
+                    {
+                        height: 24px;
+                    }
+                }
+                &__comments
+                {
+                    display: flex;
+                    align-items: center;
+                    &__title
+                    {
+                        margin-left: 8px;
+                        font-size: 18px;
+                    }
+                    &__icon
+                    {
+                        height: 22px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 520px)
+{
+    .main
+    {
+        &__article
+        {
+            &__titleTime
+            {
+                font-size: 17px !important;
+            }
+            &__select
+            {
+                width: 150px !important;
+            }
+        }
+    }
+}
+
+@media(max-width: 380px)
+{
+    .main
+    {
+        &__header
+        {
+            justify-content: end;
+            &__sort
+            {
+                &__title
+                {
+                    font-size: 14px;
+                }
+                &__select
+                {
+                    width: 170px;
+                }
+            }
+        }
+        &__article
+        {
+            &__reactions
+            {
+                &__statistics
+                {
+                    &__title
+                    {
+                        font-size: 15px;
+                    }
+                    & .dislikeIcon
+                    {
+                        margin-left: 4px;
+                    }
+                    &__icon
+                    {
+                        height: 20px;
+                    }
+                }
+                &__comments
+                {
+                    display: flex;
+                    align-items: center;
+                    &__title
+                    {
+                        margin-left: 4px;
+                        font-size: 15px;
+                    }
+                    &__icon
+                    {
+                        height: 18px;
+                    }
+                }
+            }
+            &__titleTime
+            {
+                font-size: 16px !important;
+            }
+            &__select
+            {
+                width: 130px !important;
+                top: 10px !important;
+                right: 10px !important;
+            }
         }
     }
 }

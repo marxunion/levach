@@ -188,5 +188,95 @@
     </main>
 </template>
 
+
+<style lang="scss">
+@media(max-width: 1050px)
+{
+    .main
+    {
+        &__header
+        {
+            &__sort
+            {
+                &__select
+                {
+                    & .customSelect__selected
+                    {
+                        font-size: 18px;
+                    }
+                    & .customSelect__items
+                    {
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+        
+    }
+}
+
+@media(max-width: 650px)
+{
+    .main
+    {
+        &__header
+        {
+            &__sort
+            {
+                &__select
+                {
+                    & .customSelect__selected
+                    {
+                        font-size: 17px;
+                    }
+                    & .customSelect__items
+                    {
+                        font-size: 17px;
+                    }
+                }
+            }
+        }
+
+        &__article
+        {
+            &__select
+            {
+                & .customSelect__selected
+                {
+                    font-size: 17px;
+                }
+                & .customSelect__items
+                {
+                    font-size: 17px;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 500px)
+{
+    .main
+    {
+        &__header
+        {
+            &__sort
+            {
+                &__select
+                {
+                    & .customSelect__selected
+                    {
+                        font-size: 16px;
+                    }
+                    & .customSelect__items
+                    {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+}
+</style>
 <style lang="scss" scoped src="./scss/articles.scss"></style>
 <style lang="scss" scoped src="./scss/articlesApprovedEditorially.scss"></style>

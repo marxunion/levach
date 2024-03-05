@@ -64,3 +64,293 @@
         }
     }
 }
+
+
+
+
+@media(min-width: 2020px)
+{
+    .sidebar
+    {
+        &__links 
+        {
+            &__link
+            {
+                width: 87%;
+                font-size: 22px;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                width: 87%;
+                font-size: 17px;
+            }
+        }
+    }
+}
+
+@media(min-width: 2220px)
+{
+    .sidebar
+    {
+        &__links 
+        {
+            &__link
+            {
+                width: 88%;
+                font-size: 25px;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                width: 88%;
+                font-size: 19px;
+            }
+        }
+    }
+}
+
+@media(min-width: 2420px)
+{
+    .sidebar
+    {
+        &__links 
+        {
+            &__link
+            {
+                width: 90%;
+                font-size: 27px;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                width: 90%;
+                font-size: 21px;
+            }
+        }
+    }
+}
+
+@media(max-width: 1780px)
+{
+    .sidebar
+    {
+        &__links 
+        {
+            &__link
+            {
+                width: 85%;
+                font-size: 19px;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                width: 85%;
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+@media(max-width: 1680px)
+{
+    .sidebar
+    {
+        &__links 
+        {
+            &__link
+            {
+                width: 86%;
+                font-size: 18px;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                width: 86%;
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+@media(max-width: 1580px)
+{
+    .sidebar
+    {
+        &__links 
+        {
+            &__link
+            {
+                width: 87%;
+                font-size: 17px;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                width: 87%;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media(max-width: 1480px)
+{
+    .sidebar
+    {
+        &__links 
+        {
+            &__link
+            {
+                width: 88%;
+                font-size: 16px;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                width: 88%;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media(max-width: 1380px)
+{
+    .sidebar
+    {
+        &__links 
+        {
+            &__link
+            {
+                width: 89%;
+                font-size: 15.3px;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                width: 89%;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media(max-width: 1280px)
+{
+    .sidebar
+    {
+        &__links 
+        {
+            &__link
+            {
+                font-size: 14px;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media(max-width: 1180px)
+{
+    .sidebar
+    {
+        &__links 
+        {
+            &__link
+            {
+                font-size: 13px;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+
+@media(max-width: 1080px)
+{
+    .sidebar
+    {
+        &__links 
+        {
+            &__link
+            {
+                font-size: 12.5px;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                font-size: 11.5px;
+            }
+        }
+    }
+}
+
+@media(max-width: 1050px)
+{
+    .sidebar
+    {
+        width: 280px;
+        right: 0;
+        left: inherit;
+
+        background-color: $sideBarBG;
+        border-left: 1px solid $sideBarBorderLeft;
+
+        transform: translateX(100%);
+
+        &.active
+        {
+            transform: translateX(0);
+        }
+
+        &__links
+        {
+            margin-top: 80px;
+            &__link
+            {
+                font-size: 15px;
+                text-align: center;
+            }
+        }
+        &__linksfooter
+        {
+            &__link
+            {
+                font-size: 16px;
+                text-align: center;
+            }
+        }
+        transition: .4s;
+    }
+}

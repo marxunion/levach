@@ -203,7 +203,7 @@
 				</div>
 			</div>
 			<div class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" noIconfont/>
+				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="false" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ langData['sendButton'] }}</button>	
 			</div>
 			<div class="main__article__editTags">

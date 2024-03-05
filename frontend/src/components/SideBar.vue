@@ -14,6 +14,9 @@
 
     const route = useRoute();
 
+    const { isBurgerActive } = defineProps(['isBurgerActive']);
+    const emit = defineEmits();
+
     const links = computed(() => 
     [
         { uri: '/articles/editorially', checkUris: ['/','/articles/editorially'], text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
@@ -35,11 +38,12 @@
 </script>
 
 <template>
-    <aside class="sidebar">
+    <aside class="sidebar" :class="{ 'active': isBurgerActive }">
         <div class="sidebar__links">
             <a class="sidebar__links__link"
                 v-for="link in links"
                     :href="`#${link.uri}`"
+                    @click="emit('toggleBurger')"
                     :class="{ active: isCurrentLink(link.checkUris) }">
                 {{ link.text }}
             </a>
@@ -49,6 +53,7 @@
                 class="sidebar__linksfooter__link"
                 v-for="link in linksfooter"
                 :href="`#${link.uri}`"
+                @click="emit('toggleBurger')"
             >
             {{ link.text }}
             </a>

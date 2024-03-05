@@ -86,7 +86,7 @@
 	<main class="main">
 		<article class="main__article">
 			<div class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language"/>
+				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="true"/>
 				<button class="main__article__editorContainer__sendButton">{{ langData['sendButton'] }}</button>	
 			</div>	
 			<div class="main__article__editTags">

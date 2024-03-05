@@ -3,16 +3,15 @@
 
 .main
 {
-    margin-top: 7%;
     &__article
     {
-        
         width: 60%;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
 
+        background-color: transparent;
         
         border-radius: 15px;
 
@@ -112,7 +111,7 @@
 
             &__selectVersion
             {
-                position: absolute;
+                position: absolute !important;
                 width: 220px;
                 right: 25px;
                 top: 15px;
@@ -124,7 +123,7 @@
             width: 100%;
             background-color: $articleViewCommentsBG;
             border-radius: 15px;
-            margin-top: 1.4%;
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -132,7 +131,7 @@
             &__header
             {
                 display: flex;
-                margin-top: 1%;
+                margin-top: 12px;
                 width: 96%;
                 justify-content: space-between;
                 align-items: center;
@@ -164,14 +163,14 @@
             &__newComment
             {
                 width: 97%;
-                margin-top: 1%;
-                margin-bottom: 2%;
+                margin-top: 12px;
+                margin-bottom: 15px;
                 position: relative;
                 &__editor
                 {
                     width: 100%;
                     height: auto !important;
-                    min-height: 240px;
+                    min-height: 260px;
                     border-radius: 15px;
                 }
                 &__sendButton
@@ -186,6 +185,195 @@
                         transform: scale(1.1);
                     }
                 }
+            }
+        }
+    }
+}
+
+@media(max-width: 1050px)
+{
+    .main
+    {
+        &__article
+        {
+            width: 90%;
+            &__previewContainer
+            {
+                &__titleTime
+                {
+                    font-size: 18px !important;
+                }
+                &__selectVersion
+                {
+                    position: absolute !important;
+                    top: 10px !important;
+                    right: 10px !important;
+                
+                    width: 200px !important;
+                }
+            }
+            
+        }
+    }
+}
+
+@media(max-width: 650px)
+{
+    .main
+    {
+        &__article
+        {
+            &__previewContainer
+            {
+                &__reactions
+                {
+                    width: 94%;
+                    &__statistics
+                    {
+                        &__title
+                        {
+                            font-size: 18px;
+                        }
+                        & .dislikeIcon
+                        {
+                            margin-left: 8px;
+                        }
+                        &__icon
+                        {
+                            height: 24px;
+                        }
+                    }
+                    &__comments
+                    {
+                        display: flex;
+                        align-items: center;
+                        &__title
+                        {
+                            margin-left: 8px;
+                            font-size: 18px;
+                        }
+                        &__icon
+                        {
+                            height: 22px;
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+}
+
+@media(max-width: 520px)
+{
+    .main
+    {
+        &__article
+        {
+            &__previewContainer
+            {
+                &__titleTime
+                {
+                    font-size: 17px !important;
+                }
+                &__select
+                {
+                    width: 150px !important;
+                    top: 10px !important;
+                    right: 10px !important;
+                }
+            }
+            &__comments__header__sort
+            {
+                &__title
+                {
+                    font-size: 17px !important;
+                }
+                &__selectSortType
+                {
+                    width: 150px !important;
+                    top: 10px !important;
+                    right: 10px !important;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 380px)
+{
+    .main
+    {
+        &__header
+        {
+            justify-content: end;
+            &__sort
+            {
+                &__title
+                {
+                    font-size: 14px;
+                }
+                &__select
+                {
+                    width: 170px;
+                    & .customSelect__selected
+                    {
+                        font-size: 14px;
+                        height: 32px;
+                        line-height: 32px;
+                    }
+                    & .customSelect__items
+                    {
+                        font-size: 14px;
+                        height: 32px;
+                        line-height: 32px;
+                    }
+                }
+            }
+        }
+        &__article
+        {
+            &__reactions
+            {
+                &__statistics
+                {
+                    &__title
+                    {
+                        font-size: 15px;
+                    }
+                    & .dislikeIcon
+                    {
+                        margin-left: 4px;
+                    }
+                    &__icon
+                    {
+                        height: 20px;
+                    }
+                }
+                &__comments
+                {
+                    display: flex;
+                    align-items: center;
+                    &__title
+                    {
+                        margin-left: 4px;
+                        font-size: 15px;
+                    }
+                    &__icon
+                    {
+                        height: 18px;
+                    }
+                }
+            }
+            &__titleTime
+            {
+                font-size: 16px !important;
+            }
+            &__select
+            {
+                width: 130px !important;
+                top: 10px !important;
+                right: 10px !important;
             }
         }
     }

@@ -84,3 +84,34 @@
 {
     display: none !important;
 }
+
+@media(max-width: 1050px)
+{
+    .customSelect__selected
+    {
+        font-size: 18px !important;
+    }
+    .customSelect__items 
+    {
+        font-size: 18px !important;
+    }
+}
+
+@media(max-width: 650px)
+{
+    .customSelect 
+    {
+        height: 35px;
+        &__selected
+        {
+            line-height: 35px;
+            font-size: 17px !important;
+        }
+        &__items 
+        {
+            top: 45px;
+            line-height: 35px;
+            font-size: 17px !important;
+        }
+    }
+}

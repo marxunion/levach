@@ -18,7 +18,7 @@
     &__block
     {
         margin-top: 30px;
-        max-width: 58%;
+        width: 58%;
         &__title
         {
             line-height: 1.5;
@@ -30,6 +30,133 @@
         {
             line-height: 1.5;
             font-size: 18px;
+        }
+    }
+}
+
+@media(min-width: 2000px)
+{
+    .main
+    {
+        &__title
+        {
+            font-size: 52px;
+        }
+        &__block
+        {
+            &__title
+            {
+                line-height: 1.6;
+                font-size: 20px;
+            }
+            &__description
+            {
+                line-height: 1.6;
+                font-size: 20px;
+            }
+        }
+    }
+}
+
+@media(min-width: 2300px)
+{
+    .main
+    {
+        &__title
+        {
+            font-size: 58px;
+        }
+        &__block
+        {
+            &__title
+            {
+                line-height: 1.65;
+                font-size: 22px;
+            }
+            &__description
+            {
+                line-height: 1.65;
+                font-size: 22px;
+            }
+        }
+    }
+}
+
+
+@media(min-width: 2800px)
+{
+    .main
+    {
+        &__title
+        {
+            font-size: 64px;
+        }
+        &__block
+        {
+            &__title
+            {
+                line-height: 1.7;
+                font-size: 23px;
+            }
+            &__description
+            {
+                line-height: 1.7;
+                font-size: 23px;
+            }
+        }
+    }
+}
+
+
+@media(max-width: 1050px)
+{
+    .main
+    {
+        &__block
+        {
+            width: 90%;
+        }
+    }
+}
+
+@media(max-width: 520px)
+{
+    .main
+    {
+        &__block
+        {
+            width: 86%;
+            &__title
+            {
+                line-height: 1.3;
+                font-size: 16px;
+                margin-bottom: 16px;
+            }
+            &__description
+            {
+                line-height: 1.3;
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+@media(max-width: 380px)
+{
+    .main
+    {
+        &__block
+        {
+            &__title
+            {
+                line-height: 1.25;
+                font-size: 14px;
+            }
+            &__description
+            {
+                line-height: 1.25;
+                font-size: 14px;
+            }
         }
     }
 }

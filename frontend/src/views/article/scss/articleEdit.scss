@@ -3,7 +3,6 @@
 
 .main
 {
-    margin-top: 7%;
     &__article
     {
         width: 60%;
@@ -13,6 +12,7 @@
         flex-direction: column;
 
         position: relative;
+        background-color: transparent;
         &__info
         {
             height: 210px;
@@ -54,6 +54,7 @@
                 height: 30%;
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
                 &__status
                 {
                     padding-top: 5px;
@@ -82,7 +83,7 @@
         }
         &__editorContainer
         {
-            margin-top: 1.4%;
+            margin-top: 14px;
             min-height: 620px;
             width: 100%;
             border-radius: 15px;
@@ -91,6 +92,7 @@
             {
                 width: 100%;
                 height: 100%;
+                min-height: 620px;
                 border-radius: 15px;
             }
             &__sendButton
@@ -119,8 +121,7 @@
         
         &__editTags
         {
-            margin-top: 1.4%;
-            margin-bottom: 70px;
+            margin-top: 14px;
             width: 100%;
             border-radius: 15px;
             background-color: $articleEditEditTagsBG;
@@ -225,6 +226,269 @@
                     {
                         cursor: pointer;
                         background-color: $articleEditEditTagsAddTagButtonHoverBG;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(min-height: 1100px)
+{
+    .main
+    {
+        &__article
+        {
+            &__editorContainer
+            {
+                min-height: 780px;
+                &__editor
+                {
+                    min-height: 780px;
+                }
+            }
+        }
+    }
+}
+
+@media(min-height: 1300px)
+{
+    .main
+    {
+        &__article
+        {
+            &__editorContainer
+            {
+                min-height: 880px;
+                &__editor
+                {
+                    min-height: 880px;
+                }
+            }
+        }
+    }
+}
+
+@media(min-height: 1500px)
+{
+    .main
+    {
+        &__article
+        {
+            &__editorContainer
+            {
+                min-height: 1080px;
+                &__editor
+                {
+                    min-height: 1080px;
+                }
+            }
+        }
+    }
+}
+
+
+@media(max-width: 1050px)
+{
+    .main
+    {
+        &__article
+        {
+            width: 90%;
+        }
+    }
+}
+
+@media(max-width: 680px)
+{
+    .main
+    {
+        &__article
+        {
+            &__info
+            {
+                &__statistics
+                {
+                    &__statistic
+                    {
+                        &__title
+                        {
+                            font-size: 17px;
+                        }
+                    }
+                }
+                &__statusesContainer
+                {
+                    &__status
+                    {
+                        padding-top: 4px;
+                        & > p
+                        {
+                            font-size: 16px;
+                        }
+                    }
+                    &__selectVersion
+                    {
+                        width: 160px;
+                        align-self: auto;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 580px)
+{
+    .main
+    {
+        &__article
+        {
+            &__info
+            {
+                &__statistics
+                {
+                    &__statistic
+                    {
+                        &__title
+                        {
+                            font-size: 16px;
+                        }
+                    }
+                }
+                &__statusesContainer
+                {
+                    &__status
+                    {
+                        padding-top: 3px;
+                        & > p
+                        {
+                            font-size: 14px;
+                        }
+                    }
+                    &__selectVersion
+                    {
+                        width: 115px;
+                        align-self: auto;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media(max-width: 500px)
+{
+    .main
+    {
+        &__article
+        {
+            &__info
+            {
+                height: 480px;
+
+                &__statistics
+                {
+                    flex-direction: column;
+                    &__statistic
+                    {
+                        &__title
+                        {
+                            font-size: 24px;
+                        }
+                    }
+                }
+                &__statusesContainer
+                {
+                    flex-direction: column;
+                    &__status
+                    {
+                        padding-top: 3px;
+                        & > p
+                        {
+                            font-size: 15px;
+                        }
+                    }
+                    &__selectVersion
+                    {
+                        width: 180px;
+                        align-self: auto;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 480px)
+{
+    .main
+    {
+        &__article
+        {
+            &__info
+            {
+                &__statusesContainer
+                {
+                    flex-direction: column;
+                    &__status
+                    {
+                        padding-top: 3px;
+                        & > p
+                        {
+                            font-size: 15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 380px)
+{
+    .main
+    {
+        &__article
+        {
+            &__info
+            {
+                &__statusesContainer
+                {
+                    flex-direction: column;
+                    &__status
+                    {
+                        padding-top: 3px;
+                        & > p
+                        {
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 350px)
+{
+    .main
+    {
+        &__article
+        {
+            &__info
+            {
+                &__statusesContainer
+                {
+                    flex-direction: column;
+                    &__status
+                    {
+                        padding-top: 3px;
+                        & > p
+                        {
+                            font-size: 12.45px;
+                        }
                     }
                 }
             }

@@ -8,6 +8,10 @@
     import langsData from "./locales/Header.json";
     
     const langData = ref(LangDataHandler.initLangDataHandler("Header", langsData).langData);
+
+    import { defineEmits } from 'vue';
+
+    const emit = defineEmits();
 </script>
 
 <template>
@@ -22,16 +26,17 @@
             </div>
             <div class="header__bar__subbar">
                 <a href="#/article/new" class="header__bar__subbar__createarticle">{{ langData['createArticle'] }}</a>
-                <a class="header__bar__subbar__searchmobile">
-                    <div class="header__bar__subbar__searchmobile__icon"></div>
+                <DropDown :options="LangDataHandler.langs" :default="LangDataHandler.currentLanguage.value" class="header__bar__subbar__select" @input="LangDataHandler.changeLanguage" @input-on-mounted="LangDataHandler.changeLanguage"/>
+                <a href="#/articles/" class="header__bar__subbar__searchmobile">
+                    <img src="../assets/img/header/searchiconsmall.svg" alt="Search" class="header__bar__subbar__searchmobile__icon">
                 </a>
                 <a href="#/article/new" class="header__bar__subbar__createarticlemobile">
-                    <div class="header__bar__subbar__createarticlemobile__icon"></div>
+                    <img src="../assets/img/header/createarticle.svg" alt="Create Article" class="header__bar__subbar__createarticlemobile__icon">
                 </a>
-                <DropDown :options="LangDataHandler.langs" :default="LangDataHandler.currentLanguage.value" class="header__bar__subbar__select" @input="LangDataHandler.changeLanguage" @input-on-mounted="LangDataHandler.changeLanguage"/>
+                
             </div>
         </div>
-        <div class="header__burger header-burger">
+        <div class="header__burger header-burger" @click="emit('toggleBurger')">
             <div class="header__burger__lines header-burger"></div>
         </div>
     </header>
