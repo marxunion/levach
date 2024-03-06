@@ -10,6 +10,9 @@ import articlesEditorially from './views/articles/articlesEditorially.vue';
 import articlesApprovedEditorially from './views/articles/articlesApprovedEditorially.vue';
 import articlesAbyss from './views/articles/articlesAbyss.vue';
 
+// Admin
+import articleAdminEdit from './views/article/articleAdminEdit.vue';
+
 // Other routes
 import aboutProject from './views/aboutProject.vue';
 import Rules from './views/Rules.vue';
@@ -41,7 +44,14 @@ const routes: RouteRecordRaw[] =
             { path: 'approvedEditorially', component: articlesApprovedEditorially },
             { path: 'abyss', component: articlesAbyss },
         ],
-        
+    },
+    {
+        path: '/admin',
+        children: [
+            { path: '', component: articlesEditorially },
+            { path: 'articles/edit/', component: articlesApprovedEditorially },
+            { path: 'article/edit/:id', component: articleAdminEdit },
+        ],
     },
     {
         path: '/rules',

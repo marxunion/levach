@@ -127,7 +127,7 @@
 	const comments = ref(
 	[
 		{
-			id: 1,
+			id: "00000001",
 			time: '11:06 19.09.2022',
 			text: 'Test Comment1',
 			statistics: 
@@ -137,7 +137,7 @@
 			},
 			subcomments: [
 				{
-					id: 2,
+					id: "00000002",
 					time: '12:00 19.09.2022',
 					text: 'Test Subcomment1',
 					statistics: 
@@ -147,7 +147,7 @@
 					},
 					subcomments: [
 						{
-							id: 3,
+							id: "00000003",
 							time: '13:30 19.09.2022',
 							text: 'Test Subsubcomment1',
 							statistics: 
@@ -160,7 +160,7 @@
 					]
 				},
 				{
-					id: 4,
+					id: "00000004",
 					time: '12:15 19.09.2022',
 					text: 'Test Subcomment2',
 					statistics: 
@@ -173,7 +173,7 @@
 			]
 		},
 		{
-			id: 5,
+			id: "00000005",
 			time: '14:00 19.09.2022',
 			text: 'Test Comment2',
 			statistics: 

@@ -13,7 +13,11 @@
 
 <template>
 	<div class="comment" :style="{ marginLeft: `${5 * level}%` }">
-		<p class="comment__titleTime">{{ comment.time }}</p>
+		<div class="comment__header">
+			
+			<p class="comment__header__title id">#{{ comment.id }}</p>
+			<p class="comment__header__title time">{{ comment.time }}</p>
+		</div>
 		<p class="comment__text">{{ comment.text }}</p>
 		<div class="comment__bar">
 			<div class="comment__bar__actions">

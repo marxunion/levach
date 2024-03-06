@@ -1,12 +1,42 @@
 {
     "RU":
     {
-        "titleAnswer": "Ответить",
-        "titleReport": "Пожаловатся"
+        "filtersTitle": "Фильтры",
+        
+        "commentsCountTitle": "Количество комментариев",
+        "commentsCountTitle1": "Выбрать",
+        "commentsCountTitle2": "последних",
+
+        "dateCommentSendTitle": "Дата отправки комментария",
+        "dateCommentSendTitle1": "От",
+        "dateCommentSendTitle2": "до",
+
+        "commentContentTitle": "Содержание комментария",
+        "commentContentTitle1": "Содержащих",
+
+        "applyFiltersButton": "Применить фильтры",
+        "deleteSelectedButton": "Удалить выбранное",
+
+        "commentsTitle": "Комментарии по заданным фильтрам"
     },
     "EN":
     {
-        "titleAnswer": "Answer",
-        "titleReport": "Report"
+        "filtersTitle": "Filters"
+        ,
+        "commentsCountTitle": "Comments count",
+        "commentsCountTitle1": "Select",
+        "commentsCountTitle2": "last",
+
+        "dateCommentSendTitle": "Date the comment was sent",
+        "dateCommentSendTitle1": "From",
+        "dateCommentSendTitle2": "before",
+
+        "commentContentTitle": "Comment Content",
+        "commentContentTitle2": "Containing",
+
+        "applyFiltersButton": "Apply Filters",
+        "deleteSelectedButton": "Delete Selected",
+
+        "commentsTitle": "Comment on specified filters"
     }
 }
