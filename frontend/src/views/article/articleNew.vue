@@ -8,6 +8,8 @@
 	import { LangDataHandler } from "./../../ts/LangDataHandler";
 	import langsData from "./locales/articleNew.json";
 
+	import './../../libs/font_2605852_prouiefeic';
+
 	const langData = LangDataHandler.initLangDataHandler("articleNew", langsData).langData;
 
 
@@ -86,7 +88,7 @@
 	<main class="main">
 		<article class="main__article">
 			<div class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="true"/>
+				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="true" noIconfont/>
 				<button class="main__article__editorContainer__sendButton">{{ langData['sendButton'] }}</button>	
 			</div>	
 			<div class="main__article__editTags">

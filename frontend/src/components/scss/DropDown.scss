@@ -28,7 +28,6 @@
         line-height: 40px;
         &.open 
         {
-            border-radius: 15px;
             & .customSelect__selected__img 
             {
                 transform: rotateZ(180deg)
@@ -109,9 +108,41 @@
         }
         &__items 
         {
+            & div
+            {
+                height: 35px;
+                line-height: 35px;
+            }
             top: 45px;
-            line-height: 35px;
             font-size: 17px !important;
+        }
+    }
+}
+
+@media(max-width: 420px)
+{
+    .customSelect 
+    {
+        height: 30px;
+        &__selected
+        {
+            line-height: 30px;
+            font-size: 13.2px !important;
+            border-radius: 10px;
+            &__img 
+            {
+                top: 12px;
+            }
+        }
+        &__items 
+        {
+            & div
+            {
+                height: 30px;
+                line-height: 30px;
+            }
+            top: 35px;
+            font-size: 14px !important;
         }
     }
 }

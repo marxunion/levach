@@ -158,13 +158,11 @@
                         width: 240px;
                     }
                 }
-                
             }
             &__newComment
             {
                 width: 97%;
                 margin-top: 12px;
-                margin-bottom: 15px;
                 position: relative;
                 &__editor
                 {
@@ -185,6 +183,10 @@
                         transform: scale(1.1);
                     }
                 }
+            }
+            &__commentsList
+            {
+                width: 95%;
             }
         }
     }
@@ -225,6 +227,11 @@
         {
             &__previewContainer
             {
+                &__titleTime
+                {
+                    top: 5px !important;
+                    left: 10px !important;
+                }
                 &__reactions
                 {
                     width: 94%;
@@ -258,8 +265,34 @@
                         }
                     }
                 }
+                &__selectVersion
+                {
+                    position: absolute !important;
+                    top: 10px !important;
+                    right: 10px !important;
+                
+                    width: 140px !important;
+                }
             }
-            
+            &__comments__header
+            {
+                justify-content: end;
+                &__title
+                {
+                    display: none;
+                }
+                &__sort
+                {
+                    &__title
+                    {
+                        font-size: 18px !important;
+                    }
+                    &__selectSortType
+                    {
+                        width: 170px !important;
+                    }
+                }
+            }
         }
     }
 }
@@ -276,31 +309,31 @@
                 {
                     font-size: 17px !important;
                 }
-                &__select
+                &__selectVersion
                 {
-                    width: 150px !important;
+                    position: absolute !important;
                     top: 10px !important;
                     right: 10px !important;
+                
+                    width: 120px !important;
                 }
             }
             &__comments__header__sort
             {
                 &__title
                 {
-                    font-size: 17px !important;
+                    font-size: 16px !important;
                 }
                 &__selectSortType
                 {
-                    width: 150px !important;
-                    top: 10px !important;
-                    right: 10px !important;
+                    width: 180px !important;
                 }
             }
         }
     }
 }
 
-@media(max-width: 380px)
+@media(max-width: 420px)
 {
     .main
     {
@@ -350,18 +383,25 @@
                         height: 20px;
                     }
                 }
-                &__comments
+                
+            }
+            &__comments
+            {
+                display: flex;
+                align-items: center;
+                &__icon
                 {
-                    display: flex;
-                    align-items: center;
+                    height: 18px;
+                }
+                &__header__sort
+                {
                     &__title
                     {
-                        margin-left: 4px;
-                        font-size: 15px;
+                        font-size: 14px !important;
                     }
-                    &__icon
+                    &__selectSortType
                     {
-                        height: 18px;
+                        width: 150px !important;
                     }
                 }
             }
@@ -372,8 +412,6 @@
             &__select
             {
                 width: 130px !important;
-                top: 10px !important;
-                right: 10px !important;
             }
         }
     }

@@ -4,6 +4,8 @@
 
 	import DropDown from "./../../components/DropDown.vue";
 
+	import CommentsList from "./../../components/CommentsList.vue";
+
 	import { MdPreview, MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
@@ -119,6 +121,69 @@
 
 		callback(res.map((item) => item.data.url));
 	};
+
+
+	// Comments
+	const comments = ref(
+	[
+		{
+			id: 1,
+			time: '11:06 19.09.2022',
+			text: 'Test Comment1',
+			statistics: 
+			{
+				likes: 48,
+				dislikes: 6
+			},
+			subcomments: [
+				{
+					id: 2,
+					time: '12:00 19.09.2022',
+					text: 'Test Subcomment1',
+					statistics: 
+					{
+						likes: 32,
+						dislikes: 3
+					},
+					subcomments: [
+						{
+							id: 3,
+							time: '13:30 19.09.2022',
+							text: 'Test Subsubcomment1',
+							statistics: 
+							{
+								likes: 45,
+								dislikes: 2
+							},
+							subcomments: []
+						}
+					]
+				},
+				{
+					id: 4,
+					time: '12:15 19.09.2022',
+					text: 'Test Subcomment2',
+					statistics: 
+					{
+						likes: 33,
+						dislikes: 3
+					},
+					subcomments: []
+				}
+			]
+		},
+		{
+			id: 5,
+			time: '14:00 19.09.2022',
+			text: 'Test Comment2',
+			statistics: 
+			{
+				likes: 48,
+				dislikes: 6
+			},
+			subcomments: []
+		}
+	]);
 </script>
 
 <template>
@@ -159,6 +224,10 @@
 				<div class="main__article__comments__newComment">
 					<MdEditor class="main__article__comments__newComment__editor" v-model="(newCommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImg" :language="newCommentEditorState.language" noIconfont :preview="false"/>
 					<img src="./../../assets/img/article/sendCommentButton.svg" alt="Send Button" class="main__article__comments__newComment__sendButton">
+				</div>
+				
+				<div class="main__article__comments__commentsList">
+					<CommentsList  v-for="comment in comments" :key="comment.id" :comment="comment" :level="0"/>
 				</div>
 			</div>
 		</article>
