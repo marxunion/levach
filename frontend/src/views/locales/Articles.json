@@ -25,7 +25,7 @@
         "premoderateArticleButton": "Принять",
         "rejectPremoderateArticleButton": "Не принимать",
         "readAllButton": "Читать далее",
-        
+
         "toolbarTips": 
         {
             "bold": "Жирный",
@@ -112,13 +112,19 @@
         "versionText": "Version ",
         "headerTitle":
         {
-            "editoriallyArticles": "Статьи редакции",
-            "editoriallyApprovedArticles": "Статьи одобренные редакцией",
-            "abyssArticles": "Статьи Бездны",
-            "articlesWaitingApproval": "Статьи ожидающие одобрения",
-            "articlesWaitingPremoderate": "Статьи ожидающие премодерации"
+            "editoriallyArticles": "Editorially Articles",
+            "editoriallyApprovedArticles": "Approved Editorially Articles",
+            "abyssArticles": "Abyss Articles",
+            "articlesWaitingApproval": "Articles Waiting Approval",
+            "articlesWaitingPremoderate": "Articles Waiting Premoderate"
         },
         
+        "approveArticleButton": "Approve",
+        "disapproveArticleButton": "Disapprove",
+        "premoderateArticleButton": "Accept",
+        "rejectPremoderateArticleButton": "Reject",
+        "readAllButton": "Read more",
+
         "sortTitle": "Sort by:",
         "sortTypes": 
         [
@@ -126,11 +132,6 @@
             "posting date"
         ],
 
-        "approveArticleButton": "Approve",
-        "disapproveArticleButton": "Disapprove",
-        "premoderateArticleButton": "Accept",
-        "rejectPremoderateArticleButton": "Reject",
-        "readAllButton": "Read more",
         "toolbarTips": 
         {
             "bold": "bold",

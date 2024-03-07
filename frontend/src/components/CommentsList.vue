@@ -3,6 +3,8 @@
 	
 	const props = defineProps(['comment', 'level']);
 
+	import { isAdmin } from './../ts/AdminHandler'
+
 	import { abbreviateNumber } from './../ts/AbbreviateNumberHelper';
 
 	import { LangDataHandler } from "./../ts/LangDataHandler";
@@ -22,7 +24,8 @@
 		<div class="comment__bar">
 			<div class="comment__bar__actions">
 				<p class="comment__bar__actions__action">{{ langData['titleAnswer'] }}</p>
-				<p class="comment__bar__actions__action">{{ langData['titleDelete'] }}</p>
+				<p v-if="isAdmin" class="comment__bar__actions__action">{{ langData['titleDelete'] }}</p>
+				<p v-else class="comment__bar__actions__action">{{ langData['titleReport'] }}</p>
 			</div>
 			<div class="comment__bar__reactions">
 				<img src="../assets/img/article/like.svg" alt="Likes: " class="comment__bar__reactions__icon likeIcon">

@@ -38,8 +38,17 @@ $sideBarLink: #000;
 $sideBarLinkHover: #424242;
 $sideBarLinkActive: #575757;
 
-$sideBarLinkBlue: #4193f1;
-$sideBarLinkBlueHover: #5ca8ff;
+$sidebarArticleCommentsButtonText: #54A9F8;
+$sidebarArticleCommentsButtonBorder: #54A9F8;
+
+$sidebarBackToArticleButtonText: #54A9F8;
+$sidebarBackToArticleButtonBorder: #54A9F8;
+
+$sidebarRejectAllButtonText: #950C0C;
+$sidebarRejectAllButtonBorder: #950C0C;
+
+$sideBarLinkFooter: #4193f1;
+$sideBarLinkFooterHover: #5ca8ff;
 
 
 // DropDown
@@ -111,11 +120,14 @@ $articleViewArticleTitleTime: #797979;
 
 $articleViewTagsText: #2F88F0;
 
+$articleViewDeleteArticleButtonText: #950C0C;
+$articleViewDeleteArticleButtonBorder: #950C0C;
+
 $articleViewCommentsText: #313131;
 $articleViewCommentsBG: #fff;
 
 
-// ArticleAdminEdit
+// ArticleAdminEditComments
 $articleAdminEditBG: #fff;
 
 $articleAdminEditFiltersInputBG: #d9d9d9;
@@ -140,6 +152,18 @@ $articlesArticleTagsText: #2F88F0;
 
 $articlesReadAllButtonText: #54A9F8;
 $articlesReadAllButtonBorder: #54A9F8;
+
+$articlePremoderateArticleButtonText: #38B819;
+$articlePremoderateArticleButtonBorder: #38B819;
+
+$articleRejectPremoderateArticleButtonText: #950C0C;
+$articleRejectPremoderateArticleButtonBorder: #950C0C;
+
+$articleApproveArticleButtonText: #38B819;
+$articleApproveArticleButtonBorder: #38B819;
+
+$articleDisapproveArticleButtonText: #950C0C;
+$articleDisapproveArticleButtonBorder: #950C0C;
 
 // Sponsoring
 $sponsoringBlockBG: #ececec;

@@ -8,6 +8,8 @@
 
     import { JsonData } from './../ts/JsonHandler';
 
+    import { isAdmin } from './../ts/AdminHandler'
+
     import { abbreviateNumber } from './../ts/AbbreviateNumberHelper';
 
     import langsData from "./locales/Articles.json";
@@ -161,8 +163,18 @@
             <p class="main__article__titleTime">{{ article['time'] }}</p>
             <MdPreview class="main__article__preview" :modelValue="article['currentVersionText']" :language="previewState.language"/>
             <p class="main__article__tags">{{ article['tags'] }}</p>
-            <div class="main__article__buttons">
-                <a href="#/article/testarticle" class="main__article__buttons__button">{{ langData['readAllButton'] }}</a>
+
+            <div v-if="isAdmin && currentRoute == 'articlesWaitingPremoderate'" class="main__article__buttons">
+                <a class="main__article__buttons__button premoderateArticleButton">{{ langData['premoderateArticleButton'] }}</a>
+                <a class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+            </div>
+            <div v-else-if="isAdmin && currentRoute == 'articlesWaitingApproval'" class="main__article__buttons">
+                <a class="main__article__buttons__button approveArticleButton">{{ langData['approveArticleButton'] }}</a>
+                <a class="main__article__buttons__button disapproveArticleButton">{{ langData['disapproveArticleButton'] }}</a>
+                <a class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
+            </div>
+            <div v-else class="main__article__buttons oneButton">
+                <a href="#/article/testarticle" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
             </div>
             <div class="main__article__reactions">
                 <div class="main__article__reactions__statistics">

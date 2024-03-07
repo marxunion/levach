@@ -4,6 +4,7 @@
         "versionText": "Версия ",
         "commentsTitle": "Комментарии",
         "sortTitle": "Сортировать по:",
+        "deleteArticleButton": "Удалить статью",
         "sortTypes": 
         [
             "популярности",
@@ -95,6 +96,7 @@
         "versionText": "Version ",
         "commentsTitle": "Comments",
         "sortTitle": "Sort by:",
+        "deleteArticleButton": "Delete article",
         "sortTypes": 
         [
             "popularity",

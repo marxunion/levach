@@ -59,7 +59,49 @@
                 font-size: 20px;
                 color: $articleViewTagsText;
             }
-
+            &__buttons
+            {
+                display: flex;
+                justify-content: space-between;
+                width: 95%;
+                margin-top: 15px;
+    
+                &.oneButton
+                {
+                    justify-content: end;
+                    display: grid;
+                }
+                &__button
+                {
+                    cursor: pointer;
+                    display: block;
+                    width: 220px;
+                    height: 45px;
+    
+                    border-radius: 15px;
+                    font-size: 20px;
+                    background-color: transparent;
+    
+                    text-align: center;
+                    line-height: 45px;
+                    
+                    color: $articlesReadAllButtonText;
+                    border: 2px solid $articlesReadAllButtonBorder;
+    
+                    &.deleteArticleButton
+                    {
+                        color: $articleViewDeleteArticleButtonText;
+                        border: 2px solid $articleViewDeleteArticleButtonBorder;
+                    }
+    
+                    transition: .4s;
+                    transform: scale(1.00);
+                    &:hover
+                    {
+                        transform: scale(1.05);
+                    }
+                }
+            }
             &__reactions
             {
                 width: 94%;

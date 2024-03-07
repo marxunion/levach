@@ -14,7 +14,7 @@
         position: relative;
         &__title
         {
-            font-size: 18px;
+            font-size: 17px;
             font-family: Roboto-Regular;
         }
         &__sort
@@ -85,15 +85,21 @@
 
         &__buttons
         {
-            display: grid;
+            display: flex;
+            justify-content: space-between;
             width: 95%;
             margin-top: 15px;
+
+            &.oneButton
+            {
+                justify-content: end;
+                display: grid;
+            }
             &__button
             {
                 display: block;
                 width: 220px;
                 height: 45px;
-                justify-self: end;
 
                 border-radius: 15px;
                 font-size: 20px;
@@ -104,6 +110,37 @@
                 
                 color: $articlesReadAllButtonText;
                 border: 2px solid $articlesReadAllButtonBorder;
+
+                &.premoderateArticleButton
+                {
+                    color: $articlePremoderateArticleButtonText;
+                    border: 2px solid $articlePremoderateArticleButtonBorder;
+                }
+
+                &.rejectPremoderateArticleButton
+                {
+                    color: $articleRejectPremoderateArticleButtonText;
+                    border: 2px solid $articleRejectPremoderateArticleButtonBorder;
+                }
+
+                &.approveArticleButton
+                {
+                    color: $articleApproveArticleButtonText;
+                    border: 2px solid $articleApproveArticleButtonBorder;
+                }
+
+                &.disapproveArticleButton
+                {
+                    color: $articleDisapproveArticleButtonText;
+                    border: 2px solid $articleDisapproveArticleButtonBorder;
+                }
+
+                &.readAllButton
+                {
+                    color: $articlesReadAllButtonText;
+                    border: 2px solid $articlesReadAllButtonBorder;
+                }
+
                 transition: .4s;
                 transform: scale(1.00);
                 &:hover
@@ -198,7 +235,6 @@
         }
     }
 }
-
 @media(min-width: 2200px)
 {
     .main
@@ -225,7 +261,6 @@
         }
     }
 }
-
 @media(min-width: 2440px)
 {
     .main
@@ -252,7 +287,6 @@
         }
     }
 }
-
 @media(min-width: 2640px)
 {
     .main
@@ -267,7 +301,6 @@
         }
     }
 }
-
 @media(min-width: 2840px)
 {
     .main
@@ -294,7 +327,6 @@
         }
     }
 }
-
 @media(min-width: 3040px)
 {
     .main
@@ -309,7 +341,6 @@
         }
     }
 }
-
 @media(min-width: 3240px)
 {
     .main
@@ -324,7 +355,6 @@
         }
     }
 }
-
 @media(min-width: 3440px)
 {
     .main
@@ -340,6 +370,30 @@
     }
 }
 
+@media(max-width: 1350px)
+{
+    .main
+    {
+        &__article
+        {
+            &__buttons
+            {
+                &__button
+                {
+                    display: block;
+                    width: 180px;
+
+                    height: 40px;
+                    font-size: 17px;
+    
+                    text-align: center;
+                    line-height: 40px;
+                }
+            }
+        }
+    }
+}
+
 @media(max-width: 1050px)
 {
     .main
@@ -349,13 +403,13 @@
             width: 90%;
             &__title
             {
-                font-size: 18px;
+                font-size: 17px;
             }
             &__sort
             {
                 &__title
                 {
-                    font-size: 18px;
+                    font-size: 17px;
                 }
                 &__select
                 {
@@ -381,6 +435,32 @@
         }
     }
 }
+
+
+@media(max-width: 750px)
+{
+    .main
+    {
+        &__article
+        {
+            &__buttons
+            {
+                &__button
+                {
+                    display: block;
+                    width: 170px;
+
+                    height: 35px;
+                    font-size: 17px;
+    
+                    text-align: center;
+                    line-height: 35px;
+                }
+            }
+        }
+    }
+}
+
 
 @media(max-width: 650px)
 {
@@ -411,11 +491,11 @@
             {
                 &__button
                 {
-                    width: 180px;
-                    height: 40px;
-                    line-height: 40px;
+                    width: 135px;
+                    height: 35px;
+                    line-height: 35px;
                     
-                    font-size: 18px;
+                    font-size: 15px;
                 }
             }
             &__reactions
@@ -464,6 +544,24 @@
             &__titleTime
             {
                 font-size: 17px !important;
+            }
+            &__buttons
+            {
+                flex-wrap: wrap;
+                justify-content: center;
+                &__button
+                {
+                    margin: 0px 2%;
+                    margin-top: 10px;
+                }
+            }
+
+            &__buttons.oneButton
+            {
+                .main__article__buttons__button
+                {
+                    margin: 0px;
+                }
             }
             &__select
             {

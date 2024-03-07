@@ -9,6 +9,8 @@
 	import { MdPreview, MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
+    import { isAdmin } from './../../ts/AdminHandler'
+
 	import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
 
 	import langsData from "./locales/articleView.json";
@@ -193,6 +195,9 @@
 				<p class="main__article__previewContainer__titleTime">{{ articleInfo['time'] }}</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="articleInfo.texts[articleInfo.versionsIds[articleInfo.currentVersionIdIndex]-1]" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ articleInfo['tags'] }}</p>
+				<div v-if="isAdmin" class="main__article__previewContainer__buttons oneButton">
+					<a class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
+				</div>
 				<div class="main__article__previewContainer__reactions">
 					<div class="main__article__previewContainer__reactions__statistics">
 						<img src="../../assets/img/article/like.svg" alt="Likes: " class="main__article__previewContainer__reactions__statistics__icon likeIcon">
@@ -206,6 +211,7 @@
 						<p class="main__article__previewContainer__reactions__comments__title commentsCounter">{{ abbreviateNumber(articleInfo['statistics']['comments']) }}</p>
 					</div>
 				</div>
+				
 				<DropDown 
 				:options="articleInfo.versionsIds.map((versionsId) => (langData['versionText'] as string) + versionsId)" 
 				:default="(langData['versionText'] as string) + articleInfo.versionsIds[articleInfo.currentVersionIdIndex]" 

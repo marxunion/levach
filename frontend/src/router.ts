@@ -11,14 +11,13 @@ import articleNew from './views/article/articleNew.vue';
 import Articles from './views/Articles.vue';
 
 // Admin
-import articleAdminEdit from './views/article/articleAdminEdit.vue';
-import AdminComments from './views/admin/AdminComments.vue';
+import articleAdminEditComments from './views/article/articleAdminEditComments.vue';
+import AdminEditComments from './views/admin/AdminEditComments.vue';
 
 // Other routes
 import aboutProject from './views/aboutProject.vue';
 import Rules from './views/Rules.vue';
 import Sponsoring from './views/Sponsoring.vue';
-
 
 import NotFound from './views/NotFound.vue';
 
@@ -27,51 +26,57 @@ const routes: RouteRecordRaw[] =
     {
         path: '/',
         component: Articles,
+        name: "Articles"
     },
     {
         path: '/article',
         children: [
-            { path: 'new', component: articleNew },
-            { path: 'edit/:id', component: articleEdit },
-            { path: ':id', component:  articleView },
+            { path: 'new', component: articleNew, name: "articleNew" },
+            { path: 'edit/:articleEditId', component: articleEdit, name: "articleEdit" },
+            { path: ':articleId', component: articleView, name: "articleView" },
         ], 
     },
     {
         path: '/articles',
         children: [
-            { path: '', component: Articles, props: {currentRoute: "editoriallyArticles"} },
-            { path: 'editorially', component: Articles, props: {currentRoute: "editoriallyArticles"} },
-            { path: 'approvedEditorially', component: Articles, props: {currentRoute: "editoriallyApprovedArticles"} },
-            { path: 'abyss', component: Articles, props: {currentRoute: "abyssArticles"} },
+            { path: '', component: Articles, props: {currentRoute: "editoriallyArticles"}, name: "editoriallyArticles"},
+            { path: 'editorially', component: Articles, props: {currentRoute: "editoriallyArticles"}, name: "editoriallyArticles"},
+            { path: 'approvedEditorially', component: Articles, props: {currentRoute: "editoriallyApprovedArticles"}, name: "editoriallyApprovedArticles"},
+            { path: 'abyss', component: Articles, props: {currentRoute: "abyssArticles"}, name: "abyssArticles"},
         ],
     },
     {
         path: '/rules',
         component: Rules,
+        name: "Rules"
     },
     {
         path: '/sponsoring',
         component: Sponsoring,
+        name: "Sponsoring"
     },
 
     {
         path: '/aboutProject',
         component: aboutProject,
+        name: "aboutProject"
     },
     {
         path: '/faq',
         component: aboutProject,
+        name: "aboutProject"
     },
     {
         path: '/aboutProjectAndFAQ',
         component: aboutProject,
+        name: "aboutProject"
     },
 
 
     {
         path: '/:catchAll(.*)',
-        name: 'NotFound',
-        component: NotFound
+        component: NotFound,
+        name: 'NotFound'
     }
 ];
 
@@ -80,11 +85,11 @@ if (isAdmin)
     routes.push({
         path: '/admin',
         children: [
-            { path: '', component: AdminComments },
-            { path: 'article/edit/:id', component: articleAdminEdit },
-            { path: 'articles/waitingApproval/', component: Articles, props: {currentRoute: "articlesWaitingApproval"} },
-            { path: 'articles/waitingPremoderate/', component: Articles, props: {currentRoute: "articlesWaitingPremoderate"} },
-            { path: 'articles/edit/', component: AdminComments },
+            { path: '', component: AdminEditComments, name: "adminEditComments" },
+            { path: 'article/editComments/:articleId', component: articleAdminEditComments, name: "articleAdminEditComments" },
+            { path: 'articles/waitingApproval/', component: Articles, props: {currentRoute: "articlesWaitingApproval"}, name: "articlesWaitingApproval" },
+            { path: 'articles/waitingPremoderate/', component: Articles, props: {currentRoute: "articlesWaitingPremoderate"}, name: "articlesWaitingPremoderate" },
+            { path: 'articles/edit/', component: AdminEditComments, name: "adminEditComments" },
         ],
     })
 }

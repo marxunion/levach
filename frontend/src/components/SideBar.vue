@@ -24,20 +24,20 @@
             if(isAdmin)
             {
                 return [
-                    { uri: '/articles/editorially', checkUris: ['/','/articles/editorially'], text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
-                    { uri: '/articles/approvedEditorially', checkUris: ['/articles/approvedEditorially'], text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
-                    { uri: '/articles/abyss', checkUris: ['/articles/abyss'], text: (langData.value['links'] as JsonData)['abyssArticles'] },
-                    { uri: '/admin/articles/waitingApproval', checkUris: ['/admin/articles/waitingApproval'], text: (langData.value['links'] as JsonData)['articlesWaitingApproval'] },
-                    { uri: '/admin/articles/waitingPremoderate', checkUris: ['/admin/articles/waitingPremoderate'], text: (langData.value['links'] as JsonData)['articlesWaitingPremoderate'] },
-                    { uri: '/admin/articles/edit', checkUris: ['/admin/articles/edit'], text: (langData.value['links'] as JsonData)['commentsOnForum'] }
+                    { routeUri: '/articles/editorially', routeName: 'editoriallyArticles', text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
+                    { routeUri: '/articles/approvedEditorially', routeName: 'editoriallyApprovedArticles', text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
+                    { routeUri: '/articles/abyss', routeName: 'abyssArticles', text: (langData.value['links'] as JsonData)['abyssArticles'] },
+                    { routeUri: '/admin/articles/waitingApproval', routeName: 'articlesWaitingApproval', text: (langData.value['links'] as JsonData)['articlesWaitingApproval'] },
+                    { routeUri: '/admin/articles/waitingPremoderate', routeName: 'articlesWaitingPremoderate', text: (langData.value['links'] as JsonData)['articlesWaitingPremoderate'] },
+                    { routeUri: '/admin/articles/edit', routeName: 'adminEditComments', text: (langData.value['links'] as JsonData)['adminEditComments'] }
                 ]
             }
             else
             {
                 return [
-                    { uri: '/articles/editorially', checkUris: ['/','/articles/editorially'], text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
-                    { uri: '/articles/approvedEditorially', checkUris: ['/articles/approvedEditorially'], text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
-                    { uri: '/articles/abyss', checkUris: ['/articles/abyss'], text: (langData.value['links'] as JsonData)['abyssArticles'] }
+                    { routeUri: '/articles/editorially', routeName: 'editoriallyArticles', text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
+                    { routeUri: '/articles/approvedEditorially', routeName: 'editoriallyApprovedArticles', text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
+                    { routeUri: '/articles/abyss', routeName: 'abyssArticles', text: (langData.value['links'] as JsonData)['abyssArticles'] }
                 ]
             }
         }
@@ -45,14 +45,14 @@
 
     const linksfooter = computed(() => 
     [
-        { uri: '/faq', text: (langData.value['linksfooter'] as JsonData)['aboutProjectAndFAQ'] },
-        { uri: '/rules', text: (langData.value['linksfooter'] as JsonData)['rules'], },
-        { uri: '/sponsoring', text: (langData.value['linksfooter'] as JsonData)['sponsoring'] }
+        { routeUri: '/faq', text: (langData.value['linksfooter'] as JsonData)['aboutProjectAndFAQ'] },
+        { routeUri: '/rules', text: (langData.value['linksfooter'] as JsonData)['rules'], },
+        { routeUri: '/sponsoring', text: (langData.value['linksfooter'] as JsonData)['sponsoring'] }
     ]);
-    
-    const isCurrentLink = (checkUris: string[]) => 
+
+    const isCurrentRouteName = (routeName: string) => 
     {
-        return checkUris.includes(route.path);
+        return routeName == route.name ? true : false;
     };
 </script>
 
@@ -61,17 +61,22 @@
         <div class="sidebar__links">
             <a class="sidebar__links__link"
                 v-for="link in links"
-                    :href="`#${link.uri}`"
+                    :href="`#${link.routeUri}`"
                     @click="emit('toggleBurger')"
-                    :class="{ active: isCurrentLink(link.checkUris) }">
+                    :class="{ active: isCurrentRouteName(link.routeName) }">
                 {{ link.text }}
             </a>
+            <a v-if="isAdmin && (isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingPremoderate'))" class="sidebar__links__button rejectAllButton"> {{ langData['rejectAllButton'] }} </a>
+            <a v-else-if="isAdmin && isCurrentRouteName('articleAdminEditComments')" :href="'#/article/'+route.params['articleId']" class="sidebar__links__button backToArticleButton"> {{ langData['backToArticleButton'] }} </a>
+            <a v-else-if="isAdmin && isCurrentRouteName('articleView')" :href="'#/admin/article/editComments/'+route.params['articleId']" class="sidebar__links__button articleCommentsButton"> {{ langData['articleCommentsButton'] }} </a>
+            <a v-else></a>
         </div>
+        
         <div class="sidebar__linksfooter">
             <a
                 class="sidebar__linksfooter__link"
                 v-for="link in linksfooter"
-                :href="`#${link.uri}`"
+                :href="`#${link.routeUri}`"
                 @click="emit('toggleBurger')"
             >
             {{ link.text }}

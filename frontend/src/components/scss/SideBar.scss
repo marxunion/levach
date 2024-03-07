@@ -38,7 +38,50 @@
                 color: $sideBarLinkActive;
             }
         }
+        &__button
+        {
+            display: block;
+            width: 180px;
+            height: 40px;
+
+            border-radius: 15px;
+            font-size: 16px;
+            background-color: transparent;
+
+            text-align: center;
+            line-height: 40px;
+                    
+            color: $articlesReadAllButtonText;
+            border: 2px solid $articlesReadAllButtonBorder;
+
+            margin-top: 10px;
+
+            cursor: pointer;
+
+            &.articleCommentsButton
+            {
+                color: $sidebarArticleCommentsButtonText;
+                border: 2px solid $sidebarArticleCommentsButtonBorder;
+            }
+            &.backToArticleButton
+            {
+                color: $sidebarBackToArticleButtonText;
+                border: 2px solid $sidebarBackToArticleButtonBorder;
+            }
+            &.rejectAllButton
+            {
+                color: $sidebarRejectAllButtonText;
+                border: 2px solid $sidebarRejectAllButtonBorder;
+            }
+            transition: .4s;
+            transform: scale(1.00);
+            &:hover
+            {
+                transform: scale(1.05);
+            }
+        }
     }
+    
     &__linksfooter
     {
         display: flex;
@@ -54,12 +97,12 @@
             font-size: 16px;
             line-height: 2.1;
             width: 83%;
-            color: $sideBarLinkBlue;
+            color: $sideBarLinkFooter;
             font-family: Roboto-Regular;
             transition: .2s;
             &:hover
             {
-                color: $sideBarLinkBlueHover;
+                color: $sideBarLinkFooterHover;
             }
         }
     }
@@ -350,7 +393,7 @@
             margin-bottom: 20px;
             &__link
             {
-                font-size: 20px;
+                font-size: 16px;
                 text-align: center;
             }
         }
@@ -388,23 +431,8 @@
         {
             &__link
             {
-                font-size: 16px;
+                font-size: 14px;
             }
         }
-    }
-}
-
-@media(max-width: 600px)
-{
-    .sidebar
-    {
-        &__links
-        {
-            &__link
-            {
-                font-size: 16px;
-            }
-        }
-        
     }
 }
