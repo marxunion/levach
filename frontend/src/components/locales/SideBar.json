@@ -5,7 +5,10 @@
         {
             "editoriallyArticles": "Статьи редакции",
             "editoriallyApprovedArticles": "Статьи одобренные редакцией",
-            "abyss": "Бездна"
+            "abyssArticles": "Бездна",
+            "articlesWaitingApproval": "Статьи, ожидающие одобрения",
+            "articlesWaitingPremoderate": "Статьи, ожидающие премодерации",
+            "commentsOnForum": "Комментарии на форуме"
         },
         "linksfooter":
         {
@@ -21,7 +24,10 @@
         {
             "editoriallyArticles": "Editorially Articles",
             "editoriallyApprovedArticles": "Editorially Approved Articles",
-            "abyss": "Abyss"
+            "abyssArticles": "Abyss",
+            "articlesWaitingApproval": "Articles wait accept",
+            "articlesWaitingPremoderate": "Articles wait premoderate",
+            "commentsOnForum": "Comments on forum"
         },
         "linksfooter": 
         {

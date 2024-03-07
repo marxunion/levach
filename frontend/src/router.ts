@@ -1,17 +1,18 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 
+import { isAdmin } from './ts/AdminHandler';
+
 // Article
 import articleView from './views/article/articleView.vue';
 import articleEdit from './views/article/articleEdit.vue';
 import articleNew from './views/article/articleNew.vue';
 
 // Articles
-import articlesEditorially from './views/articles/articlesEditorially.vue';
-import articlesApprovedEditorially from './views/articles/articlesApprovedEditorially.vue';
-import articlesAbyss from './views/articles/articlesAbyss.vue';
+import Articles from './views/Articles.vue';
 
 // Admin
 import articleAdminEdit from './views/article/articleAdminEdit.vue';
+import AdminComments from './views/admin/AdminComments.vue';
 
 // Other routes
 import aboutProject from './views/aboutProject.vue';
@@ -21,12 +22,11 @@ import Sponsoring from './views/Sponsoring.vue';
 
 import NotFound from './views/NotFound.vue';
 
-
 const routes: RouteRecordRaw[] = 
 [
     {
         path: '/',
-        component: articlesEditorially,
+        component: Articles,
     },
     {
         path: '/article',
@@ -39,18 +39,10 @@ const routes: RouteRecordRaw[] =
     {
         path: '/articles',
         children: [
-            { path: '', component: articlesEditorially },
-            { path: 'editorially', component: articlesEditorially },
-            { path: 'approvedEditorially', component: articlesApprovedEditorially },
-            { path: 'abyss', component: articlesAbyss },
-        ],
-    },
-    {
-        path: '/admin',
-        children: [
-            { path: '', component: articlesEditorially },
-            { path: 'articles/edit/', component: articlesApprovedEditorially },
-            { path: 'article/edit/:id', component: articleAdminEdit },
+            { path: '', component: Articles, props: {currentRoute: "editoriallyArticles"} },
+            { path: 'editorially', component: Articles, props: {currentRoute: "editoriallyArticles"} },
+            { path: 'approvedEditorially', component: Articles, props: {currentRoute: "editoriallyApprovedArticles"} },
+            { path: 'abyss', component: Articles, props: {currentRoute: "abyssArticles"} },
         ],
     },
     {
@@ -82,6 +74,20 @@ const routes: RouteRecordRaw[] =
         component: NotFound
     }
 ];
+
+if (isAdmin) 
+{
+    routes.push({
+        path: '/admin',
+        children: [
+            { path: '', component: AdminComments },
+            { path: 'article/edit/:id', component: articleAdminEdit },
+            { path: 'articles/waitingApproval/', component: Articles, props: {currentRoute: "articlesWaitingApproval"} },
+            { path: 'articles/waitingPremoderate/', component: Articles, props: {currentRoute: "articlesWaitingPremoderate"} },
+            { path: 'articles/edit/', component: AdminComments },
+        ],
+    })
+}
 
 const router = createRouter({
     history: createWebHashHistory(),

@@ -21,9 +21,7 @@ const toggleBurger = () =>
   	<Header @toggleBurger="toggleBurger" />
 		<perfect-scrollbar>
 			<router-view v-slot="{ Component }">
-				
 				<transition name="pageOpacity" mode="out-in">
-					
 					<component :is="Component" />
 				</transition>
 			</router-view>

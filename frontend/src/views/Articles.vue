@@ -1,17 +1,21 @@
 <script setup lang="ts">
     import { ref, computed, reactive, watch } from 'vue';
     
-    import DropDown from "./../../components/DropDown.vue";
+    import DropDown from "./../components/DropDown.vue";
 
     import { MdPreview, config } from 'md-editor-v3';
     import 'md-editor-v3/lib/style.css';
 
-    import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
+    import { JsonData } from './../ts/JsonHandler';
 
-    import langsData from "./locales/articlesEditorially.json";
-    import { LangDataHandler } from "./../../ts/LangDataHandler";
+    import { abbreviateNumber } from './../ts/AbbreviateNumberHelper';
 
-    import './../../libs/font_2605852_prouiefeic';
+    import langsData from "./locales/Articles.json";
+    import { LangDataHandler } from "./../ts/LangDataHandler";
+
+    import './../libs/font_2605852_prouiefeic';
+
+    const props = defineProps(['currentRoute']);
 
 	const langData = LangDataHandler.initLangDataHandler("articlesEditorially", langsData).langData;
 
@@ -147,7 +151,7 @@
 <template>
     <main class="main">
         <div class="main__header">
-			<p class="main__header__title">{{ langData['headerTitle'] }}</p>
+			<p class="main__header__title">{{ (langData['headerTitle'] as JsonData)[currentRoute || 'editoriallyArticles'] }}</p>
 			<div class="main__header__sort">
 				<p class="main__header__sort__title">{{ langData['sortTitle'] }}</p>
 				<DropDown :options="sortTypes" :default="sortTypes[currentSortType]" class="main__header__sort__select" @inputIndex="onChangeSortType" />
@@ -162,14 +166,14 @@
             </div>
             <div class="main__article__reactions">
                 <div class="main__article__reactions__statistics">
-                    <img src="../../assets/img/article/like.svg" alt="Likes: " class="main__article__reactions__statistics__icon likeIcon">
+                    <img src="../assets/img/article/like.svg" alt="Likes: " class="main__article__reactions__statistics__icon likeIcon">
                     <p class="main__article__reactions__statistics__title likeCounter">{{ abbreviateNumber(article['statistics']['likes']) }}</p>
-                    <img src="../../assets/img/article/dislike.svg" alt="Dislikes: " class="main__article__reactions__statistics__icon dislikeIcon">
+                    <img src="../assets/img/article/dislike.svg" alt="Dislikes: " class="main__article__reactions__statistics__icon dislikeIcon">
                     <p class="main__article__reactions__statistics__title dislikeCounter">{{ abbreviateNumber(article['statistics']['dislikes']) }}</p>
-                    <img src="../../assets/img/article/Share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
+                    <img src="../assets/img/article/Share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                 </div>
                 <div class="main__article__reactions__comments">
-                    <img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
+                    <img src="../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
                     <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article['statistics']['comments']) }}</p>
                 </div>
             </div>
@@ -272,5 +276,4 @@
     }
 }
 </style>
-<style lang="scss" scoped src="./scss/articles.scss"></style>
-<style lang="scss" scoped src="./scss/articlesEditorially.scss"></style>
+<style lang="scss" scoped src="./scss/Articles.scss"></style>

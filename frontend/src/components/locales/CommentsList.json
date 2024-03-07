@@ -2,11 +2,13 @@
     "RU":
     {
         "titleAnswer": "Ответить",
-        "titleReport": "Пожаловатся"
+        "titleReport": "Пожаловатся",
+        "titleDelete": "Удалить"
     },
     "EN":
     {
         "titleAnswer": "Answer",
-        "titleReport": "Report"
+        "titleReport": "Report",
+        "titleDelete": "Delete"
     }
 }

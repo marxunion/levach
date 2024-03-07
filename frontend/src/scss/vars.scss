@@ -118,6 +118,20 @@ $articleViewCommentsBG: #fff;
 // ArticleAdminEdit
 $articleAdminEditBG: #fff;
 
+$articleAdminEditFiltersInputBG: #d9d9d9;
+$articleAdminEditFiltersInputBorder: #d9d9d9;
+$articleAdminEditFiltersInputBorderHover: #aaaeb7;
+$articleAdminEditFiltersInputBorderFocus: #aaaeb7;
+$articleAdminEditFiltersInputText: #2c2c2c;
+$articleAdminEditFiltersInputPlaceholderText: #565656;
+
+$articleAdminEditFiltersInputNumberButtonBG: #f5f5f5;
+
+$articleAdminEditButtonsApplyFiltersButtonText: #54A9F8;
+$articleAdminEditButtonsApplyFiltersButtonBorder: #54A9F8;
+$articleAdminEditButtonsDeleteSelectedButtonText: #950C0C;
+$articleAdminEditButtonsDeleteSelectedButtonBorder: #950C0C;
+
 // Articles
 $articlesArticleBG: #fff;
 $articlesArticleTitleTime: #797979;
@@ -136,9 +150,6 @@ $SearchMobileModalBG: #fff;
 $SearchMobileModalInputBG: #d9d9d9;
 $SearchMobileModalInputText: #000;
 $SearchMobileModalInputPlaceholderText: #3d3d3d;
-
-
-
 
 // AdminModal
 $adminModalBG: #eee;

@@ -7,6 +7,8 @@
     import { openModal } from "jenesius-vue-modal";
     import AdminModal from "./../components/modals/AdminModal.vue";
 
+    import { isAdmin } from './../ts/AdminHandler';
+
     import { LangDataHandler } from './../ts/LangDataHandler';
     import langsData from './locales/SideBar.json';
 
@@ -18,11 +20,28 @@
     const emit = defineEmits();
 
     const links = computed(() => 
-    [
-        { uri: '/articles/editorially', checkUris: ['/','/articles/editorially'], text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
-        { uri: '/articles/approvedEditorially', checkUris: ['/articles/approvedEditorially'], text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
-        { uri: '/articles/abyss', checkUris: ['/articles/abyss'], text: (langData.value['links'] as JsonData)['abyss'] }
-    ]);
+        {
+            if(isAdmin)
+            {
+                return [
+                    { uri: '/articles/editorially', checkUris: ['/','/articles/editorially'], text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
+                    { uri: '/articles/approvedEditorially', checkUris: ['/articles/approvedEditorially'], text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
+                    { uri: '/articles/abyss', checkUris: ['/articles/abyss'], text: (langData.value['links'] as JsonData)['abyssArticles'] },
+                    { uri: '/admin/articles/waitingApproval', checkUris: ['/admin/articles/waitingApproval'], text: (langData.value['links'] as JsonData)['articlesWaitingApproval'] },
+                    { uri: '/admin/articles/waitingPremoderate', checkUris: ['/admin/articles/waitingPremoderate'], text: (langData.value['links'] as JsonData)['articlesWaitingPremoderate'] },
+                    { uri: '/admin/articles/edit', checkUris: ['/admin/articles/edit'], text: (langData.value['links'] as JsonData)['commentsOnForum'] }
+                ]
+            }
+            else
+            {
+                return [
+                    { uri: '/articles/editorially', checkUris: ['/','/articles/editorially'], text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
+                    { uri: '/articles/approvedEditorially', checkUris: ['/articles/approvedEditorially'], text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
+                    { uri: '/articles/abyss', checkUris: ['/articles/abyss'], text: (langData.value['links'] as JsonData)['abyssArticles'] }
+                ]
+            }
+        }
+    );
 
     const linksfooter = computed(() => 
     [

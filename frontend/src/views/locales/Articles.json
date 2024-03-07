@@ -2,14 +2,30 @@
     "RU":
     {
         "versionText": "Версия ",
-        "headerTitle": "Статьи Одобренные Редакцией",
+
+        "headerTitle":
+        {
+            "editoriallyArticles": "Статьи редакции",
+            "editoriallyApprovedArticles": "Статьи одобренные редакцией",
+            "abyssArticles": "Статьи Бездны",
+            "articlesWaitingApproval": "Статьи ожидающие одобрения",
+            "articlesWaitingPremoderate": "Статьи ожидающие премодерации"
+        },
+        
+
         "sortTitle": "Сортировать по:",
         "sortTypes": 
         [
             "популярности",
             "дате размещения"
         ],
+
+        "approveArticleButton": "Одобрить",
+        "disapproveArticleButton": "Не одобрять",
+        "premoderateArticleButton": "Принять",
+        "rejectPremoderateArticleButton": "Не принимать",
         "readAllButton": "Читать далее",
+        
         "toolbarTips": 
         {
             "bold": "Жирный",
@@ -94,13 +110,26 @@
     "EN":
     {
         "versionText": "Version ",
-        "headerTitle": "Articles Approved Editorially",
+        "headerTitle":
+        {
+            "editoriallyArticles": "Статьи редакции",
+            "editoriallyApprovedArticles": "Статьи одобренные редакцией",
+            "abyssArticles": "Статьи Бездны",
+            "articlesWaitingApproval": "Статьи ожидающие одобрения",
+            "articlesWaitingPremoderate": "Статьи ожидающие премодерации"
+        },
+        
         "sortTitle": "Sort by:",
         "sortTypes": 
         [
             "popularity",
             "posting date"
         ],
+
+        "approveArticleButton": "Approve",
+        "disapproveArticleButton": "Disapprove",
+        "premoderateArticleButton": "Accept",
+        "rejectPremoderateArticleButton": "Reject",
         "readAllButton": "Read more",
         "toolbarTips": 
         {

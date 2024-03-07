@@ -16,6 +16,9 @@
 
         "applyFiltersButton": "Применить фильтры",
         "deleteSelectedButton": "Удалить выбранное",
+        
+        "dateSelectText": "Выбрать",
+        "dateCancelText": "Отмена",
 
         "commentsTitle": "Комментарии по заданным фильтрам"
     },
@@ -32,10 +35,13 @@
         "dateCommentSendTitle2": "before",
 
         "commentContentTitle": "Comment Content",
-        "commentContentTitle2": "Containing",
+        "commentContentTitle1": "Containing",
 
         "applyFiltersButton": "Apply Filters",
         "deleteSelectedButton": "Delete Selected",
+
+        "dateSelectText": "Select",
+        "dateCancelText": "Cancel",
 
         "commentsTitle": "Comment on specified filters"
     }

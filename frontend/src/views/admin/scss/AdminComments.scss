@@ -1,0 +1,846 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.main
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__filters
+    {
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 15px;
+        background-color: $articleAdminEditBG;
+        &__title
+        {
+            margin-top: 12px;
+            font-size: 32px;
+            font-family: Roboto-Regular;
+        }
+        &__blocks
+        {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            &__block
+            {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                
+                &__title
+                {
+                    text-align: center;
+                    font-size: 18px;
+                    font-family: Roboto-Regular;
+                }
+                &__content
+                {
+                    display: flex;
+                    align-items: center;
+                    margin-top: 7px;
+                    &__text
+                    {
+                        font-size: 16px;
+                        font-family: Roboto-Regular;
+                    }
+                    &__input
+                    {
+                        margin-left: 5px;
+                        margin-right: 5px;
+                        
+                        width: 170px;
+                        height: 35px;
+                        border-radius: 15px;
+                        
+                        
+                        &.text
+                        {
+                            color: $articleAdminEditFiltersInputText;
+                            background-color: $articleAdminEditFiltersInputBG;
+                            font-size: 16px;
+                            padding-left: 10px;
+                            transition: .4s;
+                            box-sizing: border-box;
+                            border: 1px solid $articleAdminEditFiltersInputBorder;
+                            &:hover
+                            {
+                                border: 1px solid $articleAdminEditFiltersInputBorderHover;
+                            }
+                        }
+                        &.number
+                        {
+                            color: $articleAdminEditFiltersInputText;
+                            background-color: $articleAdminEditFiltersInputBG;
+                            width: 120px;
+                            height: 35px;
+
+                            & button
+                            {
+                                width: 27px;
+                                cursor: pointer;
+                                border-radius: 12px;
+                                margin: 3px;
+                                background-color: $articleAdminEditFiltersInputNumberButtonBG;
+
+                                &:disabled
+                                {
+                                    opacity: .9;
+                                }
+                            }
+                            & input
+                            {
+                                border-radius: 15px;
+                                height: 35px;
+                                padding: 0 !important;
+                                border: 1px solid $articleAdminEditFiltersInputBorder;
+                                color: $articleAdminEditFiltersInputText;
+                                background-color: $articleAdminEditFiltersInputBG;
+                                font-size: 16px;
+                                text-align: center;
+                                transition: .4s;
+                                box-sizing: border-box;
+                                &:hover
+                                {
+                                    border: 1px solid $articleAdminEditFiltersInputBorderHover;
+                                }
+                                &:focus
+                                {
+                                    border: 1px solid $articleAdminEditFiltersInputBorderFocus;
+                                }
+                            }
+                        }
+                        &.date
+                        {
+                            width: 185px;
+                            & input
+                            {
+                                border-radius: 15px;
+                                height: 35px;
+                                padding: 0 !important;
+                                padding-left: 35px !important;
+                                color: $articleAdminEditFiltersInputText;
+                                background-color: $articleAdminEditFiltersInputBG;
+                                font-size: 16px;
+                                border: 1px solid $articleAdminEditFiltersInputBorder;
+                                &:hover
+                                {
+                                    border: 1px solid $articleAdminEditFiltersInputBorderHover;
+                                }
+                                &:focus
+                                {
+                                    border: 1px solid $articleAdminEditFiltersInputBorderFocus;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &__buttons
+        {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 95%;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            &__button
+            {
+                cursor: pointer;
+                display: block;
+                width: 240px;
+                height: 45px;
+
+                border-radius: 15px;
+                font-size: 20px;
+                background-color: transparent;
+
+                text-align: center;
+                line-height: 45px;
+                
+                color: $articleAdminEditButtonsApplyFiltersButtonText;
+                border: 2px solid $articleAdminEditButtonsApplyFiltersButtonBorder;
+
+                &.delete
+                {
+                    color: $articleAdminEditButtonsDeleteSelectedButtonText;
+                    border: 2px solid $articleAdminEditButtonsDeleteSelectedButtonBorder;
+                }
+
+
+                transition: .4s;
+                transform: scale(1.00);
+                &:hover
+                {
+                    transform: scale(1.05);
+                }
+            }
+        }
+    }
+    &__comments
+    {
+        margin-top: 15px;
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 15px;
+        background-color: $articleAdminEditBG;
+        &__title
+        {
+            margin-top: 12px;
+            font-size: 24px;
+            font-family: Roboto-Regular;
+        }
+        &__articles
+        {
+            margin-top: 10px;
+            &__title
+            {
+                font-size: 22px;
+                font-family: Roboto-Regular;
+            }
+            &__articleComments
+            {
+                margin-left: 1%;
+            }
+            width: 95%;
+        }
+    }
+}
+
+@media(max-width: 1720px)
+{
+    .main
+    {
+        &__filters
+        {
+            &__title
+            {
+                font-size: 28px;
+            }
+            &__blocks
+            {
+                &__block
+                {
+                    &__title
+                    {
+                        font-size: 15px;
+                    }
+                    &__content
+                    {
+                        &__text
+                        {
+                            font-size: 13px;
+                            font-family: Roboto-Regular;
+                        }
+                        &__input
+                        {
+                            width: 150px;
+                            height: 35px;
+                            
+                            &.text
+                            {
+                                font-size: 14px;
+                            }
+                            &.number
+                            {
+                                width: 100px;
+                                height: 35px;
+    
+                                & button
+                                {
+                                    width: 27px;
+                                    cursor: pointer;
+                                    margin: 3px;
+                                }
+                                & input
+                                {
+                                    height: 35px;
+                                    padding: 0 !important;
+                                    font-size: 14px;
+                                }
+                            }
+                            &.date
+                            {
+                                width: 170px;
+                                & .dp__input_icons
+                                {
+                                    padding: 6px 8px;
+                                }    
+                                & input
+                                {
+                                    height: 35px;
+                                    padding-left: 32px !important;
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &__comments
+        {
+            &__title
+            {
+                font-size: 22px;
+            }
+        }
+    }
+}
+
+@media(max-width: 1520px)
+{
+    .main
+    {   
+        &__filters
+        {
+            &__title
+            {
+                font-size: 23px;
+            }
+            &__blocks
+            {
+                &__block
+                {
+                    &__title
+                    {
+                        font-size: 13px;
+                    }
+                    &__content
+                    {
+                        &__text
+                        {
+                            font-size: 13px;
+                            font-family: Roboto-Regular;
+                        }
+                        &__input
+                        {
+                            width: 130px;
+                            height: 30px;
+                            
+                            &.text
+                            {
+                                font-size: 12px;
+                            }
+                            &.number
+                            {
+                                width: 90px;
+                                height: 30px;
+    
+                                & button
+                                {
+                                    border-radius: 8px;
+                                    width: 22px;
+                                    cursor: pointer;
+                                    margin: 3px;
+                                    &::before
+                                    {
+                                        width: 14px;
+                                    }
+                                    &::after
+                                    {
+                                        height: 14px;
+                                    }
+                                }
+                                & input
+                                {
+                                    height: 30px;
+                                    padding: 0 !important;
+                                    font-size: 11.5px;
+                                }
+                            }
+                            &.date
+                            {
+                                width: 150px;
+                                & input
+                                {
+                                    height: 30px;
+                                    padding-left: 30px !important;
+                                    font-size: 11.5px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &__comments
+        {
+            &__title
+            {
+                font-size: 20px;
+            }
+        }
+    }
+}
+
+@media(max-width: 1400px)
+{
+    .main
+    {   
+        &__filters
+        {
+            &__title
+            {
+                font-size: 23px;
+            }
+            &__blocks
+            {
+                &__block
+                {
+                    &__title
+                    {
+                        font-size: 13px;
+                    }
+                    &__content
+                    {
+                        &__text
+                        {
+                            font-size: 13px;
+                            font-family: Roboto-Regular;
+                        }
+                        &__input
+                        {
+                            width: 130px;
+                            height: 30px;
+                            
+                            &.text
+                            {
+                                font-size: 12px;
+                            }
+                            &.number
+                            {
+                                width: 90px;
+                                height: 30px;
+    
+                                & button
+                                {
+                                    border-radius: 8px;
+                                    width: 22px;
+                                    cursor: pointer;
+                                    margin: 3px;
+                                    &::before
+                                    {
+                                        width: 14px;
+                                    }
+                                    &::after
+                                    {
+                                        height: 14px;
+                                    }
+                                }
+                                & input
+                                {
+                                    height: 30px;
+                                    padding: 0 !important;
+                                    font-size: 11.5px;
+                                }
+                            }
+                            &.date
+                            {
+                                width: 150px;
+                                & input
+                                {
+                                    height: 30px;
+                                    padding-left: 30px !important;
+                                    font-size: 11.5px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &__comments
+        {
+            &__title
+            {
+                font-size: 20px;
+            }
+        }
+    }
+}
+
+@media(max-width: 1350px)
+{
+    .main
+    {
+        &__filters
+        {
+            &__title
+            {
+                font-size: 28px;
+            }
+            &__blocks
+            {
+                flex-direction: column;
+                align-items: center;
+                &__block
+                {
+                    margin-top: 15px;
+                    &__title
+                    {
+                        font-size: 17px;
+                    }
+                    &__content
+                    {
+                        &__text
+                        {
+                            font-size: 15px;
+                            font-family: Roboto-Regular;
+                        }
+                        &__input
+                        {
+                            width: 150px;
+                            height: 35px;
+                            
+                            &.text
+                            {
+                                font-size: 16px;
+                            }
+                            &.number
+                            {
+                                width: 100px;
+                                height: 35px;
+    
+                                & button
+                                {
+                                    width: 27px;
+                                    cursor: pointer;
+                                    margin: 3px;
+                                }
+                                & input
+                                {
+                                    height: 35px;
+                                    padding: 0 !important;
+                                    font-size: 16px;
+                                }
+                            }
+                            &.date
+                            {
+                                width: 180px;
+                                & .dp__input_icons
+                                {
+                                    padding: 6px 8px;
+                                }    
+                                & input
+                                {
+                                    height: 35px;
+                                    padding-left: 32px !important;
+                                    font-size: 15px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &__comments
+        {
+            &__title
+            {
+                font-size: 22px;
+            }
+        }
+    }
+}
+
+
+@media(max-width: 1050px)
+{
+    .main
+    {
+        &__filters
+        {
+            width: 92%;
+            &__title
+            {
+                font-size: 28px;
+            }
+            &__blocks
+            {
+                flex-direction: row;
+                &__block
+                {
+                    &__title
+                    {
+                        font-size: 15px;
+                    }
+                    &__content
+                    {
+                        &__text
+                        {
+                            font-size: 13px;
+                            font-family: Roboto-Regular;
+                        }
+                        &__input
+                        {
+                            width: 150px;
+                            height: 35px;
+                            
+                            &.text
+                            {
+                                font-size: 14px;
+                            }
+                            &.number
+                            {
+                                width: 100px;
+                                height: 35px;
+    
+                                & button
+                                {
+                                    width: 27px;
+                                    cursor: pointer;
+                                    margin: 3px;
+                                }
+                                & input
+                                {
+                                    height: 35px;
+                                    padding: 0 !important;
+                                    font-size: 14px;
+                                }
+                            }
+                            &.date
+                            {
+                                width: 160px;
+                                & .dp__input_icons
+                                {
+                                    padding: 6px 8px;
+                                }    
+                                & input
+                                {
+                                    height: 35px;
+                                    padding-left: 32px !important;
+                                    font-size: 13px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &__comments
+        {
+            width: 92%;
+            &__title
+            {
+                font-size: 20px;
+            }
+        }
+    }
+}
+
+@media(max-width: 940px)
+{
+    .main
+    {
+        &__filters
+        {
+            &__title
+            {
+                font-size: 28px;
+            }
+            &__blocks
+            {
+                flex-direction: column;
+                &__block
+                {
+                    &__title
+                    {
+                        font-size: 15px;
+                    }
+                    &__content
+                    {
+                        &__text
+                        {
+                            font-size: 13px;
+                            font-family: Roboto-Regular;
+                        }
+                        &__input
+                        {
+                            width: 150px;
+                            height: 35px;
+                            
+                            &.text
+                            {
+                                font-size: 14px;
+                            }
+                            &.number
+                            {
+                                width: 100px;
+                                height: 35px;
+    
+                                & button
+                                {
+                                    width: 27px;
+                                    cursor: pointer;
+                                    margin: 3px;
+                                }
+                                & input
+                                {
+                                    height: 35px;
+                                    padding: 0 !important;
+                                    font-size: 14px;
+                                }
+                            }
+                            &.date
+                            {
+                                width: 160px;
+                                & .dp__input_icons
+                                {
+                                    padding: 6px 8px;
+                                }    
+                                & input
+                                {
+                                    height: 35px;
+                                    padding-left: 28px !important;
+                                    font-size: 13px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &__comments
+        {
+            &__articles
+            {
+                &__title
+                {
+                    font-size: 20px;
+                }
+            }
+            &__title
+            {
+                font-size: 18px;
+            }
+        }
+    }
+}
+
+@media(max-width: 620px)
+{
+    .main
+    {
+        &__filters
+        {
+            &__buttons
+            {
+                flex-direction: column;
+                &__button
+                {
+                    margin-top: 12px;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 450px)
+{
+    .main
+    {
+        &__filters
+        {
+            &__title
+            {
+                font-size: 25px;
+            }
+            &__blocks
+            {
+                flex-direction: column;
+                &__block
+                {
+                    &:nth-child(2) &__content
+                    {
+                        flex-direction: column;
+                        &__text
+                        {
+                            font-size: 17px;
+                            margin: 4px 0;
+                        }
+                    }
+                    &__title
+                    {
+                        font-size: 15px;
+                    }
+                    &__content
+                    {
+                        
+                        &__text
+                        {
+                            font-size: 14px;
+                            font-family: Roboto-Regular;
+                        }
+                        &__input
+                        {
+                            width: 150px;
+                            height: 35px;
+                            
+                            &.text
+                            {
+                                font-size: 15px;
+                            }
+                            &.number
+                            {
+                                width: 100px;
+                                height: 35px;
+    
+                                & button
+                                {
+                                    width: 27px;
+                                    cursor: pointer;
+                                    margin: 3px;
+                                }
+                                & input
+                                {
+                                    height: 35px;
+                                    padding: 0 !important;
+                                    font-size: 14px;
+                                }
+                            }
+                            
+                            &.date
+                            {
+                                width: 260px;
+                                & .dp__input_icons
+                                {
+                                    padding: 6px 8px;
+                                }    
+                                & input
+                                {
+                                    height: 35px;
+                                    padding-left: 32px !important;
+                                    font-size: 16px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &__comments
+        {
+            &__articles
+            {
+                &__title
+                {
+                    font-size: 18px;
+                }
+            }
+            &__title
+            {
+                font-size: 14px;
+            }
+        }
+    }
+}
