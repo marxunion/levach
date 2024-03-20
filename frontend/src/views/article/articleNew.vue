@@ -5,6 +5,10 @@
 	import { MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
+	import { openModal } from "jenesius-vue-modal";
+    import InfoModal from "./../../components/modals/InfoModal.vue";
+	import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
+
 	import { LangDataHandler } from "./../../ts/LangDataHandler";
 	import langsData from "./locales/articleNew.json";
 
@@ -82,6 +86,8 @@
 	{
 		tags.value.splice(index, 1);
 	};
+
+	const modalProps = {status: 1, text: "Это гибрид анонимного форума и интернет-журнала, предназначенный для анонимного общения в левом политическом дискурсе. Добро пожаловать.", link: "levach.com/article/edit/3238r94y9843ufggevb9yfd8v89df89v8d8989vdf67", text2: "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию"};
 </script>
 
 <template>
@@ -89,7 +95,7 @@
 		<article class="main__article">
 			<div class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="true" noIconfont/>
-				<button class="main__article__editorContainer__sendButton">{{ langData['sendButton'] }}</button>	
+				<button class="main__article__editorContainer__sendButton" @click="openModal(InfoModalWithLink, modalProps)">{{ langData['sendButton'] }}</button>	
 			</div>	
 			<div class="main__article__editTags">
 				<div class="main__article__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">

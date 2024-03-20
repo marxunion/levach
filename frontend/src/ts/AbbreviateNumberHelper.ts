@@ -1,11 +1,13 @@
 export function abbreviateNumber(number: number): string 
 {
+    // Numbers abbreviates
     const siSymbol: string[] = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc"];
-
+    
     if (number === 0) 
     {
         return "0";
     }
+
     if (number < 1000) 
     {
         return number.toString();

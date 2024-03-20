@@ -1,0 +1,149 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.form
+{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: $InfoModalBG;
+    border-radius: 20px;
+    position: absolute;
+    top: 120px;
+
+    &__title
+    {
+        font-size: 54px;
+        font-family: Roboto-Regular;
+        text-align: center;
+        color: $InfoModalTitle;
+        margin-top: 12px;
+    }
+
+    &__text
+    {
+        width: 96%;
+        font-size: 24px;
+        color: $InfoModalText;
+        font-family: Roboto-Regular;
+        text-align: center;
+        margin-top: 12px;
+        margin-bottom: 18px;
+    }
+}
+
+@media(min-width: 2400px)
+{
+    .form
+    {
+        &__title
+        {
+            font-size: 58px;
+        }
+
+        &__text
+        {
+            font-size: 24px;
+            &.footer
+            {
+                font-size: 22px;
+            }
+        }
+    }
+}
+
+@media(min-width: 3000px)
+{
+    .form
+    {
+        &__title
+        {
+            font-size: 64px;
+        }
+
+        &__text
+        {
+            font-size: 28px;
+        }
+    }
+}
+
+@media(max-width: 1400px)
+{
+    .form
+    {
+        width: 80%;
+    }
+}
+@media(max-width: 1050px)
+{
+    .form
+    {
+        width: 90%;
+    }
+}
+
+@media(max-width: 820px)
+{
+    .form
+    {
+        &__title
+        {
+            font-size: 54px;
+        }
+        &__text
+        {
+            margin-top: 2.5%;
+            font-size: 22px;
+            &.footer
+            {
+                margin-top: 3.5%;
+            }
+        }
+    }
+}
+
+@media(max-width: 600px)
+{
+    .form
+    {
+        &__title
+        {
+            font-size: 42px;
+        }
+        &__text
+        {
+            margin-top: 2.5%;
+            font-size: 16px;
+        }
+    }
+}
+
+@media(max-height: 600px)
+{
+    .form
+    {
+        top: 7%;
+        height: 70%;
+    }
+}
+
+@media(max-height: 450px)
+{
+    .form
+    {
+        top: 5%;
+        height: 75%;
+        &__title
+        {
+            font-size: 45px;
+        }
+        &__text
+        {
+            margin-top: 3%;
+            font-size: 18px;
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "RU":
+    {
+        "success": "Готово!",
+        "failure": "Ошибка!"
+    },
+    "EN":
+    {
+        "success": "Done!",
+        "failure": "Failure!"
+    }
+}

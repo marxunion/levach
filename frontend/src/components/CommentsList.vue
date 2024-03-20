@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	import { ref, defineProps } from 'vue';
+	import { defineProps } from 'vue';
 	
-	const props = defineProps(['comment', 'level']);
+	defineProps(['comment', 'level']);
 
 	import { isAdmin } from './../ts/AdminHandler'
 
