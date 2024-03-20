@@ -1,1 +1,0 @@
-<?php require "backend/views/components/header_en.php" ?>

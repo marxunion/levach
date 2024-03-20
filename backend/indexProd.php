@@ -14,9 +14,12 @@ $app->get('/frontend/assets/{file:.*}', function ($request, $response, $args)
 {
     $file = __DIR__ . '/../frontend/dist/' . $args['file'];
 
-    if (file_exists($file)) {
+    if (file_exists($file)) 
+	{
         return $response->withFile($file);
-    } else {
+    } 
+    else 
+    {
         return $response->withStatus(404)->write('File not found');
     }
 });
@@ -25,9 +28,12 @@ $app->get('/', function ($request, $response)
 {
     $file = __DIR__ . '/../frontend/index.html';
     
-    if (file_exists($file)) {
+    if (file_exists($file)) 
+	{
         return $response->withFile($file);
-    } else {
+    } 
+	else 
+	{
         return $response->withStatus(404)->write($file);
     }
 });

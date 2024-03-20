@@ -67,8 +67,7 @@ $app->group('/api', function (RouteCollectorProxy $group)
 
 $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function (Request $request, Response $response) 
 {
-    $data =
-    [
+    $data = [
         'apistatus' => "ok"
     ];
     return $response->withJson($data);

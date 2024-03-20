@@ -14,6 +14,13 @@ services:
     networks:
       - app-network
 
+  postgres:
+    image: postgres:alpine3.19
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
   composer:
     image: composer:latest
     volumes:
