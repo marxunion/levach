@@ -33,13 +33,19 @@ $app->group('/api', function (RouteCollectorProxy $group)
         ];
         return $response->withJson($data);
     });
-    $group->get('/hello/{name}', function (Request $request, Response $response, array $args) 
+    $group->post('/article/new', function (Request $request, Response $response) 
     {
-        $name = $args['name'];
-        $data = [
-            'message' => "Hello, $name",
-            'timestamp' => time(),
-        ];
+        $data = $request->getParsedBody();
+        return $response->withJson($data);
+    });
+    $group->get('/article/view/', function (Request $request, Response $response, $args) 
+    {
+        $data = $request->getParsedBody();
+        return $response->withJson($data);
+    });
+    $group->get('/articles', function (Request $request, Response $response, $args) 
+    {
+        $data = $request->getParsedBody();
         return $response->withJson($data);
     });
     $group->get('/media/img/{file}', function (Request $request, Response $response, $args) 
