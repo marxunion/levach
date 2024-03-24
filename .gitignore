@@ -12,7 +12,10 @@ frontend/dist
 
 # Backend
 
-backend/logs
+backend/logs/*.log
+backend/logs/**/*.log
+backend/backups
+backend/databases
 backend/vendor
 backend/composer.lock
 

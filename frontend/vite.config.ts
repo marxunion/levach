@@ -10,11 +10,7 @@ export default defineConfig({
       '/api': {
         target: process.env.VITE_API_URL,
         rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-      '/media': {
-        target: process.env.VITE_MEDIA_URL,
-        rewrite: (path) => path.replace(/^\/media/, ''),
-      },
+      }
     },
     watch: {
       usePolling: true,
