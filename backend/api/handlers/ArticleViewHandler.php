@@ -6,5 +6,8 @@ use Base\BaseModel;
 
 class ArticleViewHandler extends BaseHandler
 {
-    
+    public function __construct($data)
+    {
+
+    }
 }

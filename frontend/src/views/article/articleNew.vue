@@ -38,7 +38,6 @@
 
 	watch(langData, () =>
 	{
-		//state.text = langData.value['editorDefaultText'];
 		editorState.language = LangDataHandler.currentLanguage.value;
 	});
 
@@ -47,26 +46,87 @@
 		const res = await Promise.all(
 			files.map((file) => 
 			{
-				return new Promise<{ data: { url: string } }>((rev, rej) => 
+				return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
 				{
 					const form = new FormData();
 					form.append('file', file);
 
-					axios
-					.post('/api/media/img/upload', form, 
+					console.log(form);
+
+					axios.post('/api/media/img/upload', form, 
 					{
 						headers: 
 						{
 							'Content-Type': 'multipart/form-data'
 						}
 					})
-					.then((response) => rev(response))
-					.catch((error) => rej(error));
+					.then((response) => 
+					{
+						let modalInfoProps;
+                        if (response.data) 
+						{
+							console.log(response);
+							
+							if(response.data.fileName)
+							{
+								console.log(response);
+								
+								resolve(response);
+							}
+                            else if(response.data.errorStatus)
+							{
+								if(response.data.errorCode == "002001")
+								{
+									modalInfoProps = {
+										status: false, text: langData.value["errorImageNeedImage"]
+									}
+								}
+								else if(response.data.errorCode == "002002")
+								{
+									modalInfoProps = {
+										status: false, text: langData.value["errorImageMaxSize"]
+									}
+								}
+								else if(response.data.errorCode == "002003")
+								{
+									modalInfoProps = {
+										status: false, text: langData.value["errorImageUnallowedType"]
+									}
+								}
+								else
+								{
+									modalInfoProps = {
+										status: false, text: langData.value["unknownError"]
+									}
+								}
+								openModal(InfoModal, modalInfoProps);
+								reject(new Error());
+							}
+							else 
+							{
+								modalInfoProps = {
+									status: false, text: langData.value["unknownError"]
+								}
+								openModal(InfoModal, modalInfoProps);
+								reject(new Error());
+							}
+                        }
+						else
+						{
+							modalInfoProps = {
+								status: false, text: langData.value["unknownError"]
+							}
+							openModal(InfoModal, modalInfoProps);
+							reject(new Error())
+						}
+						
+                    })
+                    .catch((error) => reject(error));
 				});
 			})
 		);
 
-		callback(res.map((item) => item.data.url));
+		callback(res.map((item) => '/api/media/img/'+item.data.fileName));
 	};
 
 

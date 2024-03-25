@@ -10,6 +10,8 @@ services:
       DEBUG_MODE: ${DEBUG_MODE}
       IS_DEBUG_SERVER: true
 
+      MAX_UPLOAD_FILESIZE_MB: ${MAX_UPLOAD_FILESIZE_MB}
+
       HOSTNAME: ${HOSTNAME}
 
       DB_TYPE: ${DB_TYPE}
@@ -18,9 +20,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ./backend:/var/www/levach/backend
-      - ./frontend:/var/www/levach/frontend
-      - ./media:/var/www/levach/media
+      - ./:/var/www/levach/
     expose:
       - "9000"
     depends_on:

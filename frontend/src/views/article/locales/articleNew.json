@@ -4,6 +4,17 @@
         "editorDefaultText": "Заголовок статьи",
         "sendButton": "Опубликовать",
         "addTagPlaceholder": "Добавить тег...",
+
+        "errorImageNeedTitle": "Пожалуйста добавьте хотяб один заголовок к статье",
+        
+        "errorImageNeedImage": "Пожалуйста загрузите хотяб одно изображение",
+        "errorImageMaxSize": "Размер загружаемого изображения должен быть не больше 30МБ",
+        "errorImageUnallowedType": "Расширение загружаемого изображения не поддерживается",
+    
+        "unknownError": "Произошла неизвестная ошибка. Попробуйте повторить попытку",
+
+        
+
         "toolbarTips": 
         {
             "bold": "Жирный",
@@ -74,7 +85,7 @@
             "state": "Статусная",
             "pie": "Круговая",
             "relationship": "Реляционная",
-            "journey": "Путешествия"
+            "journey": "Путевая"
         },
         "katex": {
             "inline": "Встроенная",
@@ -90,6 +101,15 @@
         "editorDefaultText": "Article title",
         "sendButton": "Publish",
         "addTagPlaceholder": "Add Tag...",
+         
+        "errorImageNeedTitle": "Please add at least one title to the article",
+
+        "errorImageMaxSize": "The size of the uploaded image must be no larger than 30MB",
+        "errorImageUnallowedType": "The extension of the uploaded image is not supported",
+        "errorImageNeedImage": "Please upload at least one image",
+        
+        "unknownError": "An unknown error occurred. Try again",
+
         "toolbarTips": 
         {
             "bold": "bold",

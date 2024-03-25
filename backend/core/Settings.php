@@ -10,6 +10,8 @@ class Settings
     public static function Init()
     {
         self::$settings = [
+            'MAX_UPLOAD_FILESIZE_MB' => $_ENV['MAX_UPLOAD_FILESIZE_MB'],
+            
             'DB_TYPE' => $_ENV['DB_TYPE'],
             'DB_NAME' => $_ENV['DB_NAME'],
             'DB_HOST' => $_ENV['DB_HOST'],

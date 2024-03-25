@@ -5,6 +5,12 @@
         "sendButton": "Опубликовать изменения",
         "addTagPlaceholder": "Добавить тег...",
 
+        "errorImageNeedImage": "Пожалуйста загрузите хотяб одно изображение",
+        "errorImageMaxSize": "Размер загружаемого изображения должен быть не больше 30МБ",
+        "errorImageUnallowedType": "Расширение загружаемого изображения не поддерживается",
+    
+        "unknownError": "Произошла неизвестная ошибка. Попробуйте повторить попытку",
+
         "statuses": 
         {
             "premoderationStatusText": "Статус премодерации:",
@@ -217,6 +223,16 @@
     },
     "EN":
     {
+        "editorDefaultText": "Article Title",
+        "sendButton": "Publish Changes",
+        "addTagPlaceholder": "Add tag...",
+  
+        "errorImageMaxSize": "The size of the uploaded image must be no larger than 30MB",
+        "errorImageUnallowedType": "The extension of the uploaded image is not supported",
+        "errorImageNeedImage": "Please upload at least one image",
+        
+        "unknownError": "An unknown error occurred. Try again",
+
         "statuses": 
         {
             "premoderationStatusText": "Premoderation status: ",
@@ -323,9 +339,6 @@
                 }
             }
         ],
-        "editorDefaultText": "Article title",
-        "sendButton": "Public",
-        "addTagPlaceholder": "Add Tag...",
         "toolbarTips": 
         {
             "bold": "bold",
