@@ -63,31 +63,52 @@
 					.then((response) => 
 					{
 						let modalInfoProps;
+					
                         if (response.data) 
 						{
-							console.log(response);
-							
 							if(response.data.fileName)
 							{
-								console.log(response);
-								
 								resolve(response);
 							}
-                            else if(response.data.errorStatus)
+							else 
 							{
-								if(response.data.errorCode == "002001")
+								modalInfoProps = {
+									status: false, text: langData.value["unknownError"]
+								}
+								openModal(InfoModal, modalInfoProps);
+								reject(new Error());
+							}
+                        }
+						else
+						{
+							modalInfoProps = {
+								status: false, text: langData.value["unknownError"]
+							}
+							openModal(InfoModal, modalInfoProps);
+							reject(new Error())
+						}
+                    })
+                    .catch((error) => 
+					{
+						let modalInfoProps;
+
+                        if (error.response.data) 
+						{
+							if(error.response.data.errorStatus)
+							{
+								if(error.response.data.errorCode == "002001")
 								{
 									modalInfoProps = {
 										status: false, text: langData.value["errorImageNeedImage"]
 									}
 								}
-								else if(response.data.errorCode == "002002")
+								else if(error.response.data.errorCode == "002002")
 								{
 									modalInfoProps = {
 										status: false, text: langData.value["errorImageMaxSize"]
 									}
 								}
-								else if(response.data.errorCode == "002003")
+								else if(error.response.data.errorCode == "002003")
 								{
 									modalInfoProps = {
 										status: false, text: langData.value["errorImageUnallowedType"]
@@ -119,9 +140,7 @@
 							openModal(InfoModal, modalInfoProps);
 							reject(new Error())
 						}
-						
-                    })
-                    .catch((error) => reject(error));
+                    });
 				});
 			})
 		);

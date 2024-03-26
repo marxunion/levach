@@ -21,6 +21,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./:/var/www/levach/
+      - ./php/php.ini-dev:/usr/local/etc/php/php.ini
     expose:
       - "9000"
     depends_on:

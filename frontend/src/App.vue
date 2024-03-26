@@ -4,6 +4,7 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 import Header from './components/Header.vue';
 import SideBar from './components/SideBar.vue';
 import { useRoute } from 'vue-router';
+import { container } from "jenesius-vue-modal";
 
 const isBurgerActive = ref(false);
 

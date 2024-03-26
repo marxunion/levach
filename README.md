@@ -16,6 +16,9 @@ A hybrid media project focused on designing a better future through scientific d
 
 ## How to install and configure
 
+### Configure php
+Rename php-example to php and ether your auth information
+
 ### Configure .env
 Rename .env-example to .env and ether your auth information
 

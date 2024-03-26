@@ -1,7 +1,7 @@
 {
     "RU":
     {
-        "editorDefaultText": "Заголовок статьи",
+        "editorDefaultText": "# Заголовок статьи\n",
         "sendButton": "Опубликовать изменения",
         "addTagPlaceholder": "Добавить тег...",
 
@@ -223,7 +223,7 @@
     },
     "EN":
     {
-        "editorDefaultText": "Article Title",
+        "editorDefaultText": "# Article Title\n",
         "sendButton": "Publish Changes",
         "addTagPlaceholder": "Add tag...",
   
