@@ -47,8 +47,7 @@
 		if(files.length > 0)
 		{
 			openModal(LoaderModal);
-			const res = await Promise.all(
-				files.map((file) => 
+			const promises = files.map((file) => 
 				{
 					return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
 					{
@@ -125,7 +124,7 @@
 										}
 									}
 									openModal(InfoModal, modalInfoProps);
-									reject(new Error(error.response.data.errorMessage));
+									console.error(error.response.data.errorMessage);
 								}
 								else 
 								{
@@ -146,10 +145,15 @@
 							}
 						});
 					});
-				})
+				}
 			);
+
+			const res = await Promise.all(promises);
+			
+			const successfulResults = res.filter(item => item !== null);
+
 			closeModal();
-			callback(res.map((item) => '/api/media/img/'+item.data.fileName));
+			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
 		}
 	};
 
@@ -159,10 +163,28 @@
 
 	const addTag = () => 
 	{
-		if (newTag.value.length > 0 && newTag.value.length < 40 && !tags.value.includes(newTag.value.trim())) 
+		if(!tags.value.includes(newTag.value.trim()))
 		{
-			tags.value.push(newTag.value.trim());
-			newTag.value = '';
+			if (newTag.value.length > 0)
+			{
+				if(newTag.value.length < 40)
+				{
+					tags.value.push(newTag.value.trim());
+					newTag.value = '';
+				}
+				else
+				{
+					openModal(InfoModal, {status: false, text: langData.value['errorTagMaxSymbols']});
+				}
+			}
+			else
+			{
+				openModal(InfoModal, {status: false, text: langData.value['errorTagMinSymbols']});
+			}
+		}
+		else
+		{
+			openModal(InfoModal, {status: false, text: langData.value['errorTagAlreadyExist']});
 		}
 	};
 	const removeTag = (index: number) => 
@@ -172,8 +194,66 @@
 
 	const onSendButton = () =>
 	{
-		console.log(editorState);
-		openModal(InfoModalWithLink, {status: true, text: "Это гибрид анонимного форума и интернет-журнала, предназначенный для анонимного общения в левом политическом дискурсе. Добро пожаловать.", link: "levach.com/article/edit/3238r94y9843ufggevb9yfd8v89df89v8d8989vdf67", text2: "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию"})
+		const contentParts = (editorState.text as string).split('\n');
+
+		if(contentParts.length >= 1) 
+		{
+			const title = contentParts[0];
+			if(title.length >= 5) 
+			{
+				if(title.length <= 120) 
+				{
+					if(title.substring(0, 2) == '# ') 
+					{
+						if(contentParts.length >= 2) 
+						{
+							const content = contentParts.slice(1).join('\n');
+							if(content.length >= 25) 
+							{
+								if(content.length <= 10000) 
+								{
+									const data = {
+										"text": editorState.text,
+										"tags": tags
+									}
+									console.log(data);
+									openModal(InfoModalWithLink, {status: true, text: "Это гибрид анонимного форума и интернет-журнала, предназначенный для анонимного общения в левом политическом дискурсе. Добро пожаловать.", link: "levach.com/article/edit/3238r94y9843ufggevb9yfd8v89df89v8d8989vdf67", text2: "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию"})
+									
+								}
+								else
+								{
+									openModal(InfoModal, {status: false, text: langData.value['errorArticleContentMaxSymbols']})
+								}
+							}
+							else
+							{
+								openModal(InfoModal, {status: false, text: langData.value['errorArticleContentMinSymbols']})
+							}
+						}
+						else
+						{
+							openModal(InfoModal, {status: false, text: langData.value['errorArticleNeedContent']})
+						}
+					}
+					else
+					{
+						openModal(InfoModal, {status: false, text: langData.value['errorArticleNeedTitle']})
+					}
+				}
+				else
+				{
+					openModal(InfoModal, {status: false, text: langData.value['errorArticleTitleMaxSymbols']})
+				}
+			}
+			else
+			{
+				openModal(InfoModal, {status: false, text: langData.value['errorArticleTitleMinSymbols']})
+			}
+		}
+		else
+		{
+			openModal(InfoModal, {status: false, text: langData.value['errorArticleNeedTitle']})
+		}	
 	}
 </script>
 

@@ -5,15 +5,22 @@
         "sendButton": "Опубликовать",
         "addTagPlaceholder": "Добавить тег...",
 
-        "errorImageNeedTitle": "Пожалуйста добавьте хотяб один заголовок к статье",
+        "errorArticleNeedTitle": "Пожалуйста добавьте заголовок для статьи",
+        "errorArticleTitleMinSymbols": "Содержание заголовка статьи не может быть менее 5 символов",
+        "errorArticleTitleMaxSymbols": "Содержание заголовка статьи не может быть более 120 символов",
+        "errorArticleNeedContent": "Пожалуйста добавьте содержание для статьи",
+        "errorArticleContentMinSymbols": "Содержание статьи не может быть менее 25 символов",
+        "errorArticleContentMaxSymbols": "Содержание статьи не может быть более 10000 символов",
         
-        "errorImageNeedImage": "Пожалуйста загрузите хотяб одно изображение",
         "errorImageMaxSize": "Размер загружаемого изображения должен быть не больше 30МБ",
         "errorImageUnallowedType": "Расширение загружаемого изображения не поддерживается",
-    
+        "errorImageNeedImage": "Пожалуйста загрузите хотяб одно изображение",
+        
         "unknownError": "Произошла неизвестная ошибка. Попробуйте повторить попытку",
 
-        
+        "errorTagMinSymbols": "Минимальная длина тега 1 символ",
+        "errorTagMaxSymbols": "Максимальная длина тега 40 символов",
+        "errorTagAlreadyExist": "Такой тег уже добавлен к статье",
 
         "toolbarTips": 
         {
@@ -102,13 +109,22 @@
         "sendButton": "Publish",
         "addTagPlaceholder": "Add Tag...",
          
-        "errorImageNeedTitle": "Please add at least one title to the article",
+        "errorArticleNeedTitle": "Please add a title for the article",
+        "errorArticleTitleMinSymbols": "Article title cannot be less than 5 characters",
+        "errorArticleTitleMaxSymbols": "Article title cannot exceed 120 characters",
+        "errorArticleNeedContent": "Please add content for the article",
+        "errorArticleContentMinSymbols": "Article content cannot be less than 25 characters",
+        "errorArticleContentMaxSymbols": "Article content cannot exceed 10000 characters",
 
         "errorImageMaxSize": "The size of the uploaded image must be no larger than 30MB",
         "errorImageUnallowedType": "The extension of the uploaded image is not supported",
         "errorImageNeedImage": "Please upload at least one image",
         
         "unknownError": "An unknown error occurred. Try again",
+
+        "errorTagMinSymbols": "Minimum tag length 1 character",
+        "errorTagMaxSymbols": "Maximum tag length 40 characters",
+        "errorTagAlreadyExist": "This tag is already added to the article",
 
         "toolbarTips": 
         {

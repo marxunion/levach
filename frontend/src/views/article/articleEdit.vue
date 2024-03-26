@@ -9,8 +9,10 @@
 
 	import { JsonData } from './../../ts/JsonHandler';
 
-	import { openModal } from "jenesius-vue-modal";
-    import InfoModal from "./../../components/modals/InfoModal.vue";
+	import { closeModal, openModal } from "jenesius-vue-modal";
+	import LoaderModal from "./../../components/modals/LoaderModal.vue";
+	import InfoModal from "./../../components/modals/InfoModal.vue";
+    import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
 
 	import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
 
@@ -131,115 +133,118 @@
 
 	const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 	{
-		const res = await Promise.all(
-			files.map((file) => 
-			{
-				return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
+		if(files.length > 0)
+		{
+			openModal(LoaderModal);
+			const promises = files.map((file) => 
 				{
-					const form = new FormData();
-					form.append('file', file);
-
-					console.log(form);
-
-					axios.post('/api/media/img/upload', form, 
+					return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
 					{
-						headers: 
-						{
-							'Content-Type': 'multipart/form-data'
-						}
-					})
-					.then((response) => 
-					{
-						let modalInfoProps;
-					
-                        if (response.data) 
-						{
-							if(response.data.fileName)
-							{
-								resolve(response);
-							}
-							else 
-							{
-								modalInfoProps = {
-									status: false, text: langData.value["unknownError"]
-								}
-								openModal(InfoModal, modalInfoProps);
-								reject(new Error());
-							}
-                        }
-						else
-						{
-							modalInfoProps = {
-								status: false, text: langData.value["unknownError"]
-							}
-							openModal(InfoModal, modalInfoProps);
-							reject(new Error())
-						}
-                    })
-                    .catch((error) => 
-					{
-						let modalInfoProps;
+						const form = new FormData();
+						form.append('file', file);
 
-                        if (error.response.data) 
+						console.log(form);
+
+						axios.post('/api/media/img/upload', form, 
 						{
-							if(error.response.data.errorStatus)
+							headers: 
 							{
-								if(error.response.data.errorCode == "002001")
+								'Content-Type': 'multipart/form-data'
+							}
+						})
+						.then((response) => 
+						{
+							let modalInfoProps;
+						
+							if (response.data) 
+							{
+								if(response.data.fileName)
 								{
-									modalInfoProps = {
-										status: false, text: langData.value["errorImageNeedImage"]
-									}
+									resolve(response);
 								}
-								else if(error.response.data.errorCode == "002002")
-								{
-									modalInfoProps = {
-										status: false, text: langData.value["errorImageMaxSize"]
-									}
-								}
-								else if(error.response.data.errorCode == "002003")
-								{
-									modalInfoProps = {
-										status: false, text: langData.value["errorImageUnallowedType"]
-									}
-								}
-								else
+								else 
 								{
 									modalInfoProps = {
 										status: false, text: langData.value["unknownError"]
 									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
 								}
-								openModal(InfoModal, modalInfoProps);
-								reject(new Error());
 							}
-							else 
+							else
 							{
 								modalInfoProps = {
 									status: false, text: langData.value["unknownError"]
 								}
 								openModal(InfoModal, modalInfoProps);
-								reject(new Error());
+								reject(new Error("UnknownError"))
 							}
-                        }
-						else
+						})
+						.catch((error) => 
 						{
-							modalInfoProps = {
-								status: false, text: langData.value["unknownError"]
-							}
-							openModal(InfoModal, modalInfoProps);
-							reject(new Error())
-						}
-                    });
-				});
-			})
-		);
+							let modalInfoProps;
 
-		callback(res.map((item) => '/api/media/img/'+item.data.fileName));
+							if (error.response.data) 
+							{
+								if(error.response.data.errorStatus)
+								{
+									if(error.response.data.errorCode == "002001")
+									{
+										modalInfoProps = {
+											status: false, text: langData.value["errorImageNeedImage"]
+										}
+									}
+									else if(error.response.data.errorCode == "002002")
+									{
+										modalInfoProps = {
+											status: false, text: langData.value["errorImageMaxSize"]
+										}
+									}
+									else if(error.response.data.errorCode == "002003")
+									{
+										modalInfoProps = {
+											status: false, text: langData.value["errorImageUnallowedType"]
+										}
+									}
+									else
+									{
+										modalInfoProps = {
+											status: false, text: langData.value["unknownError"]
+										}
+									}
+									openModal(InfoModal, modalInfoProps);
+									console.error(error.response.data.errorMessage);
+								}
+								else 
+								{
+									modalInfoProps = {
+										status: false, text: langData.value["unknownError"]
+									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
+								}
+							}
+							else
+							{
+								modalInfoProps = {
+									status: false, text: langData.value["unknownError"]
+								}
+								openModal(InfoModal, modalInfoProps);
+								reject(new Error("UnknownError"))
+							}
+						});
+					});
+				}
+			);
+
+			const res = await Promise.all(promises);
+			
+			const successfulResults = res.filter(item => item !== null);
+
+			closeModal();
+			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
+		}
 	};
-	
-	const onSendButton = () =>
-	{
-		console.log(editorState);
-	}
 
 	// Tags
 	const newTag = ref('');
@@ -247,16 +252,40 @@
 
 	const addTag = () => 
 	{
-		if (newTag.value.length > 0 && newTag.value.length < 40 && !tags.value.includes(newTag.value.trim())) 
+		if(!tags.value.includes(newTag.value.trim()))
 		{
-			tags.value.push(newTag.value.trim());
-			newTag.value = '';
+			if (newTag.value.length > 0)
+			{
+				if(newTag.value.length < 40)
+				{
+					tags.value.push(newTag.value.trim());
+					newTag.value = '';
+				}
+				else
+				{
+					openModal(InfoModal, {status: false, text: langData.value['errorTagMaxSymbols']});
+				}
+			}
+			else
+			{
+				openModal(InfoModal, {status: false, text: langData.value['errorTagMinSymbols']});
+			}
+		}
+		else
+		{
+			openModal(InfoModal, {status: false, text: langData.value['errorTagAlreadyExist']});
 		}
 	};
 	const removeTag = (index: number) => 
 	{
 		tags.value.splice(index, 1);
 	};
+
+	const onSendButton = () =>
+	{
+		console.log(editorState);
+		openModal(InfoModalWithLink, {status: true, text: "Это гибрид анонимного форума и интернет-журнала, предназначенный для анонимного общения в левом политическом дискурсе. Добро пожаловать.", link: "levach.com/article/edit/3238r94y9843ufggevb9yfd8v89df89v8d8989vdf67", text2: "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию"})
+	}
 </script>
 
 <template>
