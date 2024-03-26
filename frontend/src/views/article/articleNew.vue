@@ -5,7 +5,8 @@
 	import { MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
-	import { openModal } from "jenesius-vue-modal";
+	import { openModal, closeModal } from "jenesius-vue-modal";
+	import LoaderModal from "./../../components/modals/LoaderModal.vue";
     import InfoModal from "./../../components/modals/InfoModal.vue";
 	import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
 
@@ -43,111 +44,114 @@
 
 	const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 	{
-		const res = await Promise.all(
-			files.map((file) => 
-			{
-				return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
+		if(files.length > 0)
+		{
+			openModal(LoaderModal);
+			const res = await Promise.all(
+				files.map((file) => 
 				{
-					const form = new FormData();
-					form.append('file', file);
-
-					console.log(form);
-
-					axios.post('/api/media/img/upload', form, 
+					return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
 					{
-						headers: 
-						{
-							'Content-Type': 'multipart/form-data'
-						}
-					})
-					.then((response) => 
-					{
-						let modalInfoProps;
-					
-                        if (response.data) 
-						{
-							if(response.data.fileName)
-							{
-								resolve(response);
-							}
-							else 
-							{
-								modalInfoProps = {
-									status: false, text: langData.value["unknownError"]
-								}
-								openModal(InfoModal, modalInfoProps);
-								reject(new Error());
-							}
-                        }
-						else
-						{
-							modalInfoProps = {
-								status: false, text: langData.value["unknownError"]
-							}
-							openModal(InfoModal, modalInfoProps);
-							reject(new Error())
-						}
-                    })
-                    .catch((error) => 
-					{
-						let modalInfoProps;
+						const form = new FormData();
+						form.append('file', file);
 
-                        if (error.response.data) 
+						console.log(form);
+
+						axios.post('/api/media/img/upload', form, 
 						{
-							if(error.response.data.errorStatus)
+							headers: 
 							{
-								if(error.response.data.errorCode == "002001")
+								'Content-Type': 'multipart/form-data'
+							}
+						})
+						.then((response) => 
+						{
+							let modalInfoProps;
+						
+							if (response.data) 
+							{
+								if(response.data.fileName)
 								{
-									modalInfoProps = {
-										status: false, text: langData.value["errorImageNeedImage"]
-									}
+									resolve(response);
 								}
-								else if(error.response.data.errorCode == "002002")
-								{
-									modalInfoProps = {
-										status: false, text: langData.value["errorImageMaxSize"]
-									}
-								}
-								else if(error.response.data.errorCode == "002003")
-								{
-									modalInfoProps = {
-										status: false, text: langData.value["errorImageUnallowedType"]
-									}
-								}
-								else
+								else 
 								{
 									modalInfoProps = {
 										status: false, text: langData.value["unknownError"]
 									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
 								}
-								openModal(InfoModal, modalInfoProps);
-								reject(new Error());
 							}
-							else 
+							else
 							{
 								modalInfoProps = {
 									status: false, text: langData.value["unknownError"]
 								}
 								openModal(InfoModal, modalInfoProps);
-								reject(new Error());
+								reject(new Error("UnknownError"))
 							}
-                        }
-						else
+						})
+						.catch((error) => 
 						{
-							modalInfoProps = {
-								status: false, text: langData.value["unknownError"]
+							let modalInfoProps;
+
+							if (error.response.data) 
+							{
+								if(error.response.data.errorStatus)
+								{
+									if(error.response.data.errorCode == "002001")
+									{
+										modalInfoProps = {
+											status: false, text: langData.value["errorImageNeedImage"]
+										}
+									}
+									else if(error.response.data.errorCode == "002002")
+									{
+										modalInfoProps = {
+											status: false, text: langData.value["errorImageMaxSize"]
+										}
+									}
+									else if(error.response.data.errorCode == "002003")
+									{
+										modalInfoProps = {
+											status: false, text: langData.value["errorImageUnallowedType"]
+										}
+									}
+									else
+									{
+										modalInfoProps = {
+											status: false, text: langData.value["unknownError"]
+										}
+									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error(error.response.data.errorMessage));
+								}
+								else 
+								{
+									modalInfoProps = {
+										status: false, text: langData.value["unknownError"]
+									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
+								}
 							}
-							openModal(InfoModal, modalInfoProps);
-							reject(new Error())
-						}
-                    });
-				});
-			})
-		);
-
-		callback(res.map((item) => '/api/media/img/'+item.data.fileName));
+							else
+							{
+								modalInfoProps = {
+									status: false, text: langData.value["unknownError"]
+								}
+								openModal(InfoModal, modalInfoProps);
+								reject(new Error("UnknownError"))
+							}
+						});
+					});
+				})
+			);
+			closeModal();
+			callback(res.map((item) => '/api/media/img/'+item.data.fileName));
+		}
 	};
-
 
 	//Tags
 	const newTag = ref('');
@@ -166,7 +170,11 @@
 		tags.value.splice(index, 1);
 	};
 
-	const modalProps = {status: 1, text: "Это гибрид анонимного форума и интернет-журнала, предназначенный для анонимного общения в левом политическом дискурсе. Добро пожаловать.", link: "levach.com/article/edit/3238r94y9843ufggevb9yfd8v89df89v8d8989vdf67", text2: "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию"};
+	const onSendButton = () =>
+	{
+		console.log(editorState);
+		openModal(InfoModalWithLink, {status: true, text: "Это гибрид анонимного форума и интернет-журнала, предназначенный для анонимного общения в левом политическом дискурсе. Добро пожаловать.", link: "levach.com/article/edit/3238r94y9843ufggevb9yfd8v89df89v8d8989vdf67", text2: "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию"})
+	}
 </script>
 
 <template>
@@ -174,7 +182,7 @@
 		<article class="main__article">
 			<div class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="true" noIconfont/>
-				<button class="main__article__editorContainer__sendButton" @click="openModal(InfoModalWithLink, modalProps)">{{ langData['sendButton'] }}</button>	
+				<button class="main__article__editorContainer__sendButton" @click="onSendButton()">{{ langData['sendButton'] }}</button>	
 			</div>	
 			<div class="main__article__editTags">
 				<div class="main__article__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">
