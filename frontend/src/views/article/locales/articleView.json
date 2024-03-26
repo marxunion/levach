@@ -10,6 +10,7 @@
             "популярности",
             "дате размещения"
         ],
+
         "toolbarTips": 
         {
             "bold": "Жирный",
@@ -80,7 +81,7 @@
             "state": "Статусная",
             "pie": "Круговая",
             "relationship": "Реляционная",
-            "journey": "Путешествия"
+            "journey": "Путевая"
         },
         "katex": {
             "inline": "Встроенная",
@@ -102,6 +103,7 @@
             "popularity",
             "posting date"
         ],
+        
         "toolbarTips": 
         {
             "bold": "bold",

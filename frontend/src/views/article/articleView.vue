@@ -164,7 +164,7 @@
 				{
 					id: "00000004",
 					time: '12:15 19.09.2022',
-					text: 'Test Subcomment2',
+					text: '# Test Subcomment2\n',
 					statistics: 
 					{
 						likes: 33,
