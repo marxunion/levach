@@ -17,7 +17,7 @@
 
     import './../libs/font_2605852_prouiefeic';
 
-    const props = defineProps(['currentRoute']);
+    defineProps(['currentRoute']);
 
 	const langData = LangDataHandler.initLangDataHandler("articlesEditorially", langsData).langData;
 

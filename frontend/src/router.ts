@@ -39,7 +39,6 @@ const routes: RouteRecordRaw[] =
     {
         path: '/articles',
         children: [
-            { path: '', component: Articles, props: {currentRoute: "editoriallyArticles"}, name: "editoriallyArticles"},
             { path: 'editorially', component: Articles, props: {currentRoute: "editoriallyArticles"}, name: "editoriallyArticles"},
             { path: 'approvedEditorially', component: Articles, props: {currentRoute: "editoriallyApprovedArticles"}, name: "editoriallyApprovedArticles"},
             { path: 'abyss', component: Articles, props: {currentRoute: "abyssArticles"}, name: "abyssArticles"},
@@ -55,24 +54,11 @@ const routes: RouteRecordRaw[] =
         component: Sponsoring,
         name: "Sponsoring"
     },
-
-    {
-        path: '/aboutProject',
-        component: aboutProject,
-        name: "aboutProject"
-    },
     {
         path: '/faq',
         component: aboutProject,
         name: "aboutProject"
     },
-    {
-        path: '/aboutProjectAndFAQ',
-        component: aboutProject,
-        name: "aboutProject"
-    },
-
-
     {
         path: '/:catchAll(.*)',
         component: NotFound,

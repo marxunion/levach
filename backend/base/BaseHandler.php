@@ -3,5 +3,8 @@ namespace Base;
 
 abstract class BaseHandler
 {
-    abstract public function __construct($data);
+    public function __construct()
+    {
+
+    }
 }

@@ -217,8 +217,43 @@
 										"tags": tags
 									}
 									console.log(data);
-									openModal(InfoModalWithLink, {status: true, text: "Это гибрид анонимного форума и интернет-журнала, предназначенный для анонимного общения в левом политическом дискурсе. Добро пожаловать.", link: "levach.com/article/edit/3238r94y9843ufggevb9yfd8v89df89v8d8989vdf67", text2: "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию"})
 									
+									axios.post('/article/new', data)
+									.then(response => 
+									{
+										console.log(response.data);
+										if(response.data.editLink)
+										{
+											openModal(InfoModalWithLink, {status: true, text: "", link: window.location.hostname + "/article/edit/" + response.data.editLink, text2: langData.value['articleEditLinkCopyWarning']})
+										}
+										else
+										{
+											if(response.data.errorStatus)
+											{
+												/*if(response.data.errorCode = "002")
+												{
+
+												}
+												else if()
+												{
+
+												}
+												else if()
+												{
+
+												}
+												else
+												{
+
+												}*/
+											}
+										}
+									})
+									.catch(error => 
+									{
+										openModal(InfoModal, langData.value['unknownError']);
+										console.error('ArticleNew', error);
+									});
 								}
 								else
 								{
