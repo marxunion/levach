@@ -2,6 +2,8 @@
 	import { ref, watch, reactive, Ref } from 'vue';
 	import axios from 'axios';
 
+	import { JsonData } from './../../ts/JsonHandler';
+
 	import { MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
@@ -76,7 +78,7 @@
 								else 
 								{
 									modalInfoProps = {
-										status: false, text: langData.value["unknownError"]
+										status: false, text: (langData.value['warnings'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
 									reject(new Error("UnknownError"));
@@ -85,7 +87,7 @@
 							else
 							{
 								modalInfoProps = {
-									status: false, text: langData.value["unknownError"]
+									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 								}
 								openModal(InfoModal, modalInfoProps);
 								reject(new Error("UnknownError"))
@@ -97,39 +99,55 @@
 
 							if (error.response.data) 
 							{
-								if(error.response.data.errorStatus)
+								if(error.response.data.warningStatus)
 								{
 									if(error.response.data.errorCode == "002001")
 									{
 										modalInfoProps = {
-											status: false, text: langData.value["errorImageNeedImage"]
+											status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]
 										}
 									}
 									else if(error.response.data.errorCode == "002002")
 									{
 										modalInfoProps = {
-											status: false, text: langData.value["errorImageMaxSize"]
+											status: false, text: (langData.value['warnings'] as JsonData)["imageMaxSize"]
 										}
 									}
 									else if(error.response.data.errorCode == "002003")
 									{
 										modalInfoProps = {
-											status: false, text: langData.value["errorImageUnallowedType"]
+											status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]
 										}
 									}
 									else
 									{
 										modalInfoProps = {
-											status: false, text: langData.value["unknownError"]
+											status: false, text: (langData.value['warnings'] as JsonData)["unknown"]
 										}
 									}
 									openModal(InfoModal, modalInfoProps);
-									console.error(error.response.data.errorMessage);
+									console.warn(error.response.data.errorMessage);
+								}
+								else if(error.response.data.errorStatus)
+								{
+									modalInfoProps = {
+										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
+									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
+								}
+								else if(error.response.data.errorCriticalStatus)
+								{
+									modalInfoProps = {
+										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
+									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
 								}
 								else 
 								{
 									modalInfoProps = {
-										status: false, text: langData.value["unknownError"]
+										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
 									reject(new Error("UnknownError"));
@@ -138,7 +156,7 @@
 							else
 							{
 								modalInfoProps = {
-									status: false, text: langData.value["unknownError"]
+									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 								}
 								openModal(InfoModal, modalInfoProps);
 								reject(new Error("UnknownError"))
@@ -165,26 +183,19 @@
 	{
 		if(!tags.value.includes(newTag.value.trim()))
 		{
-			if (newTag.value.length > 0)
+			if (newTag.value.length >= 1 && newTag.value.length <= 40)
 			{
-				if(newTag.value.length < 40)
-				{
-					tags.value.push(newTag.value.trim());
-					newTag.value = '';
-				}
-				else
-				{
-					openModal(InfoModal, {status: false, text: langData.value['errorTagMaxSymbols']});
-				}
+				tags.value.push(newTag.value.trim());
+				newTag.value = '';
 			}
 			else
 			{
-				openModal(InfoModal, {status: false, text: langData.value['errorTagMinSymbols']});
+				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['tagSymbols']});
 			}
 		}
 		else
 		{
-			openModal(InfoModal, {status: false, text: langData.value['errorTagAlreadyExist']});
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['tagAlreadyExist']});
 		}
 	};
 	const removeTag = (index: number) => 
@@ -199,95 +210,66 @@
 		if(contentParts.length >= 1) 
 		{
 			const title = contentParts[0];
-			if(title.length >= 5) 
+			if(title.length >= 5 && title.length <= 120) 
 			{
-				if(title.length <= 120) 
+				if(title.substring(0, 2) == '# ') 
 				{
-					if(title.substring(0, 2) == '# ') 
+					if(contentParts.length >= 2) 
 					{
-						if(contentParts.length >= 2) 
+						const content = contentParts.slice(1).join('\n');
+						if(content.length >= 25 && content.length <= 10000) 
 						{
-							const content = contentParts.slice(1).join('\n');
-							if(content.length >= 25) 
-							{
-								if(content.length <= 10000) 
-								{
-									const data = {
-										"text": editorState.text,
-										"tags": tags
-									}
-									console.log(data);
+							const data = {
+								"text": editorState.text,
+								"tags": tags
+							}
+							console.log(data);
 									
-									axios.post('/article/new', data)
-									.then(response => 
-									{
-										console.log(response.data);
-										if(response.data.editLink)
-										{
-											openModal(InfoModalWithLink, {status: true, text: "", link: window.location.hostname + "/article/edit/" + response.data.editLink, text2: langData.value['articleEditLinkCopyWarning']})
-										}
-										else
-										{
-											if(response.data.errorStatus)
-											{
-												/*if(response.data.errorCode = "002")
-												{
-
-												}
-												else if()
-												{
-
-												}
-												else if()
-												{
-
-												}
-												else
-												{
-
-												}*/
-											}
-										}
-									})
-									.catch(error => 
-									{
-										openModal(InfoModal, langData.value['unknownError']);
-										console.error('ArticleNew', error);
-									});
+							axios.post('/article/new', data)
+							.then(response => 
+							{
+								console.log(response.data);
+								if(response.data.editLink)
+								{
+									openModal(InfoModalWithLink, {status: true, text: "", link: window.location.hostname + "/article/edit/" + response.data.editLink, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']})
 								}
 								else
 								{
-									openModal(InfoModal, {status: false, text: langData.value['errorArticleContentMaxSymbols']})
+									if(response.data.errorStatus)
+									{
+
+									}
 								}
-							}
-							else
+							})
+							.catch(error => 
 							{
-								openModal(InfoModal, {status: false, text: langData.value['errorArticleContentMinSymbols']})
-							}
+								openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+								console.error('ArticleNew', error);
+							});
 						}
 						else
 						{
-							openModal(InfoModal, {status: false, text: langData.value['errorArticleNeedContent']})
+							openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
 						}
 					}
 					else
 					{
-						openModal(InfoModal, {status: false, text: langData.value['errorArticleNeedTitle']})
+						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
 					}
 				}
 				else
 				{
-					openModal(InfoModal, {status: false, text: langData.value['errorArticleTitleMaxSymbols']})
+					openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 				}
 			}
 			else
 			{
-				openModal(InfoModal, {status: false, text: langData.value['errorArticleTitleMinSymbols']})
+				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
 			}
 		}
 		else
 		{
-			openModal(InfoModal, {status: false, text: langData.value['errorArticleNeedTitle']})
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 		}	
 	}
 </script>

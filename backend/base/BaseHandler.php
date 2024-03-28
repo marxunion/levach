@@ -11,9 +11,14 @@ abstract class BaseHandler
 
     }
 
-    abstract function Init();
-    abstract function Process();
-    abstract function Finish();
+    abstract protected function _Init();
+    abstract public function Init();
 
-    abstract function Handle();
+    abstract protected function _Process();
+    abstract public function Process();
+
+    abstract protected function _Finish();
+    abstract public function Finish();
+
+    abstract public function Handle();
 }

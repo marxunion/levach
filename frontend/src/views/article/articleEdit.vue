@@ -165,7 +165,7 @@
 								else 
 								{
 									modalInfoProps = {
-										status: false, text: langData.value["unknownError"]
+										status: false, text: (langData.value['warnings'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
 									reject(new Error("UnknownError"));
@@ -174,7 +174,7 @@
 							else
 							{
 								modalInfoProps = {
-									status: false, text: langData.value["unknownError"]
+									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 								}
 								openModal(InfoModal, modalInfoProps);
 								reject(new Error("UnknownError"))
@@ -186,39 +186,55 @@
 
 							if (error.response.data) 
 							{
-								if(error.response.data.errorStatus)
+								if(error.response.data.warningStatus)
 								{
 									if(error.response.data.errorCode == "002001")
 									{
 										modalInfoProps = {
-											status: false, text: langData.value["errorImageNeedImage"]
+											status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]
 										}
 									}
 									else if(error.response.data.errorCode == "002002")
 									{
 										modalInfoProps = {
-											status: false, text: langData.value["errorImageMaxSize"]
+											status: false, text: (langData.value['warnings'] as JsonData)["imageMaxSize"]
 										}
 									}
 									else if(error.response.data.errorCode == "002003")
 									{
 										modalInfoProps = {
-											status: false, text: langData.value["errorImageUnallowedType"]
+											status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]
 										}
 									}
 									else
 									{
 										modalInfoProps = {
-											status: false, text: langData.value["unknownError"]
+											status: false, text: (langData.value['warnings'] as JsonData)["unknown"]
 										}
 									}
 									openModal(InfoModal, modalInfoProps);
-									console.error(error.response.data.errorMessage);
+									console.warn(error.response.data.errorMessage);
+								}
+								else if(error.response.data.errorStatus)
+								{
+									modalInfoProps = {
+										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
+									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
+								}
+								else if(error.response.data.errorCriticalStatus)
+								{
+									modalInfoProps = {
+										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
+									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
 								}
 								else 
 								{
 									modalInfoProps = {
-										status: false, text: langData.value["unknownError"]
+										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
 									reject(new Error("UnknownError"));
@@ -227,7 +243,7 @@
 							else
 							{
 								modalInfoProps = {
-									status: false, text: langData.value["unknownError"]
+									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 								}
 								openModal(InfoModal, modalInfoProps);
 								reject(new Error("UnknownError"))
@@ -245,7 +261,7 @@
 			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
 		}
 	};
-
+	
 	// Tags
 	const newTag = ref('');
 	const tags : Ref<string[]> = ref([]);
@@ -254,26 +270,19 @@
 	{
 		if(!tags.value.includes(newTag.value.trim()))
 		{
-			if (newTag.value.length > 0)
+			if (newTag.value.length >= 1 && newTag.value.length <= 40)
 			{
-				if(newTag.value.length < 40)
-				{
-					tags.value.push(newTag.value.trim());
-					newTag.value = '';
-				}
-				else
-				{
-					openModal(InfoModal, {status: false, text: langData.value['errorTagMaxSymbols']});
-				}
+				tags.value.push(newTag.value.trim());
+				newTag.value = '';
 			}
 			else
 			{
-				openModal(InfoModal, {status: false, text: langData.value['errorTagMinSymbols']});
+				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['tagSymbols']});
 			}
 		}
 		else
 		{
-			openModal(InfoModal, {status: false, text: langData.value['errorTagAlreadyExist']});
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['tagAlreadyExist']});
 		}
 	};
 	const removeTag = (index: number) => 

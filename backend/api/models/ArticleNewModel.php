@@ -11,4 +11,8 @@ class ArticleNewModel extends BaseModel
     {
 
     }
+    public function publicArticle($data)
+    {
+        $database->insert('articles', $data);
+    }
 }

@@ -9,8 +9,7 @@ use Slim\Psr7\Stream;
 use Slim\App;
 
 use Core\Settings;
-use Core\Logger;
-use Core\Error;
+use Core\Warning;
 use Core\Database;
 
 use Base\BaseHandlerRouteWithArgs;
@@ -28,33 +27,14 @@ class MediaLoadImageHandler extends BaseHandlerRouteWithArgs
     }
     public function Process()
     {
-        try 
+        if (file_exists($this->filePath)) 
         {
-            if (file_exists($this->filePath)) 
-            {
-                try 
-                {
-                    $this->response = $this->response->withFile($this->filePath);
-                } 
-                catch (\Throwable $th) 
-                {
-                    $error = new Error(404, "LoadImage File not found", "LoadImage Unable to open file, filePath=".$this->filePath, "001002");
-                    $error->InvokeLog();
-                    $this->response = $error->InvokeClientResponse();
-                }
-            }
-            else
-            {
-                $error = new Error(404, "LoadImage File not found", "LoadImage File not found, filePath=".$this->filePath, "001001");
-                $error->InvokeLog();
-                $this->response = $error->InvokeClientResponse();
-            }
+            $this->response = $this->response->withFile($this->filePath);
         }
-        catch (\Throwable $th)
+        else
         {
-            $error = new Error(404, "LoadImage File not found", "LoadImage File not found, filePath=".$this->filePath, "001001");
-            $error->InvokeLog();
-            $this->response = $error->InvokeClientResponse();
+            throw new Warning(404, "LoadImage File not found", "LoadImage File not found, filePath=".$this->filePath, "001001");
+            return;
         }
     }
 }

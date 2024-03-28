@@ -8,6 +8,9 @@ use Slim\Factory\AppFactory;
 use Slim\Psr7\Stream;
 
 use Core\Settings;
+use Core\Warning;
+use Core\Error;
+use Core\ErrorCritical;
 use Core\Logger;
 use Core\Database;
 use App\Core\Routes as AppRoutes;
