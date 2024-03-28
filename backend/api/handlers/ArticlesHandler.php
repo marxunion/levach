@@ -1,13 +1,15 @@
 <?php
 namespace Api\Handlers;
 
-use Base\BaseHandler;
+use Core\Error;
+
+use Base\BaseHandlerRoute;
 use Base\BaseModel;
 
-class ArticlesHandler extends BaseHandler
+class ArticlesHandler extends BaseHandlerRoute
 {
-    public function __construct($data)
+    public function Process()
     {
-
+        
     }
 }

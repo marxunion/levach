@@ -6,8 +6,12 @@ use Core\Error;
 use Base\BaseHandlerRoute;
 use Base\BaseModel;
 
-class ArticleViewHandler extends BaseHandlerRoute
+class ArticleEditHandler extends BaseHandlerRoute
 {
+    public function Init()
+    {
+        
+    }
     public function Process()
     {
         

@@ -22,12 +22,20 @@ Rename php-example to php and ether your auth information
 ### Configure .env
 Rename .env-example to .env and ether your auth information
 
-### Start in DevMode
+### Run in DevMode
+```bash
+docker-compose -f docker-compose.yml -f docker/docker-compose.dev.yml up --build -d
+```
+After build image:
 ```bash
 docker-compose -f docker-compose.yml -f docker/docker-compose.dev.yml up -d
 ```
 
-### Start in ProductionMode
+### Run in ProductionMode
+```bash
+docker-compose -f docker-compose.yml -f docker/docker-compose.prod.yml up --build -d
+```
+After build image:
 ```bash
 docker-compose -f docker-compose.yml -f docker/docker-compose.prod.yml up -d
 ```

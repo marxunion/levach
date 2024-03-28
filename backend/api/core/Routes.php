@@ -8,86 +8,86 @@ use Slim\Factory\AppFactory;
 use Slim\Psr7\Stream;
 use Slim\App;
 
-use Api\Handlers\MediaLoadImageHandler;
-use Api\Handlers\MediaUploadImageHandler;
-
 use Core\Settings;
 use Core\Logger;
 use Core\Database;
 
+use Base\BaseHandler;
+use Base\BaseHandlerRoute;
+use Base\EmptyHandlerRoute;
+
+use Api\Handlers\ArticleNewHandler;
+use Api\Handlers\ArticlesHandler;
+use Api\Handlers\ArticleViewHandler;
+use Api\Handlers\ArticleEditHandler;
+use Api\Handlers\MediaLoadImageHandler;
+use Api\Handlers\MediaUploadImageHandler;
+use Api\Handlers\StatusHandler;
+use Api\Handlers\UnknownHandler;
+
 class Routes
 {
     private static App $app;
+    private static BaseHandler $handler;
 
     public static function Init(App $app)
     {
+        self::$handler = new UnknownHandler();
         self::$app = $app;
         
         self::$app->group('/api', function (RouteCollectorProxy $group) 
         {
             $group->get('/', function (Request $request, Response $response) 
             {
-                $data = [
-                    'status' => "ok"
-                ];
-                return $response->withJson($data);
+                self::$handler = new StatusHandler($request, $response);
+                return self::$handler->Handle();
             });
     
             $group->get('/status', function (Request $request, Response $response) 
             {
-                $data = [
-                    'status' => "ok"
-                ];
-                return $response->withJson($data);
+                self::$handler = new StatusHandler($request, $response);
+                return self::$handler->Handle();
             });
     
             $group->post('/article/new', function (Request $request, Response $response) 
             {
-                $data = $request->getParsedBody();
-                return $response->withJson($data);
+                self::$handler = new ArticleNewHandler($request, $response);
+                return self::$handler->Handle();
             });
 
-            $group->post('/article/edit/{article}', function (Request $request, Response $response, array $args) 
+            $group->post('/article/edit/{tokenEdit}', function (Request $request, Response $response, array $args) 
             {
-                $data = $request->getParsedBody();
-                return $response->withJson($data);
+                self::$handler = new ArticleEditHandler($request, $response, $args);
+                return self::$handler->Handle();
             });
     
-            $group->get('/article/view/{article}', function (Request $request, Response $response, array $args) 
+            $group->get('/article/view/{tokenView}', function (Request $request, Response $response, array $args) 
             {
-                $data = $request->getParsedBody();
-                return $response->withJson($data);
+                self::$handler = new ArticleViewHandler($request, $response, $args);
+                return self::$handler->Handle();
             });
     
             $group->get('/articles', function (Request $request, Response $response) 
             {
-                $data = $request->getParsedBody();
-                return $response->withJson($data);
+                self::$handler = new ArticlesHandler($request, $response);
+                return self::$handler->Handle();
             });
     
             $group->get('/media/img/{file}', function (Request $request, Response $response, array $args) 
             {
-                $handler = new MediaLoadImageHandler($request, $response, $args);
-                return $handler->process();
+                self::$handler = new MediaLoadImageHandler($request, $response, $args);
+                return self::$handler->Handle();
             });
             $group->post('/media/img/upload', function (Request $request, Response $response) 
             {
-                $handler = new MediaUploadImageHandler($request, $response);
-                return $handler->process();
+                self::$handler = new MediaUploadImageHandler($request, $response);
+                return self::$handler->Handle();
+                
             });
             $group->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function (Request $request, Response $response) 
             {
-                $data = [
-                    'errorStatus' => true, 
-                    'errorMessage' => 'Api action not found', 
-                    'errorCode' => "000001"
-                ];
-                return $response->withStatus(404)->withJson($data);
+                return self::$handler->Handle();
             });
-        });
-        self::$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function (Request $request, Response $response) 
-        {
-            return $response->withRedirect('/#'.$request->getUri()->getPath(), 301);
         });
     }
 }

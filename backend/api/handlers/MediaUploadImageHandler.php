@@ -10,28 +10,20 @@ use Slim\App;
 
 use Core\Settings;
 use Core\Logger;
+use Core\Error;
 use Core\Database;
 
-use Base\BaseHandler;
-use Base\BaseHandlerRouter;
+use Base\BaseHandlerRoute;
 
-class MediaUploadImageHandler extends BaseHandlerRouter
+class MediaUploadImageHandler extends BaseHandlerRoute
 {
-    public function __construct(Request $request, Response $response)
-    {
-        parent::__construct($request, $response);
-    }
-    public function process()
+    public function Process()
     {
         if(count($this->request->getUploadedFiles()) < 1)
         {
-            Logger::WriteWarning("UploadFile File not uploaded");
-            return $this->response->withStatus(400)->withHeader('Content-type', 'application/json')->withJson(
-            [
-                'errorStatus' => true, 
-                'errorMessage' => 'File not uploaded', 
-                'errorCode' => "002001"
-            ]);
+            $error = new Error(400,"UploadImage File not uploaded", "UploadImage File not uploaded", "002001");
+            $error->InvokeLog();
+            $this->response = $error->InvokeClientResponse();
         }
 
         $uploadedFile = $this->request->getUploadedFiles()['file'];
@@ -41,8 +33,9 @@ class MediaUploadImageHandler extends BaseHandlerRouter
                 
             if ($uploadedFile->getSize() > $maxFileSize) 
             {
-                Logger::WriteWarning("UploadFile File size exceeds the maximum allowable file size");
-                return $this->response->withStatus(400)->withHeader('Content-type', 'application/json')->withJson(['errorStatus' => true, 'errorMessage' => 'File size exceeds the maximum allowable file size', 'errorCode' => "002002"]);
+                $error = new Error(400, "UploadImage File size exceeds the maximum allowable file size", "UploadImage File size exceeds the maximum allowable file size", "002002");
+                $error->InvokeLog();
+                $this->response = $error->InvokeClientResponse();
             }
             $allowedTypes = ['image/apng', 'image/png', 'image/avif', 'image/gif', 'image/jpeg', 'image/svg+xml', 'image/webp'];
             
@@ -53,31 +46,23 @@ class MediaUploadImageHandler extends BaseHandlerRouter
                 $newFileName = hash('sha3-256', uniqid().bin2hex(random_bytes(32)).$uploadedFile->getClientFilename()).'.'.pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
                 
                 $uploadedFile->moveTo($uploadPath . DIRECTORY_SEPARATOR . $newFileName);
-                return $this->response->withStatus(200)->withHeader('Content-type', 'application/json')->withJson(
+                $this->response = $this->response->withStatus(200)->withHeader('Content-type', 'application/json')->withJson(
                 [
                     'fileName' => $newFileName
                 ]);
             }
             else
             {
-                Logger::WriteWarning("UploadFile File size exceeds the maximum allowable file size");
-                return $this->response->withStatus(400)->withHeader('Content-type', 'application/json')->withJson(
-                [
-                    'errorStatus' => true, 
-                    'errorMessage' => 'Invalid image type', 
-                    'errorCode' => "002003"
-                ]);
+                $error = new Error(400, "UploadImage Invalid image type", "UploadImage Invalid image type", "002003");
+                $error->InvokeLog();
+                $this->response = $error->InvokeClientResponse();
             }
         } 
         else 
         {
-            Logger::WriteWarning("UploadFile File not uploaded");
-            return $this->response->withStatus(404)->withHeader('Content-type', 'application/json')->withJson(
-            [
-                'errorStatus' => true, 
-                'errorMessage' => 'File not uploaded', 
-                'errorCode' => "002001"
-            ]);
+            $error = new Error(400, "UploadImage File not uploaded", "UploadImage File not uploaded", "002003");
+            $error->InvokeLog();
+            $this->response = $error->InvokeClientResponse();
         }
     }
 }

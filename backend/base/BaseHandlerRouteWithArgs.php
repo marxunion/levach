@@ -8,11 +8,11 @@ use Slim\Factory\AppFactory;
 use Slim\Psr7\Stream;
 use Slim\App;
 
-use Base\BaseHandlerRouter;
+use Base\BaseHandlerRoute;
 
-class BaseHandlerRouterWithArgs extends BaseHandlerRouter
+class BaseHandlerRouteWithArgs extends BaseHandlerRoute
 {
-    protected array $args;
+    protected $args;
 
     public function __construct(Request $request, Response $response, array $args)
     {

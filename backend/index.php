@@ -13,6 +13,9 @@ use Core\Database;
 use App\Core\Routes as AppRoutes;
 use Api\Core\Routes as ApiRoutes;
 
+header('Server: NGINX');
+header('x-powered-by: PHP');
+
 require __DIR__ . '/vendor/autoload.php';
 
 Settings::Init();
@@ -29,8 +32,8 @@ $app->addErrorMiddleware(Settings::Get("DEBUG_MODE"), Settings::Get("DEBUG_MODE"
 
 Logger::WriteInfo("Error middleware added");
 
-AppRoutes::Init($app);
 ApiRoutes::Init($app);
+AppRoutes::Init($app);
 
 Logger::WriteInfo("Routes inited");
 

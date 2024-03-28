@@ -10,62 +10,51 @@ use Slim\App;
 
 use Core\Settings;
 use Core\Logger;
+use Core\Error;
 use Core\Database;
 
-use Base\BaseHandler;
-use Base\BaseHandlerRouterWithArgs;
+use Base\BaseHandlerRouteWithArgs;
 
-class MediaLoadImageHandler extends BaseHandlerRouterWithArgs
+class MediaLoadImageHandler extends BaseHandlerRouteWithArgs
 {
-    public function __construct(Request $request, Response $response, array $args)
+    private $file;
+    private $filePath;
+
+    public function Init()
     {
-        parent::__construct($request, $response, $args);
-    }
-    public function process()
-    {
-        $file = $this->args['file'];
+        $this->file = $this->args['file'];
             
-        $filePath = __DIR__.'/../../../media/img/'.$this->args['file'];
-                
+        $this->filePath = __DIR__.'/../../../media/img/'.$this->args['file'];
+    }
+    public function Process()
+    {
         try 
         {
-            if (file_exists($filePath)) 
+            if (file_exists($this->filePath)) 
             {
                 try 
                 {
-                    return $this->response->withFile($filePath);
+                    $this->response = $this->response->withFile($this->filePath);
                 } 
                 catch (\Throwable $th) 
                 {
-                    Logger::WriteError("LoadFile Unable to open file, filePath=".$filePath);
-                    return $this->response->withStatus(500)->withHeader('Content-type', 'application/json')->withJson(
-                    [
-                        'errorStatus' => true, 
-                        'errorMessage' => 'Unable to open file', 
-                        'errorCode' => "001002"
-                    ]);
+                    $error = new Error(404, "LoadImage File not found", "LoadImage Unable to open file, filePath=".$this->filePath, "001002");
+                    $error->InvokeLog();
+                    $this->response = $error->InvokeClientResponse();
                 }
             }
             else
             {
-                Logger::WriteWarning("LoadFile File not found, filePath=".$filePath);
-                return $this->response->withStatus(404)->withHeader('Content-type', 'application/json')->withJson(
-                [
-                    'errorStatus' => true, 
-                    'errorMessage' => 'File not found', 
-                    'errorCode' => "001001"
-                ]);
+                $error = new Error(404, "LoadImage File not found", "LoadImage File not found, filePath=".$this->filePath, "001001");
+                $error->InvokeLog();
+                $this->response = $error->InvokeClientResponse();
             }
         }
         catch (\Throwable $th)
         {
-            Logger::WriteError("LoadFile File not found, filePath=".$filePath);
-            return $this->response->withStatus(500)->withHeader('Content-type', 'application/json')->withJson(
-            [
-                'errorStatus' => true, 
-                'errorMessage' => 'File not found', 
-                'errorCode' => "001001"
-            ]);
+            $error = new Error(404, "LoadImage File not found", "LoadImage File not found, filePath=".$this->filePath, "001001");
+            $error->InvokeLog();
+            $this->response = $error->InvokeClientResponse();
         }
     }
 }

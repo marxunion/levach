@@ -55,5 +55,9 @@ class Routes
                 }
             });
         }
+        self::$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function (Request $request, Response $response) 
+        {
+            return $response->withRedirect('/#'.$request->getUri()->getPath(), 301);
+        });
     }
 }

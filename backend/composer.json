@@ -1,6 +1,6 @@
 {
     "name": "marxunion/levach",
-    "description": "Your package description",
+    "description": "A hybrid media project focused on designing a better future through scientific discussion.",
     "require": 
     {
         "slim/slim": "^4.12",
