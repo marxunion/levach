@@ -24,69 +24,17 @@ class BaseHandlerRoute extends BaseHandler
         $this->response = $response;
     }
 
-    public function _Init()
-    {
-
-    }
-
     public function Init()
-    {
-        try
-        {
-            $this->_Init();
-        }
-        catch (Warning $error)
-        {
-            $error->InvokeLog();
-            $this->response = $error->InvokeClientResponse();
-            return;
-        }
-        catch (Error $error)
-        {
-            $error->InvokeLog();
-            $this->response = $error->InvokeClientResponse();
-            return;
-        }
-        catch (ErrorCritical $error)
-        {
-            $error->InvokeLog();
-            $this->response = $error->InvokeClientResponse();
-            return;
-        }
-    }
-
-    public function _Process()
     {
 
     }
 
     public function Process()
     {
-        try
-        {
-            $this->_Process();
-        }
-        catch (Warning $error)
-        {
-            $error->InvokeLog();
-            $this->response = $error->InvokeClientResponse();
-            return;
-        }
-        catch (Error $error)
-        {
-            $error->InvokeLog();
-            $this->response = $error->InvokeClientResponse();
-            return;
-        }
-        catch (ErrorCritical $error)
-        {
-            $error->InvokeLog();
-            $this->response = $error->InvokeClientResponse();
-            return;
-        }
+
     }
 
-    public function _Finish()
+    public function Finish()
     {
         if($this->response != null)
         {
@@ -94,35 +42,7 @@ class BaseHandlerRoute extends BaseHandler
         }
         else
         {
-            $error = new Error(500, "Api Unknown Error", "Api Failed finish route without handler", "000000");
-            $error->InvokeLog();
-            $this->response = $error->InvokeClientResponse();
-        }
-    }
-
-    public function Finish()
-    {
-        try
-        {
-            $this->_Finish();
-        }
-        catch (Warning $error)
-        {
-            $error->InvokeLog();
-            $this->response = $error->InvokeClientResponse();
-            return;
-        }
-        catch (Error $error)
-        {
-            $error->InvokeLog();
-            $this->response = $error->InvokeClientResponse();
-            return;
-        }
-        catch (ErrorCritical $error)
-        {
-            $error->InvokeLog();
-            $this->response = $error->InvokeClientResponse();
-            return;
+            throw new Error(500, "Api Unknown Error", "Api Failed finish route without handler", "000000");
         }
     }
 
