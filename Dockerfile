@@ -17,4 +17,4 @@ RUN crontab /etc/cron.d/systemInfoLog
 RUN touch /var/log/cron.log
 
 COPY ./entrypoint.sh /
-ENTRYPOINT /entrypoint.sh
+ENTRYPOINT ["sh", "/entrypoint.sh"]

@@ -5,6 +5,7 @@ use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Handlers\ErrorHandler;
 use Throwable;
+use Core\Settings;
 use Core\Logger;
 use Core\Warning;
 use Core\Error;
@@ -12,18 +13,17 @@ use Core\ErrorCritical;
 
 class CustomExceptionHandler extends ErrorHandler
 {
-    private $exception = null;
     private $exceptionType;
     private $exceptionDetails = [];
 
-    public function __construct(bool $displayErrorDetails)
+    public function __construct(CallableResolverInterface $callableResolver, ResponseFactoryInterface $responseFactory)
     {
-        $this->exception = null;
         $this->exceptionDetails = [];
-        parent::__construct($displayErrorDetails);
+        $this->responseFactory = $responseFactory;
+        parent::__construct($callableResolver, $responseFactory);
     }
 
-    public function __invoke(Throwable $exception, bool $displayErrorDetails): ResponseInterface
+    public function __invoke(Throwable $exception): ResponseInterface
     {
         $this->exception = $exception;
         $this->exceptionType = get_class($exception);
@@ -38,59 +38,89 @@ class CustomExceptionHandler extends ErrorHandler
 
     private function handleCustomException() : ResponseInterface
     {
-        switch ($this->exceptionType) 
+        if(Settings::Get("DEBUG_MODE"))
         {
-            if($this->displayErrorDetails)
+            $this->exceptionDetails['code'] = $this->_exception->getCode();
+            $this->exceptionDetails['message'] = $this->_exception->getExtendedMessage();
+            $this->exceptionDetails['file'] = $this->_exception->getFile();
+            $this->exceptionDetails['line'] = $this->_exception->getLine();
+            $this->exceptionDetails['trace'] = $this->_exception->getTrace();
+            $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
+            if($this->exceptionDetails['message'] == "")
             {
-                $this->exceptionDetails['code'] = $this->exception->getCode();
-                $this->exceptionDetails['message'] = $this->exception->getExtendedMessage();
-                $this->exceptionDetails['file'] = $this->exception->getFile();
-                $this->exceptionDetails['line'] = $this->exception->getLine();
-                $this->exceptionDetails['trace'] = $this->exception->getTrace();
-                $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
-                if($this->exceptionDetails['message'] == "")
+                $message = $this->exception->getMessage();
+                if($message != "")
                 {
-                    $message = $this->exception->getMessage();
-                    if($message != "")
+                    $this->exceptionDetails['message'] = $message;
+                }
+                else
+                {
+                    switch ($this->exceptionType) 
                     {
-                        $this->exceptionDetails['message'] = $message;
-                    }
-                    else
-                    {
-                        $this->exceptionDetails['message'] = "Unknown error";
-                        
+                        case Error::class:
+                            $this->exceptionDetails['message'] = "Unknown error";
+                            break;
+                        case Warning::class:
+                            $this->exceptionDetails['message'] = "Unknown warning";
+                            break;
+                        case ErrorCritical::class:
+                            $this->exceptionDetails['message'] = "Unknown error critical";
+                            break;
+                        default:
+                            $this->exceptionDetails['message'] = "Unknown exception";
+                            break;
                     }
                 }
             }
+        }
+        else
+        {
+            $this->exceptionDetails['code'] = $this->exception->getCode();
+            $message = $this->exception->getClientMessage();
+            if($message != "")
+            {
+                $this->exceptionDetails['message'] = $message;
+            }
             else
             {
-                $this->exceptionDetails['code'] = $this->exception->getCode();
-                $this->exceptionDetails['message'] = $this->exception->getClientMessage();
-                $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
+                switch ($this->exceptionType) 
+                {
+                    case Error::class:
+                        $this->exceptionDetails['message'] = "Unknown error";
+                        break;
+                    case Warning::class:
+                        $this->exceptionDetails['message'] = "Unknown warning";
+                        break;
+                    case ErrorCritical::class:
+                        $this->exceptionDetails['message'] = "Unknown error critical";
+                        break;
+                    default:
+                        $this->exceptionDetails['message'] = "Unknown exception";
+                        break;
+                }
             }
-            $logMessage = 'Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exceptionDetails['file'].' | Line: '.$this->exceptionDetails['line'].' | Trace: '.$this->exception->getTraceAsString();
+            
+            $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
+        }
+        $logMessage = 'Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exceptionDetails['file'].' | Line: '.$this->exceptionDetails['line'].' | Trace: '.$this->exception->getTraceAsString();
+        
+        $response = $this->responseFactory->createResponse(500);
+        switch ($this->exceptionType) 
+        {
             case Error::class:
                 $responsePayload = json_encode(['Error' => $exceptionDetails]);
-                $response = $this->responseFactory->createResponse(500);
-
                 Logger::WriteError($logMessage);
                 break;
             case Warning::class:
                 $responsePayload = json_encode(['Warning' => $exceptionDetails]);
-                $response = $this->responseFactory->createResponse(500);
-
                 Logger::WriteWarning($logMessage);
                 break;
             case ErrorCritical::class:
                 $responsePayload = json_encode(['ErrorCritical' => $exceptionDetails]);
-                $response = $this->responseFactory->createResponse(500);
-
                 Logger::WriteCriticalError($logMessage);
                 break;
             default:
                 $responsePayload = json_encode(['Error' => $exceptionDetails]);
-                $response = $this->responseFactory->createResponse(500);
-                
                 Logger::WriteError($logMessage);
                 break;
         }
@@ -100,7 +130,7 @@ class CustomExceptionHandler extends ErrorHandler
 
     private function handleDefaultException(): ResponseInterface
     {
-        if($this->displayErrorDetails)
+        if(Settings::Get("DEBUG_MODE"))
         {
             $this->exceptionDetails['code'] = $this->exception->getCode();
             $this->exceptionDetails['message'] = $this->exception->getMessage();

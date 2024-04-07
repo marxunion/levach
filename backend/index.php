@@ -13,6 +13,8 @@ use Core\Error;
 use Core\ErrorCritical;
 use Core\Logger;
 use Core\Database;
+
+use Core\CustomExceptionHandler;
 use App\Core\Routes as AppRoutes;
 use Api\Core\Routes as ApiRoutes;
 
@@ -25,19 +27,14 @@ Settings::Init();
 Logger::Init();
 Database::Init();
 
-Logger::WriteInfo("Database inited");
-
 $app = AppFactory::create();
 
-Logger::WriteInfo("App created");
+$exceptionHandler = new CustomExceptionHandler($app->getCallableResolver(), $app->getResponseFactory());
 
-$app->addErrorMiddleware(Settings::Get("DEBUG_MODE"), Settings::Get("DEBUG_MODE"), Settings::Get("DEBUG_MODE"));
-
-Logger::WriteInfo("Error middleware added");
+$errorMiddleware = $app->addErrorMiddleware(Settings::Get("DEBUG_MODE"), Settings::Get("DEBUG_MODE"), Settings::Get("DEBUG_MODE"));
+$errorMiddleware->setDefaultErrorHandler($exceptionHandler);
 
 ApiRoutes::Init($app);
 AppRoutes::Init($app);
-
-Logger::WriteInfo("Routes inited");
 
 $app->run();
