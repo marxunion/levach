@@ -37,6 +37,7 @@ services:
       - ./media:/var/www/levach/media:rw
       - ./frontend:/var/www/levach/frontend:rw
       - ./backend:/var/www/levach/backend:rw
+      - ./robots.txt:/var/www/levach/robots.txt:rw
     environment:
       HOSTNAME: ${HOSTNAME}
     depends_on:
