@@ -7,12 +7,14 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Interfaces\CallableResolverInterface;
 use Slim\Handlers\ErrorHandler;
-use Throwable;
+
 use Core\Settings;
 use Core\Logger;
 use Core\Warning;
 use Core\Error;
 use Core\ErrorCritical;
+
+use Throwable;
 
 class CustomExceptionHandler extends ErrorHandler
 {
@@ -49,6 +51,7 @@ class CustomExceptionHandler extends ErrorHandler
             $this->exceptionDetails['line'] = $this->exception->getLine();
             $this->exceptionDetails['trace'] = $this->exception->getTrace();
             $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
+
             if($this->exceptionDetails['message'] == "")
             {
                 $message = $this->exception->getMessage();
@@ -146,7 +149,7 @@ class CustomExceptionHandler extends ErrorHandler
         else
         {
             $this->exceptionDetails['code'] = $this->exception->getCode();
-            $this->exceptionDetails['message'] = $this->exception->getMessage();
+            $this->exceptionDetails['message'] = "Unknown Error";
             $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
         }
 

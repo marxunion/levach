@@ -29,7 +29,8 @@ Database::Init();
 
 $app = AppFactory::create();
 
-$exceptionHandler = new CustomExceptionHandler($app->getCallableResolver(), $app->getResponseFactory());
+$logger = new Logger('main');
+$exceptionHandler = new CustomExceptionHandler($app->getCallableResolver(), $app->getResponseFactory(), $logger);
 
 $errorMiddleware = $app->addErrorMiddleware(Settings::Get("DEBUG_MODE"), Settings::Get("DEBUG_MODE"), Settings::Get("DEBUG_MODE"));
 $errorMiddleware->setDefaultErrorHandler($exceptionHandler);

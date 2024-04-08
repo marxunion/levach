@@ -47,14 +47,14 @@ class MediaUploadImageHandler extends BaseHandlerRoute
                 
             if(in_array($uploadedFile->getClientMediaType(), $allowedTypes))
             {
-                    $uploadPath = __DIR__.'/../../../media/img/';
+                $uploadPath = __DIR__.'/../../../media/img/';
                     
-                    $newFileName = hash('sha3-256', uniqid().bin2hex(random_bytes(32)).$uploadedFile->getClientFilename()).'.'.pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+                $newFileName = hash('sha3-256', uniqid().bin2hex(random_bytes(32)).$uploadedFile->getClientFilename()).'.'.pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
                 
                 $uploadedFile->moveTo($uploadPath . DIRECTORY_SEPARATOR . $newFileName);
                 $this->response = $this->response->withStatus(200)->withHeader('Content-type', 'application/json')->withJson(
                 [
-                        'fileName' => $newFileName
+                    'fileName' => $newFileName
                 ]);
             }
             else

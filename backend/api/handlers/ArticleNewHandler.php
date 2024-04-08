@@ -17,6 +17,7 @@ use Api\Models\ArticleNewModel;
 
 class ArticleNewHandler extends BaseHandlerRoute
 {
+    private $data;
     public function Init()
     {
         $this->model = new ArticleNewModel();
@@ -25,7 +26,8 @@ class ArticleNewHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        $contentParts = explode("\n", $data['text']);
+        // Validation
+        $contentParts = explode("\n", $this->data['text']);
 
         if (count($contentParts) >= 1) 
         {
@@ -39,36 +41,33 @@ class ArticleNewHandler extends BaseHandlerRoute
                         $content = implode("\n", array_slice($contentParts, 1));
                         if (strlen($content) >= 25 && strlen($content) <= 10000) 
                         {
-                            $response->withJson(['success' => true, 'message' => 'Article successfully saved']);
+                            $viewCode = bin2hex(random_bytes(32));
+                            $editCode = bin2hex(random_bytes(64));
+                            $this->response->withJson(['success' => true, 'message' => 'Article successfully saved']);
                         } 
                         else 
                         {
                             throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Invalid length of article content");
-                            return;
                         }
                     } 
                     else 
                     {
                         throw new Warning(400, "Please add content for the article", "Empty article content");
-                        return;
                     }
                 } 
                 else 
                 {
                     throw new Warning(400, "Please add a title for the article.", "Invalid article title");
-                    return;
                 }
             } 
             else 
             {
                 throw new Warning(400, "ArticleNew Please add a title for the article. The title must contain between 5 and 120 characters", "Invalid article title length");
-                return;
             }
         } 
         else 
         {
             throw new Warning(400, "Please add a title for the article", "Empty article title");
-            return;
         }
     }
 }

@@ -225,7 +225,7 @@
 							}
 							console.log(data);
 									
-							axios.post('/article/new', data)
+							axios.post('/api/article/new', data)
 							.then(response => 
 							{
 								console.log(response.data);

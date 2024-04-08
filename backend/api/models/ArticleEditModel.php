@@ -7,7 +7,7 @@ use Core\Database;
 
 class ArticleEditModel extends BaseModel
 {
-    public function __construct($data)
+    public function __construct()
     {
 
     }
