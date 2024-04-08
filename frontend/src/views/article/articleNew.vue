@@ -99,21 +99,21 @@
 
 							if (error.response.data) 
 							{
-								if(error.response.data.warningStatus)
+								if(error.response.data.Warning)
 								{
-									if(error.response.data.errorCode == "002001")
+									if(error.response.data.Warning.message == "UploadImage Invalid image type")
 									{
 										modalInfoProps = {
 											status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]
 										}
 									}
-									else if(error.response.data.errorCode == "002002")
+									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
 									{
 										modalInfoProps = {
 											status: false, text: (langData.value['warnings'] as JsonData)["imageMaxSize"]
 										}
 									}
-									else if(error.response.data.errorCode == "002003")
+									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
 									{
 										modalInfoProps = {
 											status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]
@@ -126,9 +126,9 @@
 										}
 									}
 									openModal(InfoModal, modalInfoProps);
-									console.warn(error.response.data.errorMessage);
+									console.warn(error.response.data.Warning.message);
 								}
-								else if(error.response.data.errorStatus)
+								else if(error.response.data.Error)
 								{
 									modalInfoProps = {
 										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
@@ -136,7 +136,7 @@
 									openModal(InfoModal, modalInfoProps);
 									reject(new Error("UnknownError"));
 								}
-								else if(error.response.data.errorCriticalStatus)
+								else if(error.response.data.ErrorCritical)
 								{
 									modalInfoProps = {
 										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
@@ -235,7 +235,7 @@
 								}
 								else
 								{
-									if(response.data.errorStatus)
+									if(response.data.Error)
 									{
 
 									}

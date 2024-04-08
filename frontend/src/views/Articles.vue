@@ -182,7 +182,7 @@
                     <p class="main__article__reactions__statistics__title likeCounter">{{ abbreviateNumber(article['statistics']['likes']) }}</p>
                     <img src="../assets/img/article/dislike.svg" alt="Dislikes: " class="main__article__reactions__statistics__icon dislikeIcon">
                     <p class="main__article__reactions__statistics__title dislikeCounter">{{ abbreviateNumber(article['statistics']['dislikes']) }}</p>
-                    <img src="../assets/img/article/Share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
+                    <img src="../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                 </div>
                 <div class="main__article__reactions__comments">
                     <img src="../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">

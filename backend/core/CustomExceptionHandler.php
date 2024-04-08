@@ -116,15 +116,15 @@ class CustomExceptionHandler extends ErrorHandler
                 Logger::WriteError($logMessage);
                 break;
             case Warning::class:
-                $responsePayload = json_encode(['Warning' => $exceptionDetails]);
+                $responsePayload = json_encode(['Warning' => $this->exceptionDetails]);
                 Logger::WriteWarning($logMessage);
                 break;
             case ErrorCritical::class:
-                $responsePayload = json_encode(['ErrorCritical' => $exceptionDetails]);
+                $responsePayload = json_encode(['ErrorCritical' => $this->exceptionDetails]);
                 Logger::WriteCriticalError($logMessage);
                 break;
             default:
-                $responsePayload = json_encode(['Error' => $exceptionDetails]);
+                $responsePayload = json_encode(['Error' => $this->exceptionDetails]);
                 Logger::WriteError($logMessage);
                 break;
         }
