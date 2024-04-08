@@ -6,8 +6,11 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Factory\AppFactory;
 use Slim\Psr7\Stream;
-use Core\Settings;
 use Slim\App;
+use Core\Settings;
+
+
+use Core\Warning;
 
 class Routes
 {
@@ -37,7 +40,7 @@ class Routes
                 } 
                 else
                 {
-                    return $response->withStatus(404)->withJson(['error' => 'File not found']);
+                    throw new Error(404, "File not found", "File not found");
                 }
             });
 
@@ -51,7 +54,7 @@ class Routes
                 } 
                 else 
                 {
-                    return $response->withStatus(404)->withJson(['error' => 'File not found']);
+                    throw new Error(404, "File not found", "File not found");
                 }
             });
         }
