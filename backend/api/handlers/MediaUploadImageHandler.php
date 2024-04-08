@@ -20,7 +20,7 @@ class MediaUploadImageHandler extends BaseHandlerRoute
     {
         if(count($this->request->getUploadedFiles()) < 1)
         {
-            throw new Warning(400,"UploadImage File not uploaded", "UploadImage File not uploaded", "002001");
+            throw new Warning(400,"UploadImage File not uploaded", "UploadImage File not uploaded");
             return;
         }
 
@@ -31,7 +31,7 @@ class MediaUploadImageHandler extends BaseHandlerRoute
                     
             if ($uploadedFile->getSize() > $maxFileSize) 
             {
-                throw new Warning(400, "UploadImage File size exceeds the maximum allowable file size", "UploadImage File size exceeds the maximum allowable file size", "002002");
+                throw new Warning(400, "UploadImage File size exceeds the maximum allowable file size", "UploadImage File size exceeds the maximum allowable file size");
                 return;
             }
             $allowedTypes = 
@@ -59,13 +59,13 @@ class MediaUploadImageHandler extends BaseHandlerRoute
             }
             else
             {
-                throw new Warning(400, "UploadImage Invalid image type", "UploadImage Invalid image type", "002003");
+                throw new Warning(400, "UploadImage Invalid image type", "UploadImage Invalid image type");
                 return;
             }
         } 
         else 
         {
-            throw new Warning(400, "UploadImage File not uploaded", "UploadImage File not uploaded", "002003");
+            throw new Warning(400, "UploadImage File not uploaded", "UploadImage File not uploaded");
             return;
         }
     }

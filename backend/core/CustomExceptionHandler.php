@@ -104,6 +104,7 @@ class CustomExceptionHandler extends ErrorHandler
             }
             
             $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
+    
         }
         $logMessage = 'Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exceptionDetails['file'].' | Line: '.$this->exceptionDetails['line'].' | Trace: '.$this->exception->getTraceAsString();
         

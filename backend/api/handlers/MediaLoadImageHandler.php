@@ -33,7 +33,7 @@ class MediaLoadImageHandler extends BaseHandlerRouteWithArgs
         }
         else
         {
-            throw new Warning(404, "LoadImage File not found", "LoadImage File not found, filePath=".$this->filePath, "001001");
+            throw new Warning(404, "LoadImage File not found", "LoadImage File not found, filePath=".$this->filePath);
             return;
         }
     }
