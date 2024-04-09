@@ -188,19 +188,19 @@
 							{
 								if(error.response.data.Warning)
 								{
-									if(error.response.data.message == "UploadImage Invalid image type")
+									if(error.response.data.Warning.message == "UploadImage Invalid image type")
 									{
 										modalInfoProps = {
 											status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]
 										}
 									}
-									else if(error.response.data.message == "UploadImage File size exceeds the maximum allowable file size")
+									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
 									{
 										modalInfoProps = {
 											status: false, text: (langData.value['warnings'] as JsonData)["imageMaxSize"]
 										}
 									}
-									else if(error.response.data.message == "UploadImage Invalid image type")
+									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
 									{
 										modalInfoProps = {
 											status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]
@@ -213,7 +213,6 @@
 										}
 									}
 									openModal(InfoModal, modalInfoProps);
-									console.warn(error.response.data.errorMessage);
 								}
 								else if(error.response.data.Error)
 								{

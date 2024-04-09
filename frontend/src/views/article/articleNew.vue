@@ -126,7 +126,6 @@
 										}
 									}
 									openModal(InfoModal, modalInfoProps);
-									console.warn(error.response.data.Warning.message);
 								}
 								else if(error.response.data.Error)
 								{

@@ -2,12 +2,18 @@
 	import { ref, computed, reactive, watch } from 'vue';
 	import axios from 'axios';
 
+	import { JsonData } from './../../ts/JsonHandler';
+
 	import DropDown from "./../../components/DropDown.vue";
 
 	import CommentsList from "./../../components/CommentsList.vue";
 
 	import { MdPreview, MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
+
+	import { openModal, closeModal } from "jenesius-vue-modal";
+	import LoaderModal from "./../../components/modals/LoaderModal.vue";
+    import InfoModal from "./../../components/modals/InfoModal.vue";
 
     import { isAdmin } from './../../ts/AdminHandler'
 
@@ -99,30 +105,135 @@
 
 	const onNewCommentUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 	{
-		const res = await Promise.all(
-			files.map((file) => 
-			{
-				return new Promise<{ data: { url: string } }>((rev, rej) => 
+		if(files.length > 0)
+		{
+			openModal(LoaderModal);
+			const promises = files.map((file) => 
 				{
-					const form = new FormData();
-					form.append('file', file);
-
-					axios
-					.post('/api/media/img/upload', form, 
+					return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
 					{
-						headers: 
-						{
-							'Content-Type': 'multipart/form-data'
-						}
-					})
-					.then((response) => rev(response))
-					.catch((error) => rej(error));
-				});
-			})
-		);
+						const form = new FormData();
+						form.append('file', file);
 
-		callback(res.map((item) => item.data.url));
+						console.log(form);
+
+						axios.post('/api/media/img/upload', form, 
+						{
+							headers: 
+							{
+								'Content-Type': 'multipart/form-data'
+							}
+						})
+						.then((response) => 
+						{
+							let modalInfoProps;
+						
+							if (response.data) 
+							{
+								if(response.data.fileName)
+								{
+									resolve(response);
+								}
+								else 
+								{
+									modalInfoProps = {
+										status: false, text: (langData.value['warnings'] as JsonData)["unknown"]
+									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
+								}
+							}
+							else
+							{
+								modalInfoProps = {
+									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
+								}
+								openModal(InfoModal, modalInfoProps);
+								reject(new Error("UnknownError"))
+							}
+						})
+						.catch((error) => 
+						{
+							let modalInfoProps;
+
+							if (error.response.data) 
+							{
+								if(error.response.data.Warning)
+								{
+									if(error.response.data.Warning.message == "UploadImage Invalid image type")
+									{
+										modalInfoProps = {
+											status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]
+										}
+									}
+									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
+									{
+										modalInfoProps = {
+											status: false, text: (langData.value['warnings'] as JsonData)["imageMaxSize"]
+										}
+									}
+									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
+									{
+										modalInfoProps = {
+											status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]
+										}
+									}
+									else
+									{
+										modalInfoProps = {
+											status: false, text: (langData.value['warnings'] as JsonData)["unknown"]
+										}
+									}
+									openModal(InfoModal, modalInfoProps);
+									console.warn(error.response.data.Warning.message);
+								}
+								else if(error.response.data.Error)
+								{
+									modalInfoProps = {
+										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
+									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
+								}
+								else if(error.response.data.ErrorCritical)
+								{
+									modalInfoProps = {
+										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
+									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
+								}
+								else 
+								{
+									modalInfoProps = {
+										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
+									}
+									openModal(InfoModal, modalInfoProps);
+									reject(new Error("UnknownError"));
+								}
+							}
+							else
+							{
+								modalInfoProps = {
+									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
+								}
+								openModal(InfoModal, modalInfoProps);
+								reject(new Error("UnknownError"))
+							}
+						});
+					});
+				}
+			);
+
+			const res = await Promise.all(promises);
+			
+			const successfulResults = res.filter(item => item !== null);
+
+			closeModal();
+			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
+		}
 	};
+
 
 
 	// Comments
