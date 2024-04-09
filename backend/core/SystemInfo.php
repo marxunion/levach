@@ -139,11 +139,14 @@ class SystemInfo
         $result['free'] = 0;
         $result['used'] = 0;
 
-        if (PHP_OS == 'WINNT') {
+        if (PHP_OS == 'WINNT') 
+        {
             $lines = null;
             exec('wmic logicaldisk get FreeSpace^,Name^,Size /Value', $lines);
-            foreach ($lines as $index => $line) {
-                if ($line != "Name=$path") {
+            foreach ($lines as $index => $line) 
+            {
+                if ($line != "Name=$path") 
+                {
                     continue;
                 }
                 $result['free'] = explode('=', $lines[$index - 1])[1];
@@ -151,11 +154,15 @@ class SystemInfo
                 $result['used'] = $result['size'] - $result['free'];
                 break;
             }
-        } else {
+        } 
+        else 
+        {
             $lines = null;
             exec(sprintf('df /P %s', $path), $lines);
-            foreach ($lines as $index => $line) {
-                if ($index != 1) {
+            foreach ($lines as $index => $line) 
+            {
+                if ($index != 1) 
+                {
                     continue;
                 }
                 $values = preg_split('/\s{1,}/', $line);
