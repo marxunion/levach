@@ -15,7 +15,8 @@ use Core\Logger;
 require __DIR__ . '/../vendor/autoload.php';
 
 Settings::Init();
-Logger::Init();
+$logger = Logger::initInstance('main');
+$logger->pushHandler(new StreamHandler(__DIR__.'/../logs/main.log', Level::Debug));
 
 // Returns used memory (either in percent (without percent sign) or free and overall in bytes)
 function getServerMemoryUsage($getPercentage = true)
@@ -132,7 +133,7 @@ function getNiceFileSize($bytes, $binaryPrefix=true)
 }
 
 $memUsage = getServerMemoryUsage(false);
-Logger::WriteInfo("Memory usage: ".getNiceFileSize($memUsage["total"] - $memUsage["free"])." / ".getNiceFileSize($memUsage["total"])." (".getServerMemoryUsage(true)."%)");
+$logger->info("Memory usage: ".getNiceFileSize($memUsage["total"] - $memUsage["free"])." / ".getNiceFileSize($memUsage["total"])." (".getServerMemoryUsage(true)."%)");
 
 function _getServerLoadLinuxData()
 {
@@ -217,8 +218,6 @@ function getServerLoad()
     return $load;
 }
 
-$logger = Logger::initInstance('main');
-$logger->pushHandler(new StreamHandler(__DIR__.'/../logs/main.log', Level::Debug));
 $cpuLoad = getServerLoad();
 if (is_null($cpuLoad)) 
 {
