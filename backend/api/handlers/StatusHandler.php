@@ -30,7 +30,7 @@ class StatusHandler extends BaseHandlerRoute
                 "Web Server Info" => [
                     "Name/Version" => $_SERVER['SERVER_SOFTWARE'],
                     "Server IP" => $_SERVER['SERVER_ADDR'],
-                    "Server Protocol" => $_SERVER['SERVER_PROTOCOL']
+                    "Server Protocol" => $_SERVER['SERVER_PROTOCOL'],
                     'Gateway Interface' => $_SERVER['GATEWAY_INTERFACE']
                 ],
                 "PHP Info" => [
