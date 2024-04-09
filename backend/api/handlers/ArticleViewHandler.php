@@ -8,6 +8,10 @@ use Base\BaseModel;
 
 class ArticleViewHandler extends BaseHandlerRoute
 {
+    public function Init()
+    {
+        
+    }
     public function Process()
     {
         

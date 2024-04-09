@@ -17,15 +17,25 @@ use Api\Models\ArticleEditModel;
 
 class ArticleEditHandler extends BaseHandlerRoute
 {
+    private array $data;
     public function Init()
     {
-        $this->model = new ArticleEditModel();
-        $this->data = $this->request->getParsedBody();
+        $this->model = new ArticleNewModel();
+        $parsedBody = $this->request->getParsedBody();
+
+        if(is_array($parsedBody))
+        {
+            $this->data = $parsedBody;
+        }
+        else
+        {
+            throw new Warning(400, "Please add a title for the article", "Empty article title");
+        }
+        
     }
 
     public function Process()
     {
-        // Validation
         $contentParts = explode("\n", $this->data['text']);
 
         if (count($contentParts) >= 1) 
