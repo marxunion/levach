@@ -42,7 +42,7 @@ class BaseHandlerRoute extends BaseHandler
         }
         else
         {
-            throw new Error(500, "Api Unknown Error", "Api Failed finish route without handler", "000000");
+            throw new Error(500, "Api Unknown Error", "Api Failed finish route without handler");
         }
     }
 

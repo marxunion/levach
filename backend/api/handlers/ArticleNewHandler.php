@@ -17,17 +17,26 @@ use Api\Models\ArticleNewModel;
 
 class ArticleNewHandler extends BaseHandlerRoute
 {
-    private $data;
+    private string $data = '';
     public function Init()
     {
         $this->model = new ArticleNewModel();
-        $this->data = $this->request->getParsedBody();
+        $parsedBody = $this->request->getParsedBody();
+        if($parsedBody !== null)
+        {
+            $this->data = $parsedBody;
+        }
+        else
+        {
+            throw new Warning(400, "Please add a title for the article", "Empty article title");
+        }
+        
     }
 
     public function Process()
     {
         // Validation
-        $contentParts = explode("\n", $this->data['text']);
+        $contentParts = explode("\n", $this->data['text'] || '');
 
         if (count($contentParts) >= 1) 
         {
@@ -41,9 +50,10 @@ class ArticleNewHandler extends BaseHandlerRoute
                         $content = implode("\n", array_slice($contentParts, 1));
                         if (strlen($content) >= 25 && strlen($content) <= 10000) 
                         {
-                            $viewCode = bin2hex(random_bytes(32));
-                            $editCode = bin2hex(random_bytes(64));
-                            $this->response->withJson(['success' => true, 'message' => 'Article successfully saved']);
+                            
+                            $viewCode = bin2hex(random_bytes(random_int(14,18)));
+                            $editCode = bin2hex(random_bytes(random_int(30,34)));
+                            $this->response = $this->response->withJson(['success' => true, 'message' => 'Article successfully saved', 'viewCode' => $viewCode, 'editCode' => $editCode]);
                         } 
                         else 
                         {

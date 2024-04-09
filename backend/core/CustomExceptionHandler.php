@@ -4,6 +4,7 @@ namespace Core;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Interfaces\CallableResolverInterface;
 use Slim\Handlers\ErrorHandler;
@@ -21,11 +22,11 @@ class CustomExceptionHandler extends ErrorHandler
     private $exceptionType;
     private $exceptionDetails = [];
 
-    public function __construct(CallableResolverInterface $callableResolver, ResponseFactoryInterface $responseFactory)
+    public function __construct(CallableResolverInterface $callableResolver, ResponseFactoryInterface $responseFactory, ?LoggerInterface $logger)
     {
         $this->exceptionDetails = [];
         $this->responseFactory = $responseFactory;
-        parent::__construct($callableResolver, $responseFactory);
+        parent::__construct($callableResolver, $responseFactory, $logger);
     }
 
     public function __invoke(ServerRequestInterface $request, Throwable $exception, bool $displayErrorDetails, bool $logErrors, bool $logErrorDetails): ResponseInterface
@@ -116,19 +117,19 @@ class CustomExceptionHandler extends ErrorHandler
         {
             case Error::class:
                 $responsePayload = json_encode(['Error' => $this->exceptionDetails]);
-                Logger::WriteError($logMessage);
+                $this->logger->error($logMessage);
                 break;
             case Warning::class:
                 $responsePayload = json_encode(['Warning' => $this->exceptionDetails]);
-                Logger::WriteWarning($logMessage);
+                $this->logger->warning($logMessage);
                 break;
             case ErrorCritical::class:
                 $responsePayload = json_encode(['ErrorCritical' => $this->exceptionDetails]);
-                Logger::WriteCriticalError($logMessage);
+                $this->logger->critical($logMessage);
                 break;
             default:
                 $responsePayload = json_encode(['Error' => $this->exceptionDetails]);
-                Logger::WriteError($logMessage);
+                $this->logger->error($logMessage);
                 break;
         }
         $response->getBody()->write($responsePayload);
@@ -153,7 +154,7 @@ class CustomExceptionHandler extends ErrorHandler
             $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
         }
 
-        Logger::WriteCriticalError('Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exceptionDetails['file'].' | Line: '.$this->exceptionDetails['line'].' | Trace: '.$this->exception->getTraceAsString());
+        $this->logger->critical('Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exceptionDetails['file'].' | Line: '.$this->exceptionDetails['line'].' | Trace: '.$this->exception->getTraceAsString());
 
         $responsePayload = json_encode(['ErrorCritical' => $this->exceptionDetails]);
 

@@ -41,7 +41,7 @@ class ArticleEditHandler extends BaseHandlerRoute
                         if (strlen($content) >= 25 && strlen($content) <= 10000) 
                         {
                             
-                            $response->withJson(['success' => true, 'message' => 'Article successfully saved']);
+                            $this->response = $this->response->withJson(['success' => true, 'message' => 'Article successfully saved']);
                         } 
                         else 
                         {

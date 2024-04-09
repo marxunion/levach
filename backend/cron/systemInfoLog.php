@@ -6,6 +6,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Factory\AppFactory;
 use Slim\Psr7\Stream;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
 
 use Core\Settings;
 use Core\Logger;
@@ -215,12 +217,14 @@ function getServerLoad()
     return $load;
 }
 
+$logger = Logger::initInstance('main');
+$logger->pushHandler(new StreamHandler(__DIR__.'/../logs/main.log', Level::Debug));
 $cpuLoad = getServerLoad();
 if (is_null($cpuLoad)) 
 {
-    Logger::WriteInfo("CPU Load not estimateable (maybe too old Windows or missing rights at Linux or Windows)");
+    $logger->info("CPU Load not estimateable (maybe too old Windows or missing rights at Linux or Windows)");
 }
 else 
 {
-    Logger::WriteInfo("CPU Load: ".$cpuLoad . "%");
+    $logger->info("CPU Load: ".$cpuLoad . "%");
 }
