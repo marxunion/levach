@@ -13,7 +13,7 @@ use Core\Settings;
 use Core\Logger;
 use Core\Warning;
 use Core\Error;
-use Core\ErrorCritical;
+use Core\Critical;
 
 use Throwable;
 
@@ -34,7 +34,7 @@ class CustomExceptionHandler extends ErrorHandler
         $this->exception = $exception;
         $this->exceptionType = get_class($exception);
         
-        if ($this->exceptionType == Error::class || $this->exceptionType == Warning::class || $this->exceptionType == ErrorCritical::class) 
+        if ($this->exceptionType == Error::class || $this->exceptionType == Warning::class || $this->exceptionType == Critical::class) 
         {
             return $this->handleCustomException();
         }
@@ -71,7 +71,7 @@ class CustomExceptionHandler extends ErrorHandler
                         case Warning::class:
                             $this->exceptionDetails['message'] = "Unknown warning";
                             break;
-                        case ErrorCritical::class:
+                        case Critical::class:
                             $this->exceptionDetails['message'] = "Unknown error critical";
                             break;
                         default:
@@ -98,7 +98,7 @@ class CustomExceptionHandler extends ErrorHandler
                     case Warning::class:
                         $this->exceptionDetails['message'] = "Unknown warning";
                         break;
-                    case ErrorCritical::class:
+                    case Critical::class:
                         $this->exceptionDetails['message'] = "Unknown error critical";
                         break;
                     default:
@@ -125,7 +125,7 @@ class CustomExceptionHandler extends ErrorHandler
                     case Warning::class:
                         $this->exceptionDetails['message'] = "Unknown warning";
                         break;
-                    case ErrorCritical::class:
+                    case Critical::class:
                         $this->exceptionDetails['message'] = "Unknown error critical";
                         break;
                     default:
@@ -147,8 +147,8 @@ class CustomExceptionHandler extends ErrorHandler
                 $responsePayload = json_encode(['Warning' => $this->exceptionDetails]);
                 $this->logger->warning($logMessage);
                 break;
-            case ErrorCritical::class:
-                $responsePayload = json_encode(['ErrorCritical' => $this->exceptionDetails]);
+            case Critical::class:
+                $responsePayload = json_encode(['Critical' => $this->exceptionDetails]);
                 $this->logger->critical($logMessage);
                 break;
             default:
@@ -180,7 +180,7 @@ class CustomExceptionHandler extends ErrorHandler
 
         $this->logger->critical('Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exceptionDetails['file'].' | Line: '.$this->exceptionDetails['line'].' | Trace: '.$this->exception->getTraceAsString());
 
-        $responsePayload = json_encode(['ErrorCritical' => $this->exceptionDetails]);
+        $responsePayload = json_encode(['Critical' => $this->exceptionDetails]);
 
         $response = $this->responseFactory->createResponse(500);
         $response->getBody()->write($responsePayload);

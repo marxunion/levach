@@ -3,7 +3,7 @@ namespace Base;
 
 use Core\Error;
 use Core\Warning;
-use Core\ErrorCritical;
+use Core\Critical;
 use Core\Router;
 
 use Psr\Http\Message\ResponseInterface as Response;

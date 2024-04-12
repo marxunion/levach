@@ -66,6 +66,12 @@ class Routes
                 self::$handler = new ArticleViewHandler($request, $response, $args);
                 return self::$handler->Handle();
             });
+
+            $group->get('/article/search/{strQuery}', function (Request $request, Response $response, array $args) 
+            {
+                self::$handler = new ArticleViewHandler($request, $response, $args);
+                return self::$handler->Handle();
+            });
     
             $group->get('/articles', function (Request $request, Response $response) 
             {

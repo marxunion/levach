@@ -3,7 +3,7 @@ namespace Core;
 
 use Core\CustomException;
 
-class ErrorCritical extends CustomException
+class Critical extends CustomException
 {
 
 }

@@ -135,7 +135,7 @@
 									openModal(InfoModal, modalInfoProps);
 									reject(new Error("UnknownError"));
 								}
-								else if(error.response.data.ErrorCritical)
+								else if(error.response.data.Critical)
 								{
 									modalInfoProps = {
 										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
