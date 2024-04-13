@@ -11,13 +11,14 @@ class ArticleNewModel extends BaseModel
     {
         parent::__construct();
     }
-    public function publicArticle($title, $text, $tags, $viewCode, $editCode)
+    public function publishArticle($title, $text, $tags, $viewCode, $editCode)
     {
         $data = [
             'title' => $title,
             'text' => $text,
             'tags' => $tags
         ];
+
         $articleId = $this->database->insert('articles', $data);
         if($articleId)
         {
@@ -28,13 +29,13 @@ class ArticleNewModel extends BaseModel
 
             $this->database->insert('ratings', $ratingData);
 
-            $linksData = [
+            $codesData = [
                 'article_id' => $articleId,
-                'view_link' => $viewCode
-                'edit_link' => $editCode
+                'view_code' => $viewCode
+                'edit_code' => $editCode
             ];
 
-            $database->insert('links', $linksData);
+            $database->insert('codes', $codesData);
         }
         else
         {

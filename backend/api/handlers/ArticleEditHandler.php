@@ -20,7 +20,7 @@ class ArticleEditHandler extends BaseHandlerRoute
     private array $data;
     public function Init()
     {
-        $this->model = new ArticleNewModel();
+        $this->model = new ArticleEditModel();
         $parsedBody = $this->request->getParsedBody();
 
         if(is_array($parsedBody))
@@ -31,51 +31,58 @@ class ArticleEditHandler extends BaseHandlerRoute
         {
             throw new Warning(400, "Please add a title for the article", "Empty article title");
         }
-        
     }
 
     public function Process()
     {
-        $contentParts = explode("\n", $this->data['text']);
+        $articleId = $this->model->getArticleToEdit($this->data['editCode']);
 
-        if (count($contentParts) >= 1) 
+        if($articleId)
         {
-            $title = $contentParts[0];
-            if (strlen($title) >= 5 && strlen($title) <= 120) 
+            $contentParts = explode("\n", $this->data['text']);
+            if (count($contentParts) >= 1) 
             {
-                if (strpos($title, '# ') === 0) 
+                $title = $contentParts[0];
+                if (strlen($title) >= 5 && strlen($title) <= 120) 
                 {
-                    if (count($contentParts) >= 2) 
+                    if (strpos($title, '# ') === 0) 
                     {
-                        $content = implode("\n", array_slice($contentParts, 1));
-                        if (strlen($content) >= 25 && strlen($content) <= 10000) 
+                        if (count($contentParts) >= 2) 
                         {
-                            
-                            $this->response = $this->response->withJson(['success' => true, 'message' => 'Article successfully saved']);
+                            $content = implode("\n", array_slice($contentParts, 1));
+                            if (strlen($content) >= 25 && strlen($content) <= 10000) 
+                            {
+                                $this->model->editArticle($articleId, $title, $content, $tags);
+                                $this->response = $this->response->withJson(['success' => true, 'message' => 'Article successfully saved']);
+                            } 
+                            else 
+                            {
+                                throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Invalid length of article content");
+                            }
                         } 
                         else 
                         {
-                            throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Invalid length of article content");
+                            throw new Warning(400, "Please add content for the article", "Empty article content");
                         }
                     } 
                     else 
                     {
-                        throw new Warning(400, "Please add content for the article", "Empty article content");
+                        throw new Warning(400, "Please add a title for the article.", "Invalid article title");
                     }
                 } 
                 else 
                 {
-                    throw new Warning(400, "Please add a title for the article.", "Invalid article title");
+                    throw new Warning(400, "ArticleNew Please add a title for the article. The title must contain between 5 and 120 characters", "Invalid article title length");
                 }
             } 
             else 
             {
-                throw new Warning(400, "ArticleNew Please add a title for the article. The title must contain between 5 and 120 characters", "Invalid article title length");
+                throw new Warning(400, "Please add a title for the article", "Empty article title");
             }
-        } 
-        else 
+        }
+        else
         {
-            throw new Warning(400, "Please add a title for the article", "Empty article title");
+            throw new Warning(400, "Article for edit not found", "Failed edit article with edit code, editCode not found");
         }
     }
 }

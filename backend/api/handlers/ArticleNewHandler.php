@@ -17,7 +17,6 @@ use Api\Models\ArticleNewModel;
 
 class ArticleNewHandler extends BaseHandlerRoute
 {
-    private array $data;
     public function Init()
     {
         $this->model = new ArticleNewModel();
@@ -53,6 +52,7 @@ class ArticleNewHandler extends BaseHandlerRoute
                             $viewCode = hash('sha3-224', uniqid().bin2hex(random_bytes(32)).$title);
                             $editCode = hash('sha3-256', uniqid().bin2hex(random_bytes(32)).$title);
 
+                            $this->model->publishArticle($title, $content, $this->data['tags'], $viewCode, $editCode);
                             $this->response = $this->response->withJson(['success' => true, 'message' => 'Article successfully saved', 'viewCode' => $viewCode, 'editCode' => $editCode]);
                         } 
                         else 

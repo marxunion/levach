@@ -7,8 +7,9 @@ use Core\Database;
 
 class ArticlesModel extends BaseModel
 {
-    public function __construct($data)
+    public function __construct()
     {
-
+        parent::__construct();
     }
+    
 }

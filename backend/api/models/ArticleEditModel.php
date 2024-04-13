@@ -11,16 +11,21 @@ class ArticleEditModel extends BaseModel
     {
         parent::__construct();
     }
-    public function editArticle($newTitle, $newText, $newTags)
+    public function getArticleToEdit($editCode)
     {
-        if ($currentVersion !== false) 
+        $this->database->get('codes', 'article_id', ['edit_code' => $editCode]);
+    }
+    
+    public function editArticle($articleId, $newTitle, $newText, $newTags)
+    {
+        $articleData = $this->database->get('articles', '*', [
+            'id' => $articleId,
+            'ORDER' => ['version_id' => 'DESC'],
+            'LIMIT' => 1
+        ]);
+
+        if($articleData)
         {
-            $articleData = $database->get('articles', '*', [
-                'id' => $articleId,
-                'ORDER' => ['version_id' => 'DESC'],
-                'LIMIT' => 1
-            ]);
-            
             $newVersion = $articleData['version_id'] + 1;
 
             $articleData['version_id'] = $newVersion;
@@ -28,11 +33,11 @@ class ArticleEditModel extends BaseModel
             $articleData['text'] = $newText;
             $articleData['tags'] = $newTags;
 
-            $database->insert('articles', $articleData);
+            $this->database->insert('articles', $articleData);
         } 
         else 
         {
-            throw new Critical(500,'Unknown error', 'Failed to create article');
+            throw new Critical(500, 'Unknown error', 'Failed to edit article');
         }
     }
 }

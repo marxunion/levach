@@ -319,7 +319,6 @@
 							<p>{{ statusesTexts.acceptedEditoriallyStatus }}</p>
 						</div>
 					</div>
-					<DropDown :options="versionsTexts" :default="versionsTexts[currentVersionIdIndex]" class="main__article__info__statusesContainer__selectVersion" @inputIndex="changeVersion"/>
 				</div>
 			</div>
 			<div class="main__article__editorContainer">

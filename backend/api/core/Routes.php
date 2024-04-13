@@ -19,6 +19,7 @@ use Base\EmptyHandlerRoute;
 use Api\Handlers\ArticleNewHandler;
 use Api\Handlers\ArticlesHandler;
 use Api\Handlers\ArticleViewHandler;
+use Api\Handlers\ArticleSearchHandler;
 use Api\Handlers\ArticleEditHandler;
 use Api\Handlers\MediaLoadImageHandler;
 use Api\Handlers\MediaUploadImageHandler;
@@ -55,21 +56,21 @@ class Routes
                 return self::$handler->Handle();
             });
 
-            $group->post('/article/edit/{tokenEdit}', function (Request $request, Response $response, array $args) 
+            $group->post('/article/edit', function (Request $request, Response $response, array $args) 
             {
                 self::$handler = new ArticleEditHandler($request, $response, $args);
                 return self::$handler->Handle();
             });
     
-            $group->get('/article/view/{tokenView}', function (Request $request, Response $response, array $args) 
+            $group->get('/article/view', function (Request $request, Response $response, array $args) 
             {
                 self::$handler = new ArticleViewHandler($request, $response, $args);
                 return self::$handler->Handle();
             });
 
-            $group->get('/article/search/{strQuery}', function (Request $request, Response $response, array $args) 
+            $group->get('/article/search', function (Request $request, Response $response, array $args) 
             {
-                self::$handler = new ArticleViewHandler($request, $response, $args);
+                self::$handler = new ArticleSearchHandler($request, $response, $args);
                 return self::$handler->Handle();
             });
     
