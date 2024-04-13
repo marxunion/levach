@@ -15,6 +15,7 @@ use Slim\App;
 
 class BaseHandlerRoute extends BaseHandler
 {
+    protected array $data;
     protected $request;
     protected $response;
 

@@ -11,7 +11,7 @@ class ArticleNewModel extends BaseModel
     {
         parent::__construct();
     }
-    public function publishArticle($title, $text, $tags, $viewCode, $editCode)
+    public function newArticle($title, $text, $tags, $viewCode, $editCode)
     {
         $data = [
             'title' => $title,
@@ -31,7 +31,7 @@ class ArticleNewModel extends BaseModel
 
             $codesData = [
                 'article_id' => $articleId,
-                'view_code' => $viewCode
+                'view_code' => $viewCode,
                 'edit_code' => $editCode
             ];
 

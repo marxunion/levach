@@ -13,11 +13,10 @@ use Core\Warning;
 
 use Base\BaseModel;
 
-use Api\Models\ArticleEditModel;
+use Api\Models\BaseHandlerRouteWithArgs;
 
-class ArticleEditHandler extends BaseHandlerRoute
+class ArticleEditHandler extends BaseHandlerRouteWithArgs
 {
-    private array $data;
     public function Init()
     {
         $this->model = new ArticleEditModel();
@@ -35,7 +34,7 @@ class ArticleEditHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        $articleId = $this->model->getArticleToEdit($this->data['editCode']);
+        $articleId = $this->model->getArticleIdByEditCode($this->args['editCode']);
 
         if($articleId)
         {

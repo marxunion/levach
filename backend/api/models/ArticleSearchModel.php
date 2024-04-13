@@ -12,11 +12,11 @@ class ArticleSearchModel extends BaseModel
         parent::__construct();
     }
 
-    public function search($queryStr = "")
+    public function searchArticle($queryStr = "")
     {
         
     }
-    public function searchWithTags($queryStr = "")
+    public function searchArticleWithTags($queryStr = "")
     {
 
     }

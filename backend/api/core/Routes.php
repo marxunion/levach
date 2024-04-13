@@ -21,6 +21,7 @@ use Api\Handlers\ArticlesHandler;
 use Api\Handlers\ArticleViewHandler;
 use Api\Handlers\ArticleSearchHandler;
 use Api\Handlers\ArticleEditHandler;
+use Api\Handlers\ArticleEditPreloadHandler;
 use Api\Handlers\MediaLoadImageHandler;
 use Api\Handlers\MediaUploadImageHandler;
 use Api\Handlers\StatusHandler;
@@ -56,19 +57,25 @@ class Routes
                 return self::$handler->Handle();
             });
 
-            $group->post('/article/edit', function (Request $request, Response $response, array $args) 
+            $group->post('/article/edit/{editCode}', function (Request $request, Response $response, array $args) 
             {
                 self::$handler = new ArticleEditHandler($request, $response, $args);
                 return self::$handler->Handle();
             });
+
+            $group->post('/article/edit/preload/{editCode}', function (Request $request, Response $response, array $args) 
+            {
+                self::$handler = new ArticleEditPreloadHandler($request, $response, $args);
+                return self::$handler->Handle();
+            });
     
-            $group->get('/article/view', function (Request $request, Response $response, array $args) 
+            $group->get('/article/view/{viewCode}', function (Request $request, Response $response, array $args) 
             {
                 self::$handler = new ArticleViewHandler($request, $response, $args);
                 return self::$handler->Handle();
             });
 
-            $group->get('/article/search', function (Request $request, Response $response, array $args) 
+            $group->get('/article/search/{queryStr}', function (Request $request, Response $response, array $args) 
             {
                 self::$handler = new ArticleSearchHandler($request, $response, $args);
                 return self::$handler->Handle();

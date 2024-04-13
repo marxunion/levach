@@ -11,9 +11,10 @@ class ArticleEditModel extends BaseModel
     {
         parent::__construct();
     }
-    public function getArticleToEdit($editCode)
+    
+    public function getArticleIdByEditCode($editCode)
     {
-        $this->database->get('codes', 'article_id', ['edit_code' => $editCode]);
+        return $this->database->get('codes', 'article_id', ['edit_code' => $editCode]);
     }
     
     public function editArticle($articleId, $newTitle, $newText, $newTags)

@@ -12,7 +12,7 @@ class ArticleViewModel extends BaseModel
         parent::__construct();
     }
 
-    public function getArticleToView($viewCode)
+    public function getArticleByViewCode($viewCode)
     {
         $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
