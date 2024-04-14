@@ -42,9 +42,9 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
             if (count($contentParts) >= 1) 
             {
                 $title = $contentParts[0];
-                if (strlen($title) >= 5 && strlen($title) <= 120) 
+                if (strpos($title, '# ') === 0) 
                 {
-                    if (strpos($title, '# ') === 0) 
+                    if (strlen($title) >= 5 && strlen($title) <= 120) 
                     {
                         if (count($contentParts) >= 2) 
                         {
@@ -66,12 +66,12 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                     } 
                     else 
                     {
-                        throw new Warning(400, "Please add a title for the article.", "Invalid article title");
+                        throw new Warning(400, "The title must contain between 5 and 120 characters", "Invalid article title length");
                     }
                 } 
                 else 
                 {
-                    throw new Warning(400, "ArticleNew Please add a title for the article. The title must contain between 5 and 120 characters", "Invalid article title length");
+                    throw new Warning(400, "Please add a title for the article.", "Invalid article title");
                 }
             } 
             else 
@@ -81,7 +81,7 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
         }
         else
         {
-            throw new Warning(400, "Article for edit not found", "Failed edit article with edit code, editCode not found");
+            throw new Warning(404, "Article for edit not found", "Failed edit article with edit code, editCode not found");
         }
     }
 }

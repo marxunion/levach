@@ -1,5 +1,6 @@
 <script setup lang="ts">
-	import { ref, watch, reactive, Ref, computed } from 'vue';
+	import { ref, watch, reactive, Ref, computed, onMounted } from 'vue';
+	import { useRoute } from 'vue-router';
 	import axios from 'axios';
 
 	import DropDown from "./../../components/DropDown.vue";
@@ -71,36 +72,7 @@
 	
 
 
-	const texts = 
-	[
-		"# TestArticle \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### ",
-		
-		"# Test Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n.",
-		
-		"# Test Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n🤗 Code\n\n```vue\n<template>\n  <MdEditor v-model=\"text\" />\n</template>\n\n\<script setup\>\nimport { ref } from 'vue';\nimport { MdEditor } from 'md-editor-v3';\nimport 'md-editor-v3/lib/style.css';\n\nconst text = ref('Hello Editor!');\n\</script\>\n```\n\n## 🖨 Text\n\nThe Old Man and the Sea served to reinvigorate Hemingway's literary reputation and prompted a reexamination of his entire body of work.\n\n##",
-		
-		"# Test Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n🤗 Code\n\n```vue\n<template>\n  <MdEditor v-model=\"text\" />\n</template>\n\n\<script setup\>\nimport { ref } from 'vue';\nimport { MdEditor } from 'md-editor-v3';\nimport 'md-editor-v3/lib/style.css';\n\nconst text = ref('Hello Editor!');\n\</script\>\n```\n\n## 🖨 Text\n\nThe Old Man and the Sea served to reinvigorate Hemingway's literary reputation and prompted a reexamination of his entire body of work.\n\n## 📈 Table\n\n| nickname | from             |\n| -------- | ---------------- |\n| zhijian  | ChongQing, China |\n\n## 📏 Formula\n\nInline: $x+y^{2x}$\n\n$$\n\\sqrt[3]{x}\n$$\n\n## 🧬 Diagram\n\n```mermaid\nflowchart TD\n  Start --> Stop\n```\n\n## 🪄 Alert\n\n!!! note Supported Types\n\nnote、abstract、info、tip、success、question、warning、failure、danger、bug、example、quote、hint、caution、error、attention\n\n!!!\n\n## ☘️ em..."
-	]
-
-	// Versions
-	let currentVersionIdIndex = ref(0);
-
-	let versionsIds = ref([
-		1,
-		2,
-		3,
-		4
-	].reverse())
-
-	const versionsTexts = computed(
-		() => versionsIds.value.map((version) => langData.value['versionText'] as string + version)
-	);
-	
-	const changeVersion = (version : number) => 
-	{
-		currentVersionIdIndex.value = version;
-	};
-
+	const text = "# TestArticle \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### ";
 	// Editor
 	config(
 	{
@@ -116,13 +88,8 @@
 
 	let editorState = reactive(
 	{
-		text: texts[versionsIds.value[currentVersionIdIndex.value]-1],
+		text: text,
 		language: LangDataHandler.currentLanguage.value
-	});
-
-	watch(currentVersionIdIndex, () => 
-	{
-		editorState.text = texts[versionsIds.value[currentVersionIdIndex.value]-1];
 	});
 
 	watch(langData, () =>
@@ -289,10 +256,152 @@
 		tags.value.splice(index, 1);
 	};
 
+	const route = useRoute();
+	const articleEditCode = ref<string | null>(null);
+
+	onMounted(() => {
+		articleEditCode.value = route.params.id as string;
+	});
+
 	const onSendButton = () =>
 	{
-		console.log(editorState);
-		openModal(InfoModalWithLink, {status: true, text: "Это гибрид анонимного форума и интернет-журнала, предназначенный для анонимного общения в левом политическом дискурсе. Добро пожаловать.", link: "levach.com/article/edit/3238r94y9843ufggevb9yfd8v89df89v8d8989vdf67", text2: "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию"})
+		const contentParts = (editorState.text as string).split('\n');
+
+		if(contentParts.length >= 1) 
+		{
+			const title = contentParts[0];
+			if(title.substring(0, 2) == '# ') 
+			{
+				if(title.length >= 5 && title.length <= 120) 
+				{
+					if(contentParts.length >= 2) 
+					{
+						const content = contentParts.slice(1).join('\n');
+						if(content.length >= 25 && content.length <= 10000) 
+						{
+							const data = {
+								"text": editorState.text,
+								"tags": tags.value,
+								"editCode": articleEditCode
+							}		
+							axios.post('/api/article/edit', data)
+							.then(response => 
+							{
+								if(response.data.editLink)
+								{
+									openModal(InfoModalWithLink, {status: true, text: "", link: window.location.hostname + "/article/edit/" + response.data.editLink, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']})
+								}
+								else
+								{
+									if(response.data.Warning)
+									{
+										if(response.data.Warning.message == "Article for edit not found")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
+										}
+										else if(response.data.Warning.message == "Please add a title for the article")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+										}
+										else if(response.data.Warning.message == "Title must contain between 5 and 120 characters")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
+										}
+										else if(response.data.Warning.message == "Please add content for the article")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
+										}
+										else if(response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
+										}
+										else
+										{
+											openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										}
+									}
+									else if(response.data.Error)
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									}
+									else if(response.data.Critical)
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									}
+									else
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									}
+								}
+							})
+							.catch(error => 
+							{
+								if(error.data.Warning)
+									{
+										if(error.data.Warning.message == "Article for edit not found")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
+										}
+										else if(error.data.Warning.message == "Please add a title for the article")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+										}
+										else if(error.data.Warning.message == "Title must contain between 5 and 120 characters")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
+										}
+										else if(error.data.Warning.message == "Please add content for the article")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
+										}
+										else if(error.data.Warning.message == "Article content must contain between 25 and 10000 characters")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
+										}
+										else
+										{
+											openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										}
+									}
+									else if(error.data.Error)
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									}
+									else if(error.data.Critical)
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									}
+									else
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									}
+							});
+						}
+						else
+						{
+							openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
+						}
+					}
+					else
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
+					}
+					
+				}
+				else
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
+				}
+			}
+			else
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+			}
+		}
+		else
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+		}	
 	}
 </script>
 

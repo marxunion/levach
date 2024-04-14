@@ -8,6 +8,7 @@
         "warnings": {
             "articleEditLink": "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию",
 
+            "articleNotFound": "Статья для редактирования не найдена",
             "articleNeedTitle": "Пожалуйста добавьте заголовок для статьи",
             "articleTitleSymbols": "Содержание заголовка статьи не может быть менее 5 символов и более 120 символов",
             "articleNeedContent": "Пожалуйста добавьте содержание для статьи",
@@ -246,6 +247,7 @@
         "warnings": {
             "articleEditLink": "Don't forget to save the link or your article will not be editable",
 
+            "articleNotFound": "Article for edit not found",
             "articleNeedTitle": "Please add a title for the article",
             "articleTitleSymbols": "Article title cannot be less than 5 characters and exceed 120 characters",
             "articleNeedContent": "Please add content for the article",

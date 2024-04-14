@@ -209,9 +209,9 @@
 		if(contentParts.length >= 1) 
 		{
 			const title = contentParts[0];
-			if(title.length >= 5 && title.length <= 120) 
+			if(title.substring(0, 2) == '# ') 
 			{
-				if(title.substring(0, 2) == '# ') 
+				if(title.length >= 5 && title.length <= 120) 
 				{
 					if(contentParts.length >= 2) 
 					{
@@ -220,30 +220,91 @@
 						{
 							const data = {
 								"text": editorState.text,
-								"tags": tags
-							}
-							console.log(data);
-									
+								"tags": tags.value
+							}		
 							axios.post('/api/article/new', data)
 							.then(response => 
 							{
-								console.log(response.data);
 								if(response.data.editLink)
 								{
 									openModal(InfoModalWithLink, {status: true, text: "", link: window.location.hostname + "/article/edit/" + response.data.editLink, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']})
 								}
 								else
 								{
-									if(response.data.Error)
+									if(response.data.Warning)
 									{
-
+										if(response.data.Warning.message == "Please add a title for the article")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+										}
+										else if(response.data.Warning.message == "Title must contain between 5 and 120 characters")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
+										}
+										else if(response.data.Warning.message == "Please add content for the article")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
+										}
+										else if(response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
+										}
+										else
+										{
+											openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										}
+									}
+									else if(response.data.Error)
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									}
+									else if(response.data.Critical)
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									}
+									else
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 									}
 								}
 							})
 							.catch(error => 
 							{
-								openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
-								console.error('ArticleNew', error);
+								if(error.data.Warning)
+									{
+										if(error.data.Warning.message == "Please add a title for the article")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+										}
+										else if(error.data.Warning.message == "Title must contain between 5 and 120 characters")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
+										}
+										else if(error.data.Warning.message == "Please add content for the article")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
+										}
+										else if(error.data.Warning.message == "Article content must contain between 25 and 10000 characters")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
+										}
+										else
+										{
+											openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										}
+									}
+									else if(error.data.Error)
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									}
+									else if(error.data.Critical)
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									}
+									else
+									{
+										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									}
 							});
 						}
 						else
@@ -255,15 +316,16 @@
 					{
 						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
 					}
+					
 				}
 				else
 				{
-					openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+					openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
 				}
 			}
 			else
 			{
-				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
+				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 			}
 		}
 		else
