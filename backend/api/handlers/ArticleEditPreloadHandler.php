@@ -22,7 +22,7 @@ class ArticleEditPreloadHandler extends BaseHandlerRouteWithArgs
         }
         else
         {
-            throw new Error(400, "Please add editCode to edit article", "Empty request content cannot find editCode");
+            throw new Error(400, "Article for edit not found", "Empty request content cannot find editCode");
         }
     }
 

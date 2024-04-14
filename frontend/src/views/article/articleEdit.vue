@@ -69,34 +69,6 @@
 			acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
 		})
 	);
-	
-
-
-	const text = "# TestArticle \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### ";
-	// Editor
-	config(
-	{
-		editorConfig: 
-		{
-			languageUserDefined: 
-			{
-				'RU': langsData['RU'],
-				'EN': langsData['EN']
-			}
-		}
-	});
-
-	let editorState = reactive(
-	{
-		text: text,
-		language: LangDataHandler.currentLanguage.value
-	});
-
-	watch(langData, () =>
-	{
-		//editorState.text = langData.value['editorDefaultText'];
-		editorState.language = LangDataHandler.currentLanguage.value;
-	});
 
 	const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 	{
@@ -260,7 +232,84 @@
 	const articleEditCode = ref<string | null>(null);
 
 	onMounted(() => {
-		articleEditCode.value = route.params.id as string;
+		articleEditCode.value = route.params.articleEditCode as string;
+	});
+
+	config(
+	{
+		editorConfig: 
+		{
+			languageUserDefined: 
+			{
+				'RU': langsData['RU'],
+				'EN': langsData['EN']
+			}
+		}
+	});
+
+	axios.get('/api/article/edit/preload',  {params: {'editCode': articleEditCode}})
+	.then(response =>
+	{
+		if(response.data.Warning)
+		{
+			openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
+		}
+		else if(response.data.Error)
+		{
+			if(response.data.Error.message == "Article for edit not found")
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
+			}
+			else
+			{
+				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+			}
+		}
+		else if(response.data.Critical)
+		{
+			openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+		}
+		else
+		{
+			openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+		}
+	})
+	.catch(response =>
+	{
+		if(response.data.Warning)
+		{
+			openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
+		}
+		else if(response.data.Error)
+		{
+			if(response.data.Error.message == "Article for edit not found")
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNotFound']})
+			}
+			else
+			{
+				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+			}
+		}
+		else if(response.data.Critical)
+		{
+			openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+		}
+		else
+		{
+			openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+		}
+	});
+
+	let editorState = reactive(
+	{
+		text: articleEditCode,
+		language: LangDataHandler.currentLanguage.value
+	});
+
+	watch(langData, () =>
+	{
+		editorState.language = LangDataHandler.currentLanguage.value;
 	});
 
 	const onSendButton = () =>
@@ -279,12 +328,7 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25 && content.length <= 10000) 
 						{
-							const data = {
-								"text": editorState.text,
-								"tags": tags.value,
-								"editCode": articleEditCode
-							}		
-							axios.post('/api/article/edit', data)
+							axios.post('/api/article/edit/'+articleEditCode, {"text": editorState.text, "tags": tags.value})
 							.then(response => 
 							{
 								if(response.data.editLink)
@@ -317,7 +361,7 @@
 										}
 										else
 										{
-											openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+											openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
 										}
 									}
 									else if(response.data.Error)
@@ -334,40 +378,40 @@
 									}
 								}
 							})
-							.catch(error => 
+							.catch(response => 
 							{
-								if(error.data.Warning)
+								if(response.data.Warning)
 									{
-										if(error.data.Warning.message == "Article for edit not found")
+										if(response.data.Warning.message == "Article for edit not found")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
 										}
-										else if(error.data.Warning.message == "Please add a title for the article")
+										else if(response.data.Warning.message == "Please add a title for the article")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 										}
-										else if(error.data.Warning.message == "Title must contain between 5 and 120 characters")
+										else if(response.data.Warning.message == "Title must contain between 5 and 120 characters")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
 										}
-										else if(error.data.Warning.message == "Please add content for the article")
+										else if(response.data.Warning.message == "Please add content for the article")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
 										}
-										else if(error.data.Warning.message == "Article content must contain between 25 and 10000 characters")
+										else if(response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
 										}
 										else
 										{
-											openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+											openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
 										}
 									}
-									else if(error.data.Error)
+									else if(response.data.Error)
 									{
 										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 									}
-									else if(error.data.Critical)
+									else if(response.data.Critical)
 									{
 										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 									}

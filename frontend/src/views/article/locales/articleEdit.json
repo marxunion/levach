@@ -25,6 +25,8 @@
         },
 
         "errors": {
+            "articleNotFound": "Статья для редактирования не найдена",
+
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
@@ -263,6 +265,8 @@
         },
 
         "errors": {
+            "articleNotFound": "Article for edit not found",
+
             "unknown": "An unknown error occurred. Try again"
         },
 
