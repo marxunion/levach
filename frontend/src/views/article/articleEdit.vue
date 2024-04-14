@@ -25,12 +25,6 @@
 
 	import './../../libs/font_2605852_prouiefeic';
 
-
-	const langData = LangDataHandler.initLangDataHandler("articleEdit", langsData).langData;
-
-
-	//TODO Refactor this code later
-	// Statistics
 	interface Statistic 
 	{
 		count: number;
@@ -42,33 +36,138 @@
 		[statisticName: string]: Statistic;
 	}
 
-	let statistics = computed(() => 
-	{
-		const statisticsTemp : Statistics = {};
+	const langData = LangDataHandler.initLangDataHandler("articleEdit", langsData).langData;
 
-		(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
-		{
-			statisticsTemp[statistic['statisticName'] as string] = 
-			{
-				count: 5,
-				title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
-			};
-		});
-		return statisticsTemp;
+
+	const route = useRoute();
+	const articleEditCode = ref<string | null>(null);
+
+	onMounted(() => {
+		articleEditCode.value = route.params.articleEditCode as string;
 	});
 	
-	// Statuses
-	let statuses = reactive({
-		premoderationStatus: 0,
-		acceptedEditoriallyStatus: 0
-	})
-
-	const statusesTexts = computed(() => 
-		({
-			premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
-			acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
+	async function fetchData()
+	{
+		return await axios.get('/api/article/edit/preload',  {params: {'editCode': articleEditCode}})
+		.then(response =>
+		{
+			if(response.data.title)
+			{
+				return response.data;
+			}
+			else
+			{
+				if(response.data.Warning)
+				{
+					openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
+					return null;
+				}
+				else if(response.data.Error)
+				{
+					if(response.data.Error.message == "Article for edit not found")
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
+						return null;
+					}
+					else
+					{
+						openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+						return null;
+					}
+				}
+				else if(response.data.Critical)
+				{
+					openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+					return null;
+				}
+				else
+				{
+					openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+					return null;
+				}
+			}
 		})
-	);
+		.catch(response =>
+		{
+			if(response.data.Warning)
+			{
+				openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
+				return null;
+			}
+			else if(response.data.Error)
+			{
+				if(response.data.Error.message == "Article for edit not found")
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNotFound']})
+					return null;
+				}
+				else
+				{
+					openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+					return null;
+				}
+			}
+			else if(response.data.Critical)
+			{
+				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+				return null;
+			}
+			else
+			{
+				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+				return null;
+			}
+		});
+	}
+
+	let fetchedData = await fetchData();
+
+	let statistics = null;
+	let statuses = null;
+	let statusesTexts = null;
+	let editorState = null;
+	if(fetchedData)
+	{
+		statistics = computed(() => 
+		{
+			const statisticsTemp : Statistics = {};
+
+			(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
+			{
+				statisticsTemp[statistic['statisticName'] as string] = 
+				{
+					count: 5,
+					title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
+				};
+			});
+			return statisticsTemp;
+		});
+		
+		// Statuses
+		 statuses = reactive({
+			premoderationStatus: 0,
+			acceptedEditoriallyStatus: 0
+		})
+
+		 statusesTexts = computed(() => 
+			({
+				premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
+				acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
+			})
+		);
+
+		editorState = reactive(
+		{
+			text: fetchedData,
+			language: LangDataHandler.currentLanguage.value
+		});
+	}
+	
+	// Tags
+	let newTag = ref('');
+	let tags : Ref<string[]> = ref([]);
+
+
 
 	const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 	{
@@ -199,10 +298,6 @@
 			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
 		}
 	};
-	
-	// Tags
-	const newTag = ref('');
-	const tags : Ref<string[]> = ref([]);
 
 	const addTag = () => 
 	{
@@ -227,90 +322,7 @@
 	{
 		tags.value.splice(index, 1);
 	};
-
-	const route = useRoute();
-	const articleEditCode = ref<string | null>(null);
-
-	onMounted(() => {
-		articleEditCode.value = route.params.articleEditCode as string;
-	});
-
-	config(
-	{
-		editorConfig: 
-		{
-			languageUserDefined: 
-			{
-				'RU': langsData['RU'],
-				'EN': langsData['EN']
-			}
-		}
-	});
-
-	axios.get('/api/article/edit/preload',  {params: {'editCode': articleEditCode}})
-	.then(response =>
-	{
-		if(response.data.Warning)
-		{
-			openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
-		}
-		else if(response.data.Error)
-		{
-			if(response.data.Error.message == "Article for edit not found")
-			{
-				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
-			}
-			else
-			{
-				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
-			}
-		}
-		else if(response.data.Critical)
-		{
-			openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
-		}
-		else
-		{
-			openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
-		}
-	})
-	.catch(response =>
-	{
-		if(response.data.Warning)
-		{
-			openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
-		}
-		else if(response.data.Error)
-		{
-			if(response.data.Error.message == "Article for edit not found")
-			{
-				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNotFound']})
-			}
-			else
-			{
-				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
-			}
-		}
-		else if(response.data.Critical)
-		{
-			openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
-		}
-		else
-		{
-			openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
-		}
-	});
-
-	let editorState = reactive(
-	{
-		text: articleEditCode,
-		language: LangDataHandler.currentLanguage.value
-	});
-
-	watch(langData, () =>
-	{
-		editorState.language = LangDataHandler.currentLanguage.value;
-	});
+	
 
 	const onSendButton = () =>
 	{
@@ -447,11 +459,28 @@
 			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 		}	
 	}
+
+	config(
+	{
+		editorConfig: 
+		{
+			languageUserDefined: 
+			{
+				'RU': langsData['RU'],
+				'EN': langsData['EN']
+			}
+		}
+	});
+
+	watch(langData, () =>
+	{
+		editorState.language = LangDataHandler.currentLanguage.value;
+	});
 </script>
 
 <template>
 	<main class="main">
-		<article class="main__article">
+		<article v-if="fetchedData" class="main__article">
 			<div class="main__article__info">
 				<div class="main__article__info__statistics">
 					<div class="main__article__info__statistics__statistic" v-for="(status, index) in statistics" :key="index">
@@ -488,6 +517,9 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
+		</article>
+		<article v-else class="main__article">
+			<h1 class="main__article__title">{{ (langData['warnings'] as JsonData)['articleNotFound'] }}</h1>
 		</article>
 	</main>
 </template>
