@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, watch, reactive, Ref, computed, onMounted } from 'vue';
+	import { ref, watch, reactive, Ref, ComputedRef, computed, onMounted } from 'vue';
 	import { useRoute } from 'vue-router';
 	import axios from 'axios';
 
@@ -122,34 +122,60 @@
 
 	let fetchedData = await fetchData();
 
-	let statistics = null;
-	let statuses = null;
-	let statusesTexts = null;
-	let editorState = null;
+	let statistics : ComputedRef<Statistics> = computed(() => ({
+		rating: {
+			count: 0,
+			title: 'rating'
+		},
+		comments: {
+			count: 0,
+			title: 'comments'
+		}
+	}) as unknown as Statistics);
+
+	let statuses = reactive({
+		premoderationStatus: 0,
+		acceptedEditoriallyStatus: 0
+	});
+	let statusesTexts = computed(() => 
+		({
+			premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
+			acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
+		})
+	);
+
+	let editorState = {
+		text: '',
+		language: ''
+	};
+
+	let newTag = ref('');
+	let tags : Ref<string[]> = ref([]);
+
 	if(fetchedData)
 	{
 		statistics = computed(() => 
 		{
 			const statisticsTemp : Statistics = {};
-
+			let statisticName;
 			(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
 			{
-				statisticsTemp[statistic['statisticName'] as string] = 
+				statisticName = statistic['statisticName'] as string;
+				statisticsTemp[statisticName] = 
 				{
-					count: 5,
+					count: fetchedData[statisticName],
 					title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
 				};
 			});
 			return statisticsTemp;
 		});
 		
-		// Statuses
-		 statuses = reactive({
-			premoderationStatus: 0,
-			acceptedEditoriallyStatus: 0
-		})
+		statuses = reactive({
+			premoderationStatus: fetchedData['premoderationStatus'],
+			acceptedEditoriallyStatus: fetchedData['acceptedEditoriallyStatus']
+		});
 
-		 statusesTexts = computed(() => 
+		statusesTexts = computed(() => 
 			({
 				premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
 				acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
@@ -158,16 +184,12 @@
 
 		editorState = reactive(
 		{
-			text: fetchedData,
+			text: fetchedData['text'],
 			language: LangDataHandler.currentLanguage.value
 		});
+
+		tags = fetchedData['tags'];
 	}
-	
-	// Tags
-	let newTag = ref('');
-	let tags : Ref<string[]> = ref([]);
-
-
 
 	const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 	{
@@ -322,7 +344,6 @@
 	{
 		tags.value.splice(index, 1);
 	};
-	
 
 	const onSendButton = () =>
 	{

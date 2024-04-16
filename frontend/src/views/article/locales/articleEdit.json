@@ -52,65 +52,17 @@
         "statistics": 
         [
             {
-                "statisticName": "likes",
+                "statisticName": "rating",
                 "data": 
                 {
                     "titleWithEnds": 
                     {
-                        "title": "лайк",
+                        "title": "рейтинг",
                         "ends": 
                         [
                             {
-                                "end": "ов",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": 0
-                            },
-                            {
                                 "end": "",
-                                "endOffsetStart": 1,
-                                "endOffsetEnd": 1
-                            },
-                            {
-                                "end": "а",
-                                "endOffsetStart": 2,
-                                "endOffsetEnd": 3
-                            },
-                            {
-                                "end": "ов",
-                                "endOffsetStart": 4,
-                                "endOffsetEnd": -1
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "statisticName": "dislikes",
-                "data": 
-                {
-                    "titleWithEnds": 
-                    {
-                        "title": "дизлайк",
-                        "ends": 
-                        [
-                            {
-                                "end": "ов",
                                 "endOffsetStart": 0,
-                                "endOffsetEnd": 0
-                            },
-                            {
-                                "end": "",
-                                "endOffsetStart": 1,
-                                "endOffsetEnd": 1
-                            },
-                            {
-                                "end": "а",
-                                "endOffsetStart": 2,
-                                "endOffsetEnd": 3
-                            },
-                            {
-                                "end": "ов",
-                                "endOffsetStart": 4,
                                 "endOffsetEnd": -1
                             }
                         ]
@@ -292,55 +244,17 @@
         "statistics": 
         [
             {
-                "statisticName": "likes",
+                "statisticName": "rating",
                 "data": 
                 {
                     "titleWithEnds": 
                     {
-                        "title": "like",
+                        "title": "rating",
                         "ends": 
                         [
                             {
-                                "end": "s",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": 0
-                            },
-                            {
                                 "end": "",
-                                "endOffsetStart": 1,
-                                "endOffsetEnd": 1
-                            },
-                            {
-                                "end": "s",
-                                "endOffsetStart": 2,
-                                "endOffsetEnd": -1
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "statisticName": "dislikes",
-                "data": 
-                {
-                    "titleWithEnds": 
-                    {
-                        "title": "dislike",
-                        "ends": 
-                        [
-                            {
-                                "end": "s",
                                 "endOffsetStart": 0,
-                                "endOffsetEnd": 0
-                            },
-                            {
-                                "end": "",
-                                "endOffsetStart": 1,
-                                "endOffsetEnd": 1
-                            },
-                            {
-                                "end": "s",
-                                "endOffsetStart": 2,
                                 "endOffsetEnd": -1
                             }
                         ]
