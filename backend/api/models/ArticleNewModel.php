@@ -16,26 +16,36 @@ class ArticleNewModel extends BaseModel
         $data = [
             'title' => $title,
             'text' => $text,
-            'tags' => $tags
+            'premoderationStatus' => 0,
+            'acceptedEditoriallyStatus' => 0,
+            'tags' => null
         ];
 
-        $articleId = $this->database->insert('articles', $data);
+        if(is_array($tags))
+        {
+            if(count($tags) > 0)
+            {
+                $data['tags'] = $tags;
+            }
+        }
+
+        $this->database->insert('articles', $data);
+        $articleId = $this->database->id();
         if($articleId)
         {
-            $ratingData = [
+            $statisticsData = [
                 'article_id' => $articleId,
-                'rating' => 0
+                'rating' => 0,
+                'comments' => 0
             ];
-
-            $this->database->insert('ratings', $ratingData);
+            $this->database->insert('statistics', $statisticsData);
 
             $codesData = [
                 'article_id' => $articleId,
                 'view_code' => $viewCode,
                 'edit_code' => $editCode
             ];
-
-            $database->insert('codes', $codesData);
+            $this->database->insert('codes', $codesData);
         }
         else
         {

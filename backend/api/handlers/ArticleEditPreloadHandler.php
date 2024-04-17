@@ -6,24 +6,14 @@ use Core\Warning;
 
 use Base\BaseHandlerRouteWithArgs;
 
-use Base\ArticleEditPreloadModel;
+use Api\Models\ArticleEditPreloadModel;
 
 class ArticleEditPreloadHandler extends BaseHandlerRouteWithArgs
 {
    
     public function Init()
     {
-        $this->model = new ArticleNewModel();
-        $parsedBody = $this->request->getParsedBody();
-
-        if(is_array($parsedBody))
-        {
-            $this->data = $parsedBody;
-        }
-        else
-        {
-            throw new Error(400, "Article for edit not found", "Empty request content cannot find editCode");
-        }
+        $this->model = new ArticleEditPreloadModel();
     }
 
     public function Process()
@@ -32,7 +22,7 @@ class ArticleEditPreloadHandler extends BaseHandlerRouteWithArgs
 
         if($articleId)
         {
-            $this->response = $this->model->viewArticle($articleId);
+            $this->response = $this->response->withJson($this->model->viewArticle($articleId));
         }
         else
         {

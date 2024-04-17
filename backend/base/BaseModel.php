@@ -5,7 +5,7 @@ use Core\Database;
 
 class BaseModel
 {
-    private $database; 
+    protected $database; 
     public function __construct()
     {
         $this->database = Database::getConnection();

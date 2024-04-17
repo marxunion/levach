@@ -19,6 +19,12 @@ class ArticleViewModel extends BaseModel
 
     public function viewArticle($articleId)
     {
+        $article = $this->database->get('articles', '*', [
+            'id' => $articleId
+        ]);
+        $articleStatistics = $this->database->get('statistics', '*', ['article_id' => $articleId]);
+
+        return $article;
         $this->database->get('articles', '*', ['id' => $articleId]);
     }
 }

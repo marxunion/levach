@@ -42,15 +42,16 @@
 	const route = useRoute();
 	const articleEditCode = ref<string | null>(null);
 
-	onMounted(() => {
-		articleEditCode.value = route.params.articleEditCode as string;
-	});
+	articleEditCode.value = route.params.articleEditCode as string;
 	
 	async function fetchData()
 	{
-		return await axios.get('/api/article/edit/preload',  {params: {'editCode': articleEditCode}})
+		console.log("PRELOAD REQUEST STARTED");
+		
+		return await axios.get('/api/article/edit/preload/'+articleEditCode.value)
 		.then(response =>
 		{
+			console.log("PRELOAD REQUEST COMPLETED");
 			if(response.data.title)
 			{
 				return response.data;
@@ -89,13 +90,16 @@
 		})
 		.catch(response =>
 		{
+			console.log("PRELOAD REQUEST COMPLETED WITH ERROR STATUS CODE");
 			if(response.data.Warning)
 			{
+				console.log("PRELOAD REQUEST COMPLETED Warning");
 				openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
 				return null;
 			}
 			else if(response.data.Error)
 			{
+				console.log("PRELOAD REQUEST COMPLETED Error");
 				if(response.data.Error.message == "Article for edit not found")
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNotFound']})
@@ -109,11 +113,13 @@
 			}
 			else if(response.data.Critical)
 			{
+				console.log("PRELOAD REQUEST COMPLETED Critical");
 				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 				return null;
 			}
 			else
 			{
+				console.log("PRELOAD REQUEST COMPLETED Error");
 				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 				return null;
 			}

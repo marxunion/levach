@@ -45,28 +45,26 @@ class ArticleNewHandler extends BaseHandlerRoute
             {
                 if (strlen($title) >= 5 && strlen($title) <= 120) 
                 {
-                    
-                        if (count($contentParts) >= 2) 
+                    if (count($contentParts) >= 2) 
+                    {
+                        $content = implode("\n", array_slice($contentParts, 1));
+                        if (strlen($content) >= 25 && strlen($content) <= 10000) 
                         {
-                            $content = implode("\n", array_slice($contentParts, 1));
-                            if (strlen($content) >= 25 && strlen($content) <= 10000) 
-                            {
-                                $viewCode = hash('sha3-224', uniqid().bin2hex(random_bytes(32)).$title);
-                                $editCode = hash('sha3-256', uniqid().bin2hex(random_bytes(32)).$title);
+                            $viewCode = hash('sha3-224', uniqid().bin2hex(random_bytes(32)).$title);
+                            $editCode = hash('sha3-256', uniqid().bin2hex(random_bytes(32)).$title);
 
-                                $this->model->newArticle($title, $content, $this->data['tags'], $viewCode, $editCode);
-                                $this->response = $this->response->withJson(['viewCode' => $viewCode, 'editCode' => $editCode]);
-                            } 
-                            else 
-                            {
-                                throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Invalid length of article content");
-                            }
+                            $this->model->newArticle($title, $content, $this->data['tags'], $viewCode, $editCode);
+                            $this->response = $this->response->withJson(['viewCode' => $viewCode, 'editCode' => $editCode]);
                         } 
                         else 
                         {
-                            throw new Warning(400, "Please add content for the article", "Empty article content");
+                            throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Invalid length of article content");
                         }
-                    
+                    } 
+                    else 
+                    {
+                        throw new Warning(400, "Please add content for the article", "Empty article content");
+                    }
                 } 
                 else 
                 {

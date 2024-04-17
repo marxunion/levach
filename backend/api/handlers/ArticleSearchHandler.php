@@ -6,7 +6,7 @@ use Core\Warning;
 
 use Base\BaseHandlerRoute;
 
-use Base\ArticleSearchModel;
+use Api\Models\ArticleSearchModel;
 
 class ArticleSearchHandler extends BaseHandlerRoute
 {

@@ -63,7 +63,7 @@ class Routes
                 return self::$handler->Handle();
             });
 
-            $group->post('/article/edit/preload/{editCode}', function (Request $request, Response $response, array $args) 
+            $group->get('/article/edit/preload/{editCode}', function (Request $request, Response $response, array $args) 
             {
                 self::$handler = new ArticleEditPreloadHandler($request, $response, $args);
                 return self::$handler->Handle();

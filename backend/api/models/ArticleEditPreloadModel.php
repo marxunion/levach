@@ -24,9 +24,7 @@ class ArticleEditPreloadModel extends BaseModel
             'ORDER' => ['version_id' => 'DESC'],
             'LIMIT' => 1
         ]);
-        $articleStatistics = $this->database->get('statistics', '*', [
-            'article_id' => $articleId
-        ]);
+        $articleStatistics = $this->database->get('statistics', '*', ['article_id' => $articleId]);
 
         return [
             "title" => $article['title'],

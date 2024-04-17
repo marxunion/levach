@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { ref, watch, reactive, Ref } from 'vue';
+	import { useRouter } from 'vue-router';
 	import axios from 'axios';
 
 	import { JsonData } from './../../ts/JsonHandler';
@@ -56,8 +57,6 @@
 						const form = new FormData();
 						form.append('file', file);
 
-						console.log(form);
-
 						axios.post('/api/media/img/upload', form, 
 						{
 							headers: 
@@ -68,7 +67,8 @@
 						.then((response) => 
 						{
 							let modalInfoProps;
-						
+							
+							
 							if (response.data) 
 							{
 								if(response.data.fileName)
@@ -221,13 +221,18 @@
 							const data = {
 								"text": editorState.text,
 								"tags": tags.value
-							}		
+							}
 							axios.post('/api/article/new', data)
-							.then(response => 
+							.then(async response => 
 							{
-								if(response.data.editLink)
+								if(response.data.editCode)
 								{
-									openModal(InfoModalWithLink, {status: true, text: "", link: window.location.hostname + "/article/edit/" + response.data.editLink, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']})
+									const modal = await openModal(InfoModalWithLink, {status: true, text: langData.value['articleCreatedSuccessfully'], link: "https://"+window.location.hostname + "/#/article/edit/" + response.data.editCode, text2: (langData.value['warnings'] as JsonData)['articleEditCodeCopy']})
+									modal.onclose = (event) => 
+									{
+										const router = useRouter();
+										router.push("/article/edit/" + response.data.editCode);
+									};
 								}
 								else
 								{
@@ -256,55 +261,64 @@
 									}
 									else if(response.data.Error)
 									{
+										console.log("REQUEST COMPLETED Error");
 										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 									}
 									else if(response.data.Critical)
 									{
+										console.log("REQUEST COMPLETED Critical");
 										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 									}
 									else
 									{
+										console.log("REQUEST COMPLETED UnkwownError");
 										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 									}
 								}
 							})
 							.catch(error => 
 							{
+								console.log("REQUEST COMPLETED WITH ERROR STATUS");
+
 								if(error.data.Warning)
+								{
+									console.log("REQUEST COMPLETED Warning");
+									if(error.data.Warning.message == "Please add a title for the article")
 									{
-										if(error.data.Warning.message == "Please add a title for the article")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
-										}
-										else if(error.data.Warning.message == "Title must contain between 5 and 120 characters")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
-										}
-										else if(error.data.Warning.message == "Please add content for the article")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
-										}
-										else if(error.data.Warning.message == "Article content must contain between 25 and 10000 characters")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
-										}
-										else
-										{
-											openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
-										}
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 									}
-									else if(error.data.Error)
+									else if(error.data.Warning.message == "Title must contain between 5 and 120 characters")
 									{
-										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
 									}
-									else if(error.data.Critical)
+									else if(error.data.Warning.message == "Please add content for the article")
 									{
-										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
+									}
+									else if(error.data.Warning.message == "Article content must contain between 25 and 10000 characters")
+									{
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
 									}
 									else
 									{
 										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 									}
+								}
+								else if(error.data.Error)
+								{
+									console.log("REQUEST COMPLETED Error");
+									openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+								}
+								else if(error.data.Critical)
+								{
+									console.log("REQUEST COMPLETED Critical");
+									openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+								}
+								else
+								{
+									console.log("REQUEST COMPLETED UnkwownError");
+									openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+								}
 							});
 						}
 						else
