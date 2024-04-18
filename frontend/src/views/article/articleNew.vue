@@ -227,15 +227,11 @@
 							{
 								if(response.data.editCode)
 								{
-									console.log("RESPONSE SUCCESS");
 									
 									const modal = await openModal(InfoModalWithLink, {status: true, text: langData.value['articleCreatedSuccessfully'], link: "https://"+window.location.hostname + "/#/article/edit/" + response.data.editCode, text2: (langData.value['warnings'] as JsonData)['articleEditCodeCopy']})
 									
 									modal.onclose = function(event)
 									{
-										console.log("WINDOW CLOSED");
-									console.log(router);
-									
 										router.push("/article/edit/" + response.data.editCode);
 										return true;
 									};
