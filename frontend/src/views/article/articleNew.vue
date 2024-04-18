@@ -20,7 +20,6 @@
 
 	const langData = LangDataHandler.initLangDataHandler("articleNew", langsData).langData;
 
-
 	//Editor
 	config(
 	{
@@ -202,7 +201,8 @@
 		tags.value.splice(index, 1);
 	};
 
-	const onSendButton = () =>
+	const router = useRouter();
+	const onSendButton = function ()
 	{
 		const contentParts = (editorState.text as string).split('\n');
 
@@ -227,11 +227,17 @@
 							{
 								if(response.data.editCode)
 								{
+									console.log("RESPONSE SUCCESS");
+									
 									const modal = await openModal(InfoModalWithLink, {status: true, text: langData.value['articleCreatedSuccessfully'], link: "https://"+window.location.hostname + "/#/article/edit/" + response.data.editCode, text2: (langData.value['warnings'] as JsonData)['articleEditCodeCopy']})
-									modal.onclose = (event) => 
+									
+									modal.onclose = function(event)
 									{
-										const router = useRouter();
+										console.log("WINDOW CLOSED");
+									console.log(router);
+									
 										router.push("/article/edit/" + response.data.editCode);
+										return true;
 									};
 								}
 								else
