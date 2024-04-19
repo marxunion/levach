@@ -52,10 +52,8 @@
 				<p v-else class="comment__bar__actions__action">{{ langData['titleReport'] }}</p>
 			</div>
 			<div class="comment__bar__reactions">
-				<img src="../assets/img/article/like.svg" alt="Likes: " class="comment__bar__reactions__icon likeIcon">
-				<p class="comment__bar__reactions__title likeCounter">{{ abbreviateNumber(comment['statistics']['likes']) }}</p>
-				<img src="../assets/img/article/dislike.svg" alt="Dislikes: " class="comment__bar__reactions__icon dislikeIcon">
-				<p class="comment__bar__reactions__title dislikeCounter">{{ abbreviateNumber(comment['statistics']['dislikes']) }}</p>
+				<img src="../assets/img/article/like.svg" alt="Rating: " class="comment__bar__reactions__icon likeIcon">
+				<p class="comment__bar__reactions__title likeCounter">{{ abbreviateNumber(comment['statistics']['rating']) }}</p>
 			</div>
 		</div>
 	</div>

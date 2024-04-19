@@ -42,8 +42,7 @@
 			text: 'Test Comment1',
 			statistics: 
 			{
-				likes: 48,
-				dislikes: 6
+				rating: 0
 			},
 			subcomments: [
 				{
@@ -52,8 +51,7 @@
 					text: 'Test Subcomment1',
 					statistics: 
 					{
-						likes: 32,
-						dislikes: 3
+						rating: 0
 					},
 					subcomments: [
 						{
@@ -62,8 +60,7 @@
 							text: 'Test Subsubcomment1',
 							statistics: 
 							{
-								likes: 45,
-								dislikes: 2
+								rating: 0
 							},
 							subcomments: []
 						}
@@ -75,8 +72,7 @@
 					text: 'Test Subcomment2',
 					statistics: 
 					{
-						likes: 33,
-						dislikes: 3
+						rating: 0
 					},
 					subcomments: []
 				}
@@ -88,8 +84,7 @@
 			text: 'Test Comment2',
 			statistics: 
 			{
-				likes: 48,
-				dislikes: 6
+				rating: 0
 			},
 			subcomments: []
 		}

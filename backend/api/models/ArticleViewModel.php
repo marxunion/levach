@@ -7,24 +7,25 @@ use Core\Database;
 
 class ArticleViewModel extends BaseModel
 {
-    public function __construct($data)
+    public function __construct()
     {
         parent::__construct();
     }
 
     public function getArticleByViewCode($viewCode)
     {
-        $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
+        return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
 
     public function viewArticle($articleId)
     {
-        $article = $this->database->get('articles', '*', [
-            'id' => $articleId
-        ]);
-        $articleStatistics = $this->database->get('statistics', '*', ['article_id' => $articleId]);
+        $articleVertions = $this->database->select('articles', ['title', 'text' ,'tags','date', 'premoderationStatus', 'acceptedEditoriallyStatus'], ['id' => $articleId]);
+        $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]);
 
+        $article = [
+            'versions' => $articleVertions,
+            'statistics' => $articleStatistics
+        ];
         return $article;
-        $this->database->get('articles', '*', ['id' => $articleId]);
     }
 }

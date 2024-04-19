@@ -1,17 +1,17 @@
 <?php
 namespace Api\Handlers;
 
-use Core\Error;
+use Core\Warning;
 
 use Base\BaseHandlerRouteWithArgs;
 
-use Base\ArticleViewModel;
+use Api\Models\ArticleViewModel;
 
 class ArticleViewHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
-        $this->model = new ArticlesModel();
+        $this->model = new ArticleViewModel();
     }
     public function Process()
     {
@@ -19,7 +19,7 @@ class ArticleViewHandler extends BaseHandlerRouteWithArgs
 
         if($articleId)
         {
-            $this->response = $this->model->viewArticle($articleId);
+            $this->response = $this->response->withJson($this->model->viewArticle($articleId));
         }
         else
         {

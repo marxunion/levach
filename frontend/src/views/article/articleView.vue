@@ -43,8 +43,7 @@
 		currentVersionIdIndex: 1,
 		statistics: 
         {
-            likes: 48,
-            dislikes: 6,
+            rating: 0,
             comments: 4
         },
 		texts: [
@@ -244,8 +243,7 @@
 			text: 'Test Comment1',
 			statistics: 
 			{
-				likes: 48,
-				dislikes: 6
+				rating: 0
 			},
 			subcomments: [
 				{
@@ -254,8 +252,7 @@
 					text: 'Test Subcomment1',
 					statistics: 
 					{
-						likes: 32,
-						dislikes: 3
+						rating: 0
 					},
 					subcomments: [
 						{
@@ -264,8 +261,7 @@
 							text: 'Test Subsubcomment1',
 							statistics: 
 							{
-								likes: 45,
-								dislikes: 2
+								rating: 0
 							},
 							subcomments: []
 						}
@@ -277,8 +273,7 @@
 					text: '# Test Subcomment2\n',
 					statistics: 
 					{
-						likes: 33,
-						dislikes: 3
+						rating: 0
 					},
 					subcomments: []
 				}
@@ -290,8 +285,7 @@
 			text: 'Test Comment2',
 			statistics: 
 			{
-				likes: 48,
-				dislikes: 6
+				rating: 0
 			},
 			subcomments: []
 		}
@@ -310,10 +304,8 @@
 				</div>
 				<div class="main__article__previewContainer__reactions">
 					<div class="main__article__previewContainer__reactions__statistics">
-						<img src="../../assets/img/article/like.svg" alt="Likes: " class="main__article__previewContainer__reactions__statistics__icon likeIcon">
-						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(articleInfo['statistics']['likes']) }}</p>
-						<img src="../../assets/img/article/dislike.svg" alt="Dislikes: " class="main__article__previewContainer__reactions__statistics__icon dislikeIcon">
-						<p class="main__article__previewContainer__reactions__statistics__title dislikeCounter">{{ abbreviateNumber(articleInfo['statistics']['dislikes']) }}</p>
+						<img src="../../assets/img/article/like.svg" alt="Rating: " class="main__article__previewContainer__reactions__statistics__icon likeIcon">
+						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(articleInfo['statistics']['rating']) }}</p>
 						<img src="../../assets/img/article/share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
 					</div>
 					<div class="main__article__previewContainer__reactions__comments">

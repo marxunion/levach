@@ -227,13 +227,11 @@
 							{
 								if(response.data.editCode)
 								{
-									
 									const modal = await openModal(InfoModalWithLink, {status: true, text: langData.value['articleCreatedSuccessfully'], link: "https://"+window.location.hostname + "/#/article/edit/" + response.data.editCode, text2: (langData.value['warnings'] as JsonData)['articleEditCodeCopy']})
 									
 									modal.onclose = function(event)
 									{
 										router.push("/article/edit/" + response.data.editCode);
-										return true;
 									};
 								}
 								else

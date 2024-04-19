@@ -3,12 +3,14 @@
 	import { useRoute } from 'vue-router';
 	import axios from 'axios';
 
-	import DropDown from "./../../components/DropDown.vue";
+	//import DropDown from "./../../components/DropDown.vue";
 
 	import { MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
 	import { JsonData } from './../../ts/JsonHandler';
+
+	import Loader from "./../../components/Loader.vue";
 
 	import { closeModal, openModal } from "jenesius-vue-modal";
 	import LoaderModal from "./../../components/modals/LoaderModal.vue";
@@ -52,6 +54,8 @@
 		.then(response =>
 		{
 			console.log("PRELOAD REQUEST COMPLETED");
+			console.log(response);
+			
 			if(response.data.title)
 			{
 				return response.data;
@@ -126,8 +130,9 @@
 		});
 	}
 
-	let fetchedData = await fetchData();
-
+	let fetchedData = ref();
+	let loaded = ref(false);
+	
 	let statistics : ComputedRef<Statistics> = computed(() => ({
 		rating: {
 			count: 0,
@@ -157,45 +162,6 @@
 
 	let newTag = ref('');
 	let tags : Ref<string[]> = ref([]);
-
-	if(fetchedData)
-	{
-		statistics = computed(() => 
-		{
-			const statisticsTemp : Statistics = {};
-			let statisticName;
-			(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
-			{
-				statisticName = statistic['statisticName'] as string;
-				statisticsTemp[statisticName] = 
-				{
-					count: fetchedData[statisticName],
-					title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
-				};
-			});
-			return statisticsTemp;
-		});
-		
-		statuses = reactive({
-			premoderationStatus: fetchedData['premoderationStatus'],
-			acceptedEditoriallyStatus: fetchedData['acceptedEditoriallyStatus']
-		});
-
-		statusesTexts = computed(() => 
-			({
-				premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
-				acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
-			})
-		);
-
-		editorState = reactive(
-		{
-			text: fetchedData['text'],
-			language: LangDataHandler.currentLanguage.value
-		});
-
-		tags = fetchedData['tags'];
-	}
 
 	const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 	{
@@ -469,7 +435,6 @@
 					{
 						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
 					}
-					
 				}
 				else
 				{
@@ -503,11 +468,62 @@
 	{
 		editorState.language = LangDataHandler.currentLanguage.value;
 	});
+
+	onMounted(async function()
+	{
+		try 
+		{
+			fetchedData.value = await fetchData();
+			if(fetchedData.value != null)
+			{
+				console.log(fetchedData.value);
+				console.log("FETCHED");
+				statistics = computed(() => 
+				{
+					const statisticsTemp : Statistics = {};
+					let statisticName;
+					(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
+					{
+						statisticName = statistic['statisticName'] as string;
+						statisticsTemp[statisticName] = 
+						{
+							count: fetchedData.value['statistics'][statisticName],
+							title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
+						};
+					});
+					return statisticsTemp;
+				});
+				
+				statuses = reactive({
+					premoderationStatus: fetchedData.value['premoderationStatus'],
+					acceptedEditoriallyStatus: fetchedData.value['acceptedEditoriallyStatus']
+				});
+
+				statusesTexts = computed(() => 
+					({
+						premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
+						acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
+					})
+				);
+
+				editorState = reactive(
+				{
+					text: fetchedData.value['title'] + '\n' + fetchedData.value['text'],
+					language: LangDataHandler.currentLanguage.value
+				});
+			}
+			loaded.value = true;
+		} 
+		catch (error) 
+		{
+			loaded.value = true;
+		}
+	});
 </script>
 
 <template>
 	<main class="main">
-		<article v-if="fetchedData" class="main__article">
+		<article v-if="loaded" class="main__article">
 			<div class="main__article__info">
 				<div class="main__article__info__statistics">
 					<div class="main__article__info__statistics__statistic" v-for="(status, index) in statistics" :key="index">
@@ -546,7 +562,7 @@
 			</div>
 		</article>
 		<article v-else class="main__article">
-			<h1 class="main__article__title">{{ (langData['warnings'] as JsonData)['articleNotFound'] }}</h1>
+			<Loader/>
 		</article>
 	</main>
 </template>
