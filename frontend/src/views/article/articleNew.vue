@@ -261,28 +261,22 @@
 									}
 									else if(response.data.Error)
 									{
-										console.log("REQUEST COMPLETED Error");
 										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 									}
 									else if(response.data.Critical)
 									{
-										console.log("REQUEST COMPLETED Critical");
 										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 									}
 									else
 									{
-										console.log("REQUEST COMPLETED UnkwownError");
 										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 									}
 								}
 							})
 							.catch(error => 
 							{
-								console.log("REQUEST COMPLETED WITH ERROR STATUS");
-
 								if(error.data.Warning)
 								{
-									console.log("REQUEST COMPLETED Warning");
 									if(error.data.Warning.message == "Please add a title for the article")
 									{
 										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
@@ -306,17 +300,14 @@
 								}
 								else if(error.data.Error)
 								{
-									console.log("REQUEST COMPLETED Error");
 									openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 								}
 								else if(error.data.Critical)
 								{
-									console.log("REQUEST COMPLETED Critical");
 									openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 								}
 								else
 								{
-									console.log("REQUEST COMPLETED UnkwownError");
 									openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 								}
 							});

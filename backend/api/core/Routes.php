@@ -24,6 +24,7 @@ use Api\Handlers\ArticleEditHandler;
 use Api\Handlers\ArticleEditPreloadHandler;
 use Api\Handlers\MediaLoadImageHandler;
 use Api\Handlers\MediaUploadImageHandler;
+use Api\Handlers\SponsoringHandler;
 use Api\Handlers\StatusHandler;
 use Api\Handlers\UnknownHandler;
 
@@ -44,7 +45,13 @@ class Routes
                 self::$handler = new StatusHandler($request, $response);
                 return self::$handler->Handle();
             });
-    
+
+            $group->get('/sponsoring', function (Request $request, Response $response) 
+            {
+                self::$handler = new SponsoringHandler($request, $response);
+                return self::$handler->Handle();
+            });
+
             $group->get('/status', function (Request $request, Response $response) 
             {
                 self::$handler = new StatusHandler($request, $response);

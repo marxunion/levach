@@ -48,14 +48,9 @@
 	
 	async function fetchData()
 	{
-		console.log("PRELOAD REQUEST STARTED");
-		
 		return await axios.get('/api/article/edit/preload/'+articleEditCode.value)
 		.then(response =>
 		{
-			console.log("PRELOAD REQUEST COMPLETED");
-			console.log(response);
-			
 			if(response.data.title)
 			{
 				return response.data;
@@ -94,16 +89,13 @@
 		})
 		.catch(response =>
 		{
-			console.log("PRELOAD REQUEST COMPLETED WITH ERROR STATUS CODE");
 			if(response.data.Warning)
 			{
-				console.log("PRELOAD REQUEST COMPLETED Warning");
 				openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
 				return null;
 			}
 			else if(response.data.Error)
 			{
-				console.log("PRELOAD REQUEST COMPLETED Error");
 				if(response.data.Error.message == "Article for edit not found")
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNotFound']})
@@ -117,13 +109,11 @@
 			}
 			else if(response.data.Critical)
 			{
-				console.log("PRELOAD REQUEST COMPLETED Critical");
 				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 				return null;
 			}
 			else
 			{
-				console.log("PRELOAD REQUEST COMPLETED Error");
 				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 				return null;
 			}
@@ -476,8 +466,6 @@
 			fetchedData.value = await fetchData();
 			if(fetchedData.value != null)
 			{
-				console.log(fetchedData.value);
-				console.log("FETCHED");
 				statistics = computed(() => 
 				{
 					const statisticsTemp : Statistics = {};
