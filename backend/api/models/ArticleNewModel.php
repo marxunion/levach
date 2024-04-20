@@ -14,18 +14,22 @@ class ArticleNewModel extends BaseModel
     public function newArticle($title, $text, $tags, $viewCode, $editCode)
     {
         $data = [
+            'version_id' => 0,
             'title' => $title,
             'text' => $text,
             'premoderation_status' => 0,
-            'acceptedEditorially_status' => 0,
+            'acceptededitorially_status' => 0,
             'tags' => null
         ];
+
+        
 
         if(is_array($tags))
         {
             if(count($tags) > 0)
             {
-                $data['tags'] = $tags;
+                $tagsString = implode(', ', $tags);
+                $data['tags'] = '{'.$tagsString.'}';
             }
         }
 
