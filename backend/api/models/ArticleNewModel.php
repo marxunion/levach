@@ -22,8 +22,6 @@ class ArticleNewModel extends BaseModel
             'tags' => null
         ];
 
-        
-
         if(is_array($tags))
         {
             if(count($tags) > 0)
@@ -40,7 +38,8 @@ class ArticleNewModel extends BaseModel
             $statisticsData = [
                 'article_id' => $articleId,
                 'rating' => 0,
-                'comments' => 0
+                'comments' => 0,
+                "last_version" => 0
             ];
             $this->database->insert('statistics', $statisticsData);
 
