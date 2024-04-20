@@ -16,8 +16,8 @@ class ArticleNewModel extends BaseModel
         $data = [
             'title' => $title,
             'text' => $text,
-            'premoderationStatus' => 0,
-            'acceptedEditoriallyStatus' => 0,
+            'premoderation_status' => 0,
+            'acceptedEditorially_status' => 0,
             'tags' => null
         ];
 
