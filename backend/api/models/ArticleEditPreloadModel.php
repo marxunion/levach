@@ -19,7 +19,7 @@ class ArticleEditPreloadModel extends BaseModel
     
     public function viewArticle($articleId)
     {
-        $article = $this->database->get('articles', ['title', 'text' ,'tags','date', 'premoderationStatus', 'acceptedEditoriallyStatus'], ['id' => $articleId, 'ORDER' => ['version_id' => 'DESC'],'LIMIT' => 1]);
+        $article = $this->database->get('articles', ['title', 'text' ,'tags','date', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId, 'ORDER' => ['version_id' => 'DESC'],'LIMIT' => 1]);
         $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]);
 
         $article['statistics'] = $articleStatistics;
