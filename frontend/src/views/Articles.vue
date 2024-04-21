@@ -48,8 +48,7 @@
             currentVersionIdIndex: 5,
             statistics: 
             {   
-                likes: 1200,
-                dislikes: 110,
+                rating: 1200,
                 comments: 210
             },
             
@@ -68,8 +67,7 @@
             ],
             statistics: 
             {
-                likes: 4800,
-                dislikes: 600,
+                rating: 4800,
                 comments: 40
             },
             currentVersionIdIndex: 3,
@@ -92,8 +90,7 @@
             ],
             statistics: 
             {
-                likes: 39000000,
-                dislikes: 120000,
+                rating: 39000000,
                 comments: 50000
             },
             currentVersionIdIndex: 7,
@@ -115,8 +112,7 @@
             ],
             statistics: 
             {
-                likes: 39000,
-                dislikes: 1200,
+                rating: 39000,
                 comments: 500
             },
             currentVersionIdIndex: 7,
@@ -178,10 +174,8 @@
             </div>
             <div class="main__article__reactions">
                 <div class="main__article__reactions__statistics">
-                    <img src="../assets/img/article/like.svg" alt="Likes: " class="main__article__reactions__statistics__icon likeIcon">
-                    <p class="main__article__reactions__statistics__title likeCounter">{{ abbreviateNumber(article['statistics']['likes']) }}</p>
-                    <img src="../assets/img/article/dislike.svg" alt="Dislikes: " class="main__article__reactions__statistics__icon dislikeIcon">
-                    <p class="main__article__reactions__statistics__title dislikeCounter">{{ abbreviateNumber(article['statistics']['dislikes']) }}</p>
+                    <img src="../assets/img/article/rating.png" alt="Likes: " class="main__article__reactions__statistics__icon ratingIcon">
+                    <p class="main__article__reactions__statistics__title likeCounter">{{ abbreviateNumber(article['statistics']['rating']) }}</p>
                     <img src="../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                 </div>
                 <div class="main__article__reactions__comments">

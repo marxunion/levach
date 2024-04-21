@@ -25,16 +25,31 @@ class ArticleEditModel extends BaseModel
             'LIMIT' => 1
         ]);
 
+        $currentVersion = $this->database->get('statistics', 'current_version', ['article_id' => $articleId]);
+
         if($articleData)
         {
-            $newVersion = $articleData['version_id'] + 1;
+            $newVersion = $currentVersion + 1;
 
             $articleData['version_id'] = $newVersion;
             $articleData['title'] = $newTitle;
             $articleData['text'] = $newText;
-            $articleData['tags'] = $newTags;
 
+            if(is_array($tags))
+            {
+                if(count($tags) > 0)
+                {
+                    $newTagsString = implode(',', $newTags);
+                    $articleData['tags'] = '{'.$newTagsString.'}';
+                }
+            }
+
+            $this->database->query('ALTER TABLE articles ALTER COLUMN id TYPE INTEGER');
             $this->database->insert('articles', $articleData);
+            $this->database->query('ALTER TABLE articles ALTER COLUMN id TYPE SERIAL');
+
+            $this->database->update('statistics', ['current_version' => $newVersion], ['article_id' => $articleId]);
+
         } 
         else 
         {

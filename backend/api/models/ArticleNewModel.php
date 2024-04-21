@@ -14,7 +14,7 @@ class ArticleNewModel extends BaseModel
     public function newArticle($title, $text, $tags, $viewCode, $editCode)
     {
         $data = [
-            'version_id' => 0,
+            'version_id' => 1,
             'title' => $title,
             'text' => $text,
             'premoderation_status' => 0,
@@ -39,7 +39,7 @@ class ArticleNewModel extends BaseModel
                 'article_id' => $articleId,
                 'rating' => 0,
                 'comments' => 0,
-                "last_version" => 0
+                "current_version" => 1
             ];
             $this->database->insert('statistics', $statisticsData);
 
