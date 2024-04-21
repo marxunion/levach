@@ -188,7 +188,7 @@
         },
         "footer": 
         {
-            "markdownTotal": "Кол-во слов",
+            "markdownTotal": "Кол-во символов",
             "scrollAuto": "Автопрокрутка"
         }
     },
