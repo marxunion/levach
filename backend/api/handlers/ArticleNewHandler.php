@@ -43,6 +43,7 @@ class ArticleNewHandler extends BaseHandlerRoute
             $title = $contentParts[0];
             if (strpos($title, '# ') === 0) 
             {
+                $title = substr($title, 2);
                 if (strlen($title) >= 5 && strlen($title) <= 120) 
                 {
                     if (count($contentParts) >= 2) 
@@ -53,7 +54,7 @@ class ArticleNewHandler extends BaseHandlerRoute
                             $viewCode = hash('sha3-224', uniqid().bin2hex(random_bytes(32)).$title);
                             $editCode = hash('sha3-256', uniqid().bin2hex(random_bytes(32)).$title);
 
-                            $this->model->newArticle($title, $content, $this->data['tags'], $viewCode, $editCode);
+                            $this->model->newArticle($title, $this->data['text'], $this->data['tags'], $viewCode, $editCode);
                             $this->response = $this->response->withJson(['viewCode' => $viewCode, 'editCode' => $editCode]);
                         } 
                         else 

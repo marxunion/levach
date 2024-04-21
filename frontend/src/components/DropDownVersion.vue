@@ -19,7 +19,7 @@ const open = ref(false);
 <template>
     <div class="customSelect" @blur="open = false">
         <div class="customSelect__selected" :class="{ open: open }" @click="open = !open">
-            {{ selected }}
+            {{ langData['version'] + selected }}
 			<span class="customSelect__selected__img"></span>
         </div>
         <div class="customSelect__items" :class="{ selectHide: !open }">

@@ -3,10 +3,12 @@
 	import { useRoute } from 'vue-router';
 	import axios from 'axios';
 
+	import { timestampToLocaleFormatedTime } from './../../ts/DateTimeHelper';
 	import { JsonData } from './../../ts/JsonHandler';
 
 	import Loader from "./../../components/Loader.vue";
 
+	import DropDown from '../../components/DropDown.vue';
 	import DropDownVersion from "./../../components/DropDownVersion.vue";
 
 	import CommentsList from "./../../components/CommentsList.vue";
@@ -33,27 +35,6 @@
 	const loaded = ref(false);
 
 	let currentVersion = 1;
-
-	const articleInfo = 
-	reactive({
-		versions: 
-		[
-			{
-				title: "",
-				text: "",
-				date: 0,
-				tags: 
-				[
-
-				]
-			}
-		],
-		statistics: 
-        {
-            rating: 0,
-            comments: 4
-        }
-	});
 
 	const route = useRoute();
 	const articleViewCode = ref<string | null>(null);
@@ -374,7 +355,7 @@
 	<main v-if="loaded" class="main">
 		<article v-if="fetchedData" class="main__article">
 			<div class="main__article__previewContainer">
-				<p class="main__article__previewContainer__titleTime">{{ fetchedData.versions[currentVersion-1].date }}</p>
+				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedData.versions[currentVersion-1].date) }}</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ fetchedData.versions[currentVersion-1].tags }}</p>
 				<div v-if="isAdmin" class="main__article__previewContainer__buttons oneButton">
@@ -383,17 +364,17 @@
 				<div class="main__article__previewContainer__reactions">
 					<div class="main__article__previewContainer__reactions__statistics">
 						<img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__previewContainer__reactions__statistics__icon ratingIcon">
-						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(articleInfo['statistics']['rating']) }}</p>
+						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(fetchedData.statistics.rating) }}</p>
 						<img src="../../assets/img/article/share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
 					</div>
 					<div class="main__article__previewContainer__reactions__comments">
 						<img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__previewContainer__reactions__comments__icon commentIcon">
-						<p class="main__article__previewContainer__reactions__comments__title commentsCounter">{{ abbreviateNumber(articleInfo['statistics']['comments']) }}</p>
+						<p class="main__article__previewContainer__reactions__comments__title commentsCounter">{{ abbreviateNumber(fetchedData.statistics.comments) }}</p>
 					</div>
 				</div>
 				
 				<DropDownVersion
-				:max-version="articleInfo.versions.length"
+				:max-version="fetchedData.versions.length"
 				class="main__article__previewContainer__selectVersion" 
 				@inputIndex="(version : number) => currentVersion = version" />
 			</div>
@@ -412,7 +393,7 @@
 				</div>
 				
 				<div class="main__article__comments__commentsList">
-					<CommentsList  v-for="comment in comments" :key="comment.id" :comment="comment" :level="0"/>
+					<CommentsList v-for="comment in comments" :key="comment.id" :comment="comment" :level="0"/>
 				</div>
 			</div>
 		</article>

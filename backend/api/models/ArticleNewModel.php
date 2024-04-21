@@ -20,7 +20,7 @@ class ArticleNewModel extends BaseModel
             'tags' => null,
             'premoderation_status' => 0,
             'acceptededitorially_status' => 0,
-            'created_at' => time()
+            'date' => time()
         ];
 
         if(is_array($tags))
