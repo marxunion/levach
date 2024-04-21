@@ -22,6 +22,15 @@ class ArticleViewModel extends BaseModel
         $articleVertions = $this->database->select('articles', ['title', 'text', 'tags', 'date', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId]);
         $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]);
 
+        foreach ($articleVertions as $versionNum => $versionInfo) 
+        {
+            if ($versionInfo['tags'] != null) 
+            {
+                $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
+                $articleVertions[$versionNum]['tags'] = explode(',', $tagsString);
+            }
+        }
+
         $article = [
             'versions' => $articleVertions,
             'statistics' => $articleStatistics

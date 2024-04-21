@@ -4,6 +4,7 @@
 	import axios from 'axios';
 
 	import { timestampToLocaleFormatedTime } from './../../ts/DateTimeHelper';
+	import { tagsArrayToString } from './../../ts/TagsHelper'
 	import { JsonData } from './../../ts/JsonHandler';
 
 	import Loader from "./../../components/Loader.vue";
@@ -343,6 +344,7 @@
 			fetchedData.value = await fetchData();
 			if(fetchedData.value != null)
 			{
+				currentVersion.value = fetchedData.value.versions.length;
 				setInterval(async () => 
 				{
 					fetchedData.value = await fetchData();
@@ -364,7 +366,7 @@
 			<div class="main__article__previewContainer">
 				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedData.versions[currentVersion-1].date) }}</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedData.versions[currentVersion-1].text" :language="previewState.language"/>
-				<p class="main__article__previewContainer__tags">{{ fetchedData.versions[currentVersion-1].tags }}</p>
+				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedData.versions[currentVersion-1].tags) }}</p>
 				<div v-if="isAdmin" class="main__article__previewContainer__buttons oneButton">
 					<a class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 				</div>
