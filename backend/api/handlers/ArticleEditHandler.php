@@ -11,9 +11,10 @@ use Slim\App;
 use Core\Error;
 use Core\Warning;
 
+use Base\BaseHandlerRouteWithArgs;
 use Base\BaseModel;
 
-use Api\Models\BaseHandlerRouteWithArgs;
+use Api\Models\ArticleEditModel;
 
 class ArticleEditHandler extends BaseHandlerRouteWithArgs
 {
@@ -44,6 +45,7 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                 $title = $contentParts[0];
                 if (strpos($title, '# ') === 0) 
                 {
+                    $title = substr($title, 2);
                     if (strlen($title) >= 5 && strlen($title) <= 120) 
                     {
                         if (count($contentParts) >= 2) 
@@ -51,7 +53,7 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                             $content = implode("\n", array_slice($contentParts, 1));
                             if (strlen($content) >= 25 && strlen($content) <= 10000) 
                             {
-                                $this->model->editArticle($articleId, $title, $content, $tags);
+                                $this->model->editArticle($articleId, $title, $this->data['text'], $this->data['tags']);
                                 $this->response = $this->response->withJson(['success' => true, 'message' => 'Article successfully saved']);
                             } 
                             else 

@@ -34,7 +34,7 @@
 	const fetchedData = ref()
 	const loaded = ref(false);
 
-	let currentVersion = 1;
+	let currentVersion = ref(1);
 
 	const route = useRoute();
 	const articleViewCode = ref<string | null>(null);
@@ -376,7 +376,7 @@
 				<DropDownVersion
 				:max-version="fetchedData.versions.length"
 				class="main__article__previewContainer__selectVersion" 
-				@inputIndex="(version : number) => currentVersion = version" />
+				@input="(version : number) => currentVersion = version" />
 			</div>
 			<div class="main__article__comments">
 				<div class="main__article__comments__header">

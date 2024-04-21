@@ -35,18 +35,16 @@ class ArticleEditModel extends BaseModel
             $articleData['title'] = $newTitle;
             $articleData['text'] = $newText;
 
-            if(is_array($tags))
+            if(is_array($newTags))
             {
-                if(count($tags) > 0)
+                if(count($newTags) > 0)
                 {
                     $newTagsString = implode(',', $newTags);
                     $articleData['tags'] = '{'.$newTagsString.'}';
                 }
             }
-
-            $this->database->query('ALTER TABLE articles ALTER COLUMN id TYPE INTEGER');
+            
             $this->database->insert('articles', $articleData);
-            $this->database->query('ALTER TABLE articles ALTER COLUMN id TYPE SERIAL');
 
             $this->database->update('statistics', ['current_version' => $newVersion], ['article_id' => $articleId]);
         } 

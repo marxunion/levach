@@ -21,7 +21,6 @@ onMounted(() =>
 {
   	emits("inputOnMounted", selected.value);
 });
-
 </script>
 
 <template>

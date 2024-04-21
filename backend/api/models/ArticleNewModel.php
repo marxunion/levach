@@ -13,7 +13,15 @@ class ArticleNewModel extends BaseModel
     }
     public function newArticle($title, $text, $tags, $viewCode, $editCode)
     {
+        $lastArticleId = $database->max('articles', 'id');
+
+        if($lastArticleId === null) 
+        {
+            $lastArticleId = 0;
+        }
+
         $data = [
+            'article_id' => $lastArticleId + 1,
             'version_id' => 1,
             'title' => $title,
             'text' => $text,

@@ -313,7 +313,7 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25 && content.length <= 10000) 
 						{
-							axios.post('/api/article/edit/'+articleEditCode, {"text": editorState.text, "tags": tags.value})
+							axios.post('/api/article/edit/'+articleEditCode.value, {"text": editorState.text, "tags": tags.value})
 							.then(response => 
 							{
 								if(response.data.editLink)
@@ -492,7 +492,7 @@
 
 				editorState = reactive(
 				{
-					text: fetchedData.value['title'] + '\n' + fetchedData.value['text'],
+					text: fetchedData.value['text'],
 					language: LangDataHandler.currentLanguage.value
 				});
 			}

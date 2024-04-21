@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./scss/DropDown.scss";
-import { ref, defineProps, defineEmits } from "vue";
+import { ref, computed, defineProps, defineEmits } from "vue";
 
 import { LangDataHandler } from "./../ts/LangDataHandler";
 import langsData from "./locales/DropDownVersion.json";
@@ -10,10 +10,20 @@ const langData = ref(LangDataHandler.initLangDataHandler("DropDownVersion", lang
 const props = defineProps(["maxVersion"]);
 const emits = defineEmits(["input"]);
 
+const reversedVersions = computed(() => 
+{
+  	const numbers = [];
+  	for (let i = props.maxVersion; i >= 1; i--) 
+	{
+    	numbers.push(i);
+  	}
+	
+  	return numbers;
+});
+
 const selected = ref(props.maxVersion);
 
 const open = ref(false);
-
 </script>
 
 <template>
@@ -24,16 +34,15 @@ const open = ref(false);
         </div>
         <div class="customSelect__items" :class="{ selectHide: !open }">
 			<div 
-				v-for="option in maxVersion"
+				v-for="version in reversedVersions" :key="version"
 				@click="
-					selected = option;
+					selected = version;
 					open = false;
-					$emit('input', option as number);">
-				{{ langData['version'] + option }}
+					$emit('input', version as number);">
+				{{ langData['version'] + version }}
 			</div>
         </div>
     </div>
 </template>
-
 
 <style lang="scss" scoped src="./scss/DropDown.scss"></style>
