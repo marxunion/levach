@@ -1,10 +1,13 @@
 <script setup lang="ts">
-	import { ref, computed, reactive, watch } from 'vue';
+	import { ref, computed, reactive, watch, onMounted } from 'vue';
+	import { useRoute } from 'vue-router';
 	import axios from 'axios';
 
 	import { JsonData } from './../../ts/JsonHandler';
 
-	import DropDown from "./../../components/DropDown.vue";
+	import Loader from "./../../components/Loader.vue";
+
+	import DropDownVersion from "./../../components/DropDownVersion.vue";
 
 	import CommentsList from "./../../components/CommentsList.vue";
 
@@ -26,38 +29,102 @@
 
 	const langData = LangDataHandler.initLangDataHandler("articleView", langsData).langData;
 
+	const fetchedData = ref()
+	const loaded = ref(false);
+
+	let currentVersion = 1;
+
 	const articleInfo = 
 	reactive({
-		title: "Test Editorially Article",
-
-		time: "10:36  19.09.2022",
-		tags: "#технологии #айфон #ios",
-
-		versionsIds: 
+		versions: 
 		[
-			4,
-			3,
-			2,
-			1
+			{
+				title: "",
+				text: "",
+				date: 0,
+				tags: 
+				[
+
+				]
+			}
 		],
-		currentVersionIdIndex: 1,
 		statistics: 
         {
             rating: 0,
             comments: 4
-        },
-		texts: [
-			"# Test Editorially Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n###",
-			
-			"# Test Editorially Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n",
-			
-			"# Test Editorially Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n🤗 Code\n\n```vue\n<template>\n  <MdEditor v-model=\"text\" />\n</template>\n\n\<script setup\>\nimport { ref } from 'vue';\nimport { MdEditor } from 'md-editor-v3';\nimport 'md-editor-v3/lib/style.css';\n\nconst text = ref('Hello Editor!');\n\</script\>\n```\n\n## 🖨 Text\n\nThe Old Man and the Sea served to reinvigorate Hemingway's literary reputation and prompted a reexamination of his entire body of work.\n\n## ",
-			
-			"# Test Editorially Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n### 🤖 Base\n\n**bold**, <u>underline</u>, _italic_, ~~line-through~~, superscript<sup>26</sup>, subscript<sub>1</sub>, `inline code`, [link](https://github.com/imzbf)\n\n> quote: I Have a Dream\n\n1. So even though we face the difficulties of today and tomorrow, I still have a dream.\n2. It is a dream deeply rooted in the American dream.\n3. I have a dream that one day this nation will rise up.\n\n- [ ] Friday\n- [ ] Saturday\n- [x] Sunday\n\n![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)\n\n🤗 Code\n\n```vue\n<template>\n  <MdEditor v-model=\"text\" />\n</template>\n\n\<script setup\>\nimport { ref } from 'vue';\nimport { MdEditor } from 'md-editor-v3';\nimport 'md-editor-v3/lib/style.css';\n\nconst text = ref('Hello Editor!');\n\</script\>\n```\n\n## 🖨 Text\n\nThe Old Man and the Sea served to reinvigorate Hemingway's literary reputation and prompted a reexamination of his entire body of work.\n\n## 📈 Table\n\n| nickname | from             |\n| -------- | ---------------- |\n| zhijian  | ChongQing, China |\n\n## 📏 Formula\n\nInline: $x+y^{2x}$\n\n$$\n\\sqrt[3]{x}\n$$\n\n## 🧬 Diagram\n\n```mermaid\nflowchart TD\n  Start --> Stop\n```\n\n## 🪄 Alert\n\n!!! note Supported Types\n\nnote、abstract、info、tip、success、question、warning、failure、danger、bug、example、quote、hint、caution、error、attention\n\n!!!\n\n## ☘️ em..."
-		]
+        }
 	});
-	// Preview
 
+	const route = useRoute();
+	const articleViewCode = ref<string | null>(null);
+
+	articleViewCode.value = route.params.articleViewCode as string;
+
+	async function fetchData()
+	{
+		return await axios.get('/api/article/view/'+articleViewCode.value)
+		.then(response =>
+		{
+			if(response.data.versions)
+			{
+				return response.data;
+			}
+			else
+			{
+				if(response.data.Warning)
+				{
+					return null;
+				}
+				else if(response.data.Error)
+				{
+					if(response.data.Error.message == "Article not found")
+					{
+						return null;
+					}
+					else
+					{
+						return null;
+					}
+				}
+				else if(response.data.Critical)
+				{
+					return null;
+				}
+				else
+				{
+					return null;
+				}
+			}
+		})
+		.catch(response =>
+		{
+			if(response.data.Warning)
+			{
+				return null;
+			}
+			else if(response.data.Error)
+			{
+				if(response.data.Error.message == "Article not found")
+				{
+					return null;
+				}
+				else
+				{
+					return null;
+				}
+			}
+			else if(response.data.Critical)
+			{
+				return null;
+			}
+			else
+			{
+				return null;
+			}
+		});
+	}
+
+	// Preview
 	config(
 	{
 		editorConfig: 
@@ -95,7 +162,6 @@
 		language: LangDataHandler.currentLanguage.value
 	});
 
-	//TODO Replace this watch to computed? later
 	watch(langData, () =>
 	{
 		previewState.language = LangDataHandler.currentLanguage.value;
@@ -232,8 +298,6 @@
 		}
 	};
 
-
-
 	// Comments
 	const comments = ref(
 	[
@@ -290,15 +354,29 @@
 			subcomments: []
 		}
 	]);
+
+	onMounted(async function()
+	{
+		try 
+		{
+			fetchedData.value = await fetchData();
+			loaded.value = true;
+		}
+		catch
+		{
+			loaded.value = true;
+			fetchedData.value = null;
+		}
+	});
 </script>
 
 <template>
-	<main class="main">
-		<article class="main__article">
+	<main v-if="loaded" class="main">
+		<article v-if="fetchedData" class="main__article">
 			<div class="main__article__previewContainer">
-				<p class="main__article__previewContainer__titleTime">{{ articleInfo['time'] }}</p>
-				<MdPreview class="main__article__previewContainer__preview" :modelValue="articleInfo.texts[articleInfo.versionsIds[articleInfo.currentVersionIdIndex]-1]" :language="previewState.language"/>
-				<p class="main__article__previewContainer__tags">{{ articleInfo['tags'] }}</p>
+				<p class="main__article__previewContainer__titleTime">{{ fetchedData.versions[currentVersion-1].date }}</p>
+				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedData.versions[currentVersion-1].text" :language="previewState.language"/>
+				<p class="main__article__previewContainer__tags">{{ fetchedData.versions[currentVersion-1].tags }}</p>
 				<div v-if="isAdmin" class="main__article__previewContainer__buttons oneButton">
 					<a class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 				</div>
@@ -314,11 +392,10 @@
 					</div>
 				</div>
 				
-				<DropDown 
-				:options="articleInfo.versionsIds.map((versionsId) => (langData['versionText'] as string) + versionsId)" 
-				:default="(langData['versionText'] as string) + articleInfo.versionsIds[articleInfo.currentVersionIdIndex]" 
+				<DropDownVersion
+				:max-version="articleInfo.versions.length"
 				class="main__article__previewContainer__selectVersion" 
-				@inputIndex="(version : number) => articleInfo['currentVersionIdIndex'] = version" />
+				@inputIndex="(version : number) => currentVersion = version" />
 			</div>
 			<div class="main__article__comments">
 				<div class="main__article__comments__header">
@@ -339,6 +416,12 @@
 				</div>
 			</div>
 		</article>
+		<article v-else class="main__article">
+			<h1 class="main__article__title">{{ (langData['errors'] as JsonData)['articleNotFound'] }}</h1>
+		</article>
+	</main>
+	<main v-else class="main">
+		<Loader/>
 	</main>
 </template>
 

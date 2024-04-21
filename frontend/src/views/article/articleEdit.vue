@@ -59,30 +59,25 @@
 			{
 				if(response.data.Warning)
 				{
-					openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
 					return null;
 				}
 				else if(response.data.Error)
 				{
 					if(response.data.Error.message == "Article for edit not found")
 					{
-						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
 						return null;
 					}
 					else
 					{
-						openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 						return null;
 					}
 				}
 				else if(response.data.Critical)
 				{
-					openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 					return null;
 				}
 				else
 				{
-					openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 					return null;
 				}
 			}
@@ -91,30 +86,25 @@
 		{
 			if(response.data.Warning)
 			{
-				openModal(InfoModal, (langData.value['warnings'] as JsonData)['unknown']);
 				return null;
 			}
 			else if(response.data.Error)
 			{
 				if(response.data.Error.message == "Article for edit not found")
 				{
-					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNotFound']})
 					return null;
 				}
 				else
 				{
-					openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 					return null;
 				}
 			}
 			else if(response.data.Critical)
 			{
-				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 				return null;
 			}
 			else
 			{
-				openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
 				return null;
 			}
 		});
@@ -122,7 +112,7 @@
 
 	let fetchedData = ref();
 	let loaded = ref(false);
-	
+
 	let statistics : ComputedRef<Statistics> = computed(() => ({
 		rating: {
 			count: 0,
@@ -511,6 +501,7 @@
 		catch (error) 
 		{
 			loaded.value = true;
+			fetchedData.value = null;
 		}
 	});
 </script>
@@ -556,7 +547,7 @@
 			</div>
 		</article>
 		<article v-else class="main__article">
-			<h1 class="main__article__title">{{ (langData['errors'] as JsonData)['articleNotFound'] }}</h1>
+			<h1 class="main__article__title">{{ (langData['errors'] as JsonData)['articleForEditNotFound'] }}</h1>
 		</article>
 	</main>
 	<main v-else class="main">

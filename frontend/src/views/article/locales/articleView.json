@@ -1,6 +1,18 @@
 {
     "RU":
     {
+        "warnings": 
+        {
+            "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
+        },
+
+        "errors": 
+        {
+            "articleNotFound": "Статья не найдена",
+
+            "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
+        },
+
         "versionText": "Версия ",
         "commentsTitle": "Комментарии",
         "sortTitle": "Сортировать по:",
@@ -94,6 +106,18 @@
     },
     "EN":
     {
+        "warnings": 
+        {
+            "unknown": "An unknown error occurred. Try again"
+        },
+
+        "errors": 
+        {
+            "articleNotFound": "Article not found",
+
+            "unknown": "An unknown error occurred. Try again"
+        },
+
         "versionText": "Version ",
         "commentsTitle": "Comments",
         "sortTitle": "Sort by:",

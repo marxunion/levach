@@ -81,7 +81,7 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
         }
         else
         {
-            throw new Warning(404, "Article for edit not found", "Failed edit article with edit code, editCode not found");
+            throw new Warning(404, "Article for edit not found", "Article for edit not found");
         }
     }
 }

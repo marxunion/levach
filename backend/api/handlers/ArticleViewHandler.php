@@ -23,7 +23,7 @@ class ArticleViewHandler extends BaseHandlerRouteWithArgs
         }
         else
         {
-            throw new Warning(404, "Requested article not found", "Article not found");
+            throw new Error(404, "Article not found", "Article not found");
         }
     }
 }

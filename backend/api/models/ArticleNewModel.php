@@ -17,9 +17,10 @@ class ArticleNewModel extends BaseModel
             'version_id' => 1,
             'title' => $title,
             'text' => $text,
+            'tags' => null,
             'premoderation_status' => 0,
             'acceptededitorially_status' => 0,
-            'tags' => null
+            'created_at' => time()
         ];
 
         if(is_array($tags))
