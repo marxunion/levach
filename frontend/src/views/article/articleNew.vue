@@ -256,20 +256,20 @@
 										}
 										else
 										{
-											openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+											openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 										}
 									}
 									else if(response.data.Error)
 									{
-										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 									}
 									else if(response.data.Critical)
 									{
-										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 									}
 									else
 									{
-										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 									}
 								}
 							})
@@ -295,20 +295,20 @@
 									}
 									else
 									{
-										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 									}
 								}
 								else if(error.data.Error)
 								{
-									openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 								}
 								else if(error.data.Critical)
 								{
-									openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 								}
 								else
 								{
-									openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 								}
 							});
 						}

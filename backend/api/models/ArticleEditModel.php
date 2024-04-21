@@ -43,7 +43,7 @@ class ArticleEditModel extends BaseModel
                     $articleData['tags'] = '{'.$newTagsString.'}';
                 }
             }
-            
+
             $this->database->insert('articles', $articleData);
 
             $this->database->update('statistics', ['current_version' => $newVersion], ['article_id' => $articleId]);
