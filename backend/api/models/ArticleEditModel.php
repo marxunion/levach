@@ -49,7 +49,6 @@ class ArticleEditModel extends BaseModel
             $this->database->query('ALTER TABLE articles ALTER COLUMN id TYPE SERIAL');
 
             $this->database->update('statistics', ['current_version' => $newVersion], ['article_id' => $articleId]);
-
         } 
         else 
         {

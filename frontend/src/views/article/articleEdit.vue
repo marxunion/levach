@@ -334,11 +334,7 @@
 								{
 									if(response.data.Warning)
 									{
-										if(response.data.Warning.message == "Article for edit not found")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
-										}
-										else if(response.data.Warning.message == "Please add a title for the article")
+										if(response.data.Warning.message == "Please add a title for the article")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 										}
@@ -361,7 +357,14 @@
 									}
 									else if(response.data.Error)
 									{
-										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										if(response.data.Error.message == "Article for edit not found")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
+										}
+										else
+										{
+											openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										}
 									}
 									else if(response.data.Critical)
 									{
@@ -377,11 +380,7 @@
 							{
 								if(response.data.Warning)
 									{
-										if(response.data.Warning.message == "Article for edit not found")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
-										}
-										else if(response.data.Warning.message == "Please add a title for the article")
+										if(response.data.Warning.message == "Please add a title for the article")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 										}
@@ -404,7 +403,14 @@
 									}
 									else if(response.data.Error)
 									{
-										openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										if(response.data.Warning.message == "Article for edit not found")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
+										}
+										else
+										{
+											openModal(InfoModal, (langData.value['errors'] as JsonData)['unknown']);
+										}
 									}
 									else if(response.data.Critical)
 									{
@@ -510,8 +516,8 @@
 </script>
 
 <template>
-	<main class="main">
-		<article v-if="loaded" class="main__article">
+	<main v-if="loaded" class="main">
+		<article v-if="fetchedData" class="main__article">
 			<div class="main__article__info">
 				<div class="main__article__info__statistics">
 					<div class="main__article__info__statistics__statistic" v-for="(status, index) in statistics" :key="index">
@@ -550,8 +556,11 @@
 			</div>
 		</article>
 		<article v-else class="main__article">
-			<Loader/>
+			<h1 class="main__article__title">{{ (langData['errors'] as JsonData)['articleNotFound'] }}</h1>
 		</article>
+	</main>
+	<main v-else class="main">
+		<Loader/>
 	</main>
 </template>
 

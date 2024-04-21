@@ -26,7 +26,7 @@ class ArticleEditPreloadHandler extends BaseHandlerRouteWithArgs
         }
         else
         {
-            throw new Error(404, "Article for edit not found", "Failed edit article with edit code, editCode not found");
+            throw new Error(404, "Article for edit not found", "Article for edit not found");
         }
     }
 }

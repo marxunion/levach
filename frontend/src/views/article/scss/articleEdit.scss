@@ -13,6 +13,11 @@
 
         position: relative;
         background-color: transparent;
+        &__title
+        {
+            font-size: 40px;
+            text-align: center;
+        }
         &__info
         {
             height: 210px;
@@ -299,12 +304,30 @@
     }
 }
 
+@media(max-width: 800px)
+{
+    .main
+    {
+        &__article
+        {
+            &__title
+            {
+                font-size: 36px;
+            }
+        }
+    }
+}
+
 @media(max-width: 680px)
 {
     .main
     {
         &__article
         {
+            &__title
+            {
+                font-size: 32px;
+            }
             &__info
             {
                 &__statistics
@@ -344,6 +367,10 @@
     {
         &__article
         {
+            &__title
+            {
+                font-size: 26px;
+            }
             &__info
             {
                 &__statistics
