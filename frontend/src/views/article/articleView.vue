@@ -341,6 +341,13 @@
 		try 
 		{
 			fetchedData.value = await fetchData();
+			if(fetchedData.value != null)
+			{
+				setInterval(async () => 
+				{
+					fetchedData.value = await fetchData();
+				}, 10000);
+			}
 			loaded.value = true;
 		}
 		catch
@@ -405,7 +412,6 @@
 		<Loader/>
 	</main>
 </template>
-
 
 <style lang="css">
 	.main__article__comments__newComment__editor .md-editor-footer

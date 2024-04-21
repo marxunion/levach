@@ -9,7 +9,6 @@ const emits = defineEmits(["inputOnMounted","input","inputIndex"]);
 const selectedIndex = ref(0);
 const selected = ref(props.default || (props.options.length > 0 ? props.options[0] : null));
 
-//TODO Remove this watch in future
 watch(props, () => 
 {
 	selected.value = props.options[selectedIndex.value];

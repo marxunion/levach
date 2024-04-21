@@ -1,9 +1,10 @@
 <?php
 namespace Api\Models;
 
-use Base\BaseModel;
-
 use Core\Database;
+use Core\Error;
+
+use Base\BaseModel;
 
 class ArticleEditModel extends BaseModel
 {
@@ -29,11 +30,17 @@ class ArticleEditModel extends BaseModel
 
         if($articleData)
         {
+            if($articleData['title'] == $newTitle && $articleData['text'] == $newText && $articleData['tags'] == $newTags)
+            {
+                throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
+            }
+
             $newVersion = $currentVersion + 1;
 
             $articleData['version_id'] = $newVersion;
             $articleData['title'] = $newTitle;
             $articleData['text'] = $newText;
+            $articleData['date'] = time();
 
             if(is_array($newTags))
             {

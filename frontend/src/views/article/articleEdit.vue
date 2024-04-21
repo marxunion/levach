@@ -316,9 +316,9 @@
 							axios.post('/api/article/edit/'+articleEditCode.value, {"text": editorState.text, "tags": tags.value})
 							.then(response => 
 							{
-								if(response.data.editLink)
+								if(response.data.success)
 								{
-									openModal(InfoModalWithLink, {status: true, text: "", link: window.location.hostname + "/article/edit/" + response.data.editLink, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']})
+									openModal(InfoModalWithLink, {status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']})
 								}
 								else
 								{
@@ -349,7 +349,11 @@
 									{
 										if(response.data.Error.message == "Article for edit not found")
 										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']});
+										}
+										else if(response.data.Error.message == "Please make changes for edit")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedChanges']});
 										}
 										else
 										{
@@ -397,6 +401,10 @@
 										if(response.data.Warning.message == "Article for edit not found")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
+										}
+										else if(response.data.Error.message == "Please make changes for edit")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedChanges']});
 										}
 										else
 										{

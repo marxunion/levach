@@ -5,9 +5,11 @@
         "sendButton": "Опубликовать изменения",
         "addTagPlaceholder": "Добавить тег...",
         
+        "articleEditedSuccessfully": "Новая версия вашей статьи успешно создана и отправлена на премодерацию.Для управления и редактирования вашей статьи воспользуйтесь той же ссылкой:",
+
         "warnings": 
         {
-            "articleEditLink": "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию",
+            "articleEditLinkCopyWarning": "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию",
 
             "articleNotFound": "Статья для редактирования не найдена",
             "articleNeedTitle": "Пожалуйста добавьте заголовок для статьи",
@@ -28,6 +30,8 @@
         "errors": 
         {
             "articleForEditNotFound": "Статья для редактирования не найдена",
+
+            "articleNeedChanges": "Пожалуйста внесите какие-либо правки для изменения статьи",
 
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
@@ -199,7 +203,9 @@
         "editorDefaultText": "# Article Title\n",
         "sendButton": "Publish Changes",
         "addTagPlaceholder": "Add tag...",
-        
+
+        "articleEditedSuccessfully": "A new version of your article has been successfully created and sent for pre-moderation.To manage and edit your article, use the same link:",
+
         "warnings": 
         {
             "articleEditLink": "Don't forget to save the link or your article will not be editable",
@@ -222,6 +228,8 @@
         "errors": 
         {
             "articleForEditNotFound": "Article for edit not found",
+
+            "articleNeedChanges": "Please make any changes to edit article",
 
             "unknown": "An unknown error occurred. Try again"
         },
