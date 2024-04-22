@@ -11,5 +11,10 @@ class ArticlesModel extends BaseModel
     {
         parent::__construct();
     }
+
+    public function loadArticlesByTime()
+    {
+        
+    }
     
 }

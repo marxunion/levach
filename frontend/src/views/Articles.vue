@@ -1,6 +1,7 @@
 <script setup lang="ts">
-    import { ref, computed, reactive, watch } from 'vue';
-    
+    import { ref, computed, reactive, watch, onMounted } from 'vue';
+    import axios from 'axios';
+
     import DropDown from "./../components/DropDown.vue";
 
     import { MdPreview, config } from 'md-editor-v3';
@@ -26,99 +27,13 @@
 
     const sortTypes = computed(() => langData.value['sortTypes'] as string[]);
 
-    const onChangeSortType = (version : number) => 
+    const onChangeSortType = (newSortType : number) => 
     {
-        currentSortType.value = version;
+        currentSortType.value = newSortType;
     };
 
     // Articles
-    const articles = ref([
-        {
-            title: "Test Editorially Article",
-
-            time: "10:36  19.09.2022",
-            tags: "#технологии #айфон #ios",
-            versionsIds: 
-            [
-                4,
-                3,
-                2,
-                1
-            ],
-            currentVersionIdIndex: 5,
-            statistics: 
-            {   
-                rating: 1200,
-                comments: 210
-            },
-            
-            currentVersionText: "# Test Editorially Article \n## 😲 md-editor-v3\n\nMarkdown Editor for Vue3, developed in jsx and typescript, support different themes、beautify content by prettier.\n\n"
-        },
-        {
-            title: "Test Editorially Article 2",
-
-            time: "08:32  21.09.2022",
-            tags: "#технологии #айфон #ios",
-            versionsIds: 
-            [
-                3,
-                2,
-                1
-            ],
-            statistics: 
-            {
-                rating: 4800,
-                comments: 40
-            },
-            currentVersionIdIndex: 3,
-            currentVersionText: "# Test Editorially Article 2\n## 🤗 Code\n\n```vue\n<template>\n  <MdEditor v-model=\"text\" />\n</template>\n\n\<script setup\>\nimport { ref } from 'vue';\nimport { MdEditor } from 'md-editor-v3';\nimport 'md-editor-v3/lib/style.css';\n\nconst text = ref('Hello Editor!');\n\</script\>\n```"
-        },
-        {
-            title: "Test Editorially Article 3",
-
-            time: "01:33  20.09.2022",
-            tags: "#технологии #айфон #ios",
-            versionsIds: 
-            [
-                7,
-                6,
-                5,
-                4,
-                3,
-                2,
-                1
-            ],
-            statistics: 
-            {
-                rating: 39000000,
-                comments: 50000
-            },
-            currentVersionIdIndex: 7,
-            currentVersionText: "# Test Editorially Article 3 \n 🖨 Text\n\nThe Old Man and the Sea served to reinvigorate Hemingway's literary reputation and prompted a reexamination of his entire body of work.\n\n## 📈 Table\n\n| nickname | from             |\n| -------- | ---------------- |\n| zhijian  | ChongQing, China |\n\n## 📏 Formula\n\nInline: $x+y^{2x}$\n\n$$\n\\sqrt[3]{x}\n$$\n\n## 🧬 Diagram\n\n```mermaid\nflowchart TD\n  Start --> Stop\n```\n\n## 🪄 Alert\n\n!!! note Supported Types\n\nnote、abstract、info、tip、success、question、warning、failure、danger、bug、example、quote、hint、caution、error、attention\n\n!!!\n\n## ☘️ em..."
-        },
-        {
-            title: "Test Editorially Article 4",
-
-            time: "14:31  20.09.2022",
-            tags: "#технологии #айфон #ios",
-            versionsIds: 
-            [
-                6,
-                5,
-                4,
-                3,
-                2,
-                1
-            ],
-            statistics: 
-            {
-                rating: 39000,
-                comments: 500
-            },
-            currentVersionIdIndex: 7,
-            currentVersionText: "# Test Editorially Article 4 \n ![Picture](https://imzbf.github.io/md-editor-rt/imgs/mark_emoji.gif)"
-        }
-    ]);
+    const articles = ref([]);
 
     // Preview
 
@@ -143,6 +58,53 @@
 	{
 		previewState.language = LangDataHandler.currentLanguage.value;
 	});
+
+
+    let lastLoadedArticleId = ref(0);
+    let lastLoadedArticleTime = ref(0);
+    let lastLoadedArticleRate = ref(0);
+
+    onMounted(() => 
+    {
+        if(currentSortType.value == 0)
+        {
+            axios.get('/api/articles', {
+                params: {
+                    sortType: 'time',
+                    count: 6,
+                    lastLoadedArticleId: lastLoadedArticleId.value,
+                    lastLoadedArticleTime: lastLoadedArticleTime.value
+                }
+            })
+            .then(response => 
+            {
+                
+            })
+            .catch(response => 
+            {
+
+            });
+        }
+        else
+        {
+            axios.get('/api/articles', {
+                params: {
+                    sortType: 'rate',
+                    count: 6,
+                    lastLoadedArticleId: lastLoadedArticleId.value,
+                    lastLoadedArticleRate: lastLoadedArticleRate.value
+                }
+            })
+            .then(response => 
+            {
+                
+            })
+            .catch(response => 
+            {
+
+            });
+        }
+    });
 
 </script>
 
