@@ -5,7 +5,7 @@ use Core\Error;
 
 use Base\BaseHandlerRoute;
 
-use Base\ArticlesModel;
+use Api\Models\ArticlesModel;
 
 class ArticlesHandler extends BaseHandlerRoute
 {
