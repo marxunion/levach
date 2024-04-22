@@ -48,7 +48,8 @@ class ArticleNewModel extends BaseModel
                 'article_id' => $articleId,
                 'rating' => 0,
                 'comments' => 0,
-                "current_version" => 1
+                'created_at' => time(),
+                'current_version' => 1
             ];
             $this->database->insert('statistics', $statisticsData);
 
