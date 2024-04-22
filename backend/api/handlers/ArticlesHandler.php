@@ -12,7 +12,7 @@ class ArticlesHandler extends BaseHandlerRoute
     public function Init()
     {
         $this->model = new ArticlesModel();
-        $parsedBody = $this->request->getParsedBody();
+        $parsedBody = $this->request->getQueryParams();
         if(is_array($parsedBody))
         {
             $this->data = $parsedBody;
@@ -25,44 +25,45 @@ class ArticlesHandler extends BaseHandlerRoute
     public function Process()
     {
         $count = 4;
-        if($this->data['count'])
+        if(array_key_exists('count', $this->data))
         {
             $count = $this->data['count'];
         }
         $lastLoadedArticleId = 0;
-        if($this->data['count'])
+        if(array_key_exists('lastLoadedArticleId', $this->data))
         {
             $lastLoadedArticleId = $this->data['lastLoadedArticleId'];
         }
 
-        if($this->data['sortType'])
+        if(array_key_exists('sortType', $this->data))
         {
             $sortType = $this->data['sortType'];
             $articleIds = null;
-            if($sortType == 'time')
+            if($sortType == 'timestamp')
             {
-                $lastLoadedArticleTimestamp = 0;
-                if($this->data['lastLoadedArticleTimestamp'])
+                $lastLoadedArticleTimestamp = 2147483645;
+                if(array_key_exists('lastLoadedArticleTimestamp', $this->data))
                 {
                     $lastLoadedArticleTimestamp = $this->data['lastLoadedArticleTimestamp'];
                 }
-                $articleIds = $this->model->loadArticlesByTime($count, $lastLoadedArticleId, $lastLoadedArticleTime);
+                $articleIds = $this->model->loadArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
             }
             else if($sortType == 'rate')
             {
-                $lastLoadedArticleRate = 0;
-                if($this->data['lastLoadedArticleRate'])
+                $lastLoadedArticleRate = 2147483645;
+                if(array_key_exists('lastLoadedArticleRate', $this->data))
                 {
                     $lastLoadedArticleRate = $this->data['lastLoadedArticleRate'];
                 }
-                $articleIds = $this->model->loadArticlesByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
+                $articleIds = $this->model->loadArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
             }
             else
             {
                 throw new Error(400, "Invalid sortType", "Invalid sortType");
                 return;
             }
-            $this->response = $this->response->withJson($this->model->loadArticles());
+            
+            $this->response = $this->response->withJson($this->model->loadArticles($articleIds));
         }
         else
         {

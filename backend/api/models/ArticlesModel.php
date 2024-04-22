@@ -12,19 +12,19 @@ class ArticlesModel extends BaseModel
         parent::__construct();
     }
 
-    public function loadArticlesIdsByTimestamp($count = 4, $lastLoadedArticleId = 0, $lastArticleTimestamp = 0, )
+    public function loadArticlesIdsByTimestamp($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleTimestamp = 2147483645)
     {
-        return $database->select(
+        return $this->database->select(
             'statistics',
             'article_id',
             [
-                'LIMIT' => $limit,
+                'LIMIT' => $count,
                 'AND' => [
                     'OR' => [
                         'created_at[<]' => $lastLoadedArticleTimestamp,
                         'AND' => [
-                            'created_at' => $lastArticleTimestamp,
-                            'id[<]' => $lastLoadedArticleId
+                            'created_at' => $lastLoadedArticleTimestamp,
+                            'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
                 ]
@@ -33,19 +33,19 @@ class ArticlesModel extends BaseModel
 
         
     }
-    public function loadArticlesIdsByRate($count = 4, $lastLoadedArticleId = 0, $lastArticleRate = 0, )
+    public function loadArticlesIdsByRate($count = 4, $lastLoadedArticleId = 0, $lastLoadedArticleRate = 0, )
     {
-        return $database->select(
+        return $this->database->select(
             'statistics',
             'article_id',
             [
-                'LIMIT' => $limit,
+                'LIMIT' => $count,
                 'AND' => [
                     'OR' => [
-                        'rate[<]' => $lastArticleRate,
+                        'rate[<]' => $lastLoadedArticleRate,
                         'AND' => [
-                            'rate' => $lastArticleRate,
-                            'id[<]' => $lastLoadedArticleId
+                            'rate' => $lastLoadedArticleRate,
+                            'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
                 ]

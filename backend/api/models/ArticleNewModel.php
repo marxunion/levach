@@ -13,15 +13,16 @@ class ArticleNewModel extends BaseModel
     }
     public function newArticle($title, $text, $tags, $viewCode, $editCode)
     {
-        $lastArticleId = $database->max('articles', 'id');
+        $lastArticleId = $this->database->max('articles', 'id');
+        $newArticleId = 1;
 
-        if($lastArticleId === null) 
+        if($lastArticleId !== '') 
         {
-            $lastArticleId = 0;
+            $newArticleId = $lastArticleId + 1;
         }
 
         $data = [
-            'article_id' => $lastArticleId + 1,
+            'id' => $newArticleId,
             'version_id' => 1,
             'title' => $title,
             'text' => $text,
@@ -41,28 +42,23 @@ class ArticleNewModel extends BaseModel
         }
 
         $this->database->insert('articles', $data);
-        $articleId = $this->database->id();
-        if($articleId)
-        {
-            $statisticsData = [
-                'article_id' => $articleId,
-                'rating' => 0,
-                'comments' => 0,
-                'created_at' => time(),
-                'current_version' => 1
-            ];
-            $this->database->insert('statistics', $statisticsData);
 
-            $codesData = [
-                'article_id' => $articleId,
-                'view_code' => $viewCode,
-                'edit_code' => $editCode
-            ];
-            $this->database->insert('codes', $codesData);
-        }
-        else
-        {
-            throw new Critical(500, "Unknown Error", "Failed to create article");
-        }
+        $statisticsData = 
+        [
+            'article_id' => $newArticleId,
+            'rating' => 0,
+            'comments' => 0,
+            'created_at' => time(),
+            'current_version' => 1
+        ];
+        $this->database->insert('statistics', $statisticsData);
+
+        $codesData = 
+        [
+            'article_id' => $newArticleId,
+            'view_code' => $viewCode,
+            'edit_code' => $editCode
+        ];
+        $this->database->insert('codes', $codesData);
     }
 }
