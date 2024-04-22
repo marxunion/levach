@@ -38,14 +38,15 @@ class ArticlesHandler extends BaseHandlerRoute
         if($this->data['sortType'])
         {
             $sortType = $this->data['sortType'];
+            $articleIds = null;
             if($sortType == 'time')
             {
-                $lastLoadedArticleTime = 0;
-                if($this->data['lastLoadedArticleTime'])
+                $lastLoadedArticleTimestamp = 0;
+                if($this->data['lastLoadedArticleTimestamp'])
                 {
-                    $lastLoadedArticleTime = $this->data['lastLoadedArticleTime'];
+                    $lastLoadedArticleTimestamp = $this->data['lastLoadedArticleTimestamp'];
                 }
-                $this->response = $this->response->withJson($this->model->loadArticlesByTime($count, $lastLoadedArticleId, $lastLoadedArticleTime));
+                $articleIds = $this->model->loadArticlesByTime($count, $lastLoadedArticleId, $lastLoadedArticleTime);
             }
             else if($sortType == 'rate')
             {
@@ -54,12 +55,14 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $lastLoadedArticleRate = $this->data['lastLoadedArticleRate'];
                 }
-                $this->response = $this->response->withJson($this->model->loadArticlesByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate));
+                $articleIds = $this->model->loadArticlesByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
             }
             else
             {
                 throw new Error(400, "Invalid sortType", "Invalid sortType");
+                return;
             }
+            $this->response = $this->response->withJson($this->model->loadArticles());
         }
         else
         {

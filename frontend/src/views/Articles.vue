@@ -61,7 +61,7 @@
 
 
     let lastLoadedArticleId = ref(0);
-    let lastLoadedArticleTime = ref(0);
+    let lastLoadedArticleTimestamp = ref(0);
     let lastLoadedArticleRate = ref(0);
 
     onMounted(() => 
@@ -73,7 +73,7 @@
                     sortType: 'time',
                     count: 6,
                     lastLoadedArticleId: lastLoadedArticleId.value,
-                    lastLoadedArticleTime: lastLoadedArticleTime.value
+                    lastLoadedArticleTimestamp: lastLoadedArticleTimestamp.value
                 }
             })
             .then(response => 
