@@ -32,12 +32,13 @@ class ArticleNewModel extends BaseModel
             'date' => time()
         ];
 
+        $tagsString = '';
         if(is_array($tags))
         {
             if(count($tags) > 0)
             {
-                $tagsString = implode(', ', $tags);
-                $data['tags'] = '{'.$tagsString.'}';
+                $tagsString = '{'.implode(', ', $tags).'}';
+                $data['tags'] = $tagsString;
             }
         }
 
@@ -49,7 +50,9 @@ class ArticleNewModel extends BaseModel
             'rating' => 0,
             'comments' => 0,
             'created_at' => time(),
-            'current_version' => 1
+            'current_version' => 1,
+            'current_title' => $title
+            'current_tags'
         ];
         $this->database->insert('statistics', $statisticsData);
 
