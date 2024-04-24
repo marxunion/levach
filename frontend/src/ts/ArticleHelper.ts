@@ -5,11 +5,19 @@ export interface ArticleVersion
     tags: Array<string>,
     editorially_status: number,
     premoderation_status: number,
-    acceptededitorially_status: number
+    acceptededitorially_status: number,
+    date: number
 }
+export interface Statistics
+{
+    rating: number,
+    comments: number,
+    currentVersion: number
+} 
+
 export interface Article
 {
     versions: Array<ArticleVersion>,
-    statistics: Array<any>,
+    statistics: Statistics,
     currentVersion: number
 }

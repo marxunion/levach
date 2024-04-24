@@ -4,6 +4,10 @@
 
     import Loader from "./../components/Loader.vue";
 
+    import { timestampToLocaleFormatedTime } from './../ts/DateTimeHelper';
+    import { tagsArrayToString } from './../ts/TagsHelper'
+    import { JsonData } from './../ts/JsonHandler';
+
     import { Article } from './../ts/ArticleHelper';
 
     import DropDown from './../components/DropDown.vue';
@@ -12,8 +16,7 @@
     import { MdPreview, config } from 'md-editor-v3';
     import 'md-editor-v3/lib/style.css';
 
-    import { JsonData } from './../ts/JsonHandler';
-
+    
     import { isAdmin } from './../ts/AdminHandler';
 
     import { abbreviateNumber } from './../ts/AbbreviateNumberHelper';
@@ -100,7 +103,7 @@
                     {
                         response.data.forEach(article => 
                         {
-                            
+                            articles.push(article as Article);
                         });
                     }
                 }
@@ -187,9 +190,9 @@
 			</div>
 		</div>
 		<article class="main__article" v-if="articles !== null" v-for="article in articles">
-            <p class="main__article__titleTime">{{ article['time'] }}</p>
-            <MdPreview class="main__article__preview" :modelValue="article['currentVersionText']" :language="previewState.language"/>
-            <p class="main__article__tags">{{ article['tags'] }}</p>
+            <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentVersion].date) }}</p>
+            <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentVersion].text" :language="previewState.language"/>
+            <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentVersion].tags) }}</p>
 
             <div v-if="isAdmin && currentRoute == 'articlesWaitingPremoderate'" class="main__article__buttons">
                 <a class="main__article__buttons__button premoderateArticleButton">{{ langData['premoderateArticleButton'] }}</a>
