@@ -219,23 +219,19 @@
 								else if(error.response.data.Error)
 								{
 									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"] });
-									reject(new Error("UnknownError"));
 								}
 								else if(error.response.data.Critical)
 								{
 									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"] });
-									reject(new Error("UnknownError"));
 								}
 								else 
 								{
 									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"] });
-									reject(new Error("UnknownError"));
 								}
 							}
 							else
 							{
 								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"] });
-								reject(new Error("UnknownError"))
 							}
 						});
 					});

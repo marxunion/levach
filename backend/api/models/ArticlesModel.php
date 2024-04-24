@@ -66,7 +66,8 @@ class ArticlesModel extends BaseModel
                     {
                         $article = [
                             'versions' => $this->database->select('articles', ['title', 'text', 'tags', 'date', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId]),
-                            'statistics' => $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId])
+                            'statistics' => $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]),
+                            'viewCode' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
                         ];
                         array_push($articles, $article);
                     }

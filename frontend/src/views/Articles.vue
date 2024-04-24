@@ -101,9 +101,10 @@
                 {
                     if(Array.isArray(response.data))
                     {
-                        response.data.forEach(article => 
+                        response.data.forEach((article : Article) => 
                         {
-                            articles.push(article as Article);
+                            article.currentVersion = article.versions.length;
+                            articles.push(article);
                         });
                     }
                 }
@@ -135,6 +136,7 @@
                     {
                         response.data.forEach(article => 
                         {
+                            article.currentVersion = article.versions.length;
                             articles.push(article as Article);
                         });
                     }
@@ -204,17 +206,17 @@
                 <a class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
             </div>
             <div v-else class="main__article__buttons oneButton">
-                <a href="#/article/testarticle" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
+                <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
             </div>
             <div class="main__article__reactions">
                 <div class="main__article__reactions__statistics">
-                    <img src="../assets/img/article/rating.png" alt="Likes: " class="main__article__reactions__statistics__icon ratingIcon">
-                    <p class="main__article__reactions__statistics__title likeCounter">{{ abbreviateNumber(article['statistics']['rating']) }}</p>
+                    <img src="../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
+                    <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.statistics.rating) }}</p>
                     <img src="../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                 </div>
                 <div class="main__article__reactions__comments">
                     <img src="../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
-                    <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article['statistics']['comments']) }}</p>
+                    <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article.statistics.comments) }}</p>
                 </div>
             </div>
             <DropDownVersion

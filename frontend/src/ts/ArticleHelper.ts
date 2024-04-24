@@ -19,5 +19,6 @@ export interface Article
 {
     versions: Array<ArticleVersion>,
     statistics: Statistics,
+    view_code: string,
     currentVersion: number
 }

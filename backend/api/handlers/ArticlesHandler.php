@@ -29,6 +29,11 @@ class ArticlesHandler extends BaseHandlerRoute
         {
             $count = $this->data['count'];
         }
+        if($count > 10)
+        {
+            $count = 10;
+        }
+        
         $lastLoadedArticleId = 0;
         if(array_key_exists('lastLoadedArticleId', $this->data))
         {

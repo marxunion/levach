@@ -53,7 +53,7 @@ class ArticleEditModel extends BaseModel
 
             $this->database->insert('articles', $articleData);
 
-            $this->database->update('statistics', ['current_version' => $newVersion] , ['article_id' => $articleId]);
+            $this->database->update('statistics', ['current_version' => $newVersion], ['article_id' => $articleId]);
         } 
         else 
         {
