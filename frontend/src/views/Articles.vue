@@ -35,24 +35,6 @@
 
     const sortTypes = computed(() => langData.value['sortTypes'] as string[]);
 
-    let lastLoadedArticleId = ref(0);
-    let lastLoadedArticleTimestamp = ref(0);
-    let lastLoadedArticleRate = ref(0);
-
-    const onChangeSortType = (newSortType : number) => 
-    {
-        lastLoadedArticleId.value = 0;
-        if(currentSortType.value == 0)
-        {
-            lastLoadedArticleTimestamp.value = 0;
-        }
-        else
-        {
-            lastLoadedArticleRate.value = 0;
-        }
-        currentSortType.value = newSortType;
-    };
-
     // Preview
 	config(
 	{
@@ -76,13 +58,33 @@
 		previewState.language = LangDataHandler.currentLanguage.value;
 	});
 
-    
+    let lastLoadedArticleId = ref(0);
+    let lastLoadedArticleTimestamp = ref(0);
+    let lastLoadedArticleRate = ref(0);
 
-    const fetchNewArticles = () => 
+    let loading = ref(false);
+    const scrollTarget = ref(null);
+    const articles : Array<Article> = reactive([]);
+
+    const onChangeSortType = (newSortType : number) => 
+    {
+        lastLoadedArticleId.value = 0;
+        if(currentSortType.value == 0)
+        {
+            lastLoadedArticleTimestamp.value = 0;
+        }
+        else
+        {
+            lastLoadedArticleRate.value = 0;
+        }
+        currentSortType.value = newSortType;
+    };
+
+    const fetchNewArticles = async () => 
     {
         if(currentSortType.value == 0)
         {
-            axios.get('/api/articles', {
+            await axios.get('/api/articles', {
                 params: {
                     sortType: 'timestamp',
                     count: 4,
@@ -94,21 +96,27 @@
             {
                 if(response.data !== null)
                 {
-                    
+                    if(Array.isArray(response.data))
+                    {
+                        response.data.forEach(article => 
+                        {
+                            
+                        });
+                    }
                 }
                 else
                 {
-                    openModal(InfoModal, );
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
                 }
             })
             .catch(response => 
             {
-                openModal(InfoModal, );
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
             });
         }
         else
         {
-            axios.get('/api/articles', {
+            await axios.get('/api/articles', {
                 params: {
                     sortType: 'rate',
                     count: 4,
@@ -118,18 +126,29 @@
             })
             .then(response => 
             {
-                
+                if(response.data)
+                {
+                    if(Array.isArray(response.data))
+                    {
+                        response.data.forEach(article => 
+                        {
+                            articles.push(article as Article);
+                        });
+                    }
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+                }
             })
             .catch(response => 
             {
-
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
             });
         }
     };
 
-    let loading = ref(false);
-    const scrollTarget = ref(null);
-    const articles = ref([]);
+    
 
     const handleScroll = () => 
     {
@@ -147,6 +166,7 @@
     onMounted(() => 
     {
         window.addEventListener('scroll', handleScroll);
+        fetchNewArticles();
         
     });
     onUnmounted(() => 
