@@ -27,8 +27,11 @@ class ArticleNewModel extends BaseModel
             'title' => $title,
             'text' => $text,
             'tags' => null,
+            
+            'editorially_status' => 0,
             'premoderation_status' => 0,
             'acceptededitorially_status' => 0,
+            
             'date' => time()
         ];
 
@@ -37,7 +40,7 @@ class ArticleNewModel extends BaseModel
         {
             if(count($tags) > 0)
             {
-                $tagsString = '{'.implode(', ', $tags).'}';
+                $tagsString = '{'.implode(',', $tags).'}';
                 $data['tags'] = $tagsString;
             }
         }
@@ -50,9 +53,7 @@ class ArticleNewModel extends BaseModel
             'rating' => 0,
             'comments' => 0,
             'created_at' => time(),
-            'current_version' => 1,
-            'current_title' => $title
-            'current_tags'
+            'current_version' => 1
         ];
         $this->database->insert('statistics', $statisticsData);
 
