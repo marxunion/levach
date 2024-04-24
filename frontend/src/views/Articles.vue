@@ -1,15 +1,20 @@
 <script setup lang="ts">
-    import { ref, computed, reactive, watch, onMounted } from 'vue';
+    import { ref, computed, reactive, watch, onMounted, onUnmounted } from 'vue';
     import axios from 'axios';
 
-    import DropDown from "./../components/DropDown.vue";
+    import Loader from "./../components/Loader.vue";
+
+    import { Article } from './../ts/ArticleHelper';
+
+    import DropDown from './../components/DropDown.vue';
+    import DropDownVersion from './../components/DropDownVersion.vue';
 
     import { MdPreview, config } from 'md-editor-v3';
     import 'md-editor-v3/lib/style.css';
 
     import { JsonData } from './../ts/JsonHandler';
 
-    import { isAdmin } from './../ts/AdminHandler'
+    import { isAdmin } from './../ts/AdminHandler';
 
     import { abbreviateNumber } from './../ts/AbbreviateNumberHelper';
 
@@ -27,16 +32,25 @@
 
     const sortTypes = computed(() => langData.value['sortTypes'] as string[]);
 
+    let lastLoadedArticleId = ref(0);
+    let lastLoadedArticleTimestamp = ref(0);
+    let lastLoadedArticleRate = ref(0);
+
     const onChangeSortType = (newSortType : number) => 
     {
+        lastLoadedArticleId.value = 0;
+        if(currentSortType.value == 0)
+        {
+            lastLoadedArticleTimestamp.value = 0;
+        }
+        else
+        {
+            lastLoadedArticleRate.value = 0;
+        }
         currentSortType.value = newSortType;
     };
 
-    // Articles
-    const articles = ref([]);
-
     // Preview
-
 	config(
 	{
 		editorConfig: 
@@ -59,19 +73,16 @@
 		previewState.language = LangDataHandler.currentLanguage.value;
 	});
 
+    
 
-    let lastLoadedArticleId = ref(0);
-    let lastLoadedArticleTimestamp = ref(0);
-    let lastLoadedArticleRate = ref(0);
-
-    onMounted(() => 
+    const fetchNewArticles = () => 
     {
         if(currentSortType.value == 0)
         {
             axios.get('/api/articles', {
                 params: {
-                    sortType: 'time',
-                    count: 6,
+                    sortType: 'timestamp',
+                    count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
                     lastLoadedArticleTimestamp: lastLoadedArticleTimestamp.value
                 }
@@ -90,7 +101,7 @@
             axios.get('/api/articles', {
                 params: {
                     sortType: 'rate',
-                    count: 6,
+                    count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
                     lastLoadedArticleRate: lastLoadedArticleRate.value
                 }
@@ -104,8 +115,36 @@
 
             });
         }
+    };
+
+    let loading = ref(false);
+    const scrollTarget = ref(null);
+    const articles = ref([]);
+
+    const handleScroll = () => 
+    {
+        const scrollElement = scrollTarget.value;
+        if (scrollElement !== null && !loading.value) 
+        {
+            const bottomDistance = (scrollElement as HTMLElement).getBoundingClientRect().bottom - window.innerHeight;
+            if (bottomDistance <= 0) 
+            {
+                loading.value = true;
+            }
+        }
+    };
+    
+    onMounted(() => 
+    {
+        window.addEventListener('scroll', handleScroll);
+        
+    });
+    onUnmounted(() => 
+    {
+        window.removeEventListener('scroll', handleScroll);
     });
 
+    
 </script>
 
 <template>
@@ -117,7 +156,7 @@
 				<DropDown :options="sortTypes" :default="sortTypes[currentSortType]" class="main__header__sort__select" @inputIndex="onChangeSortType" />
 			</div>
 		</div>
-		<article class="main__article" v-for="article in articles">
+		<article class="main__article" v-if="articles !== null" v-for="article in articles">
             <p class="main__article__titleTime">{{ article['time'] }}</p>
             <MdPreview class="main__article__preview" :modelValue="article['currentVersionText']" :language="previewState.language"/>
             <p class="main__article__tags">{{ article['tags'] }}</p>
@@ -145,12 +184,13 @@
                     <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article['statistics']['comments']) }}</p>
                 </div>
             </div>
-            <DropDown 
-                :options="article['versionsIds'].map((versionsId) => (langData['versionText'] as string) + versionsId)" 
-                :default="article['versionsIds'][article['currentVersionIdIndex']]" 
+            <DropDownVersion
+                :max-version="(article as Article).versions.length"
                 class="main__article__select" 
-                @inputIndex="(version : number) => article['currentVersionIdIndex'] = version" />
+                @inputIndex="(version : number) => (article as Article).currentVersion = version" />
         </article>
+        <div ref="scrollTarget" style="height: 100px;"></div>
+        <Loader v-if="loading" />
     </main>
 </template>
 
