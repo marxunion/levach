@@ -18,6 +18,9 @@
 
     import { abbreviateNumber } from './../ts/AbbreviateNumberHelper';
 
+	import { openModal } from "jenesius-vue-modal";
+    import InfoModal from "./../components/modals/InfoModal.vue";
+
     import langsData from "./locales/Articles.json";
     import { LangDataHandler } from "./../ts/LangDataHandler";
 
@@ -89,11 +92,18 @@
             })
             .then(response => 
             {
-                
+                if(response.data !== null)
+                {
+                    
+                }
+                else
+                {
+                    openModal(InfoModal, );
+                }
             })
             .catch(response => 
             {
-
+                openModal(InfoModal, );
             });
         }
         else
@@ -133,7 +143,7 @@
             }
         }
     };
-    
+
     onMounted(() => 
     {
         window.addEventListener('scroll', handleScroll);
