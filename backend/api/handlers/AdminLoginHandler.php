@@ -5,9 +5,9 @@ use Core\Error;
 
 use Base\BaseHandlerRoute;
 
-use Api\Models\AdminQuitModel;
+use Api\Models\AdminLoginModel;
 
 class AdminQuitHandler extends BaseHandlerRoute
 {
-    publ
+    
 }

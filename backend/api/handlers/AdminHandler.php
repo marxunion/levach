@@ -12,7 +12,11 @@ class AdminHandler extends BaseHandlerRoute
     {
         if(AdminModel::isAdmin())
         {
-            
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

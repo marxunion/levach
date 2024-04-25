@@ -10,8 +10,13 @@ use Api\Handlers\AdminModel;
 
 class AdminStatusModel extends BaseModel
 {
-    public function isAdmin()
+    public function __construct()
     {
-        return AdminModel::isAdmin();
+        parent::__construct();
+    }
+
+    public function isAdmin($token, $nickname, $timestamp)
+    {
+        return AdminModel::isAdmin($token, $nickname, $timestamp);
     }   
 }

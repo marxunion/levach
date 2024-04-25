@@ -40,6 +40,27 @@ class Routes
         
         self::$app->group('/api', function (RouteCollectorProxy $group) 
         {
+            $group->group('/admin', function (RouteCollectorProxy $adminGroup) 
+            {
+                $adminGroup->get('/status', function (Request $request, Response $response) 
+                {
+                    self::$handler = new AdminStatusHandler($request, $response);
+                    return self::$handler->Handle();
+                });
+
+                $adminGroup->post('/login', function (Request $request, Response $response) 
+                {
+                    self::$handler = new AdminLoginHandler($request, $response);
+                    return self::$handler->Handle();
+                });
+
+                $adminGroup->post('/quit', function (Request $request, Response $response) 
+                {
+                    self::$handler = new AdminQuitHandler($request, $response);
+                    return self::$handler->Handle();
+                });
+            });
+
             $group->get('/', function (Request $request, Response $response) 
             {
                 self::$handler = new StatusHandler($request, $response);
