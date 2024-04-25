@@ -34,7 +34,7 @@ class AdminQuitHandler extends BaseHandlerRoute
                 if(isset($this->data['token']))
                 {
                     $created_at = $this->data['admin_created_at'];
-
+                    $this->response = $this->response->withStatus(200)->withJson($this->model->quit($_COOKIE));
                 }
                 else
                 {
@@ -50,6 +50,5 @@ class AdminQuitHandler extends BaseHandlerRoute
         {
             throw new Error(404, "Admin token not found", "Admin token not found");
         }
-        $this->response = $this->response->withStatus(200)->withJson($this->model->quit($_COOKIE));
     }
 }
