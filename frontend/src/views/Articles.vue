@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, computed, reactive, watch, onMounted, onUnmounted } from 'vue';
+    import { ref, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
     import axios from 'axios';
 
     import Loader from "./../components/Loader.vue";
@@ -61,9 +61,9 @@
 		previewState.language = LangDataHandler.currentLanguage.value;
 	});
 
-    let lastLoadedArticleId = ref(0);
-    let lastLoadedArticleTimestamp = ref(0);
-    let lastLoadedArticleRate = ref(0);
+    let lastLoadedArticleId = ref(2147483645);
+    let lastLoadedArticleTimestamp = ref(2147483645);
+    let lastLoadedArticleRate = ref(2147483645);
 
     let loading = ref(false);
     const scrollTarget = ref(null);
@@ -153,10 +153,9 @@
         }
     };
 
-    
-
     const handleScroll = () => 
     {
+        console.log("SCROLLED");
         const scrollElement = scrollTarget.value;
         if (scrollElement !== null && !loading.value) 
         {
@@ -164,22 +163,29 @@
             if (bottomDistance <= 0) 
             {
                 loading.value = true;
+                 fetchNewArticles();
             }
         }
     };
-
-    onMounted(() => 
-    {
-        window.addEventListener('scroll', handleScroll);
-        fetchNewArticles();
-        
-    });
-    onUnmounted(() => 
-    {
-        window.removeEventListener('scroll', handleScroll);
-    });
-
     
+    onMounted(async () => 
+    {
+        let ps = document.querySelector('.ps');
+        if(ps != null)
+        {
+            ps.addEventListener('scroll', handleScroll)
+        }
+        await fetchNewArticles();
+    });
+
+    onBeforeUnmount(() => 
+    {
+        let ps = document.querySelector('.ps');
+        if(ps != null)
+        {
+            ps.removeEventListener('scroll', handleScroll)
+        }
+    })
 </script>
 
 <template>
@@ -191,10 +197,10 @@
 				<DropDown :options="sortTypes" :default="sortTypes[currentSortType]" class="main__header__sort__select" @inputIndex="onChangeSortType" />
 			</div>
 		</div>
-		<article class="main__article" v-if="articles !== null" v-for="article in articles">
-            <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentVersion].date) }}</p>
-            <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentVersion].text" :language="previewState.language"/>
-            <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentVersion].tags) }}</p>
+		<article class="main__article" v-if="articles !== null && !loading" v-for="article in articles">
+            <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentVersion-1].date) }}</p>
+            <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentVersion-1].text" :language="previewState.language"/>
+            <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentVersion-1].tags) }}</p>
 
             <div v-if="isAdmin && currentRoute == 'articlesWaitingPremoderate'" class="main__article__buttons">
                 <a class="main__article__buttons__button premoderateArticleButton">{{ langData['premoderateArticleButton'] }}</a>
@@ -206,7 +212,7 @@
                 <a class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
             </div>
             <div v-else class="main__article__buttons oneButton">
-                <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
+                <a :href="'#/article/'+article.view_code" target="_blank" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
             </div>
             <div class="main__article__reactions">
                 <div class="main__article__reactions__statistics">

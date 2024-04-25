@@ -20,6 +20,16 @@
             "дате размещения"
         ],
 
+        "warnings": 
+        {
+            "unknown": "An unknown error occurred. Try again"
+        },
+
+        "errors": 
+        {
+            "unknown": "An unknown error occurred. Try again"
+        },
+
         "approveArticleButton": "Одобрить",
         "disapproveArticleButton": "Не одобрять",
         "premoderateArticleButton": "Принять",

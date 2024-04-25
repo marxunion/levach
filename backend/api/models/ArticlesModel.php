@@ -19,6 +19,9 @@ class ArticlesModel extends BaseModel
             'article_id',
             [
                 'LIMIT' => $count,
+                "ORDER" => [
+                    "created_at" => "DESC",
+                ],
                 'AND' => [
                     'OR' => [
                         'created_at[<]' => $lastLoadedArticleTimestamp,
@@ -33,18 +36,21 @@ class ArticlesModel extends BaseModel
 
         
     }
-    public function loadArticlesIdsByRate($count = 4, $lastLoadedArticleId = 0, $lastLoadedArticleRate = 0, )
+    public function loadArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645 )
     {
         return $this->database->select(
             'statistics',
             'article_id',
             [
                 'LIMIT' => $count,
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
                 'AND' => [
                     'OR' => [
-                        'rate[<]' => $lastLoadedArticleRate,
+                        'rating[<]' => $lastLoadedArticleRate,
                         'AND' => [
-                            'rate' => $lastLoadedArticleRate,
+                            'rating' => $lastLoadedArticleRate,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -67,7 +73,7 @@ class ArticlesModel extends BaseModel
                         $article = [
                             'versions' => $this->database->select('articles', ['title', 'text', 'tags', 'date', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId]),
                             'statistics' => $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]),
-                            'viewCode' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
+                            'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
                         ];
                         array_push($articles, $article);
                     }
