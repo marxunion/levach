@@ -57,14 +57,6 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $lastLoadedArticleTimestamp = $this->data['lastLoadedArticleTimestamp'];
                 }
-                if ($category) 
-                {
-                    
-                }
-                else
-                {
-                    
-                }
                 $articleIds = $this->model->loadArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
             }
             else if($sortType == 'rate')
@@ -82,7 +74,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 return;
             }
             
-            $this->response = $this->response->withJson($this->model->loadArticles($articleIds));
+            $this->response = $this->response->withJson($this->model->loadArticles($articleIds, $category));
         }
         else
         {
