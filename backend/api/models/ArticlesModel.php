@@ -12,7 +12,7 @@ class ArticlesModel extends BaseModel
         parent::__construct();
     }
 
-    public function loadArticlesIdsByTimestamp($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleTimestamp = 2147483645)
+    public function loadEditieditoriallyArticlesIdsByTimestamp($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleTimestamp = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -33,10 +33,107 @@ class ArticlesModel extends BaseModel
                 ]
             ]
         );
-
-        
     }
-    public function loadArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645 )
+
+    
+    public function loadEditieditoriallyArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645 )
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => $count,
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'AND' => [
+                    'OR' => [
+                        'rating[<]' => $lastLoadedArticleRate,
+                        'AND' => [
+                            'rating' => $lastLoadedArticleRate,
+                            'article_id[<]' => $lastLoadedArticleId
+                        ]
+                    ]
+                ]
+            ]
+        );
+    }
+
+
+
+
+    public function loadEditoriallyApprovedArticlesIdsByTimestamp($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleTimestamp = 2147483645 )
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => $count,
+                "ORDER" => [
+                    "created_at" => "DESC",
+                ],
+                'AND' => [
+                    'OR' => [
+                        'created_at[<]' => $lastLoadedArticleTimestamp,
+                        'AND' => [
+                            'created_at' => $lastLoadedArticleTimestamp,
+                            'article_id[<]' => $lastLoadedArticleId
+                        ]
+                    ]
+                ]
+            ]
+        );
+    }
+
+    public function loadEditoriallyApprovedArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645 )
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => $count,
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'AND' => [
+                    'OR' => [
+                        'rating[<]' => $lastLoadedArticleRate,
+                        'AND' => [
+                            'rating' => $lastLoadedArticleRate,
+                            'article_id[<]' => $lastLoadedArticleId
+                        ]
+                    ]
+                ]
+            ]
+        );
+    }
+
+
+
+
+    public function loadAbyssArticlesIdsByTimestamp($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleTimestamp = 2147483645 )
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => $count,
+                "ORDER" => [
+                    "created_at" => "DESC",
+                ],
+                'AND' => [
+                    'OR' => [
+                        'created_at[<]' => $lastLoadedArticleTimestamp,
+                        'AND' => [
+                            'created_at' => $lastLoadedArticleTimestamp,
+                            'article_id[<]' => $lastLoadedArticleId
+                        ]
+                    ]
+                ]
+            ]
+        );
+    }
+    public function loadAbyssArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645 )
     {
         return $this->database->select(
             'statistics',

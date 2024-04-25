@@ -29,7 +29,7 @@
 
     import './../libs/font_2605852_prouiefeic';
 
-    defineProps(['currentRoute']);
+    const props = defineProps(['currentRoute']);
 
 	const langData = LangDataHandler.initLangDataHandler("articlesEditorially", langsData).langData;
 
@@ -89,11 +89,13 @@
 
     const fetchNewArticles = async () => 
     {
+        loading.value = true;
         if(currentSortType.value === 0)
         {
             await axios.get('/api/articles', {
                 params: {
                     sortType: 'rate',
+                    category: props.currentRoute,
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
                     lastLoadedArticleRate: lastLoadedArticleRate.value
@@ -128,6 +130,7 @@
             await axios.get('/api/articles', {
                 params: {
                     sortType: 'timestamp',
+                    category: props.currentRoute,
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
                     lastLoadedArticleTimestamp: lastLoadedArticleTimestamp.value
@@ -162,7 +165,6 @@
 
     const handleScroll = async () => 
     {
-        console.log("SCROLLED");
         const scrollElement = scrollTarget.value;
         if (scrollElement !== null && !loading.value) 
         {

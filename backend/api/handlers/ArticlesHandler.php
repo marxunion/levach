@@ -28,17 +28,24 @@ class ArticlesHandler extends BaseHandlerRoute
         if(array_key_exists('count', $this->data))
         {
             $count = $this->data['count'];
+            if($count > 10)
+            {
+                $count = 10;
+            }
         }
-        if($count > 10)
+
+        $category = 'editoriallyArticles';
+        if(array_key_exists('category', $this->data))
         {
-            $count = 10;
+            $category = $this->data['category'];
         }
-        
-        $lastLoadedArticleId = 0;
+
+        $lastLoadedArticleId = 2147483645;
         if(array_key_exists('lastLoadedArticleId', $this->data))
         {
             $lastLoadedArticleId = $this->data['lastLoadedArticleId'];
         }
+        
 
         if(array_key_exists('sortType', $this->data))
         {
