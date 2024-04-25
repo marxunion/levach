@@ -74,24 +74,32 @@ class ArticlesModel extends BaseModel
                     {
                         if($category == 'editoriallyArticles')
                         {
-
+                            $articleVersions = $this->database->select('articles', ['version_id', 'title', 'text', 'tags', 'date', 'editorially_status', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId, 'editorially_status' => 1]);
                         }
-                        elseif ($category == '')
+                        elseif ($category == 'editoriallyApprovedArticles')
                         {
-
+                            $articleVersions = $this->database->select('articles', ['version_id', 'title', 'text', 'tags', 'date', 'editorially_status', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId, 'premoderation_status' => 2, 'acceptededitorially_status' => 1]);
                         }
-                        else if()
+                        else if($category == 'abyssArticles')
                         {
-
+                            $articleVersions = $this->database->select('articles', ['version_id', 'title', 'text', 'tags', 'date', 'editorially_status', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId, 'premoderation_status' => 2]);
+                        }
+                        else if($category == 'articlesWaitingApproval')
+                        {
+                            $articleVersions =  $this->database->select('articles', ['version_id', 'title', 'text', 'tags', 'date', 'editorially_status', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId, 'premoderation_status' => 2, 'acceptededitorially_status' => 1]);
+                        }
+                        else if($category == 'articlesWaitingPremoderate')
+                        {
+                            $articleVersions = $this->database->select('articles', ['version_id', 'title', 'text', 'tags', 'date', 'editorially_status', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId, 'premoderation_status' => 1]);
                         }
                         else
                         {
                             throw new Error(400, 'Unknown category', 'Unknown category');
                         }
-                        $articleVerions = $this->database->select('articles', ['version_id', 'title', 'text', 'tags', 'date', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId]);
+                        
                         $article = [
                             'id' => $articleId,
-                            'versions' => $articleVerions,
+                            'versions' => $articleVersions,
                             'statistics' => $this->database->get('statistics', ['created_at','rating', 'comments'], ['article_id' => $articleId]),
                             'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
                         ];
