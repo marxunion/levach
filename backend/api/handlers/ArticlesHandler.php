@@ -45,7 +45,6 @@ class ArticlesHandler extends BaseHandlerRoute
         {
             $lastLoadedArticleId = $this->data['lastLoadedArticleId'];
         }
-        
 
         if(array_key_exists('sortType', $this->data))
         {
@@ -57,6 +56,14 @@ class ArticlesHandler extends BaseHandlerRoute
                 if(array_key_exists('lastLoadedArticleTimestamp', $this->data))
                 {
                     $lastLoadedArticleTimestamp = $this->data['lastLoadedArticleTimestamp'];
+                }
+                if ($category) 
+                {
+                    
+                }
+                else
+                {
+                    
                 }
                 $articleIds = $this->model->loadArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
             }
