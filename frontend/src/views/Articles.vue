@@ -34,7 +34,7 @@
 	const langData = LangDataHandler.initLangDataHandler("articlesEditorially", langsData).langData;
 
     // Sort
-	const currentSortType = ref();
+	const currentSortType = ref(0);
 
     const sortTypes = computed(() => langData.value['sortTypes'] as string[]);
 
@@ -67,25 +67,63 @@
 
     let loading = ref(false);
     const scrollTarget = ref(null);
-    const articles : Array<Article> = reactive([]);
+    let articles : Array<Article> = reactive([]);
 
-    const onChangeSortType = (newSortType : number) => 
+    const onChangeSortType = async (newSortType : number) => 
     {
-        lastLoadedArticleId.value = 0;
-        if(currentSortType.value == 0)
+        articles = reactive([]);
+        lastLoadedArticleId.value = 2147483645;
+        console.log(newSortType);
+        
+        if(currentSortType.value === 0)
         {
-            lastLoadedArticleTimestamp.value = 0;
+            lastLoadedArticleTimestamp.value = 2147483645;
         }
         else
         {
-            lastLoadedArticleRate.value = 0;
+            lastLoadedArticleRate.value = 2147483645;
         }
         currentSortType.value = newSortType;
+        await fetchNewArticles();
     };
 
     const fetchNewArticles = async () => 
     {
-        if(currentSortType.value == 0)
+        if(currentSortType.value === 0)
+        {
+            await axios.get('/api/articles', {
+                params: {
+                    sortType: 'rate',
+                    count: 4,
+                    lastLoadedArticleId: lastLoadedArticleId.value,
+                    lastLoadedArticleRate: lastLoadedArticleRate.value
+                }
+            })
+            .then(response => 
+            {
+                if(response.data !== null)
+                {
+                    if(Array.isArray(response.data))
+                    {
+                        response.data.forEach((article : Article) => 
+                        {
+                            if(lastLoadedArticleId.value > article.id)
+                            {
+                                lastLoadedArticleId.value = article.id;
+                            }
+                            lastLoadedArticleRate.value = article.statistics.rating;
+                            article.currentSelectedVersion = article.versions.length;
+                            articles.push(article as Article);
+                        });
+                    }
+                }
+            })
+            .catch(response => 
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+            });
+        }
+        else
         {
             await axios.get('/api/articles', {
                 params: {
@@ -103,57 +141,26 @@
                     {
                         response.data.forEach((article : Article) => 
                         {
-                            article.currentVersion = article.versions.length;
+                            if(lastLoadedArticleId.value > article.id)
+                            {
+                                lastLoadedArticleId.value = article.id;
+                            }
+                            lastLoadedArticleTimestamp.value = article.statistics.created_at;
+                            article.currentSelectedVersion = article.versions.length;
                             articles.push(article);
                         });
                     }
                 }
-                else
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-                }
             })
             .catch(response => 
             {
                 openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
             });
         }
-        else
-        {
-            await axios.get('/api/articles', {
-                params: {
-                    sortType: 'rate',
-                    count: 4,
-                    lastLoadedArticleId: lastLoadedArticleId.value,
-                    lastLoadedArticleRate: lastLoadedArticleRate.value
-                }
-            })
-            .then(response => 
-            {
-                if(response.data)
-                {
-                    if(Array.isArray(response.data))
-                    {
-                        response.data.forEach(article => 
-                        {
-                            article.currentVersion = article.versions.length;
-                            articles.push(article as Article);
-                        });
-                    }
-                }
-                else
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-                }
-            })
-            .catch(response => 
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-            });
-        }
+        loading.value = false;
     };
 
-    const handleScroll = () => 
+    const handleScroll = async () => 
     {
         console.log("SCROLLED");
         const scrollElement = scrollTarget.value;
@@ -163,7 +170,7 @@
             if (bottomDistance <= 0) 
             {
                 loading.value = true;
-                 fetchNewArticles();
+                await fetchNewArticles();
             }
         }
     };
@@ -175,6 +182,7 @@
         {
             ps.addEventListener('scroll', handleScroll)
         }
+        loading.value = true;
         await fetchNewArticles();
     });
 
@@ -198,9 +206,9 @@
 			</div>
 		</div>
 		<article class="main__article" v-if="articles !== null && !loading" v-for="article in articles">
-            <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentVersion-1].date) }}</p>
-            <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentVersion-1].text" :language="previewState.language"/>
-            <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentVersion-1].tags) }}</p>
+            <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion-1].date) }}</p>
+            <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
+            <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 
             <div v-if="isAdmin && currentRoute == 'articlesWaitingPremoderate'" class="main__article__buttons">
                 <a class="main__article__buttons__button premoderateArticleButton">{{ langData['premoderateArticleButton'] }}</a>
@@ -228,7 +236,7 @@
             <DropDownVersion
                 :max-version="(article as Article).versions.length"
                 class="main__article__select" 
-                @inputIndex="(version : number) => (article as Article).currentVersion = version" />
+                @inputIndex="(version : number) => (article as Article).currentSelectedVersion = version" />
         </article>
         <div ref="scrollTarget" style="height: 100px;"></div>
         <Loader v-if="loading" />

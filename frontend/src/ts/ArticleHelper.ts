@@ -1,5 +1,6 @@
 export interface ArticleVersion
 {
+    version_id: number,
     title: string,
     text: string,
     tags: Array<string>,
@@ -10,6 +11,7 @@ export interface ArticleVersion
 }
 export interface Statistics
 {
+    created_at: number,
     rating: number,
     comments: number,
     currentVersion: number
@@ -17,8 +19,9 @@ export interface Statistics
 
 export interface Article
 {
+    id: number,
     versions: Array<ArticleVersion>,
     statistics: Statistics,
     view_code: string,
-    currentVersion: number
+    currentSelectedVersion: number
 }

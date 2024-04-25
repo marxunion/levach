@@ -71,8 +71,9 @@ class ArticlesModel extends BaseModel
                     foreach ($articleIds as &$articleId) 
                     {
                         $article = [
-                            'versions' => $this->database->select('articles', ['title', 'text', 'tags', 'date', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId]),
-                            'statistics' => $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]),
+                            'id' => $articleId,
+                            'versions' => $this->database->select('articles', ['version_id', 'title', 'text', 'tags', 'date', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId]),
+                            'statistics' => $this->database->get('statistics', ['created_at','rating', 'comments'], ['article_id' => $articleId]),
                             'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
                         ];
                         array_push($articles, $article);
