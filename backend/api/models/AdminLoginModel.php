@@ -53,7 +53,7 @@ class AdminLoginModel extends BaseModel
         if(isset($nickname))
         {
             $token = bin2hex(random_bytes(random_int(5,15))).hash('sha3-512', uniqid().bin2hex(random_bytes(32))).bin2hex(random_bytes(random_int(5,15)))
-            $expiresTimestamp = time() + (7 * 24 * 60 * 60);
+            $expiresTimestamp = time() + (24 * 60 * 60);
 
         }
         
