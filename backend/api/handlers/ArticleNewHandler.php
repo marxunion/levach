@@ -18,7 +18,10 @@ class ArticleNewHandler extends BaseHandlerRoute
         if(is_array($parsedBody))
         {
             $this->data = $parsedBody;
-        }
+            if(!isset($this->data['text']))
+            {
+                throw new Warning(400, "Please add a title for the article", "Empty article title");
+            }
         else
         {
             throw new Warning(400, "Please add a title for the article", "Empty article title");
@@ -45,7 +48,15 @@ class ArticleNewHandler extends BaseHandlerRoute
                             $viewCode = hash('sha3-224', uniqid().bin2hex(random_bytes(32)).$title);
                             $editCode = hash('sha3-256', uniqid().bin2hex(random_bytes(32)).$title);
 
-                            $this->model->newArticle($title, $this->data['text'], $this->data['tags'], $viewCode, $editCode);
+                            if(isset($this->data['tags']))
+                            {
+                                $this->model->newArticle($title, $this->data['text'], $this->data['tags'], $viewCode, $editCode);
+                            }
+                            else
+                            {
+                                $this->model->newArticle($title, $this->data['text'], null, $viewCode, $editCode);
+                            }
+                            
                             $this->response = $this->response->withJson(['viewCode' => $viewCode, 'editCode' => $editCode]);
                         } 
                         else 

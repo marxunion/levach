@@ -25,7 +25,7 @@ class ArticlesHandler extends BaseHandlerRoute
     public function Process()
     {
         $count = 4;
-        if(array_key_exists('count', $this->data))
+        if(isset($this->data['count']))
         {
             $count = $this->data['count'];
             if($count > 10)
@@ -35,25 +35,25 @@ class ArticlesHandler extends BaseHandlerRoute
         }
 
         $category = 'editoriallyArticles';
-        if(array_key_exists('category', $this->data))
+        if(isset($this->data['category']))
         {
-            $category = $this->data['category'];
+            $category = ;
         }
 
         $lastLoadedArticleId = 2147483645;
-        if(array_key_exists('lastLoadedArticleId', $this->data))
+        if(isset($this->data['lastLoadedArticleId']))
         {
             $lastLoadedArticleId = $this->data['lastLoadedArticleId'];
         }
 
-        if(array_key_exists('sortType', $this->data))
+        if(isset($this->data['sortType']))
         {
             $sortType = $this->data['sortType'];
             $articleIds = null;
             if($sortType == 'timestamp')
             {
                 $lastLoadedArticleTimestamp = 2147483645;
-                if(array_key_exists('lastLoadedArticleTimestamp', $this->data))
+                if(isset($this->data['lastLoadedArticleTimestamp']))
                 {
                     $lastLoadedArticleTimestamp = $this->data['lastLoadedArticleTimestamp'];
                 }
@@ -62,7 +62,7 @@ class ArticlesHandler extends BaseHandlerRoute
             else if($sortType == 'rate')
             {
                 $lastLoadedArticleRate = 2147483645;
-                if(array_key_exists('lastLoadedArticleRate', $this->data))
+                if(isset($this->data['lastLoadedArticleRate']))
                 {
                     $lastLoadedArticleRate = $this->data['lastLoadedArticleRate'];
                 }

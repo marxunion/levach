@@ -13,12 +13,21 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
+        if(isset($this->args['editCode']))
+        {
+            throw new Warning(404, "Article for edit not found", "Article for edit not found");
+        }
+
         $this->model = new ArticleEditModel();
         $parsedBody = $this->request->getParsedBody();
 
         if(is_array($parsedBody))
         {
             $this->data = $parsedBody;
+            if(!isset($this->data['text']))
+            {
+                throw new Warning(400, "Please add a title for the article", "Empty article title");
+            }
         }
         else
         {
@@ -46,7 +55,15 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                             $content = implode("\n", array_slice($contentParts, 1));
                             if (strlen($content) >= 25 && strlen($content) <= 10000) 
                             {
-                                $this->model->editArticle($articleId, $title, $this->data['text'], $this->data['tags']);
+                                if(isset($this->data['text']))
+                                {
+                                    $this->model->editArticle($articleId, $title, $this->data['text'], $this->data['tags']);
+                                }
+                                else
+                                {
+                                    $this->model->editArticle($articleId, $title, $this->data['text'], null);
+                                }
+                                
                                 $this->response = $this->response->withJson(['success' => true, 'message' => 'Article successfully saved']);
                             } 
                             else 

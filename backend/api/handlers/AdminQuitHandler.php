@@ -20,7 +20,7 @@ class AdminQuitHandler extends BaseHandlerRoute
         }
         else
         {
-            throw new Warning(400, "Please add a title for the article", "Empty article title");
+            throw new Error(400, "Admin token cookie not found", "Admin token cookie not found");
         }
     }
     public function Process()
@@ -38,17 +38,17 @@ class AdminQuitHandler extends BaseHandlerRoute
                 }
                 else
                 {
-                    throw new Error(404, "Admin created_at not found", "Admin created_at not found");
+                    throw new Error(400, "Admin created_at cookie not found", "Admin created_at cookie not found");
                 }
             }
             else
             {
-                throw new Error(404, "Admin nickname not found", "Admin nickname not found");
+                throw new Error(400, "Admin nickname cookie not found", "Admin nickname cookie not found");
             }
         }
         else
         {
-            throw new Error(404, "Admin token not found", "Admin token not found");
+            throw new Error(400, "Admin token cookie not found", "Admin token cookie not found");
         }
     }
 }
