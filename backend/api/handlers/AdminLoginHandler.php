@@ -38,6 +38,16 @@ class AdminLoginHandler extends BaseHandlerRoute
     {
         $nickname = $this->data['nickname'];
         $password = $this->data['password'];
-        $this->response = $this->response->withStatus(200)->withJson($this->model->login($nickname, $password));
+        
+        if($this->model->login($nickname, $password))
+        {
+            $tokenInfo = $this->model->createToken();
+            $this->response = $this->response->withStatus(200)->withJson($this->model->login($nickname, $password));
+        }
+        else
+        {
+            throw new Error(400, "Nickname or password is incorrect", "Nickname or password is incorrect");
+        }
+        
     }
 }

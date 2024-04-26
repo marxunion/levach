@@ -22,7 +22,7 @@ class AdminLoginModel extends BaseModel
             if(isset($password))
             {
                 $passwordEncrypted = $this->database->get('admins', 'password', ['nickname' => $nickname]);
-                if()
+                if(isset($passwordEncrypted))
                 {
                     if(password_verify($password, $passwordEncrypted))
                     {
@@ -48,8 +48,14 @@ class AdminLoginModel extends BaseModel
             throw new Error(400, "Admin nickname not found", "Admin nickname not found");
         }
     } 
-    public function createToken()
+    public function createToken($nickname)
     {
-        $expiresTimestamp = time() + (7 * 24 * 60 * 60);
+        if(isset($nickname))
+        {
+            $token = bin2hex(random_bytes(random_int(5,15))).hash('sha3-512', uniqid().bin2hex(random_bytes(32))).bin2hex(random_bytes(random_int(5,15)))
+            $expiresTimestamp = time() + (7 * 24 * 60 * 60);
+
+        }
+        
     }
 }
