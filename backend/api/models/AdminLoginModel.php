@@ -19,7 +19,34 @@ class AdminLoginModel extends BaseModel
     {
         if(isset($nickname))
         {
-            
+            if(isset($password))
+            {
+                $passwordEncrypted = $this->database->get('admins', 'password', ['nickname' => $nickname]);
+                if()
+                {
+                    if(password_verify($password, $passwordEncrypted))
+                    {
+                        
+                    }
+                    else
+                    {
+                        throw new Error(400, "Nickname or password is incorrect", "Nickname or password is incorrect");
+                    }
+                }
+                else
+                {
+                    throw new Error(400, "Nickname or password is incorrect", "Nickname or password is incorrect");
+                }
+            }
+            else
+            {
+                throw new Error(400, "Admin password not found", "Admin password not found");
+            }
+        } 
+        else
+        {
+            throw new Error(400, "Admin nickname not found", "Admin nickname not found");
         }
-    }   
+    } 
+    public function create 
 }

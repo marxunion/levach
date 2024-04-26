@@ -15,27 +15,27 @@ class AdminModel extends BaseModel
         parent::__construct();
     }
 
-    public function quit($token, $nickname, $created_at)
+    public function quit($token, $nickname, $expires_time)
     {
         if(isset($token))
         {
             if(isset($nickname))
             {
-                if(isset($created_at))
+                if(isset($expires_time))
                 {
-                    $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'created_at_encrypted'], ['token' => $token]);
+                    $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'expires_time_encrypted'], ['token' => $token]);
                     if($adminInfo)
                     {
                         if(password_verify($nickname, $adminInfo['nickname_encrypted']))
                         {
-                            if(password_verify($created_at, $adminInfo['created_at_encrypted']))
+                            if(password_verify($expires_time, $adminInfo['expires_time_encrypted']))
                             {
                                 $this->database->delete('admins_tokens', ['token' => $token]);
                                 return ['success' => true];
                             }
                             else
                             {
-                                throw new Error(400, "Invalid created_at for token", "Invalid created_at for token");
+                                throw new Error(400, "Invalid expires_time for token", "Invalid expires_time for token");
                             }
                         }
                         else
@@ -50,7 +50,7 @@ class AdminModel extends BaseModel
                 }
                 else
                 {
-                    throw new Error(400, "Admin created_at not found", "Admin created_at not found");
+                    throw new Error(400, "Admin expires_time not found", "Admin expires_time not found");
                 }
             }
             else
