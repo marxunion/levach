@@ -26,7 +26,7 @@ class AdminLoginModel extends BaseModel
                 {
                     if(password_verify($password, $passwordEncrypted))
                     {
-                        
+                        return true;
                     }
                     else
                     {
@@ -48,5 +48,8 @@ class AdminLoginModel extends BaseModel
             throw new Error(400, "Admin nickname not found", "Admin nickname not found");
         }
     } 
-    public function create 
+    public function createToken()
+    {
+        $expiresTimestamp = time() + (7 * 24 * 60 * 60);
+    }
 }
