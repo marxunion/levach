@@ -15,27 +15,27 @@ class AdminModel extends BaseModel
         parent::__construct();
     }
 
-    public function quit($token, $nickname, $expires_time)
+    public function quit($token, $nickname, $expiration_time)
     {
         if(isset($token))
         {
             if(isset($nickname))
             {
-                if(isset($expires_time))
+                if(isset($expiration_time))
                 {
-                    $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'expires_time_encrypted'], ['token' => $token]);
+                    $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'expiration_time_encrypted'], ['token' => $token]);
                     if($adminInfo)
                     {
                         if(password_verify($nickname, $adminInfo['nickname_encrypted']))
                         {
-                            if(password_verify($expires_time, $adminInfo['expires_time_encrypted']))
+                            if(password_verify($expiration_time, $adminInfo['expiration_time_encrypted']))
                             {
                                 $this->database->delete('admins_tokens', ['token' => $token]);
                                 return ['success' => true];
                             }
                             else
                             {
-                                throw new Error(400, "Invalid expires_time for token", "Invalid expires_time for token");
+                                throw new Error(400, "Invalid expiration_time for token", "Invalid expiration_time for token");
                             }
                         }
                         else
@@ -50,7 +50,7 @@ class AdminModel extends BaseModel
                 }
                 else
                 {
-                    throw new Error(400, "Admin expires_time not found", "Admin expires_time not found");
+                    throw new Error(400, "Admin expiration_time not found", "Admin expiration_time not found");
                 }
             }
             else

@@ -12,7 +12,7 @@ class AdminQuitHandler extends BaseHandlerRoute
     public function Init()
     {
         $this->model = new AdminStatusModel();
-        $parsedBody = $this->request->cookies;
+        $parsedBody = $this->request->getCookieParams();
 
         if(is_array($parsedBody))
         {
@@ -34,12 +34,12 @@ class AdminQuitHandler extends BaseHandlerRoute
                 $nickname = $this->data['admin_nickname'];
                 if(isset($this->data['token']))
                 {
-                    $created_at = $this->data['admin_created_at'];
-                    $this->response = $this->response->withStatus(200)->withJson($this->model->isAdmin($token, $nickname, $created_at));
+                    $expiration_time = $this->data['admin_expiration_time'];
+                    $this->response = $this->response->withStatus(200)->withJson($this->model->isAdmin($token, $nickname, $expiration_time));
                 }
                 else
                 {
-                    throw new Error(400, "Admin created_at cookie not found", "Admin created_at cookie not found");
+                    throw new Error(400, "Admin expiration_time cookie not found", "Admin expiration_time cookie not found");
                 }
             }
             else

@@ -31,14 +31,14 @@ class AdminQuitHandler extends BaseHandlerRoute
             if(isset($this->data['admin_nickname']))
             {
                 $nickname = $this->data['admin_nickname'];
-                if(isset($this->data['admin_created_at']))
+                if(isset($this->data['admin_expiration_time']))
                 {
-                    $created_at = $this->data['admin_created_at'];
-                    $this->response = $this->response->withStatus(200)->withJson($this->model->quit($token, $nickname, $created_at));
+                    $expiration_time = $this->data['admin_expiration_time'];
+                    $this->response = $this->response->withStatus(200)->withJson($this->model->quit($token, $nickname, $expiration_time));
                 }
                 else
                 {
-                    throw new Error(400, "Admin created_at not found", "Admin created_at not found");
+                    throw new Error(400, "Admin expiration_time not found", "Admin expiration_time not found");
                 }
             }
             else
