@@ -15,20 +15,20 @@ class AdminModel extends BaseModel
         parent::__construct();
     }
 
-    public function quit($token, $nickname, $expiration_time)
+    public function quit($token, $nickname, $expirationTime)
     {
         if(isset($token))
         {
             if(isset($nickname))
             {
-                if(isset($expiration_time))
+                if(isset($expirationTime))
                 {
                     $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'expiration_time_encrypted'], ['token' => $token]);
                     if($adminInfo)
                     {
                         if(password_verify($nickname, $adminInfo['nickname_encrypted']))
                         {
-                            if(password_verify($expiration_time, $adminInfo['expiration_time_encrypted']))
+                            if(password_verify($expirationTime, $adminInfo['expiration_time_encrypted']))
                             {
                                 $this->database->delete('admins_tokens', ['token' => $token]);
                                 return ['success' => true];

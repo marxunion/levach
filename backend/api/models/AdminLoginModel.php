@@ -56,7 +56,7 @@ class AdminLoginModel extends BaseModel
             'nickname_encrypted' => password_hash($nickname, PASSWORD_DEFAULT),
             'expiration_time_encrypted' => password_hash($expirationTime, PASSWORD_DEFAULT)
         ]
-        if($this->database->insert('admin_tokens', $data))
+        if($this->database->insert('admins_tokens', $data))
         {
             return true;
         }

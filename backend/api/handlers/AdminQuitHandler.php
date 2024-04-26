@@ -25,7 +25,7 @@ class AdminQuitHandler extends BaseHandlerRoute
     }
     public function Process()
     {
-        if(isset($this->data['token']))
+        if(isset($this->data['admin_token']))
         {
             $token = $this->data['admin_token'];
             if(isset($this->data['admin_nickname']))
@@ -33,8 +33,8 @@ class AdminQuitHandler extends BaseHandlerRoute
                 $nickname = $this->data['admin_nickname'];
                 if(isset($this->data['admin_expiration_time']))
                 {
-                    $expiration_time = $this->data['admin_expiration_time'];
-                    $this->response = $this->response->withStatus(200)->withJson($this->model->quit($token, $nickname, $expiration_time));
+                    $expirationTime = $this->data['admin_expiration_time'];
+                    $this->response = $this->response->withStatus(200)->withJson($this->model->quit($token, $nickname, $expirationTime));
                 }
                 else
                 {

@@ -9,6 +9,34 @@ use Api\Models\AdminStatusModel;
 
 class AdminQuitHandler extends BaseHandlerRoute
 {
+    public function static isAdmin($cookiesData)
+    {
+        if(isset($cookiesData['admin_token']))
+        {
+            $token = $cookiesData['admin_token'];
+            if(isset($cookiesData['admin_nickname']))
+            {
+                $nickname = $cookiesData['admin_nickname'];
+                if(isset($cookiesData['admin_expiration_time']))
+                {
+                    return AdminStatusModel::_isAdmin();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        } 
+    }
+
     public function Init()
     {
         $this->model = new AdminStatusModel();
@@ -26,16 +54,16 @@ class AdminQuitHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        if(isset($this->data['token']))
+        if(isset($this->data['admin_token']))
         {
             $token = $this->data['admin_token'];
-            if(isset($this->data['token']))
+            if(isset($this->data['admin_nickname']))
             {
                 $nickname = $this->data['admin_nickname'];
-                if(isset($this->data['token']))
+                if(isset($this->data['admin_expiration_time']))
                 {
-                    $expiration_time = $this->data['admin_expiration_time'];
-                    $this->response = $this->response->withStatus(200)->withJson($this->model->isAdmin($token, $nickname, $expiration_time));
+                    $expirationTime = $this->data['admin_expiration_time'];
+                    $this->response = $this->response->withStatus(200)->withJson($this->model->isAdmin($token, $nickname, $expirationTime));
                 }
                 else
                 {

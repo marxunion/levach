@@ -15,26 +15,76 @@ class AdminStatusModel extends BaseModel
         parent::__construct();
     }
 
-    public function static _isAdmin()
-    {
-        return 
-    }
-    public function isAdmin($token, $nickname, $expiration_time)
+    public function static _isAdmin($token, $nickname, $expirationTime)
     {
         if(isset($token))
         {
             if(isset($nickname))
             {
-                if(isset($expiration_time))
+                if(isset($expirationTime))
                 {
                     $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'expiration_time_encrypted'], ['token' => $token]);
                     if($adminInfo)
                     {
                         if(password_verify($nickname, $adminInfo['nickname_encrypted']))
                         {
-                            if(password_verify($expiration_time, $adminInfo['expiration_time_encrypted']))
+                            if(password_verify($expirationTime, $adminInfo['expiration_time_encrypted']))
                             {
-                                if(time() < $expiration_time)
+                                if(time() < $expirationTime)
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public function isAdmin($token, $nickname, $expirationTime)
+    {
+        if(isset($token))
+        {
+            if(isset($nickname))
+            {
+                if(isset($expirationTime))
+                {
+                    $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'expiration_time_encrypted'], ['token' => $token]);
+                    if($adminInfo)
+                    {
+                        if(password_verify($nickname, $adminInfo['nickname_encrypted']))
+                        {
+                            if(password_verify($expirationTime, $adminInfo['expiration_time_encrypted']))
+                            {
+                                if(time() < $expirationTime)
                                 {
                                     return ['success' => true];
                                 }
@@ -71,5 +121,6 @@ class AdminStatusModel extends BaseModel
         else
         {
             throw new Error(400, "Admin token not found", "Admin token not found");
+        }
     }   
 }
