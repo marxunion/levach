@@ -30,12 +30,12 @@ class AdminLoginModel extends BaseModel
                     }
                     else
                     {
-                        throw new Error(400, "Nickname or password is incorrect", "Nickname or password is incorrect");
+                        throw new Error(400, "Admin nickname or password is incorrect", "Admin nickname or password is incorrect");
                     }
                 }
                 else
                 {
-                    throw new Error(400, "Nickname or password is incorrect", "Nickname or password is incorrect");
+                    throw new Error(400, "Admin nickname or password is incorrect", "Admin nickname or password is incorrect");
                 }
             }
             else
@@ -56,6 +56,13 @@ class AdminLoginModel extends BaseModel
             'nickname_encrypted' => password_hash($nickname, PASSWORD_DEFAULT),
             'expiration_time_encrypted' => password_hash($expirationTime, PASSWORD_DEFAULT)
         ]
-        $this->database->insert('admin_tokens', $data);
+        if($this->database->insert('admin_tokens', $data))
+        {
+            return true;
+        }
+        else
+        {
+            throw new Critical(500, "Unknown error", "Failed to safe admin token");
+        }
     }
 }
