@@ -41,13 +41,36 @@ class AdminLoginHandler extends BaseHandlerRoute
         
         if($this->model->login($nickname, $password))
         {
-            $tokenInfo = $this->model->createToken();
-            $this->response = $this->response->withStatus(200)->withJson($this->model->login($nickname, $password));
+            $token = bin2hex(random_bytes(random_int(5,15))).hash('sha3-512', uniqid().bin2hex(random_bytes(32))).bin2hex(random_bytes(random_int(5,15)))
+            
+                $expirationTime = time() + (24 * 60 * 60);
+                $this->response = $response->withCookie('admin_nickname', 'example_admin', 
+                [
+                    'expires' => $expirationTime,
+                    'path' => '/',
+                ]);
+            
+                $this->response = $response->withCookie('admin_token', 'example_token', 
+                [
+                    'expires' => $expirationTime,
+                    'path' => '/',
+                ]);
+            
+                $this->response = $response->withCookie('admin_expiration_time', $expirationTime, 
+                [
+                    'expires' => $expirationTime,
+                    'path' => '/',
+                ]);
+                $this->response = $this->response->withStatus(200)->withJson(['success' => true]);
+            }
+            else
+            {
+                throw new Error(400, "Nickname or password is incorrect", "Nickname or password is incorrect");
+            }
         }
         else
         {
             throw new Error(400, "Nickname or password is incorrect", "Nickname or password is incorrect");
         }
-        
     }
 }

@@ -48,14 +48,14 @@ class AdminLoginModel extends BaseModel
             throw new Error(400, "Admin nickname not found", "Admin nickname not found");
         }
     } 
-    public function createToken($nickname)
+    public function safeToken($token, $nickname, $expirationTime)
     {
-        if(isset($nickname))
-        {
-            $token = bin2hex(random_bytes(random_int(5,15))).hash('sha3-512', uniqid().bin2hex(random_bytes(32))).bin2hex(random_bytes(random_int(5,15)))
-            $expiresTimestamp = time() + (24 * 60 * 60);
-
-        }
-        
+        $data = 
+        [
+            'token' =>  $token,
+            'nickname_encrypted' => password_hash($nickname, PASSWORD_DEFAULT),
+            'expiration_time_encrypted' => password_hash($expirationTime, PASSWORD_DEFAULT)
+        ]
+        $this->database->insert('admin_tokens', $data);
     }
 }
