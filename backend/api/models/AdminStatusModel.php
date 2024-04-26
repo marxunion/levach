@@ -32,9 +32,9 @@ class AdminStatusModel extends BaseModel
                     {
                         if(password_verify($nickname, $adminInfo['nickname_encrypted']))
                         {
-                            if(password_verify(strval($expiration_time), $adminInfo['expiration_time_encrypted']))
+                            if(password_verify($expiration_time, $adminInfo['expiration_time_encrypted']))
                             {
-                                if(time() < intval($expiration_time))
+                                if(time() < $expiration_time)
                                 {
                                     return ['success' => true];
                                 }
