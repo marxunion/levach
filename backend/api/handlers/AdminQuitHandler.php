@@ -34,7 +34,7 @@ class AdminQuitHandler extends BaseHandlerRoute
                 if(isset($this->data['token']))
                 {
                     $created_at = $this->data['admin_created_at'];
-                    $this->response = $this->response->withStatus(200)->withJson($this->model->quit($_COOKIE));
+                    $this->response = $this->response->withStatus(200)->withJson($this->model->quit($token, $nickname, $created_at));
                 }
                 else
                 {

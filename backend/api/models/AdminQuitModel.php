@@ -14,21 +14,38 @@ class AdminModel extends BaseModel
     {
         parent::__construct();
     }
-    
-    public static isAdmin()
+
+    public function quit($token, $nickname, $password)
     {
-        $database = Database::getConnection();
-        if(!isset($_COOKIE['adminToken']))
+        if($token && $nickname && $timestamp)
         {
-            $adminToken = $_COOKIE['adminToken'];
-            if($database)
+            $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'created_at_encrypted'], ['token' => $token]);
+            if($adminInfo)
             {
-                return true;
+                if(password_verify($nickname, $adminInfo['nickname_encrypted']))
+                {
+                    if(password_verify($timestamp, $adminInfo['created_at_encrypted']))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
                 return false;
             }
+        }
+        else
+        {
+            return false;
         }
     }   
 }

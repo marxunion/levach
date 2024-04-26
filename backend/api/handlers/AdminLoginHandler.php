@@ -17,6 +17,17 @@ class AdminLoginHandler extends BaseHandlerRoute
         if(is_array($parsedBody))
         {
             $this->data = $parsedBody;
+            if(isset($this->data['nickname']))
+            {
+                if(!isset($this->data['password']))
+                {
+                    throw new Error(400, "Admin password not found", "Admin password not found");
+                }
+            }
+            else
+            {
+                throw new Error(400, "Admin nickname not found", "Admin nickname not found");
+            }
         }
         else
         {
@@ -25,9 +36,8 @@ class AdminLoginHandler extends BaseHandlerRoute
     }
     public function Process()
     {
-        if(isset($this->data['c']))
-        {
-
-        }
+        $nickname = $this->data['nickname'];
+        $password = $this->data['password'];
+        $this->response = $this->response->withStatus(200)->withJson($this->model->login($nickname, $password));
     }
 }

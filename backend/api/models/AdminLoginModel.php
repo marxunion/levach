@@ -14,20 +14,12 @@ class AdminLoginModel extends BaseModel
     {
         parent::__construct();
     }
-    
-    public function isAdmin()
+
+    public function login($nickname, $password)
     {
         if()
         {
-            $adminToken = $_COOKIE['adminToken'];
-            if($database)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            
         }
     }   
 }
