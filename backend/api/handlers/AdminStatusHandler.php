@@ -5,13 +5,13 @@ use Core\Error;
 
 use Base\BaseHandlerRoute;
 
-use Api\Models\AdminQuitModel;
+use Api\Models\AdminStatusModel;
 
 class AdminQuitHandler extends BaseHandlerRoute
 {
     public function Init()
     {
-        $this->model = new AdminQuitModel();
+        $this->model = new AdminStatusModel();
         $parsedBody = $this->request->cookies;
 
         if(is_array($parsedBody))

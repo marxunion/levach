@@ -17,7 +17,7 @@ class AdminLoginModel extends BaseModel
 
     public function login($nickname, $password)
     {
-        if()
+        if(isset($nickname))
         {
             
         }

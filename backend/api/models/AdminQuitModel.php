@@ -15,37 +15,52 @@ class AdminModel extends BaseModel
         parent::__construct();
     }
 
-    public function quit($token, $nickname, $password)
+    public function quit($token, $nickname, $created_at)
     {
-        if($token && $nickname && $timestamp)
+        if(isset($token))
         {
-            $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'created_at_encrypted'], ['token' => $token]);
-            if($adminInfo)
+            if(isset($nickname))
             {
-                if(password_verify($nickname, $adminInfo['nickname_encrypted']))
+                if(isset($created_at))
                 {
-                    if(password_verify($timestamp, $adminInfo['created_at_encrypted']))
+                    $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'created_at_encrypted'], ['token' => $token]);
+                    if($adminInfo)
                     {
-                        return true;
+                        if(password_verify($nickname, $adminInfo['nickname_encrypted']))
+                        {
+                            if(password_verify($created_at, $adminInfo['created_at_encrypted']))
+                            {
+                                $this->database->delete('admins_tokens', ['token' => $token]);
+                                return ['success' => true];
+                            }
+                            else
+                            {
+                                throw new Error(400, "Invalid created_at for token", "Invalid created_at for token");
+                            }
+                        }
+                        else
+                        {
+                            throw new Error(400, "Invalid nickname for token", "Invalid nickname for token");
+                        }
                     }
                     else
                     {
-                        return false;
+                        throw new Error(400, "Token is invalid", "Token is invalid");
                     }
                 }
                 else
                 {
-                    return false;
+                    throw new Error(400, "Admin created_at not found", "Admin created_at not found");
                 }
             }
             else
             {
-                return false;
+                throw new Error(400, "Admin nickname not found", "Admin nickname not found");
             }
         }
         else
         {
-            return false;
+            throw new Error(400, "Admin token not found", "Admin token not found");
         }
     }   
 }
