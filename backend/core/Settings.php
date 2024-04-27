@@ -10,6 +10,7 @@ class Settings
     public static function Init()
     {
         self::$settings = [
+            'ARTICLE_EDIT_TIMEOUT_MINUTES' => $_ENV['ARTICLE_EDIT_TIMEOUT_MINUTES'],
             'MAX_UPLOAD_FILESIZE_MB' => $_ENV['MAX_UPLOAD_FILESIZE_MB'],
             
             'DB_TYPE' => $_ENV['DB_TYPE'],

@@ -31,7 +31,8 @@
         "formLoginPasswordPlaceholder": "****",
 
         "formPanelEditSettingsArticleTimeoutMinutesTitle": "Таймаут для редактирования статьи(в минутах):",
-
+        "formPanelEditSettingsArticleMaxUploadFileSizeTitle": "Максимальный размер прикрепляемого к статье файла (в МБ)",
+        
         "formPanelTitle": "Админ панель",
         "formPanelButtonSaveSettings": "Сохранить настройки",
         "formPanelButtonQuit": "Выйти из админ панели"
@@ -68,6 +69,7 @@
         "formLoginPasswordPlaceholder": "****",
 
         "formPanelEditSettingsArticleTimeoutMinutesTitle": "Timeout for edit article(in minutes):",
+        "formPanelEditSettingsArticleMaxUploadFileSizeTitle": "Max size of file to be attached to article (in MB)",
 
         "formPanelTitle": "Admin Panel",
         "formPanelButtonSaveSettings": "Save settings",

@@ -23,7 +23,7 @@
     {
         width: 90%;
 
-        margin-top: 4%;
+        margin-top: 2%;
 
         display: flex;
         flex-direction: column;
@@ -191,12 +191,11 @@
         height: 60px;
 
         margin-top: 6%;
-        margin-bottom: 6%;
+       
 
-        color: $adminModalButtonText;
+        
         background-color: transparent;
-        border: 3px solid $adminModalButtonBorder;
-
+        
         transition: .6s;
         
         font-size: 26px;
@@ -207,10 +206,23 @@
         {
             transform: scale(1.04);
         }
+
+        &.login
+        {
+            color: $adminModalButtonText;
+            border: 3px solid $adminModalButtonBorder;
+            margin-bottom: 6%;
+        }
+        &.saveSettings 
+        {
+            color: $adminModalButtonTextSaveSettings;
+            border: 3px solid $adminModalButtonBorderSaveSettings;
+        }
         &.quit 
         {
             color: $adminModalButtonTextQuit;
             border: 3px solid $adminModalButtonBorderQuit;
+            margin-bottom: 6%;
         }
     }
 }
