@@ -1,12 +1,13 @@
 {
     "RU":
     {
-        "successLogin": "Успешный вход",
-        "successQuit": "Успешный выход",
+        "successfullyLogin": "Успешный вход",
+        "successfullySettingsSaved": "Настройки успешно сохранены",
+        "successfullyQuit": "Успешный выход",
 
         "warnings": 
         {
-            "needLogin": "Ваша авторизационная сессия устарела, войдите снова пожалуйста",
+            "needLogin": "Вероятно ваша авторизационная сессия устарела. Попробуйте повторить попытку или перезайдите",
 
             "needNickname": "Пожалуйста укажите ваш никнейм",
             "needPassword": "Пожалуйста укажите ваш пароль",
@@ -37,12 +38,13 @@
     },
     "EN":
     {
-        "successLogin": "Successufully login",
-        "successQuit": "Successufully quit",
+        "successfullyLogin": "Successufully login",
+        "successfullySettingsSaved": "Settings successufully saved",
+        "successfullyQuit": "Successufully quit",
         
         "warnings": 
         {
-            "needLogin": "Your authorisation session is out of date, please login again",
+            "needLogin": "Your authorisation session is probably out of date. Try again or login again",
 
             "needNickname": "Please ether your nickname",
             "needPassword": "Please ether your password",
