@@ -66,7 +66,7 @@ const routes: RouteRecordRaw[] =
     }
 ];
 
-if (isAdmin) 
+if (isAdmin()) 
 {
     routes.push({
         path: '/admin',

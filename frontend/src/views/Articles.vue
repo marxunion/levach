@@ -212,11 +212,11 @@
             <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
             <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 
-            <div v-if="isAdmin && currentRoute == 'articlesWaitingPremoderate'" class="main__article__buttons">
+            <div v-if="isAdmin() && currentRoute == 'articlesWaitingPremoderate'" class="main__article__buttons">
                 <a class="main__article__buttons__button premoderateArticleButton">{{ langData['premoderateArticleButton'] }}</a>
                 <a class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
             </div>
-            <div v-else-if="isAdmin && currentRoute == 'articlesWaitingApproval'" class="main__article__buttons">
+            <div v-else-if="isAdmin() && currentRoute == 'articlesWaitingApproval'" class="main__article__buttons">
                 <a class="main__article__buttons__button approveArticleButton">{{ langData['approveArticleButton'] }}</a>
                 <a class="main__article__buttons__button disapproveArticleButton">{{ langData['disapproveArticleButton'] }}</a>
                 <a class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
