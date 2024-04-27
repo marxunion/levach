@@ -12,7 +12,7 @@ class AdminQuitHandler extends BaseHandlerRoute
     public function Init()
     {
         $this->model = new AdminQuitModel();
-        $parsedBody = $this->request->cookies;
+        $parsedBody = $this->request->getCookieParams();
 
         if(is_array($parsedBody))
         {
