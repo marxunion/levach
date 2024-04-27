@@ -12,7 +12,7 @@ class AdminLoginHandler extends BaseHandlerRoute
     public function Init()
     {
         $this->model = new AdminLoginModel();
-        $parsedBody = $this->request->getQueryParams();
+        $parsedBody = $this->request->getParsedBody();
 
         if(is_array($parsedBody))
         {
@@ -43,7 +43,6 @@ class AdminLoginHandler extends BaseHandlerRoute
         {
             $token = bin2hex(random_bytes(random_int(5,15))).hash('sha3-512', uniqid().bin2hex(random_bytes(32))).bin2hex(random_bytes(random_int(5,15)));
             
-
             if(isset($this->data['rememberMe']))
             {
                 if($this->data['rememberMe'])
@@ -62,23 +61,9 @@ class AdminLoginHandler extends BaseHandlerRoute
 
             if($this->model->safeToken($token, $nickname, $expirationTime))
             {
-                $this->response = $response->withCookie('admin_token', $token, 
-                [
-                    'expires' => $expirationTime,
-                    'path' => '/',
-                ]);
-
-                $this->response = $response->withCookie('admin_nickname', $nickname, 
-                [
-                    'expires' => $expirationTime,
-                    'path' => '/',
-                ]);               
-                
-                $this->response = $response->withCookie('admin_expiration_time', $expirationTime, 
-                [
-                    'expires' => $expirationTime,
-                    'path' => '/',
-                ]);
+                setcookie('admin_token', $token, $expirationTime);
+                setcookie('admin_nickname', $nickname, $expirationTime);
+                setcookie('admin_expiration_time', $expirationTime, $expirationTime);
                 $this->response = $this->response->withStatus(200)->withJson(['success' => true]);
             }
             else

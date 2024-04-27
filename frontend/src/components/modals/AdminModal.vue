@@ -21,8 +21,6 @@
 
     const onLoginButton = () => 
     {
-        console.log(checkedRememberMe.value);
-        
         if(nickname.value.length > 0)
         {
             if (password.value.length > 0) 
