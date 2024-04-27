@@ -7,9 +7,9 @@ use Base\BaseHandlerRoute;
 
 use Api\Models\AdminStatusModel;
 
-class AdminQuitHandler extends BaseHandlerRoute
+class AdminStatusHandler extends BaseHandlerRoute
 {
-    public function static isAdmin($cookiesData)
+    public static function isAdmin($cookiesData)
     {
         if(isset($cookiesData['admin_token']))
         {

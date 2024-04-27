@@ -7,6 +7,10 @@
     height: 520px;
     background-color: $adminModalBG;
     
+    &.quit 
+    {
+        height: 280px;
+    }
 
     display: flex;
     flex-direction: column;
@@ -86,6 +90,11 @@
         {
             transform: scale(1.04);
         }
+        &.quit 
+        {
+            color: $adminModalButtonTextQuit;
+            border: 3px solid $adminModalButtonBorderQuit;
+        }
     }
 }
 
@@ -96,6 +105,11 @@
         width: 500px;
         height: 600px;
         border-radius: 18px;
+
+        &.quit 
+        {
+            height: 290px;
+        }
 
         &__title
         {
@@ -137,6 +151,11 @@
         height: 680px;
         border-radius: 22px;
 
+        &.quit 
+        {
+            height: 300px;
+        }
+
         &__title
         {
             font-size: 46px;
@@ -175,6 +194,11 @@
         width: 680px;
         height: 780px;
         border-radius: 25px;
+
+        &.quit 
+        {
+            height: 310px;
+        }
 
         &__title
         {
@@ -215,6 +239,12 @@
     {
         width: 400px;
         height: 480px;
+
+        &.quit 
+        {
+            height: 240px;
+        }
+
         &__title
         {
             font-size: 33px;
@@ -251,6 +281,12 @@
     {
         width: 340px;
         height: 400px;
+
+        &.quit 
+        {
+            height: 200px;
+        }
+
         &__title
         {
             font-size: 28px;
@@ -288,6 +324,11 @@
     {
         width: 280px;
         height: 340px;
+        &.quit 
+        {
+            height: 160px;
+        }
+
         &__title
         {
             font-size: 24px;

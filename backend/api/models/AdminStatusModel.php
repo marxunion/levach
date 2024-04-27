@@ -15,7 +15,7 @@ class AdminStatusModel extends BaseModel
         parent::__construct();
     }
 
-    public function static _isAdmin($token, $nickname, $expirationTime)
+    public static function _isAdmin($token, $nickname, $expirationTime)
     {
         if(isset($token))
         {

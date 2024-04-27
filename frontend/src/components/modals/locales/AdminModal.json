@@ -1,22 +1,56 @@
 {
     "RU":
     {
-        "formTitle": "Вход в админ панель",
-        "formTitleLogin": "Логин",
-        "formTitlePassword": "Пароль",
-        "formButton": "Войти",
+        "successLogin": "Успешный вход",
+        "warnings": 
+        {
+            "needNickname": "Пожалуйста укажите ваш никнейм",
+            "needPassword": "Пожалуйста укажите ваш пароль",
+            "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
+        },
 
-        "userLoginPlaceholder": "admin",
-        "userPasswordPlaceholder": "****"
+        "errors": 
+        {
+            "incorrectNicknameOrPassword": "Никнейм или пароль неверны",
+            "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
+        },
+
+        "formLoginTitle": "Вход в админ панель",
+        "formLoginTitleNickname": "Никнейм",
+        "formLoginTitlePassword": "Пароль",
+        "formLoginButton": "Войти",
+
+        "formLoginNicknamePlaceholder": "admin",
+        "formLoginPasswordPlaceholder": "****",
+
+        "formQuitTitle": "Админ панель",
+        "formQuitButton": "Выйти из админ панели"
     },
     "EN":
     {
-        "formTitle": "Admin Panel Login",
-        "formTitleLogin": "Nickname",
-        "formTitlePassword": "Password",
-        "formButton": "Login",
+        "successLogin": "Successufully login",
+        "warnings": 
+        {
+            "needNickname": "Please ether your nickname",
+            "needPassword": "Please ether your password",
+            "unknown": "An unknown error occurred. Try again"
+        },
 
-        "userLoginPlaceholder": "admin",
-        "userPasswordPlaceholder": "****"
+        "errors": 
+        {
+            "incorrectNicknameOrPassword": "Nickname or password is incorrect",
+            "unknown": "An unknown error occurred. Try again"
+        },
+
+        "formLoginTitle": "Admin Panel Login",
+        "formLoginTitleNickname": "Nickname",
+        "formLoginTitlePassword": "Password",
+        "formLoginButton": "Login",
+
+        "formLoginNicknamePlaceholder": "admin",
+        "formLoginPasswordPlaceholder": "****",
+
+        "formQuitTitle": "Admin Panel",
+        "formQuitButton": "Quit from admin panel"
     }
 }

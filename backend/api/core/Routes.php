@@ -16,6 +16,10 @@ use Base\BaseHandler;
 use Base\BaseHandlerRoute;
 use Base\EmptyHandlerRoute;
 
+
+use Api\Handlers\AdminStatusHandler;
+use Api\Handlers\AdminQuitHandler;
+use Api\Handlers\AdminLoginHandler;
 use Api\Handlers\ArticleNewHandler;
 use Api\Handlers\ArticlesHandler;
 use Api\Handlers\ArticleViewHandler;
@@ -37,10 +41,10 @@ class Routes
     {
         self::$handler = new UnknownHandler();
         self::$app = $app;
-        
-        self::$app->group('/api', function (RouteCollectorProxy $group) 
+    
+        self::$app->group('/api', function (RouteCollectorProxy $apiGroup) 
         {
-            $group->group('/admin', function (RouteCollectorProxy $adminGroup) 
+            $apiGroup->group('/admin', function (RouteCollectorProxy $adminGroup) 
             {
                 $adminGroup->get('/status', function (Request $request, Response $response) 
                 {
@@ -61,72 +65,72 @@ class Routes
                 });
             });
 
-            $group->get('/', function (Request $request, Response $response) 
+            $apiGroup->get('/', function (Request $request, Response $response) 
             {
                 self::$handler = new StatusHandler($request, $response);
                 return self::$handler->Handle();
             });
 
-            $group->get('/sponsoring', function (Request $request, Response $response) 
+            $apiGroup->get('/sponsoring', function (Request $request, Response $response) 
             {
                 self::$handler = new SponsoringHandler($request, $response);
                 return self::$handler->Handle();
             });
 
-            $group->get('/status', function (Request $request, Response $response) 
+            $apiGroup->get('/status', function (Request $request, Response $response) 
             {
                 self::$handler = new StatusHandler($request, $response);
                 return self::$handler->Handle();
             });
     
-            $group->post('/article/new', function (Request $request, Response $response) 
+            $apiGroup->post('/article/new', function (Request $request, Response $response) 
             {
                 self::$handler = new ArticleNewHandler($request, $response);
                 return self::$handler->Handle();
             });
 
-            $group->post('/article/edit/{editCode}', function (Request $request, Response $response, array $args) 
+            $apiGroup->post('/article/edit/{editCode}', function (Request $request, Response $response, array $args) 
             {
                 self::$handler = new ArticleEditHandler($request, $response, $args);
                 return self::$handler->Handle();
             });
 
-            $group->get('/article/edit/preload/{editCode}', function (Request $request, Response $response, array $args) 
+            $apiGroup->get('/article/edit/preload/{editCode}', function (Request $request, Response $response, array $args) 
             {
                 self::$handler = new ArticleEditPreloadHandler($request, $response, $args);
                 return self::$handler->Handle();
             });
     
-            $group->get('/article/view/{viewCode}', function (Request $request, Response $response, array $args) 
+            $apiGroup->get('/article/view/{viewCode}', function (Request $request, Response $response, array $args) 
             {
                 self::$handler = new ArticleViewHandler($request, $response, $args);
                 return self::$handler->Handle();
             });
 
-            $group->get('/article/search/{queryStr}', function (Request $request, Response $response, array $args) 
+            $apiGroup->get('/article/search/{queryStr}', function (Request $request, Response $response, array $args) 
             {
                 self::$handler = new ArticleSearchHandler($request, $response, $args);
                 return self::$handler->Handle();
             });
     
-            $group->get('/articles', function (Request $request, Response $response) 
+            $apiGroup->get('/articles', function (Request $request, Response $response) 
             {
                 self::$handler = new ArticlesHandler($request, $response);
                 return self::$handler->Handle();
             });
     
-            $group->get('/media/img/{file}', function (Request $request, Response $response, array $args) 
+            $apiGroup->get('/media/img/{file}', function (Request $request, Response $response, array $args) 
             {
                 self::$handler = new MediaLoadImageHandler($request, $response, $args);
                 return self::$handler->Handle();
             });
-            $group->post('/media/img/upload', function (Request $request, Response $response) 
+            $apiGroup->post('/media/img/upload', function (Request $request, Response $response) 
             {
                 self::$handler = new MediaUploadImageHandler($request, $response);
                 return self::$handler->Handle();
                 
             });
-            $group->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function (Request $request, Response $response) 
+            $apiGroup->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function (Request $request, Response $response) 
             {
                 return self::$handler->Handle();
             });

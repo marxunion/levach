@@ -40,12 +40,12 @@ class AdminLoginModel extends BaseModel
             }
             else
             {
-                throw new Error(400, "Admin password not found", "Admin password not found");
+                throw new Warning(400, "Please ether password", "Please ether password");
             }
         } 
         else
         {
-            throw new Error(400, "Admin nickname not found", "Admin nickname not found");
+            throw new Warning(400, "Please ether nickname", "Please ether nickname");
         }
     } 
     public function safeToken($token, $nickname, $expirationTime)
