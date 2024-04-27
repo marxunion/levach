@@ -3,6 +3,7 @@
     {
         "successLogin": "Успешный вход",
         "successQuit": "Успешный выход",
+
         "warnings": 
         {
             "needLogin": "Ваша авторизационная сессия устарела, войдите снова пожалуйста",
@@ -28,13 +29,17 @@
         "formLoginNicknamePlaceholder": "admin",
         "formLoginPasswordPlaceholder": "****",
 
-        "formQuitTitle": "Админ панель",
-        "formQuitButton": "Выйти из админ панели"
+        "formPanelEditSettingsArticleTimeoutMinutesTitle": "Таймаут для редактирования статьи(в минутах):",
+
+        "formPanelTitle": "Админ панель",
+        "formPanelButtonSaveSettings": "Сохранить настройки",
+        "formPanelButtonQuit": "Выйти из админ панели"
     },
     "EN":
     {
         "successLogin": "Successufully login",
         "successQuit": "Successufully quit",
+        
         "warnings": 
         {
             "needLogin": "Your authorisation session is out of date, please login again",
@@ -60,7 +65,10 @@
         "formLoginNicknamePlaceholder": "admin",
         "formLoginPasswordPlaceholder": "****",
 
-        "formQuitTitle": "Admin Panel",
-        "formQuitButton": "Quit from admin panel"
+        "formPanelEditSettingsArticleTimeoutMinutesTitle": "Timeout for edit article(in minutes):",
+
+        "formPanelTitle": "Admin Panel",
+        "formPanelButtonSaveSettings": "Save settings",
+        "formPanelButtonQuit": "Quit from admin panel"
     }
 }

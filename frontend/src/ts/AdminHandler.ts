@@ -15,4 +15,3 @@ export function adminStatusReCheck()
         adminStatus.value = false;
     }
 };
-

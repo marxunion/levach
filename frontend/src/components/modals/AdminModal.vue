@@ -8,6 +8,8 @@
     import InfoModal from "./InfoModal.vue";
     import { pushModal, closeModal, openModal } from "jenesius-vue-modal";
 
+    import VueNumberInput from '@chenfengyuan/vue-number-input';
+
     import { JsonData } from "../../ts/JsonHandler";
 
     import { LangDataHandler } from "./../../ts/LangDataHandler";
@@ -18,6 +20,8 @@
     const checkedRememberMe = ref(false);
     const nickname = ref('');
     const password = ref('');
+
+    const settingsEditArticleTimeoutMinutes = ref(1);
 
     const onLoginButton = () => 
     {
@@ -126,6 +130,12 @@
             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needNickname']});
         }
     }
+
+    const onSaveSettingsButton = () =>
+    {
+
+    }
+
     const onQuitButton = () => 
     {
         axios.post('/api/admin/quit')
@@ -220,6 +230,7 @@
             }
         });
     }
+    
     adminStatusReCheck();
 </script>
 
@@ -229,11 +240,11 @@
         <div class="form__fields">
             <div class="form__fields__field">
                 <p class="form__fields__field__title">{{ langData["formLoginTitleNickname"] }}</p>
-                <input v-model="nickname" :placeholder="(langData['formLoginNicknamePlaceholder'] as string)" class="form__fields__field__input" type="text">
+                <input v-model="nickname" :placeholder="(langData['formLoginNicknamePlaceholder'] as string)" class="form__fields__field__input text" type="text">
             </div>
             <div class="form__fields__field">
                 <p class="form__fields__field__title">{{ langData["formLoginTitlePassword"] }}</p>
-                <input v-model="password" :placeholder="(langData['formLoginPasswordPlaceholder'] as string)" class="form__fields__field__input" type="password">
+                <input v-model="password" :placeholder="(langData['formLoginPasswordPlaceholder'] as string)" class="form__fields__field__input text" type="password">
             </div>
         </div>
 
@@ -245,10 +256,15 @@
         
         <button @click="onLoginButton" class="form__button">{{ langData["formLoginButton"] }}</button>
     </div>
-    <div v-else class="form quit">
-        <p class="form__title">{{ langData["formQuitTitle"] }}</p>
-        <button @click="onQuitButton" class="form__button quit">{{ langData["formQuitButton"] }}</button>
+    <div v-else class="form">
+        <p class="form__title">{{ langData["formPanelTitle"] }}</p>
+        <div class="form__fields__field">
+            <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleTimeoutMinutesTitle'] }}</p>
+            <VueNumberInput v-model="settingsEditArticleTimeoutMinutes" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+        </div>
+        <button @click="onSaveSettingsButton" class="form__button quit">{{ langData["formPanelButtonQuit"] }}</button>
+        <button @click="onQuitButton" class="form__button quit">{{ langData["formPanelButtonQuit"] }}</button>
     </div>
 </template>
 
-<style lang="scss" scoped src="./scss/AdminModal.scss"></style>
+<style lang="scss" src="./scss/AdminModal.scss"></style>

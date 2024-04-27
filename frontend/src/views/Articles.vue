@@ -247,7 +247,6 @@
     </main>
 </template>
 
-
 <style lang="scss">
 @media(max-width: 1050px)
 {
