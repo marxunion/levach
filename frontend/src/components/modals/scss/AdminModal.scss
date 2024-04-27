@@ -63,16 +63,16 @@
 
                 &.text
                 {
-                    background-color: $adminModalInputBG;
-                    color: $adminModalInputText;
+                    background-color: $adminModalInputTextBG;
+                    color: $adminModalInputTextText;
                     padding-left: 12px;
                     box-sizing: border-box;
                 }
 
                 &.number
                 {
-                    color: $articleAdminEditFiltersInputText;
-                    background-color: $articleAdminEditFiltersInputBG;
+                    color: $adminModalInputNumberText;
+                    background-color: $adminModalInputNumberBG;
                     width: 120px;
                     height: 35px;
 
@@ -82,7 +82,7 @@
                         cursor: pointer;
                         border-radius: 12px;
                         margin: 3px;
-                        background-color: $articleAdminEditFiltersInputNumberButtonBG;
+                        background-color: $adminModalInputNumberButtonBG;
 
                         &:disabled
                         {
@@ -94,20 +94,20 @@
                         border-radius: 15px;
                         height: 35px;
                         padding: 0 !important;
-                        border: 1px solid $articleAdminEditFiltersInputBorder;
-                        color: $articleAdminEditFiltersInputText;
-                        background-color: $articleAdminEditFiltersInputBG;
+                        border: 1px solid $adminModalInputNumberBorder;
+                        color: $adminModalInputNumberText;
+                        background-color: $adminModalInputNumberBG;
                         font-size: 16px;
                         text-align: center;
                         transition: .4s;
                         box-sizing: border-box;
                         &:hover
                         {
-                            border: 1px solid $articleAdminEditFiltersInputBorderHover;
+                            border: 1px solid $adminModalInputNumberBorderHover;
                         }
                         &:focus
                         {
-                            border: 1px solid $articleAdminEditFiltersInputBorderFocus;
+                            border: 1px solid $adminModalInputNumberBorderFocus;
                         }
                     }
                 }
