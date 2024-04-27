@@ -6,7 +6,7 @@
 	import { MdPreview, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
-	import { isAdmin } from './../ts/AdminHandler'
+	import { adminStatus, adminStatusReCheck } from './../ts/AdminHandler'
 
 	import { abbreviateNumber } from './../ts/AbbreviateNumberHelper';
 	
@@ -14,6 +14,8 @@
 	import langsData from "./locales/CommentsList.json";
 
 	const langData = LangDataHandler.initLangDataHandler("CommentsList", langsData).langData;
+
+	adminStatusReCheck();
 
 	// Preview
 
@@ -33,8 +35,6 @@
 	{
 		language: LangDataHandler.currentLanguage.value
 	});
-
-
 </script>
 
 <template>
@@ -48,7 +48,7 @@
 		<div class="comment__bar">
 			<div class="comment__bar__actions">
 				<p class="comment__bar__actions__action">{{ langData['titleAnswer'] }}</p>
-				<p v-if="isAdmin" class="comment__bar__actions__action">{{ langData['titleDelete'] }}</p>
+				<p v-if="adminStatus" class="comment__bar__actions__action">{{ langData['titleDelete'] }}</p>
 				<p v-else class="comment__bar__actions__action">{{ langData['titleReport'] }}</p>
 			</div>
 			<div class="comment__bar__reactions">

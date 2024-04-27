@@ -21,7 +21,7 @@
 	import LoaderModal from "./../../components/modals/LoaderModal.vue";
     import InfoModal from "./../../components/modals/InfoModal.vue";
 
-    import { isAdmin } from './../../ts/AdminHandler'
+    import { adminStatus, adminStatusReCheck } from './../../ts/AdminHandler'
 
 	import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
 
@@ -41,6 +41,8 @@
 	const articleViewCode = ref<string | null>(null);
 
 	articleViewCode.value = route.params.articleViewCode as string;
+
+	adminStatusReCheck();
 
 	async function fetchData()
 	{
@@ -334,7 +336,7 @@
 				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedData.versions[currentVersion-1].date) }}</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedData.versions[currentVersion-1].tags) }}</p>
-				<div v-if="isAdmin()" class="main__article__previewContainer__buttons oneButton">
+				<div v-if="adminStatus" class="main__article__previewContainer__buttons oneButton">
 					<a class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 				</div>
 				<div class="main__article__previewContainer__reactions">

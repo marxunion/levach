@@ -6,9 +6,7 @@ use Core\Error;
 
 use Base\BaseModel;
 
-use Core\Database;
-
-class AdminModel extends BaseModel
+class AdminQuitModel extends BaseModel
 {
     public function __construct()
     {

@@ -3,7 +3,7 @@
 
     import axios from "axios";
 
-    import { isAdmin } from "../../ts/AdminHandler";
+    import { adminStatus, adminStatusReCheck } from "../../ts/AdminHandler";
 
     import InfoModal from "./InfoModal.vue";
     import { pushModal, closeModal, openModal } from "jenesius-vue-modal";
@@ -37,7 +37,7 @@
                     if(response.data.success)
                     {
                         closeModal();
-                        openModal(InfoModal, {status: false, text: langData.value['successLogin']}); 
+                        openModal(InfoModal, {status: true, text: langData.value['successLogin']}); 
                     }
                     else
                     {
@@ -131,12 +131,10 @@
         axios.post('/api/admin/quit')
         .then(response => 
         {
-            console.log(response);
-            
             if(response.data.success)
             {
                 closeModal();
-                openModal(InfoModal, {status: false, text: langData.value['successQuit']}); 
+                openModal(InfoModal, {status: true, text: langData.value['successQuit']}); 
             }
             else
             {
@@ -222,10 +220,11 @@
             }
         });
     }
+    adminStatusReCheck();
 </script>
 
 <template>
-    <div v-if="!isAdmin" class="form">
+    <div v-if="!adminStatus" class="form">
         <p class="form__title">{{ langData["formLoginTitle"] }}</p>
         <div class="form__fields">
             <div class="form__fields__field">

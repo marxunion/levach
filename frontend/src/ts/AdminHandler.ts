@@ -1,13 +1,18 @@
+import { ref } from "vue";
+
 import { checkCookie } from "./CookiesHelper";
 
-export const isAdmin = () => 
+export const adminStatus = ref(false);
+
+export function adminStatusReCheck() 
 {
-    if(checkCookie('admin_token') && checkCookie('admin_nickname') && checkCookie('admin_password'))
+    if(checkCookie('admin_token') && checkCookie('admin_nickname') && checkCookie('admin_expiration_time'))
     {
-        return true;
+        adminStatus.value = true;
     }
     else
     {
-        return false
+        adminStatus.value = false;
     }
 };
+

@@ -1,11 +1,11 @@
 <?php
 namespace Api\Models;
 
-use Base\BaseModel;
-
 use Core\Error;
 
 use Core\Database;
+
+use Base\BaseModel;
 
 class ArticlesModel extends BaseModel
 {
@@ -36,7 +36,6 @@ class ArticlesModel extends BaseModel
             ]
         );
     }
-
     
     public function loadArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645)
     {

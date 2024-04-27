@@ -7,7 +7,7 @@
     import { openModal } from "jenesius-vue-modal";
     import AdminModal from "./../components/modals/AdminModal.vue";
 
-    import { isAdmin } from './../ts/AdminHandler';
+    import { adminStatus, adminStatusReCheck } from './../ts/AdminHandler';
 
     import { LangDataHandler } from './../ts/LangDataHandler';
     import langsData from './locales/SideBar.json';
@@ -21,7 +21,7 @@
 
     const links = computed(() => 
         {
-            if(isAdmin)
+            if(adminStatus.value)
             {
                 return [
                     { routeUri: '/articles/editorially', routeName: 'editoriallyArticles', text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
@@ -66,9 +66,9 @@
                     :class="{ active: isCurrentRouteName(link.routeName) }">
                 {{ link.text }}
             </a>
-            <a v-if="isAdmin && (isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingPremoderate'))" class="sidebar__links__button rejectAllButton"> {{ langData['rejectAllButton'] }} </a>
-            <a v-else-if="isAdmin && isCurrentRouteName('articleAdminEditComments')" :href="'#/article/'+route.params['articleId']" class="sidebar__links__button backToArticleButton"> {{ langData['backToArticleButton'] }} </a>
-            <a v-else-if="isAdmin && isCurrentRouteName('articleView')" :href="'#/admin/article/editComments/'+route.params['articleId']" class="sidebar__links__button articleCommentsButton"> {{ langData['articleCommentsButton'] }} </a>
+            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingPremoderate'))" class="sidebar__links__button rejectAllButton"> {{ langData['rejectAllButton'] }} </a>
+            <a v-else-if="adminStatus && isCurrentRouteName('articleAdminEditComments')" :href="'#/article/'+route.params['articleId']" class="sidebar__links__button backToArticleButton"> {{ langData['backToArticleButton'] }} </a>
+            <a v-else-if="adminStatus && isCurrentRouteName('articleView')" :href="'#/admin/article/editComments/'+route.params['articleId']" class="sidebar__links__button articleCommentsButton"> {{ langData['articleCommentsButton'] }} </a>
             <a v-else></a>
         </div>
         

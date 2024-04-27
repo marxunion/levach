@@ -1,4 +1,4 @@
-export function checkCookie(cookieName : string) 
+export function checkCookie(cookieName : string) : boolean
 {
     return document.cookie.split(';').some(cookie => 
     {

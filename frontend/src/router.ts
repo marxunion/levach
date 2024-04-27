@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 
-import { isAdmin } from './ts/AdminHandler';
+import { adminStatus, adminStatusReCheck } from './ts/AdminHandler';
 
 // Article
 import articleView from './views/article/articleView.vue';
@@ -66,7 +66,9 @@ const routes: RouteRecordRaw[] =
     }
 ];
 
-if (isAdmin()) 
+setInterval(adminStatusReCheck, 1000);
+
+if (adminStatus.value) 
 {
     routes.push({
         path: '/admin',
