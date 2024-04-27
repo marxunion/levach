@@ -6,8 +6,6 @@ use Core\Error;
 
 use Base\BaseModel;
 
-use Core\Database;
-
 class AdminLoginModel extends BaseModel
 {
     public function __construct()
@@ -55,7 +53,7 @@ class AdminLoginModel extends BaseModel
             'token' =>  $token,
             'nickname_encrypted' => password_hash($nickname, PASSWORD_DEFAULT),
             'expiration_time_encrypted' => password_hash($expirationTime, PASSWORD_DEFAULT)
-        ]
+        ];
         if($this->database->insert('admins_tokens', $data))
         {
             return true;

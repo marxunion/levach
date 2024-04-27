@@ -82,15 +82,16 @@
 				}
 			}
 		})
-		.catch(response =>
+		.catch(error =>
 		{
-			if(response.data.Warning)
+			console.log(error.response);
+			if(error.response.data.Warning)
 			{
 				return null;
 			}
-			else if(response.data.Error)
+			else if(error.response.data.Error)
 			{
-				if(response.data.Error.message == "Article for edit not found")
+				if(error.response.data.Error.message == "Article for edit not found")
 				{
 					return null;
 				}
@@ -99,7 +100,7 @@
 					return null;
 				}
 			}
-			else if(response.data.Critical)
+			else if(error.response.data.Critical)
 			{
 				return null;
 			}
@@ -316,6 +317,7 @@
 							axios.post('/api/article/edit/'+articleEditCode.value, {"text": editorState.text, "tags": tags.value})
 							.then(response => 
 							{
+								console.log(response);
 								if(response.data.success)
 								{
 									openModal(InfoModalWithLink, {status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']})
@@ -373,6 +375,8 @@
 							})
 							.catch(response => 
 							{
+								console.log(response);
+								
 								if(response.data.Warning)
 									{
 										if(response.data.Warning.message == "Please add a title for the article")

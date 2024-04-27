@@ -275,21 +275,21 @@
 							})
 							.catch(error => 
 							{
-								if(error.data.Warning)
+								if(error.response.data.Warning)
 								{
-									if(error.data.Warning.message == "Please add a title for the article")
+									if(error.response.data.Warning.message == "Please add a title for the article")
 									{
 										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 									}
-									else if(error.data.Warning.message == "Title must contain between 5 and 120 characters")
+									else if(error.response.data.Warning.message == "Title must contain between 5 and 120 characters")
 									{
 										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
 									}
-									else if(error.data.Warning.message == "Please add content for the article")
+									else if(error.response.data.Warning.message == "Please add content for the article")
 									{
 										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
 									}
-									else if(error.data.Warning.message == "Article content must contain between 25 and 10000 characters")
+									else if(error.response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
 									{
 										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
 									}
@@ -298,11 +298,11 @@
 										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 									}
 								}
-								else if(error.data.Error)
+								else if(error.response.data.Error)
 								{
 									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 								}
-								else if(error.data.Critical)
+								else if(error.response.data.Critical)
 								{
 									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 								}

@@ -4,6 +4,9 @@
         "successLogin": "Успешный вход",
         "warnings": 
         {
+            "needLogin": "Ваша авторизационная сессия устарела, войдите снова пожалуйста",
+
+
             "needNickname": "Пожалуйста укажите ваш никнейм",
             "needPassword": "Пожалуйста укажите ваш пароль",
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
@@ -31,6 +34,9 @@
         "successLogin": "Successufully login",
         "warnings": 
         {
+            "needLogin": "Your authorisation session is out of date, please login again",
+
+
             "needNickname": "Please ether your nickname",
             "needPassword": "Please ether your password",
             "unknown": "An unknown error occurred. Try again"

@@ -41,7 +41,7 @@ class AdminLoginHandler extends BaseHandlerRoute
         
         if($this->model->login($nickname, $password))
         {
-            $token = bin2hex(random_bytes(random_int(5,15))).hash('sha3-512', uniqid().bin2hex(random_bytes(32))).bin2hex(random_bytes(random_int(5,15)))
+            $token = bin2hex(random_bytes(random_int(5,15))).hash('sha3-512', uniqid().bin2hex(random_bytes(32))).bin2hex(random_bytes(random_int(5,15)));
             $expirationTime = time() + (24 * 60 * 60);
 
             if($this->model->safeToken($token, $nickname, $expirationTime))

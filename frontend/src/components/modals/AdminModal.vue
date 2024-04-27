@@ -18,7 +18,7 @@
     let nickname = ref('');
     let password = ref('');
 
-    const onSendButton = () => 
+    const onLoginButton = () => 
     {
         if(nickname.value.length > 0)
         {
@@ -74,15 +74,16 @@
                         }
                     }
                 })
-                .catch(response => 
+                .catch(error => 
                 {
-                    if(response.data.Warning)
+                    console.log(error.response);
+                    if(error.response.data.Warning)
                     {
-                        if(response.data.Warning.message == 'Please ether nickname')
+                        if(error.response.data.Warning.message == 'Please ether nickname')
                         {
                             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needNickname']});
                         }
-                        else if(response.data.Warning.message == 'Please ether password')
+                        else if(error.data.Warning.message == 'Please ether password')
                         {
                             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needPassword']});
                         }
@@ -91,9 +92,9 @@
                             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
                         }
                     }
-                    else if(response.data.Error)
+                    else if(error.response.data.Error)
                     {
-                        if(response.data.Error.message == 'Admin nickname or password is incorrect')
+                        if(error.response.data.Error.message == 'Admin nickname or password is incorrect')
                         {
                             pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['incorrectNicknameOrPassword']});
                         }
@@ -102,7 +103,7 @@
                             pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
                         }
                     }
-                    else if(response.data.Critical)
+                    else if(error.response.data.Critical)
                     {
                         pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
                     }
@@ -122,6 +123,103 @@
             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needNickname']});
         }
     }
+    const onQuitButton = () => 
+    {
+        axios.post('/api/admin/quit')
+        .then(response => 
+        {
+            console.log(response);
+            
+            if(response.data.success)
+            {
+                closeModal();
+                openModal(InfoModal, {status: false, text: langData.value['successQuit']}); 
+            }
+            else
+            {
+                if(response.data.Warning)
+                {
+                    if(response.data.Warning.message == 'Admin token not found')
+                    {
+                        pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
+                    }
+                    else if(response.data.Warning.message == 'Admin nickname not found')
+                    {
+                        pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
+                    }
+                    else if(response.data.Warning.message == 'Admin expiration_time not found')
+                    {
+                        pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
+                    }
+                    else
+                    {
+                        pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['unknown']});
+                    }
+                }
+                else if(response.data.Error)
+                {
+                    if(response.data.Error.message == 'Token is invalid')
+                    {
+                        pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
+                    }
+                    else
+                    {
+                        pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                }
+                else if(response.data.Critical)
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            }
+        })
+        .catch(response => 
+        {
+            console.log(response)
+            if(response.data.Warning)
+            {
+                if(response.data.Warning.message == 'Admin token not found')
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
+                }
+                else if(response.data.Warning.message == 'Admin nickname not found')
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
+                }
+                else if(response.data.Warning.message == 'Admin expiration_time not found')
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
+                }
+                else
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['unknown']});
+                }
+            }
+            else if(response.data.Error)
+            {
+                if(response.data.Error.message == 'Token is invalid')
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
+                }
+                else
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            }
+            else if(response.data.Critical)
+            {
+                pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+            else
+            {
+                pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+        });
+    }
 </script>
 
 <template>
@@ -137,11 +235,11 @@
                 <input v-model="password" :placeholder="(langData['formLoginPasswordPlaceholder'] as string)" class="form__fields__field__input" type="password">
             </div>
         </div>
-        <button class="form__button">{{ langData["formLoginButton"] }}</button>
+        <button @click="onLoginButton" class="form__button">{{ langData["formLoginButton"] }}</button>
     </div>
     <div v-else class="form quit">
         <p class="form__title">{{ langData["formQuitTitle"] }}</p>
-        <button class="form__button quit">{{ langData["formQuitButton"] }}</button>
+        <button @click="onQuitButton" class="form__button quit">{{ langData["formQuitButton"] }}</button>
     </div>
 </template>
 

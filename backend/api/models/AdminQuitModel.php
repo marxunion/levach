@@ -50,17 +50,17 @@ class AdminModel extends BaseModel
                 }
                 else
                 {
-                    throw new Error(400, "Admin expiration_time not found", "Admin expiration_time not found");
+                    throw new Warning(400, "Admin expiration_time not found", "Admin expiration_time not found");
                 }
             }
             else
             {
-                throw new Error(400, "Admin nickname not found", "Admin nickname not found");
+                throw new Warning(400, "Admin nickname not found", "Admin nickname not found");
             }
         }
         else
         {
-            throw new Error(400, "Admin token not found", "Admin token not found");
+            throw new Warning(400, "Admin token not found", "Admin token not found");
         }
     }   
 }
