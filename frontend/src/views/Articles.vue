@@ -61,11 +61,11 @@
 		previewState.language = LangDataHandler.currentLanguage.value;
 	});
 
-    let lastLoadedArticleId = ref(2147483645);
-    let lastLoadedArticleTimestamp = ref(2147483645);
-    let lastLoadedArticleRate = ref(2147483645);
+    const lastLoadedArticleId = ref(2147483645);
+    const lastLoadedArticleTimestamp = ref(2147483645);
+    const lastLoadedArticleRate = ref(2147483645);
 
-    let loading = ref(false);
+    const loading = ref(false);
     const scrollTarget = ref(null);
     let articles : Array<Article> = reactive([]);
 

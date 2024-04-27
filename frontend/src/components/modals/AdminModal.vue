@@ -81,7 +81,6 @@
                 })
                 .catch(error => 
                 {
-                    console.log(error.response);
                     if(error.response.data.Warning)
                     {
                         if(error.response.data.Warning.message == 'Please ether nickname')
@@ -91,7 +90,7 @@
                         else if(error.data.Warning.message == 'Please ether password')
                         {
                             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needPassword']});
-                            
+
                         }
                         else
                         {
