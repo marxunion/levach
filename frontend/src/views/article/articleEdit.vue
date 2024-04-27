@@ -26,7 +26,6 @@
 	import { StringWithEnds } from "./../../ts/StringWithEnds";
 
 	import './../../libs/font_2605852_prouiefeic';
-
 	interface Statistic 
 	{
 		count: number;
@@ -373,25 +372,23 @@
 									}
 								}
 							})
-							.catch(response => 
+							.catch(error => 
 							{
-								console.log(response);
-								
-								if(response.data.Warning)
+								if(error.response.data.Warning)
 									{
-										if(response.data.Warning.message == "Please add a title for the article")
+										if(error.response.data.Warning.message == "Please add a title for the article")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 										}
-										else if(response.data.Warning.message == "Title must contain between 5 and 120 characters")
+										else if(error.response.data.Warning.message == "Title must contain between 5 and 120 characters")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
 										}
-										else if(response.data.Warning.message == "Please add content for the article")
+										else if(error.response.data.Warning.message == "Please add content for the article")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
 										}
-										else if(response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
+										else if(error.response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
 										}
@@ -400,13 +397,13 @@
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
 										}
 									}
-									else if(response.data.Error)
+									else if(error.response.data.Error)
 									{
-										if(response.data.Warning.message == "Article for edit not found")
+										if(error.response.data.Warning.message == "Article for edit not found")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
 										}
-										else if(response.data.Error.message == "Please make changes for edit")
+										else if(error.response.data.Error.message == "Please make changes for edit")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedChanges']});
 										}
@@ -415,7 +412,7 @@
 											openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 										}
 									}
-									else if(response.data.Critical)
+									else if(error.response.data.Critical)
 									{
 										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 									}

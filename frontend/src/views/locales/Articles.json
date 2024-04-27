@@ -22,12 +22,12 @@
 
         "warnings": 
         {
-            "unknown": "An unknown error occurred. Try again"
+            "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
         "errors": 
         {
-            "unknown": "An unknown error occurred. Try again"
+            "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
         "approveArticleButton": "Одобрить",

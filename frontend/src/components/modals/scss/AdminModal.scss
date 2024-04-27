@@ -68,13 +68,83 @@
             }
         }
     }
+    &__checkbox
+    {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        margin-top: 14%;
+
+        & input 
+        {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        &__checkmark 
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 28px;
+            width: 28px;
+            background-color: #ccc;
+            transition: .3s;
+            border-radius: 5px;
+            &:after 
+            {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+        }
+
+        &:hover input ~ &__checkmark 
+        {
+            background-color: #b9b9b9;
+        }
+        
+
+        & input:checked ~ &__checkmark 
+        {
+            background-color: #2196F3;
+        }
+        & input:checked ~ &__checkmark:after 
+        {
+            display: block;
+        }
+
+        & &__checkmark:after 
+        {
+            left: 10px;
+            top: 5px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+    }
     &__button
     {
         cursor: pointer;
         width: 80%;
         height: 60px;
 
-        margin-top: 22%;
+        margin-top: 6%;
 
         color: $adminModalButtonText;
         background-color: transparent;
@@ -136,7 +206,6 @@
         &__button
         {
             border-radius: 18px;
-            margin-top: 24%;
             height: 70px;
             font-size: 28px;
         }
@@ -225,7 +294,7 @@
         &__button
         {
             border-radius: 25px;
-            margin-top: 26%;
+            margin-top: 8%;
             height: 90px;
             border: 5px solid $adminModalButtonBorder;
             font-size: 31px;
@@ -311,7 +380,7 @@
         }
         &__button
         {
-            margin-top: 18%;
+            margin-top: 5%;
             border: 2px solid $adminModalButtonBorder;
             font-size: 21px;
         }
@@ -352,7 +421,6 @@
         }
         &__button
         {
-            margin-top: 14%;
             border: 2px solid $adminModalButtonBorder;
             font-size: 18px;
         }

@@ -15,18 +15,23 @@
     
     const langData = ref(LangDataHandler.initLangDataHandler("AdminModal", langsData).langData);
 
-    let nickname = ref('');
-    let password = ref('');
+    const checkedRememberMe = ref(false);
+    const nickname = ref('');
+    const password = ref('');
 
     const onLoginButton = () => 
     {
+        console.log(checkedRememberMe.value);
+        
         if(nickname.value.length > 0)
         {
             if (password.value.length > 0) 
             {
-                const data = {
-			    	"nickname": nickname,
-					"password": password
+                const data = 
+                {
+			    	"nickname": nickname.value,
+					"password": password.value,
+                    "rememberMe": checkedRememberMe.value
 				}
                 axios.post('/api/admin/login', data)
 			    .then(response => 
@@ -86,6 +91,7 @@
                         else if(error.data.Warning.message == 'Please ether password')
                         {
                             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needPassword']});
+                            
                         }
                         else
                         {
@@ -177,20 +183,19 @@
                 }
             }
         })
-        .catch(response => 
+        .catch(error => 
         {
-            console.log(response)
-            if(response.data.Warning)
+            if(error.response.data.Warning)
             {
-                if(response.data.Warning.message == 'Admin token not found')
+                if(error.response.data.Warning.message == 'Admin token not found')
                 {
                     pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
                 }
-                else if(response.data.Warning.message == 'Admin nickname not found')
+                else if(error.response.data.Warning.message == 'Admin nickname not found')
                 {
                     pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
                 }
-                else if(response.data.Warning.message == 'Admin expiration_time not found')
+                else if(error.response.data.Warning.message == 'Admin expiration_time not found')
                 {
                     pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
                 }
@@ -199,9 +204,9 @@
                     pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['unknown']});
                 }
             }
-            else if(response.data.Error)
+            else if(error.response.data.Error)
             {
-                if(response.data.Error.message == 'Token is invalid')
+                if(error.response.data.Error.message == 'Token is invalid')
                 {
                     pushModal(InfoModal, {status: false, text: (langData.value['warning'] as JsonData)['needLogin']});
                 }
@@ -210,7 +215,7 @@
                     pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
                 }
             }
-            else if(response.data.Critical)
+            else if(error.response.data.Critical)
             {
                 pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
             }
@@ -235,6 +240,13 @@
                 <input v-model="password" :placeholder="(langData['formLoginPasswordPlaceholder'] as string)" class="form__fields__field__input" type="password">
             </div>
         </div>
+
+
+        <label class="form__checkbox">{{ langData["formLoginCheckboxRememberMe"] }}
+            <input type="checkbox" v-model="checkedRememberMe">
+            <span class="form__checkbox__checkmark"></span>
+        </label>
+        
         <button @click="onLoginButton" class="form__button">{{ langData["formLoginButton"] }}</button>
     </div>
     <div v-else class="form quit">

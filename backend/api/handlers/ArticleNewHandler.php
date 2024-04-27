@@ -22,6 +22,7 @@ class ArticleNewHandler extends BaseHandlerRoute
             {
                 throw new Warning(400, "Please add a title for the article", "Empty article title");
             }
+        }
         else
         {
             throw new Warning(400, "Please add a title for the article", "Empty article title");

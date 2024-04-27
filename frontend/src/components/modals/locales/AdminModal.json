@@ -18,6 +18,8 @@
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
+        "formLoginCheckboxRememberMe": "Запомнить меня",
+
         "formLoginTitle": "Вход в админ панель",
         "formLoginTitleNickname": "Никнейм",
         "formLoginTitlePassword": "Пароль",
@@ -47,6 +49,8 @@
             "incorrectNicknameOrPassword": "Nickname or password is incorrect",
             "unknown": "An unknown error occurred. Try again"
         },
+
+        "formLoginCheckboxRememberMe": "Remember Me",
 
         "formLoginTitle": "Admin Panel Login",
         "formLoginTitleNickname": "Nickname",
