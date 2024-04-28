@@ -19,7 +19,24 @@ class AdminSettingsHandler extends BaseHandlerRoute
     {
         if(isset($propertyName))
         {
-            $this->response = $this->response->withJson(AdminSettingsModel::_getProperty($propertyName));
+            $responseData = AdminSettingsModel::_getProperty($propertyName);
+            if($responseData)
+            {
+                $this->response = $this->response->withJson($responseData);
+            }
+            else
+            {
+                $responseData = Settings::getProperty('default_'.$propertyName);
+                if($responseData)
+                {
+                    $this->response = $this->response->withJson($responseData);
+                }
+                else
+                {
+                    throw new Error(404, "Selected property not found", "Selected property not found");
+                }
+            }
+            
         }
         else
         {
@@ -71,7 +88,7 @@ class AdminSettingsHandler extends BaseHandlerRoute
     {
         if(AdminStatusHandler::_isAdmin($this->request->getCookieParams()))
         {
-            $this->model = new AdminSettingsGetModel();
+            $this->model = new AdminSettingsModel();
         }
         else
         {
@@ -81,14 +98,31 @@ class AdminSettingsHandler extends BaseHandlerRoute
 
     public function getProperties()
     {
-        $this->response = $this->response->withJson($this->getProperties());
+        $this->response = $this->response->withJson($this->model->getProperties());
     }
 
     public function getProperty($propertyName)
     {
         if(isset($propertyName))
         {
-            $this->response = $this->response->withJson($this->getProperty());
+            $responseData = $this->model->getProperty();
+            if($responseData)
+            {
+                $this->response = $this->response->withJson($responseData);
+            }
+            else
+            {
+                $responseData = Settings::getProperty('default_'.$propertyName);
+                if($responseData)
+                {
+                    $this->response = $this->response->withJson($responseData);
+                }
+                else
+                {
+                    throw new Error(404, "Selected property not found", "Selected property not found");
+                }
+            }
+            
         }
         else
         {
@@ -102,7 +136,7 @@ class AdminSettingsHandler extends BaseHandlerRoute
         {
             if(isset($propertyValue))
             {
-                if($this->setProperty($propertyName, $propertyValue))
+                if($this->model->setProperty($propertyName, $propertyValue))
                 {
                     $this->response = $this->response->withJson(['success' => true]);
                 }

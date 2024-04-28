@@ -11,8 +11,8 @@ class Settings
     {
         self::$settings = 
         [
-            'article_edit_timeout_minutes' => $_ENV['article_edit_timeout_minutes'],
-            'max_upload_filesize_mb' => $_ENV['max_upload_filesize_mb'],
+            'default_article_edit_timeout_minutes' => $_ENV['default_article_edit_timeout_minutes'],
+            'default_max_upload_filesize_mb' => $_ENV['default_max_upload_filesize_mb'],
             
             'DB_TYPE' => $_ENV['DB_TYPE'],
             'DB_NAME' => $_ENV['DB_NAME'],

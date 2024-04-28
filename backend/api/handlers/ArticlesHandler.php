@@ -28,9 +28,9 @@ class ArticlesHandler extends BaseHandlerRoute
         if(isset($this->data['count']))
         {
             $count = $this->data['count'];
-            if($count > 10)
+            if($count > 8)
             {
-                $count = 10;
+                $count = 8;
             }
         }
 

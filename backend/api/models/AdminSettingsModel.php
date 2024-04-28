@@ -2,6 +2,7 @@
 namespace Api\Models;
 
 use Core\Database;
+use Core\Settings;
 use Core\Error;
 
 use Base\BaseModel;
@@ -16,32 +17,60 @@ class AdminSettingsModel extends BaseModel
     public static function _getAllProperties()
     {
         $database = Database::getConnection();
-        return $database->select('settings', '*');
+        if($database)
+        {
+            return $database->select('settings', '*');
+        }
+        else
+        {
+            throw new Critical(500, "Failed to establish database connenction", "Failed to establish database connenction");
+        }
     }
 
     public static function _getProperty($propertyName)
     {
         $database = Database::getConnection();
-        return $this->database->get('settings', '*', ['name' => $propertyName]);
+
+        if($database)
+        {
+            return $this->database->get('settings', '*', ['name' => $propertyName]);
+        }
+        else
+        {
+            throw new Critical(500, "Failed to establish database connenction", "Failed to establish database connenction");
+        }
+        
     }
 
     public static function _setProperty($propertyName, $propertyValue)
     {
         $database = Database::getConnection();
-        if(!$database->update('settings', ['value' => $propertyValue], ['name' => $propertyName]))
+
+        if($database)
         {
-            if($database->insert('settings', 
-            [
-                'name' => $propertyName, 
-                'value' => $propertyValue
-            ]))
+            if(!$database->update('settings', ['value' => $propertyValue], ['name' => $propertyName]))
             {
-                return true;
+                if($database->insert('settings', 
+                [
+                    'name' => $propertyName, 
+                    'value' => $propertyValue
+                ]))
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new Critical(500, "Failed to set property", "Failed to set property");
+                }
             }
             else
             {
-                throw new Critical(500, "Failed to set property", "Failed to set property");
+                return true;
             }
+        }
+        else
+        {
+            throw new Critical(500, "Failed to establish database connenction", "Failed to establish database connenction");
         }
     }
 
@@ -71,6 +100,10 @@ class AdminSettingsModel extends BaseModel
             {
                 throw new Critical(500, "Failed to set property", "Failed to set property");
             }
+        }
+        else
+        {
+            return true;
         }
     }
 }
