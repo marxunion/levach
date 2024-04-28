@@ -15,9 +15,12 @@ class AdminSettingsSetModel extends BaseModel
 
     public function Set($settings)
     {
-        if(isset())
+        if(isset($settings['editArticleTimeoutMinutes']))
         {
-
+            if(gettype($settings['editArticleTimeoutMinutes'] == "integer"))
+            {
+                
+            }
         }
     }
 }

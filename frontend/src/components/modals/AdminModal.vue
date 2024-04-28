@@ -32,7 +32,7 @@
     };
 
     let settings = reactive({
-        editArticleTimeoutMinutes: 1,
+        editArticleTimeoutMinutes: 5,
         maxUploadFileSize: 30
     });
 
