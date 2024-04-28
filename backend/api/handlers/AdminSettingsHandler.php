@@ -21,6 +21,10 @@ class AdminSettingsHandler extends BaseHandlerRoute
         {
             $this->response = $this->response->withJson(AdminSettingsModel::_getProperty($propertyName));
         }
+        else
+        {
+            throw new Warning(400, "Please select setting to get", "Please select setting to get");
+        }
     }
 
     public static function _setProperty($propertyName, $propertyValue, $cookieParams)
@@ -39,7 +43,7 @@ class AdminSettingsHandler extends BaseHandlerRoute
                         }
                         else
                         {
-                            throw new Error(500, "Failed to set property", "Failed to set property");
+                            throw new Critical(500, "Failed to set property", "Failed to set property");
                         }
                     }
                     else
@@ -77,14 +81,18 @@ class AdminSettingsHandler extends BaseHandlerRoute
 
     public function getProperties()
     {
-        
+        $this->response = $this->response->withJson($this->getProperties());
     }
 
     public function getProperty($propertyName)
     {
         if(isset($propertyName))
         {
-            
+            $this->response = $this->response->withJson($this->getProperty());
+        }
+        else
+        {
+            throw new Warning(400, "Please select setting to get", "Please select setting to get");
         }
     }
 
@@ -94,7 +102,7 @@ class AdminSettingsHandler extends BaseHandlerRoute
         {
             if(isset($propertyValue))
             {
-                if(AdminSettingsModel::_setProperty($propertyName, $propertyValue))
+                if($this->setProperty($propertyName, $propertyValue))
                 {
                     $this->response = $this->response->withJson(['success' => true]);
                 }

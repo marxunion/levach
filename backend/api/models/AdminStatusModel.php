@@ -23,7 +23,8 @@ class AdminStatusModel extends BaseModel
             {
                 if(isset($expirationTime))
                 {
-                    $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'expiration_time_encrypted'], ['token' => $token]);
+                    $database = Database::getConnection();
+                    $adminInfo = $database->get('admins_tokens', ['nickname_encrypted', 'expiration_time_encrypted'], ['token' => $token]);
                     if($adminInfo)
                     {
                         if(password_verify($nickname, $adminInfo['nickname_encrypted']))

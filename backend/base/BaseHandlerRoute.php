@@ -27,7 +27,7 @@ class BaseHandlerRoute extends BaseHandler
 
     public function Init()
     {
-
+        
     }
 
     public function Process()
