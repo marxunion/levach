@@ -16,7 +16,8 @@ use Base\BaseHandler;
 use Base\BaseHandlerRoute;
 use Base\EmptyHandlerRoute;
 
-
+use Api\Handlers\AdminSettingsGetHandler;
+use Api\Handlers\AdminSettingsSetHandler;
 use Api\Handlers\AdminStatusHandler;
 use Api\Handlers\AdminQuitHandler;
 use Api\Handlers\AdminLoginHandler;
@@ -46,6 +47,21 @@ class Routes
         {
             $apiGroup->group('/admin', function (RouteCollectorProxy $adminGroup) 
             {
+                $adminGroup->group('/settings', function (RouteCollectorProxy $adminSettingsGroup) 
+                {
+                    $adminSettingsGroup->post('/get', function (Request $request, Response $response) 
+                    {
+                        self::$handler = new AdminSettingsGetHandler($request, $response);
+                        return self::$handler->Handle();
+                    });
+
+                    $adminSettingsGroup->post('/set', function (Request $request, Response $response) 
+                    {
+                        self::$handler = new AdminSettingsSetHandler($request, $response);
+                        return self::$handler->Handle();
+                    });
+                });
+
                 $adminGroup->get('/status', function (Request $request, Response $response) 
                 {
                     self::$handler = new AdminStatusHandler($request, $response);

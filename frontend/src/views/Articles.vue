@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, nextTick, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
+    import { ref, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
     import axios from 'axios';
 
     import Loader from "./../components/Loader.vue";
