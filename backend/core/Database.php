@@ -7,6 +7,7 @@ use Core\Settings;
 
 class Database 
 {
+    private static $initStatus = false;
     private static $connection;
 
     private static function establishConnection() 
@@ -36,6 +37,12 @@ class Database
 
     public static function Init()
     {
+        $initStatus = true;
         self::establishConnection();
+    }
+
+    public static function isInited()
+    {
+        return $initStatus;
     }
 }

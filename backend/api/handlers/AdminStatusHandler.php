@@ -9,7 +9,7 @@ use Api\Models\AdminStatusModel;
 
 class AdminStatusHandler extends BaseHandlerRoute
 {
-    public static function isAdmin($cookiesData)
+    public static function _isAdmin($cookiesData)
     {
         if(isset($cookiesData['admin_token']))
         {

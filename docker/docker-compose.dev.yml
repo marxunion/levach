@@ -10,8 +10,8 @@ services:
       DEBUG_MODE: ${DEBUG_MODE}
       IS_DEBUG_SERVER: true
 
-      ARTICLE_EDIT_TIMEOUT_MINUTES: ${ARTICLE_EDIT_TIMEOUT_MINUTES}
-      MAX_UPLOAD_FILESIZE_MB: ${MAX_UPLOAD_FILESIZE_MB}
+      article_edit_timeout_minutes: ${article_edit_timeout_minutes}
+      max_upload_filesize_mb: ${max_upload_filesize_mb}
 
       HOSTNAME: ${HOSTNAME}
 

@@ -8,11 +8,13 @@ use Core\SystemInfo;
 
 use Base\BaseHandlerRoute;
 
+use Api\Handlers\AdminStatusHandler;
+
 class StatusHandler extends BaseHandlerRoute
 {
     public function Init()
     {
-        if(Settings::getProperty('DEBUG_MODE'))
+        if(Settings::getProperty('DEBUG_MODE') || AdminStatusHandler::_isAdmin())
         {
             $memUsage = SystemInfo::getServerMemoryUsage(false);
             $cpuLoad = SystemInfo::getServerLoad();

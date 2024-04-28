@@ -32,8 +32,8 @@
     };
 
     let settings = reactive({
-        editArticleTimeoutMinutes: 5,
-        maxUploadFileSize: 30
+        article_edit_timeout_minutes: 5,
+        max_upload_filesize_mb: 30
     });
 
     const onLoginButton = () => 
@@ -468,11 +468,11 @@
         <div class="form__fields">
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleTimeoutMinutesTitle'] }}</p>
-                <VueNumberInput v-model="settings.editArticleTimeoutMinutes" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+                <VueNumberInput v-model="settings.article_edit_timeout_minutes" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleMaxUploadFileSizeTitle'] }}</p>
-                <VueNumberInput v-model="settings.maxUploadFileSize" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+                <VueNumberInput v-model="settings.max_upload_filesize_mb" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
         </div>
 

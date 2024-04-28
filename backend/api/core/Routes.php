@@ -51,13 +51,13 @@ class Routes
                 {
                     $adminSettingsGroup->post('/get', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminSettingsGetHandler($request, $response);
+                        self::$handler = new AdminSettingsHandler($request, $response);
                         return self::$handler->Handle();
                     });
 
                     $adminSettingsGroup->post('/set', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminSettingsSetHandler($request, $response);
+                        self::$handler = new AdminSettingsHandler($request, $response);
                         return self::$handler->Handle();
                     });
                 });
