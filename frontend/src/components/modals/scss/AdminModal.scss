@@ -191,8 +191,6 @@
         height: 60px;
 
         margin-top: 6%;
-       
-
         
         background-color: transparent;
         
@@ -222,6 +220,7 @@
         {
             color: $adminModalButtonTextQuit;
             border: 3px solid $adminModalButtonBorderQuit;
+            margin-top: 4%;
             margin-bottom: 6%;
         }
     }

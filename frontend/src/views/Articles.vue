@@ -1,9 +1,8 @@
 <script setup lang="ts">
-    import { ref, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
+    import { ref, nextTick, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
     import axios from 'axios';
 
     import Loader from "./../components/Loader.vue";
-
     import { timestampToLocaleFormatedTime } from './../ts/DateTimeHelper';
     import { tagsArrayToString } from './../ts/TagsHelper'
     import { JsonData } from './../ts/JsonHandler';
@@ -197,7 +196,8 @@
         {
             ps.removeEventListener('scroll', handleScroll)
         }
-    })
+    });
+
 </script>
 
 <template>

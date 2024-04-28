@@ -1,6 +1,8 @@
 <script setup lang="ts">
     import { onMounted, reactive, ref } from "vue";
 
+    import { useRoute, useRouter } from 'vue-router';
+    
     import axios from "axios";
 
     import { adminStatus, adminStatusReCheck } from "../../ts/AdminHandler";
@@ -17,9 +19,17 @@
     
     const langData = ref(LangDataHandler.initLangDataHandler("AdminModal", langsData).langData);
 
+    const route = useRoute();
+    const router = useRouter();
+
     const checkedRememberMe = ref(false);
     const nickname = ref('');
     const password = ref('');
+
+    const isCurrentRouteName = (routeName: string) => 
+    {
+        return routeName == route.name ? true : false;
+    };
 
     let settings = reactive({
         editArticleTimeoutMinutes: 1,
@@ -231,12 +241,20 @@
     const onQuitButton = () => 
     {
         axios.post('/api/admin/quit')
-        .then(response => 
+        .then(async response => 
         {
             if(response.data.success)
             {
                 closeModal();
-                openModal(InfoModal, {status: true, text: langData.value['successfullyQuit']}); 
+                const modal = await openModal(InfoModal, {status: true, text: langData.value['successfullyQuit']});
+									
+				modal.onclose = function(event)
+				{
+                    if(isCurrentRouteName('adminEditComments') || isCurrentRouteName('articleAdminEditComments') || isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingPremoderate'))
+                    {
+                        router.push("/");
+                    }
+				};
             }
             else
             {
@@ -325,7 +343,7 @@
 
     onMounted(() => 
     {
-        if(adminStatus)
+        if(adminStatus.value)
         {
             axios.post('/api/admin/settings/get')
             .then(response => 

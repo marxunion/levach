@@ -6,6 +6,8 @@ import SideBar from './components/SideBar.vue';
 import { useRoute } from 'vue-router';
 import { container } from "jenesius-vue-modal";
 
+import { componentsShow } from './ts/ComponentsReloadHelper';
+
 const isBurgerActive = ref(false);
 
 const toggleBurger = () => {
@@ -30,7 +32,7 @@ watch(() => route.path, () =>
 
 <template>
     <Header @toggleBurger="toggleBurger" />
-    <perfect-scrollbar ref="scroll">
+    <perfect-scrollbar v-if="componentsShow" ref="scroll">
         <router-view v-slot="{ Component }">
             <transition name="pageOpacity" mode="out-in">
                 <component :is="Component" />

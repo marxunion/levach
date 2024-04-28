@@ -20,6 +20,7 @@ import Rules from './views/Rules.vue';
 import Sponsoring from './views/Sponsoring.vue';
 
 import NotFound from './views/NotFound.vue';
+import { watch } from 'vue';
 
 const routes: RouteRecordRaw[] = 
 [
@@ -66,11 +67,18 @@ const routes: RouteRecordRaw[] =
     }
 ];
 
+adminStatusReCheck();
 setInterval(adminStatusReCheck, 1000);
 
-if (adminStatus.value) 
+const router = createRouter(
 {
-    routes.push({
+    history: createWebHashHistory(),
+    routes,
+});
+
+function addAdminRoutes() 
+{
+    router.addRoute({
         path: '/admin',
         children: [
             { path: '', component: AdminEditComments, name: "adminEditComments" },
@@ -82,9 +90,29 @@ if (adminStatus.value)
     })
 }
 
-const router = createRouter({
-    history: createWebHashHistory(),
-    routes,
+function removeAdminRoutes() 
+{
+    router.removeRoute('adminEditComments');
+    router.removeRoute('articleAdminEditComments');
+    router.removeRoute('articlesWaitingApproval');
+    router.removeRoute('articlesWaitingPremoderate');
+}
+
+if(adminStatus)
+{
+    addAdminRoutes();
+}
+
+watch(adminStatus, (newVal, oldVal) => 
+{
+    if (newVal) 
+    {
+        addAdminRoutes();
+    } 
+    else 
+    {
+        removeAdminRoutes();
+    }
 });
 
 export default router;

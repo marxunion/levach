@@ -1,13 +1,17 @@
 <script setup lang="ts">
-    import { computed } from 'vue';
+    import { nextTick, computed } from 'vue';
     import { useRoute } from 'vue-router';
     
+    import reloadComponent from '../views/Articles.vue'
+
     import { JsonData } from '../ts/JsonHandler';
 
     import { openModal } from "jenesius-vue-modal";
     import AdminModal from "./../components/modals/AdminModal.vue";
 
     import { adminStatus, adminStatusReCheck } from './../ts/AdminHandler';
+
+    import { forceReload } from '../ts/ComponentsReloadHelper';
 
     import { LangDataHandler } from './../ts/LangDataHandler';
     import langsData from './locales/SideBar.json';
@@ -18,6 +22,7 @@
 
     const { isBurgerActive } = defineProps(['isBurgerActive']);
     const emit = defineEmits();
+
 
     const links = computed(() => 
         {
@@ -62,7 +67,7 @@
             <a class="sidebar__links__link"
                 v-for="link in links"
                     :href="`#${link.routeUri}`"
-                    @click="emit('toggleBurger')"
+                    @click="forceReload();emit('toggleBurger')"
                     :class="{ active: isCurrentRouteName(link.routeName) }">
                 {{ link.text }}
             </a>
