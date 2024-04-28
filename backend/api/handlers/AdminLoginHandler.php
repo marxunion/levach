@@ -41,7 +41,7 @@ class AdminLoginHandler extends BaseHandlerRoute
         
         if($this->model->login($nickname, $password))
         {
-            $token = bin2hex(random_bytes(random_int(5,15))).hash('sha3-512', uniqid().bin2hex(random_bytes(32))).bin2hex(random_bytes(random_int(5,15)));
+            $token = bin2hex(random_bytes(random_int(5,15))).hash('sha3-512', uniqid().bin2hex(random_bytes(random_int(120,150)))).bin2hex(random_bytes(random_int(5,15)));
             
             if(isset($this->data['rememberMe']))
             {

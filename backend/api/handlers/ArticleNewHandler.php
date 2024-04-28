@@ -46,8 +46,8 @@ class ArticleNewHandler extends BaseHandlerRoute
                         $content = implode("\n", array_slice($contentParts, 1));
                         if (strlen($content) >= 25 && strlen($content) <= 10000) 
                         {
-                            $viewCode = hash('sha3-224', uniqid().bin2hex(random_bytes(32)).$title);
-                            $editCode = hash('sha3-256', uniqid().bin2hex(random_bytes(32)).$title);
+                            $viewCode = hash('sha3-224', uniqid().bin2hex(random_bytes(random_int(60,80))).$title);
+                            $editCode = hash('sha3-256', uniqid().bin2hex(random_bytes(random_int(70,90))).$title);
 
                             if(isset($this->data['tags']))
                             {

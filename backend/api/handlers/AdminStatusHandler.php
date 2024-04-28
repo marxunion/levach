@@ -19,7 +19,8 @@ class AdminStatusHandler extends BaseHandlerRoute
                 $nickname = $cookiesData['admin_nickname'];
                 if(isset($cookiesData['admin_expiration_time']))
                 {
-                    return AdminStatusModel::_isAdmin();
+                    $expirationTime = $cookiesData['admin_expiration_time'];
+                    return AdminStatusModel::_isAdmin($token, $nickname, $expirationTime);
                 }
                 else
                 {

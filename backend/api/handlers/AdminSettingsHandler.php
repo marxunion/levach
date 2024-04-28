@@ -10,7 +10,7 @@ use Api\Handlers\AdminStatusHandler;
 
 class AdminSettingsHandler extends BaseHandlerRoute
 {
-    public static function _getProperties()
+    public static function _getAllProperties()
     {
         $this->response = $this->response->withJson(AdminSettingsModel::_getProperties());
     }
@@ -96,9 +96,9 @@ class AdminSettingsHandler extends BaseHandlerRoute
         }
     }
 
-    public function getProperties()
+    public function getAllProperties()
     {
-        $this->response = $this->response->withJson($this->model->getProperties());
+        $this->response = $this->response->withJson($this->model->getAllProperties());
     }
 
     public function getProperty($propertyName)

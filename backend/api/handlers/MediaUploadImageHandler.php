@@ -1,18 +1,13 @@
 <?php
 namespace Api\Handlers;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Routing\RouteCollectorProxy;
-use Slim\Factory\AppFactory;
-use Slim\Psr7\Stream;
-use Slim\App;
-
 use Core\Settings;
 use Core\Warning;
 use Core\Database;
 
 use Base\BaseHandlerRoute;
+
+use Api\Handlers\AdminSettingsHandler;
 
 class MediaUploadImageHandler extends BaseHandlerRoute
 {
@@ -27,7 +22,8 @@ class MediaUploadImageHandler extends BaseHandlerRoute
         $uploadedFile = $this->request->getUploadedFiles()['file'];
         if ($uploadedFile->getError() === UPLOAD_ERR_OK) 
         {
-            $maxFileSize = intval(Settings::getProperty('max_upload_filesize_mb')) * 1024 * 1024;
+
+            $maxFileSize = intval(AdminSettingsHandler::_getProperty('max_upload_filesize_mb')) * 1024 * 1024;
                     
             if ($uploadedFile->getSize() > $maxFileSize) 
             {

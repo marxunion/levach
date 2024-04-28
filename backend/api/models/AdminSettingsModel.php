@@ -19,7 +19,15 @@ class AdminSettingsModel extends BaseModel
         $database = Database::getConnection();
         if($database)
         {
-            return $database->select('settings', '*');
+            $data = $database->select('settings', '*');
+            $settings = [];
+
+            foreach ($data as &$setting) 
+            {
+                $settings[$setting['name']] = $setting['value'];
+            }
+
+            return $settings;
         }
         else
         {
@@ -76,7 +84,15 @@ class AdminSettingsModel extends BaseModel
 
     public function getAllProperties()
     {
-        return $this->database->select('settings', '*');
+        $data = $this->database->select('settings', '*');
+        $settings = [];
+
+        foreach ($data as &$setting) 
+        {
+            $settings[$setting['name']] = $setting['value'];
+        }
+            
+        return $settings;
     }
 
     public function getProperty($propertyName)

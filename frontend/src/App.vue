@@ -10,7 +10,8 @@ import { componentsShow } from './ts/ComponentsReloadHelper';
 
 const isBurgerActive = ref(false);
 
-const toggleBurger = () => {
+const toggleBurger = () => 
+{
     isBurgerActive.value = !isBurgerActive.value;
 };
 
@@ -31,6 +32,7 @@ watch(() => route.path, () =>
 </script>
 
 <template>
+    <input type="hidden" id="csrfToken" value="">
     <Header @toggleBurger="toggleBurger" />
     <perfect-scrollbar v-if="componentsShow" ref="scroll">
         <router-view v-slot="{ Component }">
