@@ -12,4 +12,12 @@ class AdminSettingsSetModel extends BaseModel
     {
         parent::__construct();
     }
+
+    public function Set($settings)
+    {
+        if(isset())
+        {
+
+        }
+    }
 }

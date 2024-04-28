@@ -12,4 +12,8 @@ class AdminSettingsGetModel extends BaseModel
     {
         parent::__construct();
     }
+    public function get()
+    {
+        
+    }
 }
