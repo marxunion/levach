@@ -164,8 +164,6 @@
 						const form = new FormData();
 						form.append('file', file);
 
-						console.log(form);
-
 						axios.post('/api/media/img/upload', form, 
 						{
 							headers: 

@@ -18,6 +18,8 @@
 
 	import './../../libs/font_2605852_prouiefeic';
 
+	import { csrfToken, getNewCsrfToken } from '../../ts/csrfTokenHelper';
+
 	const langData = LangDataHandler.initLangDataHandler("articleNew", langsData).langData;
 
 	//Editor
@@ -218,10 +220,14 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25 && content.length <= 10000) 
 						{
+							getNewCsrfToken();
+
 							const data = {
+								'csrfToken': csrfToken.value,
 								"text": editorState.text,
 								"tags": tags.value
 							}
+
 							axios.post('/api/article/new', data)
 							.then(async response => 
 							{

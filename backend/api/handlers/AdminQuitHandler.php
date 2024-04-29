@@ -7,6 +7,8 @@ use Base\BaseHandlerRoute;
 
 use Api\Models\AdminQuitModel;
 
+use Api\Handlers\csrfTokenHandler;
+
 class AdminQuitHandler extends BaseHandlerRoute
 {
     public function Init()
@@ -17,6 +19,17 @@ class AdminQuitHandler extends BaseHandlerRoute
         if(is_array($parsedBody))
         {
             $this->data = $parsedBody;
+            if(isset($this->data['csrfToken']))
+            {
+                if(!csrfTokenHandler::checkCsrfToken($this->data['csrfToken']))
+                {
+                    throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+                }
+            }
+            else
+            {
+                throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+            }
         }
         else
         {

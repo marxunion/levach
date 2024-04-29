@@ -16,6 +16,7 @@ use Base\BaseHandler;
 use Base\BaseHandlerRoute;
 use Base\EmptyHandlerRoute;
 
+use Api\Handlers\csrfTokenHandler;
 use Api\Handlers\AdminSettingsHandler;
 use Api\Handlers\AdminStatusHandler;
 use Api\Handlers\AdminQuitHandler;
@@ -31,7 +32,7 @@ use Api\Handlers\MediaUploadImageHandler;
 use Api\Handlers\SponsoringHandler;
 use Api\Handlers\StatusHandler;
 use Api\Handlers\UnknownHandler;
-use Api\Handlers\csrfTokenHandler;
+
 
 class Routes
 {

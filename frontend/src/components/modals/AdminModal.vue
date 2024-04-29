@@ -16,6 +16,8 @@
 
     import { LangDataHandler } from "./../../ts/LangDataHandler";
     import langsData from "./locales/AdminModal.json";
+
+    import { csrfToken, getNewCsrfToken } from "../../ts/csrfTokenHelper";
     
     const langData = ref(LangDataHandler.initLangDataHandler("AdminModal", langsData).langData);
 
@@ -48,6 +50,9 @@
 					"password": password.value,
                     "rememberMe": checkedRememberMe.value
 				}
+
+                getNewCsrfToken();
+                
                 axios.post('/api/admin/login', data)
 			    .then(response => 
 				{
@@ -146,6 +151,8 @@
 
     const onSaveSettingsButton = () =>
     {
+        getNewCsrfToken();
+
         axios.post('/api/admin/settings/edit', settings)
         .then(response => 
         {
@@ -176,7 +183,7 @@
                 }
                 else if(response.data.Error)
                 {
-                    if(response.data.Error.message == 'Token is invalid')
+                    if(response.data.Error.message == 'Invalid admin token')
                     {
                         pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
                     }
@@ -218,7 +225,7 @@
             }
             else if(error.response.data.Error)
             {
-                if(error.response.data.Error.message == 'Token is invalid')
+                if(error.response.data.Error.message == 'Invalid admin token')
                 {
                     pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
                 }
@@ -240,7 +247,13 @@
 
     const onQuitButton = () => 
     {
-        axios.post('/api/admin/quit')
+        getNewCsrfToken();
+        const data = 
+        {
+            csrfToken: csrfToken.value
+        };
+
+        axios.post('/api/admin/quit', data)
         .then(async response => 
         {
             if(response.data.success)
@@ -279,7 +292,7 @@
                 }
                 else if(response.data.Error)
                 {
-                    if(response.data.Error.message == 'Token is invalid')
+                    if(response.data.Error.message == 'Invalid admin token')
                     {
                         pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
                     }
@@ -321,7 +334,7 @@
             }
             else if(error.response.data.Error)
             {
-                if(error.response.data.Error.message == 'Token is invalid')
+                if(error.response.data.Error.message == 'Invalid admin token')
                 {
                     pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
                 }
@@ -345,6 +358,8 @@
     {
         if(adminStatus.value)
         {
+            getNewCsrfToken();
+
             axios.post('/api/admin/settings/get')
             .then(response => 
             {
@@ -375,7 +390,7 @@
                     }
                     else if(response.data.Error)
                     {
-                        if(response.data.Error.message == 'Token is invalid')
+                        if(response.data.Error.message == 'Invalid admin token')
                         {
                             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
                         }
@@ -417,7 +432,7 @@
                 }
                 else if(error.response.data.Error)
                 {
-                    if(error.response.data.Error.message == 'Token is invalid')
+                    if(error.response.data.Error.message == 'Invalid admin token')
                     {
                         pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
                     }

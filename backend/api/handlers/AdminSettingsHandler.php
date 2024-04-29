@@ -6,6 +6,8 @@ use Core\Error;
 use Base\BaseHandlerRoute;
 
 use Api\Models\AdminSettingsModel;
+
+use Api\Handlers\csrfTokenHandler;
 use Api\Handlers\AdminStatusHandler;
 
 class AdminSettingsHandler extends BaseHandlerRoute
@@ -65,12 +67,12 @@ class AdminSettingsHandler extends BaseHandlerRoute
                     }
                     else
                     {
-                        throw new Error(400, "Token is invalid", "Token is invalid");
+                        throw new Error(400, "Invalid admin token", "Invalid admin token");
                     }
                 }
                 else
                 {
-                    throw new Error(400, "Token is invalid", "Token is invalid");
+                    throw new Error(400, "Invalid admin token", "Invalid admin token");
                 }
             }
             else
@@ -86,13 +88,32 @@ class AdminSettingsHandler extends BaseHandlerRoute
 
     public function Init()
     {
-        if(AdminStatusHandler::_isAdmin($this->request->getCookieParams()))
+        $parsedBody = $this->request->getParsedBody();
+        if(is_array($parsedBody))
         {
-            $this->model = new AdminSettingsModel();
-        }
-        else
-        {
-            throw new Error(400, "Token is invalid", "Token is invalid");
+            $this->data = $parsedBody;
+            if(isset($this->data['csrfToken']))
+            {
+                if(csrfTokenHandler::checkCsrfToken($this->data['csrfToken']))
+                {
+                    if(AdminStatusHandler::_isAdmin($this->request->getCookieParams()))
+                    {
+                        $this->model = new AdminSettingsModel();
+                    }
+                    else
+                    {
+                        throw new Error(400, "Invalid admin token", "Invalid admin token");
+                    }
+                }
+                else
+                {
+                    throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+                }
+            }
+            else
+            {
+                throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+            }
         }
     }
 

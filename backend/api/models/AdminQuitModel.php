@@ -43,7 +43,7 @@ class AdminQuitModel extends BaseModel
                     }
                     else
                     {
-                        throw new Error(400, "Token is invalid", "Token is invalid");
+                        throw new Error(400, "Invalid admin token", "Invalid admin token");
                     }
                 }
                 else

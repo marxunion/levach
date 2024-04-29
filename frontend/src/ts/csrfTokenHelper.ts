@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const csrfToken = ref(''); 
 
-export function getCsrfToken()
+export function getNewCsrfToken()
 {
     axios.get('/api/csrfToken')
     .then(response => 

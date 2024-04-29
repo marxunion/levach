@@ -26,6 +26,9 @@
 	import { StringWithEnds } from "./../../ts/StringWithEnds";
 
 	import './../../libs/font_2605852_prouiefeic';
+
+	import { csrfToken, getNewCsrfToken } from '../../ts/csrfTokenHelper';
+	
 	interface Statistic 
 	{
 		count: number;
@@ -313,7 +316,16 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25 && content.length <= 10000) 
 						{
-							axios.post('/api/article/edit/'+articleEditCode.value, {"text": editorState.text, "tags": tags.value})
+							getNewCsrfToken();
+
+							const data = 
+							{
+								"csrfToken": csrfToken.value,
+								"text": editorState.text, 
+								"tags": tags.value
+							};
+
+							axios.post('/api/article/edit/'+articleEditCode.value, data)
 							.then(response => 
 							{
 								console.log(response);

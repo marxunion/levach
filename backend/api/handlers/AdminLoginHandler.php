@@ -17,16 +17,30 @@ class AdminLoginHandler extends BaseHandlerRoute
         if(is_array($parsedBody))
         {
             $this->data = $parsedBody;
-            if(isset($this->data['nickname']))
+            if(isset($this->data['csrfToken']))
             {
-                if(!isset($this->data['password']))
+                if(csrfTokenHandler::checkCsrfToken($this->data['csrfToken']))
                 {
-                    throw new Error(400, "Admin password not found", "Admin password not found");
+                    if(isset($this->data['nickname']))
+                    {
+                        if(!isset($this->data['password']))
+                        {
+                            throw new Error(400, "Admin password not found", "Admin password not found");
+                        }
+                    }
+                    else
+                    {
+                        throw new Error(400, "Admin nickname not found", "Admin nickname not found");
+                    }
+                }
+                else
+                {
+                    throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
                 }
             }
             else
             {
-                throw new Error(400, "Admin nickname not found", "Admin nickname not found");
+                throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
             }
         }
         else

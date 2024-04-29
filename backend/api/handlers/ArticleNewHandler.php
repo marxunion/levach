@@ -8,6 +8,8 @@ use Base\BaseHandlerRoute;
 
 use Api\Models\ArticleNewModel;
 
+use Api\Handlers\csrfTokenHandler;
+
 class ArticleNewHandler extends BaseHandlerRoute
 {
     public function Init()
