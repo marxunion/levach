@@ -38,7 +38,6 @@ class AdminSettingsHandler extends BaseHandlerRoute
                     throw new Error(404, "Selected property not found", "Selected property not found");
                 }
             }
-            
         }
         else
         {
@@ -91,10 +90,11 @@ class AdminSettingsHandler extends BaseHandlerRoute
         $parsedBody = $this->request->getParsedBody();
         if(is_array($parsedBody))
         {
-            $this->data = $parsedBody;
-            if(isset($this->data['csrfToken']))
+            $this->parsedBody = $parsedBody;
+            
+            if(isset($this->parsedBody['csrfToken']))
             {
-                if(csrfTokenHandler::checkCsrfToken($this->data['csrfToken']))
+                if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
                     if(AdminStatusHandler::_isAdmin($this->request->getCookieParams()))
                     {

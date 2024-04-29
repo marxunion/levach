@@ -15,7 +15,7 @@ class ArticlesHandler extends BaseHandlerRoute
         $parsedBody = $this->request->getQueryParams();
         if(is_array($parsedBody))
         {
-            $this->data = $parsedBody;
+            $this->parsedBody = $parsedBody;
         }
         else
         {
@@ -25,9 +25,9 @@ class ArticlesHandler extends BaseHandlerRoute
     public function Process()
     {
         $count = 4;
-        if(isset($this->data['count']))
+        if(isset($this->parsedBody['count']))
         {
-            $count = $this->data['count'];
+            $count = $this->parsedBody['count'];
             if($count > 8)
             {
                 $count = 8;
@@ -35,35 +35,35 @@ class ArticlesHandler extends BaseHandlerRoute
         }
 
         $category = 'editoriallyArticles';
-        if(isset($this->data['category']))
+        if(isset($this->parsedBody['category']))
         {
         }
 
         $lastLoadedArticleId = 2147483645;
-        if(isset($this->data['lastLoadedArticleId']))
+        if(isset($this->parsedBody['lastLoadedArticleId']))
         {
-            $lastLoadedArticleId = $this->data['lastLoadedArticleId'];
+            $lastLoadedArticleId = $this->parsedBody['lastLoadedArticleId'];
         }
 
-        if(isset($this->data['sortType']))
+        if(isset($this->parsedBody['sortType']))
         {
-            $sortType = $this->data['sortType'];
+            $sortType = $this->parsedBody['sortType'];
             $articleIds = null;
             if($sortType == 'timestamp')
             {
                 $lastLoadedArticleTimestamp = 2147483645;
-                if(isset($this->data['lastLoadedArticleTimestamp']))
+                if(isset($this->parsedBody['lastLoadedArticleTimestamp']))
                 {
-                    $lastLoadedArticleTimestamp = $this->data['lastLoadedArticleTimestamp'];
+                    $lastLoadedArticleTimestamp = $this->parsedBody['lastLoadedArticleTimestamp'];
                 }
                 $articleIds = $this->model->loadArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
             }
             else if($sortType == 'rate')
             {
                 $lastLoadedArticleRate = 2147483645;
-                if(isset($this->data['lastLoadedArticleRate']))
+                if(isset($this->parsedBody['lastLoadedArticleRate']))
                 {
-                    $lastLoadedArticleRate = $this->data['lastLoadedArticleRate'];
+                    $lastLoadedArticleRate = $this->parsedBody['lastLoadedArticleRate'];
                 }
                 $articleIds = $this->model->loadArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
             }

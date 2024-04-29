@@ -9,6 +9,8 @@ class csrfTokenHandler extends BaseHandlerRoute
 {
     public static function checkCsrfToken($token)
     {
+        session_start();
+
         if($_SESSION['csrfToken'] == $token)
         {
             return true;

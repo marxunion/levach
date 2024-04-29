@@ -16,14 +16,14 @@ class AdminLoginHandler extends BaseHandlerRoute
 
         if(is_array($parsedBody))
         {
-            $this->data = $parsedBody;
-            if(isset($this->data['csrfToken']))
+            $this->parsedBody = $parsedBody;
+            if(isset($this->parsedBody['csrfToken']))
             {
-                if(csrfTokenHandler::checkCsrfToken($this->data['csrfToken']))
+                if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
-                    if(isset($this->data['nickname']))
+                    if(isset($this->parsedBody['nickname']))
                     {
-                        if(!isset($this->data['password']))
+                        if(!isset($this->parsedBody['password']))
                         {
                             throw new Error(400, "Admin password not found", "Admin password not found");
                         }
@@ -50,16 +50,16 @@ class AdminLoginHandler extends BaseHandlerRoute
     }
     public function Process()
     {
-        $nickname = $this->data['nickname'];
-        $password = $this->data['password'];
+        $nickname = $this->parsedBody['nickname'];
+        $password = $this->parsedBody['password'];
         
         if($this->model->login($nickname, $password))
         {
             $token = bin2hex(random_bytes(random_int(5,15))).hash('sha3-512', uniqid().bin2hex(random_bytes(random_int(120,150)))).bin2hex(random_bytes(random_int(5,15)));
             
-            if(isset($this->data['rememberMe']))
+            if(isset($this->parsedBody['rememberMe']))
             {
-                if($this->data['rememberMe'])
+                if($this->parsedBody['rememberMe'])
                 {
                     $expirationTime = time() + (7 * 24 * 60 * 60);
                 }

@@ -41,11 +41,11 @@ class AdminStatusHandler extends BaseHandlerRoute
     public function Init()
     {
         $this->model = new AdminStatusModel();
-        $parsedBody = $this->request->getCookieParams();
+        $cookiesBody = $this->request->getCookieParams();
 
-        if(is_array($parsedBody))
+        if(is_array($cookiesBody))
         {
-            $this->data = $parsedBody;
+            $this->cookiesBody = $cookiesBody;
         }
         else
         {
@@ -55,15 +55,15 @@ class AdminStatusHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        if(isset($this->data['admin_token']))
+        if(isset($this->cookiesBody['admin_token']))
         {
-            $token = $this->data['admin_token'];
-            if(isset($this->data['admin_nickname']))
+            $token = $this->cookiesBody['admin_token'];
+            if(isset($this->cookiesBody['admin_nickname']))
             {
-                $nickname = $this->data['admin_nickname'];
-                if(isset($this->data['admin_expiration_time']))
+                $nickname = $this->cookiesBody['admin_nickname'];
+                if(isset($this->cookiesBody['admin_expiration_time']))
                 {
-                    $expirationTime = $this->data['admin_expiration_time'];
+                    $expirationTime = $this->cookiesBody['admin_expiration_time'];
                     $this->response = $this->response->withStatus(200)->withJson($this->model->isAdmin($token, $nickname, $expirationTime));
                 }
                 else

@@ -1,17 +1,20 @@
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 
 import axios from "axios";
 
-export const csrfToken = ref(''); 
+export const csrfTokenInput : Ref<HTMLInputElement | null> = ref(null); 
 
-export function getNewCsrfToken()
+export async function getNewCsrfToken()
 {
-    axios.get('/api/csrfToken')
-    .then(response => 
+    await axios.get('/api/csrfToken')
+    .then(async (response) => 
     {
         if(response.data.token)
         {
-            csrfToken.value = response.data.token;
+            if(csrfTokenInput.value != null)
+            {
+                csrfTokenInput.value.value = response.data.token;
+            }
         }
     });
 }

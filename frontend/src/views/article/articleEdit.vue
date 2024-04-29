@@ -27,7 +27,7 @@
 
 	import './../../libs/font_2605852_prouiefeic';
 
-	import { csrfToken, getNewCsrfToken } from '../../ts/csrfTokenHelper';
+	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 	
 	interface Statistic 
 	{
@@ -318,11 +318,17 @@
 						{
 							getNewCsrfToken();
 
+							if(csrfTokenInput.value == null)
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+								return;
+							}
+
 							const data = 
 							{
-								"csrfToken": csrfToken.value,
-								"text": editorState.text, 
-								"tags": tags.value
+								csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+								text: editorState.text, 
+								tags: tags.value
 							};
 
 							axios.post('/api/article/edit/'+articleEditCode.value, data)

@@ -17,7 +17,7 @@
     import { LangDataHandler } from "./../../ts/LangDataHandler";
     import langsData from "./locales/AdminModal.json";
 
-    import { csrfToken, getNewCsrfToken } from "../../ts/csrfTokenHelper";
+    import { csrfTokenInput, getNewCsrfToken } from "../../ts/csrfTokenHelper";
     
     const langData = ref(LangDataHandler.initLangDataHandler("AdminModal", langsData).langData);
 
@@ -38,22 +38,31 @@
         max_upload_filesize_mb: 30
     });
 
-    const onLoginButton = () => 
+    const onLoginButton = async () => 
     {
         if(nickname.value.length > 0)
         {
             if (password.value.length > 0) 
             {
+                console.log((csrfTokenInput.value as HTMLInputElement).value);
+                await getNewCsrfToken();
+                console.log((csrfTokenInput.value as HTMLInputElement).value);
+
+                if(csrfTokenInput.value == null)
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                    return;
+                }
+
                 const data = 
                 {
-			    	"nickname": nickname.value,
-					"password": password.value,
-                    "rememberMe": checkedRememberMe.value
+                    csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			    	nickname: nickname.value,
+					password: password.value,
+                    rememberMe: checkedRememberMe.value
 				}
 
-                getNewCsrfToken();
-                
-                axios.post('/api/admin/login', data)
+                await axios.post('/api/admin/login', data)
 			    .then(response => 
 				{
                     if(response.data.success)
@@ -149,11 +158,23 @@
         }
     }
 
-    const onSaveSettingsButton = () =>
+    const onSaveSettingsButton = async () =>
     {
-        getNewCsrfToken();
+        await getNewCsrfToken();
 
-        axios.post('/api/admin/settings/edit', settings)
+        if(csrfTokenInput.value == null)
+        {
+            pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            return;
+        }
+
+        const data =
+        {
+            csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+            settings: settings
+        }
+
+        await axios.post('/api/admin/settings/edit', data)
         .then(response => 
         {
             if(response.data.success)
@@ -245,15 +266,22 @@
         });
     };
 
-    const onQuitButton = () => 
+    const onQuitButton = async () => 
     {
-        getNewCsrfToken();
+        await getNewCsrfToken();
+
+        if(csrfTokenInput.value == null)
+        {
+            pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            return;
+        }
+
         const data = 
         {
-            csrfToken: csrfToken.value
+            csrfToken: (csrfTokenInput.value as HTMLInputElement).value
         };
 
-        axios.post('/api/admin/quit', data)
+        await axios.post('/api/admin/quit', data)
         .then(async response => 
         {
             if(response.data.success)
@@ -354,13 +382,24 @@
         });
     };
 
-    onMounted(() => 
+    onMounted(async () => 
     {
         if(adminStatus.value)
         {
-            getNewCsrfToken();
+            await getNewCsrfToken();
 
-            axios.post('/api/admin/settings/get')
+            if(csrfTokenInput.value == null)
+            {
+                pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                return;
+            }
+
+            const data = 
+            {
+                csrfToken: (csrfTokenInput.value as HTMLInputElement).value
+            };
+
+            await axios.post('/api/admin/settings/get', data)
             .then(response => 
             {
                 if(response.data.settings)

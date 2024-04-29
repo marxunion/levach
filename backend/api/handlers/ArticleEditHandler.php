@@ -23,8 +23,8 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
 
         if(is_array($parsedBody))
         {
-            $this->data = $parsedBody;
-            if(!isset($this->data['text']))
+            $this->parsedBody = $parsedBody;
+            if(!isset($this->parsedBody['text']))
             {
                 throw new Warning(400, "Please add a title for the article", "Empty article title");
             }
@@ -41,7 +41,7 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
 
         if($articleId)
         {
-            $contentParts = explode("\n", $this->data['text']);
+            $contentParts = explode("\n", $this->parsedBody['text']);
             if (count($contentParts) >= 1) 
             {
                 $title = $contentParts[0];
@@ -55,13 +55,13 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                             $content = implode("\n", array_slice($contentParts, 1));
                             if (strlen($content) >= 25 && strlen($content) <= 10000) 
                             {
-                                if(isset($this->data['text']))
+                                if(isset($this->parsedBody['text']))
                                 {
-                                    $this->model->editArticle($articleId, $title, $this->data['text'], $this->data['tags']);
+                                    $this->model->editArticle($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
                                 }
                                 else
                                 {
-                                    $this->model->editArticle($articleId, $title, $this->data['text'], null);
+                                    $this->model->editArticle($articleId, $title, $this->parsedBody['text'], null);
                                 }
                                 
                                 $this->response = $this->response->withJson(['success' => true, 'message' => 'Article successfully saved']);

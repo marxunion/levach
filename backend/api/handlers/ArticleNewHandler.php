@@ -19,8 +19,8 @@ class ArticleNewHandler extends BaseHandlerRoute
 
         if(is_array($parsedBody))
         {
-            $this->data = $parsedBody;
-            if(!isset($this->data['text']))
+            $this->parsedBody = $parsedBody;
+            if(!isset($this->parsedBody['text']))
             {
                 throw new Warning(400, "Please add a title for the article", "Empty article title");
             }
@@ -33,7 +33,7 @@ class ArticleNewHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        $contentParts = explode("\n", $this->data['text']);
+        $contentParts = explode("\n", $this->parsedBody['text']);
 
         if (count($contentParts) >= 1) 
         {
@@ -51,13 +51,13 @@ class ArticleNewHandler extends BaseHandlerRoute
                             $viewCode = hash('sha3-224', uniqid().bin2hex(random_bytes(random_int(60,80))).$title);
                             $editCode = hash('sha3-256', uniqid().bin2hex(random_bytes(random_int(70,90))).$title);
 
-                            if(isset($this->data['tags']))
+                            if(isset($this->parsedBody['tags']))
                             {
-                                $this->model->newArticle($title, $this->data['text'], $this->data['tags'], $viewCode, $editCode);
+                                $this->model->newArticle($title, $this->parsedBody['text'], $this->parsedBody['tags'], $viewCode, $editCode);
                             }
                             else
                             {
-                                $this->model->newArticle($title, $this->data['text'], null, $viewCode, $editCode);
+                                $this->model->newArticle($title, $this->parsedBody['text'], null, $viewCode, $editCode);
                             }
                             
                             $this->response = $this->response->withJson(['viewCode' => $viewCode, 'editCode' => $editCode]);

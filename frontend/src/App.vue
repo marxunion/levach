@@ -6,7 +6,7 @@ import SideBar from './components/SideBar.vue';
 import { useRoute } from 'vue-router';
 import { container } from "jenesius-vue-modal";
 
-import { csrfToken, getNewCsrfToken } from './ts/csrfTokenHelper';
+import { csrfTokenInput, getNewCsrfToken } from './ts/csrfTokenHelper';
 import { componentsShow } from './ts/ComponentsReloadHelper';
 
 const isBurgerActive = ref(false);
@@ -35,7 +35,7 @@ getNewCsrfToken();
 </script>
 
 <template>
-    <input type="hidden" id="csrfToken" :value="csrfToken">
+    <input type="hidden" id="csrfTokenInput" ref="csrfTokenInput">
     <Header @toggleBurger="toggleBurger" />
     <perfect-scrollbar v-if="componentsShow" ref="scroll">
         <router-view v-slot="{ Component }">
