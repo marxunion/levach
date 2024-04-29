@@ -86,7 +86,6 @@
 		})
 		.catch(error =>
 		{
-			console.log(error.response);
 			if(error.response.data.Warning)
 			{
 				return null;
@@ -157,8 +156,6 @@
 					{
 						const form = new FormData();
 						form.append('file', file);
-
-						console.log(form);
 
 						axios.post('/api/media/img/upload', form, 
 						{
@@ -300,7 +297,7 @@
 		tags.value.splice(index, 1);
 	};
 
-	const onSendButton = () =>
+	const onSendButton = async () =>
 	{
 		const contentParts = (editorState.text as string).split('\n');
 
@@ -316,7 +313,7 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25 && content.length <= 10000) 
 						{
-							getNewCsrfToken();
+							await getNewCsrfToken();
 
 							if(csrfTokenInput.value == null)
 							{
@@ -331,10 +328,9 @@
 								tags: tags.value
 							};
 
-							axios.post('/api/article/edit/'+articleEditCode.value, data)
+							await axios.post('/api/article/edit/'+articleEditCode.value, data)
 							.then(response => 
 							{
-								console.log(response);
 								if(response.data.success)
 								{
 									openModal(InfoModalWithLink, {status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']})

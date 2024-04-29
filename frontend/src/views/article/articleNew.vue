@@ -204,7 +204,7 @@
 	};
 
 	const router = useRouter();
-	const onSendButton = function ()
+	const onSendButton = async function ()
 	{
 		const contentParts = (editorState.text as string).split('\n');
 
@@ -220,7 +220,7 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25 && content.length <= 10000) 
 						{
-							getNewCsrfToken();
+							await getNewCsrfToken();
 
 							if(csrfTokenInput.value == null)
 							{
@@ -234,7 +234,7 @@
 								tags: tags.value
 							}
 
-							axios.post('/api/article/new', data)
+							await axios.post('/api/article/new', data)
 							.then(async response => 
 							{
 								if(response.data.editCode)
