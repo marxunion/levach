@@ -15,7 +15,6 @@
     import { MdPreview, config } from 'md-editor-v3';
     import 'md-editor-v3/lib/style.css';
 
-    
     import { adminStatus, adminStatusReCheck } from './../ts/AdminHandler';
 
     import { abbreviateNumber } from './../ts/AbbreviateNumberHelper';
@@ -27,6 +26,7 @@
     import { LangDataHandler } from "./../ts/LangDataHandler";
 
     import './../libs/font_2605852_prouiefeic';
+
 
     const props = defineProps(['currentRoute']);
 
@@ -72,7 +72,6 @@
     {
         articles = reactive([]);
         lastLoadedArticleId.value = 2147483645;
-        console.log(newSortType);
         
         if(currentSortType.value === 0)
         {
@@ -93,8 +92,10 @@
         loading.value = true;
         if(currentSortType.value === 0)
         {
-            await axios.get('/api/articles', {
-                params: {
+            await axios.get('/api/articles', 
+            {
+                params: 
+                {
                     sortType: 'rate',
                     category: props.currentRoute,
                     count: 4,
@@ -128,8 +129,10 @@
         }
         else
         {
-            await axios.get('/api/articles', {
-                params: {
+            await axios.get('/api/articles', 
+            {
+                params: 
+                {
                     sortType: 'timestamp',
                     category: props.currentRoute,
                     count: 4,
@@ -197,7 +200,6 @@
             ps.removeEventListener('scroll', handleScroll)
         }
     });
-
 </script>
 
 <template>
@@ -242,7 +244,7 @@
                 class="main__article__select" 
                 @inputIndex="(version : number) => (article as Article).currentSelectedVersion = version" />
         </article>
-        <h1 v-if="articles.length == 0 && !loading" class="main__article__title">  {{ (langData['warnings'] as JsonData)["articlesNotFound"] }}</h1>
+        <h1 v-if="articles.length == 0 && !loading" class="main__article__title">{{ (langData['warnings'] as JsonData)["articlesNotFound"] }}</h1>
         
         <div ref="scrollTarget" style="height: 100px;"></div>
         <Loader v-if="loading" />
@@ -338,4 +340,5 @@
     }
 }
 </style>
+
 <style lang="scss" scoped src="./scss/Articles.scss"></style>

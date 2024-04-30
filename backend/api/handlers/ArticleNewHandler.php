@@ -53,14 +53,27 @@ class ArticleNewHandler extends BaseHandlerRoute
 
                             if(isset($this->parsedBody['tags']))
                             {
-                                $this->model->newArticle($title, $this->parsedBody['text'], $this->parsedBody['tags'], $viewCode, $editCode);
+                                if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                                {
+                                    $this->model->newArticleAdmin($title, $this->parsedBody['text'], $this->parsedBody['tags'], $viewCode, $editCode);
+                                }
+                                else
+                                {
+                                    $this->model->newArticle($title, $this->parsedBody['text'], $this->parsedBody['tags'], $viewCode, $editCode);
+                                }
                             }
                             else
                             {
-                                $this->model->newArticle($title, $this->parsedBody['text'], null, $viewCode, $editCode);
+                                if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                                {
+                                    $this->model->newArticleAdmin($title, $this->parsedBody['text'], null, $viewCode, $editCode);
+                                }
+                                else
+                                {
+                                    $this->model->newArticle($title, $this->parsedBody['text'], null, $viewCode, $editCode);
+                                }
+                                
                             }
-                            
-                            $this->response = $this->response->withJson(['viewCode' => $viewCode, 'editCode' => $editCode]);
                         } 
                         else 
                         {

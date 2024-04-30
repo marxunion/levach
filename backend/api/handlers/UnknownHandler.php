@@ -1,9 +1,9 @@
 <?php
 namespace Api\Handlers;
 
-use Base\BaseHandlerRoute;
-
 use Core\Error;
+
+use Base\BaseHandlerRoute;
 
 class UnknownHandler extends BaseHandlerRoute
 {

@@ -6,7 +6,7 @@
     
     const props = defineProps(["status", "text", "link", "text2"]);
 
-    const langData = ref(LangDataHandler.initLangDataHandler("InfoModalWithLink", langsData).langData);
+    const langData = LangDataHandler.initLangDataHandler("InfoModalWithLink", langsData).langData;
 
     const inputText = ref(props.link);
     const textInput = ref();
@@ -21,7 +21,7 @@
     {
         textInput.value.select();
     });
-;</script>
+</script>
 
 <template>
     <div class="form">

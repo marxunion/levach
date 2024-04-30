@@ -19,6 +19,7 @@ class StatusHandler extends BaseHandlerRoute
             $memUsage = SystemInfo::getServerMemoryUsage(false);
             $cpuLoad = SystemInfo::getServerLoad();
             $diskInfo = SystemInfo::getDiskInfo();
+            
             $this->response = $this->response->withStatus(200)->withJson([
                 "status" => true,
                 "OS" => PHP_OS,

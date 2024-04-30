@@ -1,9 +1,9 @@
 <?php
 namespace Api\Models;
 
-use Base\BaseModel;
-
 use Core\Database;
+
+use Base\BaseModel;
 
 class ArticleEditPreloadModel extends BaseModel
 {
@@ -19,7 +19,7 @@ class ArticleEditPreloadModel extends BaseModel
     
     public function viewArticle($articleId)
     {
-        $article = $this->database->get('articles', ['title', 'text' ,'tags','date', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId, 'ORDER' => ['version_id' => 'DESC'],'LIMIT' => 1]);
+        $article = $this->database->get('articles', ['title', 'text' ,'tags','date', 'premoderation_status', 'acceptededitorially_status', 'editorially_status'], ['id' => $articleId, 'ORDER' => ['version_id' => 'DESC'], 'LIMIT' => 1]);
         $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]);
 
         if($article['tags'] != null)

@@ -6,7 +6,7 @@
     
     defineProps(["status", "text"]);
 
-    const langData = ref(LangDataHandler.initLangDataHandler("InfoModal", langsData).langData);
+    const langData = LangDataHandler.initLangDataHandler("InfoModal", langsData).langData;
 </script>
 
 <template>

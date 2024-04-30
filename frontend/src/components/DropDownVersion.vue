@@ -5,7 +5,7 @@ import { ref, computed, defineProps, defineEmits } from "vue";
 import { LangDataHandler } from "./../ts/LangDataHandler";
 import langsData from "./locales/DropDownVersion.json";
 
-const langData = ref(LangDataHandler.initLangDataHandler("DropDownVersion", langsData).langData);
+const langData = LangDataHandler.initLangDataHandler("DropDownVersion", langsData).langData;
 
 const props = defineProps(["maxVersion"]);
 const emits = defineEmits(["input"]);

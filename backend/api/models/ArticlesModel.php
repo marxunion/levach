@@ -2,7 +2,6 @@
 namespace Api\Models;
 
 use Core\Error;
-
 use Core\Database;
 
 use Base\BaseModel;

@@ -19,7 +19,7 @@
 
     import { csrfTokenInput, getNewCsrfToken } from "../../ts/csrfTokenHelper";
     
-    const langData = ref(LangDataHandler.initLangDataHandler("AdminModal", langsData).langData);
+    const langData = LangDataHandler.initLangDataHandler("AdminModal", langsData).langData;
 
     const route = useRoute();
     const router = useRouter();
@@ -44,9 +44,7 @@
         {
             if (password.value.length > 0) 
             {
-                console.log((csrfTokenInput.value as HTMLInputElement).value);
                 await getNewCsrfToken();
-                console.log((csrfTokenInput.value as HTMLInputElement).value);
 
                 if(csrfTokenInput.value == null)
                 {

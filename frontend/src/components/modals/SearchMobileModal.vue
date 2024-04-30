@@ -4,7 +4,7 @@
     import { LangDataHandler } from "./../../ts/LangDataHandler";
     import langsData from "./locales/SearchMobileModal.json";
     
-    const langData = ref(LangDataHandler.initLangDataHandler("SearchMobileModal", langsData).langData);
+    const langData = LangDataHandler.initLangDataHandler("SearchMobileModal", langsData).langData;
 </script>
 
 <template>

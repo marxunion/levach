@@ -10,7 +10,7 @@
     import { LangDataHandler } from "./../ts/LangDataHandler";
     import langsData from "./locales/Header.json";
     
-    const langData = ref(LangDataHandler.initLangDataHandler("Header", langsData).langData);
+    const langData = LangDataHandler.initLangDataHandler("Header", langsData).langData;
 
     import { defineEmits } from 'vue';
 

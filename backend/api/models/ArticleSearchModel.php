@@ -1,9 +1,9 @@
 <?php
 namespace Api\Models;
 
-use Base\BaseModel;
-
 use Core\Database;
+
+use Base\BaseModel;
 
 class ArticleSearchModel extends BaseModel
 {

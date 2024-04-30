@@ -6,7 +6,7 @@
     import { LangDataHandler } from "./../../ts/LangDataHandler";
     import langsData from "./locales/SponsoringCryptoModal.json";
 
-    const langData = ref(LangDataHandler.initLangDataHandler("SponsoringCryptoModal", langsData).langData);
+    const langData = LangDataHandler.initLangDataHandler("SponsoringCryptoModal", langsData).langData;
 
     const props = defineProps(["crypto"]); 
 
@@ -24,26 +24,23 @@
         axios.get('api/sponsoring')
         .then(response => 
         {
-            console.log(response);
-            
             if(response.data[props.crypto])
             {
                 walletLink.value = response.data[props.crypto];
             }
             else
             {
-                console.error('');
                 walletLink.value = '';
             }
         });
 
         inputWallet.value.select();
     });
-;</script>
+</script>
 
 <template>
     <div class="form">
-        <p class="form__text">Monero Receive Address</p>
+        <p class="form__text">{{ langData['formTitleText'] }}</p>
         <img class="form__qrcode" :src="'/api/media/img/'+crypto+'.png'" alt="QR Code">
         <div class="form__link">
             <input v-model="walletLink" ref="inputWallet" type="text" class="form__link__input" readonly></input>

@@ -9,6 +9,8 @@ use Base\BaseModel;
 
 use Api\Models\ArticleEditModel;
 
+use Api\Handlers\AdminStatusHandler;
+
 class ArticleEditHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
@@ -17,10 +19,11 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
         {
             $this->model = new ArticleEditModel();
             $parsedBody = $this->request->getParsedBody();
-
+            
             if(is_array($parsedBody))
             {
                 $this->parsedBody = $parsedBody;
+                $this->cookiesBody = $this->request->getCookieParams();
                 if(!isset($this->parsedBody['text']))
                 {
                     throw new Warning(400, "Please add a title for the article", "Empty article title");
@@ -57,13 +60,29 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                             $content = implode("\n", array_slice($contentParts, 1));
                             if (strlen($content) >= 25 && strlen($content) <= 10000) 
                             {
-                                if(isset($this->parsedBody['text']))
+                                if(isset($this->parsedBody['tags']))
                                 {
-                                    $this->model->editArticle($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags'], $this->request->getCookieParams());
+                                    if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                                    {
+                                        $this->model->editArticleAdmin($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
+                                    }
+                                    else
+                                    {
+                                        $this->model->editArticle($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
+                                    }
+                                    
                                 }
                                 else
                                 {
-                                    $this->model->editArticle($articleId, $title, $this->parsedBody['text'], null, $this->request->getCookieParams());
+                                    if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                                    {
+                                        $this->model->editArticleAdmin($articleId, $title, $this->parsedBody['text'], null);
+                                    }
+                                    else
+                                    {
+                                        $this->model->editArticle($articleId, $title, $this->parsedBody['text'], null);
+                                    }
+                                    
                                 }
                                 
                                 $this->response = $this->response->withJson(['success' => true]);
