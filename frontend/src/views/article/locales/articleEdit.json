@@ -17,7 +17,8 @@
             "articleNeedContent": "Пожалуйста добавьте содержание для статьи",
             "articleContentSymbols": "Содержание статьи не может быть менее 25 символов и более 10000 символов",
             
-            "imageMaxSize": "Размер загружаемого изображения должен быть не больше 30МБ",
+            "imageMaxSize": "Размер загружаемого изображения должен быть не больше ",
+            "imageMaxSizeSymbol": "МБ",
             "imageUnallowedType": "Расширение загружаемого изображения не поддерживается",
             "imageNeedImage": "Пожалуйста загрузите хотяб одно изображение",
     
@@ -216,7 +217,8 @@
             "articleNeedContent": "Please add content for the article",
             "articleContentSymbols": "Article content cannot be less than 25 characters and exceed 10000 characters",
             
-            "imageMaxSize": "The size of the uploaded image must be no larger than 30MB",
+            "imageMaxSize": "The size of the uploaded image must be no larger than ",
+            "imageMaxSizeSymbol": "MB",
             "imageUnallowedType": "The extension of the uploaded image is not supported",
             "imageNeedImage": "Please upload at least one image",
     

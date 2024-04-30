@@ -52,7 +52,9 @@ class CustomExceptionHandler extends ErrorHandler
             $this->exceptionDetails['file'] = $this->exception->getFile();
             $this->exceptionDetails['line'] = $this->exception->getLine();
             $this->exceptionDetails['trace'] = $this->exception->getTrace();
+            $this->exceptionDetails['params'] = $this->exception->getParams();
             $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
+            
 
             if($this->exceptionDetails['message'] == "")
             {
@@ -83,7 +85,10 @@ class CustomExceptionHandler extends ErrorHandler
         }
         else
         {
+            $this->exceptionDetails['params'] = $this->exception->getParams();
+            
             $message = $this->exception->getMessage();
+            
             if($message != "")
             {
                 $this->exceptionDetails['message'] = $message;

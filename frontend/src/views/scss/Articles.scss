@@ -51,6 +51,13 @@
 
         border-radius: 15px;
         
+        &__title
+        {
+            font-size: 32px;
+            margin-top: 3%;
+            text-align: center;
+        }
+
         &__titleTime
         {
             position: absolute;

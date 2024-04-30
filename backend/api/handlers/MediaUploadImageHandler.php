@@ -29,7 +29,7 @@ class MediaUploadImageHandler extends BaseHandlerRoute
                     
                 if ($uploadedFile->getSize() > $maxFileSize) 
                 {
-                    throw new Warning(400, "UploadImage File size exceeds the maximum allowable file size", "UploadImage File size exceeds the maximum allowable file size");
+                    throw new Warning(400, "UploadImage File size exceeds the maximum allowable file size", "UploadImage File size exceeds the maximum allowable file size", ['max_upload_filesize_mb' => $maxUploadFilesizeMB]);
                     return;
                 }
                 $allowedTypes = 

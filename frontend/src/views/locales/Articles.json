@@ -22,6 +22,7 @@
 
         "warnings": 
         {
+            "articlesNotFound": "К сожалению по вашему запросу статьи не найдены :(",
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
@@ -141,6 +142,17 @@
             "popularity",
             "posting date"
         ],
+
+        "warnings": 
+        {
+            "articlesNotFound": "Unfortunately no articles were found for your query :(",
+            "unknown": "An unknown error occurred. Try again"
+        },
+
+        "errors": 
+        {
+            "unknown": "An unknown error occurred. Try again"
+        },
 
         "toolbarTips": 
         {

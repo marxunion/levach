@@ -166,8 +166,6 @@
 						})
 						.then((response) => 
 						{
-							let modalInfoProps;
-						
 							if (response.data) 
 							{
 								if(response.data.fileName)
@@ -176,82 +174,53 @@
 								}
 								else 
 								{
-									modalInfoProps = {
-										status: false, text: (langData.value['warnings'] as JsonData)["unknown"]
-									}
-									openModal(InfoModal, modalInfoProps);
+									openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
 								}
 							}
 							else
 							{
-								modalInfoProps = {
-									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
-								}
-								openModal(InfoModal, modalInfoProps);
+								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 							}
 						})
 						.catch((error) => 
 						{
-							let modalInfoProps;
-
 							if (error.response.data) 
 							{
 								if(error.response.data.Warning)
 								{
 									if(error.response.data.Warning.message == "UploadImage Invalid image type")
 									{
-										modalInfoProps = {
-											status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]
-										}
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
 									}
 									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
 									{
-										modalInfoProps = {
-											status: false, text: (langData.value['warnings'] as JsonData)["imageMaxSize"]
-										}
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageMaxSize"] as string + error.response.data.Warning.params.max_upload_filesize_mb + (langData.value['warnings'] as JsonData)["imageMaxSizeSymbol"] as string});
 									}
 									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
 									{
-										modalInfoProps = {
-											status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]
-										}
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
 									}
 									else
 									{
-										modalInfoProps = {
-											status: false, text: (langData.value['warnings'] as JsonData)["unknown"]
-										}
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["unknown"]})
 									}
-									openModal(InfoModal, modalInfoProps);
 								}
 								else if(error.response.data.Error)
 								{
-									modalInfoProps = {
-										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
-									}
-									openModal(InfoModal, modalInfoProps);
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 								}
 								else if(error.response.data.Critical)
 								{
-									modalInfoProps = {
-										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
-									}
-									openModal(InfoModal, modalInfoProps);
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 								}
 								else 
 								{
-									modalInfoProps = {
-										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
-									}
-									openModal(InfoModal, modalInfoProps);
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 								}
 							}
 							else
 							{
-								modalInfoProps = {
-									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
-								}
-								openModal(InfoModal, modalInfoProps);
+								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 							}
 						});
 					});

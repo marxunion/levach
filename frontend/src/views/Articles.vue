@@ -209,7 +209,7 @@
 				<DropDown :options="sortTypes" :default="sortTypes[currentSortType]" class="main__header__sort__select" @inputIndex="onChangeSortType" />
 			</div>
 		</div>
-		<article class="main__article" v-if="articles !== null && !loading" v-for="article in articles">
+		<article class="main__article" v-if="articles.length > 0 && !loading" v-for="article in articles">
             <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion-1].date) }}</p>
             <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
             <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
@@ -242,6 +242,8 @@
                 class="main__article__select" 
                 @inputIndex="(version : number) => (article as Article).currentSelectedVersion = version" />
         </article>
+        <h1 v-if="articles.length == 0 && !loading" class="main__article__title">  {{ (langData['warnings'] as JsonData)["articlesNotFound"] }}</h1>
+        
         <div ref="scrollTarget" style="height: 100px;"></div>
         <Loader v-if="loading" />
     </main>
