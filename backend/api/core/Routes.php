@@ -47,6 +47,11 @@ class Routes
     
         self::$app->group('/api', function (RouteCollectorProxy $apiGroup) 
         {
+            $apiGroup->get('/', function (Request $request, Response $response) 
+            {
+                self::$handler = new StatusHandler($request, $response);
+                return self::$handler->Handle();
+            });
             $apiGroup->group('/admin', function (RouteCollectorProxy $adminGroup) 
             {
                 $adminGroup->group('/settings', function (RouteCollectorProxy $adminSettingsGroup) 
@@ -81,12 +86,6 @@ class Routes
                     self::$handler = new AdminQuitHandler($request, $response);
                     return self::$handler->Handle();
                 });
-            });
-
-            $apiGroup->get('/', function (Request $request, Response $response) 
-            {
-                self::$handler = new StatusHandler($request, $response);
-                return self::$handler->Handle();
             });
 
             $apiGroup->get('/csrfToken', function (Request $request, Response $response) 
