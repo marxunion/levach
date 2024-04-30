@@ -37,6 +37,7 @@ class ArticlesHandler extends BaseHandlerRoute
         $category = 'editoriallyArticles';
         if(isset($this->parsedBody['category']))
         {
+            $category = $this->parsedBody['category'];
         }
 
         $lastLoadedArticleId = 2147483645;

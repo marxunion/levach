@@ -74,7 +74,7 @@ class ArticleNewModel extends BaseModel
         $this->database->insert('codes', $codesData);
     }
 
-    public function newAdminArticle($title, $text, $tags, $viewCode, $editCode)
+    public function newArticleAdmin($title, $text, $tags, $viewCode, $editCode)
     {
         $lastArticleId = $this->database->max('articles', 'id');
         $newArticleId = 1;
@@ -91,9 +91,10 @@ class ArticleNewModel extends BaseModel
             'text' => $text,
             'tags' => null,
             
-            'editorially_status' => 2,
+            'editorially_status' => 1,
+            
             'premoderation_status' => 2,
-            'acceptededitorially_status' => 1,
+            'acceptededitorially_status' => 2,
             
             'date' => time()
         ];

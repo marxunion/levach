@@ -20,6 +20,8 @@ class ArticleNewHandler extends BaseHandlerRoute
         if(is_array($parsedBody))
         {
             $this->parsedBody = $parsedBody;
+            $this->cookiesBody = $this->request->getCookieParams();
+
             if(!isset($this->parsedBody['text']))
             {
                 throw new Warning(400, "Please add a title for the article", "Empty article title");
@@ -74,6 +76,8 @@ class ArticleNewHandler extends BaseHandlerRoute
                                 }
                                 
                             }
+                            
+                            $this->response = $this->response->withJson(['viewCode' => $viewCode, 'editCode' => $editCode]);
                         } 
                         else 
                         {
