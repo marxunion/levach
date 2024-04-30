@@ -13,11 +13,11 @@ class Database
     private static function establishConnection() 
     {
         self::$connection = new Medoo([
-            'database_type' => Settings::getProperty("DB_TYPE"),
-            'database_name' => Settings::getProperty("DB_NAME"),
-            'server' => Settings::getProperty("DB_HOST"),
-            'username' => Settings::getProperty("DB_USER"),
-            'password' => Settings::getProperty("DB_PASSWORD")
+            'database_type' => Settings::getSetting("DB_TYPE"),
+            'database_name' => Settings::getSetting("DB_NAME"),
+            'server' => Settings::getSetting("DB_HOST"),
+            'username' => Settings::getSetting("DB_USER"),
+            'password' => Settings::getSetting("DB_PASSWORD")
         ]);
     }
 

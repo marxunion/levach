@@ -33,9 +33,9 @@
         return routeName == route.name ? true : false;
     };
 
-    let settings = reactive({
-        article_edit_timeout_minutes: 5,
-        max_upload_filesize_mb: 30
+    const settings = ref({
+        article_edit_timeout_minutes: 0,
+        max_upload_filesize_mb: 0
     });
 
     const onLoginButton = async () => 
@@ -171,15 +171,15 @@
         const data =
         {
             csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-            settings: settings
+            settings: settings.value
         }
 
-        await axios.post('/api/admin/settings/edit', data)
+        await axios.post('/api/admin/settings/set', data)
         .then(response => 
         {
             if(response.data.success)
             {
-                pushModal(InfoModal, {status: true, text: langData.value['successfullySavedChanges']}); 
+                pushModal(InfoModal, {status: true, text: langData.value['successfullySettingsSaved']}); 
             }
             else
             {
@@ -402,9 +402,9 @@
             await axios.post('/api/admin/settings/get', data)
             .then(response => 
             {
-                if(response.data.settings)
+                if(response.data)
                 {
-                    settings = response.data.settings;
+                    settings.value = response.data;
                 }
                 else
                 {
@@ -522,11 +522,11 @@
         <div class="form__fields">
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleTimeoutMinutesTitle'] }}</p>
-                <VueNumberInput v-model="settings.article_edit_timeout_minutes" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+                <VueNumberInput :value="settings.article_edit_timeout_minutes" v-model="settings.article_edit_timeout_minutes" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleMaxUploadFileSizeTitle'] }}</p>
-                <VueNumberInput v-model="settings.max_upload_filesize_mb" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+                <VueNumberInput :value="settings.max_upload_filesize_mb" v-model="settings.max_upload_filesize_mb" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
         </div>
 

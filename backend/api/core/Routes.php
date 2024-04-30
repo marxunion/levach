@@ -17,7 +17,8 @@ use Base\BaseHandlerRoute;
 use Base\EmptyHandlerRoute;
 
 use Api\Handlers\csrfTokenHandler;
-use Api\Handlers\AdminSettingsHandler;
+use Api\Handlers\AdminSettingsGetHandler;
+use Api\Handlers\AdminSettingsSetHandler;
 use Api\Handlers\AdminStatusHandler;
 use Api\Handlers\AdminQuitHandler;
 use Api\Handlers\AdminLoginHandler;
@@ -50,29 +51,15 @@ class Routes
             {
                 $adminGroup->group('/settings', function (RouteCollectorProxy $adminSettingsGroup) 
                 {
-                    $adminSettingsGroup->get('/getAll', function (Request $request, Response $response) 
-                    {
-                        self::$handler = new AdminSettingsHandler($request, $response);
-                        self::$handler->Init();
-                        self::$handler->getAllProperties();
-
-                        return self::$handler->Finish();
-                    });
-
                     $adminSettingsGroup->post('/get', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminSettingsHandler($request, $response);
-                        self::$handler->Init();
-                        self::$handler->get();
-                        
-
-                        return self::$handler->Finish();
+                        self::$handler = new AdminSettingsGetHandler($request, $response);
+                        return self::$handler->Handle();
                     });
 
                     $adminSettingsGroup->post('/set', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminSettingsHandler($request, $response);
-                        self::$handler->Init();
+                        self::$handler = new AdminSettingsSetHandler($request, $response);
                         return self::$handler->Handle();
                     });
                 });

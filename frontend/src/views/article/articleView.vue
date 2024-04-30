@@ -183,13 +183,13 @@
 								else 
 								{
 									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"] });
-									reject(new Error("UnknownError"));
+									(new Error("UnknownError"));
 								}
 							}
 							else
 							{
 								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"] });
-								reject(new Error("UnknownError"))
+
 							}
 						})
 						.catch((error) => 

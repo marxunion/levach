@@ -82,7 +82,6 @@
 										status: false, text: (langData.value['warnings'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
-									reject(new Error("UnknownError"));
 								}
 							}
 							else
@@ -91,7 +90,6 @@
 									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 								}
 								openModal(InfoModal, modalInfoProps);
-								reject(new Error("UnknownError"))
 							}
 						})
 						.catch((error) => 
@@ -134,7 +132,6 @@
 										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
-									reject(new Error("UnknownError"));
 								}
 								else if(error.response.data.Critical)
 								{
@@ -142,7 +139,6 @@
 										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
-									reject(new Error("UnknownError"));
 								}
 								else 
 								{
@@ -150,7 +146,6 @@
 										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
-									reject(new Error("UnknownError"));
 								}
 							}
 							else
@@ -159,7 +154,6 @@
 									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 								}
 								openModal(InfoModal, modalInfoProps);
-								reject(new Error("UnknownError"))
 							}
 						});
 					});
@@ -241,7 +235,7 @@
 								{
 									const modal = await openModal(InfoModalWithLink, {status: true, text: langData.value['articleCreatedSuccessfully'], link: "https://"+window.location.hostname + "/#/article/edit/" + response.data.editCode, text2: (langData.value['warnings'] as JsonData)['articleEditCodeCopy']})
 									
-									modal.onclose = function(event)
+									modal.onclose = function()
 									{
 										router.push("/article/edit/" + response.data.editCode);
 									};

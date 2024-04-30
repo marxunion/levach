@@ -114,7 +114,7 @@
 
 	let fetchedData = ref();
 	let loaded = ref(false);
-
+	
 	let statistics : ComputedRef<Statistics> = computed(() => ({
 		rating: {
 			count: 0,
@@ -180,7 +180,6 @@
 										status: false, text: (langData.value['warnings'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
-									reject(new Error("UnknownError"));
 								}
 							}
 							else
@@ -189,7 +188,6 @@
 									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 								}
 								openModal(InfoModal, modalInfoProps);
-								reject(new Error("UnknownError"))
 							}
 						})
 						.catch((error) => 
@@ -232,7 +230,6 @@
 										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
-									reject(new Error("UnknownError"));
 								}
 								else if(error.response.data.Critical)
 								{
@@ -240,7 +237,6 @@
 										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
-									reject(new Error("UnknownError"));
 								}
 								else 
 								{
@@ -248,7 +244,6 @@
 										status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 									}
 									openModal(InfoModal, modalInfoProps);
-									reject(new Error("UnknownError"));
 								}
 							}
 							else
@@ -257,7 +252,6 @@
 									status: false, text: (langData.value['errors'] as JsonData)["unknown"]
 								}
 								openModal(InfoModal, modalInfoProps);
-								reject(new Error("UnknownError"))
 							}
 						});
 					});

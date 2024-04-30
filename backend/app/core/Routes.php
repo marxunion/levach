@@ -20,7 +20,7 @@ class Routes
     {
         self::$app = $app;
         
-        if(Settings::getProperty("IS_DEBUG_SERVER"))
+        if(Settings::getSetting("IS_DEBUG_SERVER"))
         {
             self::$app->get('/', function (Request $request,Response $response) 
             {

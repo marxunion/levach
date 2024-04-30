@@ -39,11 +39,18 @@ class Settings
             self::$settings['IS_DEBUG_SERVER'] = false;
         }
     }
-    public static function getProperty($key)
+    public static function getSetting($key)
     {
-        return self::$settings[$key];
+        if(isset(self::$settings[$key]))
+        {
+            return self::$settings[$key];
+        }
+        else
+        {
+            return null;
+        }
     }
-    public static function setProperty($key, $value)
+    public static function setSetting($key, $value)
     {
         self::$settings[$key] = $value;
     }
