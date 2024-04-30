@@ -18,9 +18,11 @@
             "imageMaxSize": "Размер загружаемого изображения должен быть не больше {size}МБ",
             "imageUnallowedType": "Расширение загружаемого изображения не поддерживается",
             "imageNeedImage": "Пожалуйста загрузите хотяб одно изображение",
-    
+
+            "articleDuplicatedTags": "В статье не могут дублироватся теги",
             "tagSymbols": "Тег не может быть менее 1 символа и более 40 символов",
             "tagAlreadyExist": "Такой тег уже добавлен к статье",
+
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
@@ -130,8 +132,10 @@
             "imageUnallowedType": "The extension of the uploaded image is not supported",
             "imageNeedImage": "Please upload at least one image",
     
+            "articleDuplicatedTags": "Tags cannot be duplicated in an article",
             "tagSymbols": "Tag cannot be less than 1 characters and exceed 40 characters",
             "tagAlreadyExist": "This tag is already added to the article",
+            
             "unknown": "An unknown error occurred. Try again"
         },
 

@@ -12,9 +12,9 @@ use Api\Handlers\csrfTokenHandler;
 
 class AdminSettingsSetHandler extends BaseHandlerRoute
 {
-    public static function setSettings($settings, $cookiesData)
+    public static function setSettings($settings, $cookiesBody)
     {
-        if(AdminStatusHandler::isAdmin($cookiesData))
+        if(AdminStatusHandler::isAdmin($cookiesBody))
         {
             if(is_array($settings))
             {
@@ -35,9 +35,9 @@ class AdminSettingsSetHandler extends BaseHandlerRoute
         }  
     }
     
-    public static function setSetting($settingName, $settingValue, $cookiesData)
+    public static function setSetting($settingName, $settingValue, $cookiesBody)
     {
-        if(AdminStatusHandler::isAdmin($cookiesData))
+        if(AdminStatusHandler::isAdmin($cookiesBody))
         {
             if(isset($settingName))
             {

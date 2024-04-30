@@ -62,7 +62,7 @@ class MediaUploadImageHandler extends BaseHandlerRoute
             }
             else
             {
-                throw new Critical(400, "Max upload filesize not found in settings", "Max upload filesize not found in settings");
+                throw new Critical(500, "Unknown error", "Max upload filesize not found in settings");
             }
         } 
         else 

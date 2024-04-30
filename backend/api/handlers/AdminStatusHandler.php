@@ -9,17 +9,17 @@ use Api\Models\AdminStatusModel;
 
 class AdminStatusHandler extends BaseHandlerRoute
 {
-    public static function isAdmin($cookiesData)
+    public static function isAdmin($cookiesBody)
     {
-        if(isset($cookiesData['admin_token']))
+        if(isset($cookiesBody['admin_token']))
         {
-            $token = $cookiesData['admin_token'];
-            if(isset($cookiesData['admin_nickname']))
+            $token = $cookiesBody['admin_token'];
+            if(isset($cookiesBody['admin_nickname']))
             {
-                $nickname = $cookiesData['admin_nickname'];
-                if(isset($cookiesData['admin_expiration_time']))
+                $nickname = $cookiesBody['admin_nickname'];
+                if(isset($cookiesBody['admin_expiration_time']))
                 {
-                    $expirationTime = $cookiesData['admin_expiration_time'];
+                    $expirationTime = $cookiesBody['admin_expiration_time'];
                     return AdminStatusModel::_isAdmin($token, $nickname, $expirationTime);
                 }
                 else

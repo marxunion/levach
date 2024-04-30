@@ -15,23 +15,25 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
     {
         if(isset($this->args['editCode']))
         {
-            throw new Warning(404, "Article for edit not found", "Article for edit not found");
-        }
+            $this->model = new ArticleEditModel();
+            $parsedBody = $this->request->getParsedBody();
 
-        $this->model = new ArticleEditModel();
-        $parsedBody = $this->request->getParsedBody();
-
-        if(is_array($parsedBody))
-        {
-            $this->parsedBody = $parsedBody;
-            if(!isset($this->parsedBody['text']))
+            if(is_array($parsedBody))
+            {
+                $this->parsedBody = $parsedBody;
+                if(!isset($this->parsedBody['text']))
+                {
+                    throw new Warning(400, "Please add a title for the article", "Empty article title");
+                }
+            }
+            else
             {
                 throw new Warning(400, "Please add a title for the article", "Empty article title");
             }
         }
         else
         {
-            throw new Warning(400, "Please add a title for the article", "Empty article title");
+            throw new Warning(404, "Article for editing not found", "Article for edit not found");
         }
     }
 
@@ -57,14 +59,14 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                             {
                                 if(isset($this->parsedBody['text']))
                                 {
-                                    $this->model->editArticle($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
+                                    $this->model->editArticle($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags'], $this->request->getCookieParams());
                                 }
                                 else
                                 {
-                                    $this->model->editArticle($articleId, $title, $this->parsedBody['text'], null);
+                                    $this->model->editArticle($articleId, $title, $this->parsedBody['text'], null, $this->request->getCookieParams());
                                 }
                                 
-                                $this->response = $this->response->withJson(['success' => true, 'message' => 'Article successfully saved']);
+                                $this->response = $this->response->withJson(['success' => true]);
                             } 
                             else 
                             {
@@ -83,7 +85,7 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                 } 
                 else 
                 {
-                    throw new Warning(400, "Please add a title for the article.", "Invalid article title");
+                    throw new Warning(400, "Please add a title for the article", "Invalid article title");
                 }
             } 
             else 
@@ -93,7 +95,7 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
         }
         else
         {
-            throw new Warning(404, "Article for edit not found", "Article for edit not found");
+            throw new Warning(404, "Article for editing not found", "Article for editing not found");
         }
     }
 }

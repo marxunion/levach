@@ -13,7 +13,10 @@ class ArticleEditPreloadHandler extends BaseHandlerRouteWithArgs
    
     public function Init()
     {
-        $this->model = new ArticleEditPreloadModel();
+        if(isset($this->args['editCode']))
+        {
+            $this->model = new ArticleEditPreloadModel();
+        }
     }
 
     public function Process()

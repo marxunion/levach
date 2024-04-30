@@ -40,8 +40,15 @@ class ArticleNewModel extends BaseModel
         {
             if(count($tags) > 0)
             {
-                $tagsString = '{'.implode(',', $tags).'}';
-                $data['tags'] = $tagsString;
+                if(count($tags) == count(array_unique($tags)))
+                {
+                    $tagsString = '{'.implode(',', $tags).'}';
+                    $data['tags'] = $tagsString;
+                }
+                else
+                {
+                    throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
+                }
             }
         }
 
@@ -53,7 +60,8 @@ class ArticleNewModel extends BaseModel
             'rating' => 0,
             'comments' => 0,
             'created_at' => time(),
-            'current_version' => 1
+            'current_version' => 1,
+            'edit_timeout_to_date' => time()
         ];
         $this->database->insert('statistics', $statisticsData);
 

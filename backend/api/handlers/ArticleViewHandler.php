@@ -11,7 +11,15 @@ class ArticleViewHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
-        $this->model = new ArticleViewModel();
+        if(isset($this->args['viewCode']))
+        {
+            $this->model = new ArticleViewModel();
+        }
+        else
+        {
+            throw new Error(404, "Article not found", "Article not found");
+        }
+        
     }
     public function Process()
     {

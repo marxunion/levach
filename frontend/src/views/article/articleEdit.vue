@@ -27,6 +27,8 @@
 
 	import './../../libs/font_2605852_prouiefeic';
 
+	import { timestampToLocaleFormatedTime } from '../../ts/DateTimeHelper';
+
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 	
 	interface Statistic 
@@ -296,7 +298,7 @@
 							{
 								if(response.data.success)
 								{
-									openModal(InfoModalWithLink, {status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']})
+									openModal(InfoModalWithLink, {status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']});
 								}
 								else
 								{
@@ -304,19 +306,23 @@
 									{
 										if(response.data.Warning.message == "Please add a title for the article")
 										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']});
+										}
+										else if(response.data.Warning.message == 'Article has duplicated tags')
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleDuplicatedTags']});
 										}
 										else if(response.data.Warning.message == "Title must contain between 5 and 120 characters")
 										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']});
 										}
 										else if(response.data.Warning.message == "Please add content for the article")
 										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']});
 										}
 										else if(response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
 										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']});
 										}
 										else
 										{
@@ -357,6 +363,10 @@
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 										}
+										else if(error.response.data.Warning.message == "Wait for a timeout to re-edit the article")
+										{
+											openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)['editTimeoutToDate'] as string).replace('{date}', timestampToLocaleFormatedTime(error.response.data.Warning.params['edit_timeout_to_date']))})
+										}
 										else if(error.response.data.Warning.message == "Title must contain between 5 and 120 characters")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
@@ -376,13 +386,13 @@
 									}
 									else if(error.response.data.Error)
 									{
-										if(error.response.data.Warning.message == "Article for edit not found")
+										if(error.response.data.Error.message == "Article for edit not found")
 										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']})
+											openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNotFound']})
 										}
 										else if(error.response.data.Error.message == "Please make changes for edit")
 										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedChanges']});
+											openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNeedChanges']});
 										}
 										else
 										{
@@ -482,6 +492,8 @@
 					text: fetchedData.value['text'],
 					language: LangDataHandler.currentLanguage.value
 				});
+
+				tags.value = fetchedData.value['tags'];
 			}
 			loaded.value = true;
 		} 

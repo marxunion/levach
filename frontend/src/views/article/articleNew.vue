@@ -216,6 +216,10 @@
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 										}
+										else if(response.data.Warning.message == 'Article has duplicated tags')
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleDuplicatedTags']});
+										}
 										else if(response.data.Warning.message == "Title must contain between 5 and 120 characters")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})

@@ -21,8 +21,9 @@
             "imageUnallowedType": "Расширение загружаемого изображения не поддерживается",
             "imageNeedImage": "Пожалуйста загрузите хотяб одно изображение",
             
-            "editTimeoutedToDate": "Подождите до {date}, для повторного редактирования",
+            "editTimeoutToDate": "Подождите до {date}, для повторного редактирования",
 
+            "articleDuplicatedTags": "В статье не могут дублироватся теги",
             "tagSymbols": "Тег не может быть менее 1 символа и более 40 символов",
             "tagAlreadyExist": "Такой тег уже добавлен к статье",
             
@@ -224,8 +225,10 @@
             
             "editTimeoutToDate": "Wait until {date} to edit again",
 
+            "articleDuplicatedTags": "Tags cannot be duplicated in an article",
             "tagSymbols": "Tag cannot be less than 1 characters and exceed 40 characters",
             "tagAlreadyExist": "This tag is already added to the article",
+
             "unknown": "An unknown error occurred. Try again"
         },
 
