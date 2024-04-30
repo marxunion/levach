@@ -5,8 +5,7 @@
         {
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку",
 
-            "imageMaxSize": "Размер загружаемого изображения должен быть не больше ",
-            "imageMaxSizeSymbol": "МБ",
+            "imageMaxSize": "Размер загружаемого изображения должен быть не больше {size}МБ",
             "imageUnallowedType": "Расширение загружаемого изображения не поддерживается",
             "imageNeedImage": "Пожалуйста загрузите хотяб одно изображение"
         },
@@ -115,8 +114,7 @@
         {
             "unknown": "An unknown error occurred. Try again",
 
-            "imageMaxSize": "The size of the uploaded image must be no larger than ",
-            "imageMaxSizeSymbol": "MB",
+            "imageMaxSize": "The size of the uploaded image must be no larger than {size}MB",
             "imageUnallowedType": "The extension of the uploaded image is not supported",
             "imageNeedImage": "Please upload at least one image"
         },

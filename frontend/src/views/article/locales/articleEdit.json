@@ -17,33 +17,11 @@
             "articleNeedContent": "Пожалуйста добавьте содержание для статьи",
             "articleContentSymbols": "Содержание статьи не может быть менее 25 символов и более 10000 символов",
             
-            "imageMaxSize": "Размер загружаемого изображения должен быть не больше ",
-            "imageMaxSizeSymbol": "МБ",
+            "imageMaxSize": "Размер загружаемого изображения должен быть не больше {size}МБ",
             "imageUnallowedType": "Расширение загружаемого изображения не поддерживается",
             "imageNeedImage": "Пожалуйста загрузите хотяб одно изображение",
             
-            "editTimeoutMinutes": "Пожалуйста ожидайте таймаут в {timeout} для повторного редактирования",
-            "editTimeoutMinutesSymbols": {
-                "title": "минут",
-                "ends": 
-                [
-                    {
-                        "end": "",
-                        "endOffsetStart": 0,
-                        "endOffsetEnd": 0
-                    },
-                    {
-                        "end": "ы",
-                        "endOffsetStart": 1,
-                        "endOffsetEnd": 4
-                    },
-                    {
-                        "end": "",
-                        "endOffsetStart": 5,
-                        "endOffsetEnd": -1
-                    }
-                ]
-            },
+            "editTimeoutedToDate": "Подождите до {date}, для повторного редактирования",
 
             "tagSymbols": "Тег не может быть менее 1 символа и более 40 символов",
             "tagAlreadyExist": "Такой тег уже добавлен к статье",
@@ -240,33 +218,11 @@
             "articleNeedContent": "Please add content for the article",
             "articleContentSymbols": "Article content cannot be less than 25 characters and exceed 10000 characters",
             
-            "imageMaxSize": "The size of the uploaded image must be no larger than ",
-            "imageMaxSizeSymbol": "MB",
+            "imageMaxSize": "The size of the uploaded image must be no larger than {size}MB",
             "imageUnallowedType": "The extension of the uploaded image is not supported",
             "imageNeedImage": "Please upload at least one image",
             
-            "editTimeoutMinutes": "Please wait timeout {timeout} for edit",
-            "editTimeoutMinutesSymbols": {
-                "title": "minute",
-                "ends": 
-                [
-                    {
-                        "end": "s",
-                        "endOffsetStart": 0,
-                        "endOffsetEnd": 0
-                    },
-                    {
-                        "end": "",
-                        "endOffsetStart": 1,
-                        "endOffsetEnd": 1
-                    },
-                    {
-                        "end": "s",
-                        "endOffsetStart": 2,
-                        "endOffsetEnd": -1
-                    }
-                ]
-            },
+            "editTimeoutToDate": "Wait until {date} to edit again",
 
             "tagSymbols": "Tag cannot be less than 1 characters and exceed 40 characters",
             "tagAlreadyExist": "This tag is already added to the article",

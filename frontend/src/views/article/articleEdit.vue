@@ -194,7 +194,7 @@
 									}
 									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
 									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageMaxSize"] as string + error.response.data.Warning.params.max_upload_filesize_mb + (langData.value['warnings'] as JsonData)["imageMaxSizeSymbol"] as string});
+										openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
 									}
 									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
 									{
