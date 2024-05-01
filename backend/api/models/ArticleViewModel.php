@@ -19,7 +19,7 @@ class ArticleViewModel extends BaseModel
 
     public function viewArticle($articleId)
     {
-        $articleVertions = $this->database->select('articles', ['title', 'text', 'tags', 'date', 'premoderation_status', 'acceptededitorially_status'], ['id' => $articleId]);
+        $articleVertions = $this->database->select('articles', ['title', 'text', 'tags', 'date', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId]);
         $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]);
 
         foreach ($articleVertions as $versionNum => $versionInfo) 

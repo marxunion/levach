@@ -6,7 +6,7 @@ export interface ArticleVersion
     tags: Array<string>,
     editorially_status: number,
     premoderation_status: number,
-    acceptededitorially_status: number,
+    approvededitorially_status: number,
     date: number
 }
 export interface Statistics

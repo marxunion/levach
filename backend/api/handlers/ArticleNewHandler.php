@@ -50,25 +50,29 @@ class ArticleNewHandler extends BaseHandlerRoute
                         $content = implode("\n", array_slice($contentParts, 1));
                         if (strlen($content) >= 25 && strlen($content) <= 10000) 
                         {
-                            $viewCode = hash('sha3-224', uniqid().bin2hex(random_bytes(random_int(60,80))).$title);
-                            $editCode = hash('sha3-256', uniqid().bin2hex(random_bytes(random_int(70,90))).$title);
-
-                            if(isset($this->parsedBody['tags']))
+                            if(AdminStatusHandler::isAdmin($this->cookiesBody))
                             {
-                                if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                                $viewCode = bin2hex(random_bytes(random_int(5,15))).uniqid().hash('sha3-256', uniqid().bin2hex(random_bytes(random_int(80,100))).$title).bin2hex(random_bytes(random_int(5,15)));
+                                $editCode = bin2hex(random_bytes(random_int(10,25))).uniqid().hash('sha3-512', uniqid().bin2hex(random_bytes(random_int(130,150))).$title).bin2hex(random_bytes(random_int(10,25)));
+
+                                if(isset($this->parsedBody['tags']))
                                 {
                                     $this->model->newArticleAdmin($title, $this->parsedBody['text'], $this->parsedBody['tags'], $viewCode, $editCode);
                                 }
                                 else
                                 {
-                                    $this->model->newArticle($title, $this->parsedBody['text'], $this->parsedBody['tags'], $viewCode, $editCode);
+                                    $this->model->newArticleAdmin($title, $this->parsedBody['text'], null, $viewCode, $editCode);
                                 }
                             }
                             else
                             {
-                                if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                                $viewCode = bin2hex(random_bytes(random_int(5,15))).uniqid().hash('sha3-224', uniqid().bin2hex(random_bytes(random_int(60,80))).$title).bin2hex(random_bytes(random_int(5,15)));
+                                $editCode = bin2hex(random_bytes(random_int(5,15))).uniqid().hash('sha3-256', uniqid().bin2hex(random_bytes(random_int(70,90))).$title).bin2hex(random_bytes(random_int(5,15)));
+
+                                if(isset($this->parsedBody['tags']))
                                 {
-                                    $this->model->newArticleAdmin($title, $this->parsedBody['text'], null, $viewCode, $editCode);
+                                    
+                                    $this->model->newArticle($title, $this->parsedBody['text'], $this->parsedBody['tags'], $viewCode, $editCode);
                                 }
                                 else
                                 {

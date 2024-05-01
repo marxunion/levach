@@ -6,6 +6,7 @@ use Core\Error;
 use Base\BaseHandlerRoute;
 
 use Api\Models\ArticlesModel;
+use Api\Handlers\AdminStatusHandler;
 
 class ArticlesHandler extends BaseHandlerRoute
 {
@@ -16,6 +17,7 @@ class ArticlesHandler extends BaseHandlerRoute
         if(is_array($parsedBody))
         {
             $this->parsedBody = $parsedBody;
+            $this->cookiesBody = $this->request->getCookieParams();
         }
         else
         {
@@ -50,6 +52,7 @@ class ArticlesHandler extends BaseHandlerRoute
         {
             $sortType = $this->parsedBody['sortType'];
             $articleIds = null;
+            
             if($sortType == 'timestamp')
             {
                 $lastLoadedArticleTimestamp = 2147483645;
@@ -58,6 +61,61 @@ class ArticlesHandler extends BaseHandlerRoute
                     $lastLoadedArticleTimestamp = $this->parsedBody['lastLoadedArticleTimestamp'];
                 }
                 $articleIds = $this->model->loadArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+    
+                if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                {
+                    if($cateroty == 'editoriallyArticles')
+                    {
+                        $articleIds = $this->model->loadEditoriallyArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
+                    }
+                    else if($cateroty == 'editoriallyApprovedArticles')
+                    {
+                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
+                    }
+                    else if($cateroty == 'abyssArticles')
+                    {
+                        $articleIds = $this->model->loadAbyssArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
+                    }
+                    else if($cateroty == 'articlesWaitingApproval')
+                    {
+                        $articleIds = $this->model->loadArticlesWaitingApprovalIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproval($articleIds));
+                    }
+                    else if($cateroty == 'articlesWaitingPremoderate')
+                    {
+                        $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
+                    }
+                    else
+                    {
+                        throw new Error(400, "Invalid category", "Invalid category");
+                    }
+                }
+                else
+                {
+                    if($cateroty == 'editoriallyArticles')
+                    {
+                        $articleIds = $this->model->loadEditoriallyArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
+                    }
+                    else if($cateroty == 'editoriallyApprovedArticles')
+                    {
+                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
+                    }
+                    else if($cateroty == 'abyssArticles')
+                    {
+                        $articleIds = $this->model->loadAbyssArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
+                    }
+                    else
+                    {
+                        throw new Error(400, "Invalid category", "Invalid category");
+                    }
+                }
             }
             else if($sortType == 'rate')
             {
@@ -66,15 +124,66 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $lastLoadedArticleRate = $this->parsedBody['lastLoadedArticleRate'];
                 }
-                $articleIds = $this->model->loadArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
+            
+                if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                {
+                    if($cateroty == 'editoriallyArticles')
+                    {
+                        $articleIds = $this->model->loadEditoriallyArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
+                        $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
+                    }
+                    else if($cateroty == 'editoriallyApprovedArticles')
+                    {
+                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
+                        $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
+                    }
+                    else if($cateroty == 'abyssArticles')
+                    {
+                        $articleIds = $this->model->loadAbyssArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
+                        $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
+                    }
+                    else if($cateroty == 'articlesWaitingApproval')
+                    {
+                        $articleIds = $this->model->loadArticlesWaitingApprovalIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
+                        $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproval($articleIds));
+                    }
+                    else if($cateroty == 'articlesWaitingPremoderate')
+                    {
+                        $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
+                        $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
+                    }
+                    else
+                    {
+                        throw new Error(400, "Invalid category", "Invalid category");
+                    }
+                }
+                else
+                {
+                    if($cateroty == 'editoriallyArticles')
+                    {
+                        $articleIds = $this->model->loadEditoriallyArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
+                        $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
+                    }
+                    else if($cateroty == 'editoriallyApprovedArticles')
+                    {
+                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
+                        $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
+                    }
+                    else if($cateroty == 'abyssArticles')
+                    {
+                        $articleIds = $this->model->loadAbyssArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
+                        $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
+                    }
+                    else
+                    {
+                        throw new Error(400, "Invalid category", "Invalid category");
+                    }
+                }
             }
             else
             {
                 throw new Error(400, "Invalid sortType", "Invalid sortType");
-                return;
             }
-            
-            $this->response = $this->response->withJson($this->model->loadArticles($articleIds, $category));
         }
         else
         {

@@ -53,7 +53,8 @@ class ArticleEditModel extends BaseModel
                         $articleData['title'] = $newTitle;
                         $articleData['text'] = $newText;
                         $articleData['premoderation_status'] = 0;
-                        $articleData['acceptededitorially_status'] = 0;
+                        $articleData['approvededitorially_status'] = 0;
+                        
                         $articleData['date'] = time();
                         
                         if(is_array($newTags))

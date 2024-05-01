@@ -477,7 +477,7 @@
 				
 				statuses = reactive({
 					premoderationStatus: fetchedData.value['premoderation_status'],
-					acceptedEditoriallyStatus: fetchedData.value['acceptededitorially_status']
+					acceptedEditoriallyStatus: fetchedData.value['approvededitorially_status']
 				});
 
 				statusesTexts = computed(() => 

@@ -30,7 +30,7 @@ class ArticleNewModel extends BaseModel
             
             'editorially_status' => 0,
             'premoderation_status' => 0,
-            'acceptededitorially_status' => 0,
+            'approvededitorially_status' => 0,
             
             'date' => time()
         ];
@@ -94,7 +94,7 @@ class ArticleNewModel extends BaseModel
             'editorially_status' => 1,
             
             'premoderation_status' => 2,
-            'acceptededitorially_status' => 2,
+            'approvededitorially_status' => 2,
             
             'date' => time()
         ];
