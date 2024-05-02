@@ -69,7 +69,7 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
             {
                 if($this->model->rejectApprove())
                 {
-                    
+                    $this->response = $this->response->withJson(['success' => true]);
                 }
                 else
                 {
@@ -78,7 +78,14 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
             }
             else if($this->parsedBody['status'] == 1)
             {
-                
+                if($this->model->acceptApprove())
+                {
+                    $this->response = $this->response->withJson(['success' => true]);
+                }
+                else
+                {
+                    throw new Critical(500, "Failed to accept approve article", "Failed to accept approve article");
+                }
             }
             else if($this->parsedBody['status'] == 2)
             {
