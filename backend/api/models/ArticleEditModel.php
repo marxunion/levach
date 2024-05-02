@@ -73,7 +73,7 @@ class ArticleEditModel extends BaseModel
                         $articleEditTimeoutMinutes = AdminSettingsGetHandler::getSetting('article_edit_timeout_minutes');
                         if(isset($articleEditTimeoutMinutes))
                         {
-                            $this->database->update('statistics', ['current_version' => $newVersion, 'current_title', 'edit_timeout_to_date' => $newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)], ['article_id' => $articleId]);
+                            $this->database->update('statistics', ['current_version' => $newVersion, 'current_title' => $newTitle, 'current_text' => $newText, 'current_tags' => $newTags, 'edit_timeout_to_date' => $newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)], ['article_id' => $articleId]);
                         }
                         else
                         {
