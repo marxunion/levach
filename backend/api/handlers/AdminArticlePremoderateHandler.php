@@ -23,13 +23,20 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        if(isset($this->args['viewCode']))
-                        {
-                            $this->model = new AdminArticlePremoderateModel();
+                        if(isset($this->parsedBody['status']))
+                        { 
+                            if(isset($this->args['viewCode']))
+                            {
+                                $this->model = new AdminArticlePremoderateModel();
+                            }
+                            else
+                            {
+                                throw new Error(400, "Article not found", "Article not found");
+                            }
                         }
-                        else
+                        else 
                         {
-                            throw new Error(400, "Article not found", "Article not found");
+                            throw new Error(400, "Premoderation status not found", "Premoderation status not found");
                         }
                     }
                     else
@@ -58,39 +65,37 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode'];);
         if(isset($articleId))
         {
-            if(isset($this->parsedBody['status']))
-            {   
-                if($this->parsedBody['status'])
+            if($this->parsedBody['status'] == 0)
+            {
+                
+                if($this->model->rejectPremoderate())
                 {
-                    if($this->model->acceptPremoderate())
-                    {
-                        return $this->response->withJson(['success' => true]);
-                    }
-                    else
-                    {
-                        throw new Critical(500, "Failed to premoderate article", "Failed to premoderate article");
-                    }
+                    $this->response = $this->response->withJson(['success' => true]);
                 }
                 else
                 {
-                    if($this->model->rejectPremoderate())
-                    {
-                        return $this->response->withJson(['success' => true]);
-                    }
-                    else
-                    {
-                        throw new Critical(500, "Failed to reject premoderate article", "Failed to reject premoderate article");
-                    }
+                    throw new Critical(500, "Failed to reject premoderate article", "Failed to reject premoderate article");
                 }
             }
-            else 
+            else if($this->parsedBody['status'] == 1)
             {
-                throw new Error(400, "Premoderation status not found", "Premoderation status not found");
+                if($this->model->acceptPremoderate())
+                {
+                    $this->response = $this->response->withJson(['success' => true]);
+                }
+                else
+                {
+                    throw new Critical(500, "Failed to premoderate article", "Failed to premoderate article");
+                }
+            }
+            else
+            {
+                throw new Error(404, "Unknown status", "Unknown status");
             }
         }
         else
         {
-            throw new Error(400, "Article not found", "Article not found");
+            throw new Error(404, "Article not found", "Article not found");
         }
     };
 }

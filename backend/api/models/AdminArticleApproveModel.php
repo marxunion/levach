@@ -18,18 +18,46 @@ class AdminArticleApproveModel extends BaseModel
         return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
 
-    public function rejectApproved($articleId)
+    public function rejectApprove($articleId)
     {
+        if($this->database->update('statistics', [''], ['']))
+        {
+            if($this->database->update('statistics', [''], ['article_id' => $articleId]))
+            {
 
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+
+        }
     }
 
-    public function acceptApproved($articleId)
+    public function acceptApprove($articleId)
     {
+        if($this->database)
+        {
+            if()
+            {
 
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+
+        }
     }
 
-    public function acceptApprovedWithChanges($articleId, $newTitle, $newText, $newTags)
+    public function acceptApproveWithChanges($articleId, $newTitle, $newText, $newTags)
     {
-
+        $articleInfo = $this->database->get('statistics', ['current_title', 'current_', ''], ['article_id' => $articleId]);
     }
 }

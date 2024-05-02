@@ -2,6 +2,7 @@
 namespace Api\Handlers;
 
 use Core\Error;
+use Core\Critical;
 
 use Base\BaseHandlerRouteWithArgs;
 
@@ -22,13 +23,20 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        if(isset($this->args['viewCode']))
+                        if(isset($this->parsedBody['status']))
                         {
-                            $this->model = new AdminArticleApproveModel();
+                            if(isset($this->args['viewCode']))
+                            {
+                                $this->model = new AdminArticleApproveModel();
+                            }
+                            else
+                            {
+                                throw new Error(404, "Article not found", "Article not found");
+                            }
                         }
                         else
                         {
-                            throw new Error(400, "Article not found", "Article not found");
+                            throw new Error(404, "Approved status not found", "Approved status not found");
                         }
                     }
                     else
@@ -57,32 +65,37 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode'];);
         if(isset($articleId))
         {
-            if(isset($this->parsedBody['status']))
-            {   
-                if($this->parsedBody['status'])
+            if($this->parsedBody['status'] == 0)
+            {
+                if($this->model->rejectApprove())
                 {
-                    if($this->model->acceptPremoderate())
-                    {
-                        return $this->response->withJson(['success' => true]);
-                    }
-                    else
-                    {
-                        throw new Critical(500, "Failed to premoderate article", "Failed to premoderate article");
-                    }
+                    
+                }
+            }
+            else if($this->parsedBody['status'] == 1)
+            {
+                
+            }
+            else if($this->parsedBody['status'] == 2)
+            {
+                if(isset($this->parsedBody['newTitle']) && isset($this->parsedBody['newText']) && isset($this->parsedBody['newTags']))
+                { 
+                    $this->model->
                 }
                 else
                 {
-
+                    throw new Error(400, "Changes in article not found", "Changes in article not found");
                 }
             }
-            else 
+
+            else
             {
-                throw new Error(400, "Approve status", "Unknown premoderation status");
+                throw new Error(404, "Unknown status", "Unknown status");
             }
         }
         else
         {
-            throw new Error(400, "Article not found", "Article not found");
+            throw new Error(404, "Article not found", "Article not found");
         }
     };
 }
