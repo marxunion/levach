@@ -22,7 +22,10 @@
 
     const onSearchButton = () =>
     {
-        router.push('/articles/search/'+searchText.value);
+        if(searchText.value.length > 0)
+        {
+            router.push('/articles/search/'+searchText.value);
+        }        
     }
 
     const emit = defineEmits();

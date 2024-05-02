@@ -535,7 +535,7 @@ class ArticlesModel extends BaseModel
 
     # ArticlesWaitingApproval
 
-    public function loadArticlesWaitingApprovalArticles($articleIds)
+    public function loadArticlesWaitingApproval($articleIds)
     {
         if($articleIds)
         {
