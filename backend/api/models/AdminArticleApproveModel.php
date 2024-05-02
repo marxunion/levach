@@ -17,4 +17,19 @@ class AdminArticleApproveModel extends BaseModel
     {
         return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
+
+    public function rejectApproved($articleId)
+    {
+
+    }
+
+    public function acceptApproved($articleId)
+    {
+
+    }
+
+    public function acceptApprovedWithChanges($articleId, $newTitle, $newText, $newTags)
+    {
+
+    }
 }

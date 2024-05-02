@@ -3,11 +3,11 @@ namespace Api\Handlers;
 
 use Core\Error;
 
-use Base\BaseHandlerRoute;
+use Base\BaseHandlerRouteWithArgs;
 
 use Api\Models\AdminArticleApproveModel;
 
-class AdminArticleApproveHandler extends BaseHandlerRoute
+class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
@@ -22,7 +22,14 @@ class AdminArticleApproveHandler extends BaseHandlerRoute
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        $this->model = new AdminArticleApproveModel();
+                        if(isset($this->args['viewCode']))
+                        {
+                            $this->model = new AdminArticleApproveModel();
+                        }
+                        else
+                        {
+                            throw new Error(400, "Article not found", "Article not found");
+                        }
                     }
                     else
                     {
@@ -47,6 +54,35 @@ class AdminArticleApproveHandler extends BaseHandlerRoute
 
     public function Process()
     {
+        $articleId = $this->model->getArticleByViewCode($this->args['viewCode'];);
+        if(isset($articleId))
+        {
+            if(isset($this->parsedBody['status']))
+            {   
+                if($this->parsedBody['status'])
+                {
+                    if($this->model->acceptPremoderate())
+                    {
+                        return $this->response->withJson(['success' => true]);
+                    }
+                    else
+                    {
+                        throw new Critical(500, "Failed to premoderate article", "Failed to premoderate article");
+                    }
+                }
+                else
+                {
 
+                }
+            }
+            else 
+            {
+                throw new Error(400, "Approve status", "Unknown premoderation status");
+            }
+        }
+        else
+        {
+            throw new Error(400, "Article not found", "Article not found");
+        }
     };
 }

@@ -3,11 +3,11 @@ namespace Api\Handlers;
 
 use Core\Error;
 
-use Base\BaseHandlerRoute;
+use Base\BaseHandlerRouteWithArgs;
 
 use Api\Models\AdminApproveArticlePreloadModel;
 
-class AdminApproveArticlePreloadHandler extends BaseHandlerRoute
+class AdminApproveArticlePreloadHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
@@ -22,7 +22,14 @@ class AdminApproveArticlePreloadHandler extends BaseHandlerRoute
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        $this->model = new AdminApproveArticlePreloadModel();
+                        if(isset($this->args['viewCode']))
+                        {
+                            $this->model = new AdminApproveArticlePreloadModel();
+                        }
+                        else
+                        {
+                            throw new Error(400, "Article not found", "Article not found");
+                        }
                     }
                     else
                     {
@@ -47,6 +54,6 @@ class AdminApproveArticlePreloadHandler extends BaseHandlerRoute
 
     public function Process()
     {
-
+        
     };
 }

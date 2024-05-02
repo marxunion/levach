@@ -27,6 +27,10 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
                         {
                             $this->model = new AdminArticlePremoderateModel();
                         }
+                        else
+                        {
+                            throw new Error(400, "Article not found", "Article not found");
+                        }
                     }
                     else
                     {
@@ -81,7 +85,7 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
             }
             else 
             {
-                throw new Error(400, "Unknown premoderation status", "Unknown premoderation status");
+                throw new Error(400, "Premoderation status not found", "Premoderation status not found");
             }
         }
         else

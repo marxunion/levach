@@ -21,7 +21,8 @@ use Api\Handlers\AdminArticlePremoderateHandler;
 use Api\Handlers\ArticleApproveRequestHandler;
 
 use Api\Handlers\AdminArticleApproveHandler;
-use Api\Handlers\AdminApproveArticlePreloadHandler;
+use Api\Handlers\AdminArticleDeleteHandler;
+use Api\Handlers\AdminArticleApprovePreloadHandler;
 
 use Api\Handlers\AdminArticleCommentsDeleteHandler;
 use Api\Handlers\ArticleCommentsGetHandler;
@@ -101,7 +102,7 @@ class Routes
                         return self::$handler->Handle();
                     });
                 });
-                $adminGroup->group('/admin', function (RouteCollectorProxy $articleGroup) 
+                $adminGroup->group('/article', function (RouteCollectorProxy $articleGroup) 
                 {
                     $adminGroup->post('/premoderate/{viewCode}', function (Request $request, Response $response, array $args) 
                     {
@@ -118,6 +119,12 @@ class Routes
                     $adminGroup->post('/approveEditorially/{viewCode}', function (Request $request, Response $response, array $args) 
                     {
                         self::$handler = new AdminArticleApproveHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
+
+                    $adminGroup->post('/delete/{viewCode}', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new AdminArticleDeleteHandler($request, $response, $args);
                         return self::$handler->Handle();
                     });
                 });
@@ -138,18 +145,6 @@ class Routes
                 $adminGroup->post('/quit', function (Request $request, Response $response) 
                 {
                     self::$handler = new AdminQuitHandler($request, $response);
-                    return self::$handler->Handle();
-                });
-
-                $adminGroup->post('/quit', function (Request $request, Response $response) 
-                {
-                    self::$handler = new AdminQuitHandler($request, $response);
-                    return self::$handler->Handle();
-                });
-
-                $adminGroup->post('/editArticle', function (Request $request, Response $response) 
-                {
-                    self::$handler = new AdminEditArticleHandler($request, $response);
                     return self::$handler->Handle();
                 });
             });
