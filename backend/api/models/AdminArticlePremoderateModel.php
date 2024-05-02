@@ -13,22 +13,18 @@ class AdminEditArticleStatusModel extends BaseModel
         parent::__construct();
     }
 
-    public function approveArticle()
-    {   
-
+    public function getArticleByViewCode($viewCode)
+    {
+        return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
-    public function premoderateArticle()
-    {   
+
+    public acceptPremoderate()
+    {
         
     }
 
-    public function disapproveArticle()
-    {   
+    public rejectPremoderate()
+    {
 
-    }
-
-    public function dispremoderateArticle()
-    {   
-        
     }
 }

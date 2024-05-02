@@ -16,11 +16,11 @@ use Base\BaseHandler;
 use Base\BaseHandlerRoute;
 use Base\EmptyHandlerRoute;
 
-use Api\Handlers\AdminPremoderateArticleHandler;
+use Api\Handlers\AdminArticlePremoderateHandler;
 
 use Api\Handlers\ArticleApproveRequestHandler;
 
-use Api\Handlers\AdminApproveArticleHandler;
+use Api\Handlers\AdminArticleApproveHandler;
 use Api\Handlers\AdminApproveArticlePreloadHandler;
 
 use Api\Handlers\AdminArticleCommentsDeleteHandler;
@@ -101,6 +101,27 @@ class Routes
                         return self::$handler->Handle();
                     });
                 });
+                $adminGroup->group('/admin', function (RouteCollectorProxy $articleGroup) 
+                {
+                    $adminGroup->post('/premoderate/{viewCode}', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new AdminArticlePremoderateHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
+
+                    $adminGroup->post('/approveEditorially/preload/{viewCode}', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new AdminArticleApprovePreloadHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
+
+                    $adminGroup->post('/approveEditorially/{viewCode}', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new AdminArticleApproveHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
+                });
+                
 
                 $adminGroup->get('/status', function (Request $request, Response $response) 
                 {
