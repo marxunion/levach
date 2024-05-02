@@ -34,11 +34,7 @@ class ArticleEditModel extends BaseModel
             {
                 if($statisticsData['edit_timeout_to_date'] < time())
                 {
-                    $articleData = $this->database->get('articles', '*', [
-                        'id' => $articleId,
-                        'ORDER' => ['version_id' => 'DESC'],
-                        'LIMIT' => 1
-                    ]);
+                    $articleData = $this->database->select('statistics', ['current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
 
                     if(isset($articleData))
                     {
@@ -47,15 +43,9 @@ class ArticleEditModel extends BaseModel
                             throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
                         }
             
-                        $newVersion = $statisticsData['current_version'] + 1;
+                        $newVersionId = $statisticsData['current_version'] + 1;
+                        $newArticleCreatedDate = time();
             
-                        $articleData['version_id'] = $newVersion;
-                        $articleData['title'] = $newTitle;
-                        $articleData['text'] = $newText;
-                        $articleData['premoderation_status'] = 0;
-                        $articleData['approvededitorially_status'] = 0;
-                        
-                        $articleData['created_date'] = time();
                         
                         if(isset($newTags))
                         {
@@ -76,12 +66,14 @@ class ArticleEditModel extends BaseModel
                             }
                         }
             
-                        $this->database->insert('articles', $articleData);
+                        $this->database->insert('articles', [
+                            
+                        ]);
             
                         $articleEditTimeoutMinutes = AdminSettingsGetHandler::getSetting('article_edit_timeout_minutes');
                         if(isset($articleEditTimeoutMinutes))
                         {
-                            $this->database->update('statistics', ['current_version' => $newVersion, 'edit_timeout_to_date' => time() + ($articleEditTimeoutMinutes * 60)], ['article_id' => $articleId]);
+                            $this->database->update('statistics', ['current_version' => $newVersion, 'current_title', 'edit_timeout_to_date' => $newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)], ['article_id' => $articleId]);
                         }
                         else
                         {
@@ -154,7 +146,7 @@ class ArticleEditModel extends BaseModel
                 [
                     'id' => $articleId,
                     'version_id' => $newVersionId,
-                    'created_date'
+                    'created_date' => $newArticleCreatedDate,
 
                     'title' => $newTitle,
                     'text' => $newText,
@@ -165,7 +157,7 @@ class ArticleEditModel extends BaseModel
                     'approvededitorially_status' => 0,
                 ]);
             
-                $this->database->update('statistics', ['current_version' => $newVersionId, 'current_title' => $newTitle, 'current_text' => $newText, 'current_tags' => $newTags, 'createdDate' => , 'edit_timeout_to_date' => $newArticleCreatedDate], ['article_id' => $articleId]);
+                $this->database->update('statistics', ['current_version' => $newVersionId, 'current_title' => $newTitle, 'current_text' => $newText, 'current_tags' => $newTags, 'created_date' => $newArticleCreatedDate, 'edit_timeout_to_date' => $newArticleCreatedDate], ['article_id' => $articleId]);
             }
             else
             {
