@@ -61,31 +61,15 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                             $content = implode("\n", array_slice($contentParts, 1));
                             if (strlen($content) >= 25 && strlen($content) <= 10000) 
                             {
-                                if(isset($this->parsedBody['tags']))
+                                if(AdminStatusHandler::isAdmin($this->cookiesBody))
                                 {
-                                    if(AdminStatusHandler::isAdmin($this->cookiesBody))
-                                    {
-                                        $this->model->editArticleAdmin($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
-                                    }
-                                    else
-                                    {
-                                        $this->model->editArticle($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
-                                    }
-                                    
+                                    $this->model->editArticleAdmin($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
                                 }
                                 else
                                 {
-                                    if(AdminStatusHandler::isAdmin($this->cookiesBody))
-                                    {
-                                        $this->model->editArticleAdmin($articleId, $title, $this->parsedBody['text'], null);
-                                    }
-                                    else
-                                    {
-                                        $this->model->editArticle($articleId, $title, $this->parsedBody['text'], null);
-                                    }
-                                    
+                                    $this->model->editArticle($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
                                 }
-                                
+                        
                                 $this->response = $this->response->withJson(['success' => true]);
                             } 
                             else 

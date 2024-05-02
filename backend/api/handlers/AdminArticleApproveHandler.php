@@ -84,7 +84,28 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
             {
                 if(isset($this->parsedBody['newTitle']) && isset($this->parsedBody['newText']) && isset($this->parsedBody['newTags']))
                 { 
-                    $this->model->
+                    if(isset($this->parsedBody['newTags']))
+                    {
+                        if($this->model->acceptApproveWithChanges($articleId, $this->parsedBody['newTitle']))
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        if($this->model->acceptApproveWithChanges())
+                        {
+
+                        }
+                        else
+                        {
+                            
+                        }
+                    }
                 }
                 else
                 {

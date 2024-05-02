@@ -57,18 +57,21 @@ class ArticleEditModel extends BaseModel
                         
                         $articleData['date'] = time();
                         
-                        if(is_array($newTags))
+                        if(isset($newTags))
                         {
-                            if(count($newTags) > 0)
+                            if(is_array($newTags))
                             {
-                                if(count($newTags) == count(array_unique($newTags)))
+                                if(count($newTags) > 0)
                                 {
-                                    $newTagsString = implode(',', $newTags);
-                                    $articleData['tags'] = '{'.$newTagsString.'}';
-                                }
-                                else
-                                {
-                                    throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
+                                    if(count($newTags) == count(array_unique($newTags)))
+                                    {
+                                        $newTagsString = implode(',', $newTags);
+                                        $articleData['tags'] = '{'.$newTagsString.'}';
+                                    }
+                                    else
+                                    {
+                                        throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
+                                    }
                                 }
                             }
                         }
