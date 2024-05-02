@@ -303,7 +303,7 @@
 			</div>
 		</div>
 		<article class="main__article" v-if="articles.length > 0 && !loading" v-for="article in articles">
-            <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion-1].date) }}</p>
+            <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion-1].created_date) }}</p>
             <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
             <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 

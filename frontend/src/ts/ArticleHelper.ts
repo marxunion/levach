@@ -7,7 +7,7 @@ export interface ArticleVersion
     editorially_status: number,
     premoderation_status: number,
     approvededitorially_status: number,
-    date: number
+    created_date: number
 }
 export interface Statistics
 {

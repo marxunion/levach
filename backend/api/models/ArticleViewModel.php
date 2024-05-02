@@ -19,7 +19,7 @@ class ArticleViewModel extends BaseModel
 
     public function viewArticle($articleId)
     {
-        $articleVertions = $this->database->select('articles', ['title', 'text', 'tags', 'date', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId, 'premoderation_status' => 2]);
+        $articleVertions = $this->database->select('articles', ['title', 'text', 'tags', 'created_date', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId, 'premoderation_status' => 2]);
         if(isset($articleVertions))
         {
             $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId, 'premoderation_status' => 2]);
@@ -49,7 +49,7 @@ class ArticleViewModel extends BaseModel
 
     public function viewArticle($articleId)
     {
-        $articleVertions = $this->database->select('articles', ['title', 'text', 'tags', 'date', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId]);
+        $articleVertions = $this->database->select('articles', ['title', 'text', 'tags', 'created_date', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId]);
         if(isset($articleVertions))
         {
             $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]);

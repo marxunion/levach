@@ -331,7 +331,7 @@
 	<main v-if="loaded" class="main">
 		<article v-if="fetchedData" class="main__article">
 			<div class="main__article__previewContainer">
-				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedData.versions[currentVersion-1].date) }}</p>
+				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedData.versions[currentVersion-1].created_date) }}</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedData.versions[currentVersion-1].tags) }}</p>
 				<div v-if="adminStatus" class="main__article__previewContainer__buttons oneButton">

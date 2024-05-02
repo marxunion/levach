@@ -32,7 +32,7 @@ class ArticleNewModel extends BaseModel
             'premoderation_status' => 0,
             'approvededitorially_status' => 0,
             
-            'date' => time()
+            'created_date' => time()
         ];
 
         $statisticsData = 
@@ -106,7 +106,7 @@ class ArticleNewModel extends BaseModel
             'premoderation_status' => 2,
             'approvededitorially_status' => 2,
             
-            'date' => time()
+            'created_date' => time()
         ];
 
         $statisticsData = 
