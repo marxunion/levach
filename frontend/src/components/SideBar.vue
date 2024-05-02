@@ -23,7 +23,6 @@
     const { isBurgerActive } = defineProps(['isBurgerActive']);
     const emit = defineEmits();
 
-
     const links = computed(() => 
         {
             if(adminStatus.value)

@@ -35,7 +35,8 @@
 
     const settings = ref({
         article_edit_timeout_minutes: 0,
-        max_upload_filesize_mb: 0
+        max_upload_filesize_mb: 0,
+        article_need_rating_to_approve_editorially: 0
     });
 
     const onLoginButton = async () => 
@@ -525,6 +526,10 @@
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleMaxUploadFileSizeTitle'] }}</p>
                 <VueNumberInput :value="settings.max_upload_filesize_mb" v-model="settings.max_upload_filesize_mb" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+            </div>
+            <div class="form__fields__field">
+                <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleNeedRatingApproveEditorially'] }}</p>
+                <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.max_upload_filesize_mb" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
         </div>
 

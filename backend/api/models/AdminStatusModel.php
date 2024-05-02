@@ -6,8 +6,6 @@ use Core\Error;
 
 use Base\BaseModel;
 
-use Api\Handlers\AdminModel;
-
 class AdminStatusModel extends BaseModel
 {
     public function __construct()

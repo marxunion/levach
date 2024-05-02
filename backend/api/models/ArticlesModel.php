@@ -453,7 +453,7 @@ class ArticlesModel extends BaseModel
 
     # EditoriallyApprovedArticles
 
-    public function loadAEditoriallypprovedArticles($articleIds)
+    public function loadEditoriallyApprovedArticles($articleIds)
     {
         if($articleIds)
         {
@@ -464,7 +464,7 @@ class ArticlesModel extends BaseModel
                     $articles = [];
                     foreach ($articleIds as &$articleId) 
                     {
-                        $articleVersions = $this->database->select('articles', ['version_id', 'title', 'text', 'tags', 'date', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId, 'premoderation_status' => 2, 'approvededitorially_status' => 1]);
+                        $articleVersions = $this->database->select('articles', ['version_id', 'title', 'text', 'tags', 'date', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId, 'approvededitorially_status' => 2]);
                         
                         $article = [
                             'id' => $articleId,

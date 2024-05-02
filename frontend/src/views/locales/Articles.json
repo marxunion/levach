@@ -23,7 +23,7 @@
         "sortTypesNames": 
         [
             "rate",
-            "createdAt"
+            "created_at"
         ],
 
         "warnings": 

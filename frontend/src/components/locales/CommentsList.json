@@ -2,7 +2,6 @@
     "RU":
     {
         "titleAnswer": "Ответить",
-        "titleReport": "Пожаловатся",
         "titleDelete": "Удалить",
 
         "toolbarTips": 
@@ -89,7 +88,6 @@
     "EN":
     {
         "titleAnswer": "Answer",
-        "titleReport": "Report",
         "titleDelete": "Delete",
 
         "toolbarTips": 

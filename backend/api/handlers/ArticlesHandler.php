@@ -67,23 +67,22 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $lastLoadedArticleCreatedAt = $this->parsedBody['lastLoadedArticleCreatedAt'];
                 }
-                $articleIds = $this->model->loadArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
         
                 if(AdminStatusHandler::isAdmin($this->cookiesBody))
                 {
                     if($category == 'editoriallyArticles')
                     {
-                        $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+                        $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
                     }
                     else if($category == 'editoriallyApprovedArticles')
                     {
-                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
                     }
                     else if($category == 'abyssArticles')
                     {
-                        $articleIds = $this->model->loadAbyssArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+                        $articleIds = $this->model->loadAbyssArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt);
                         $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
                     }
                     else if($category == 'articlesSearch')
@@ -119,12 +118,12 @@ class ArticlesHandler extends BaseHandlerRoute
                     }
                     else if($category == 'articlesWaitingApproval')
                     {
-                        $articleIds = $this->model->loadArticlesWaitingApprovalIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+                        $articleIds = $this->model->loadArticlesWaitingApprovalIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt);
                         $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproval($articleIds));
                     }
                     else if($category == 'articlesWaitingPremoderate')
                     {
-                        $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+                        $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt);
                         $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
                     }
                     else
@@ -136,17 +135,17 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     if($category == 'editoriallyArticles')
                     {
-                        $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+                        $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
                     }
                     else if($category == 'editoriallyApprovedArticles')
                     {
-                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
                     }
                     else if($category == 'abyssArticles')
                     {
-                        $articleIds = $this->model->loadAbyssArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+                        $articleIds = $this->model->loadAbyssArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt);
                         $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
                     }
                     else if($category == 'articlesSearch')

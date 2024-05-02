@@ -16,9 +16,22 @@ use Base\BaseHandler;
 use Base\BaseHandlerRoute;
 use Base\EmptyHandlerRoute;
 
+use Api\Handlers\AdminPremoderateArticleHandler;
+
+use Api\Handlers\ArticleApproveRequestHandler;
+
+use Api\Handlers\AdminApproveArticleHandler;
+use Api\Handlers\AdminApproveArticlePreloadHandler;
+
+use Api\Handlers\AdminArticleCommentsDeleteHandler;
+use Api\Handlers\ArticleCommentsGetHandler;
+use Api\Handlers\ArticleCommentsSetHandler;
+;
 use Api\Handlers\csrfTokenHandler;
+
 use Api\Handlers\AdminSettingsGetHandler;
 use Api\Handlers\AdminSettingsSetHandler;
+
 use Api\Handlers\AdminStatusHandler;
 use Api\Handlers\AdminQuitHandler;
 use Api\Handlers\AdminLoginHandler;
@@ -52,6 +65,26 @@ class Routes
                 self::$handler = new StatusHandler($request, $response);
                 return self::$handler->Handle();
             });
+            $apiGroup->group('/comments', function (RouteCollectorProxy $adminGroup))
+            {
+                $adminSettingsGroup->post('/get', function (Request $request, Response $response) 
+                {
+                    self::$handler = new ArticleCommentsGetHandler($request, $response);
+                    return self::$handler->Handle();
+                });
+
+                $adminSettingsGroup->post('/set', function (Request $request, Response $response) 
+                {
+                    self::$handler = new ArticleCommentCreateHandler($request, $response);
+                    return self::$handler->Handle();
+                });
+            
+                $adminSettingsGroup->post('/delete', function (Request $request, Response $response) 
+                {
+                    self::$handler = new AdminArticleCommentsDeleteHandler($request, $response);
+                    return self::$handler->Handle();
+                });
+            }
             $apiGroup->group('/admin', function (RouteCollectorProxy $adminGroup) 
             {
                 $adminGroup->group('/settings', function (RouteCollectorProxy $adminSettingsGroup) 
@@ -86,6 +119,18 @@ class Routes
                     self::$handler = new AdminQuitHandler($request, $response);
                     return self::$handler->Handle();
                 });
+
+                $adminGroup->post('/quit', function (Request $request, Response $response) 
+                {
+                    self::$handler = new AdminQuitHandler($request, $response);
+                    return self::$handler->Handle();
+                });
+
+                $adminGroup->post('/editArticle', function (Request $request, Response $response) 
+                {
+                    self::$handler = new AdminEditArticleHandler($request, $response);
+                    return self::$handler->Handle();
+                });
             });
 
             $apiGroup->get('/csrfToken', function (Request $request, Response $response) 
@@ -106,53 +151,70 @@ class Routes
                 return self::$handler->Handle();
             });
     
-            $apiGroup->post('/article/new', function (Request $request, Response $response) 
+            $apiGroup->group('/article', function (RouteCollectorProxy $articleGroup) 
             {
-                self::$handler = new ArticleNewHandler($request, $response);
-                return self::$handler->Handle();
-            });
+                $articleGroup->post('/new', function (Request $request, Response $response) 
+                {
+                    self::$handler = new ArticleNewHandler($request, $response);
+                    return self::$handler->Handle();
+                });
 
-            $apiGroup->post('/article/edit/{editCode}', function (Request $request, Response $response, array $args) 
-            {
-                self::$handler = new ArticleEditHandler($request, $response, $args);
-                return self::$handler->Handle();
-            });
-
-            $apiGroup->get('/article/edit/preload/{editCode}', function (Request $request, Response $response, array $args) 
-            {
-                self::$handler = new ArticleEditPreloadHandler($request, $response, $args);
-                return self::$handler->Handle();
-            });
+                $articleGroup->group('/edit', function (RouteCollectorProxy $articleEditGroup) 
+                {
+                    $articleEditGroup->post('/requestApprove/{editCode}', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new ArticleApproveRequestHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
     
-            $apiGroup->get('/article/view/{viewCode}', function (Request $request, Response $response, array $args) 
-            {
-                self::$handler = new ArticleViewHandler($request, $response, $args);
-                return self::$handler->Handle();
+                    $articleEditGroup->post('/{editCode}', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new ArticleEditHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
+        
+                    $articleEditGroup->get('/preload/{editCode}', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new ArticleEditPreloadHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
+                });
+                
+        
+                $articleGroup->get('/view/{viewCode}', function (Request $request, Response $response, array $args) 
+                {
+                    self::$handler = new ArticleViewHandler($request, $response, $args);
+                    return self::$handler->Handle();
+                });
+    
+                $articleGroup->get('/search/{queryStr}', function (Request $request, Response $response, array $args) 
+                {
+                    self::$handler = new ArticleSearchHandler($request, $response, $args);
+                    return self::$handler->Handle();
+                });
             });
-
-            $apiGroup->get('/article/search/{queryStr}', function (Request $request, Response $response, array $args) 
-            {
-                self::$handler = new ArticleSearchHandler($request, $response, $args);
-                return self::$handler->Handle();
-            });
+            
     
             $apiGroup->get('/articles', function (Request $request, Response $response) 
             {
                 self::$handler = new ArticlesHandler($request, $response);
                 return self::$handler->Handle();
             });
-    
-            $apiGroup->get('/media/img/{file}', function (Request $request, Response $response, array $args) 
+            
+            $apiGroup->group('/media', function (RouteCollectorProxy $mediaGroup) 
             {
-                self::$handler = new MediaLoadImageHandler($request, $response, $args);
-                return self::$handler->Handle();
+                $mediaGroup->get('/img/{file}', function (Request $request, Response $response, array $args) 
+                {
+                    self::$handler = new MediaLoadImageHandler($request, $response, $args);
+                    return self::$handler->Handle();
+                });
+                $mediaGroup->post('/img/upload', function (Request $request, Response $response) 
+                {
+                    self::$handler = new MediaUploadImageHandler($request, $response);
+                    return self::$handler->Handle();
+                });
             });
-            $apiGroup->post('/media/img/upload', function (Request $request, Response $response) 
-            {
-                self::$handler = new MediaUploadImageHandler($request, $response);
-                return self::$handler->Handle();
-                
-            });
+            
             $apiGroup->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function (Request $request, Response $response) 
             {
                 return self::$handler->Handle();

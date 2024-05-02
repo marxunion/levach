@@ -224,7 +224,7 @@
             {
                 params: 
                 {
-                    sortType: 'timestamp',
+                    sortType: (langData.value['sortTypesNames'] as JsonData)[currentSortType.value],
                     category: props.currentRoute,
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
