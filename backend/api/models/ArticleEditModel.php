@@ -55,7 +55,7 @@ class ArticleEditModel extends BaseModel
                         $articleData['premoderation_status'] = 0;
                         $articleData['approvededitorially_status'] = 0;
                         
-                        $articleData['date'] = time();
+                        $articleData['created_date'] = time();
                         
                         if(isset($newTags))
                         {
@@ -115,45 +115,57 @@ class ArticleEditModel extends BaseModel
         
         if(isset($statisticsData))
         {
-            $articleData = $this->database->get('articles', '*', [
-                'id' => $articleId,
-                'ORDER' => ['version_id' => 'DESC'],
-                'LIMIT' => 1
-            ]);
+            $articleData = $this->database->select('statistics', ['current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
 
             if(isset($articleData))
             {
-                if($articleData['title'] == $newTitle && $articleData['text'] == $newText && $articleData['tags'] == $newTags)
+                if($articleData['current_title'] == $newTitle && $articleData['current_text'] == $newText && $articleData['current_tags'] == $newTags)
                 {
                     throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
                 }
             
-                $newVersion = $statisticsData['current_version'] + 1;
-            
-                $articleData['version_id'] = $newVersion;
-                $articleData['title'] = $newTitle;
-                $articleData['text'] = $newText;
-                $articleData['date'] = time();
-                        
-                if(is_array($newTags))
+                $newVersionId = $statisticsData['current_version'] + 1;
+                $newArticleCreatedDate = time();
+                      
+                if(isset($newTags))
                 {
-                    if(count($newTags) > 0)
+                    if(is_array($newTags))
                     {
-                        if(count($newTags) == count(array_unique($newTags)))
+                        if(count($newTags) > 0)
                         {
-                            $newTagsString = implode(',', $newTags);
-                            $articleData['tags'] = '{'.$newTagsString.'}';
-                        }
-                        else
-                        {
-                            throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
+                            if(count($newTags) == count(array_unique($newTags)))
+                            {
+                                $newTagsString = implode(',', $newTags);
+                                $newTagsString = '{'.$newTagsString.'}';
+                            }
+                            else
+                            {
+                                throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
+                            }
                         }
                     }
                 }
+                else
+                {
+                    $newTagsString = '{}';
+                }
             
-                $this->database->insert('articles', $articleData);
+                $this->database->insert('articles',
+                [
+                    'id' => $articleId,
+                    'version_id' => $newVersionId,
+                    'created_date'
+
+                    'title' => $newTitle,
+                    'text' => $newText,
+                    'tags' => $newTags,
+                    
+                    'editorially_status' => 0,
+                    'premoderation_status' => 0,
+                    'approvededitorially_status' => 0,
+                ]);
             
-                $this->database->update('statistics', ['current_version' => $newVersion, 'edit_timeout_to_date' => time()], ['article_id' => $articleId]);
+                $this->database->update('statistics', ['current_version' => $newVersionId, 'current_title' => $newTitle, 'current_text' => $newText, 'current_tags' => $newTags, 'createdDate' => , 'edit_timeout_to_date' => $newArticleCreatedDate], ['article_id' => $articleId]);
             }
             else
             {

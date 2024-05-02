@@ -11,7 +11,7 @@ export interface ArticleVersion
 }
 export interface Statistics
 {
-    created_at: number,
+    created_date: number,
     rating: number,
     comments: number,
     currentVersion: number

@@ -78,7 +78,7 @@
 	});
 
     const lastLoadedArticleId = ref(2147483645);
-    const lastLoadedArticleCreatedAt = ref(2147483645);
+    const lastLoadedArticleCreatedDate = ref(2147483645);
     const lastLoadedArticleRate = ref(2147483645);
 
     const loading = ref(false);
@@ -92,7 +92,7 @@
         
         if(currentSortType.value === 0)
         {
-            lastLoadedArticleCreatedAt.value = 2147483645;
+            lastLoadedArticleCreatedDate.value = 2147483645;
         }
         else
         {
@@ -228,7 +228,7 @@
                     category: props.currentRoute,
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
-                    lastLoadedArticleCreatedAt: lastLoadedArticleCreatedAt.value
+                    lastLoadedArticleCreatedDate: lastLoadedArticleCreatedDate.value
                 }
             })
             .then(response => 
@@ -243,7 +243,7 @@
                             {
                                 lastLoadedArticleId.value = article.id;
                             }
-                            lastLoadedArticleCreatedAt.value = article.statistics.created_at;
+                            lastLoadedArticleCreatedDate.value = article.statistics.created_date;
                             article.currentSelectedVersion = article.versions.length;
                             articles.push(article);
                         });

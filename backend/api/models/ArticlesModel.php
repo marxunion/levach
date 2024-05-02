@@ -15,7 +15,7 @@ class ArticlesModel extends BaseModel
 
 
     # Article search
-    public function loadArticleSearchIdsByCreatedAtWithTags($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645, $searchTitle = '', $searchTags = '')
+    public function loadArticleSearchIdsByCreatedDateWithTags($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedDate = 2147483645, $searchTitle = '', $searchTags = '')
     {
         return $this->database->select(
             'statistics',
@@ -30,9 +30,9 @@ class ArticlesModel extends BaseModel
                     'current_title[~]' => $searchTitle,
                     'current_tags &&' => $searchTags,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleCreatedAt,
+                        'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleCreatedAt,
+                            'created_date' => $lastLoadedArticleCreatedDate,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -44,7 +44,7 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    public function loadArticleSearchIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645, $searchTitle = '')
+    public function loadArticleSearchIdsByCreatedDate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedDate = 2147483645, $searchTitle = '')
     {
         return $this->database->select(
             'statistics',
@@ -58,9 +58,9 @@ class ArticlesModel extends BaseModel
                     'premoderation_status' => 2,
                     'current_title[~]' => $searchTitle,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleCreatedAt,
+                        'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleCreatedAt,
+                            'created_date' => $lastLoadedArticleCreatedDate,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -131,7 +131,7 @@ class ArticlesModel extends BaseModel
 
     
     # EditoriallyArticles
-    public function loadEditoriallyArticlesIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645)
+    public function loadEditoriallyArticlesIdsByCreatedDate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedDate = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -139,14 +139,14 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
-                    "created_at" => "DESC",
+                    "created_date" => "DESC",
                 ],
                 'AND' => [
                     'editorially_status' => 1,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleCreatedAt,
+                        'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleCreatedAt,
+                            'created_date' => $lastLoadedArticleCreatedDate,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -181,7 +181,7 @@ class ArticlesModel extends BaseModel
 
     # EditoriallyApprovedArticles
 
-    public function loadEditoriallyApprovedArticlesIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645)
+    public function loadEditoriallyApprovedArticlesIdsByCreatedDate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedDate = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -189,14 +189,14 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
-                    "created_at" => "DESC",
+                    "created_date" => "DESC",
                 ],
                 'AND' => [
                     'approvededitorially_status' => 2,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleCreatedAt,
+                        'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleCreatedAt,
+                            'created_date' => $lastLoadedArticleCreatedDate,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -231,7 +231,7 @@ class ArticlesModel extends BaseModel
 
     # AbyssArticles
 
-    public function loadAbyssArticlesIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645)
+    public function loadAbyssArticlesIdsByCreatedDate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedDate = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -239,15 +239,15 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
-                    "created_at" => "DESC",
+                    "created_date" => "DESC",
                 ],
                 'AND' => [
                     'premoderation_status' => 2,
                     'approvededitorially_status' => 1,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleCreatedAt,
+                        'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleCreatedAt,
+                            'created_date' => $lastLoadedArticleCreatedDate,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -288,7 +288,7 @@ class ArticlesModel extends BaseModel
 
     # ArticlesWaitingApproval
 
-    public function loadArticlesWaitingApprovalIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645)
+    public function loadArticlesWaitingApprovalIdsByCreatedDate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedDate = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -296,14 +296,14 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
-                    "created_at" => "DESC",
+                    "created_date" => "DESC",
                 ],
                 'AND' => [
                     'approvededitorially_status' => 1,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleCreatedAt,
+                        'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleCreatedAt,
+                            'created_date' => $lastLoadedArticleCreatedDate,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -338,7 +338,7 @@ class ArticlesModel extends BaseModel
 
     # ArticlesWaitingPremoderate
 
-    public function loadArticlesWaitingPremoderateIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645)
+    public function loadArticlesWaitingPremoderateIdsByCreatedDate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedDate = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -346,14 +346,14 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
-                    "created_at" => "DESC",
+                    "created_date" => "DESC",
                 ],
                 'AND' => [
                     'premoderation_status' => 1,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleCreatedAt,
+                        'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleCreatedAt,
+                            'created_date' => $lastLoadedArticleCreatedDate,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -416,7 +416,7 @@ class ArticlesModel extends BaseModel
                         $article = [
                             'id' => $articleId,
                             'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_at','rating', 'comments'], ['article_id' => $articleId]),
+                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
                             'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
                         ];
                         array_push($articles, $article);
@@ -457,7 +457,7 @@ class ArticlesModel extends BaseModel
                         $article = [
                             'id' => $articleId,
                             'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_at','rating', 'comments'], ['article_id' => $articleId]),
+                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
                             'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
                         ];
                         array_push($articles, $article);
@@ -498,7 +498,7 @@ class ArticlesModel extends BaseModel
                         $article = [
                             'id' => $articleId,
                             'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_at','rating', 'comments'], ['article_id' => $articleId]),
+                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
                             'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
                         ];
                         array_push($articles, $article);
@@ -539,7 +539,7 @@ class ArticlesModel extends BaseModel
                         $article = [
                             'id' => $articleId,
                             'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_at','rating', 'comments'], ['article_id' => $articleId]),
+                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
                             'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
                         ];
                         array_push($articles, $article);
@@ -580,7 +580,7 @@ class ArticlesModel extends BaseModel
                         $article = [
                             'id' => $articleId,
                             'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_at','rating', 'comments'], ['article_id' => $articleId]),
+                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
                             'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
                         ];
                         array_push($articles, $article);
@@ -621,7 +621,7 @@ class ArticlesModel extends BaseModel
                         $article = [
                             'id' => $articleId,
                             'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_at','rating', 'comments'], ['article_id' => $articleId]),
+                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
                             'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
                         ];
                         array_push($articles, $article);

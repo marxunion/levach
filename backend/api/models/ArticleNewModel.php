@@ -40,7 +40,7 @@ class ArticleNewModel extends BaseModel
             'article_id' => $newArticleId,
             'rating' => 0,
             'comments' => 0,
-            'created_at' => time(),
+            'created_date' => time(),
             
             'edit_timeout_to_date' => time(),
 
@@ -114,7 +114,7 @@ class ArticleNewModel extends BaseModel
             'article_id' => $newArticleId,
             'rating' => 0,
             'comments' => 0,
-            'created_at' => time(),
+            'created_date' => time(),
             
             'edit_timeout_to_date' => time(),
 

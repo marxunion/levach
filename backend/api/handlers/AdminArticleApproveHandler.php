@@ -91,27 +91,13 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
             {
                 if(isset($this->parsedBody['newTitle']) && isset($this->parsedBody['newText']) && isset($this->parsedBody['newTags']))
                 { 
-                    if(isset($this->parsedBody['newTags']))
+                    if($this->model->acceptApproveWithChanges($articleId, $this->parsedBody['newTitle'], $this->pa))
                     {
-                        if($this->model->acceptApproveWithChanges($articleId, $this->parsedBody['newTitle']))
-                        {
-
-                        }
-                        else
-                        {
-
-                        }
+                        $this->response = $this->response->withJson(['success' => true]);
                     }
                     else
                     {
-                        if($this->model->acceptApproveWithChanges())
-                        {
-
-                        }
-                        else
-                        {
-                            
-                        }
+                        throw new Critical(500, "Failed to accept approve article", "Failed to accept approve article");
                     }
                 }
                 else
