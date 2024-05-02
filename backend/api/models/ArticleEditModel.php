@@ -44,7 +44,6 @@ class ArticleEditModel extends BaseModel
                     $newVersionId = $articleData['current_version'] + 1;
                     $newArticleCreatedDate = time();
         
-                    
                     if(isset($newTags))
                     {
                         if(is_array($newTags))
