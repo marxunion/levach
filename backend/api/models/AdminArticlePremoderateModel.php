@@ -18,13 +18,42 @@ class AdminEditArticleStatusModel extends BaseModel
         return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
 
-    public acceptPremoderate()
+    public acceptPremoderate($articleId)
     {
-        
+        if($this->database->update('statistics', ['premoderation_status' => 2], ['article_id' => $articleId]))
+        {
+            if($this->database->update('articles', ['premoderation_status' => 2], ['id' => $articlerId]))
+            {
+                return true;
+            }
+            else
+            {   
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    public rejectPremoderate()
+    public rejectPremoderate($articleId)
     {
-
+        if($this->database->delete('statistics', ['article_id' => $articleId]))
+        {
+            if($this->database->delete('articles', ['id' => $articleId]))
+            {
+                return true;
+            }
+            else
+            {   
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+        return $this->database->delete();
     }
 }

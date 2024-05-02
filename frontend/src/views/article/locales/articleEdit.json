@@ -53,7 +53,8 @@
             {
                 "0": "Не одобрена",
                 "1": "В процессе одобрения",
-                "2": "Одобрена"
+                "2": "Одобрена",
+                "3": "В процессе одобрения"
             }
         },
         "versionText": "Версия ",
@@ -262,7 +263,8 @@
             {
                 "0": "Not approved",
                 "1": "In approval process",
-                "2": "Approved"
+                "2": "Approved",
+                "3": "In approval process"
             }
         },
         "versionText": "Version ",

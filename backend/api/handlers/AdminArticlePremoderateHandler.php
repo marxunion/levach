@@ -2,6 +2,7 @@
 namespace Api\Handlers;
 
 use Core\Error;
+use Core\Critical;
 
 use Base\BaseHandlerRouteWithArgs;
 
@@ -50,34 +51,42 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
 
     public function Process()
     {
-        if(isset($this->parsedBody['status']))
-        {   
-            if($this->parsedBody['status'])
-            {
-                if($this->model->acceptPremoderate())
+        $articleId = $this->model->getArticleByViewCode($this->args['viewCode'];);
+        if(isset($articleId))
+        {
+            if(isset($this->parsedBody['status']))
+            {   
+                if($this->parsedBody['status'])
                 {
-
+                    if($this->model->acceptPremoderate())
+                    {
+                        return $this->response->withJson(['success' => true]);
+                    }
+                    else
+                    {
+                        throw new Critical(500, "Failed to premoderate article", "Failed to premoderate article");
+                    }
                 }
                 else
                 {
-
+                    if($this->model->rejectPremoderate())
+                    {
+                        return $this->response->withJson(['success' => true]);
+                    }
+                    else
+                    {
+                        throw new Critical(500, "Failed to reject premoderate article", "Failed to reject premoderate article");
+                    }
                 }
             }
-            else
+            else 
             {
-                if($this->model->rejectPremoderate())
-                {
-
-                }
-                else
-                {
-
-                }
+                throw new Error(400, "Unknown premoderation status", "Unknown premoderation status");
             }
         }
-        else 
+        else
         {
-            throw new Error(400, "Unknown premoderation status", "Unknown premoderation status");
+            throw new Error(400, "Article not found", "Article not found");
         }
     };
 }
