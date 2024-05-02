@@ -73,8 +73,8 @@ class AdminArticleApproveModel extends BaseModel
         {
             return false;
         }
-        $articleInfo = $this->database->get('statistics', ['current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
-        if(isset($articleInfo))
+        $articleData = $this->database->get('statistics', ['current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
+        if(isset($articleData))
         {
             
         }

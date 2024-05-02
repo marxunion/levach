@@ -26,97 +26,90 @@ class ArticleEditModel extends BaseModel
     
     public function editArticle($articleId, $newTitle, $newText, $newTags)
     {
-        $statisticsData = $this->database->get('statistics', ['current_version', 'edit_timeout_to_date'], ['article_id' => $articleId]);
+        $articleData = $this->database->get('statistics', ['current_version','current_title', 'current_text', 'current_tags', 'edit_timeout_to_date'], ['article_id' => $articleId]);
         
-        if(isset($statisticsData))
+        if(isset($articleData))
         {
-            if(isset($statisticsData['edit_timeout_to_date']))
+            if(isset($articleData['edit_timeout_to_date']))
             {
-                if($statisticsData['edit_timeout_to_date'] < time())
+                if($articleData['edit_timeout_to_date'] < time())
                 {
-                    $articleData = $this->database->select('statistics', ['current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
+                    $articleData = $this->database->select('statistics', [], ['article_id' => $articleId]);
 
-                    if(isset($articleData))
+                    if($articleData['title'] == $newTitle && $articleData['text'] == $newText && $articleData['tags'] == $newTags)
                     {
-                        if($articleData['title'] == $newTitle && $articleData['text'] == $newText && $articleData['tags'] == $newTags)
+                        throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
+                    }
+        
+                    $newVersionId = $articleData['current_version'] + 1;
+                    $newArticleCreatedDate = time();
+        
+                    
+                    if(isset($newTags))
+                    {
+                        if(is_array($newTags))
                         {
-                            throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
-                        }
-            
-                        $newVersionId = $statisticsData['current_version'] + 1;
-                        $newArticleCreatedDate = time();
-            
-                        
-                        if(isset($newTags))
-                        {
-                            if(is_array($newTags))
+                            if(count($newTags) > 0)
                             {
-                                if(count($newTags) > 0)
+                                if(count($newTags) == count(array_unique($newTags)))
                                 {
-                                    if(count($newTags) == count(array_unique($newTags)))
-                                    {
-                                        $newTagsString = implode(',', $newTags);
-                                        $articleData['tags'] = '{'.$newTagsString.'}';
-                                    }
-                                    else
-                                    {
-                                        throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
-                                    }
+                                    $newTagsString = implode(',', $newTags);
+                                    $articleData['tags'] = '{'.$newTagsString.'}';
+                                }
+                                else
+                                {
+                                    throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
                                 }
                             }
                         }
-            
-                        $this->database->insert(
-                            'articles', 
-                            [
-                                'id' => $articleId,
-                                'version_id' => $newVersionId,
-                                'created_date' => $newArticleCreatedDate,
+                    }
+        
+                    $this->database->insert(
+                        'articles', 
+                        [
+                            'id' => $articleId,
+                            'version_id' => $newVersionId,
+                            'created_date' => $newArticleCreatedDate,
 
-                                'title' => $newTitle,
-                                'text' => $newText,
-                                'tags' => $newTags,
-                                
+                            'title' => $newTitle,
+                            'text' => $newText,
+                            'tags' => $newTags,
+                            
+                            'editorially_status' => 0,
+                            'premoderation_status' => 0,
+                            'approvededitorially_status' => 0,
+                        ]
+                    );
+        
+                    $articleEditTimeoutMinutes = AdminSettingsGetHandler::getSetting('article_edit_timeout_minutes');
+                    if(isset($articleEditTimeoutMinutes))
+                    {
+                        $this->database->update(
+                            'statistics', 
+                            [
+                                'current_version' => $newVersionId, 
+                                'current_title' => $newTitle, 
+                                'current_text' => $newText, 
+                                'current_tags' => $newTags,
+                                'created_date' => $newArticleCreatedDate,
                                 'editorially_status' => 0,
                                 'premoderation_status' => 0,
                                 'approvededitorially_status' => 0,
+                                'edit_timeout_to_date' => $newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)
+                            ], 
+                            [
+                                'article_id' => $articleId
                             ]
                         );
-            
-                        $articleEditTimeoutMinutes = AdminSettingsGetHandler::getSetting('article_edit_timeout_minutes');
-                        if(isset($articleEditTimeoutMinutes))
-                        {
-                            $this->database->update(
-                                'statistics', 
-                                [
-                                    'current_version' => $newVersionId, 
-                                    'current_title' => $newTitle, 
-                                    'current_text' => $newText, 
-                                    'current_tags' => $newTags,
-                                    'created_date' => $newArticleCreatedDate,
-                                    'editorially_status' => 0,
-                                    'premoderation_status' => 0,
-                                    'approvededitorially_status' => 0,
-                                    'edit_timeout_to_date' => $newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)
-                                ], 
-                                [
-                                    'article_id' => $articleId
-                                ]
-                            );
-                        }
-                        else
-                        {
-                            throw new Critical(500, 'Unknown error', "Article edit timeout minutes not found in settings");
-                        }
                     }
                     else
                     {
-                        throw new Error(404, 'Article for editing not found', 'Article for editing not found');
+                        throw new Critical(500, 'Unknown error', "Article edit timeout minutes not found in settings");
                     }
                 } 
                 else 
                 {
-                    throw new Warning(403, 'Wait for a timeout to re-edit the article', 'Wait for a timeout to re-edit the article', ["edit_timeout_to_date" => $statisticsData['edit_timeout_to_date']]);
+                    throw new Warning(403, 'Wait for a timeout to re-edit the article', 'Wait for a timeout to re-edit the article', ["edit_timeout_to_date" => $articleData['edit_timeout_to_date']]);
                 }
             }
             else
@@ -132,84 +125,76 @@ class ArticleEditModel extends BaseModel
 
     public function editArticleAdmin($articleId, $newTitle, $newText, $newTags)
     {
-        $statisticsData = $this->database->get('statistics', ['current_version', 'edit_timeout_to_date'], ['article_id' => $articleId]);
+        $articleData = $this->database->get('statistics', ['current_version', 'current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
         
-        if(isset($statisticsData))
+        if(isset($articleData))
         {
-            $articleData = $this->database->select('statistics', ['current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
-
-            if(isset($articleData))
+            if($articleData['current_title'] == $newTitle && $articleData['current_text'] == $newText && $articleData['current_tags'] == $newTags)
             {
-                if($articleData['current_title'] == $newTitle && $articleData['current_text'] == $newText && $articleData['current_tags'] == $newTags)
-                {
-                    throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
-                }
+                throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
+            }
             
-                $newVersionId = $statisticsData['current_version'] + 1;
-                $newArticleCreatedDate = time();
+            $newVersionId = $statisticsData['current_version'] + 1;
+            $newArticleCreatedDate = time();
                       
-                if(isset($newTags))
+            if(isset($newTags))
+            {
+                if(is_array($newTags))
                 {
-                    if(is_array($newTags))
+                    if(count($newTags) > 0)
                     {
-                        if(count($newTags) > 0)
+                        if(count($newTags) == count(array_unique($newTags)))
                         {
-                            if(count($newTags) == count(array_unique($newTags)))
-                            {
-                                $newTagsString = implode(',', $newTags);
-                                $newTagsString = '{'.$newTagsString.'}';
-                            }
-                            else
-                            {
-                                throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
-                            }
+                            $newTagsString = implode(',', $newTags);
+                            $newTagsString = '{'.$newTagsString.'}';
+                        }
+                        else
+                        {
+                            throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
                         }
                     }
                 }
-                else
-                {
-                    $newTagsString = '{}';
-                }
-            
-                $this->database->insert(
-                    'articles',
-                    [
-                        'id' => $articleId,
-                        'version_id' => $newVersionId,
-                        'created_date' => $newArticleCreatedDate,
-
-                        'title' => $newTitle,
-                        'text' => $newText,
-                        'tags' => $newTags,
-                        
-                        'editorially_status' => 1,
-                        'premoderation_status' => 2,
-                        'approvededitorially_status' => 2
-                    ]
-                );
-            
-                $this->database->update(
-                    'statistics', 
-                    [
-                        'current_version' => $newVersionId, 
-                        'current_title' => $newTitle, 
-                        'current_text' => $newText, 
-                        'current_tags' => $newTags, 
-                        'created_date' => $newArticleCreatedDate,
-                        'editorially_status' => 1,
-                        'premoderation_status' => 2,
-                        'approvededitorially_status' => 2,
-                        'edit_timeout_to_date' => $newArticleCreatedDate
-                    ], 
-                    [
-                        'article_id' => $articleId
-                    ]
-                );
             }
             else
             {
-                throw new Error(404, 'Article for editing not found', 'Article for editing not found');
+                $newTagsString = '{}';
             }
+            
+            $this->database->insert(
+                'articles',
+                [
+                    'id' => $articleId,
+                    'version_id' => $newVersionId,
+                    'created_date' => $newArticleCreatedDate,
+
+                    'title' => $newTitle,
+                    'text' => $newText,
+                    'tags' => $newTags,
+                    'editorially_status' => 1,
+                    'premoderation_status' => 2,
+                    'approvededitorially_status' => 2
+                ]
+            );
+            
+            $this->database->update(
+                'statistics', 
+                [
+                    'current_version' => $newVersionId, 
+                    'created_date' => $newArticleCreatedDate,
+
+                    'current_title' => $newTitle, 
+                    'current_text' => $newText, 
+                    'current_tags' => $newTags, 
+                    
+                    'editorially_status' => 1,
+                    'premoderation_status' => 2,
+                    'approvededitorially_status' => 2,
+                    'edit_timeout_to_date' => $newArticleCreatedDate
+                ], 
+                [
+                    'article_id' => $articleId
+                ]
+            );
         }
         else
         {
