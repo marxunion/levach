@@ -1,5 +1,7 @@
 <script setup lang="ts">
     import { ref, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
+    import { useRoute } from 'vue-router';
+
     import axios from 'axios';
 
     import Loader from "./../components/Loader.vue";
@@ -25,9 +27,11 @@
     import langsData from "./locales/Articles.json";
     import { LangDataHandler } from "./../ts/LangDataHandler";
 
+    import { searchText } from "../ts/searchHelper";
+
     import './../libs/font_2605852_prouiefeic';
 
-
+    const route = useRoute();
     const props = defineProps(['currentRoute']);
 
 	const langData = LangDataHandler.initLangDataHandler("articlesEditorially", langsData).langData;
@@ -36,6 +40,19 @@
 	const currentSortType = ref(0);
 
     const sortTypes = computed(() => langData.value['sortTypes'] as string[]);
+
+    if(props.currentRoute == 'articlesSearch')
+    {
+        const searchData : string = route.params.searchData as string;
+
+        if(searchData != null)
+        {
+            if(searchData.length > 0)
+            {
+                searchText.value = searchData;
+            }
+        }
+    }
 
     // Preview
 	config(
@@ -61,7 +78,7 @@
 	});
 
     const lastLoadedArticleId = ref(2147483645);
-    const lastLoadedArticleTimestamp = ref(2147483645);
+    const lastLoadedArticleCreatedAt = ref(2147483645);
     const lastLoadedArticleRate = ref(2147483645);
 
     const loading = ref(false);
@@ -75,7 +92,7 @@
         
         if(currentSortType.value === 0)
         {
-            lastLoadedArticleTimestamp.value = 2147483645;
+            lastLoadedArticleCreatedAt.value = 2147483645;
         }
         else
         {
@@ -92,40 +109,114 @@
         loading.value = true;
         if(currentSortType.value === 0)
         {
-            await axios.get('/api/articles', 
+            if(props.currentRoute == 'articlesSearch')
             {
-                params: 
+                const searchData : string = route.params.searchData as string;
+                
+                if(searchData != null)
                 {
-                    sortType: 'rate',
-                    category: props.currentRoute,
-                    count: 4,
-                    lastLoadedArticleId: lastLoadedArticleId.value,
-                    lastLoadedArticleRate: lastLoadedArticleRate.value
-                }
-            })
-            .then(response => 
-            {
-                if(response.data !== null)
-                {
-                    if(Array.isArray(response.data))
+                    if(searchData.length > 0)
                     {
-                        response.data.forEach((article : Article) => 
+                        const searchParts : string[] = searchData.split('#');
+                        const searchTitle : string = searchParts[0].trim();
+                        const searchTags : string[] = searchParts.slice(1).map(tag => `${tag.trim()}`);
+                        
+                        let data;
+
+                        console.log(props.currentRoute);
+                        
+                        if(searchTags.length > 0)
                         {
-                            if(lastLoadedArticleId.value > article.id)
-                            {
-                                lastLoadedArticleId.value = article.id;
+                            data = {
+                                sortType: (langData.value['sortTypesNames'] as JsonData)[currentSortType.value],
+                                category: props.currentRoute,
+                                count: 4,
+                                lastLoadedArticleId: lastLoadedArticleId.value,
+                                lastLoadedArticleRate: lastLoadedArticleRate.value,
+                                searchTitle: searchTitle,
+                                searchTags: searchTags
                             }
-                            lastLoadedArticleRate.value = article.statistics.rating;
-                            article.currentSelectedVersion = article.versions.length;
-                            articles.push(article as Article);
+                        }
+                        else
+                        {
+                            data = {
+                                sortType: (langData.value['sortTypesNames'] as JsonData)[currentSortType.value],
+                                category: props.currentRoute,
+                                count: 4,
+                                lastLoadedArticleId: lastLoadedArticleId.value,
+                                lastLoadedArticleRate: lastLoadedArticleRate.value,
+                                searchTitle: searchTitle
+                            }
+                        }
+
+                        await axios.get('/api/articles', 
+                        {
+                            params: data
+                        })
+                        .then(response => 
+                        {
+                            if(response.data !== null)
+                            {
+                                if(Array.isArray(response.data))
+                                {
+                                    response.data.forEach((article : Article) => 
+                                    {
+                                        if(lastLoadedArticleId.value > article.id)
+                                        {
+                                            lastLoadedArticleId.value = article.id;
+                                        }
+                                        lastLoadedArticleRate.value = article.statistics.rating;
+                                        article.currentSelectedVersion = article.versions.length;
+                                        articles.push(article as Article);
+                                    });
+                                }
+                            }
+                        })
+                        .catch(response => 
+                        {
+                            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
                         });
                     }
                 }
-            })
-            .catch(response => 
+            }
+            else
             {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-            });
+                await axios.get('/api/articles', 
+                {
+                    params: 
+                    {
+                        sortType: (langData.value['sortTypesNames'] as JsonData)[currentSortType.value],
+                        category: props.currentRoute,
+                        count: 4,
+                        lastLoadedArticleId: lastLoadedArticleId.value,
+                        lastLoadedArticleRate: lastLoadedArticleRate.value
+                    }
+                })
+                .then(response => 
+                {
+                    if(response.data !== null)
+                    {
+                        if(Array.isArray(response.data))
+                        {
+                            response.data.forEach((article : Article) => 
+                            {
+                                if(lastLoadedArticleId.value > article.id)
+                                {
+                                    lastLoadedArticleId.value = article.id;
+                                }
+                                lastLoadedArticleRate.value = article.statistics.rating;
+                                article.currentSelectedVersion = article.versions.length;
+                                articles.push(article as Article);
+                            });
+                        }
+                    }
+                })
+                .catch(response => 
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+                });
+            }
+            
         }
         else
         {
@@ -137,7 +228,7 @@
                     category: props.currentRoute,
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
-                    lastLoadedArticleTimestamp: lastLoadedArticleTimestamp.value
+                    lastLoadedArticleCreatedAt: lastLoadedArticleCreatedAt.value
                 }
             })
             .then(response => 
@@ -152,7 +243,7 @@
                             {
                                 lastLoadedArticleId.value = article.id;
                             }
-                            lastLoadedArticleTimestamp.value = article.statistics.created_at;
+                            lastLoadedArticleCreatedAt.value = article.statistics.created_at;
                             article.currentSelectedVersion = article.versions.length;
                             articles.push(article);
                         });

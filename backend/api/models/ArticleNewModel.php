@@ -21,7 +21,7 @@ class ArticleNewModel extends BaseModel
             $newArticleId = $lastArticleId + 1;
         }
 
-        $data = [
+        $articleData = [
             'id' => $newArticleId,
             'version_id' => 1,
             'title' => $title,
@@ -35,6 +35,32 @@ class ArticleNewModel extends BaseModel
             'date' => time()
         ];
 
+        $statisticsData = 
+        [
+            'article_id' => $newArticleId,
+            'rating' => 0,
+            'comments' => 0,
+            'created_at' => time(),
+            
+            'edit_timeout_to_date' => time(),
+
+            'current_version' => 1,
+            'current_title' => $title,
+            'current_text' => $text,
+            'current_tags' => null,
+
+            'editorially_status' => 0,
+            'premoderation_status' => 0,
+            'approvededitorially_status' => 0
+        ];
+
+        $codesData = 
+        [
+            'article_id' => $newArticleId,
+            'view_code' => $viewCode,
+            'edit_code' => $editCode
+        ];
+        
         $tagsString = '';
         if(is_array($tags))
         {
@@ -43,7 +69,8 @@ class ArticleNewModel extends BaseModel
                 if(count($tags) == count(array_unique($tags)))
                 {
                     $tagsString = '{'.implode(',', $tags).'}';
-                    $data['tags'] = $tagsString;
+                    $articleData['tags'] = $tagsString;
+                    $statisticsData['current_tags'] = $tagsString;
                 }
                 else
                 {
@@ -52,25 +79,8 @@ class ArticleNewModel extends BaseModel
             }
         }
 
-        $this->database->insert('articles', $data);
-
-        $statisticsData = 
-        [
-            'article_id' => $newArticleId,
-            'rating' => 0,
-            'comments' => 0,
-            'created_at' => time(),
-            'current_version' => 1,
-            'edit_timeout_to_date' => time()
-        ];
+        $this->database->insert('articles', $articleData);
         $this->database->insert('statistics', $statisticsData);
-
-        $codesData = 
-        [
-            'article_id' => $newArticleId,
-            'view_code' => $viewCode,
-            'edit_code' => $editCode
-        ];
         $this->database->insert('codes', $codesData);
     }
 
@@ -84,7 +94,7 @@ class ArticleNewModel extends BaseModel
             $newArticleId = $lastArticleId + 1;
         }
 
-        $data = [
+        $articleData = [
             'id' => $newArticleId,
             'version_id' => 1,
             'title' => $title,
@@ -99,6 +109,32 @@ class ArticleNewModel extends BaseModel
             'date' => time()
         ];
 
+        $statisticsData = 
+        [
+            'article_id' => $newArticleId,
+            'rating' => 0,
+            'comments' => 0,
+            'created_at' => time(),
+            
+            'edit_timeout_to_date' => time(),
+
+            'current_version' => 1,
+            'current_title' => $title,
+            'current_text' => $text,
+            'current_tags' => null,
+
+            'editorially_status' => 1,
+            'premoderation_status' => 2,
+            'approvededitorially_status' => 2
+        ];
+
+        $codesData = 
+        [
+            'article_id' => $newArticleId,
+            'view_code' => $viewCode,
+            'edit_code' => $editCode
+        ];
+
         $tagsString = '';
         if(is_array($tags))
         {
@@ -107,7 +143,8 @@ class ArticleNewModel extends BaseModel
                 if(count($tags) == count(array_unique($tags)))
                 {
                     $tagsString = '{'.implode(',', $tags).'}';
-                    $data['tags'] = $tagsString;
+                    $articleData['tags'] = $tagsString;
+                    $statisticsData['current_tags'] = $tagsString;
                 }
                 else
                 {
@@ -116,25 +153,8 @@ class ArticleNewModel extends BaseModel
             }
         }
 
-        $this->database->insert('articles', $data);
-
-        $statisticsData = 
-        [
-            'article_id' => $newArticleId,
-            'rating' => 0,
-            'comments' => 0,
-            'created_at' => time(),
-            'current_version' => 1,
-            'edit_timeout_to_date' => time()
-        ];
+        $this->database->insert('articles', $articleData);
         $this->database->insert('statistics', $statisticsData);
-
-        $codesData = 
-        [
-            'article_id' => $newArticleId,
-            'view_code' => $viewCode,
-            'edit_code' => $editCode
-        ];
         $this->database->insert('codes', $codesData);
     }
 }

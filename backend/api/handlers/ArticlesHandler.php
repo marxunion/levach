@@ -35,58 +35,96 @@ class ArticlesHandler extends BaseHandlerRoute
                 $count = 8;
             }
         }
-
-        $category = 'editoriallyArticles';
+        
         if(isset($this->parsedBody['category']))
         {
             $category = $this->parsedBody['category'];
         }
-
-        $lastLoadedArticleId = 2147483645;
+        else
+        {
+            $category = 'editoriallyArticles';
+        }
+        
         if(isset($this->parsedBody['lastLoadedArticleId']))
         {
             $lastLoadedArticleId = $this->parsedBody['lastLoadedArticleId'];
         }
+        else
+        {
+            $lastLoadedArticleId = 2147483645;
+        }
 
+        
         if(isset($this->parsedBody['sortType']))
         {
             $sortType = $this->parsedBody['sortType'];
             $articleIds = null;
-            
-            if($sortType == 'timestamp')
+        
+            if($sortType == 'created_at')
             {
-                $lastLoadedArticleTimestamp = 2147483645;
-                if(isset($this->parsedBody['lastLoadedArticleTimestamp']))
+                $lastLoadedArticleCreatedAt = 2147483645;
+                if(isset($this->parsedBody['lastLoadedArticleCreatedAt']))
                 {
-                    $lastLoadedArticleTimestamp = $this->parsedBody['lastLoadedArticleTimestamp'];
+                    $lastLoadedArticleCreatedAt = $this->parsedBody['lastLoadedArticleCreatedAt'];
                 }
-                $articleIds = $this->model->loadArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
-    
+                $articleIds = $this->model->loadArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+        
                 if(AdminStatusHandler::isAdmin($this->cookiesBody))
                 {
-                    if($cateroty == 'editoriallyArticles')
+                    if($category == 'editoriallyArticles')
                     {
-                        $articleIds = $this->model->loadEditoriallyArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
                     }
-                    else if($cateroty == 'editoriallyApprovedArticles')
+                    else if($category == 'editoriallyApprovedArticles')
                     {
-                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
                     }
-                    else if($cateroty == 'abyssArticles')
+                    else if($category == 'abyssArticles')
                     {
-                        $articleIds = $this->model->loadAbyssArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $articleIds = $this->model->loadAbyssArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
                         $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
                     }
-                    else if($cateroty == 'articlesWaitingApproval')
+                    else if($category == 'articlesSearch')
                     {
-                        $articleIds = $this->model->loadArticlesWaitingApprovalIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        if(isset($this->parsedBody['searchTitle']))
+                        {
+                            if(strlen($this->parsedBody['searchTitle']) > 0)
+                            {
+                                $searchTitle = $this->parsedBody['searchTitle'];
+                                $searchTags = $this->parsedBody['searchTags'];
+                                if(isset($searchTags))
+                                {
+                                    $searchTagsString = '{'.implode(',', $searchTags).'}';
+    
+                                    $articleIds = $this->model->loadArticlesSearchIdsByCreatedAtWithTags($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle, $searchTagsString);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
+                                }
+                                else
+                                {
+                                    $articleIds = $this->model->loadArticlesSearchIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
+                                }
+                            }
+                            else
+                            {
+                                throw new Error(400, "Not found search title", "Not found search title");
+                            }
+                        }
+                        else
+                        {
+                            throw new Error(400, "Not found search title", "Not found search title");
+                        }
+                    }
+                    else if($category == 'articlesWaitingApproval')
+                    {
+                        $articleIds = $this->model->loadArticlesWaitingApprovalIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
                         $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproval($articleIds));
                     }
-                    else if($cateroty == 'articlesWaitingPremoderate')
+                    else if($category == 'articlesWaitingPremoderate')
                     {
-                        $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
                         $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
                     }
                     else
@@ -96,20 +134,52 @@ class ArticlesHandler extends BaseHandlerRoute
                 }
                 else
                 {
-                    if($cateroty == 'editoriallyArticles')
+                    if($category == 'editoriallyArticles')
                     {
-                        $articleIds = $this->model->loadEditoriallyArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
                     }
-                    else if($cateroty == 'editoriallyApprovedArticles')
+                    else if($category == 'editoriallyApprovedArticles')
                     {
-                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
                     }
-                    else if($cateroty == 'abyssArticles')
+                    else if($category == 'abyssArticles')
                     {
-                        $articleIds = $this->model->loadAbyssArticlesIdsByTimestamp($count, $lastLoadedArticleId, $lastLoadedArticleTimestamp);
+                        $articleIds = $this->model->loadAbyssArticlesIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
                         $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
+                    }
+                    else if($category == 'articlesSearch')
+                    {
+                        if(isset($this->parsedBody['searchTitle']))
+                        {
+                            if(strlen($this->parsedBody['searchTitle']) > 0)
+                            {
+                                $searchTitle = $this->parsedBody['searchTitle'];
+                                $searchTags = $this->parsedBody['searchTags'];
+                                
+                                if(isset($searchTags))
+                                {
+                                    $searchTagsString = '{'.implode(',', $searchTags).'}';
+    
+                                    $articleIds = $this->model->loadArticlesSearchIdsByCreatedAtWithTags($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle, $searchTagsString);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
+                                }
+                                else
+                                {
+                                    $articleIds = $this->model->loadArticlesSearchIdsByCreatedAt($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
+                                }
+                            }
+                            else
+                            {
+                                throw new Error(400, "Not found search title", "Not found search title");
+                            }
+                        }
+                        else
+                        {
+                            throw new Error(400, "Not found search title", "Not found search title");
+                        }
                     }
                     else
                     {
@@ -124,30 +194,61 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $lastLoadedArticleRate = $this->parsedBody['lastLoadedArticleRate'];
                 }
-            
+                
                 if(AdminStatusHandler::isAdmin($this->cookiesBody))
                 {
-                    if($cateroty == 'editoriallyArticles')
+                    if($category == 'editoriallyArticles')
                     {
                         $articleIds = $this->model->loadEditoriallyArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
                     }
-                    else if($cateroty == 'editoriallyApprovedArticles')
+                    else if($category == 'editoriallyApprovedArticles')
                     {
                         $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
                     }
-                    else if($cateroty == 'abyssArticles')
+                    else if($category == 'abyssArticles')
                     {
                         $articleIds = $this->model->loadAbyssArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
                         $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
                     }
-                    else if($cateroty == 'articlesWaitingApproval')
+                    else if($category == 'articlesSearch')
+                    {
+                        if(isset($this->parsedBody['searchTitle']))
+                        {
+                            if(strlen($this->parsedBody['searchTitle']) > 0)
+                            {
+                                $searchTitle = $this->parsedBody['searchTitle'];
+                                $searchTags = $this->parsedBody['searchTags'];
+                                if(isset($searchTags))
+                                {
+                                    $searchTagsString = '{'.implode(',', $searchTags).'}';
+    
+                                    $articleIds = $this->model->loadArticlesSearchIdsByRateWithTags($count, $lastLoadedArticleId, $lastLoadedArticleRate, $searchTitle, $searchTagsString);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
+                                }
+                                else
+                                {
+                                    $articleIds = $this->model->loadArticlesSearchIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate, $searchTitle);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
+                                }
+                            }
+                            else
+                            {
+                                throw new Error(400, "Not found search title", "Not found search title");
+                            }
+                        }
+                        else
+                        {
+                            throw new Error(400, "Not found search title", "Not found search title");
+                        }
+                    }
+                    else if($category == 'articlesWaitingApproval')
                     {
                         $articleIds = $this->model->loadArticlesWaitingApprovalIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
                         $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproval($articleIds));
                     }
-                    else if($cateroty == 'articlesWaitingPremoderate')
+                    else if($category == 'articlesWaitingPremoderate')
                     {
                         $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
                         $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
@@ -159,20 +260,52 @@ class ArticlesHandler extends BaseHandlerRoute
                 }
                 else
                 {
-                    if($cateroty == 'editoriallyArticles')
+                    if($category == 'editoriallyArticles')
                     {
                         $articleIds = $this->model->loadEditoriallyArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
                     }
-                    else if($cateroty == 'editoriallyApprovedArticles')
+                    else if($category == 'editoriallyApprovedArticles')
                     {
                         $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
                     }
-                    else if($cateroty == 'abyssArticles')
+                    else if($category == 'abyssArticles')
                     {
                         $articleIds = $this->model->loadAbyssArticlesIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleRate);
                         $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
+                    }
+                    else if($category == 'articlesSearch')
+                    {
+                        if(isset($this->parsedBody['searchTitle']))
+                        {
+                            if(strlen($this->parsedBody['searchTitle']) > 0)
+                            {
+                                $searchTitle = $this->parsedBody['searchTitle'];
+                                $searchTags = $this->parsedBody['searchTags'];
+                                
+                                if(isset($searchTags))
+                                {
+                                    $searchTagsString = '{'.implode(',', $searchTags).'}';
+    
+                                    $articleIds = $this->model->loadArticlesSearchIdsByRateWithTags($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle, $searchTagsString);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
+                                }
+                                else
+                                {
+                                    $articleIds = $this->model->loadArticlesSearchIdsByRate($count, $lastLoadedArticleId, $lastLoadedArticleCreatedAt, $searchTitle);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
+                                }
+                            }
+                            else
+                            {
+                                throw new Error(400, "Not found search title", "Not found search title");
+                            }
+                        }
+                        else
+                        {
+                            throw new Error(400, "Not found search title", "Not found search title");
+                        }
                     }
                     else
                     {
@@ -184,6 +317,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 throw new Error(400, "Invalid sortType", "Invalid sortType");
             }
+            
         }
         else
         {

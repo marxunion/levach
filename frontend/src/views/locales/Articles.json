@@ -5,6 +5,7 @@
 
         "headerTitle":
         {
+            "searchResults": "Результаты поиска",
             "editoriallyArticles": "Статьи редакции",
             "editoriallyApprovedArticles": "Статьи одобренные редакцией",
             "abyssArticles": "Статьи Бездны",
@@ -18,6 +19,11 @@
         [
             "популярности",
             "дате размещения"
+        ],
+        "sortTypesNames": 
+        [
+            "rate",
+            "createdAt"
         ],
 
         "warnings": 
@@ -123,6 +129,7 @@
         "versionText": "Version ",
         "headerTitle":
         {
+            "searchResults": "Search results",
             "editoriallyArticles": "Editorially Articles",
             "editoriallyApprovedArticles": "Approved Editorially Articles",
             "abyssArticles": "Abyss Articles",

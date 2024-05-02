@@ -130,12 +130,12 @@
 
 	let statuses = reactive({
 		premoderationStatus: 0,
-		acceptedEditoriallyStatus: 0
+		approvedEditoriallyStatus: 0
 	});
 	let statusesTexts = computed(() => 
 		({
 			premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
-			acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
+			approvedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[statuses.approvedEditoriallyStatus.toString()]
 		})
 	);
 
@@ -477,13 +477,13 @@
 				
 				statuses = reactive({
 					premoderationStatus: fetchedData.value['premoderation_status'],
-					acceptedEditoriallyStatus: fetchedData.value['approvededitorially_status']
+					approvedEditoriallyStatus: fetchedData.value['approvededitorially_status']
 				});
 
 				statusesTexts = computed(() => 
 					({
 						premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
-						acceptedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['acceptedEditoriallyStatus'] as JsonData)[statuses.acceptedEditoriallyStatus.toString()]
+						approvedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[statuses.approvedEditoriallyStatus.toString()]
 					})
 				);
 
@@ -523,9 +523,9 @@
 							<p>{{ statusesTexts.premoderationStatus }}</p>
 						</div>
 						<div class="main__article__info__statusesContainer__status">
-							<p>{{ (langData['statuses'] as JsonData)['acceptedEditoriallyStatusText'] }}</p>
-							<img :src="`/src/assets/img/article/statuses/${statuses.acceptedEditoriallyStatus}.svg`" alt="acceptedEditoriallyStatus">
-							<p>{{ statusesTexts.acceptedEditoriallyStatus }}</p>
+							<p>{{ (langData['statuses'] as JsonData)['approvedEditoriallyStatusText'] }}</p>
+							<img :src="`/src/assets/img/article/statuses/${statuses.approvedEditoriallyStatus}.svg`" alt="approvedEditoriallyStatus">
+							<p>{{ statusesTexts.approvedEditoriallyStatus }}</p>
 						</div>
 					</div>
 				</div>

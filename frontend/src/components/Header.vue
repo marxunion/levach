@@ -1,5 +1,7 @@
 <script setup lang="ts">
     import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
+
     import DropDown from "./DropDown.vue";
 
     import "./scss/Header.scss"
@@ -9,10 +11,19 @@
 
     import { LangDataHandler } from "./../ts/LangDataHandler";
     import langsData from "./locales/Header.json";
+
+    import { searchText } from "../ts/searchHelper";
     
+    import { defineEmits } from 'vue';
+
     const langData = LangDataHandler.initLangDataHandler("Header", langsData).langData;
 
-    import { defineEmits } from 'vue';
+    const router = useRouter();
+
+    const onSearchButton = () =>
+    {
+        router.push('/articles/search/'+searchText.value);
+    }
 
     const emit = defineEmits();
 </script>
@@ -24,8 +35,8 @@
         </a>
         <div class="header__bar">
             <div class="header__bar__search">
-                <input :placeholder="(langData['search'] as string)" type="text" class="header__bar__search__input">
-                <a href="#/" class="header__bar__search__button"></a>
+                <input v-model="searchText" :placeholder="(langData['search'] as string)" type="text" class="header__bar__search__input">
+                <a @click="onSearchButton" class="header__bar__search__button"></a>
             </div>
             <div class="header__bar__subbar">
                 <a href="#/article/new" class="header__bar__subbar__createarticle">{{ langData['createArticle'] }}</a>

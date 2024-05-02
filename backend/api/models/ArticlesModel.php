@@ -13,9 +13,9 @@ class ArticlesModel extends BaseModel
         parent::__construct();
     }
 
-    # EditoriallyArticles
 
-    public function loadEditoriallyArticlesIdsByTimestamp($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleTimestamp = 2147483645, $searchTitle = '')
+    # Article search
+    public function loadArticleSearchIdsByCreatedAtWithTags($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645, $searchTitle = '', $searchTags = '')
     {
         return $this->database->select(
             'statistics',
@@ -23,15 +23,16 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
-                    "created_at" => "DESC",
+                    "article_id" => "DESC",
                 ],
                 'AND' => [
-                    'editorially_status' => 1,
-                    'title[~]' => $searchTitle,
+                    'premoderation_status' => 2,
+                    'current_title[~]' => $searchTitle,
+                    'current_tags &&' => $searchTags,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleTimestamp,
+                        'created_at[<]' => $lastLoadedArticleCreatedAt,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleTimestamp,
+                            'created_at' => $lastLoadedArticleCreatedAt,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -39,8 +40,8 @@ class ArticlesModel extends BaseModel
             ]
         );
     }
-    
-    public function loadEditoriallyArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645, $searchTitle = '')
+
+    public function loadArticleSearchIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645, $searchTitle = '')
     {
         return $this->database->select(
             'statistics',
@@ -48,11 +49,37 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
-                    "rating" => "DESC",
+                    "article_id" => "DESC",
                 ],
                 'AND' => [
-                    'editorially_status' => 1,
-                    'title[~]' => $searchTitle,
+                    'premoderation_status' => 2,
+                    'current_title[~]' => $searchTitle,
+                    'OR' => [
+                        'created_at[<]' => $lastLoadedArticleCreatedAt,
+                        'AND' => [
+                            'created_at' => $lastLoadedArticleCreatedAt,
+                            'article_id[<]' => $lastLoadedArticleId
+                        ]
+                    ]
+                ]
+            ]
+        );
+    }
+
+    public function loadArticleSearchIdsByRateWithTags($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645, $searchTitle = '', $searchTags = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => $count,
+                "ORDER" => [
+                    "article_id" => "DESC",
+                ],
+                'AND' => [
+                    'premoderation_status' => 2,
+                    'current_title[~]' => $searchTitle,
+                    'current_tags &&' => $searchTags,
                     'OR' => [
                         'rating[<]' => $lastLoadedArticleRate,
                         'AND' => [
@@ -65,9 +92,84 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    # ApprovedEditoriallyArticles
+    public function loadArticleSearchIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645, $searchTitle = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => $count,
+                "ORDER" => [
+                    "article_id" => "DESC",
+                ],
+                'AND' => [
+                    'premoderation_status' => 2,
+                    'current_title[~]' => $searchTitle,
+                    'OR' => [
+                        'rating[<]' => $lastLoadedArticleRate,
+                        'AND' => [
+                            'rating' => $lastLoadedArticleRate,
+                            'article_id[<]' => $lastLoadedArticleId
+                        ]
+                    ]
+                ]
+            ]
+        );
+    }
 
-    public function loadApprovedEditoriallyArticlesIdsByTimestamp($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleTimestamp = 2147483645, $searchTitle = '')
+    
+    # EditoriallyArticles
+    public function loadEditoriallyArticlesIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645)
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => $count,
+                "ORDER" => [
+                    "created_at" => "DESC",
+                ],
+                'AND' => [
+                    'editorially_status' => 1,
+                    'OR' => [
+                        'created_at[<]' => $lastLoadedArticleCreatedAt,
+                        'AND' => [
+                            'created_at' => $lastLoadedArticleCreatedAt,
+                            'article_id[<]' => $lastLoadedArticleId
+                        ]
+                    ]
+                ]
+            ]
+        );
+    }
+    
+    public function loadEditoriallyArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645)
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => $count,
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'AND' => [
+                    'editorially_status' => 1,
+                    'OR' => [
+                        'rating[<]' => $lastLoadedArticleRate,
+                        'AND' => [
+                            'rating' => $lastLoadedArticleRate,
+                            'article_id[<]' => $lastLoadedArticleId
+                        ]
+                    ]
+                ]
+            ]
+        );
+    }
+
+    # EditoriallyApprovedArticles
+
+    public function loadEditoriallyApprovedArticlesIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -79,11 +181,10 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'approvededitorially_status' => 2,
-                    'title[~]' => $searchTitle,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleTimestamp,
+                        'created_at[<]' => $lastLoadedArticleCreatedAt,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleTimestamp,
+                            'created_at' => $lastLoadedArticleCreatedAt,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -92,7 +193,7 @@ class ArticlesModel extends BaseModel
         );
     }
     
-    public function loadApprovedEditoriallyArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645, $searchTitle = '')
+    public function loadEditoriallyApprovedArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -104,7 +205,6 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'approvededitorially_status' => 2,
-                    'title[~]' => $searchTitle,
                     'OR' => [
                         'rating[<]' => $lastLoadedArticleRate,
                         'AND' => [
@@ -119,7 +219,7 @@ class ArticlesModel extends BaseModel
 
     # AbyssArticles
 
-    public function loadAbyssArticlesIdsByTimestamp($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleTimestamp = 2147483645, $searchTitle = '')
+    public function loadAbyssArticlesIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -131,11 +231,10 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'premoderation_status' => 2,
-                    'title[~]' => $searchTitle,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleTimestamp,
+                        'created_at[<]' => $lastLoadedArticleCreatedAt,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleTimestamp,
+                            'created_at' => $lastLoadedArticleCreatedAt,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -144,7 +243,7 @@ class ArticlesModel extends BaseModel
         );
     }
     
-    public function loadAbyssArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645, $searchTitle = '')
+    public function loadAbyssArticlesIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645, $searchTitle = '', $searchTags = null)
     {
         return $this->database->select(
             'statistics',
@@ -156,7 +255,6 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'premoderation_status' => 2,
-                    'title[~]' => $searchTitle,
                     'OR' => [
                         'rating[<]' => $lastLoadedArticleRate,
                         'AND' => [
@@ -171,7 +269,7 @@ class ArticlesModel extends BaseModel
 
     # ArticlesWaitingApproval
 
-    public function loadArticlesWaitingApprovalIdsByTimestamp($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleTimestamp = 2147483645, $searchTitle = '')
+    public function loadArticlesWaitingApprovalIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -183,11 +281,10 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'approvededitorially_status' => 1,
-                    'title[~]' => $searchTitle,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleTimestamp,
+                        'created_at[<]' => $lastLoadedArticleCreatedAt,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleTimestamp,
+                            'created_at' => $lastLoadedArticleCreatedAt,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -196,7 +293,7 @@ class ArticlesModel extends BaseModel
         );
     }
     
-    public function loadArticlesWaitingApprovalIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645, $searchTitle = '')
+    public function loadArticlesWaitingApprovalIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -208,7 +305,6 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'approvededitorially_status' => 1,
-                    'title[~]' => $searchTitle,
                     'OR' => [
                         'rating[<]' => $lastLoadedArticleRate,
                         'AND' => [
@@ -223,7 +319,7 @@ class ArticlesModel extends BaseModel
 
     # ArticlesWaitingPremoderate
 
-    public function loadArticlesWaitingPremoderateIdsByTimestamp($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleTimestamp = 2147483645, $searchTitle = '')
+    public function loadArticlesWaitingPremoderateIdsByCreatedAt($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedAt = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -235,11 +331,10 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'premoderation_status' => 1,
-                    'title[~]' => $searchTitle,
                     'OR' => [
-                        'created_at[<]' => $lastLoadedArticleTimestamp,
+                        'created_at[<]' => $lastLoadedArticleCreatedAt,
                         'AND' => [
-                            'created_at' => $lastLoadedArticleTimestamp,
+                            'created_at' => $lastLoadedArticleCreatedAt,
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
@@ -248,7 +343,7 @@ class ArticlesModel extends BaseModel
         );
     }
     
-    public function loadArticlesWaitingPremoderateIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645, $searchTitle = '')
+    public function loadArticlesWaitingPremoderateIdsByRate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleRate = 2147483645)
     {
         return $this->database->select(
             'statistics',
@@ -260,7 +355,6 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'premoderation_status' => 1,
-                    'title[~]' => $searchTitle,
                     'OR' => [
                         'rating[<]' => $lastLoadedArticleRate,
                         'AND' => [
@@ -272,7 +366,50 @@ class ArticlesModel extends BaseModel
             ]
         );
     }
-    
+
+    # Load articles from article ids
+
+    # Articles search 
+
+    public function loadArticlesSearch($articleIds)
+    {
+        if($articleIds)
+        {
+            if(is_array($articleIds))
+            {
+                if(count($articleIds) > 0)
+                {
+                    $articles = [];
+                    foreach ($articleIds as &$articleId) 
+                    {
+                        $articleVersions = $this->database->select('articles', ['version_id', 'title', 'text', 'tags', 'date', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId, 'premoderation_status' => 2]);
+                        
+                        $article = [
+                            'id' => $articleId,
+                            'versions' => $articleVersions,
+                            'statistics' => $this->database->get('statistics', ['created_at','rating', 'comments'], ['article_id' => $articleId]),
+                            'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
+                        ];
+                        array_push($articles, $article);
+                    }
+                    return $articles;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     # EditoriallyArticles
 
     public function loadEditoriallyArticles($articleIds)
@@ -314,9 +451,9 @@ class ArticlesModel extends BaseModel
         }
     }
 
-    # ApprovedEditoriallyArticles
+    # EditoriallyApprovedArticles
 
-    public function loadApprovedEditoriallyArticles($articleIds)
+    public function loadAEditoriallypprovedArticles($articleIds)
     {
         if($articleIds)
         {

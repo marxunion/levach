@@ -43,6 +43,7 @@ const routes: RouteRecordRaw[] =
             { path: 'editorially', component: Articles, props: {currentRoute: "editoriallyArticles"}, name: "editoriallyArticles"},
             { path: 'approvedEditorially', component: Articles, props: {currentRoute: "editoriallyApprovedArticles"}, name: "editoriallyApprovedArticles"},
             { path: 'abyss', component: Articles, props: {currentRoute: "abyssArticles"}, name: "abyssArticles"},
+            { path: 'search/:searchData', component: Articles, props: {currentRoute: "articlesSearch"}, name: "articlesSearch"},
         ],
     },
     {
