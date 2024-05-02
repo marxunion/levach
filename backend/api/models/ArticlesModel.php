@@ -36,6 +36,9 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
+                ],
+                'AND NOT' => [
+                    'approvededitorially_status' => 3
                 ]
             ]
         );
@@ -61,6 +64,9 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
+                ],
+                'AND NOT' => [
+                    'approvededitorially_status' => 3
                 ]
             ]
         );
@@ -87,6 +93,9 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
+                ],
+                'AND NOT' => [
+                    'approvededitorially_status' => 3
                 ]
             ]
         );
@@ -112,6 +121,9 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
+                ],
+                'AND NOT' => [
+                    'approvededitorially_status' => 3
                 ]
             ]
         );
@@ -231,6 +243,7 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'premoderation_status' => 2,
+                    'approvededitorially_status' => 1,
                     'OR' => [
                         'created_at[<]' => $lastLoadedArticleCreatedAt,
                         'AND' => [
@@ -238,6 +251,9 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
+                ],
+                'AND NOT' => [
+                    'approvededitorially_status' => [2, 3]
                 ]
             ]
         );
@@ -262,6 +278,9 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
+                ],
+                'AND NOT' => [
+                    'approvededitorially_status' => [2, 3]
                 ]
             ]
         );
@@ -382,7 +401,17 @@ class ArticlesModel extends BaseModel
                     $articles = [];
                     foreach ($articleIds as &$articleId) 
                     {
-                        $articleVersions = $this->database->select('articles', ['version_id', 'title', 'text', 'tags', 'date', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId, 'premoderation_status' => 2]);
+                        $articleVersions = $this->database->select(
+                            'articles', 
+                            ['version_id', 'title', 'text', 'tags', 'date', 'editorially_status', 'premoderation_status', 'approvededitorially_status'],
+                            [
+                                'id' => $articleId, 
+                                'premoderation_status' => 2,
+                                'AND NOT' => [
+                                    'approvededitorially_status' => [2, 3]
+                                ]
+                            ]
+                        );
                         
                         $article = [
                             'id' => $articleId,

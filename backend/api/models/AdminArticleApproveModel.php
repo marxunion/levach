@@ -20,44 +20,52 @@ class AdminArticleApproveModel extends BaseModel
 
     public function rejectApprove($articleId)
     {
-        if($this->database->update('statistics', [''], ['']))
+        if($this->database->update('statistics', ['approvededitorially_status' => 0], ['article_id' => $articleId]))
         {
-            if($this->database->update('statistics', [''], ['article_id' => $articleId]))
+            if($this->database->update('articles', ['approvededitorially_status' => 0], ['id' => $articleId]))
             {
-
+                return true;
             }
             else
             {
-
+                return false;
             }
         }
         else
         {
-
+            return false;
         }
     }
 
     public function acceptApprove($articleId)
     {
-        if($this->database)
+        if($this->database->update('statistics', ['approvededitorially_status' => 2], ['article_id' => $articleId]))
         {
-            if()
+            if($this->database->update('articles', ['approvededitorially_status' => 2], ['id' => $articleId]))
             {
-
+                return true;
             }
             else
             {
-
+                return false;
             }
         }
         else
         {
-
+            return false;
         }
     }
 
     public function acceptApproveWithChanges($articleId, $newTitle, $newText, $newTags)
     {
-        $articleInfo = $this->database->get('statistics', ['current_title', 'current_', ''], ['article_id' => $articleId]);
+        $articleInfo = $this->database->get('statistics', ['current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
+        if(isset($articleInfo))
+        {
+               
+        }
+        else 
+        {
+            throw new Error(404, "Article not found", "Article not found");
+        }
     }
 }
