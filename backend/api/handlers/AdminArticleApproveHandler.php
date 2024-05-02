@@ -71,6 +71,10 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                 {
                     
                 }
+                else
+                {
+                    throw new Critical(500, "Failed to reject approve article", "Failed to reject approve article");
+                }
             }
             else if($this->parsedBody['status'] == 1)
             {

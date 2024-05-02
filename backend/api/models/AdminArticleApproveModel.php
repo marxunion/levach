@@ -58,10 +58,25 @@ class AdminArticleApproveModel extends BaseModel
 
     public function acceptApproveWithChanges($articleId, $newTitle, $newText, $newTags)
     {
+        if($this->database->update('statistics', ['approvededitorially_status' => 3], ['article_id' => $articleId]))
+        {
+            if($this->database->update('articles', ['approvededitorially_status' => 3], ['id' => $articleId]))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
         $articleInfo = $this->database->get('statistics', ['current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
         if(isset($articleInfo))
         {
-               
+            
         }
         else 
         {
