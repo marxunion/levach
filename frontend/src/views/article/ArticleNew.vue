@@ -14,13 +14,13 @@
 	import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
 
 	import { LangDataHandler } from "./../../ts/LangDataHandler";
-	import langsData from "./locales/articleNew.json";
+	import langsData from "./locales/ArticleNew.json";
 
 	import './../../libs/font_2605852_prouiefeic';
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 
-	const langData = LangDataHandler.initLangDataHandler("articleNew", langsData).langData;
+	const langData = LangDataHandler.initLangDataHandler("ArticleNew", langsData).langData;
 
 	//Editor
 	config(
@@ -339,4 +339,4 @@
 	</main>
 </template>
 
-<style lang="scss" scoped src="./scss/articleNew.scss"></style>
+<style lang="scss" scoped src="./scss/ArticleNew.scss"></style>

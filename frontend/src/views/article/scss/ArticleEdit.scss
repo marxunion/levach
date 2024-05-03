@@ -22,7 +22,7 @@
         {
             height: 210px;
             width: 100%;
-            background-color: $articleEditInfoBG;
+            background-color: $ArticleEditInfoBG;
             border-radius: 15px;
 
             display: flex;
@@ -108,8 +108,8 @@
                 width: 260px;
                 height: 45px;
                 border-radius: 20px;
-                background-color: $articleEditSendButtonBG;
-                color: $articleEditSendButtonText;
+                background-color: $ArticleEditSendButtonBG;
+                color: $ArticleEditSendButtonText;
                 font-size: 18px;
                 font-family: Roboto-Regular;
                 transition: .5s;
@@ -119,7 +119,7 @@
                 {
                     cursor: pointer;
                     transform: scale(1.04);
-                    background-color: $articleEditSendButtonHoverBG;
+                    background-color: $ArticleEditSendButtonHoverBG;
                 }
             }
         }
@@ -129,7 +129,7 @@
             margin-top: 14px;
             width: 100%;
             border-radius: 15px;
-            background-color: $articleEditEditTagsBG;
+            background-color: $ArticleEditEditTagsBG;
             padding: 0px 12px 12px 12px;
             box-sizing: border-box;
             display: flex;
@@ -148,7 +148,7 @@
                     align-items: center;
                     position: relative;
                     box-sizing: border-box;
-                    background-color: $articleEditEditTagsTagBG;
+                    background-color: $ArticleEditEditTagsTagBG;
                     border-radius: 17px;
                     margin-right: 10px;
                     margin-top: 12px;
@@ -164,7 +164,7 @@
                             transform: rotate(45deg);
                             font-weight: 400;
                             font-family: Arial, Helvetica, sans-serif;
-                            color: $articleEditEditTagsRemoveTagButtonText;
+                            color: $ArticleEditEditTagsRemoveTagButtonText;
                         }
                         margin-left: 6px;
                         width: 40px;
@@ -172,14 +172,14 @@
 
                         border-radius: 17px;
 
-                        background-color: $articleEditEditTagsRemoveTagButtonBG;
+                        background-color: $ArticleEditEditTagsRemoveTagButtonBG;
                         text-align: center;
                         transition: .5s;
                         
                         &:hover
                         {
                             cursor: pointer;
-                            background-color: $articleEditEditTagsRemoveTagButtonHoverBG;
+                            background-color: $ArticleEditEditTagsRemoveTagButtonHoverBG;
                         }
                     }
                 }
@@ -196,11 +196,11 @@
                 {
                     width: 100%;
                     height: 100%;
-                    background-color: $articleEditEditTagsAddTagInputBG;
+                    background-color: $ArticleEditEditTagsAddTagInputBG;
                     border-radius: 20px;
                     padding-left: 14px;
                     
-                    color: $articleEditEditTagsAddTagInputText;
+                    color: $ArticleEditEditTagsAddTagInputText;
                     font-size: 20px;
                     font-family: Roboto-Regular;
 
@@ -208,7 +208,7 @@
 
                     &::placeholder
                     {
-                        color: $articleEditEditTagsAddTagInputPlaceholderText;
+                        color: $ArticleEditEditTagsAddTagInputPlaceholderText;
                     }
                 }
                 &__button
@@ -219,8 +219,8 @@
                     width: 45px;
                     height: 45px;
                     border-radius: 20px;
-                    background-color: $articleEditEditTagsAddTagButtonBG;
-                    color: $articleEditEditTagsAddTagButtonText;
+                    background-color: $ArticleEditEditTagsAddTagButtonBG;
+                    color: $ArticleEditEditTagsAddTagButtonText;
                     line-height: 0;
                     text-align: center;
                     font-size: 44px;
@@ -230,7 +230,7 @@
                     &:hover
                     {
                         cursor: pointer;
-                        background-color: $articleEditEditTagsAddTagButtonHoverBG;
+                        background-color: $ArticleEditEditTagsAddTagButtonHoverBG;
                     }
                 }
             }

@@ -25,12 +25,12 @@
 
 	import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
 
-	import langsData from "./locales/articleView.json";
+	import langsData from "./locales/ArticleView.json";
 	import { LangDataHandler } from "./../../ts/LangDataHandler";
 	
 	import './../../libs/font_2605852_prouiefeic';
 
-	const langData = LangDataHandler.initLangDataHandler("articleView", langsData).langData;
+	const langData = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
 	const fetchedData = ref()
 	const loaded = ref(false);
@@ -388,4 +388,4 @@
 		display: none;
 	}
 </style>
-<style lang="scss" scoped src="./scss/articleView.scss"></style>
+<style lang="scss" scoped src="./scss/ArticleView.scss"></style>

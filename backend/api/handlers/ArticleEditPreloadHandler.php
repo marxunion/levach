@@ -17,6 +17,10 @@ class ArticleEditPreloadHandler extends BaseHandlerRouteWithArgs
         {
             $this->model = new ArticleEditPreloadModel();
         }
+        else
+        {
+            throw new Error(404, "Article for edit not found", "Article for edit not found");
+        }
     }
 
     public function Process()

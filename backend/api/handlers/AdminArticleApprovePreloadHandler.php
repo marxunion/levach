@@ -54,6 +54,14 @@ class AdminApproveArticlePreloadHandler extends BaseHandlerRouteWithArgs
 
     public function Process()
     {
-        
+        $articleId = $this->model->getArticleByViewCode($this->args['viewCode'];);
+        if(isset($articleId))
+        {
+            $this->response = $this->response->withJson($this->model->viewArticle($articleId));
+        }
+        else
+        {
+            throw new Error(404, "Article not found", "Article not found");
+        }
     };
 }

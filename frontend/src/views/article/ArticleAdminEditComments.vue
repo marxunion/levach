@@ -9,10 +9,10 @@
 
 	import CommentsList from "./../../components/CommentsList.vue";
 
-	import langsData from "./locales/articleAdminEditComments.json";
+	import langsData from "./locales/ArticleAdminEditComments.json";
 	import { LangDataHandler } from "./../../ts/LangDataHandler";
 
-    const langData = LangDataHandler.initLangDataHandler("articleAdminEditComments", langsData).langData;
+    const langData = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
 
     // Filters
     const dateFilter = reactive(
@@ -137,4 +137,4 @@
 	</main>
 </template>
 
-<style lang="scss" src="./scss/articleAdminEditComments.scss"></style>
+<style lang="scss" src="./scss/ArticleAdminEditComments.scss"></style>

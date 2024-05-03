@@ -71,8 +71,8 @@
                 {{ link.text }}
             </a>
             <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingPremoderate'))" class="sidebar__links__button rejectAllButton"> {{ langData['rejectAllButton'] }} </a>
-            <a v-else-if="adminStatus && isCurrentRouteName('articleAdminEditComments')" :href="'#/article/'+route.params['articleId']" class="sidebar__links__button backToArticleButton"> {{ langData['backToArticleButton'] }} </a>
-            <a v-else-if="adminStatus && isCurrentRouteName('articleView')" :href="'#/admin/article/editComments/'+route.params['articleId']" class="sidebar__links__button articleCommentsButton"> {{ langData['articleCommentsButton'] }} </a>
+            <a v-else-if="adminStatus && isCurrentRouteName('ArticleAdminEditComments')" :href="'#/article/'+route.params['articleId']" class="sidebar__links__button backToArticleButton"> {{ langData['backToArticleButton'] }} </a>
+            <a v-else-if="adminStatus && isCurrentRouteName('ArticleView')" :href="'#/admin/article/editComments/'+route.params['articleId']" class="sidebar__links__button articleCommentsButton"> {{ langData['articleCommentsButton'] }} </a>
             <a v-else></a>
         </div>
         

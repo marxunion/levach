@@ -19,7 +19,7 @@
 
 	import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
 
-	import langsData from "./locales/articleEdit.json";
+	import langsData from "./locales/ArticleEdit.json";
 
 	import { LangDataHandler } from "./../../ts/LangDataHandler";
 
@@ -42,7 +42,7 @@
 		[statisticName: string]: Statistic;
 	}
 
-	const langData = LangDataHandler.initLangDataHandler("articleEdit", langsData).langData;
+	const langData = LangDataHandler.initLangDataHandler("ArticleEdit", langsData).langData;
 
 
 	const route = useRoute();
@@ -554,4 +554,4 @@
 	</main>
 </template>
 
-<style lang="scss" scoped src="./scss/articleEdit.scss"></style>
+<style lang="scss" scoped src="./scss/ArticleEdit.scss"></style>

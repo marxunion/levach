@@ -4,9 +4,9 @@
 	import { JsonData } from './../ts/JsonHandler';
 
 	import { LangDataHandler } from './../ts/LangDataHandler';
-	import langsData from './locales/aboutProject.json';
+	import langsData from './locales/AboutProject.json';
 
-	const langData = LangDataHandler.initLangDataHandler('aboutProject', langsData).langData;
+	const langData = LangDataHandler.initLangDataHandler('AboutProject', langsData).langData;
 
 	const sectionData = computed(() => 
 	{
@@ -34,4 +34,4 @@
 	</main>
 </template>
 
-<style lang="scss" scoped src="./scss/aboutProject.scss"></style>
+<style lang="scss" scoped src="./scss/AboutProject.scss"></style>

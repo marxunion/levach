@@ -29,7 +29,7 @@
             flex-direction: column;
             align-items: center;
 
-            background-color: $articleViewArticleBG;
+            background-color: $ArticleViewArticleBG;
 
             box-sizing: border-box;
             border-radius: 15px;
@@ -46,7 +46,7 @@
                 top: 13px;
                 font-size: 22px;
                 font-family: Roboto-Regular;
-                color: $articleViewArticleTitleTime;
+                color: $ArticleViewArticleTitleTime;
                 z-index: 2;
             }
 
@@ -62,7 +62,7 @@
             {
                 width: 95%;
                 font-size: 20px;
-                color: $articleViewTagsText;
+                color: $ArticleViewTagsText;
             }
             &__buttons
             {
@@ -95,8 +95,8 @@
     
                     &.deleteArticleButton
                     {
-                        color: $articleViewDeleteArticleButtonText;
-                        border: 2px solid $articleViewDeleteArticleButtonBorder;
+                        color: $ArticleViewDeleteArticleButtonText;
+                        border: 2px solid $ArticleViewDeleteArticleButtonBorder;
                     }
     
                     transition: .4s;
@@ -164,7 +164,7 @@
         &__comments
         {
             width: 100%;
-            background-color: $articleViewCommentsBG;
+            background-color: $ArticleViewCommentsBG;
             border-radius: 15px;
             margin-top: 20px;
             display: flex;
@@ -192,7 +192,7 @@
 
                         margin-right: 8px;
 
-                        color: $articleViewCommentsText;
+                        color: $ArticleViewCommentsText;
                     }
                     display: flex;
                     align-items: center;

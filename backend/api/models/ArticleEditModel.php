@@ -34,9 +34,7 @@ class ArticleEditModel extends BaseModel
             {
                 if($articleData['edit_timeout_to_date'] < time())
                 {
-                    $articleData = $this->database->select('statistics', [], ['article_id' => $articleId]);
-
-                    if($articleData['title'] == $newTitle && $articleData['text'] == $newText && $articleData['tags'] == $newTags)
+                    if($articleData['current_title'] == $newTitle && $articleData['current_text'] == $newText && $articleData['current_tags'] == $newTags)
                     {
                         throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
                     }
@@ -52,8 +50,7 @@ class ArticleEditModel extends BaseModel
                             {
                                 if(count($newTags) == count(array_unique($newTags)))
                                 {
-                                    $newTagsString = implode(',', $newTags);
-                                    $articleData['tags'] = '{'.$newTagsString.'}';
+                                    $newTagsString = '{'.implode(',', $newTags).'}';
                                 }
                                 else
                                 {
@@ -61,6 +58,10 @@ class ArticleEditModel extends BaseModel
                                 }
                             }
                         }
+                    }
+                    else
+                    {
+                        $newTagsString = '{}';
                     }
         
                     $this->database->insert(
@@ -144,8 +145,7 @@ class ArticleEditModel extends BaseModel
                     {
                         if(count($newTags) == count(array_unique($newTags)))
                         {
-                            $newTagsString = implode(',', $newTags);
-                            $newTagsString = '{'.$newTagsString.'}';
+                            $newTagsString = '{'.implode(',', $newTags).'}';
                         }
                         else
                         {

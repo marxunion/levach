@@ -290,7 +290,7 @@
 									
 				modal.onclose = function(event)
 				{
-                    if(isCurrentRouteName('adminEditComments') || isCurrentRouteName('articleAdminEditComments') || isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingPremoderate'))
+                    if(isCurrentRouteName('adminEditComments') || isCurrentRouteName('ArticleAdminEditComments') || isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingPremoderate'))
                     {
                         router.push("/");
                     }

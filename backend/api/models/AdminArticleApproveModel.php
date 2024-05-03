@@ -62,7 +62,79 @@ class AdminArticleApproveModel extends BaseModel
         {
             if($this->database->update('articles', ['approvededitorially_status' => 3], ['id' => $articleId]))
             {
-                return true;
+                $articleData = $this->database->get('statistics', ['current_version', 'current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
+                if(isset($articleData))
+                {
+                    if($articleData['current_title'] == $newTitle && $articleData['current_text'] == $newText && $articleData['current_tags'] == $newTags)
+                    {
+                        throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
+                    }
+
+                    $newVersionId = $articleData['currentVersion'] + 1;
+                    $newArticleCreatedDate = time();
+
+                    if(isset($newTags))
+                    {
+                        if(is_array($newTags))
+                        {
+                            if(count($newTags) > 0)
+                            {
+                                if(count($newTags) == count(array_unique($newTags)))
+                                {
+                                    $newTagsString = '{'.implode(',', $newTags).'}';
+                                }
+                                else
+                                {
+                                    throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        $newTagsString = '{}';
+                    }
+
+                    $this->database->insert(
+                        'articles',
+                        [
+                            'id' => $articleId,
+                            'version_id' => $newVersionId,
+                            'created_date' => $newArticleCreatedDate,
+
+                            'title' => $newTitle,
+                            'text' => $newText,
+                            'tags' => $newTags,
+                            'editorially_status' => 1,
+                            'premoderation_status' => 2,
+                            'approvededitorially_status' => 3
+                        ]
+                    );
+                    
+                    $this->database->update(
+                        'statistics', 
+                        [
+                            'current_version' => $newVersionId, 
+                            'created_date' => $newArticleCreatedDate,
+
+                            'current_title' => $newTitle, 
+                            'current_text' => $newText, 
+                            'current_tags' => $newTags, 
+                            
+                            'editorially_status' => 1,
+                            'premoderation_status' => 2,
+                            'approvededitorially_status' => 3,
+                            'edit_timeout_to_date' => $newArticleCreatedDate
+                        ], 
+                        [
+                            'article_id' => $articleId
+                        ]
+                    );
+                }
+                else 
+                {
+                    throw new Error(404, "Article not found", "Article not found");
+                }
             }
             else
             {
@@ -72,15 +144,6 @@ class AdminArticleApproveModel extends BaseModel
         else
         {
             return false;
-        }
-        $articleData = $this->database->get('statistics', ['current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
-        if(isset($articleData))
-        {
-            
-        }
-        else 
-        {
-            throw new Error(404, "Article not found", "Article not found");
         }
     }
 }

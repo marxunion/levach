@@ -91,7 +91,7 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
             {
                 if(isset($this->parsedBody['newTitle']) && isset($this->parsedBody['newText']) && isset($this->parsedBody['newTags']))
                 { 
-                    if($this->model->acceptApproveWithChanges($articleId, $this->parsedBody['newTitle'], $this->pa))
+                    if($this->model->acceptApproveWithChanges($articleId, $this->parsedBody['newTitle'], $this->parsedBody['newText'], $this->parsedBody['newTags']))
                     {
                         $this->response = $this->response->withJson(['success' => true]);
                     }
