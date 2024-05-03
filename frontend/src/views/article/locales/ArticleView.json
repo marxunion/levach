@@ -21,7 +21,7 @@
         "commentsTitle": "Комментарии",
         "sortTitle": "Сортировать по:",
         "deleteArticleButton": "Удалить статью",
-        "sortTypes": 
+        "sortTypesNames": 
         [
             "популярности",
             "дате размещения"
@@ -130,7 +130,7 @@
         "commentsTitle": "Comments",
         "sortTitle": "Sort by:",
         "deleteArticleButton": "Delete article",
-        "sortTypes": 
+        "sortTypesNames": 
         [
             "popularity",
             "posting date"

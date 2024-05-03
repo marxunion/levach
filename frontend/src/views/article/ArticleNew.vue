@@ -52,81 +52,80 @@
 		{
 			openModal(LoaderModal);
 			const promises = files.map((file) => 
+			{
+				return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
 				{
-					return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
-					{
-						const form = new FormData();
-						form.append('file', file);
+					const form = new FormData();
+					form.append('file', file);
 
-						axios.post('/api/media/img/upload', form, 
+					axios.post('/api/media/img/upload', form, 
+					{
+						headers: 
 						{
-							headers: 
+							'Content-Type': 'multipart/form-data'
+						}
+					})
+					.then((response) => 
+					{
+						if (response.data) 
+						{
+							if(response.data.fileName)
 							{
-								'Content-Type': 'multipart/form-data'
+								resolve(response);
 							}
-						})
-						.then((response) => 
-						{
-							if (response.data) 
+							else 
 							{
-								if(response.data.fileName)
+								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
+							}
+						}
+						else
+						{
+							openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+						}
+					})
+					.catch((error) => 
+					{
+						if (error.response.data) 
+						{
+							if(error.response.data.Warning)
+							{
+								if(error.response.data.Warning.message == "UploadImage Invalid image type")
 								{
-									resolve(response);
+									openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
 								}
-								else 
+								else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
+								{
+									openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
+								}
+								else if(error.response.data.Warning.message == "UploadImage Invalid image type")
+								{
+									openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
+								}
+								else
 								{
 									openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
 								}
 							}
-							else
+							else if(error.response.data.Error)
 							{
 								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 							}
-						})
-						.catch((error) => 
+							else if(error.response.data.Critical)
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+							else 
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+						}
+						else
 						{
-							if (error.response.data) 
-							{
-								if(error.response.data.Warning)
-								{
-									if(error.response.data.Warning.message == "UploadImage Invalid image type")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
-									}
-									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
-									{
-										openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
-									}
-									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
-									}
-									else
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
-									}
-								}
-								else if(error.response.data.Error)
-								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-								else if(error.response.data.Critical)
-								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-								else 
-								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-							}
-							else
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-							}
-						});
+							openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+						}
 					});
-				}
-			);
+				});
+			});
 
 			const res = await Promise.all(promises);
 			

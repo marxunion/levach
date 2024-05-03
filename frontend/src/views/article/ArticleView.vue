@@ -132,11 +132,11 @@
 	// Sort
 	const currentSortType = ref();
 
-	const sortTypes = computed(() => langData.value['sortTypes'] as string[]);
+	const sortTypesNames = computed(() => langData.value['sortTypesNames'] as string[]);
 
-	const onChangeSortType = (version : number) => 
+	const onChangeSortType = (sortType : number) => 
 	{
-		currentSortType.value = version;
+		currentSortType.value = sortType;
 	};
 
 	// NewComment
@@ -359,7 +359,7 @@
 					<p class="main__article__comments__header__title">{{ langData['commentsTitle'] }}</p>
 					<div class="main__article__comments__header__sort">
 						<p class="main__article__comments__header__sort__title">{{ langData['sortTitle'] }}</p>
-						<DropDown :options="sortTypes" :default="sortTypes[currentSortType]" class="main__article__comments__header__sort__selectSortType" @inputIndex="onChangeSortType" />
+						<DropDown :options="sortTypesNames" :default="sortTypesNames[currentSortType]" class="main__article__comments__header__sort__selectSortType" @inputIndex="onChangeSortType" />
 					</div>
 				</div>
 

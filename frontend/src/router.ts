@@ -83,8 +83,9 @@ function addAdminRoutes()
     router.addRoute({
         path: '/admin',
         children: [
-            { path: '', component: AdminEditComments, name: "adminEditComments" },
+            { path: '/edit/comments', component: AdminEditComments, name: "AdminEditComments" },
             { path: 'article/editComments/:articleId', component: ArticleAdminEditComments, name: "ArticleAdminEditComments" },
+            { path: 'article/approve/:articleViewCode', component: ArticleAdminApprove, name: "ArticleAdminApprove"},
             { path: 'articles/waitingApproval/', component: Articles, props: {currentRoute: "articlesWaitingApproval"}, name: "articlesWaitingApproval" },
             { path: 'articles/waitingPremoderate/', component: Articles, props: {currentRoute: "articlesWaitingPremoderate"}, name: "articlesWaitingPremoderate" },
             { path: 'articles/edit/', component: AdminEditComments, name: "adminEditComments" },
@@ -94,7 +95,8 @@ function addAdminRoutes()
 
 function removeAdminRoutes() 
 {
-    router.removeRoute('adminEditComments');
+    router.removeRoute('AdminEditComments');
+    router.removeRoute('ArticleAdminApprove');
     router.removeRoute('ArticleAdminEditComments');
     router.removeRoute('articlesWaitingApproval');
     router.removeRoute('articlesWaitingPremoderate');

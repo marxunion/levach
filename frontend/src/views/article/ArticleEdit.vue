@@ -117,7 +117,8 @@
 	let fetchedData = ref();
 	let loaded = ref(false);
 	
-	let statistics : ComputedRef<Statistics> = computed(() => ({
+	let statistics : ComputedRef<Statistics> = computed(() => 
+	({
 		rating: {
 			count: 0,
 			title: 'rating'
@@ -133,11 +134,12 @@
 		approvedEditoriallyStatus: 0
 	});
 	let statusesTexts = computed(() => 
-		({
+	(
+		{
 			premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
 			approvedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[statuses.approvedEditoriallyStatus.toString()]
-		})
-	);
+		}
+	));
 
 	let editorState = {
 		text: '',
@@ -333,7 +335,7 @@
 									{
 										if(response.data.Error.message == "Article for edit not found")
 										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNotFound']});
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleForEditNotFound']});
 										}
 										else if(response.data.Error.message == "Please make changes for edit")
 										{
@@ -358,55 +360,55 @@
 							.catch(error => 
 							{
 								if(error.response.data.Warning)
+								{
+									if(error.response.data.Warning.message == "Please add a title for the article")
 									{
-										if(error.response.data.Warning.message == "Please add a title for the article")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
-										}
-										else if(error.response.data.Warning.message == "Wait for a timeout to re-edit the article")
-										{
-											openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)['editTimeoutToDate'] as string).replace('{date}', timestampToLocaleFormatedTime(error.response.data.Warning.params['edit_timeout_to_date']))})
-										}
-										else if(error.response.data.Warning.message == "Title must contain between 5 and 120 characters")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
-										}
-										else if(error.response.data.Warning.message == "Please add content for the article")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
-										}
-										else if(error.response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
-										}
-										else
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-										}
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
 									}
-									else if(error.response.data.Error)
+									else if(error.response.data.Warning.message == "Wait for a timeout to re-edit the article")
 									{
-										if(error.response.data.Error.message == "Article for edit not found")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNotFound']})
-										}
-										else if(error.response.data.Error.message == "Please make changes for edit")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNeedChanges']});
-										}
-										else
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-										}
+										openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)['editTimeoutToDate'] as string).replace('{date}', timestampToLocaleFormatedTime(error.response.data.Warning.params['edit_timeout_to_date']))})
 									}
-									else if(error.response.data.Critical)
+									else if(error.response.data.Warning.message == "Title must contain between 5 and 120 characters")
 									{
-										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
+									}
+									else if(error.response.data.Warning.message == "Please add content for the article")
+									{
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
+									}
+									else if(error.response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
+									{
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
+									}
+									else
+									{
+										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+									}
+								}
+								else if(error.response.data.Error)
+								{
+									if(error.response.data.Error.message == "Article for edit not found")
+									{
+										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleForEditNotFound']})
+									}
+									else if(error.response.data.Error.message == "Please make changes for edit")
+									{
+										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNeedChanges']});
 									}
 									else
 									{
 										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 									}
+								}
+								else if(error.response.data.Critical)
+								{
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+								}
+								else
+								{
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+								}
 							});
 						}
 						else

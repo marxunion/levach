@@ -39,7 +39,7 @@
     // Sort
 	const currentSortType = ref(0);
 
-    const sortTypes = computed(() => langData.value['sortTypes'] as string[]);
+    const sortTypesNames = computed(() => langData.value['sortTypesNames'] as string[]);
 
     if(props.currentRoute == 'articlesSearch')
     {
@@ -128,7 +128,7 @@
                         if(searchTags.length > 0)
                         {
                             data = {
-                                sortType: (langData.value['sortTypesNames'] as JsonData)[currentSortType.value],
+                                sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
                                 category: props.currentRoute,
                                 count: 4,
                                 lastLoadedArticleId: lastLoadedArticleId.value,
@@ -140,7 +140,7 @@
                         else
                         {
                             data = {
-                                sortType: (langData.value['sortTypesNames'] as JsonData)[currentSortType.value],
+                                sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
                                 category: props.currentRoute,
                                 count: 4,
                                 lastLoadedArticleId: lastLoadedArticleId.value,
@@ -185,7 +185,7 @@
                 {
                     params: 
                     {
-                        sortType: (langData.value['sortTypesNames'] as JsonData)[currentSortType.value],
+                        sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
                         category: props.currentRoute,
                         count: 4,
                         lastLoadedArticleId: lastLoadedArticleId.value,
@@ -224,7 +224,7 @@
             {
                 params: 
                 {
-                    sortType: (langData.value['sortTypesNames'] as JsonData)[currentSortType.value],
+                    sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
                     category: props.currentRoute,
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
@@ -299,7 +299,7 @@
 			<p class="main__header__title">{{ (langData['headerTitle'] as JsonData)[currentRoute || 'editoriallyArticles'] }}</p>
 			<div class="main__header__sort">
 				<p class="main__header__sort__title">{{ langData['sortTitle'] }}</p>
-				<DropDown :options="sortTypes" :default="sortTypes[currentSortType]" class="main__header__sort__select" @inputIndex="onChangeSortType" />
+				<DropDown :options="sortTypesNames" :default="sortTypesNames[currentSortType]" class="main__header__sort__select" @inputIndex="onChangeSortType" />
 			</div>
 		</div>
 		<article class="main__article" v-if="articles.length > 0 && !loading" v-for="article in articles">

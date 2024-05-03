@@ -32,7 +32,7 @@
 
         "errors": 
         {
-            "articleForEditNotFound": "Статья для редактирования не найдена",
+            "articleForApproveNotFound": "Статья для редактирования не найдена",
 
             "articleNeedChanges": "Пожалуйста внесите какие-либо правки для изменения статьи",
 
@@ -57,6 +57,7 @@
                 "3": "В процессе одобрения"
             }
         },
+        "versionText": "Версия ",
         
         "articleCanRequestApprove": "Статья перешла порог рейтинга. Запросить одобрение статьи редакцией? После переноса редактирование будет невозможно.",
         "articleCanRequestApproveAccept": "Да",
@@ -241,7 +242,7 @@
 
         "errors": 
         {
-            "articleForEditNotFound": "Article for edit not found",
+            "articleForApproveNotFound": "Article for edit not found",
 
             "articleNeedChanges": "Please make any changes to edit article",
 
@@ -266,13 +267,6 @@
                 "3": "In approval process"
             }
         },
-
-        "articleCanRequestApprove": "Article has crossed the rating threshold. Request editorial approval of the article?",
-        "articleCanRequestApproveAccept": "Yes",
-
-        "editoriallyApproveArticleButWithChanges": "The editorially have made edits to your article. You must accept them in order to move the article to the 'editorially approved' section. Editing will not be possible after the transfer.",
-        "editoriallyApproveArticleButWithChangesAccept": "Accept",
-        "editoriallyApproveArticleButWithChangesReject": "Reject",
 
         "statistics": 
         [

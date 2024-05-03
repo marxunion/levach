@@ -144,12 +144,12 @@
         "readAllButton": "Read more",
 
         "sortTitle": "Sort by:",
-        "sortTypes": 
+        "sortTypesNames": 
         [
             "popularity",
             "posting date"
         ],
-        "sortTypesNames": 
+        "sortTypes": 
         [
             "rate",
             "created_date"
