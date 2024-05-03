@@ -529,7 +529,7 @@
             </div>
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleNeedRatingApproveEditorially'] }}</p>
-                <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.max_upload_filesize_mb" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+                <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.article_need_rating_to_approve_editorially" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
         </div>
 

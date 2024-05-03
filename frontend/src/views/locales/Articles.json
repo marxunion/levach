@@ -149,6 +149,11 @@
             "popularity",
             "posting date"
         ],
+        "sortTypesNames": 
+        [
+            "rate",
+            "created_date"
+        ],
 
         "warnings": 
         {

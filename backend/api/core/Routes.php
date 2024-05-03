@@ -66,26 +66,26 @@ class Routes
                 self::$handler = new StatusHandler($request, $response);
                 return self::$handler->Handle();
             });
-            $apiGroup->group('/comments', function (RouteCollectorProxy $adminGroup))
+            $apiGroup->group('/comments', function (RouteCollectorProxy $commentsGroup)
             {
-                $adminSettingsGroup->post('/get', function (Request $request, Response $response) 
+                $commentsGroup->post('/get', function (Request $request, Response $response) 
                 {
                     self::$handler = new ArticleCommentsGetHandler($request, $response);
                     return self::$handler->Handle();
                 });
 
-                $adminSettingsGroup->post('/set', function (Request $request, Response $response) 
+                $commentsGroup->post('/set', function (Request $request, Response $response) 
                 {
                     self::$handler = new ArticleCommentCreateHandler($request, $response);
                     return self::$handler->Handle();
                 });
             
-                $adminSettingsGroup->post('/delete', function (Request $request, Response $response) 
+                $commentsGroup->post('/delete', function (Request $request, Response $response) 
                 {
                     self::$handler = new AdminArticleCommentsDeleteHandler($request, $response);
                     return self::$handler->Handle();
                 });
-            }
+            });
             $apiGroup->group('/admin', function (RouteCollectorProxy $adminGroup) 
             {
                 $adminGroup->group('/settings', function (RouteCollectorProxy $adminSettingsGroup) 
@@ -102,27 +102,27 @@ class Routes
                         return self::$handler->Handle();
                     });
                 });
-                $adminGroup->group('/article', function (RouteCollectorProxy $articleGroup) 
+                $adminGroup->group('/article', function (RouteCollectorProxy $adminArticleGroup) 
                 {
-                    $adminGroup->post('/premoderate/{viewCode}', function (Request $request, Response $response, array $args) 
+                    $adminArticleGroup->post('/premoderate/{viewCode}', function (Request $request, Response $response, array $args) 
                     {
                         self::$handler = new AdminArticlePremoderateHandler($request, $response, $args);
                         return self::$handler->Handle();
                     });
 
-                    $adminGroup->post('/approveEditorially/preload/{viewCode}', function (Request $request, Response $response, array $args) 
+                    $adminArticleGroup->post('/approveEditorially/preload/{viewCode}', function (Request $request, Response $response, array $args) 
                     {
                         self::$handler = new AdminArticleApprovePreloadHandler($request, $response, $args);
                         return self::$handler->Handle();
                     });
 
-                    $adminGroup->post('/approveEditorially/{viewCode}', function (Request $request, Response $response, array $args) 
+                    $adminArticleGroup->post('/approveEditorially/{viewCode}', function (Request $request, Response $response, array $args) 
                     {
                         self::$handler = new AdminArticleApproveHandler($request, $response, $args);
                         return self::$handler->Handle();
                     });
 
-                    $adminGroup->post('/delete/{viewCode}', function (Request $request, Response $response, array $args) 
+                    $adminArticleGroup->post('/delete/{viewCode}', function (Request $request, Response $response, array $args) 
                     {
                         self::$handler = new AdminArticleDeleteHandler($request, $response, $args);
                         return self::$handler->Handle();
