@@ -38,4 +38,4 @@ export class LangDataHandler
     }
 }
 
-const componentLangDataHandlers: Record<string, LangDataHandler> = {};
+const componentLangDataHandlers: Record<string, LangDataHandler> = {

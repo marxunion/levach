@@ -137,7 +137,7 @@
 	const onChangeSortType = (sortType : number) => 
 	{
 		currentSortType.value = sortType;
-	};
+	}
 
 	// NewComment
 	let newCommentEditorState = reactive(
@@ -245,7 +245,7 @@
 			closeModal();
 			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
 		}
-	};
+	}
 
 	// Comments
 	const comments = ref(

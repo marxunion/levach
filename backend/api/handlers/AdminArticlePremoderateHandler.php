@@ -58,7 +58,7 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
         {
             throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
         }
-    };
+    }
 
     public function Process()
     {
@@ -97,5 +97,5 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
         {
             throw new Error(404, "Article not found", "Article not found");
         }
-    };
+    }
 }

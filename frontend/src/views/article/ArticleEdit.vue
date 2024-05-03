@@ -144,7 +144,7 @@
 	let editorState = {
 		text: '',
 		language: ''
-	};
+	}
 
 	let newTag = ref('');
 	let tags : Ref<string[]> = ref([]);
@@ -238,7 +238,7 @@
 			closeModal();
 			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
 		}
-	};
+	}
 
 	const addTag = () => 
 	{
@@ -258,11 +258,11 @@
 		{
 			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['tagAlreadyExist']});
 		}
-	};
+	}
 	const removeTag = (index: number) => 
 	{
 		tags.value.splice(index, 1);
-	};
+	}
 
 	const onSendButton = async () =>
 	{
@@ -293,7 +293,7 @@
 								csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
 								text: editorState.text, 
 								tags: tags.value
-							};
+							}
 
 							await axios.post('/api/article/edit/'+articleEditCode.value, data)
 							.then(response => 
@@ -463,7 +463,7 @@
 			{
 				statistics = computed(() => 
 				{
-					const statisticsTemp : Statistics = {};
+					const statisticsTemp : Statistics = {}
 					let statisticName;
 					(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
 					{
@@ -472,7 +472,7 @@
 						{
 							count: fetchedData.value['statistics'][statisticName],
 							title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
-						};
+						}
 					});
 					return statisticsTemp;
 				});

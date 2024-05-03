@@ -14,7 +14,7 @@ const isBurgerActive = ref(false);
 const toggleBurger = () => 
 {
     isBurgerActive.value = !isBurgerActive.value;
-};
+}
 
 const route = useRoute();
 

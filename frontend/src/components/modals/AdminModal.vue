@@ -31,7 +31,7 @@
     const isCurrentRouteName = (routeName: string) => 
     {
         return routeName == route.name ? true : false;
-    };
+    }
 
     const settings = ref({
         article_edit_timeout_minutes: 0,
@@ -263,7 +263,7 @@
                 pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
             }
         });
-    };
+    }
 
     const onQuitButton = async () => 
     {
@@ -278,7 +278,7 @@
         const data = 
         {
             csrfToken: (csrfTokenInput.value as HTMLInputElement).value
-        };
+        }
 
         await axios.post('/api/admin/quit', data)
         .then(async response => 
@@ -294,7 +294,7 @@
                     {
                         router.push("/");
                     }
-				};
+				}
             }
             else
             {
@@ -379,7 +379,7 @@
                 pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
             }
         });
-    };
+    }
 
     onMounted(async () => 
     {
@@ -396,7 +396,7 @@
             const data = 
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value
-            };
+            }
 
             await axios.post('/api/admin/settings/get', data)
             .then(response => 

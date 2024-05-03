@@ -102,7 +102,7 @@
         }
         currentSortType.value = newSortType;
         await fetchNewArticles();
-    };
+    }
 
     adminStatusReCheck();
 
@@ -256,7 +256,7 @@
             });
         }
         loading.value = false;
-    };
+    }
 
     const handleScroll = async () => 
     {
@@ -270,7 +270,7 @@
                 await fetchNewArticles();
             }
         }
-    };
+    }
 
     const rejectApproveArticle = async (articleViewCode : string) => 
     {
@@ -288,7 +288,7 @@
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
                 status: 0,
-            };
+            }
 
             await axios.post('/api/admin/article/approve/' + articleViewCode, data)
             .then(response =>
@@ -359,7 +359,7 @@
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
                 status: 1,
-            };
+            }
 
             await axios.post('/api/admin/article/premoderate/' + articleViewCode, data)
             .then(response =>
@@ -430,7 +430,7 @@
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
                 status: 0,
-            };
+            }
 
             await axios.post('/api/admin/article/premoderate/' + articleViewCode, data)
             .then(response =>

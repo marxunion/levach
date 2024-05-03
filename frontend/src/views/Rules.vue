@@ -15,7 +15,7 @@
 		{
 			const title : string = section['title'] as string;
 			const description : string[] = section['description'] as string[];
-			return { title, description };
+			return { title, description }
 		});
 	});
 </script>

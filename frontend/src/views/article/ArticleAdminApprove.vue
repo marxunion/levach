@@ -202,7 +202,7 @@
 			closeModal();
 			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
 		}
-	};
+	}
 
 	const addTag = () => 
 	{
@@ -222,11 +222,11 @@
 		{
 			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['tagAlreadyExist']});
 		}
-	};
+	}
 	const removeTag = (index: number) => 
 	{
 		tags.value.splice(index, 1);
-	};
+	}
 
     const checkChanges = () =>
     {
@@ -274,7 +274,7 @@
                                     status: 2,
                                     text: editorState.text, 
                                     tags: tags.value
-                                };
+                                }
 
                                 await axios.post('/api/admin/article/approve/'+articleViewCode.value, data)
                                 .then(async response => 
@@ -286,7 +286,7 @@
                                         modal.onclose = function()
                                         {
                                             router.push("/admin/articles/waitingApproval");
-                                        };
+                                        }
                                     }
                                     else
                                     {
@@ -436,7 +436,7 @@
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
                 status: 1,
-            };
+            }
 
             await axios.post('/api/admin/article/approve/'+articleViewCode.value, data)
             .then(async response => 
@@ -448,7 +448,7 @@
                     modal.onclose = function()
                     {
                         router.push("/admin/articles/waitingApproval");
-                    };
+                    }
                 }
                 else
                 {

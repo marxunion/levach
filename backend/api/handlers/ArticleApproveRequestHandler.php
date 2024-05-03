@@ -12,10 +12,10 @@ class ArticleApproveRequestHandler extends BaseHandlerRoute
     public function Init()
     {
 
-    };
+    }
 
     public function Process()
     {
 
-    };
+    }
 }

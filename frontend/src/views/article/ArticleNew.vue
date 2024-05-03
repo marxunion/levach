@@ -134,7 +134,7 @@
 			closeModal();
 			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
 		}
-	};
+	}
 
 	//Tags
 	const newTag = ref('');
@@ -158,11 +158,11 @@
 		{
 			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['tagAlreadyExist']});
 		}
-	};
+	}
 	const removeTag = (index: number) => 
 	{
 		tags.value.splice(index, 1);
-	};
+	}
 
 	const router = useRouter();
 	const onSendButton = async function ()
@@ -205,7 +205,7 @@
 									modal.onclose = function()
 									{
 										router.push("/article/edit/" + response.data.editCode);
-									};
+									}
 								}
 								else
 								{

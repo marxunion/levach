@@ -40,7 +40,7 @@
         "approveArticleButton": "Одобрить",
         "rejectApproveArticleButton": "Не одобрять",
         "acceptPremoderateArticleButton": "Принять",
-        "rejectPremoderateArticleButton": "Не принимать",
+        "rejectPremoderateArticleButton": "Отклонить",
         "readAllButton": "Читать далее",
 
         "toolbarTips": 
@@ -138,7 +138,7 @@
         },
         
         "approveArticleButton": "Approve",
-        "rejectApproveArticleButton": "Disapprove",
+        "rejectApproveArticleButton": "Reject Approve",
         "acceptPremoderateArticleButton": "Accept",
         "rejectPremoderateArticleButton": "Reject",
         "readAllButton": "Read more",
