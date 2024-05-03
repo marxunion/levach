@@ -26,7 +26,7 @@ class ArticleEditModel extends BaseModel
     
     public function editArticle($articleId, $newTitle, $newText, $newTags)
     {
-        $articleData = $this->database->get('statistics', ['current_version','current_title', 'current_text', 'current_tags', 'edit_timeout_to_date'], ['article_id' => $articleId]);
+        $articleData = $this->database->get('statistics', ['current_version','current_title', 'current_text', 'current_tags', 'edit_timeout_to_date', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['article_id' => $articleId]);
         
         if(isset($articleData))
         {
@@ -75,9 +75,9 @@ class ArticleEditModel extends BaseModel
                             'text' => $newText,
                             'tags' => $newTags,
                             
-                            'editorially_status' => 0,
-                            'premoderation_status' => 0,
-                            'approvededitorially_status' => 0,
+                            'editorially_status' => $articleData['editorially_status'],
+                            'premoderation_status' => $articleData['premoderation_status'],
+                            'approvededitorially_status' => $articleData['approvededitorially_status']
                         ]
                     );
         
@@ -92,9 +92,11 @@ class ArticleEditModel extends BaseModel
                                 'current_text' => $newText, 
                                 'current_tags' => $newTags,
                                 'created_date' => $newArticleCreatedDate,
-                                'editorially_status' => 0,
-                                'premoderation_status' => 0,
-                                'approvededitorially_status' => 0,
+
+                                'editorially_status' => $articleData['editorially_status'],
+                                'premoderation_status' => $articleData['premoderation_status'],
+                                'approvededitorially_status' => $articleData['approvededitorially_status']
+
                                 'edit_timeout_to_date' => $newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)
                             ], 
                             [
@@ -125,7 +127,7 @@ class ArticleEditModel extends BaseModel
 
     public function editArticleAdmin($articleId, $newTitle, $newText, $newTags)
     {
-        $articleData = $this->database->get('statistics', ['current_version', 'current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
+        $articleData = $this->database->get('statistics', ['current_version', 'current_title', 'current_text', 'current_tags', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['article_id' => $articleId]);
         
         if(isset($articleData))
         {
@@ -169,9 +171,10 @@ class ArticleEditModel extends BaseModel
                     'title' => $newTitle,
                     'text' => $newText,
                     'tags' => $newTags,
-                    'editorially_status' => 1,
-                    'premoderation_status' => 2,
-                    'approvededitorially_status' => 2
+
+                    'editorially_status' => $articleData['editorially_status'],
+                    'premoderation_status' => $articleData['premoderation_status'],
+                    'approvededitorially_status' => $articleData['approvededitorially_status']
                 ]
             );
             
@@ -185,9 +188,10 @@ class ArticleEditModel extends BaseModel
                     'current_text' => $newText, 
                     'current_tags' => $newTags, 
                     
-                    'editorially_status' => 1,
-                    'premoderation_status' => 2,
-                    'approvededitorially_status' => 2,
+                    'editorially_status' => $articleData['editorially_status'],
+                    'premoderation_status' => $articleData['premoderation_status'],
+                    'approvededitorially_status' => $articleData['approvededitorially_status'],
+
                     'edit_timeout_to_date' => $newArticleCreatedDate
                 ], 
                 [

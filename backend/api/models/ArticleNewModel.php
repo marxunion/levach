@@ -29,7 +29,7 @@ class ArticleNewModel extends BaseModel
             'tags' => null,
             
             'editorially_status' => 0,
-            'premoderation_status' => 0,
+            'premoderation_status' => 1,
             'approvededitorially_status' => 0,
             
             'created_date' => time()
@@ -50,7 +50,7 @@ class ArticleNewModel extends BaseModel
             'current_tags' => null,
 
             'editorially_status' => 0,
-            'premoderation_status' => 0,
+            'premoderation_status' => 1,
             'approvededitorially_status' => 0
         ];
 

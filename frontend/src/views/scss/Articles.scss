@@ -119,10 +119,10 @@
                 color: $articlesReadAllButtonText;
                 border: 2px solid $articlesReadAllButtonBorder;
 
-                &.premoderateArticleButton
+                &.acceptPremoderateArticleButton
                 {
-                    color: $articlePremoderateArticleButtonText;
-                    border: 2px solid $articlePremoderateArticleButtonBorder;
+                    color: $articleAcceptPremoderateArticleButtonText;
+                    border: 2px solid $articleAcceptPremoderateArticleButtonBorder;
                 }
 
                 &.rejectPremoderateArticleButton
@@ -133,14 +133,14 @@
 
                 &.approveArticleButton
                 {
-                    color: $articleApproveArticleButtonText;
-                    border: 2px solid $articleApproveArticleButtonBorder;
+                    color: $articleAcceptApproveArticleButtonText;
+                    border: 2px solid $articleAcceptApproveArticleButtonBorder;
                 }
 
-                &.disapproveArticleButton
+                &.rejectApproveArticleButton
                 {
-                    color: $articleDisapproveArticleButtonText;
-                    border: 2px solid $articleDisapproveArticleButtonBorder;
+                    color: $articleRejectApproveArticleButtonText;
+                    border: 2px solid $articleRejectApproveArticleButtonBorder;
                 }
 
                 &.readAllButton

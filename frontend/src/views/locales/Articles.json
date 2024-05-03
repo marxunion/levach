@@ -15,12 +15,12 @@
         
 
         "sortTitle": "Сортировать по:",
-        "sortTypes": 
+        "sortTypesNames": 
         [
             "популярности",
             "дате размещения"
         ],
-        "sortTypesNames": 
+        "sortTypes": 
         [
             "rate",
             "created_date"
@@ -38,8 +38,8 @@
         },
 
         "approveArticleButton": "Одобрить",
-        "disapproveArticleButton": "Не одобрять",
-        "premoderateArticleButton": "Принять",
+        "rejectApproveArticleButton": "Не одобрять",
+        "acceptPremoderateArticleButton": "Принять",
         "rejectPremoderateArticleButton": "Не принимать",
         "readAllButton": "Читать далее",
 
@@ -138,8 +138,8 @@
         },
         
         "approveArticleButton": "Approve",
-        "disapproveArticleButton": "Disapprove",
-        "premoderateArticleButton": "Accept",
+        "rejectApproveArticleButton": "Disapprove",
+        "acceptPremoderateArticleButton": "Accept",
         "rejectPremoderateArticleButton": "Reject",
         "readAllButton": "Read more",
 

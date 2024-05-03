@@ -34,8 +34,8 @@ const routes: RouteRecordRaw[] =
         path: '/article',
         children: [
             { path: 'new', component: ArticleNew, name: "ArticleNew" },
-            { path: 'edit/:ArticleEditCode', component: ArticleEdit, name: "ArticleEdit" },
-            { path: ':ArticleViewCode', component: ArticleView, name: "ArticleView" },
+            { path: 'edit/:articleEditCode', component: ArticleEdit, name: "ArticleEdit" },
+            { path: ':articleViewCode', component: ArticleView, name: "ArticleView" },
         ], 
     },
     {
