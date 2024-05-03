@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import { ref, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
-    import { useRoute } from 'vue-router';
-
+    import { useRoute, useRouter } from 'vue-router';
     import axios from 'axios';
 
     import Loader from "./../components/Loader.vue";
@@ -31,7 +30,10 @@
 
     import './../libs/font_2605852_prouiefeic';
 
+	import { csrfTokenInput, getNewCsrfToken } from '../ts/csrfTokenHelper';
+
     const route = useRoute();
+    //const router = useRouter();
     const props = defineProps(['currentRoute']);
 
 	const langData = LangDataHandler.initLangDataHandler("articlesEditorially", langsData).langData;
@@ -122,8 +124,6 @@
                         const searchTags : string[] = searchParts.slice(1).map(tag => `${tag.trim()}`);
                         
                         let data;
-
-                        console.log(props.currentRoute);
                         
                         if(searchTags.length > 0)
                         {
@@ -271,6 +271,221 @@
             }
         }
     };
+
+    const rejectApproveArticle = async (articleViewCode : string) => 
+    {
+        if(adminStatus.value)
+        {
+            await getNewCsrfToken();
+
+            if(csrfTokenInput.value == null)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                return;
+            }
+
+            const data = 
+            {
+                csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+                status: 0,
+            };
+
+            await axios.post('/api/admin/article/approve/' + articleViewCode, data)
+            .then(response =>
+            {
+                if(response.data.success)
+                {
+                    openModal(InfoModal, {status: true, text: langData.value['articleRejectApproveSuccessfully']});
+                }
+                else
+                {
+                    if(response.data.Warning)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                    }
+                    else if(response.data.Error)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                    else if(response.data.Critical)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                    else
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                }
+            })
+            .catch(error => 
+            {
+                if(error.response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(error.response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(error.response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            });
+        }
+        else
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+        }
+    }
+
+    const acceptPremoderateArticle = async (articleViewCode : string) => 
+    {
+        if(adminStatus.value)
+        {
+            await getNewCsrfToken();
+
+            if(csrfTokenInput.value == null)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                return;
+            }
+
+            const data = 
+            {
+                csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+                status: 1,
+            };
+
+            await axios.post('/api/admin/article/premoderate/' + articleViewCode, data)
+            .then(response =>
+            {
+                if(response.data.success)
+                {
+                    openModal(InfoModal, {status: true, text: langData.value['articleAcceptPremoderateSuccessfully']});
+                }
+                else
+                {
+                    if(response.data.Warning)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                    }
+                    else if(response.data.Error)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                    else if(response.data.Critical)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                    else
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                }
+            })
+            .catch(error => 
+            {
+                if(error.response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(error.response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(error.response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            });
+        }
+        else
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+        }
+    }
+
+    const rejectPremoderateArticle = async (articleViewCode : string) => 
+    {
+        if(adminStatus.value)
+        {
+            await getNewCsrfToken();
+
+            if(csrfTokenInput.value == null)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                return;
+            }
+
+            const data = 
+            {
+                csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+                status: 0,
+            };
+
+            await axios.post('/api/admin/article/premoderate/' + articleViewCode, data)
+            .then(response =>
+            {
+                if(response.data.success)
+                {
+                    openModal(InfoModal, {status: true, text: langData.value['articleRejectPremoderateSuccessfully']});
+                }
+                else
+                {
+                    if(response.data.Warning)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                    }
+                    else if(response.data.Error)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                    else if(response.data.Critical)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                    else
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                }
+            })
+            .catch(error => 
+            {
+                if(error.response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(error.response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(error.response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            });
+        }
+        else
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+        }
+    }
+
+    
     
     onMounted(async () => 
     {
@@ -308,13 +523,14 @@
             <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 
             <div v-if="adminStatus && currentRoute == 'articlesWaitingPremoderate'" class="main__article__buttons">
-                <a class="main__article__buttons__button premoderateArticleButton">{{ langData['premoderateArticleButton'] }}</a>
-                <a class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+                <a @click="rejectPremoderateArticle(article.view_code)" class="main__article__buttons__button premoderateArticleButton">{{ langData['premoderateArticleButton'] }}</a>
+                <a @click="acceptPremoderateArticle(article.view_code)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+                <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
             </div>
             <div v-else-if="adminStatus && currentRoute == 'articlesWaitingApproval'" class="main__article__buttons">
-                <a class="main__article__buttons__button approveArticleButton">{{ langData['approveArticleButton'] }}</a>
-                <a class="main__article__buttons__button disapproveArticleButton">{{ langData['disapproveArticleButton'] }}</a>
-                <a class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
+                <a :href="'#/admin/article/approve/'+article.view_code" class="main__article__buttons__button approveArticleButton">{{ langData['approveArticleButton'] }}</a>
+                <a @click="rejectApproveArticle(article.view_code)" class="main__article__buttons__button disapproveArticleButton">{{ langData['disapproveArticleButton'] }}</a>
+                <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
             </div>
             <div v-else class="main__article__buttons oneButton">
                 <a :href="'#/article/'+article.view_code" target="_blank" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>

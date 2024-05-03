@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { ref, watch, reactive, Ref, ComputedRef, computed, onMounted } from 'vue';
-	import { useRoute } from 'vue-router';
+	import { useRoute, useRouter } from 'vue-router';
 	import axios from 'axios';
 
 	//import DropDown from "./../../components/DropDown.vue";
@@ -17,13 +17,9 @@
 	import InfoModal from "./../../components/modals/InfoModal.vue";
     import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
 
-	import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
-
 	import langsData from "./locales/ArticleEdit.json";
 
 	import { LangDataHandler } from "./../../ts/LangDataHandler";
-
-	import { StringWithEnds } from "./../../ts/StringWithEnds";
 
 	import './../../libs/font_2605852_prouiefeic';
 
@@ -33,10 +29,11 @@
 
 	const langData = LangDataHandler.initLangDataHandler("ArticleEdit", langsData).langData;
 
-    const buttonTitles = computed(() => langData.value['buttonNames'] as JsonData);
-
+    const buttonTitles = computed(() => langData.value['buttonNames'] as string[]);
+    const currentChangesStatus = ref(0);
 
 	const route = useRoute();
+    const router = useRouter();
 	const articleViewCode = ref<string | null>(null);
 
 	articleViewCode.value = route.params.articleViewCode as string;
@@ -233,182 +230,266 @@
 
     const checkChanges = () =>
     {
-        
+        if(editorState.text != fetchedData.value['text'] || tags.value != fetchedData.value['tags'])
+        {
+            currentChangesStatus.value = 1;
+            return true;
+        }
+        else
+        {
+            currentChangesStatus.value = 0;
+            return false;
+        }
     }
 
 	const onSendButton = async () =>
 	{
+        if(checkChanges())
+        {
+            const contentParts = (editorState.text as string).split('\n');
 
-		const contentParts = (editorState.text as string).split('\n');
+            if(contentParts.length >= 1) 
+            {
+                const title = contentParts[0];
+                if(title.substring(0, 2) == '# ') 
+                {
+                    if(title.length >= 5 && title.length <= 120) 
+                    {
+                        if(contentParts.length >= 2) 
+                        {
+                            const content = contentParts.slice(1).join('\n');
+                            if(content.length >= 25 && content.length <= 10000) 
+                            {
+                                await getNewCsrfToken();
 
-		if(contentParts.length >= 1) 
-		{
-			const title = contentParts[0];
-			if(title.substring(0, 2) == '# ') 
-			{
-				if(title.length >= 5 && title.length <= 120) 
-				{
-					if(contentParts.length >= 2) 
-					{
-						const content = contentParts.slice(1).join('\n');
-						if(content.length >= 25 && content.length <= 10000) 
-						{
-							await getNewCsrfToken();
+                                if(csrfTokenInput.value == null)
+                                {
+                                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                                    return;
+                                }
 
-							if(csrfTokenInput.value == null)
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-								return;
-							}
+                                const data = 
+                                {
+                                    csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+                                    status: 2,
+                                    text: editorState.text, 
+                                    tags: tags.value
+                                };
 
-							const data = 
-							{
-								csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-                                status: 2,
-								text: editorState.text, 
-								tags: tags.value
-							};
+                                await axios.post('/api/admin/article/approve/'+articleViewCode.value, data)
+                                .then(async response => 
+                                {
+                                    if(response.data.success)
+                                    {
+                                        const modal = await openModal(InfoModalWithLink, {status: true, text: langData.value['articleApprovedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleViewCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']});
+                                    
+                                        modal.onclose = function()
+                                        {
+                                            router.push("/admin/articles/waitingApproval");
+                                        };
+                                    }
+                                    else
+                                    {
+                                        if(response.data.Warning)
+                                        {
+                                            if(response.data.Warning.message == "Please add a title for the article")
+                                            {
+                                                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']});
+                                            }
+                                            else if(response.data.Warning.message == 'Article has duplicated tags')
+                                            {
+                                                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleDuplicatedTags']});
+                                            }
+                                            else if(response.data.Warning.message == "Title must contain between 5 and 120 characters")
+                                            {
+                                                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']});
+                                            }
+                                            else if(response.data.Warning.message == "Please add content for the article")
+                                            {
+                                                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']});
+                                            }
+                                            else if(response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
+                                            {
+                                                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']});
+                                            }
+                                            else
+                                            {
+                                                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                                            }
+                                        }
+                                        else if(response.data.Error)
+                                        {
+                                            if(response.data.Error.message == "Article for edit not found")
+                                            {
+                                                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleForApproveNotFound']});
+                                            }
+                                            else if(response.data.Error.message == "Please make changes for edit")
+                                            {
+                                                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedChanges']});
+                                            }
+                                            else
+                                            {
+                                                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                                            }
+                                        }
+                                        else if(response.data.Critical)
+                                        {
+                                            openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                                        }
+                                        else
+                                        {
+                                            
+                                            openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                                        }
+                                    }
+                                })
+                                .catch(error => 
+                                {
+                                    if(error.response.data.Warning)
+                                    {
+                                        if(error.response.data.Warning.message == "Please add a title for the article")
+                                        {
+                                            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+                                        }
+                                        else if(error.response.data.Warning.message == "Wait for a timeout to re-edit the article")
+                                        {
+                                            openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)['editTimeoutToDate'] as string).replace('{date}', timestampToLocaleFormatedTime(error.response.data.Warning.params['edit_timeout_to_date']))})
+                                        }
+                                        else if(error.response.data.Warning.message == "Title must contain between 5 and 120 characters")
+                                        {
+                                            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
+                                        }
+                                        else if(error.response.data.Warning.message == "Please add content for the article")
+                                        {
+                                            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
+                                        }
+                                        else if(error.response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
+                                        {
+                                            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
+                                        }
+                                        else
+                                        {
+                                            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                                        }
+                                    }
+                                    else if(error.response.data.Error)
+                                    {
+                                        if(error.response.data.Error.message == "Article for edit not found")
+                                        {
+                                            openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleForApproveNotFound']})
+                                        }
+                                        else if(error.response.data.Error.message == "Please make changes for edit")
+                                        {
+                                            openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNeedChanges']});
+                                        }
+                                        else
+                                        {
+                                            openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                                        }
+                                    }
+                                    else if(error.response.data.Critical)
+                                    {
+                                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                                    }
+                                    else
+                                    {
+                                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
+                            }
+                        }
+                        else
+                        {
+                            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
+                        }
+                    }
+                    else
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
+                    }
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+                }
+            }
+            else
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+            }	
+        }
+        else
+        {
+            await getNewCsrfToken();
 
-							await axios.post('/api/admin/article/approve/'+articleViewCode.value, data)
-							.then(response => 
-							{
-								if(response.data.success)
-								{
-									openModal(InfoModalWithLink, {status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleViewCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']});
-								}
-								else
-								{
-									if(response.data.Warning)
-									{
-										if(response.data.Warning.message == "Please add a title for the article")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']});
-										}
-										else if(response.data.Warning.message == 'Article has duplicated tags')
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleDuplicatedTags']});
-										}
-										else if(response.data.Warning.message == "Title must contain between 5 and 120 characters")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']});
-										}
-										else if(response.data.Warning.message == "Please add content for the article")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']});
-										}
-										else if(response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']});
-										}
-										else
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-										}
-									}
-									else if(response.data.Error)
-									{
-										if(response.data.Error.message == "Article for edit not found")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleForApproveNotFound']});
-										}
-										else if(response.data.Error.message == "Please make changes for edit")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedChanges']});
-										}
-										else
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-										}
-									}
-									else if(response.data.Critical)
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-									}
-									else
-									{
-										
-										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-									}
-								}
-							})
-							.catch(error => 
-							{
-								if(error.response.data.Warning)
-								{
-									if(error.response.data.Warning.message == "Please add a title for the article")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
-									}
-									else if(error.response.data.Warning.message == "Wait for a timeout to re-edit the article")
-									{
-										openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)['editTimeoutToDate'] as string).replace('{date}', timestampToLocaleFormatedTime(error.response.data.Warning.params['edit_timeout_to_date']))})
-									}
-									else if(error.response.data.Warning.message == "Title must contain between 5 and 120 characters")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
-									}
-									else if(error.response.data.Warning.message == "Please add content for the article")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
-									}
-									else if(error.response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
-									}
-									else
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-									}
-								}
-								else if(error.response.data.Error)
-								{
-									if(error.response.data.Error.message == "Article for edit not found")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleForApproveNotFound']})
-									}
-									else if(error.response.data.Error.message == "Please make changes for edit")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleNeedChanges']});
-									}
-									else
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-									}
-								}
-								else if(error.response.data.Critical)
-								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-								}
-								else
-								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-								}
-							});
-						}
-						else
-						{
-							openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
-						}
-					}
-					else
-					{
-						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
-					}
-				}
-				else
-				{
-					openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
-				}
-			}
-			else
-			{
-				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
-			}
-		}
-		else
-		{
-			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
-		}	
+            if(csrfTokenInput.value == null)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                return;
+            }
+
+            const data = 
+            {
+                csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+                status: 1,
+            };
+
+            await axios.post('/api/admin/article/approve/'+articleViewCode.value, data)
+            .then(async response => 
+            {
+                if(response.data.success)
+                {
+                    const modal = await openModal(InfoModalWithLink, {status: true, text: langData.value['articleApprovedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleViewCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']});
+                        
+                    modal.onclose = function()
+                    {
+                        router.push("/admin/articles/waitingApproval");
+                    };
+                }
+                else
+                {
+                    if(response.data.Warning)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                    }
+                    else if(response.data.Error)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                    else if(response.data.Critical)
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                    else
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                }
+            })
+            .catch(error =>
+            {   
+                if(error.response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(error.response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(error.response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            })
+        }
 	}
 
 	config(
@@ -427,6 +508,16 @@
 	{
 		editorState.language = LangDataHandler.currentLanguage.value;
 	});
+
+    watch(editorState, () => 
+    {
+        checkChanges();
+    });
+
+    watch(tags, () => 
+    {
+        checkChanges();
+    });
 
 	onMounted(async function()
 	{
@@ -458,7 +549,7 @@
 		<article v-if="fetchedData" class="main__article">
 			<div class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="false" noIconfont/>
-				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ langData['sendButton'] }}</button>	
+				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ buttonTitles[currentChangesStatus] }}</button>	
 			</div>
 			<div class="main__article__editTags">
 				<div class="main__article__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">
