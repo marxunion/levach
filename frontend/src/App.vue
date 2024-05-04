@@ -36,8 +36,8 @@ getNewCsrfToken();
 
 <template>
     <input type="hidden" id="csrfTokenInput" ref="csrfTokenInput">
-    <Header v-if="componentsShow" @toggleBurger="toggleBurger" />
-    <perfect-scrollbar v-if="componentsShow" ref="scroll">
+    <Header @toggleBurger="toggleBurger" />
+    <perfect-scrollbar ref="scroll">
         <router-view v-slot="{ Component }">
             <transition name="pageOpacity" mode="out-in">
                 <component :is="Component" />
@@ -45,5 +45,5 @@ getNewCsrfToken();
         </router-view>
     </perfect-scrollbar>
     <container />
-    <SideBar v-if="componentsShow" :isBurgerActive="isBurgerActive" @toggleBurger="toggleBurger"/>
+    <SideBar :isBurgerActive="isBurgerActive" @toggleBurger="toggleBurger"/>
 </template>

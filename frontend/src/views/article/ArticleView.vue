@@ -80,15 +80,15 @@
 				}
 			}
 		})
-		.catch(response =>
+		.catch(error =>
 		{
-			if(response.data.Warning)
+			if(error.response.data.Warning)
 			{
 				return null;
 			}
-			else if(response.data.Error)
+			else if(error.response.data.Error)
 			{
-				if(response.data.Error.message == "Article not found")
+				if(error.response.data.Error.message == "Article not found")
 				{
 					return null;
 				}
@@ -97,7 +97,7 @@
 					return null;
 				}
 			}
-			else if(response.data.Critical)
+			else if(error.response.data.Critical)
 			{
 				return null;
 			}
