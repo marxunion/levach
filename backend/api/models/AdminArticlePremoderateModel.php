@@ -26,8 +26,8 @@ class AdminArticlePremoderateModel extends BaseModel
 
     public function rejectPremoderate($articleId)
     {
-        $this->database->delete('codes', ['article_id' => $articleId])
-        $this->model-delete('statistics', ['article_id' => $articleId]);
-        $this->model-delete('articles', ['id' => $articleId]);
+        $this->database->delete('codes', ['article_id' => $articleId]);
+        $this->database-delete('statistics', ['article_id' => $articleId]);
+        $this->database-delete('articles', ['id' => $articleId]);
     }
 }
