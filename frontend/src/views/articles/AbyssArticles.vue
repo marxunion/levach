@@ -25,11 +25,11 @@
     import langsData from "./locales/Articles.json";
     import { LangDataHandler } from "./../../ts/LangDataHandler";
 
-    import './../libs/font_2605852_prouiefeic';
+    import './../../libs/font_2605852_prouiefeic';
 
     import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 
-	const langData = LangDataHandler.initLangDataHandler("AbbysArticles", langsData).langData;
+	const langData = LangDataHandler.initLangDataHandler("AbyssArticles", langsData).langData;
 
     // Sort
 	const currentSortType = ref(0);
@@ -99,7 +99,7 @@
                 params: 
                 {
                     sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                    category: 'AbbysArticles',
+                    category: 'AbyssArticles',
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
                     lastLoadedArticleRate: lastLoadedArticleRate.value
@@ -136,7 +136,7 @@
                 params: 
                 {
                     sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                    category: 'AbbysArticles',
+                    category: 'AbyssArticles',
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
                     lastLoadedArticleCreatedDate: lastLoadedArticleCreatedDate.value
@@ -289,7 +289,7 @@
 <template>
     <main class="main">
         <div class="main__header">
-			<p class="main__header__title">{{ (langData['headerTitle'] as JsonData)['AbbysArticles'] }}</p>
+			<p class="main__header__title">{{ (langData['headerTitle'] as JsonData)['AbyssArticles'] }}</p>
 			<div class="main__header__sort">
 				<p class="main__header__sort__title">{{ langData['sortTitle'] }}</p>
 				<DropDown :options="sortTypesNames" :default="sortTypesNames[currentSortType]" class="main__header__sort__select" @inputIndex="onChangeSortType" />
@@ -310,12 +310,12 @@
                 </div>
                 <div class="main__article__reactions">
                     <div class="main__article__reactions__statistics">
-                        <img src="../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
+                        <img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
                         <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.statistics.rating) }}</p>
-                        <img src="../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
+                        <img src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                     </div>
                     <div class="main__article__reactions__comments">
-                        <img src="../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
+                        <img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
                         <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article.statistics.comments) }}</p>
                     </div>
                 </div>

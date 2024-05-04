@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import { ref, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
-    import { useRoute } from 'vue-router';
     import axios from 'axios';
 
     import Loader from "./../../components/Loader.vue";
@@ -26,7 +25,7 @@
     import langsData from "./locales/Articles.json";
     import { LangDataHandler } from "./../../ts/LangDataHandler";
 
-    import './../libs/font_2605852_prouiefeic';
+    import './../../libs/font_2605852_prouiefeic';
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 
@@ -383,12 +382,12 @@
                 </div>
                 <div class="main__article__reactions">
                     <div class="main__article__reactions__statistics">
-                        <img src="../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
+                        <img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
                         <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.statistics.rating) }}</p>
-                        <img src="../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
+                        <img src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                     </div>
                     <div class="main__article__reactions__comments">
-                        <img src="../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
+                        <img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
                         <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article.statistics.comments) }}</p>
                     </div>
                 </div>

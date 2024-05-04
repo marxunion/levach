@@ -8,7 +8,15 @@ import ArticleEdit from './views/article/ArticleEdit.vue';
 import ArticleNew from './views/article/ArticleNew.vue';
 
 // Articles
-import Articles from './views/Articles.vue';
+
+import EditoriallyArticles from './views/articles/EditoriallyArticles.vue';
+import EditoriallyApprovedArticles from './views/articles/EditoriallyApprovedArticles.vue';
+import AbyssArticles from './views/articles/AbyssArticles.vue';
+import ArticlesSearch from './views/articles/ArticlesSearch.vue';
+
+import ArticlesWaitingApprove from './views/articles/ArticlesWaitingApprove.vue';
+import ArticlesWaitingPremoderate from './views/articles/ArticlesWaitingPremoderate.vue';
+
 
 // Admin
 import ArticleAdminApprove from './views/article/ArticleAdminApprove.vue';
@@ -27,8 +35,9 @@ const routes: RouteRecordRaw[] =
 [
     {
         path: '/',
-        component: Articles,
-        name: "Articles"
+        component: EditoriallyArticles,
+        props: {currentRoute: "editoriallyArticles"},
+        name: "editoriallyArticles"
     },
     {
         path: '/article',
@@ -41,10 +50,10 @@ const routes: RouteRecordRaw[] =
     {
         path: '/articles',
         children: [
-            { path: 'editorially', component: Articles, props: {currentRoute: "editoriallyArticles"}, name: "editoriallyArticles"},
-            { path: 'approvedEditorially', component: Articles, props: {currentRoute: "editoriallyApprovedArticles"}, name: "editoriallyApprovedArticles"},
-            { path: 'abyss', component: Articles, props: {currentRoute: "abyssArticles"}, name: "abyssArticles"},
-            { path: 'search/:searchData', component: Articles, props: {currentRoute: "articlesSearch"}, name: "articlesSearch"},
+            { path: 'editorially', component: EditoriallyArticles, props: {currentRoute: "editoriallyArticles"}, name: "editoriallyArticles"},
+            { path: 'approvedEditorially', component: EditoriallyApprovedArticles, props: {currentRoute: "editoriallyApprovedArticles"}, name: "editoriallyApprovedArticles"},
+            { path: 'abyss', component: AbyssArticles, props: {currentRoute: "abyssArticles"}, name: "abyssArticles"},
+            { path: 'search/:searchData', component: ArticlesSearch, props: {currentRoute: "articlesSearch"}, name: "articlesSearch"},
         ],
     },
     {
@@ -86,8 +95,8 @@ function addAdminRoutes()
             { path: '/edit/comments', component: AdminEditComments, name: "AdminEditComments" },
             { path: 'article/editComments/:articleId', component: ArticleAdminEditComments, name: "ArticleAdminEditComments" },
             { path: 'article/approve/:articleViewCode', component: ArticleAdminApprove, name: "ArticleAdminApprove"},
-            { path: 'articles/waitingApproval/', component: Articles, props: {currentRoute: "articlesWaitingApproval"}, name: "articlesWaitingApproval" },
-            { path: 'articles/waitingPremoderate/', component: Articles, props: {currentRoute: "articlesWaitingPremoderate"}, name: "articlesWaitingPremoderate" },
+            { path: 'articles/waitingApproval/', component: ArticlesWaitingApprove, props: {currentRoute: "articlesWaitingApproval"}, name: "articlesWaitingApproval" },
+            { path: 'articles/waitingPremoderate/', component: ArticlesWaitingPremoderate, props: {currentRoute: "articlesWaitingPremoderate"}, name: "articlesWaitingPremoderate" },
             { path: 'articles/edit/', component: AdminEditComments, name: "adminEditComments" },
         ],
     })
