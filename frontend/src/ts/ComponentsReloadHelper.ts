@@ -4,6 +4,7 @@ export const componentsShow = ref(true);
 
 export const forceReload = async () => 
 {
+    console.log('test1');
     componentsShow.value = false;
 
     await nextTick();

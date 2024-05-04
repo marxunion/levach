@@ -13,7 +13,6 @@ class ArticlesModel extends BaseModel
         parent::__construct();
     }
 
-
     # Article search
     public function loadArticleSearchIdsByCreatedDateWithTags($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedDate = 2147483645, $searchTitle = '', $searchTags = '')
     {
@@ -30,6 +29,7 @@ class ArticlesModel extends BaseModel
                     'current_title[~]' => $searchTitle,
                     'current_tags &&' => $searchTags,
                     'approvededitorially_status[!]' => 3,
+                    
                     'OR' => [
                         'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
