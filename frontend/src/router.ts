@@ -35,9 +35,7 @@ const routes: RouteRecordRaw[] =
 [
     {
         path: '/',
-        component: EditoriallyArticles,
-        props: {currentRoute: "editoriallyArticles"},
-        name: "editoriallyArticles"
+        component: EditoriallyArticles
     },
     {
         path: '/article',

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, computed, reactive, watch, onMounted } from 'vue';
+	import { ref, computed, reactive, watch, onMounted, onUnmounted } from 'vue';
 	import { useRoute } from 'vue-router';
 	import axios from 'axios';
 
@@ -304,25 +304,35 @@
 		}
 	]);
 
-	onMounted(async function()
-	{
+	let intervalId : NodeJS.Timeout | null = null;
+	onMounted(async function() {
 		try 
 		{
 			fetchedData.value = await fetchData();
-			if(fetchedData.value != null)
+			if (fetchedData.value != null) 
 			{
 				currentVersion.value = fetchedData.value.versions.length;
-				setInterval(async () => 
+				intervalId = setInterval(async () => 
 				{
 					fetchedData.value = await fetchData();
 				}, 10000);
+
+				
 			}
 			loaded.value = true;
-		}
-		catch
+		} 
+		catch 
 		{
 			loaded.value = true;
 			fetchedData.value = null;
+		}
+	});
+
+	onUnmounted(() => 
+	{
+		if(intervalId != null)
+		{
+			clearInterval(intervalId);
 		}
 	});
 </script>
