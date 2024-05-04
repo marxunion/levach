@@ -99,7 +99,7 @@
                 params: 
                 {
                     sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                    category: 'ArticlesWaitingApprove',
+                    category: 'ArticlesWaitingApproval',
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
                     lastLoadedArticleRate: lastLoadedArticleRate.value
@@ -137,7 +137,7 @@
                 params: 
                 {
                     sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                    category: 'ArticleWaitingApprove',
+                    category: 'ArticlesWaitingApproval',
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
                     lastLoadedArticleCreatedDate: lastLoadedArticleCreatedDate.value
@@ -256,159 +256,6 @@
             openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
         }
     }
-
-    const acceptPremoderateArticle = async (articleViewCode : string) => 
-    {
-        if(adminStatus.value)
-        {
-            await getNewCsrfToken();
-
-            if(csrfTokenInput.value == null)
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-                return;
-            }
-
-            const data = 
-            {
-                csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-                status: 1,
-            }
-
-            await axios.post('/api/admin/article/premoderate/' + articleViewCode, data)
-            .then(response =>
-            {
-                if(response.data.success)
-                {
-                    openModal(InfoModal, {status: true, text: langData.value['articleAcceptPremoderateSuccessfully']});
-                }
-                else
-                {
-                    if(response.data.Warning)
-                    {
-                        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-                    }
-                    else if(response.data.Error)
-                    {
-                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                    }
-                    else if(response.data.Critical)
-                    {
-                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                    }
-                    else
-                    {
-                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                    }
-                }
-            })
-            .catch(error => 
-            {
-                if(error.response.data.Warning)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-                }
-                else if(error.response.data.Error)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else if(error.response.data.Critical)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-            });
-        }
-        else
-        {
-            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-        }
-    }
-
-    const rejectPremoderateArticle = async (articleViewCode : string) => 
-    {
-        if(adminStatus.value)
-        {
-            await getNewCsrfToken();
-
-            if(csrfTokenInput.value == null)
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-                return;
-            }
-
-            const data = 
-            {
-                csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-                status: 0,
-            }
-
-            await axios.post('/api/admin/article/premoderate/' + articleViewCode, data)
-            .then(async response =>
-            {
-                if(response.data.success)
-                {
-                    await openModal(InfoModal, {status: true, text: langData.value['articleRejectPremoderateSuccessfully']});
-                    console.log(articles);
-                    
-                    articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1));
-                    if(articles.length == 0)
-                    {
-                        loading.value = true;
-                        await fetchNewArticles();
-                    }
-                    console.log(articles);
-                }
-                else
-                {
-                    if(response.data.Warning)
-                    {
-                        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-                    }
-                    else if(response.data.Error)
-                    {
-                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                    }
-                    else if(response.data.Critical)
-                    {
-                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                    }
-                    else
-                    {
-                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                    }
-                }
-            })
-            .catch(error => 
-            {
-                if(error.response.data.Warning)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-                }
-                else if(error.response.data.Error)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else if(error.response.data.Critical)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-            });
-        }
-        else
-        {
-            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-        }
-    }
-
-    
     
     onMounted(async () => 
     {

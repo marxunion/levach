@@ -23,6 +23,7 @@ class ArticlesModel extends BaseModel
                 'LIMIT' => $count,
                 "ORDER" => [
                     "article_id" => "DESC",
+                    "created_date" => "DESC",
                 ],
                 'AND' => [
                     'premoderation_status' => 2,
@@ -51,6 +52,7 @@ class ArticlesModel extends BaseModel
                 'LIMIT' => $count,
                 "ORDER" => [
                     "article_id" => "DESC",
+                    "created_date" => "DESC",
                 ],
                 'AND' => [
                     'premoderation_status' => 2,
@@ -77,6 +79,7 @@ class ArticlesModel extends BaseModel
                 'LIMIT' => $count,
                 "ORDER" => [
                     "article_id" => "DESC",
+                    "rating" => "DESC",
                 ],
                 'AND' => [
                     'premoderation_status' => 2,
@@ -104,6 +107,7 @@ class ArticlesModel extends BaseModel
                 'LIMIT' => $count,
                 "ORDER" => [
                     "article_id" => "DESC",
+                    "rating" => "DESC",
                 ],
                 'AND' => [
                     'premoderation_status' => 2,
@@ -120,7 +124,6 @@ class ArticlesModel extends BaseModel
             ]
         );
     }
-
     
     # EditoriallyArticles
     public function loadEditoriallyArticlesIdsByCreatedDate($count = 4, $lastLoadedArticleId = 2147483645, $lastLoadedArticleCreatedDate = 2147483645)
@@ -131,6 +134,7 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
+                    "article_id" => "DESC",
                     "created_date" => "DESC",
                 ],
                 'AND' => [
@@ -155,6 +159,7 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
+                    "article_id" => "DESC",
                     "rating" => "DESC",
                 ],
                 'AND' => [
@@ -181,6 +186,7 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
+                    "article_id" => "DESC",
                     "created_date" => "DESC",
                 ],
                 'AND' => [
@@ -206,6 +212,7 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
+                    "article_id" => "DESC",
                     "rating" => "DESC",
                 ],
                 'AND' => [
@@ -233,6 +240,7 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
+                    "article_id" => "DESC",
                     "created_date" => "DESC",
                 ],
                 'AND' => [
@@ -261,6 +269,7 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
+                    "article_id" => "DESC",
                     "rating" => "DESC",
                 ],
                 'AND' => [
@@ -291,6 +300,7 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
+                    "article_id" => "DESC",
                     "created_date" => "DESC",
                 ],
                 'AND' => [
@@ -315,6 +325,7 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
+                    "article_id" => "DESC",
                     "rating" => "DESC",
                 ],
                 'AND' => [
@@ -341,6 +352,7 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
+                    "article_id" => "DESC",
                     "created_date" => "DESC",
                 ],
                 'AND' => [
@@ -365,6 +377,7 @@ class ArticlesModel extends BaseModel
             [
                 'LIMIT' => $count,
                 "ORDER" => [
+                    "article_id" => "DESC",
                     "rating" => "DESC",
                 ],
                 'AND' => [
