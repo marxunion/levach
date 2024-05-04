@@ -203,11 +203,23 @@
             }
 
             await axios.post('/api/admin/article/premoderate/' + articleViewCode, data)
-            .then(response =>
+            .then(async response =>
             {
                 if(response.data.success)
                 {
                     openModal(InfoModal, {status: true, text: langData.value['articleAcceptPremoderateSuccessfully']});
+
+                    articles = reactive(articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1)));
+                    if(articles.length == 0)
+                    {
+                        loading.value = true;
+                    }
+                    else
+                    {
+                        reloading.value = true;
+                    }
+                        
+                    await fetchNewArticles();
                 }
                 else
                 {
@@ -279,15 +291,18 @@
                 if(response.data.success)
                 {
                     await openModal(InfoModal, {status: true, text: langData.value['articleRejectPremoderateSuccessfully']});
-                    console.log(articles);
                     
-                    articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1));
+                    articles = reactive(articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1)));
                     if(articles.length == 0)
                     {
                         loading.value = true;
-                        await fetchNewArticles();
                     }
-                    console.log(articles);
+                    else
+                    {
+                        reloading.value = true;
+                    }
+                        
+                    await fetchNewArticles();
                 }
                 else
                 {

@@ -231,7 +231,7 @@
         }
     } 
 
-    const deletePremoderateArticle = async (articleViewCode : string) => 
+    const deleteArticle = async (articleViewCode : string) => 
     {
         if(adminStatus.value)
         {
@@ -255,15 +255,18 @@
                 if(response.data.success)
                 {
                     await openModal(InfoModal, {status: true, text: langData.value['articleDeletedSuccessfully']});
-                    console.log(articles);
-                    
-                    articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1));
+
+                    articles = reactive(articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1)));
                     if(articles.length == 0)
                     {
                         loading.value = true;
-                        await fetchNewArticles();
                     }
-                    console.log(articles);
+                    else
+                    {
+                        reloading.value = true;
+                    }
+                        
+                    await fetchNewArticles();
                 }
                 else
                 {
@@ -349,7 +352,7 @@
                 <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 
                 <div v-if="adminStatus" class="main__article__buttons">
-                    <a @click="currentSelectedArticleIndex = index;deletePremoderateArticle(article.view_code)" class="main__article__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
+                    <a @click="currentSelectedArticleIndex = index;deleteArticle(article.view_code)" class="main__article__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
                     <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
                 </div>
                 <div v-else class="main__article__buttons oneButton">

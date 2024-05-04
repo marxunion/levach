@@ -182,13 +182,12 @@
 								}
 								else 
 								{
-									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"] });
-									(new Error("UnknownError"));
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
 								}
 							}
 							else
 							{
-								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"] });
+								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 
 							}
 						})
@@ -200,7 +199,7 @@
 								{
 									if(error.response.data.Warning.message == "UploadImage Invalid image type")
 									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"] });
+										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
 									}
 									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
 									{
@@ -208,7 +207,7 @@
 									}
 									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
 									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"] });
+										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
 									}
 									else
 									{
@@ -218,20 +217,20 @@
 								}
 								else if(error.response.data.Error)
 								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"] });
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 								}
 								else if(error.response.data.Critical)
 								{
-									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"] });
+									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 								}
 								else 
 								{
-									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"] });
+									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 								}
 							}
 							else
 							{
-								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"] });
+								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 							}
 						});
 					});

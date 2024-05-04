@@ -21,7 +21,7 @@ class AdminArticleDeleteModel extends BaseModel
     public function deleteArticle($articleId)
     {
         $this->database->delete('codes', ['article_id' => $articleId]);
-        $this->database-delete('statistics', ['article_id' => $articleId]);
-        $this->database-delete('articles', ['id' => $articleId]);
+        $this->database->delete('statistics', ['article_id' => $articleId]);
+        $this->database->delete('articles', ['id' => $articleId]);
     }
 }

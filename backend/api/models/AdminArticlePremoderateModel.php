@@ -1,7 +1,6 @@
 <?php
 namespace Api\Models;
 
-use Core\Database;
 use Core\Error;
 
 use Base\BaseModel;
@@ -27,7 +26,7 @@ class AdminArticlePremoderateModel extends BaseModel
     public function rejectPremoderate($articleId)
     {
         $this->database->delete('codes', ['article_id' => $articleId]);
-        $this->database-delete('statistics', ['article_id' => $articleId]);
-        $this->database-delete('articles', ['id' => $articleId]);
+        $this->database->delete('statistics', ['article_id' => $articleId]);
+        $this->database->delete('articles', ['id' => $articleId]);
     }
 }

@@ -205,11 +205,23 @@
             }
 
             await axios.post('/api/admin/article/approve/' + articleViewCode, data)
-            .then(response =>
+            .then(async response =>
             {
                 if(response.data.success)
                 {
                     openModal(InfoModal, {status: true, text: langData.value['articleRejectApproveSuccessfully']});
+
+                    articles = reactive(articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1)));
+                    if(articles.length == 0)
+                    {
+                        loading.value = true;
+                    }
+                    else
+                    {
+                        reloading.value = true;
+                    }
+                        
+                    await fetchNewArticles();
                 }
                 else
                 {
