@@ -84,7 +84,8 @@
     const lastLoadedArticleCreatedDate = ref(2147483645);
     const lastLoadedArticleRate = ref(2147483645);
 
-    const loading = ref(false);
+    const reloading = ref(false);
+    const loading = ref(true);
     const scrollTarget = ref(null);
     let articles : Array<Article> = reactive([]);
 
@@ -102,6 +103,8 @@
             lastLoadedArticleRate.value = 2147483645;
         }
         currentSortType.value = newSortType;
+
+        loading.value = false;
         await fetchNewArticles();
     }
 
@@ -109,7 +112,6 @@
 
     const fetchNewArticles = async () => 
     {
-        loading.value = true;
         if(currentSortType.value === 0)
         {
             if(props.currentRoute == 'articlesSearch')
@@ -257,6 +259,7 @@
             });
         }
         loading.value = false;
+        reloading.value = false;
     }
 
     const handleScroll = async () => 
@@ -267,7 +270,7 @@
             const bottomDistance = (scrollElement as HTMLElement).getBoundingClientRect().bottom - window.innerHeight;
             if (bottomDistance <= 0) 
             {
-                loading.value = true;
+                reloading.value = true;
                 await fetchNewArticles();
             }
         }
@@ -438,13 +441,16 @@
             {
                 if(response.data.success)
                 {
-                    openModal(InfoModal, {status: true, text: langData.value['articleRejectPremoderateSuccessfully']});
+                    await openModal(InfoModal, {status: true, text: langData.value['articleRejectPremoderateSuccessfully']});
+                    console.log(articles);
+                    
                     articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1));
                     if(articles.length == 0)
                     {
                         loading.value = true;
                         await fetchNewArticles();
                     }
+                    console.log(articles);
                 }
                 else
                 {
@@ -501,6 +507,7 @@
         {
             ps.addEventListener('scroll', handleScroll)
         }
+
         loading.value = true;
         await fetchNewArticles();
     });
@@ -525,43 +532,45 @@
 			</div>
 		</div>
 		<article class="main__article" v-if="articles.length > 0 && !loading" v-for="(article, index) in articles" :key="article.id">
-            <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion-1].created_date) }}</p>
-            <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
-            <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
+            <div class="main__article__block" v-if="article.versions[article.currentSelectedVersion-1]">
+                <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion-1].created_date) }}</p>
+                <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
+                <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 
-            <div v-if="adminStatus && currentRoute == 'articlesWaitingPremoderate'" class="main__article__buttons">
-                <a @click="currentSelectedArticleIndex = index;rejectPremoderateArticle(article.view_code)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
-                <a @click="currentSelectedArticleIndex = index;acceptPremoderateArticle(article.view_code)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
-                <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
-            </div>
-            <div v-else-if="adminStatus && currentRoute == 'articlesWaitingApproval'" class="main__article__buttons">
-                <a :href="'#/admin/article/approve/'+article.view_code" class="main__article__buttons__button approveArticleButton">{{ langData['approveArticleButton'] }}</a>
-                <a @click="currentSelectedArticleIndex = index;rejectApproveArticle(article.view_code)" class="main__article__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
-                <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
-            </div>
-            <div v-else class="main__article__buttons oneButton">
-                <a :href="'#/article/'+article.view_code" target="_blank" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
-            </div>
-            <div class="main__article__reactions">
-                <div class="main__article__reactions__statistics">
-                    <img src="../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
-                    <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.statistics.rating) }}</p>
-                    <img src="../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
+                <div v-if="adminStatus && currentRoute == 'articlesWaitingPremoderate'" class="main__article__buttons">
+                    <a @click="currentSelectedArticleIndex = index;acceptPremoderateArticle(article.view_code)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
+                    <a @click="currentSelectedArticleIndex = index;rejectPremoderateArticle(article.view_code)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+                    <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
                 </div>
-                <div class="main__article__reactions__comments">
-                    <img src="../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
-                    <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article.statistics.comments) }}</p>
+                <div v-else-if="adminStatus && currentRoute == 'articlesWaitingApproval'" class="main__article__buttons">
+                    <a :href="'#/admin/article/approve/'+article.view_code" class="main__article__buttons__button approveArticleButton">{{ langData['approveArticleButton'] }}</a>
+                    <a @click="currentSelectedArticleIndex = index;rejectApproveArticle(article.view_code)" class="main__article__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
+                    <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
                 </div>
+                <div v-else class="main__article__buttons oneButton">
+                    <a :href="'#/article/'+article.view_code" target="_blank" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
+                </div>
+                <div class="main__article__reactions">
+                    <div class="main__article__reactions__statistics">
+                        <img src="../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
+                        <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.statistics.rating) }}</p>
+                        <img src="../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
+                    </div>
+                    <div class="main__article__reactions__comments">
+                        <img src="../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
+                        <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article.statistics.comments) }}</p>
+                    </div>
+                </div>
+                <DropDownVersion
+                    :max-version="(article as Article).versions.length"
+                    class="main__article__select" 
+                    @inputIndex="(version : number) => (article as Article).currentSelectedVersion = version" />
             </div>
-            <DropDownVersion
-                :max-version="(article as Article).versions.length"
-                class="main__article__select" 
-                @inputIndex="(version : number) => (article as Article).currentSelectedVersion = version" />
         </article>
         <h1 v-if="articles.length == 0 && !loading" class="main__article__title">{{ (langData['warnings'] as JsonData)["articlesNotFound"] }}</h1>
         
         <div ref="scrollTarget" style="height: 100px;"></div>
-        <Loader v-if="loading" />
+        <Loader v-if="loading || reloading" />
     </main>
 </template>
 

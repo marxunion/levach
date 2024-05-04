@@ -29,6 +29,7 @@ class ArticlesModel extends BaseModel
                     'premoderation_status' => 2,
                     'current_title[~]' => $searchTitle,
                     'current_tags &&' => $searchTags,
+                    'approvededitorially_status[!]' => 3,
                     'OR' => [
                         'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
@@ -36,9 +37,6 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
-                ],
-                'AND NOT' => [
-                    'approvededitorially_status' => 3
                 ]
             ]
         );
@@ -57,6 +55,7 @@ class ArticlesModel extends BaseModel
                 'AND' => [
                     'premoderation_status' => 2,
                     'current_title[~]' => $searchTitle,
+                    'approvededitorially_status[!]' => 3,
                     'OR' => [
                         'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
@@ -64,9 +63,6 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
-                ],
-                'AND NOT' => [
-                    'approvededitorially_status' => 3
                 ]
             ]
         );
@@ -86,6 +82,7 @@ class ArticlesModel extends BaseModel
                     'premoderation_status' => 2,
                     'current_title[~]' => $searchTitle,
                     'current_tags &&' => $searchTags,
+                    'approvededitorially_status[!]' => 3,
                     'OR' => [
                         'rating[<]' => $lastLoadedArticleRate,
                         'AND' => [
@@ -93,9 +90,6 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
-                ],
-                'AND NOT' => [
-                    'approvededitorially_status' => 3
                 ]
             ]
         );
@@ -113,6 +107,7 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'premoderation_status' => 2,
+                    'approvededitorially_status[!]' => 3,
                     'current_title[~]' => $searchTitle,
                     'OR' => [
                         'rating[<]' => $lastLoadedArticleRate,
@@ -121,9 +116,6 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
-                ],
-                'AND NOT' => [
-                    'approvededitorially_status' => 3
                 ]
             ]
         );
@@ -193,6 +185,7 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'approvededitorially_status' => 2,
+                    'editorially_status[!]' => 1,
                     'OR' => [
                         'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
@@ -217,6 +210,7 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'approvededitorially_status' => 2,
+                    'editorially_status[!]' => 1,
                     'OR' => [
                         'rating[<]' => $lastLoadedArticleRate,
                         'AND' => [
@@ -243,7 +237,10 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'premoderation_status' => 2,
-                    'approvededitorially_status' => 1,
+                    'editorially_status[!]' => 1,
+                    'approvededitorially_status[!]' => 2,
+                    'approvededitorially_status[!]' => 3,
+
                     'OR' => [
                         'created_date[<]' => $lastLoadedArticleCreatedDate,
                         'AND' => [
@@ -251,9 +248,6 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
-                ],
-                'AND NOT' => [
-                    'approvededitorially_status' => [2, 3]
                 ]
             ]
         );
@@ -271,6 +265,10 @@ class ArticlesModel extends BaseModel
                 ],
                 'AND' => [
                     'premoderation_status' => 2,
+                    'editorially_status[!]' => 1,
+                    'approvededitorially_status[!]' => 2,
+                    'approvededitorially_status[!]' => 3,
+                    
                     'OR' => [
                         'rating[<]' => $lastLoadedArticleRate,
                         'AND' => [
@@ -278,9 +276,6 @@ class ArticlesModel extends BaseModel
                             'article_id[<]' => $lastLoadedArticleId
                         ]
                     ]
-                ],
-                'AND NOT' => [
-                    'approvededitorially_status' => [2, 3]
                 ]
             ]
         );
@@ -416,9 +411,8 @@ class ArticlesModel extends BaseModel
                             [
                                 'id' => $articleId, 
                                 'premoderation_status' => 2,
-                                'AND NOT' => [
-                                    'approvededitorially_status' => [2, 3]
-                                ]
+                                'approvededitorially_status[!]' => 2,
+                                'approvededitorially_status[!]' => 3
                             ]
                         );
                         
@@ -532,7 +526,8 @@ class ArticlesModel extends BaseModel
                             ],
                             [
                                 'id' => $articleId,
-                                'approvededitorially_status' => 2
+                                'approvededitorially_status' => 2,
+                                'editorially_status[!]' => 1,
                             ]
                         );
                         
@@ -590,9 +585,9 @@ class ArticlesModel extends BaseModel
                             [
                                 'id' => $articleId, 
                                 'premoderation_status' => 2,
-                                'AND NOT' => [
-                                    'approvededitorially_status' => [2, 3]
-                                ]
+                                'editorially_status[!]' => 1,
+                                'approvededitorially_status[!]' => 2,
+                                'approvededitorially_status[!]' => 3
                             ]
                         );
                         

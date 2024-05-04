@@ -39,14 +39,21 @@ class AdminArticlePremoderateModel extends BaseModel
 
     public function rejectPremoderate($articleId)
     {
-        if($this->database->delete('statistics', ['article_id' => $articleId]))
+        if($this->database->delete('codes', ['article_id' => $articleId]))
         {
-            if($this->database->delete('articles', ['id' => $articleId]))
+            if($this->model-delete('statistics', ['article_id' => $articleId]))
             {
-                return true;
+                if($this->model-delete('articles', ['id' => $articleId]))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
-            {   
+            {
                 return false;
             }
         }
@@ -54,6 +61,5 @@ class AdminArticlePremoderateModel extends BaseModel
         {
             return false;
         }
-        return $this->database->delete();
     }
 }

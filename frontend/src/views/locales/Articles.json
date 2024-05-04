@@ -37,6 +37,10 @@
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
+        "articleRejectApproveSuccessfully": "Статья была успешно отклонена",
+        "articleRejectPremoderateSuccessfully": "Статья была успешно отклонена",
+        "articleAcceptPremoderateSuccessfully": "Статья была успешно премодерирована",
+
         "approveArticleButton": "Одобрить",
         "rejectApproveArticleButton": "Не одобрять",
         "acceptPremoderateArticleButton": "Принять",
@@ -136,12 +140,6 @@
             "articlesWaitingApproval": "Articles Waiting Approval",
             "articlesWaitingPremoderate": "Articles Waiting Premoderate"
         },
-        
-        "approveArticleButton": "Approve",
-        "rejectApproveArticleButton": "Reject Approve",
-        "acceptPremoderateArticleButton": "Accept",
-        "rejectPremoderateArticleButton": "Reject",
-        "readAllButton": "Read more",
 
         "sortTitle": "Sort by:",
         "sortTypesNames": 
@@ -165,6 +163,16 @@
         {
             "unknown": "An unknown error occurred. Try again"
         },
+
+        "articleRejectApproveSuccessfully": "The article was successfully rejected",
+        "articleRejectPremoderateSuccessfully": "The article was successfully rejected",
+        "articleAcceptPremoderateSuccessfully": "Article was successfully premoderated",
+
+        "approveArticleButton": "Approve",
+        "rejectApproveArticleButton": "Reject Approve",
+        "acceptPremoderateArticleButton": "Accept",
+        "rejectPremoderateArticleButton": "Reject",
+        "readAllButton": "Read more",
 
         "toolbarTips": 
         {
