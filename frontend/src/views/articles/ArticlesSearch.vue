@@ -220,7 +220,7 @@
     const handleScroll = async () => 
     {
         const scrollElement = scrollTarget.value;
-        if (scrollElement !== null && !loading.value) 
+        if (scrollElement !== null && !loading.value && !reloading.value) 
         {
             const bottomDistance = (scrollElement as HTMLElement).getBoundingClientRect().bottom - window.innerHeight;
             if (bottomDistance <= 0) 

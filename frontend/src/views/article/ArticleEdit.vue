@@ -495,7 +495,11 @@
 					language: LangDataHandler.currentLanguage.value
 				});
 
-				tags.value = fetchedData.value['tags'];
+				if(fetchedData.value['tags'] != null)
+				{
+					tags.value = fetchedData.value['tags'];
+				}
+				
 			}
 			loaded.value = true;
 		} 

@@ -63,7 +63,7 @@ class ArticleEditModel extends BaseModel
                     {
                         $newTagsString = '{}';
                     }
-        
+                    
                     $this->database->insert(
                         'articles', 
                         [
@@ -73,7 +73,7 @@ class ArticleEditModel extends BaseModel
 
                             'title' => $newTitle,
                             'text' => $newText,
-                            'tags' => $newTags,
+                            'tags' => $newTagsString,
                             
                             'editorially_status' => $articleData['editorially_status'],
                             'premoderation_status' => $articleData['premoderation_status'],
@@ -90,12 +90,12 @@ class ArticleEditModel extends BaseModel
                                 'current_version' => $newVersionId, 
                                 'current_title' => $newTitle, 
                                 'current_text' => $newText, 
-                                'current_tags' => $newTags,
+                                'current_tags' => $newTagsString,
                                 'created_date' => $newArticleCreatedDate,
 
                                 'editorially_status' => $articleData['editorially_status'],
                                 'premoderation_status' => $articleData['premoderation_status'],
-                                'approvededitorially_status' => $articleData['approvededitorially_status']
+                                'approvededitorially_status' => $articleData['approvededitorially_status'],
 
                                 'edit_timeout_to_date' => $newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)
                             ], 
