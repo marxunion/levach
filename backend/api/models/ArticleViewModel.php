@@ -19,23 +19,23 @@ class ArticleViewModel extends BaseModel
 
     public function viewArticle($articleId)
     {
-        $articleVertions = $this->database->select('articles', ['title', 'text', 'tags', 'created_date', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId, 'premoderation_status' => 2]);
-        if(isset($articleVertions))
+        $articleVersions = $this->database->select('articles', ['title', 'text', 'tags', 'created_date', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId, 'premoderation_status' => 2]);
+        if(isset($articleVersions))
         {
             $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId, 'premoderation_status' => 2]);
             if(isset($articleStatistics))
             {
-                foreach ($articleVertions as $versionNum => $versionInfo) 
+                foreach ($articleVersions as $versionNum => $versionInfo) 
                 {
                     if ($versionInfo['tags'] != null) 
                     {
                         $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
-                        $articleVertions[$versionNum]['tags'] = explode(',', $tagsString);
+                        $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
                     }
                 }
 
                 $article = [
-                    'versions' => $articleVertions,
+                    'versions' => $articleVersions,
                     'statistics' => $articleStatistics
                 ];
                 return $article;
@@ -47,31 +47,31 @@ class ArticleViewModel extends BaseModel
         }
     }
 
-    public function viewArticle($articleId)
+    public function viewArticleAdmin($articleId)
     {
-        $articleVertions = $this->database->select('articles', ['title', 'text', 'tags', 'created_date', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId]);
-        if(isset($articleVertions))
+        $articleVersions = $this->database->select('articles', ['title', 'text', 'tags', 'created_date', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId]);
+        if(isset($articleVersions))
         {
             $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]);
 
-            foreach ($articleVertions as $versionNum => $versionInfo) 
+            foreach ($articleVersions as $versionNum => $versionInfo) 
             {
                 if ($versionInfo['tags'] != null) 
                 {
                     $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
-                    $articleVertions[$versionNum]['tags'] = explode(',', $tagsString);
+                    $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
                 }
             }
     
             $article = [
-                'versions' => $articleVertions,
+                'versions' => $articleVersions,
                 'statistics' => $articleStatistics
             ];
             return $article;
         }
-    }
-    else
-    {
-        return null;
+        else
+        {
+            return null;
+        }
     }
 }

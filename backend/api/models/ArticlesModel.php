@@ -429,6 +429,15 @@ class ArticlesModel extends BaseModel
                             ]
                         );
                         
+                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        {
+                            if ($versionInfo['tags'] != null) 
+                            {
+                                $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
+                                $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
+                            }
+                        }
+                        
                         $article = [
                             'id' => $articleId,
                             'versions' => $articleVersions,
@@ -485,6 +494,15 @@ class ArticlesModel extends BaseModel
                                 'editorially_status' => 1
                             ]
                         );
+
+                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        {
+                            if ($versionInfo['tags'] != null) 
+                            {
+                                $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
+                                $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
+                            }
+                        }
                         
                         $article = [
                             'id' => $articleId,
@@ -543,6 +561,15 @@ class ArticlesModel extends BaseModel
                                 'editorially_status[!]' => 1,
                             ]
                         );
+
+                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        {
+                            if ($versionInfo['tags'] != null) 
+                            {
+                                $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
+                                $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
+                            }
+                        }
                         
                         $article = [
                             'id' => $articleId,
@@ -603,6 +630,15 @@ class ArticlesModel extends BaseModel
                                 'approvededitorially_status[!]' => 3
                             ]
                         );
+
+                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        {
+                            if ($versionInfo['tags'] != null) 
+                            {
+                                $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
+                                $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
+                            }
+                        }
                         
                         $article = [
                             'id' => $articleId,
@@ -662,6 +698,15 @@ class ArticlesModel extends BaseModel
                             ]
                         );
                         
+                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        {
+                            if ($versionInfo['tags'] != null) 
+                            {
+                                $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
+                                $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
+                            }
+                        }
+
                         $article = [
                             'id' => $articleId,
                             'versions' => $articleVersions,
@@ -718,6 +763,15 @@ class ArticlesModel extends BaseModel
                                 'premoderation_status' => 1
                             ]
                         );
+
+                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        {
+                            if ($versionInfo['tags'] != null) 
+                            {
+                                $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
+                                $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
+                            }
+                        }
                         
                         $article = [
                             'id' => $articleId,

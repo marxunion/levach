@@ -7,12 +7,15 @@ use Base\BaseHandlerRouteWithArgs;
 
 use Api\Models\ArticleViewModel;
 
+use Api\Handlers\AdminStatusHandler;
+
 class ArticleViewHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
         if(isset($this->args['viewCode']))
         {
+            $this->cookiesBody = $this->request->getCookieParams();
             $this->model = new ArticleViewModel();
         }
         else
@@ -27,7 +30,14 @@ class ArticleViewHandler extends BaseHandlerRouteWithArgs
 
         if($articleId)
         {
-            $this->response = $this->response->withJson($this->model->viewArticle($articleId));
+            if(AdminStatusHandler::isAdmin($this->cookiesBody))
+            {
+                $this->response = $this->response->withJson($this->model->viewArticleAdmin($articleId));
+            }
+            else
+            {
+                $this->response = $this->response->withJson($this->model->viewArticle($articleId));
+            }
         }
         else
         {
