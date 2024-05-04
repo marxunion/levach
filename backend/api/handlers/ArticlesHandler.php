@@ -70,22 +70,22 @@ class ArticlesHandler extends BaseHandlerRoute
         
                 if(AdminStatusHandler::isAdmin($this->cookiesBody))
                 {
-                    if($category == 'editoriallyArticles')
+                    if($category == 'EditoriallyArticles')
                     {
                         $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedDate($count, $lastLoadedArticleId, $lastLoadedArticleCreatedDate);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
                     }
-                    else if($category == 'editoriallyApprovedArticles')
+                    else if($category == 'EditoriallyApprovedArticles')
                     {
                         $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedDate($count, $lastLoadedArticleId, $lastLoadedArticleCreatedDate);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
                     }
-                    else if($category == 'abyssArticles')
+                    else if($category == 'AbyssArticles')
                     {
                         $articleIds = $this->model->loadAbyssArticlesIdsByCreatedDate($count, $lastLoadedArticleId, $lastLoadedArticleCreatedDate);
                         $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
                     }
-                    else if($category == 'articlesSearch')
+                    else if($category == 'ArticlesSearch')
                     {
                         if(isset($this->parsedBody['searchTitle']))
                         {
@@ -116,12 +116,12 @@ class ArticlesHandler extends BaseHandlerRoute
                             throw new Error(400, "Not found search title", "Not found search title");
                         }
                     }
-                    else if($category == 'articlesWaitingApproval')
+                    else if($category == 'ArticlesWaitingApproval')
                     {
                         $articleIds = $this->model->loadArticlesWaitingApprovalIdsByCreatedDate($count, $lastLoadedArticleId, $lastLoadedArticleCreatedDate);
                         $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproval($articleIds));
                     }
-                    else if($category == 'articlesWaitingPremoderate')
+                    else if($category == 'ArticlesWaitingPremoderate')
                     {
                         $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByCreatedDate($count, $lastLoadedArticleId, $lastLoadedArticleCreatedDate);
                         $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
@@ -133,22 +133,22 @@ class ArticlesHandler extends BaseHandlerRoute
                 }
                 else
                 {
-                    if($category == 'editoriallyArticles')
+                    if($category == 'EditoriallyArticles')
                     {
                         $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedDate($count, $lastLoadedArticleId, $lastLoadedArticleCreatedDate);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
                     }
-                    else if($category == 'editoriallyApprovedArticles')
+                    else if($category == 'EditoriallyApprovedArticles')
                     {
                         $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedDate($count, $lastLoadedArticleId, $lastLoadedArticleCreatedDate);
                         $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
                     }
-                    else if($category == 'abyssArticles')
+                    else if($category == 'AbyssArticles')
                     {
                         $articleIds = $this->model->loadAbyssArticlesIdsByCreatedDate($count, $lastLoadedArticleId, $lastLoadedArticleCreatedDate);
                         $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
                     }
-                    else if($category == 'articlesSearch')
+                    else if($category == 'ArticlesSearch')
                     {
                         if(isset($this->parsedBody['searchTitle']))
                         {

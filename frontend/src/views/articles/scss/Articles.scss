@@ -131,6 +131,12 @@
                 color: $articlesReadAllButtonText;
                 border: 2px solid $articlesReadAllButtonBorder;
 
+                &.deleteArticleButton
+                {
+                    color: $articleRejectApproveArticleButtonText;
+                    border: 2px solid $articleRejectApproveArticleButtonBorder;
+                }
+
                 &.acceptPremoderateArticleButton
                 {
                     color: $articleAcceptPremoderateArticleButtonText;

@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { ref, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
+    import { useRoute } from 'vue-router';
     import axios from 'axios';
 
     import Loader from "./../../components/Loader.vue";
@@ -25,17 +26,32 @@
     import langsData from "./locales/Articles.json";
     import { LangDataHandler } from "./../../ts/LangDataHandler";
 
+    import { searchText } from "./../../ts/searchHelper";
+
     import './../libs/font_2605852_prouiefeic';
 
-    import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
+	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 
-	const langData = LangDataHandler.initLangDataHandler("AbbysArticles", langsData).langData;
+    const route = useRoute();
+
+	const langData = LangDataHandler.initLangDataHandler("ArticlesSearch", langsData).langData;
 
     // Sort
 	const currentSortType = ref(0);
     const currentSelectedArticleIndex = ref(0);
 
     const sortTypesNames = computed(() => langData.value['sortTypesNames'] as string[]);
+
+    const searchData : string = route.params.searchData as string;
+
+    if(searchData != null)
+    {
+        if(searchData.length > 0)
+        {
+            searchText.value = searchData;
+        }
+    }
+
 
     // Preview
 	config(
@@ -94,40 +110,71 @@
     {
         if(currentSortType.value === 0)
         {
-            await axios.get('/api/articles', 
+            const searchData : string = route.params.searchData as string;
+                
+            if(searchData != null)
             {
-                params: 
+                if(searchData.length > 0)
                 {
-                    sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                    category: 'AbbysArticles',
-                    count: 4,
-                    lastLoadedArticleId: lastLoadedArticleId.value,
-                    lastLoadedArticleRate: lastLoadedArticleRate.value
-                }
-            })
-            .then(response => 
-            {
-                if(response.data !== null)
-                {
-                    if(Array.isArray(response.data))
+                    const searchParts : string[] = searchData.split('#');
+                    const searchTitle : string = searchParts[0].trim();
+                    const searchTags : string[] = searchParts.slice(1).map(tag => `${tag.trim()}`);
+                        
+                    let data;
+                        
+                    if(searchTags.length > 0)
                     {
-                        response.data.forEach((article : Article) => 
-                        {
-                            if(lastLoadedArticleId.value > article.id)
-                            {
-                                lastLoadedArticleId.value = article.id;
-                            }
-                            lastLoadedArticleRate.value = article.statistics.rating;
-                            article.currentSelectedVersion = article.versions.length;
-                            articles.push(article as Article);
-                        });
+                        data = {
+                            sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
+                            category: 'ArticlesSearch',
+                            count: 4,
+                            lastLoadedArticleId: lastLoadedArticleId.value,
+                            lastLoadedArticleRate: lastLoadedArticleRate.value,
+                            searchTitle: searchTitle,
+                            searchTags: searchTags
+                        }
                     }
+                    else
+                    {
+                        data = {
+                            sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
+                            category: 'ArticlesSearch',
+                            count: 4,
+                            lastLoadedArticleId: lastLoadedArticleId.value,
+                            lastLoadedArticleRate: lastLoadedArticleRate.value,
+                            searchTitle: searchTitle
+                        }
+                    }
+
+                    await axios.get('/api/articles', 
+                    {
+                        params: data
+                    })
+                    .then(response => 
+                    {
+                        if(response.data !== null)
+                        {
+                            if(Array.isArray(response.data))
+                            {
+                                response.data.forEach((article : Article) => 
+                                {
+                                    if(lastLoadedArticleId.value > article.id)
+                                    {
+                                        lastLoadedArticleId.value = article.id;
+                                    }
+                                    lastLoadedArticleRate.value = article.statistics.rating;
+                                    article.currentSelectedVersion = article.versions.length;
+                                    articles.push(article as Article);
+                                });
+                            }
+                        }
+                    })
+                    .catch(response => 
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+                    });
                 }
-            })
-            .catch(response => 
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-            });
+            }
         }
         else
         {
@@ -136,7 +183,7 @@
                 params: 
                 {
                     sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                    category: 'AbbysArticles',
+                    category: 'ArticlesSearch',
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
                     lastLoadedArticleCreatedDate: lastLoadedArticleCreatedDate.value
@@ -182,8 +229,8 @@
                 await fetchNewArticles();
             }
         }
-    }
-    
+    } 
+
     const deletePremoderateArticle = async (articleViewCode : string) => 
     {
         if(adminStatus.value)
@@ -263,7 +310,7 @@
             openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
         }
     }
-
+    
     onMounted(async () => 
     {
         let ps = document.querySelector('.ps');
@@ -289,7 +336,7 @@
 <template>
     <main class="main">
         <div class="main__header">
-			<p class="main__header__title">{{ (langData['headerTitle'] as JsonData)['AbbysArticles'] }}</p>
+			<p class="main__header__title">{{ (langData['headerTitle'] as JsonData)['ArticlesSearch'] }}</p>
 			<div class="main__header__sort">
 				<p class="main__header__sort__title">{{ langData['sortTitle'] }}</p>
 				<DropDown :options="sortTypesNames" :default="sortTypesNames[currentSortType]" class="main__header__sort__select" @inputIndex="onChangeSortType" />
@@ -308,6 +355,7 @@
                 <div v-else class="main__article__buttons oneButton">
                     <a :href="'#/article/'+article.view_code" target="_blank" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
                 </div>
+                
                 <div class="main__article__reactions">
                     <div class="main__article__reactions__statistics">
                         <img src="../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">

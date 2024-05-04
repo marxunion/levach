@@ -1,64 +1,41 @@
 <script setup lang="ts">
     import { ref, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
-    import { useRoute, useRouter } from 'vue-router';
     import axios from 'axios';
 
-    import Loader from "./../components/Loader.vue";
-    import { timestampToLocaleFormatedTime } from './../ts/DateTimeHelper';
-    import { tagsArrayToString } from './../ts/TagsHelper'
-    import { JsonData } from './../ts/JsonHandler';
+    import Loader from "./../../components/Loader.vue";
+    import { timestampToLocaleFormatedTime } from './../../ts/DateTimeHelper';
+    import { tagsArrayToString } from './../../ts/TagsHelper'
+    import { JsonData } from './../../ts/JsonHandler';
 
-    import { Article } from './../ts/ArticleHelper';
+    import { Article } from './../../ts/ArticleHelper';
 
-    import DropDown from './../components/DropDown.vue';
-    import DropDownVersion from './../components/DropDownVersion.vue';
+    import DropDown from './../../components/DropDown.vue';
+    import DropDownVersion from './../../components/DropDownVersion.vue';
 
     import { MdPreview, config } from 'md-editor-v3';
     import 'md-editor-v3/lib/style.css';
 
-    import { adminStatus, adminStatusReCheck } from './../ts/AdminHandler';
+    import { adminStatus, adminStatusReCheck } from './../../ts/AdminHandler';
 
-    import { abbreviateNumber } from './../ts/AbbreviateNumberHelper';
+    import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
 
 	import { openModal } from "jenesius-vue-modal";
-    import InfoModal from "./../components/modals/InfoModal.vue";
+    import InfoModal from "./../../components/modals/InfoModal.vue";
 
     import langsData from "./locales/Articles.json";
-    import { LangDataHandler } from "./../ts/LangDataHandler";
-
-    import { searchText } from "../ts/searchHelper";
-
-    import { componentsShow, forceReload } from './../ts/ComponentsReloadHelper';
+    import { LangDataHandler } from "./../../ts/LangDataHandler";
 
     import './../libs/font_2605852_prouiefeic';
 
-	import { csrfTokenInput, getNewCsrfToken } from '../ts/csrfTokenHelper';
+	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 
-    const route = useRoute();
-    //const router = useRouter();
-    const props = defineProps(['currentRoute']);
-
-	const langData = LangDataHandler.initLangDataHandler("articlesEditorially", langsData).langData;
+	const langData = LangDataHandler.initLangDataHandler("ArticlesWaitingApprove", langsData).langData;
 
     // Sort
 	const currentSortType = ref(0);
     const currentSelectedArticleIndex = ref(0);
 
     const sortTypesNames = computed(() => langData.value['sortTypesNames'] as string[]);
-
-    if(props.currentRoute == 'articlesSearch')
-    {
-        const searchData : string = route.params.searchData as string;
-
-        if(searchData != null)
-        {
-            if(searchData.length > 0)
-            {
-                searchText.value = searchData;
-            }
-        }
-    }
-
 
     // Preview
 	config(
@@ -117,111 +94,40 @@
     {
         if(currentSortType.value === 0)
         {
-            if(props.currentRoute == 'articlesSearch')
+            await axios.get('/api/articles', 
             {
-                const searchData : string = route.params.searchData as string;
-                
-                if(searchData != null)
+                params: 
                 {
-                    if(searchData.length > 0)
+                    sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
+                    category: 'ArticlesWaitingApprove',
+                    count: 4,
+                    lastLoadedArticleId: lastLoadedArticleId.value,
+                    lastLoadedArticleRate: lastLoadedArticleRate.value
+                }
+            })
+            .then(response => 
+            {
+                if(response.data !== null)
+                {
+                    if(Array.isArray(response.data))
                     {
-                        const searchParts : string[] = searchData.split('#');
-                        const searchTitle : string = searchParts[0].trim();
-                        const searchTags : string[] = searchParts.slice(1).map(tag => `${tag.trim()}`);
-                        
-                        let data;
-                        
-                        if(searchTags.length > 0)
+                        response.data.forEach((article : Article) => 
                         {
-                            data = {
-                                sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                                category: props.currentRoute,
-                                count: 4,
-                                lastLoadedArticleId: lastLoadedArticleId.value,
-                                lastLoadedArticleRate: lastLoadedArticleRate.value,
-                                searchTitle: searchTitle,
-                                searchTags: searchTags
-                            }
-                        }
-                        else
-                        {
-                            data = {
-                                sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                                category: props.currentRoute,
-                                count: 4,
-                                lastLoadedArticleId: lastLoadedArticleId.value,
-                                lastLoadedArticleRate: lastLoadedArticleRate.value,
-                                searchTitle: searchTitle
-                            }
-                        }
-
-                        await axios.get('/api/articles', 
-                        {
-                            params: data
-                        })
-                        .then(response => 
-                        {
-                            if(response.data !== null)
+                            if(lastLoadedArticleId.value > article.id)
                             {
-                                if(Array.isArray(response.data))
-                                {
-                                    response.data.forEach((article : Article) => 
-                                    {
-                                        if(lastLoadedArticleId.value > article.id)
-                                        {
-                                            lastLoadedArticleId.value = article.id;
-                                        }
-                                        lastLoadedArticleRate.value = article.statistics.rating;
-                                        article.currentSelectedVersion = article.versions.length;
-                                        articles.push(article as Article);
-                                    });
-                                }
+                                lastLoadedArticleId.value = article.id;
                             }
-                        })
-                        .catch(response => 
-                        {
-                            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+                            lastLoadedArticleRate.value = article.statistics.rating;
+                            article.currentSelectedVersion = article.versions.length;
+                            articles.push(article as Article);
                         });
                     }
                 }
-            }
-            else
+            })
+            .catch(response => 
             {
-                await axios.get('/api/articles', 
-                {
-                    params: 
-                    {
-                        sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                        category: props.currentRoute,
-                        count: 4,
-                        lastLoadedArticleId: lastLoadedArticleId.value,
-                        lastLoadedArticleRate: lastLoadedArticleRate.value
-                    }
-                })
-                .then(response => 
-                {
-                    if(response.data !== null)
-                    {
-                        if(Array.isArray(response.data))
-                        {
-                            response.data.forEach((article : Article) => 
-                            {
-                                if(lastLoadedArticleId.value > article.id)
-                                {
-                                    lastLoadedArticleId.value = article.id;
-                                }
-                                lastLoadedArticleRate.value = article.statistics.rating;
-                                article.currentSelectedVersion = article.versions.length;
-                                articles.push(article as Article);
-                            });
-                        }
-                    }
-                })
-                .catch(response => 
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-                });
-            }
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+            });
             
         }
         else
@@ -231,7 +137,7 @@
                 params: 
                 {
                     sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                    category: props.currentRoute,
+                    category: 'ArticleWaitingApprove',
                     count: 4,
                     lastLoadedArticleId: lastLoadedArticleId.value,
                     lastLoadedArticleCreatedDate: lastLoadedArticleCreatedDate.value
@@ -529,7 +435,7 @@
 <template>
     <main class="main">
         <div class="main__header">
-			<p class="main__header__title">{{ (langData['headerTitle'] as JsonData)[currentRoute || 'editoriallyArticles'] }}</p>
+			<p class="main__header__title">{{ (langData['headerTitle'] as JsonData)['ArticlesWaitingApprove'] }}</p>
 			<div class="main__header__sort">
 				<p class="main__header__sort__title">{{ langData['sortTitle'] }}</p>
 				<DropDown :options="sortTypesNames" :default="sortTypesNames[currentSortType]" class="main__header__sort__select" @inputIndex="onChangeSortType" />
@@ -541,12 +447,7 @@
                 <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
                 <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 
-                <div v-if="adminStatus && currentRoute == 'articlesWaitingPremoderate'" class="main__article__buttons">
-                    <a @click="currentSelectedArticleIndex = index;acceptPremoderateArticle(article.view_code)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
-                    <a @click="currentSelectedArticleIndex = index;rejectPremoderateArticle(article.view_code)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
-                    <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
-                </div>
-                <div v-else-if="adminStatus && currentRoute == 'articlesWaitingApproval'" class="main__article__buttons">
+                <div v-if="adminStatus" class="main__article__buttons">
                     <a :href="'#/admin/article/approve/'+article.view_code" class="main__article__buttons__button approveArticleButton">{{ langData['approveArticleButton'] }}</a>
                     <a @click="currentSelectedArticleIndex = index;rejectApproveArticle(article.view_code)" class="main__article__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
                     <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
