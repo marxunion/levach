@@ -219,19 +219,20 @@ import { arraysAreEqual } from '../../ts/ArrayHelper';
 
     const checkChanges = async () =>
     {
-        return setTimeout(() => 
+        await setTimeout(() => 
         {
-            if(editorState.text != fetchedData.value['text'] || !arraysAreEqual(tags.value, fetchedData.value['tags']))
-            {
-                currentChangesStatus.value = 1;
-                return true;
-            }
-            else
-            {
-                currentChangesStatus.value = 0;
-                return false;
-            }
-        }, 500);
+            
+        }, 1500);
+        if(editorState.text != fetchedData.value['text'] || !arraysAreEqual(tags.value, fetchedData.value['tags']))
+        {
+            currentChangesStatus.value = 1;
+            return true;
+        }
+        else
+        {
+            currentChangesStatus.value = 0;
+            return false;
+        }
     }
 
 	const addTag = () => 
@@ -259,7 +260,7 @@ import { arraysAreEqual } from '../../ts/ArrayHelper';
 		tags.value.splice(index, 1);
         checkChanges();
 	}
-    
+
 	const onSendButton = async () =>
 	{
         if(await checkChanges())
