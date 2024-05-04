@@ -39,7 +39,6 @@ use Api\Handlers\AdminLoginHandler;
 use Api\Handlers\ArticleNewHandler;
 use Api\Handlers\ArticlesHandler;
 use Api\Handlers\ArticleViewHandler;
-use Api\Handlers\ArticleSearchHandler;
 use Api\Handlers\ArticleEditHandler;
 use Api\Handlers\ArticleEditPreloadHandler;
 use Api\Handlers\MediaLoadImageHandler;
@@ -200,12 +199,6 @@ class Routes
                 $articleGroup->get('/view/{viewCode}', function (Request $request, Response $response, array $args) 
                 {
                     self::$handler = new ArticleViewHandler($request, $response, $args);
-                    return self::$handler->Handle();
-                });
-    
-                $articleGroup->get('/search/{queryStr}', function (Request $request, Response $response, array $args) 
-                {
-                    self::$handler = new ArticleSearchHandler($request, $response, $args);
                     return self::$handler->Handle();
                 });
             });
