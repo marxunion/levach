@@ -124,7 +124,7 @@
                     }
                 }
             })
-            .catch(response => 
+            .catch(error => 
             {
                 openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
             });
@@ -161,7 +161,7 @@
                     }
                 }
             })
-            .catch(response => 
+            .catch(error => 
             {
                 openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
             });

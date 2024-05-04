@@ -124,7 +124,7 @@
                     }
                 }
             })
-            .catch(response => 
+            .catch(error => 
             {
                 openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
             });
@@ -161,7 +161,7 @@
                     }
                 }
             })
-            .catch(response => 
+            .catch(error => 
             {
                 openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
             });
@@ -208,7 +208,7 @@
                 if(response.data.success)
                 {
                     await openModal(InfoModal, {status: true, text: langData.value['articleDeletedSuccessfully']});
-                    
+
                     articles = reactive(articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1)));
                     if(articles.length == 0)
                     {
