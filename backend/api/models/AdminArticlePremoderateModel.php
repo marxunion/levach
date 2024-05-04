@@ -20,46 +20,14 @@ class AdminArticlePremoderateModel extends BaseModel
 
     public function acceptPremoderate($articleId)
     {
-        if($this->database->update('statistics', ['premoderation_status' => 2], ['article_id' => $articleId]))
-        {
-            if($this->database->update('articles', ['premoderation_status' => 2], ['id' => $articleId]))
-            {
-                return true;
-            }
-            else
-            {   
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
+        $this->database->update('statistics', ['premoderation_status' => 2], ['article_id' => $articleId]);
+        $this->database->update('articles', ['premoderation_status' => 2], ['id' => $articleId]);
     }
 
     public function rejectPremoderate($articleId)
     {
-        if($this->database->delete('codes', ['article_id' => $articleId]))
-        {
-            if($this->model-delete('statistics', ['article_id' => $articleId]))
-            {
-                if($this->model-delete('articles', ['id' => $articleId]))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
+        $this->database->delete('codes', ['article_id' => $articleId])
+        $this->model-delete('statistics', ['article_id' => $articleId]);
+        $this->model-delete('articles', ['id' => $articleId]);
     }
 }

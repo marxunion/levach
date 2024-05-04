@@ -20,130 +20,84 @@ class AdminArticleApproveModel extends BaseModel
 
     public function rejectApprove($articleId)
     {
-        if($this->database->update('statistics', ['approvededitorially_status' => 0], ['article_id' => $articleId]))
-        {
-            if($this->database->update('articles', ['approvededitorially_status' => 0], ['id' => $articleId]))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
+        $this->database->update('statistics', ['approvededitorially_status' => 0], ['article_id' => $articleId]);
+        $this->database->update('articles', ['approvededitorially_status' => 0], ['id' => $articleId]);
     }
 
     public function acceptApprove($articleId)
     {
-        if($this->database->update('statistics', ['approvededitorially_status' => 2], ['article_id' => $articleId]))
-        {
-            if($this->database->update('articles', ['approvededitorially_status' => 2], ['id' => $articleId]))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
+        $this->database->update('statistics', ['approvededitorially_status' => 2], ['article_id' => $articleId]);
+        $this->database->update('articles', ['approvededitorially_status' => 2], ['id' => $articleId]);
     }
 
     public function acceptApproveWithChanges($articleId, $newTitle, $newText, $newTags)
     {
-        if($this->database->update('statistics', ['approvededitorially_status' => 3], ['article_id' => $articleId]))
+        $this->database->update('statistics', ['approvededitorially_status' => 3], ['article_id' => $articleId]);
+        $this->database->update('articles', ['approvededitorially_status' => 3], ['id' => $articleId]);
+        $articleData = $this->database->get('statistics', ['current_version', 'current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
+        if(isset($articleData))
         {
-            if($this->database->update('articles', ['approvededitorially_status' => 3], ['id' => $articleId]))
+            if($articleData['current_title'] == $newTitle && $articleData['current_text'] == $newText && $articleData['current_tags'] == $newTags)
             {
-                $articleData = $this->database->get('statistics', ['current_version', 'current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
-                if(isset($articleData))
+                throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
+            }
+
+            $newVersionId = $articleData['currentVersion'] + 1;
+            $newArticleCreatedDate = time();
+
+            if(isset($newTags))
+            {
+                if(is_array($newTags))
                 {
-                    if($articleData['current_title'] == $newTitle && $articleData['current_text'] == $newText && $articleData['current_tags'] == $newTags)
+                    if(count($newTags) > 0)
                     {
-                        throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
-                    }
-
-                    $newVersionId = $articleData['currentVersion'] + 1;
-                    $newArticleCreatedDate = time();
-
-                    if(isset($newTags))
-                    {
-                        if(is_array($newTags))
+                        if(count($newTags) == count(array_unique($newTags)))
                         {
-                            if(count($newTags) > 0)
-                            {
-                                if(count($newTags) == count(array_unique($newTags)))
-                                {
-                                    $newTagsString = '{'.implode(',', $newTags).'}';
-                                }
-                                else
-                                {
-                                    throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
-                                }
-                            }
+                            $newTagsString = '{'.implode(',', $newTags).'}';
+                        }
+                        else
+                        {
+                            throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
                         }
                     }
-                    else
-                    {
-                        $newTagsString = '{}';
-                    }
-
-                    $this->database->insert(
-                        'articles',
-                        [
-                            'id' => $articleId,
-                            'version_id' => $newVersionId,
-                            'created_date' => $newArticleCreatedDate,
-
-                            'title' => $newTitle,
-                            'text' => $newText,
-                            'tags' => $newTagsString,
-                            'editorially_status' => 1,
-                            'premoderation_status' => 2,
-                            'approvededitorially_status' => 3
-                        ]
-                    );
-                    
-                    $this->database->update(
-                        'statistics', 
-                        [
-                            'current_version' => $newVersionId, 
-                            'created_date' => $newArticleCreatedDate,
-
-                            'current_title' => $newTitle, 
-                            'current_text' => $newText, 
-                            'current_tags' => $newTagsString, 
-                            
-                            'editorially_status' => 1,
-                            'premoderation_status' => 2,
-                            'approvededitorially_status' => 3,
-                            'edit_timeout_to_date' => $newArticleCreatedDate
-                        ], 
-                        [
-                            'article_id' => $articleId
-                        ]
-                    );
-                }
-                else 
-                {
-                    throw new Error(404, "Article not found", "Article not found");
                 }
             }
             else
             {
-                return false;
+                $newTagsString = '{}';
             }
+
+            $this->database->insert(
+                'articles',
+                [
+                    'id' => $articleId,
+                    'version_id' => $newVersionId,
+                    'created_date' => $newArticleCreatedDate,
+
+                    'title' => $newTitle,
+                    'text' => $newText,
+                    'tags' => $newTagsString,
+
+                    'current_version' => $newVersionId, 
+                    'created_date' => $newArticleCreatedDate,
+
+                    'current_title' => $newTitle, 
+                    'current_text' => $newText, 
+                    'current_tags' => $newTagsString, 
+                        
+                    'editorially_status' => 1,
+                    'premoderation_status' => 2,
+                    'approvededitorially_status' => 3,
+                    'edit_timeout_to_date' => $newArticleCreatedDate
+                ], 
+                [
+                    'article_id' => $articleId
+                ]
+            );
         }
-        else
+        else 
         {
-            return false;
+            throw new Error(404, "Article not found", "Article not found");
         }
     }
 }

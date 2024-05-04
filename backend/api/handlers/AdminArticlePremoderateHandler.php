@@ -68,25 +68,13 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
             if($this->parsedBody['status'] == 0)
             {
                 
-                if($this->model->rejectPremoderate($articleId))
-                {
-                    $this->response = $this->response->withJson(['success' => true]);
-                }
-                else
-                {
-                    throw new Critical(500, "Failed to reject premoderate article", "Failed to reject premoderate article");
-                }
+                $this->model->rejectPremoderate($articleId);
+                $this->response = $this->response->withJson(['success' => true]);
             }
             else if($this->parsedBody['status'] == 1)
             {
-                if($this->model->acceptPremoderate($articleId))
-                {
-                    $this->response = $this->response->withJson(['success' => true]);
-                }
-                else
-                {
-                    throw new Critical(500, "Failed to premoderate article", "Failed to premoderate article");
-                }
+                $this->model->acceptPremoderate($articleId);
+                $this->response = $this->response->withJson(['success' => true]);
             }
             else
             {

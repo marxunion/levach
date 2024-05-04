@@ -20,25 +20,9 @@ class AdminSettingsSetModel extends BaseModel
 
         if($database)
         {
-            if(!$database->update('settings', ['value' => $settingValue], ['name' => $settingName]))
-            {
-                if($database->insert('settings', 
-                [
-                    'name' => $settingName, 
-                    'value' => $settingValue
-                ]))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return true;
-            }
+            $database->update('settings', ['value' => $settingValue], ['name' => $settingName]);
+            $database->insert('settings', ['name' => $settingName, 'value' => $settingValue]);
+            return true;
         }
         else
         {
@@ -48,24 +32,7 @@ class AdminSettingsSetModel extends BaseModel
 
     public function setSetting($settingName, $settingValue)
     {
-        if(!$this->database->update('settings', ['value' => $settingValue], ['name' => $settingName]))
-        {
-            if($this->database->insert('settings', 
-            [
-                'name' => $settingName, 
-                'value' => $settingValue
-            ]))
-            {
-                return true;
-            }
-            else
-            {
-                throw new Critical(500, "Failed to set setting", "Failed to set setting");
-            }
-        }
-        else
-        {
-            return true;
-        }
+        $this->database->update('settings', ['value' => $settingValue], ['name' => $settingName]);
+        $this->database->insert('settings', ['name' => $settingName, 'value' => $settingValue]);
     }
 }

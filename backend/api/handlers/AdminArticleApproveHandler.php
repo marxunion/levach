@@ -67,38 +67,20 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
         {
             if($this->parsedBody['status'] == 0)
             {
-                if($this->model->rejectApprove())
-                {
-                    $this->response = $this->response->withJson(['success' => true]);
-                }
-                else
-                {
-                    throw new Critical(500, "Failed to reject approve article", "Failed to reject approve article");
-                }
+                $this->model->rejectApprove($articleId);
+                $this->response = $this->response->withJson(['success' => true]);
             }
             else if($this->parsedBody['status'] == 1)
             {
-                if($this->model->acceptApprove())
-                {
-                    $this->response = $this->response->withJson(['success' => true]);
-                }
-                else
-                {
-                    throw new Critical(500, "Failed to accept approve article", "Failed to accept approve article");
-                }
+                $this->model->acceptApprove($articleId);
+                $this->response = $this->response->withJson(['success' => true]);
             }
             else if($this->parsedBody['status'] == 2)
             {
                 if(isset($this->parsedBody['newTitle']) && isset($this->parsedBody['newText']) && isset($this->parsedBody['newTags']))
                 { 
-                    if($this->model->acceptApproveWithChanges($articleId, $this->parsedBody['newTitle'], $this->parsedBody['newText'], $this->parsedBody['newTags']))
-                    {
-                        $this->response = $this->response->withJson(['success' => true]);
-                    }
-                    else
-                    {
-                        throw new Critical(500, "Failed to accept approve article", "Failed to accept approve article");
-                    }
+                    $this->model->acceptApproveWithChanges($articleId, $this->parsedBody['newTitle'], $this->parsedBody['newText'], $this->parsedBody['newTags']);
+                    $this->response = $this->response->withJson(['success' => true]);
                 }
                 else
                 {

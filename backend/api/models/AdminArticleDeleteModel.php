@@ -20,27 +20,8 @@ class AdminArticleDeleteModel extends BaseModel
 
     public function deleteArticle($articleId)
     {
-        if($this->database->delete('codes', ['article_id' => $articleId]))
-        {
-            if($this->model-delete('statistics', ['article_id' => $articleId]))
-            {
-                if($this->model-delete('articles', ['id' => $articleId]))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
+        $this->database->delete('codes', ['article_id' => $articleId])
+        $this->model-delete('statistics', ['article_id' => $articleId]);
+        $this->model-delete('articles', ['id' => $articleId]);
     }
 }
