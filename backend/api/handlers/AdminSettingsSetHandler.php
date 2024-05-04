@@ -126,14 +126,8 @@ class AdminSettingsSetHandler extends BaseHandlerRoute
         {
             if(isset($this->parsedBody['settingValue']))
             {
-                if($this->model->setSetting($this->parsedBody['settingName'], $this->parsedBody['settingValue']))
-                {
-                    $this->response = $this->response->withJson(['success' => true]);
-                }
-                else
-                {
-                    throw new Critical(403, "Invalid CSRF token", "Invalid CSRF token");
-                }
+                $this->model->setSetting($this->parsedBody['settingName'], $this->parsedBody['settingValue']);
+                $this->response = $this->response->withJson(['success' => true]);
             }
             else
             {
