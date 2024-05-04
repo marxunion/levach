@@ -40,6 +40,7 @@
 
     // Sort
 	const currentSortType = ref(0);
+    const currentSelectedArticleIndex = ref(0);
 
     const sortTypesNames = computed(() => langData.value['sortTypesNames'] as string[]);
 
@@ -433,11 +434,17 @@
             }
 
             await axios.post('/api/admin/article/premoderate/' + articleViewCode, data)
-            .then(response =>
+            .then(async response =>
             {
                 if(response.data.success)
                 {
                     openModal(InfoModal, {status: true, text: langData.value['articleRejectPremoderateSuccessfully']});
+                    articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1));
+                    if(articles.length == 0)
+                    {
+                        loading.value = true;
+                        await fetchNewArticles();
+                    }
                 }
                 else
                 {
@@ -517,19 +524,19 @@
 				<DropDown :options="sortTypesNames" :default="sortTypesNames[currentSortType]" class="main__header__sort__select" @inputIndex="onChangeSortType" />
 			</div>
 		</div>
-		<article class="main__article" v-if="articles.length > 0 && !loading" v-for="article in articles">
+		<article class="main__article" v-if="articles.length > 0 && !loading" v-for="(article, index) in articles" :key="article.id">
             <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion-1].created_date) }}</p>
             <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
             <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 
             <div v-if="adminStatus && currentRoute == 'articlesWaitingPremoderate'" class="main__article__buttons">
-                <a @click="rejectPremoderateArticle(article.view_code)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
-                <a @click="acceptPremoderateArticle(article.view_code)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+                <a @click="currentSelectedArticleIndex = index;rejectPremoderateArticle(article.view_code)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
+                <a @click="currentSelectedArticleIndex = index;acceptPremoderateArticle(article.view_code)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
                 <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
             </div>
             <div v-else-if="adminStatus && currentRoute == 'articlesWaitingApproval'" class="main__article__buttons">
                 <a :href="'#/admin/article/approve/'+article.view_code" class="main__article__buttons__button approveArticleButton">{{ langData['approveArticleButton'] }}</a>
-                <a @click="rejectApproveArticle(article.view_code)" class="main__article__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
+                <a @click="currentSelectedArticleIndex = index;rejectApproveArticle(article.view_code)" class="main__article__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
                 <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
             </div>
             <div v-else class="main__article__buttons oneButton">

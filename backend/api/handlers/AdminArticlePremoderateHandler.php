@@ -62,13 +62,13 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
 
     public function Process()
     {
-        $articleId = $this->model->getArticleByViewCode($this->args['viewCode'];);
+        $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
             if($this->parsedBody['status'] == 0)
             {
                 
-                if($this->model->rejectPremoderate())
+                if($this->model->rejectPremoderate($articleId))
                 {
                     $this->response = $this->response->withJson(['success' => true]);
                 }
@@ -79,7 +79,7 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
             }
             else if($this->parsedBody['status'] == 1)
             {
-                if($this->model->acceptPremoderate())
+                if($this->model->acceptPremoderate($articleId))
                 {
                     $this->response = $this->response->withJson(['success' => true]);
                 }
