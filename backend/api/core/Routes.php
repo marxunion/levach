@@ -109,18 +109,21 @@ class Routes
                         return self::$handler->Handle();
                     });
 
-                    $adminArticleGroup->post('/approveEditorially/preload/{viewCode}', function (Request $request, Response $response, array $args) 
+                    $adminArticleGroup->group('/approve', function (RouteCollectorProxy $adminApproveArticleGroup) 
                     {
-                        self::$handler = new AdminArticleApprovePreloadHandler($request, $response, $args);
-                        return self::$handler->Handle();
-                    });
+                        $adminApproveArticleGroup->post('/{viewCode}', function (Request $request, Response $response, array $args) 
+                        {
+                            self::$handler = new AdminArticleApproveHandler($request, $response, $args);
+                            return self::$handler->Handle();
+                        });
 
-                    $adminArticleGroup->post('/approveEditorially/{viewCode}', function (Request $request, Response $response, array $args) 
-                    {
-                        self::$handler = new AdminArticleApproveHandler($request, $response, $args);
-                        return self::$handler->Handle();
+                        $adminApproveArticleGroup->post('/preload/{viewCode}', function (Request $request, Response $response, array $args) 
+                        {
+                            self::$handler = new AdminArticleApprovePreloadHandler($request, $response, $args);
+                            return self::$handler->Handle();
+                        });
                     });
-
+                    
                     $adminArticleGroup->post('/delete/{viewCode}', function (Request $request, Response $response, array $args) 
                     {
                         self::$handler = new AdminArticleDeleteHandler($request, $response, $args);
@@ -188,7 +191,7 @@ class Routes
                         return self::$handler->Handle();
                     });
         
-                    $articleEditGroup->get('/preload/{editCode}', function (Request $request, Response $response, array $args) 
+                    $articleEditGroup->post('/preload/{editCode}', function (Request $request, Response $response, array $args) 
                     {
                         self::$handler = new ArticleEditPreloadHandler($request, $response, $args);
                         return self::$handler->Handle();

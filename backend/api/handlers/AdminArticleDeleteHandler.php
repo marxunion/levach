@@ -55,17 +55,11 @@ class AdminArticleDeleteHandler extends BaseHandlerRouteWithArgs
 
     public function Process()
     {
-        $articleId = $this->model->getArticleByViewCode($this->args['viewCode'];);
+        $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            if($this->model-deleteArticle($articleId))
-            {
-                $this->response = $this->response->withJson(['success' => true]);
-            }
-            else
-            {
-                throw new Critical(500, "Failed to delete article", "Failed to delete article");
-            }
+            $this->model->deleteArticle($articleId);
+            $this->response = $this->response->withJson(['success' => true]);
         }
         else
         {

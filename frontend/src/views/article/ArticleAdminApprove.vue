@@ -17,7 +17,7 @@
 	import InfoModal from "./../../components/modals/InfoModal.vue";
     import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
 
-	import langsData from "./locales/ArticleEdit.json";
+	import langsData from "./locales/ArticleAdminApprove.json";
 
 	import { LangDataHandler } from "./../../ts/LangDataHandler";
 
@@ -26,10 +26,10 @@
 	import { timestampToLocaleFormatedTime } from '../../ts/DateTimeHelper';
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
+import { arraysAreEqual } from '../../ts/ArrayHelper';
 
-	const langData = LangDataHandler.initLangDataHandler("ArticleEdit", langsData).langData;
+	const langData = LangDataHandler.initLangDataHandler("ArticleAdminApprove", langsData).langData;
 
-    const buttonTitles = computed(() => langData.value['buttonNames'] as string[]);
     const currentChangesStatus = ref(0);
 
 	const route = useRoute();
@@ -40,7 +40,20 @@
 	
 	async function fetchData()
 	{
-		return await axios.get('/api/admin/article/approve/preload/'+articleViewCode.value)
+		await getNewCsrfToken();
+
+        if(csrfTokenInput.value == null)
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            return;
+        }
+
+        const data = 
+        {
+            csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+        }
+		
+		return await axios.post('/api/admin/article/approve/preload/'+articleViewCode.value, data)
 		.then(response =>
 		{
 			if(response.data.title)
@@ -204,6 +217,23 @@
 		}
 	}
 
+    const checkChanges = async () =>
+    {
+        return setTimeout(() => 
+        {
+            if(editorState.text != fetchedData.value['text'] || !arraysAreEqual(tags.value, fetchedData.value['tags']))
+            {
+                currentChangesStatus.value = 1;
+                return true;
+            }
+            else
+            {
+                currentChangesStatus.value = 0;
+                return false;
+            }
+        }, 500);
+    }
+
 	const addTag = () => 
 	{
 		if(!tags.value.includes(newTag.value.trim()))
@@ -212,6 +242,7 @@
 			{
 				tags.value.push(newTag.value.trim());
 				newTag.value = '';
+                checkChanges();
 			}
 			else
 			{
@@ -226,25 +257,12 @@
 	const removeTag = (index: number) => 
 	{
 		tags.value.splice(index, 1);
+        checkChanges();
 	}
-
-    const checkChanges = () =>
-    {
-        if(editorState.text != fetchedData.value['text'] || tags.value != fetchedData.value['tags'])
-        {
-            currentChangesStatus.value = 1;
-            return true;
-        }
-        else
-        {
-            currentChangesStatus.value = 0;
-            return false;
-        }
-    }
-
+    
 	const onSendButton = async () =>
 	{
-        if(checkChanges())
+        if(await checkChanges())
         {
             const contentParts = (editorState.text as string).split('\n');
 
@@ -509,12 +527,7 @@
 		editorState.language = LangDataHandler.currentLanguage.value;
 	});
 
-    watch(editorState, () => 
-    {
-        checkChanges();
-    });
-
-    watch(tags, () => 
+    watch(() => editorState.text, () => 
     {
         checkChanges();
     });
@@ -532,10 +545,12 @@
 					language: LangDataHandler.currentLanguage.value
 				});
 
-				if(fetchedData.value['tags'] != null)
+				if(fetchedData.value['tags'] == null)
 				{
-					tags.value = fetchedData.value['tags'];
+					fetchedData.value['tags'] = [];
 				}
+
+                Object.assign(tags, fetchedData.value['tags']);
 			}
 			loaded.value = true;
 		} 
@@ -551,8 +566,8 @@
 	<main v-if="loaded" class="main">
 		<article v-if="fetchedData" class="main__article">
 			<div class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="false" noIconfont/>
-				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ buttonTitles[currentChangesStatus] }}</button>	
+				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onChange="checkChanges" @onUploadImg="onUploadImg" :language="editorState.language" :preview="false" noIconfont/>
+				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ (langData['buttonTitles'] as JsonData)[currentChangesStatus] }}</button>	
 			</div>
 			<div class="main__article__editTags">
 				<div class="main__article__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">

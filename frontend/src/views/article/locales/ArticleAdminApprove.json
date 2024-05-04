@@ -7,6 +7,12 @@
         
         "articleEditedSuccessfully": "Новая версия вашей статьи успешно создана и отправлена на премодерацию.Для управления и редактирования вашей статьи воспользуйтесь той же ссылкой:",
 
+        "buttonTitles": 
+        [
+            "Одобрить без изменений",
+            "Одобрить"
+        ],
+
         "warnings": 
         {
             "articleEditLinkCopyWarning": "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию",
@@ -39,87 +45,6 @@
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
-        "statuses": 
-        {
-            "premoderationStatusText": "Статус премодерации:",
-            "premoderationStatus": 
-            {
-                "0": "Не пройдена",
-                "1": "В процессе премодерации",
-                "2": "Пройдена"
-            },
-            "approvedEditoriallyStatusText": "Статус одобрения редакции:",
-            "approvedEditoriallyStatus": 
-            {
-                "0": "Не одобрена",
-                "1": "В процессе одобрения",
-                "2": "Одобрена",
-                "3": "В процессе одобрения"
-            }
-        },
-        "versionText": "Версия ",
-        
-        "articleCanRequestApprove": "Статья перешла порог рейтинга. Запросить одобрение статьи редакцией? После переноса редактирование будет невозможно.",
-        "articleCanRequestApproveAccept": "Да",
-
-        "editoriallyApproveArticleButWithChanges": "Редакция внесла правки в вашу статью. Для переноса статьи в раздел 'одобренное редакцией' вы должны принять их. После переноса редактирование будет невозможно.",
-        "editoriallyApproveArticleButWithChangesAccept": "Принять",
-        "editoriallyApproveArticleButWithChangesReject": "Отклонить",
-
-        "statistics": 
-        [
-            {
-                "statisticName": "rating",
-                "data": 
-                {
-                    "titleWithEnds": 
-                    {
-                        "title": "рейтинг",
-                        "ends": 
-                        [
-                            {
-                                "end": "",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": -1
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "statisticName": "comments",
-                "data": 
-                {
-                    "titleWithEnds": 
-                    {
-                        "title": "комментар",
-                        "ends": 
-                        [
-                            {
-                                "end": "иев",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": 0
-                            },
-                            {
-                                "end": "ий",
-                                "endOffsetStart": 1,
-                                "endOffsetEnd": 1
-                            },
-                            {
-                                "end": "ия",
-                                "endOffsetStart": 2,
-                                "endOffsetEnd": 3
-                            },
-                            {
-                                "end": "иев",
-                                "endOffsetStart": 4,
-                                "endOffsetEnd": -1
-                            }
-                        ]
-                    }
-                }
-            }
-        ],
         "toolbarTips": 
         {
             "bold": "Жирный",
@@ -217,6 +142,12 @@
 
         "articleEditedSuccessfully": "A new version of your article has been successfully created and sent for pre-moderation.To manage and edit your article, use the same link:",
 
+        "buttonTitles": 
+        [
+            "Accept without changes",
+            "Accept"
+        ],
+
         "warnings": 
         {
             "articleEditLink": "Don't forget to save the link or your article will not be editable",
@@ -249,74 +180,6 @@
             "unknown": "An unknown error occurred. Try again"
         },
 
-        "statuses": 
-        {
-            "premoderationStatusText": "Premoderation status: ",
-            "premoderationStatus": 
-            {
-                "0": "Not passed",
-                "1": "In process premoderated",
-                "2": "Passed"
-            },
-            "approvedEditoriallyStatusText": "Editorial approval status: ",
-            "approvedEditoriallyStatus": 
-            {
-                "0": "Not approved",
-                "1": "In approval process",
-                "2": "Approved",
-                "3": "In approval process"
-            }
-        },
-
-        "statistics": 
-        [
-            {
-                "statisticName": "rating",
-                "data": 
-                {
-                    "titleWithEnds": 
-                    {
-                        "title": "rating",
-                        "ends": 
-                        [
-                            {
-                                "end": "",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": -1
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "statisticName": "comments",
-                "data": 
-                {
-                    "titleWithEnds": 
-                    {
-                        "title": "comment",
-                        "ends": 
-                        [
-                            {
-                                "end": "s",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": 0
-                            },
-                            {
-                                "end": "",
-                                "endOffsetStart": 1,
-                                "endOffsetEnd": 1
-                            },
-                            {
-                                "end": "s",
-                                "endOffsetStart": 2,
-                                "endOffsetEnd": -1
-                            }
-                        ]
-                    }
-                }
-            }
-        ],
         "toolbarTips": 
         {
             "bold": "bold",

@@ -13,13 +13,37 @@ class ArticleEditPreloadHandler extends BaseHandlerRouteWithArgs
    
     public function Init()
     {
-        if(isset($this->args['editCode']))
+        $parsedBody = $this->request->getParsedBody();
+        if(is_array($parsedBody))
         {
-            $this->model = new ArticleEditPreloadModel();
+            $this->parsedBody = $parsedBody;
+            
+            if(isset($this->parsedBody['csrfToken']))
+            {
+                if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
+                {
+                    if(isset($this->args['editCode']))
+                    {
+                        $this->model = new ArticleEditPreloadModel();
+                    }
+                    else
+                    {
+                        throw new Error(404, "Article for edit not found", "Article for edit not found");
+                    }
+                }
+                else
+                {
+                    throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+                }
+            }
+            else
+            {
+                throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+            }
         }
         else
         {
-            throw new Error(404, "Article for edit not found", "Article for edit not found");
+            throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
         }
     }
 

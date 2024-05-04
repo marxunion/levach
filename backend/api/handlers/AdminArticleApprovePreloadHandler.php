@@ -5,9 +5,9 @@ use Core\Error;
 
 use Base\BaseHandlerRouteWithArgs;
 
-use Api\Models\AdminApproveArticlePreloadModel;
+use Api\Models\AdminArticleApprovePreloadModel;
 
-class AdminApproveArticlePreloadHandler extends BaseHandlerRouteWithArgs
+class AdminArticleApprovePreloadHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
@@ -24,7 +24,7 @@ class AdminApproveArticlePreloadHandler extends BaseHandlerRouteWithArgs
                     {
                         if(isset($this->args['viewCode']))
                         {
-                            $this->model = new AdminApproveArticlePreloadModel();
+                            $this->model = new AdminArticleApprovePreloadModel();
                         }
                         else
                         {
@@ -54,7 +54,7 @@ class AdminApproveArticlePreloadHandler extends BaseHandlerRouteWithArgs
 
     public function Process()
     {
-        $articleId = $this->model->getArticleByViewCode($this->args['viewCode'];);
+        $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
             $this->response = $this->response->withJson($this->model->viewArticle($articleId));

@@ -52,7 +52,20 @@
 	
 	async function fetchData()
 	{
-		return await axios.get('/api/article/edit/preload/'+articleEditCode.value)
+		await getNewCsrfToken();
+
+        if(csrfTokenInput.value == null)
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            return;
+        }
+
+        const data = 
+        {
+            csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+        }
+		
+		return await axios.post('/api/article/edit/preload/'+articleEditCode.value, data)
 		.then(response =>
 		{
 			if(response.data.title)
@@ -495,11 +508,12 @@
 					language: LangDataHandler.currentLanguage.value
 				});
 
-				if(fetchedData.value['tags'] != null)
+				if(fetchedData.value['tags'] == null)
 				{
-					tags.value = fetchedData.value['tags'];
+					fetchedData.value['tags'] = [];
 				}
-				
+
+				tags.value = fetchedData.value['tags'];
 			}
 			loaded.value = true;
 		} 
