@@ -12,13 +12,24 @@
         },
         "articleCommentsButton": "Комментарии статьи",
         "backToArticleButton": "Вернутся к статье",
-        "rejectAllButton": "Отклонить всё",
+
+        "rejectApproveAllButton": "Отклонить всё",
+        "rejectPremoderateAllButton": "Отклонить всё",
+        
+        "successfullyRejectApproveAll": "Отклонены все статьи запросившие одобрения",
+        "successfullyRejectPremoderateAll": "Отклонены все статьи ожидающие премодерации",
+
         "linksfooter":
         {
             "aboutProjectAndFAQ": "О проекте и FAQ",
             "rules": "Правила",
             "sponsoring": "Помощь проекту",
             "admin": "Администрация"
+        },
+
+        "warnings": 
+        {
+            "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         }
     },
     "EN":
@@ -32,15 +43,26 @@
             "articlesWaitingPremoderate": "Articles waiting premoderate",
             "adminEditComments": "Comments on forum"
         },
+
         "articleCommentsButton": "Article comments",
         "backToArticleButton": "Back to article",
-        "rejectAllButton": "Reject all",
+        "rejectApproveAllButton": "Reject all",
+        "rejectPremoderateAllButton": "Reject all",
+
+        "successfullyRejectApproveAll": "All articles requesting approval were rejected",
+        "successfullyRejectPremoderateAll": "All articles awaiting premoderation have been rejected",
+
         "linksfooter": 
         {
             "aboutProjectAndFAQ": "About project and FAQ",
             "rules": "Rules",
             "sponsoring": "Sponsoring",
             "admin": "Admin"
+        },
+
+        "warnings": 
+        {
+            "unknown": "An unknown error occurred. Try again"
         }
     }
 }

@@ -1,10 +1,12 @@
 <script setup lang="ts">
     import { nextTick, computed } from 'vue';
     import { useRoute } from 'vue-router';
+    import axios from 'axios';
 
     import { JsonData } from '../ts/JsonHandler';
 
     import { openModal } from "jenesius-vue-modal";
+    import InfoModal from './modals/InfoModal.vue';
     import AdminModal from "./../components/modals/AdminModal.vue";
 
     import { adminStatus, adminStatusReCheck } from './../ts/AdminHandler';
@@ -14,6 +16,8 @@
     import { LangDataHandler } from './../ts/LangDataHandler';
     import langsData from './locales/SideBar.json';
 
+    import { csrfTokenInput, getNewCsrfToken } from '../ts/csrfTokenHelper';
+    
     const langData = LangDataHandler.initLangDataHandler("SideBar", langsData).langData;
 
     const route = useRoute();
@@ -56,6 +60,72 @@
     {
         return routeName == route.name ? true : false;
     }
+
+    const rejectApproveAll = async () => 
+    {
+        await getNewCsrfToken();
+
+        if(csrfTokenInput.value == null)
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            return;
+        }
+
+        const data = 
+        {
+            csrfToken: (csrfTokenInput.value as HTMLInputElement).value
+        }
+
+        return axios.post('/api/admin/articles/rejectApproveAll', data)
+        .then(response => 
+        {
+            if(response.data.success)
+            {
+                openModal(InfoModal, {status: false, text: langData.value['successfullyRejectApproveAll']});
+            }
+            else
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+        })
+        .catch(error => 
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+        });
+    }
+
+    const premoderateApproveAll = async () =>
+    {
+        await getNewCsrfToken();
+
+        if(csrfTokenInput.value == null)
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            return;
+        }
+
+        const data = 
+        {
+            csrfToken: (csrfTokenInput.value as HTMLInputElement).value
+        }
+
+        return axios.post('/api/admin/articles/rejectPremoderateAll', data)
+        .then(response => 
+        {
+            if(response.data.success)
+            {
+                openModal(InfoModal, {status: false, text: langData.value['successfullyRejectPremoderateAll']});
+            }
+            else
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+        })
+        .catch(error => 
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+        });
+    }
 </script>
 
 <template>
@@ -69,8 +139,8 @@
                 {{ link.text }}
             </a>
             
-            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingApproval'))" class="sidebar__links__button rejectApproveAllButton"> {{ langData['rejectApproveAllButton'] }} </a>
-            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingPremoderate'))" class="sidebar__links__button rejectPremoderateAllButton"> {{ langData['rejectPremoderateAllButton'] }} </a>
+            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingApproval'))" @click="rejectApproveAll()" class="sidebar__links__button rejectApproveAllButton"> {{ langData['rejectApproveAllButton'] }} </a>
+            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingPremoderate'))" @click="premoderateApproveAll()" class="sidebar__links__button rejectPremoderateAllButton"> {{ langData['rejectPremoderateAllButton'] }} </a>
             <a v-else-if="adminStatus && isCurrentRouteName('ArticleAdminEditComments')" :href="'#/article/'+route.params['articleId']" class="sidebar__links__button backToArticleButton"> {{ langData['backToArticleButton'] }} </a>
             <a v-else-if="adminStatus && isCurrentRouteName('ArticleView')" :href="'#/admin/article/editComments/'+route.params['articleId']" class="sidebar__links__button articleCommentsButton"> {{ langData['articleCommentsButton'] }} </a>
             <a v-else></a>
