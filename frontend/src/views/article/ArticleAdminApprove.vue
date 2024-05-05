@@ -301,7 +301,7 @@
                                 {
                                     if(response.data.success)
                                     {
-                                        const modal = await openModal(InfoModalWithLink, {status: true, text: langData.value['articleApprovedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleViewCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning']});
+                                        const modal = await openModal(InfoModal, {status: true, text: langData.value['articleApprovedSuccessfully']});
                                     
                                         modal.onclose = function()
                                         {

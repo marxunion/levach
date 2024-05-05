@@ -11,9 +11,9 @@ class ArticleApproveRequestHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
-        if($this->args->editCode)
+        if($this->args['editCode'])
         {
-
+            
         }
         else
         {

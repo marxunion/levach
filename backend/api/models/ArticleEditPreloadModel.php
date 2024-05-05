@@ -1,6 +1,8 @@
 <?php
 namespace Api\Models;
 
+use Api\Handlers\AdminSettingsGetHandler;
+
 use Base\BaseModel;
 
 class ArticleEditPreloadModel extends BaseModel
@@ -27,7 +29,33 @@ class ArticleEditPreloadModel extends BaseModel
             $article['tags'] = explode(',', $tagsString);
         }
 
+        $canRequestAccept = false;
+        if($article['approvededitorially_status'] == 0)
+        {
+            $ratingToRequestApprove = AdminSettingsGetHandler::getSetting("article_need_rating_to_approve_editorially");
+            if(isset($ratingToRequestApprove))
+            {
+                if($articleStatistics['rating'] > $ratingToRequestApprove)
+                {
+                    $article['canRequestAccept'] = true;
+                }
+                else
+                {
+                    $article['canRequestAccept'] = false;
+                }
+            }
+            else
+            {
+                $article['canRequestAccept'] = false;
+            }
+        }
+        else
+        {
+            $article['canRequestAccept'] = false;
+        }
+
         $article['statistics'] = $articleStatistics;
+        
         return $article;
     }
 }
