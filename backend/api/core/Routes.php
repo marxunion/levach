@@ -133,15 +133,15 @@ class Routes
                 
                 $adminGroup->group('/articles', function (RouteCollectorProxy $adminArticlesGroup) 
                 {
-                    $adminArticlesGroup->post('/rejectApproveAll', function (Request $request, Response $response, array $args) 
+                    $adminArticlesGroup->post('/rejectApproveAll', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminRejectApproveAllHandler($request, $response, $args);
+                        self::$handler = new AdminRejectApproveAllHandler($request, $response);
                         return self::$handler->Handle();
                     });
-                    
-                    $adminArticlesGroup->post('/rejectPremoderateAll', function (Request $request, Response $response, array $args) 
+
+                    $adminArticlesGroup->post('/rejectPremoderateAll', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminRejectPremoderateAllHandler($request, $response, $args);
+                        self::$handler = new AdminRejectPremoderateAllHandler($request, $response);
                         return self::$handler->Handle();
                     });
                 });

@@ -1,8 +1,6 @@
 <script setup lang="ts">
     import { nextTick, computed } from 'vue';
     import { useRoute } from 'vue-router';
-    
-    import reloadComponent from '../views/Articles.vue'
 
     import { JsonData } from '../ts/JsonHandler';
 
@@ -71,7 +69,8 @@
                 {{ link.text }}
             </a>
             
-            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingPremoderate'))" class="sidebar__links__button rejectAllButton"> {{ langData['rejectAllButton'] }} </a>
+            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingApproval'))" class="sidebar__links__button rejectApproveAllButton"> {{ langData['rejectApproveAllButton'] }} </a>
+            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingPremoderate'))" class="sidebar__links__button rejectPremoderateAllButton"> {{ langData['rejectPremoderateAllButton'] }} </a>
             <a v-else-if="adminStatus && isCurrentRouteName('ArticleAdminEditComments')" :href="'#/article/'+route.params['articleId']" class="sidebar__links__button backToArticleButton"> {{ langData['backToArticleButton'] }} </a>
             <a v-else-if="adminStatus && isCurrentRouteName('ArticleView')" :href="'#/admin/article/editComments/'+route.params['articleId']" class="sidebar__links__button articleCommentsButton"> {{ langData['articleCommentsButton'] }} </a>
             <a v-else></a>
