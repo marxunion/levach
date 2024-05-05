@@ -13,11 +13,11 @@
         "articleCommentsButton": "Комментарии статьи",
         "backToArticleButton": "Вернутся к статье",
 
-        "rejectApproveAllButton": "Отклонить всё",
-        "rejectPremoderateAllButton": "Отклонить всё",
+        "rejectAllApproveButton": "Отклонить всё",
+        "rejectAllPremoderateButton": "Отклонить всё",
         
-        "successfullyRejectApproveAll": "Отклонены все статьи запросившие одобрения",
-        "successfullyRejectPremoderateAll": "Отклонены все статьи ожидающие премодерации",
+        "successfullyRejectAllApprove": "Отклонены все статьи запросившие одобрения",
+        "successfullyRejectAllPremoderate": "Отклонены все статьи ожидающие премодерации",
 
         "linksfooter":
         {
@@ -46,11 +46,11 @@
 
         "articleCommentsButton": "Article comments",
         "backToArticleButton": "Back to article",
-        "rejectApproveAllButton": "Reject all",
-        "rejectPremoderateAllButton": "Reject all",
+        "rejectAllApproveButton": "Reject all",
+        "rejectAllPremoderateButton": "Reject all",
 
-        "successfullyRejectApproveAll": "All articles requesting approval were rejected",
-        "successfullyRejectPremoderateAll": "All articles awaiting premoderation have been rejected",
+        "successfullyRejectAllApprove": "All articles requesting approval were rejected",
+        "successfullyRejectAllPremoderate": "All articles awaiting premoderation have been rejected",
 
         "linksfooter": 
         {

@@ -68,15 +68,15 @@
                 color: $sidebarBackToArticleButtonText;
                 border: 2px solid $sidebarBackToArticleButtonBorder;
             }
-            &.rejectApproveAllButton
+            &.rejectAllApproveButton
             {
-                color: $sidebarRejectApproveAllButtonText;
-                border: 2px solid $sidebarRejectApproveAllButtonBorder;
+                color: $sidebarRejectAllApproveButtonText;
+                border: 2px solid $sidebarRejectAllApproveButtonBorder;
             }
-            &.rejectPremoderateAllButton
+            &.rejectAllPremoderateButton
             {
-                color: $sidebarRejectPremoderateAllButtonText;
-                border: 2px solid $sidebarRejectPremoderateAllButtonBorder;
+                color: $sidebarRejectAllPremoderateButtonText;
+                border: 2px solid $sidebarRejectAllPremoderateButtonBorder;
             }
             transition: .4s;
             transform: scale(1.00);

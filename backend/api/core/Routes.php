@@ -16,6 +16,9 @@ use Base\BaseHandler;
 use Base\BaseHandlerRoute;
 use Base\EmptyHandlerRoute;
 
+use Api\Handlers\AdminRejectAllApproveHandler;
+use Api\Handlers\AdminRejectAllPremoderateHandler;
+
 use Api\Handlers\AdminArticlePremoderateHandler;
 
 use Api\Handlers\ArticleApproveRequestHandler;
@@ -133,15 +136,16 @@ class Routes
                 
                 $adminGroup->group('/articles', function (RouteCollectorProxy $adminArticlesGroup) 
                 {
-                    $adminArticlesGroup->post('/rejectApproveAll', function (Request $request, Response $response) 
+                    $adminArticlesGroup->post('/rejectAllApprove', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminRejectApproveAllHandler($request, $response);
+                        self::$handler = new AdminRejectAllApproveHandler($request, $response);
                         return self::$handler->Handle();
                     });
 
-                    $adminArticlesGroup->post('/rejectPremoderateAll', function (Request $request, Response $response) 
+                    $adminArticlesGroup->post('/rejectAllPremoderate', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminRejectPremoderateAllHandler($request, $response);
+                        self::$handler = new AdminRejectAllPremoderate
+                        Handler($request, $response);
                         return self::$handler->Handle();
                     });
                 });

@@ -7,14 +7,14 @@ use Core\Critical;
 
 use Base\BaseModel;
 
-class AdminRejectPremoderateAllModel extends BaseModel
+class AdminRejectAllPremoderateModel extends BaseModel
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function rejectPremoderateAllModel()
+    public function rejectAllPremoderateModel()
     {
         $this->database->delete('articles', ['premoderation_status' => 2]);
         $this->database->delete('statistics', ['premoderation_status' => 2]);

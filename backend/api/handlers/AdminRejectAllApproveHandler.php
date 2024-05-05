@@ -9,7 +9,7 @@ use Base\BaseHandlerRoute;
 
 use Api\Models\ArticleCommentsGetModel;
 
-class AdminRejectApproveAllHandler extends BaseHandlerRoute
+class AdminRejectAllApproveHandler extends BaseHandlerRoute
 {
     public function Init()
     {
@@ -24,7 +24,7 @@ class AdminRejectApproveAllHandler extends BaseHandlerRoute
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        $this->model = new AdminRejectApproveAllModel();
+                        $this->model = new AdminRejectAllApproveModel();
                     }
                     else
                     {

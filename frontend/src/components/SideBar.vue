@@ -61,7 +61,7 @@
         return routeName == route.name ? true : false;
     }
 
-    const rejectApproveAll = async () => 
+    const rejectAllApprove = async () => 
     {
         await getNewCsrfToken();
 
@@ -76,12 +76,12 @@
             csrfToken: (csrfTokenInput.value as HTMLInputElement).value
         }
 
-        return axios.post('/api/admin/articles/rejectApproveAll', data)
+        return axios.post('/api/admin/articles/rejectAllApprove', data)
         .then(response => 
         {
             if(response.data.success)
             {
-                openModal(InfoModal, {status: false, text: langData.value['successfullyRejectApproveAll']});
+                openModal(InfoModal, {status: false, text: langData.value['successfullyRejectAllApprove']});
             }
             else
             {
@@ -94,7 +94,7 @@
         });
     }
 
-    const rejectPremoderateAll = async () =>
+    const rejectAllPremoderate = async () =>
     {
         await getNewCsrfToken();
 
@@ -109,12 +109,12 @@
             csrfToken: (csrfTokenInput.value as HTMLInputElement).value
         }
 
-        return axios.post('/api/admin/articles/rejectPremoderateAll', data)
+        return axios.post('/api/admin/articles/rejectAllPremoderate', data)
         .then(response => 
         {
             if(response.data.success)
             {
-                openModal(InfoModal, {status: false, text: langData.value['successfullyRejectPremoderateAll']});
+                openModal(InfoModal, {status: false, text: langData.value['successfullyRejectAllPremoderate']});
             }
             else
             {
@@ -139,8 +139,8 @@
                 {{ link.text }}
             </a>
             
-            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingApproval'))" @click="rejectApproveAll()" class="sidebar__links__button rejectApproveAllButton"> {{ langData['rejectApproveAllButton'] }} </a>
-            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingPremoderate'))" @click="rejectPremoderateAll()" class="sidebar__links__button rejectPremoderateAllButton"> {{ langData['rejectPremoderateAllButton'] }} </a>
+            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingApproval'))" @click="rejectAllApprove()" class="sidebar__links__button rejectAllApproveButton"> {{ langData['rejectAllApproveButton'] }} </a>
+            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingPremoderate'))" @click="rejectAllPremoderate()" class="sidebar__links__button rejectAllPremoderateButton"> {{ langData['rejectAllPremoderateButton'] }} </a>
             <a v-else-if="adminStatus && isCurrentRouteName('ArticleAdminEditComments')" :href="'#/article/'+route.params['articleId']" class="sidebar__links__button backToArticleButton"> {{ langData['backToArticleButton'] }} </a>
             <a v-else-if="adminStatus && isCurrentRouteName('ArticleView')" :href="'#/admin/article/editComments/'+route.params['articleId']" class="sidebar__links__button articleCommentsButton"> {{ langData['articleCommentsButton'] }} </a>
             <a v-else></a>
