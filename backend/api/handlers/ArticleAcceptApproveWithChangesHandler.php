@@ -47,6 +47,16 @@ class ArticleAcceptApproveWithChangesHandler extends BaseHandlerRouteWithArgs
 
     public function Process()
     {
+        $articleId = $this->model->getArticleIdByEditCode($this->args['editCode']);
 
+        if($articleId)
+        {
+            $this->model->acceptApproveWithChanges($articleId);
+            $this->response = $this->response->withJson(['success' => true]);
+        }
+        else
+        {
+            throw new Error(404, "Article for edit not found", "Article for edit not found");
+        }
     }
 }

@@ -51,19 +51,8 @@ class ArticleApproveRequestHandler extends BaseHandlerRouteWithArgs
 
         if($articleId)
         {
-            $ratingToRequestApprove = AdminSettingsGetHandler::getSetting("article_need_rating_to_approve_editorially");
-            if(isset($ratingToRequestApprove))
-            {
-                if(> $ratingToRequestApprove)
-                {
-                    $this->model->requestApprove($articleId);
-                }
-                else
-                {
-
-                }
-            }
-            
+            $this->model->requestApprove($articleId);
+            $this->response = $this->response->withJson(['success' => true]);
         }
         else
         {

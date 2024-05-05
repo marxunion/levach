@@ -550,6 +550,10 @@
 					</div>
 				</div>
 			</div>
+			<div class="main__article__requestApproveArticle">
+				<p class="main__article__requestApproveArticle_title">{{ langData['requestApproveTitle'] }}</p>
+				<button class="main__article__requestApproveArticle__button">{{ langData['requestApproveButtonTitle'] }}</button>
+			</div>
 			<div class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="false" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ langData['sendButton'] }}</button>	

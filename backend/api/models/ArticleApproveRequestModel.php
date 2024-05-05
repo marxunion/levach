@@ -21,7 +21,18 @@ class ArticleApproveRequestModel extends BaseModel
 
     public function requestApprove($articleId)
     {
-        $this->database->update('articles', ['approvededitorially_status' => 1], ['article_id' => $articleId]);
-        $this->database->update('articles', ['approvededitorially_status' => 1], ['article_id' => $articleId]);
+        $ratingToRequestApprove = AdminSettingsGetHandler::getSetting("article_need_rating_to_approve_editorially");
+        
+        if(isset($ratingToRequestApprove))
+        {
+            if($this->database->get('statistics', 'rating', ['article_id' => $articleId]) > $ratingToRequestApprove)
+            {
+                $this->database->update('statistics', ['approvededitorially_status' => 1], ['article_id' => $articleId]);
+            }
+            else
+            {
+                throw new Error(403, "Approve request insufficient number of ratings", "Approve request insufficient number of ratings");
+            }
+        }
     }
 }
