@@ -92,28 +92,35 @@
             }
         }
 
-        &__requestApproveArticle
+        &__block
         {
             margin-top: 14px;
             width: 100%;
-            height: 150px;
             border-radius: 15px;
-            background-color: $ArticleEditRequestApproveArticleBG;
+            background-color: $ArticleEditBlockBG;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-
+            
+            &__subblock
+            {
+                width: 56%;
+                display: flex;
+                justify-content: space-between;
+            }
             &__title
             {
+                margin-top: 14px;
                 width: 96%;
-                color: $ArticleEditRequestApproveArticleTitle;
+                color: $ArticleEditBlockTitle;
                 font-size: 21px;
             }
             &__button
             {
                 cursor: pointer;
-                margin-top: 3px;
+                margin-top: 10px;
+                margin-bottom: 14px;
 
                 min-width: 100px;
                 height: 50px;
@@ -128,8 +135,24 @@
                 {
                     transform: scale(1.04);
                 }
-                color: $ArticleEditRequestApproveArticleButton;
-                border: 3px solid $ArticleEditRequestApproveArticleButtonBorder;
+                &.requestApproveArticleButton
+                {
+                    color: $ArticleEditRequestApproveArticleButton;
+                    border: 3px solid $ArticleEditRequestApproveArticleButtonBorder;
+                }
+
+                &.acceptArticleApprovedWithChangesButton
+                {
+                    width: 180px;
+                    color: $ArticleEditAcceptArticleApprovedWithChangesButton;
+                    border: 3px solid $ArticleEditAcceptArticleApprovedWithChangesButtonBorder;
+                }
+                &.rejectArticleApprovedWithChangesButton
+                {
+                    width: 180px;
+                    color: $ArticleEditRejectArticleApprovedWithChangesButton;
+                    border: 3px solid $ArticleEditRejectArticleApprovedWithChangesButtonBorder;
+                }
             }
         }
 
@@ -361,15 +384,24 @@
             {
                 font-size: 36px;
             }
-            &__requestApproveArticle
+            &__block
             {
+                &__subblock
+                {
+                    width: 90%;
+                    display: flex;
+                    justify-content: space-between;
+                }
                 &__title
                 {
-                    font-size: 20px;
+                    font-size: 18px;
                 }
                 &__button
                 {   
-                    font-size: 24px;
+                    margin-top: 3px;
+                    min-width: 90px;
+                    height: 50px;
+                    font-size: 22px;
                 }
             }
         }
@@ -415,15 +447,18 @@
                     }
                 }
             }
-            &__requestApproveArticle
+            &__block
             {
                 &__title
                 {
-                    font-size: 17px;
+                    font-size: 16px;
                 }
                 &__button
                 {   
-                    font-size: 21px;
+                    margin-top: 8px;
+                    min-width: 75px;
+                    height: 40px;
+                    font-size: 20px;
                 }
             }
         }
@@ -469,6 +504,17 @@
                     }
                 }
             }
+            &__block
+            {
+                &__title
+                {
+                    font-size: 15px;
+                }
+                &__button
+                {   
+                    font-size: 19px;
+                }
+            }
         }
     }
 }
@@ -512,6 +558,17 @@
                         width: 180px;
                         align-self: auto;
                     }
+                }
+            }
+            &__block
+            {
+                &__title
+                {
+                    font-size: 14px;
+                }
+                &__button
+                {   
+                    font-size: 18px;
                 }
             }
         }

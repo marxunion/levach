@@ -554,9 +554,16 @@
 					</div>
 				</div>
 			</div>
-			<div class="main__article__requestApproveArticle">
-				<p class="main__article__requestApproveArticle__title">{{ langData['requestApproveTitle'] }}</p>
-				<button class="main__article__requestApproveArticle__button">{{ langData['requestApproveButtonTitle'] }}</button>
+			<div class="main__article__block">
+				<p class="main__article__block__title">{{ langData['requestApproveTitle'] }}</p>
+				<button class="main__article__block__button requestApproveArticleButton">{{ langData['requestApproveButtonTitle'] }}</button>
+			</div>
+			<div class="main__article__block">
+				<p class="main__article__block__title">{{ langData['articleApprovedWithChangesTitle'] }}</p>
+				<div class="main__article__block__subblock">
+					<button class="main__article__block__button acceptArticleApprovedWithChangesButton">{{ langData['acceptArticleApprovedWithChangesButtonTitle'] }}</button>
+					<button class="main__article__block__button rejectArticleApprovedWithChangesButton">{{ langData['rejectArticleApprovedWithChangesButtonTitle'] }}</button>
+				</div>
 			</div>
 			<div class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="false" noIconfont/>

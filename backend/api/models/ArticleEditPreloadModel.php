@@ -29,7 +29,6 @@ class ArticleEditPreloadModel extends BaseModel
             $article['tags'] = explode(',', $tagsString);
         }
 
-        $canRequestAccept = false;
         if($article['approvededitorially_status'] == 0)
         {
             $ratingToRequestApprove = AdminSettingsGetHandler::getSetting("article_need_rating_to_approve_editorially");
@@ -37,21 +36,21 @@ class ArticleEditPreloadModel extends BaseModel
             {
                 if($articleStatistics['rating'] > $ratingToRequestApprove)
                 {
-                    $article['canRequestAccept'] = true;
+                    $article['canRequestApprove'] = true;
                 }
                 else
                 {
-                    $article['canRequestAccept'] = false;
+                    $article['canRequestApprove'] = false;
                 }
             }
             else
             {
-                $article['canRequestAccept'] = false;
+                $article['canRequestApprove'] = false;
             }
         }
         else
         {
-            $article['canRequestAccept'] = false;
+            $article['canRequestApprove'] = false;
         }
 
         $article['statistics'] = $articleStatistics;
