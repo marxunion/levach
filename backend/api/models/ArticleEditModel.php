@@ -178,7 +178,7 @@ class ArticleEditModel extends BaseModel
 
                     'title' => $newTitle,
                     'text' => $newText,
-                    'tags' => $newTags,
+                    'tags' => $newTagsString,
 
                     'editorially_status' => $articleData['editorially_status'],
                     'premoderation_status' => $articleData['premoderation_status'],
@@ -194,7 +194,7 @@ class ArticleEditModel extends BaseModel
 
                     'current_title' => $newTitle, 
                     'current_text' => $newText, 
-                    'current_tags' => $newTags, 
+                    'current_tags' => $newTagsString, 
                     
                     'editorially_status' => $articleData['editorially_status'],
                     'premoderation_status' => $articleData['premoderation_status'],

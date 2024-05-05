@@ -76,6 +76,7 @@ class AdminArticleApproveModel extends BaseModel
             }
 
             echo($newTagsString);
+
             $this->database->insert(
                 'articles',
                 [
@@ -85,7 +86,7 @@ class AdminArticleApproveModel extends BaseModel
 
                     'title' => $newTitle,
                     'text' => $newText,
-                    'tags' => $newTags,
+                    'tags' => $newTagsString,
 
                     'editorially_status' => 0,
                     'premoderation_status' => 2,
@@ -101,7 +102,7 @@ class AdminArticleApproveModel extends BaseModel
 
                     'current_title' => $newTitle, 
                     'current_text' => $newText, 
-                    'current_tags' => $newTags, 
+                    'current_tags' => $newTagsString, 
                     
                     'editorially_status' => 0,
                     'premoderation_status' => 2,

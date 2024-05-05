@@ -151,6 +151,16 @@ class ArticleNewModel extends BaseModel
                     throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
                 }
             }
+            else
+            {
+                $articleData['tags'] = '{}';
+                $statisticsData['current_tags'] =  '{}';
+            }
+        }
+        else
+        {
+            $articleData['tags'] = '{}';
+            $statisticsData['current_tags'] =  '{}';
         }
 
         $this->database->insert('articles', $articleData);
