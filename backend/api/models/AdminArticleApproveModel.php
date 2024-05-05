@@ -42,7 +42,7 @@ class AdminArticleApproveModel extends BaseModel
                 throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
             }
 
-            $newVersionId = $articleData['currentVersion'] + 1;
+            $newVersionId = $articleData['current_version'] + 1;
             $newArticleCreatedDate = time();
 
             if(isset($newTags))
@@ -88,6 +88,43 @@ class AdminArticleApproveModel extends BaseModel
                     'editorially_status' => 1,
                     'premoderation_status' => 2,
                     'approvededitorially_status' => 3,
+                    'edit_timeout_to_date' => $newArticleCreatedDate
+                ], 
+                [
+                    'article_id' => $articleId
+                ]
+            );
+            $this->database->insert(
+                'articles',
+                [
+                    'id' => $articleId,
+                    'version_id' => $newVersionId,
+                    'created_date' => $newArticleCreatedDate,
+
+                    'title' => $newTitle,
+                    'text' => $newText,
+                    'tags' => $newTags,
+
+                    'editorially_status' => 0,
+                    'premoderation_status' => 2,
+                    'approvededitorially_status' => 3
+                ]
+            );
+            
+            $this->database->update(
+                'statistics', 
+                [
+                    'current_version' => $newVersionId, 
+                    'created_date' => $newArticleCreatedDate,
+
+                    'current_title' => $newTitle, 
+                    'current_text' => $newText, 
+                    'current_tags' => $newTags, 
+                    
+                    'editorially_status' => 0,
+                    'premoderation_status' => 2,
+                    'approvededitorially_status' => 3,
+
                     'edit_timeout_to_date' => $newArticleCreatedDate
                 ], 
                 [

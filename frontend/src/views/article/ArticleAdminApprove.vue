@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, watch, reactive, Ref, ComputedRef, computed, onMounted } from 'vue';
+	import { ref, watch, reactive, Ref, onMounted } from 'vue';
 	import { useRoute, useRouter } from 'vue-router';
 	import axios from 'axios';
 
@@ -26,7 +26,8 @@
 	import { timestampToLocaleFormatedTime } from '../../ts/DateTimeHelper';
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
-import { arraysAreEqual } from '../../ts/ArrayHelper';
+
+    import { arraysAreEqual } from '../../ts/ArrayHelper';
 
 	const langData = LangDataHandler.initLangDataHandler("ArticleAdminApprove", langsData).langData;
 

@@ -77,17 +77,48 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
             }
             else if($this->parsedBody['status'] == 2)
             {
-                if(isset($this->parsedBody['newTitle']) && isset($this->parsedBody['newText']) && isset($this->parsedBody['newTags']))
-                { 
-                    $this->model->acceptApproveWithChanges($articleId, $this->parsedBody['newTitle'], $this->parsedBody['newText'], $this->parsedBody['newTags']);
-                    $this->response = $this->response->withJson(['success' => true]);
-                }
-                else
+                $contentParts = explode("\n", $this->parsedBody['text']);
+                if (count($contentParts) >= 1) 
                 {
-                    throw new Error(400, "Changes in article not found", "Changes in article not found");
+                    $title = $contentParts[0];
+                    if (strpos($title, '# ') === 0) 
+                    {
+                        $title = substr($title, 2);
+                        if (strlen($title) >= 5 && strlen($title) <= 120) 
+                        {
+                            if (count($contentParts) >= 2) 
+                            {
+                                $content = implode("\n", array_slice($contentParts, 1));
+                                if (strlen($content) >= 25 && strlen($content) <= 10000) 
+                                {
+                                    $this->model->acceptApproveWithChanges($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
+                                    $this->response = $this->response->withJson(['success' => true]);
+                                }            
+                                else 
+                                {
+                                    throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Invalid length of article content");
+                                }
+                            } 
+                            else 
+                            {
+                                throw new Warning(400, "Please add content for the article", "Empty article content");
+                            }
+                        } 
+                        else 
+                        {
+                            throw new Warning(400, "The title must contain between 5 and 120 characters", "Invalid article title length");
+                        }
+                    } 
+                    else 
+                    {
+                        throw new Warning(400, "Please add a title for the article", "Invalid article title");
+                    }
+                } 
+                else 
+                {
+                    throw new Warning(400, "Please add a title for the article", "Empty article title");
                 }
             }
-
             else
             {
                 throw new Error(404, "Unknown status", "Unknown status");
