@@ -16,6 +16,7 @@ class AdminRejectPremoderateAllModel extends BaseModel
 
     public function rejectPremoderateAllModel()
     {
-
+        $this->database->delete('articles', ['premoderation_status' => 2]);
+        $this->database->delete('statistics', ['premoderation_status' => 2]);
     }
 }

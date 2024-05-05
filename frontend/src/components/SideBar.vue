@@ -94,7 +94,7 @@
         });
     }
 
-    const premoderateApproveAll = async () =>
+    const rejectPremoderateAll = async () =>
     {
         await getNewCsrfToken();
 
@@ -140,7 +140,7 @@
             </a>
             
             <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingApproval'))" @click="rejectApproveAll()" class="sidebar__links__button rejectApproveAllButton"> {{ langData['rejectApproveAllButton'] }} </a>
-            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingPremoderate'))" @click="premoderateApproveAll()" class="sidebar__links__button rejectPremoderateAllButton"> {{ langData['rejectPremoderateAllButton'] }} </a>
+            <a v-if="adminStatus && (isCurrentRouteName('articlesWaitingPremoderate'))" @click="rejectPremoderateAll()" class="sidebar__links__button rejectPremoderateAllButton"> {{ langData['rejectPremoderateAllButton'] }} </a>
             <a v-else-if="adminStatus && isCurrentRouteName('ArticleAdminEditComments')" :href="'#/article/'+route.params['articleId']" class="sidebar__links__button backToArticleButton"> {{ langData['backToArticleButton'] }} </a>
             <a v-else-if="adminStatus && isCurrentRouteName('ArticleView')" :href="'#/admin/article/editComments/'+route.params['articleId']" class="sidebar__links__button articleCommentsButton"> {{ langData['articleCommentsButton'] }} </a>
             <a v-else></a>
