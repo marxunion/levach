@@ -7,7 +7,7 @@
         
         "articleEditedSuccessfully": "Новая версия вашей статьи успешно создана и отправлена на премодерацию.Для управления и редактирования вашей статьи воспользуйтесь той же ссылкой:",
 
-        "requestApproveTitle": "Статья перешла порог рейтинга. Запросить одобренире статьи редакцией?",
+        "requestApproveTitle": "Статья перешла порог рейтинга. Запросить одобрение статьи редакцией? После одобрения редактирование статьи будет невозможно",
         "requestApproveButtonTitle": "Да",
 
         "warnings": 
@@ -219,7 +219,7 @@
 
         "articleEditedSuccessfully": "A new version of your article has been successfully created and sent for pre-moderation.To manage and edit your article, use the same link:",
 
-        "requestApproveTitle": "Article has crossed the rating threshold. Request editorial approval of the article?",
+        "requestApproveTitle": "Article has crossed the rating threshold. Request editorial approval of the article? Once approved, it will not be possible to edit the article",
         "requestApproveButtonTitle": "Ok",
 
         "warnings": 

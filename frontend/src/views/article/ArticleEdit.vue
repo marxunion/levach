@@ -539,19 +539,23 @@
 					<div class="main__article__info__statusesContainer__statuses">
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['premoderationStatusText'] }}</p>
-							<img :src="`/src/assets/img/article/statuses/${statuses.premoderationStatus}.svg`" alt="premoderationStatus">
-							<p>{{ statusesTexts.premoderationStatus }}</p>
+							<div>
+								<img :src="`/src/assets/img/article/statuses/${statuses.premoderationStatus}.svg`" alt="premoderationStatus">
+								<p>{{ statusesTexts.premoderationStatus }}</p>
+							</div>
 						</div>
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['approvedEditoriallyStatusText'] }}</p>
-							<img :src="`/src/assets/img/article/statuses/${statuses.approvedEditoriallyStatus}.svg`" alt="approvedEditoriallyStatus">
-							<p>{{ statusesTexts.approvedEditoriallyStatus }}</p>
+							<div>
+								<img :src="`/src/assets/img/article/statuses/${statuses.approvedEditoriallyStatus}.svg`" alt="approvedEditoriallyStatus">
+								<p>{{ statusesTexts.approvedEditoriallyStatus }}</p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="main__article__requestApproveArticle">
-				<p class="main__article__requestApproveArticle_title">{{ langData['requestApproveTitle'] }}</p>
+				<p class="main__article__requestApproveArticle__title">{{ langData['requestApproveTitle'] }}</p>
 				<button class="main__article__requestApproveArticle__button">{{ langData['requestApproveButtonTitle'] }}</button>
 			</div>
 			<div class="main__article__editorContainer">
