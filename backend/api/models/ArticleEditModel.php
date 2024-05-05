@@ -154,6 +154,14 @@ class ArticleEditModel extends BaseModel
                             throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
                         }
                     }
+                    else
+                    {
+                        $newTagsString = '{}';
+                    }
+                }
+                else
+                {
+                    $newTagsString = '{}';
                 }
             }
             else

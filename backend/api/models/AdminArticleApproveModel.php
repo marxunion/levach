@@ -60,6 +60,14 @@ class AdminArticleApproveModel extends BaseModel
                             throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
                         }
                     }
+                    else
+                    {
+                        $newTagsString = '{}';
+                    }
+                }
+                else
+                {
+                    $newTagsString = '{}';
                 }
             }
             else
@@ -67,33 +75,7 @@ class AdminArticleApproveModel extends BaseModel
                 $newTagsString = '{}';
             }
 
-            $this->database->insert(
-                'articles',
-                [
-                    'id' => $articleId,
-                    'version_id' => $newVersionId,
-                    'created_date' => $newArticleCreatedDate,
-
-                    'title' => $newTitle,
-                    'text' => $newText,
-                    'tags' => $newTagsString,
-
-                    'current_version' => $newVersionId, 
-                    'created_date' => $newArticleCreatedDate,
-
-                    'current_title' => $newTitle, 
-                    'current_text' => $newText, 
-                    'current_tags' => $newTagsString, 
-                        
-                    'editorially_status' => 1,
-                    'premoderation_status' => 2,
-                    'approvededitorially_status' => 3,
-                    'edit_timeout_to_date' => $newArticleCreatedDate
-                ], 
-                [
-                    'article_id' => $articleId
-                ]
-            );
+            echo($newTagsString);
             $this->database->insert(
                 'articles',
                 [
