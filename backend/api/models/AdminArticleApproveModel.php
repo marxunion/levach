@@ -32,7 +32,6 @@ class AdminArticleApproveModel extends BaseModel
 
     public function acceptApproveWithChanges($articleId, $newTitle, $newText, $newTags)
     {
-        $this->database->update('statistics', ['approvededitorially_status' => 3], ['article_id' => $articleId]);
         $this->database->update('articles', ['approvededitorially_status' => 3], ['id' => $articleId]);
         $articleData = $this->database->get('statistics', ['current_version', 'current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
         if(isset($articleData))
@@ -74,9 +73,7 @@ class AdminArticleApproveModel extends BaseModel
             {
                 $newTagsString = '{}';
             }
-
-            echo($newTagsString);
-
+            
             $this->database->insert(
                 'articles',
                 [

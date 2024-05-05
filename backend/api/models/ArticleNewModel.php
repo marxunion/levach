@@ -160,7 +160,7 @@ class ArticleNewModel extends BaseModel
         else
         {
             $articleData['tags'] = '{}';
-            $statisticsData['current_tags'] =  '{}';
+            $statisticsData['current_tags'] = '{}';
         }
 
         $this->database->insert('articles', $articleData);
