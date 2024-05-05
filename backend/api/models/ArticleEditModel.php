@@ -134,7 +134,7 @@ class ArticleEditModel extends BaseModel
                 throw new Error(400, 'Please make changes for edit', 'Please make changes for edit');
             }
             
-            $newVersionId = $statisticsData['current_version'] + 1;
+            $newVersionId = $articleData['current_version'] + 1;
             $newArticleCreatedDate = time();
                       
             if(isset($newTags))
