@@ -7,7 +7,7 @@
     import { tagsArrayToString } from './../../ts/TagsHelper'
     import { JsonData } from './../../ts/JsonHandler';
 
-    import { Article } from './../../ts/ArticleHelper';
+    import { Article, articleReloading, articles } from '../../ts/ArticlesHelper';
 
     import DropDown from './../../components/DropDown.vue';
     import DropDownVersion from './../../components/DropDownVersion.vue';
@@ -67,11 +67,10 @@
     const reloading = ref(false);
     const loading = ref(true);
     const scrollTarget = ref(null);
-    let articles : Array<Article> = reactive([]);
 
     const onChangeSortType = async (newSortType : number) => 
     {
-        articles = reactive([]);
+        articles.value = reactive([]);
         lastLoadedArticleId.value = 2147483645;
         
         if(currentSortType.value === 0)
@@ -84,7 +83,7 @@
         }
         currentSortType.value = newSortType;
 
-        loading.value = false;
+        loading.value = true;
         await fetchNewArticles();
     }
 
@@ -119,7 +118,7 @@
                             }
                             lastLoadedArticleRate.value = article.statistics.rating;
                             article.currentSelectedVersion = article.versions.length;
-                            articles.push(article as Article);
+                            articles.value.push(article as Article);
                         });
                     }
                 }
@@ -156,7 +155,7 @@
                             }
                             lastLoadedArticleCreatedDate.value = article.statistics.created_date;
                             article.currentSelectedVersion = article.versions.length;
-                            articles.push(article);
+                            articles.value.push(article);
                         });
                     }
                 }
@@ -209,8 +208,8 @@
                 {
                     openModal(InfoModal, {status: true, text: langData.value['articleAcceptPremoderateSuccessfully']});
 
-                    articles = reactive(articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1)));
-                    if(articles.length == 0)
+                    articles.value = reactive(articles.value.slice(0, currentSelectedArticleIndex.value).concat(articles.value.slice(currentSelectedArticleIndex.value + 1)));
+                    if(articles.value.length == 0)
                     {
                         loading.value = true;
                     }
@@ -292,8 +291,8 @@
                 {
                     await openModal(InfoModal, {status: true, text: langData.value['articleRejectPremoderateSuccessfully']});
                     
-                    articles = reactive(articles.slice(0, currentSelectedArticleIndex.value).concat(articles.slice(currentSelectedArticleIndex.value + 1)));
-                    if(articles.length == 0)
+                    articles.value = reactive(articles.value.slice(0, currentSelectedArticleIndex.value).concat(articles.value.slice(currentSelectedArticleIndex.value + 1)));
+                    if(articles.value.length == 0)
                     {
                         loading.value = true;
                     }
@@ -352,6 +351,7 @@
     
     onMounted(async () => 
     {
+        articles.value = [];
         let ps = document.querySelector('.ps');
         if(ps != null)
         {
@@ -369,6 +369,14 @@
         {
             ps.removeEventListener('scroll', handleScroll)
         }
+    });
+    watch(articleReloading, async () => 
+    {
+        articles.value = reactive([]);
+
+        loading.value = true;
+        articleReloading.value = false;
+        await fetchNewArticles();
     });
 </script>
 

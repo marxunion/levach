@@ -1,3 +1,5 @@
+import { ref, Ref } from "vue";
+
 export interface ArticleVersion
 {
     version_id: number,
@@ -25,3 +27,6 @@ export interface Article
     view_code: string,
     currentSelectedVersion: number
 }
+
+export const articleReloading = ref(false);
+export let articles : Ref<Array<Article>> = ref([]);

@@ -7,7 +7,7 @@ use Core\Critical;
 
 use Base\BaseHandlerRoute;
 
-use Api\Models\ArticleCommentsGetModel;
+use Api\Models\AdminRejectAllApproveModel;
 
 class AdminRejectAllApproveHandler extends BaseHandlerRoute
 {
@@ -49,6 +49,7 @@ class AdminRejectAllApproveHandler extends BaseHandlerRoute
 
     public function Process()
     {
-
+        $this->model->rejectAllApproveModel();
+        $this->response = $this->response->withJson(['success' => true]);
     }
 }

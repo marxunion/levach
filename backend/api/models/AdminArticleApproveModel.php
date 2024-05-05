@@ -60,17 +60,17 @@ class AdminArticleApproveModel extends BaseModel
                     }
                     else
                     {
-                        $newTagsString = '{}';
+                        $newTagsString = null;
                     }
                 }
                 else
                 {
-                    $newTagsString = '{}';
+                    $newTagsString = null;
                 }
             }
             else
             {
-                $newTagsString = '{}';
+                $newTagsString = null;
             }
 
             $this->database->insert(

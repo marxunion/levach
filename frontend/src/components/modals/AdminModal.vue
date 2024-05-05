@@ -288,7 +288,7 @@
                 closeModal();
                 const modal = await openModal(InfoModal, {status: true, text: langData.value['successfullyQuit']});
 									
-				modal.onclose = function(event)
+				modal.onclose = function()
 				{
                     if(isCurrentRouteName('adminEditComments') || isCurrentRouteName('ArticleAdminEditComments') || isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingPremoderate' || isCurrentRouteName('ArticleAdminApprove')))
                     {

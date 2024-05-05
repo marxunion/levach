@@ -144,8 +144,7 @@ class Routes
 
                     $adminArticlesGroup->post('/rejectAllPremoderate', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminRejectAllPremoderate
-                        Handler($request, $response);
+                        self::$handler = new AdminRejectAllPremoderateHandler($request, $response);
                         return self::$handler->Handle();
                     });
                 });

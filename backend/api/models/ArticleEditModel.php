@@ -59,7 +59,7 @@ class ArticleEditModel extends BaseModel
                     }
                     else
                     {
-                        $newTagsString = '{}';
+                        $newTagsString = null;
                     }
                     
                     $this->database->insert(
@@ -154,17 +154,17 @@ class ArticleEditModel extends BaseModel
                     }
                     else
                     {
-                        $newTagsString = '{}';
+                        $newTagsString = null;
                     }
                 }
                 else
                 {
-                    $newTagsString = '{}';
+                    $newTagsString = null;
                 }
             }
             else
             {
-                $newTagsString = '{}';
+                $newTagsString = null;
             }
             
             $this->database->insert(

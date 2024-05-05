@@ -135,7 +135,6 @@ class ArticleNewModel extends BaseModel
             'edit_code' => $editCode
         ];
 
-        $tagsString = '';
         if(is_array($tags))
         {
             if(count($tags) > 0)
@@ -151,16 +150,6 @@ class ArticleNewModel extends BaseModel
                     throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
                 }
             }
-            else
-            {
-                $articleData['tags'] = '{}';
-                $statisticsData['current_tags'] =  '{}';
-            }
-        }
-        else
-        {
-            $articleData['tags'] = '{}';
-            $statisticsData['current_tags'] = '{}';
         }
 
         $this->database->insert('articles', $articleData);

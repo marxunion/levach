@@ -7,7 +7,7 @@ use Core\Critical;
 
 use Base\BaseHandlerRoute;
 
-use Api\Models\ArticleCommentsGetModel;
+use Api\Models\AdminRejectAllPremoderateModel;
 
 class AdminRejectAllPremoderateHandler extends BaseHandlerRoute
 {
@@ -49,6 +49,7 @@ class AdminRejectAllPremoderateHandler extends BaseHandlerRoute
 
     public function Process()
     {
-
+        $this->model->rejectAllPremoderateModel();
+        $this->response = $this->response->withJson(['success' => true]);
     }
 }

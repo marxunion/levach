@@ -7,7 +7,7 @@ import { useRoute } from 'vue-router';
 import { container } from "jenesius-vue-modal";
 
 import { csrfTokenInput, getNewCsrfToken } from './ts/csrfTokenHelper';
-import { componentsShow } from './ts/ComponentsReloadHelper';
+
 
 const isBurgerActive = ref(false);
 
