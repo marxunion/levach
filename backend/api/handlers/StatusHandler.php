@@ -1,10 +1,10 @@
 <?php
 namespace Api\Handlers;
 
-use Helpers\StringFormatter;
-
 use Core\Settings;
 use Core\SystemInfo;
+
+use Helpers\StringFormatter;
 
 use Base\BaseHandlerRoute;
 

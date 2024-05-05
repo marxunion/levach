@@ -1,7 +1,6 @@
 <?php
 namespace Api\Models;
 
-use Core\Database;
 use Core\Error;
 
 use Base\BaseModel;
@@ -73,7 +72,7 @@ class AdminArticleApproveModel extends BaseModel
             {
                 $newTagsString = '{}';
             }
-            
+
             $this->database->insert(
                 'articles',
                 [

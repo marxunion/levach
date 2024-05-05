@@ -2,7 +2,6 @@
 namespace Api\Handlers;
 
 use Core\Error;
-use Core\Critical;
 
 use Base\BaseHandlerRouteWithArgs;
 

@@ -3,7 +3,6 @@ namespace Api\Models;
 
 use Core\Database;
 use Core\Settings;
-use Core\Error;
 use Core\Critical;
 
 use Base\BaseModel;

@@ -2,8 +2,10 @@
 namespace Api\Handlers;
 
 use Core\Settings;
-use Core\Warning;
 use Core\Database;
+
+use Core\Warning;
+use Core\Critical;
 
 use Base\BaseHandlerRoute;
 

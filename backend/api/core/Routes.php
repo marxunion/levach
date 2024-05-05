@@ -131,6 +131,19 @@ class Routes
                     });
                 });
                 
+                $adminGroup->group('/articles', function (RouteCollectorProxy $adminArticlesGroup) 
+                {
+                    $adminArticlesGroup->post('/rejectPremoderateAll', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new AdminRejectPremoderateAllHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
+                    $adminArticlesGroup->post('/rejectApproveAll', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new AdminRejectApproveAllHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
+                });
 
                 $adminGroup->get('/status', function (Request $request, Response $response) 
                 {

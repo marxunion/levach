@@ -1,8 +1,6 @@
 <?php
 namespace Api\Models;
 
-use Core\Database;
-
 use Base\BaseModel;
 
 class ArticleViewModel extends BaseModel

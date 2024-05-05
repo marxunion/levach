@@ -1,9 +1,6 @@
 <?php
 namespace Api\Models;
 
-use Core\Error;
-use Core\Database;
-
 use Base\BaseModel;
 
 class ArticlesModel extends BaseModel

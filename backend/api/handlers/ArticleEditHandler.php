@@ -1,7 +1,6 @@
 <?php
 namespace Api\Handlers;
 
-use Core\Error;
 use Core\Warning;
 
 use Base\BaseHandlerRouteWithArgs;

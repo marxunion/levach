@@ -2,7 +2,7 @@
 namespace Api\Handlers;
 
 use Core\Error;
-use Core\Critical;
+use Core\Warning;
 
 use Base\BaseHandlerRouteWithArgs;
 
@@ -31,7 +31,7 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                             }
                             else
                             {
-                                throw new Error(404, "Article not found", "Article not found");
+                                throw new Warning(404, "Article for approve not found", "Article for approve not found");
                             }
                         }
                         else

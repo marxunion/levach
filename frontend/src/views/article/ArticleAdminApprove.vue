@@ -339,7 +339,7 @@
                                         }
                                         else if(response.data.Error)
                                         {
-                                            if(response.data.Error.message == "Article for edit not found")
+                                            if(response.data.Error.message == "Article for approve not found")
                                             {
                                                 openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleForApproveNotFound']});
                                             }
@@ -394,7 +394,7 @@
                                     }
                                     else if(error.response.data.Error)
                                     {
-                                        if(error.response.data.Error.message == "Article for edit not found")
+                                        if(error.response.data.Error.message == "Article for approve not found")
                                         {
                                             openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['articleForApproveNotFound']})
                                         }
