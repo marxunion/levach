@@ -21,6 +21,7 @@ class ArticleEditPreloadModel extends BaseModel
     {
         $article = $this->database->get('articles', ['title', 'text' ,'tags','created_date', 'premoderation_status', 'approvededitorially_status', 'editorially_status'], ['id' => $articleId, 'ORDER' => ['version_id' => 'DESC'], 'LIMIT' => 1]);
         $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]);
+        $article['view_code'] = $this->database->get('codes', 'view_code', ['article_id' => $articleId]);
 
         if($article['tags'] != null)
         {
