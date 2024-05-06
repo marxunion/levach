@@ -49,6 +49,8 @@
 
 	articleEditCode.value = route.params.articleEditCode as string;
 
+	const viewLink = ref('localhost:8000/#/');
+
 	let fetchedData = ref();
 	let loaded = ref(false);
 	
@@ -92,8 +94,6 @@
 		{
 			if(response.data.title)
 			{
-				console.log(response.data);
-				
 				fetchedData.value = response.data;
 				statistics = computed(() => 
 				{
@@ -175,6 +175,14 @@
 			}
 		});
 	}
+	
+	const textInput = ref();
+
+    const copyToClipboard = () => 
+    {
+        navigator.clipboard.writeText(fetchedData.value['view_code'])
+        textInput.value.select();
+    }
 
 	const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 	{
@@ -710,6 +718,14 @@
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div v-if="fetchedData['view_code']" class="main_article__block">
+				<div class="main_article__block__link">
+					<input v-model="fetchedData['view_code']" ref="textInput" type="text" class="form__link__input"></input>
+					<button class="form__link__copyButton" @click="copyToClipboard">
+						<img src="./../../assets/img/modals/CopyButton.svg" alt="Copy" class="form__link__copyButton__icon">
+					</button>
 				</div>
 			</div>
 			<div v-if="fetchedData['canRequestApprove']" class="main__article__block">

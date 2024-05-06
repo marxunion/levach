@@ -18,6 +18,8 @@
         "articleRejectApproveWithChangesSuccessfully": "Правки от редакции успешно отклонены",
         "articleAcceptApproveWithChangesSuccessfully": "Правки от редакции успешно приняты, статья перенесена в одобренные редакцией",
 
+        "linkForViewArticle": "Ссылка для просмотра статьи",
+
         "warnings": 
         {
             "articleEditLinkCopyWarning": "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию",
@@ -230,6 +232,8 @@
         "articleRequestApproveSuccessfully": "The article has been successfully sent for approval by the editorial board",
         "articleRejectApproveWithChangesSuccessfully": "The editors' edits were successfully rejected",
         "articleAcceptApproveWithChangesSuccessfully": "Editors' edits successfully accepted and the article has been moved to editorially approved",
+
+        "linkForViewArticle": "Link for article edit",
 
         "warnings": 
         {
