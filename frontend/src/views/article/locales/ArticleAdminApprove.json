@@ -5,7 +5,8 @@
         "sendButton": "Опубликовать изменения",
         "addTagPlaceholder": "Добавить тег...",
         
-        "articleEditedSuccessfully": "Новая версия вашей статьи успешно создана и отправлена на премодерацию.Для управления и редактирования вашей статьи воспользуйтесь той же ссылкой:",
+        "articleApprovedSuccessfully": "Статья успешно подтверждена",
+        "articleApprovedSuccessfullyWithChanges": "Статья успешно подтверждена с правками, если автор статьи одобрит их статья преходит в 'одобренные редакцией'",
 
         "buttonTitles": 
         [
@@ -139,8 +140,9 @@
         "editorDefaultText": "# Article Title\n",
         "sendButton": "Publish Changes",
         "addTagPlaceholder": "Add tag...",
-
-        "articleEditedSuccessfully": "A new version of your article has been successfully created and sent for pre-moderation.To manage and edit your article, use the same link:",
+        
+        "articleApprovedSuccessfully": "The article has been successfully validated",
+        "articleApprovedSuccessfullyWithChanges": "The article has been successfully confirmed with edits, if the author of the article approves them the article goes to 'approved editorially'",
 
         "buttonTitles": 
         [

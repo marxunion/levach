@@ -215,17 +215,17 @@ class Routes
                         self::$handler = new ArticleEditPreloadHandler($request, $response, $args);
                         return self::$handler->Handle();
                     });
+
+                    $articleEditGroup->post('/approveWithChanges/{editCode}', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new ArticleApproveWithChangesHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
                 });
                 
-                $articleGroup->post('/view/{viewCode}', function (Request $request, Response $response, array $args) 
+                $articleGroup->get('/view/{viewCode}', function (Request $request, Response $response, array $args) 
                 {
                     self::$handler = new ArticleViewHandler($request, $response, $args);
-                    return self::$handler->Handle();
-                });
-        
-                $articleGroup->get('/approveWithChanges/{editCode}', function (Request $request, Response $response, array $args) 
-                {
-                    self::$handler = new ArticleApproveWithChangesHandler($request, $response, $args);
                     return self::$handler->Handle();
                 });
             });

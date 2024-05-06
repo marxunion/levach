@@ -52,11 +52,11 @@ class ArticleApproveWithChangesHandler extends BaseHandlerRouteWithArgs
         
         if($articleId)
         {
-            if($this->args['status'] == 0)
+            if($this->parsedBody['status'] == 0)
             {
                 $this->model->rejectApproveWithChanges($articleId);
             }
-            else if($this->args['status'] == 1)
+            else if($this->parsedBody['status'] == 1)
             {
                 $this->model->acceptApproveWithChanges($articleId);
             }

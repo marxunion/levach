@@ -44,12 +44,34 @@
 
 	const langData = LangDataHandler.initLangDataHandler("ArticleEdit", langsData).langData;
 
-
 	const route = useRoute();
 	const articleEditCode = ref<string | null>(null);
 
 	articleEditCode.value = route.params.articleEditCode as string;
+
+	let fetchedData = ref();
+	let loaded = ref(false);
 	
+	let statistics : ComputedRef<Statistics> = computed(() => 
+	({
+		rating: {
+			count: 0,
+			title: 'rating'
+		},
+		comments: {
+			count: 0,
+			title: 'comments'
+		}
+	}) as unknown as Statistics);
+
+	let editorState = reactive({
+		text: '',
+		language: 'RU'
+	});
+
+	let newTag = ref('');
+	let tags : Ref<string[]> = ref([]);
+
 	async function fetchData()
 	{
 		await getNewCsrfToken();
@@ -70,31 +92,59 @@
 		{
 			if(response.data.title)
 			{
-				return response.data;
+				console.log(response.data);
+				
+				fetchedData.value = response.data;
+				statistics = computed(() => 
+				{
+					const statisticsTemp : Statistics = {}
+					let statisticName;
+					(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
+					{
+						statisticName = statistic['statisticName'] as string;
+						statisticsTemp[statisticName] = 
+						{
+							count: fetchedData.value['statistics'][statisticName],
+							title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
+						}
+					});
+					return statisticsTemp;
+				});
+
+				if(fetchedData.value['tags'] == null)
+				{
+					fetchedData.value['tags'] = [];
+				}
+				tags.value = fetchedData.value['tags'];
+				
+				editorState.text = fetchedData.value['text'];
+
+				loaded.value = true;
 			}
 			else
 			{
 				if(response.data.Warning)
 				{
+					loaded.value = true;
+					fetchedData.value = null;
 					return null;
 				}
 				else if(response.data.Error)
 				{
-					if(response.data.Error.message == "Article for edit not found")
-					{
-						return null;
-					}
-					else
-					{
-						return null;
-					}
+					loaded.value = true;
+					fetchedData.value = null;
+					return null;
 				}
 				else if(response.data.Critical)
 				{
+					loaded.value = true;
+					fetchedData.value = null;
 					return null;
 				}
 				else
 				{
+					loaded.value = true;
+					fetchedData.value = null;
 					return null;
 				}
 			}
@@ -107,59 +157,24 @@
 			}
 			else if(error.response.data.Error)
 			{
-				if(error.response.data.Error.message == "Article for edit not found")
-				{
-					return null;
-				}
-				else
-				{
-					return null;
-				}
+				loaded.value = true;
+				fetchedData.value = null;
+				return null;
 			}
 			else if(error.response.data.Critical)
 			{
+				loaded.value = true;
+				fetchedData.value = null;
 				return null;
 			}
 			else
 			{
+				loaded.value = true;
+				fetchedData.value = null;
 				return null;
 			}
 		});
 	}
-
-	let fetchedData = ref();
-	let loaded = ref(false);
-	
-	let statistics : ComputedRef<Statistics> = computed(() => 
-	({
-		rating: {
-			count: 0,
-			title: 'rating'
-		},
-		comments: {
-			count: 0,
-			title: 'comments'
-		}
-	}) as unknown as Statistics);
-
-	let statuses = reactive({
-		premoderationStatus: 0,
-		approvedEditoriallyStatus: 0
-	});
-	let statusesTexts = computed(() => 
-		({
-			premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
-			approvedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[statuses.approvedEditoriallyStatus.toString()]
-		})
-	);
-
-	let editorState = {
-		text: '',
-		language: ''
-	}
-
-	let newTag = ref('');
-	let tags : Ref<string[]> = ref([]);
 
 	const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 	{
@@ -482,7 +497,7 @@
             if(response.data.success)
             {
 				fetchedData.value['canRequestApprove'] = false;
-				statuses.approvedEditoriallyStatus = 1;
+				fetchedData.value['approvededitorially_status'] = 1;
                 openModal(InfoModal, {status: true, text: langData.value['articleRequestApproveSuccessfully']});
             }
             else
@@ -542,7 +557,7 @@
 			status: 0
 		}
 
-		await axios.post('/api/article/approveWithChanges/' + articleEditCode.value, data)
+		await axios.post('/api/article/edit/approveWithChanges/' + articleEditCode.value, data)
 		.then(async response =>
 		{
 			if(response.data.success)
@@ -606,7 +621,7 @@
 			status: 1
 		}
 
-		await axios.post('/api/article/approveWithChanges/' + articleEditCode.value, data)
+		await axios.post('/api/article/edit/approveWithChanges/' + articleEditCode.value, data)
 		.then(async response =>
 		{
 			if(response.data.success)
@@ -662,47 +677,7 @@
 
 	onMounted(async function()
 	{
-		try 
-		{
-			fetchedData.value = await fetchData();
-			if(fetchedData.value != null)
-			{
-				statistics = computed(() => 
-				{
-					const statisticsTemp : Statistics = {}
-					let statisticName;
-					(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
-					{
-						statisticName = statistic['statisticName'] as string;
-						statisticsTemp[statisticName] = 
-						{
-							count: fetchedData.value['statistics'][statisticName],
-							title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
-						}
-					});
-					return statisticsTemp;
-				});
-
-				editorState = reactive(
-				{
-					text: fetchedData.value['text'],
-					language: LangDataHandler.currentLanguage.value
-				});
-
-				if(fetchedData.value['tags'] == null)
-				{
-					fetchedData.value['tags'] = [];
-				}
-
-				tags.value = fetchedData.value['tags'];
-			}
-			loaded.value = true;
-		} 
-		catch (error) 
-		{
-			loaded.value = true;
-			fetchedData.value = null;
-		}
+		await fetchData();
 	});
 </script>
 
@@ -721,15 +696,15 @@
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['premoderationStatusText'] }}</p>
 							<div>
-								<img :src="`/src/assets/img/article/statuses/${fetchedData.value['premoderation_status']}.svg`" alt="premoderationStatus">
-								<p>{{ statusesTexts.premoderationStatus }}</p>
+								<img :src="`/src/assets/img/article/statuses/${fetchedData['premoderation_status']}.svg`" alt="premoderationStatus">
+								<p>{{ ((langData['statuses'] as JsonData)['premoderationStatus'] as JsonData)[fetchedData['premoderation_status'].toString()] }}</p>
 							</div>
 						</div>
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['approvedEditoriallyStatusText'] }}</p>
 							<div>
-								<img :src="`/src/assets/img/article/statuses/${fetchedData.value['approvededitorially_status']}.svg`" alt="approvedEditoriallyStatus">
-								<p>{{ statusesTexts.approvedEditoriallyStatus }}</p>
+								<img :src="`/src/assets/img/article/statuses/${fetchedData['approvededitorially_status']}.svg`" alt="approvedEditoriallyStatus">
+								<p>{{ ((langData['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[fetchedData['approvededitorially_status'].toString()] }}</p>
 							</div>
 						</div>
 					</div>
