@@ -15,10 +15,12 @@ class ArticleApproveWithChangesModel extends BaseModel
         return $this->database->get('codes', 'article_id', ['edit_code' => $editCode]);
     }
 
-    public function rejectApproveWithChanges()
+    public function rejectApproveWithChanges($articleId)
     {
-        if($this->database->get('statistics', 'approvededitorially_status', ['article_id' => $articleId]) == 3)
+        $statisticsData = $this->database->get('statistics', ['current_version', 'approvededitorially_status'], ['article_id' => $articleId])
+        if($statisticsData['approvededitorially_status'] == 3)
         {
+            $this->database->delete('articles', ['id' => $articleId, 'version_id' => $statisticsData['current_version']]);
             $this->database->update('articles', ['approvededitorially_status' => 0], ['id' => $articleId]);
             $this->database->update('statistics', ['approvededitorially_status' => 0], ['article_id' => $articleId]);
         }

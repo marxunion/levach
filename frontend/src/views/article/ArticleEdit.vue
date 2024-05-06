@@ -563,6 +563,7 @@
 			if(response.data.success)
             {
                 openModal(InfoModal, {status: true, text: langData.value['articleRejectApproveWithChangesSuccessfully']});
+				await fetchData();
             }
             else
             {
@@ -627,6 +628,7 @@
 			if(response.data.success)
             {
                 openModal(InfoModal, {status: true, text: langData.value['articleAcceptApproveWithChangesSuccessfully']});
+				await fetchData();
             }
             else
             {
@@ -721,11 +723,11 @@
 					<button @click="onRejectApproveWithChanges" class="main__article__block__button rejectArticleApprovedWithChangesButton">{{ langData['rejectArticleApprovedWithChangesButtonTitle'] }}</button>
 				</div>
 			</div>
-			<div class="main__article__editorContainer">
+			<div v-if="fetchedData['approvededitorially_status'] != 2" class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="false" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ langData['sendButton'] }}</button>	
 			</div>
-			<div class="main__article__editTags">
+			<div v-if="fetchedData['approvededitorially_status'] != 2" class="main__article__editTags">
 				<div class="main__article__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">
 					<p class="main__article__editTags__tags__tag__title">{{ tag }}</p>
 					<button class="main__article__editTags__tags__tag__button" @click="removeTag(index)"><p>+</p></button>

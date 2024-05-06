@@ -54,7 +54,7 @@ class ArticleEditPreloadModel extends BaseModel
         }
 
         $article['statistics'] = $articleStatistics;
-        
+
         return $article;
     }
 }

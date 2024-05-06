@@ -6,7 +6,7 @@
         "addTagPlaceholder": "Добавить тег...",
         
         "articleApprovedSuccessfully": "Статья успешно подтверждена",
-        "articleApprovedSuccessfullyWithChanges": "Статья успешно подтверждена с правками, если автор статьи одобрит их статья преходит в 'одобренные редакцией'",
+        "articleApprovedSuccessfullyWithChanges": "Статья успешно подтверждена с правками, если автор статьи одобрит их, статья перейдёт в \"одобренные редакцией\"",
 
         "buttonTitles": 
         [
@@ -142,7 +142,7 @@
         "addTagPlaceholder": "Add tag...",
         
         "articleApprovedSuccessfully": "The article has been successfully validated",
-        "articleApprovedSuccessfullyWithChanges": "The article has been successfully confirmed with edits, if the author of the article approves them the article goes to 'approved editorially'",
+        "articleApprovedSuccessfullyWithChanges": "The article has been successfully confirmed with edits, if the author of the article approves the edits, the article will be moved to \"approved editorially\"",
 
         "buttonTitles": 
         [

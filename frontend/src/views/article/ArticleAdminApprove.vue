@@ -301,7 +301,7 @@
                                 {
                                     if(response.data.success)
                                     {
-                                        const modal = await openModal(InfoModal, {status: true, text: langData.value['articleApprovedSuccessfully']});
+                                        const modal = await openModal(InfoModal, {status: true, text: langData.value['articleApprovedSuccessfullyWithChanges']});
                                     
                                         modal.onclose = function()
                                         {
