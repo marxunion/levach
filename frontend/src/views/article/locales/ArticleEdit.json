@@ -10,6 +10,14 @@
         "requestApproveTitle": "Статья перешла порог рейтинга. Запросить одобрение статьи редакцией? После переноса редактирование будет невозможно.",
         "requestApproveButtonTitle": "Да",
 
+        "articleApprovedWithChangesTitle": "Редакция внесла правки в вашу статью. Для переноса статьи в раздел 'одобренное редакцией' вы должны принять их. После переноса редактирование будет невозможно.",
+        "acceptArticleApprovedWithChangesButtonTitle": "Принять",
+        "rejectArticleApprovedWithChangesButtonTitle": "Отклонить",
+
+        "articleRequestApproveSuccessfully": "Статья успешно отправлена на одобрение редакией",
+        "articleRejectApproveWithChangesSuccessfully": "Правки от редакции успешно отклонены",
+        "articleAcceptApproveWithChangesSuccessfully": "Правки от редакции успешно приняты, статья перенесена в одобренные редакцией",
+
         "warnings": 
         {
             "articleEditLinkCopyWarning": "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию",
@@ -60,13 +68,6 @@
                 "3": "В процессе одобрения"
             }
         },
-        
-        "articleCanRequestApprove": "Статья перешла порог рейтинга. Запросить одобрение статьи редакцией? После переноса редактирование будет невозможно.",
-        "articleCanRequestApproveAccept": "Да",
-
-        "articleApprovedWithChangesTitle": "Редакция внесла правки в вашу статью. Для переноса статьи в раздел 'одобренное редакцией' вы должны принять их. После переноса редактирование будет невозможно.",
-        "acceptArticleApprovedWithChangesButtonTitle": "Принять",
-        "rejectArticleApprovedWithChangesButtonTitle": "Отклонить",
 
         "statistics": 
         [
@@ -222,9 +223,13 @@
         "requestApproveTitle": "Article has crossed the rating threshold. Request editorial approval of the article? Editing will not be possible after the transfer.",
         "requestApproveButtonTitle": "Ok",
 
-        "articleApproveWithChangesTitle": "The editorially have made edits to your article. You must accept them in order to move the article to the 'editorially approved' section. Editing will not be possible after the transfer.",
-        "acceptArticleApproveWithChangesButtonTitle": "Accept",
-        "rejectArticleApproveWithChangesButtonTitle": "Reject",
+        "articleApprovedWithChangesTitle": "The editors have made edits to your article. You must accept them in order to move the article to the 'approved by editors' section. Once moved, editing will not be possible.",
+        "acceptArticleApprovedWithChangesButtonTitle": "Accept",
+        "rejectArticleApprovedWithChangesButtonTitle": "Reject",
+
+        "articleRequestApproveSuccessfully": "The article has been successfully sent for approval by the editorial board",
+        "articleRejectApproveWithChangesSuccessfully": "The editors' edits were successfully rejected",
+        "articleAcceptApproveWithChangesSuccessfully": "Editors' edits successfully accepted and the article has been moved to editorially approved",
 
         "warnings": 
         {

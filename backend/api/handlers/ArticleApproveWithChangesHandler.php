@@ -5,9 +5,9 @@ use Core\Error;
 
 use Base\BaseHandlerRouteWithArgs;
 
-use Api\Models\ArticleAcceptApproveWithChangesModel;
+use Api\Models\ArticleApproveWithChangesModel;
 
-class ArticleAcceptApproveWithChangesHandler extends BaseHandlerRouteWithArgs
+class ArticleApproveWithChangesHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
@@ -22,7 +22,7 @@ class ArticleAcceptApproveWithChangesHandler extends BaseHandlerRouteWithArgs
                 {
                     if(isset($this->args['editCode']))
                     {
-                        $this->model = new ArticleAcceptApproveWithChangesModel();
+                        $this->model = new ArticleApproveWithChangesModel();
                     }
                     else
                     {
@@ -49,9 +49,21 @@ class ArticleAcceptApproveWithChangesHandler extends BaseHandlerRouteWithArgs
     {
         $articleId = $this->model->getArticleIdByEditCode($this->args['editCode']);
 
+        
         if($articleId)
         {
-            $this->model->acceptApproveWithChanges($articleId);
+            if($this->args['status'] == 0)
+            {
+                $this->model->rejectApproveWithChanges($articleId);
+            }
+            else if($this->args['status'] == 1)
+            {
+                $this->model->acceptApproveWithChanges($articleId);
+            }
+            else
+            {
+                throw new Error(404, "Unknown status", "Unknown status");
+            }
             $this->response = $this->response->withJson(['success' => true]);
         }
         else

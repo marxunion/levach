@@ -105,7 +105,7 @@
             
             &__subblock
             {
-                width: 56%;
+                width: 70%;
                 display: flex;
                 justify-content: space-between;
             }
@@ -122,7 +122,6 @@
                 margin-top: 10px;
                 margin-bottom: 14px;
 
-                min-width: 100px;
                 height: 50px;
                 
                 background-color: transparent;
@@ -137,6 +136,7 @@
                 }
                 &.requestApproveArticleButton
                 {
+                    width: 100px;
                     color: $ArticleEditRequestApproveArticleButton;
                     border: 3px solid $ArticleEditRequestApproveArticleButtonBorder;
                 }
@@ -402,6 +402,19 @@
                     min-width: 90px;
                     height: 50px;
                     font-size: 22px;
+                    &.requestApproveArticleButton
+                    {
+                        width: 90px;
+                    }
+
+                    &.acceptArticleApprovedWithChangesButton
+                    {
+                        width: 170px;
+                    }
+                    &.rejectArticleApprovedWithChangesButton
+                    {
+                        width: 170px;
+                    }
                 }
             }
         }
@@ -456,9 +469,22 @@
                 &__button
                 {   
                     margin-top: 8px;
-                    min-width: 75px;
                     height: 40px;
                     font-size: 20px;
+
+                    &.requestApproveArticleButton
+                    {
+                        width: 75px;
+                    }
+
+                    &.acceptArticleApprovedWithChangesButton
+                    {
+                        width: 160px;
+                    }
+                    &.rejectArticleApprovedWithChangesButton
+                    {
+                        width: 160px;
+                    }
                 }
             }
         }
@@ -513,6 +539,15 @@
                 &__button
                 {   
                     font-size: 19px;
+
+                    &.acceptArticleApprovedWithChangesButton
+                    {
+                        width: 140px;
+                    }
+                    &.rejectArticleApprovedWithChangesButton
+                    {
+                        width: 140px;
+                    }
                 }
             }
         }

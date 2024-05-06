@@ -16,6 +16,8 @@ use Base\BaseHandler;
 use Base\BaseHandlerRoute;
 use Base\EmptyHandlerRoute;
 
+use Api\Handlers\ArticleApproveWithChangesHandler;
+
 use Api\Handlers\AdminRejectAllApproveHandler;
 use Api\Handlers\AdminRejectAllPremoderateHandler;
 
@@ -215,10 +217,15 @@ class Routes
                     });
                 });
                 
-        
-                $articleGroup->get('/view/{viewCode}', function (Request $request, Response $response, array $args) 
+                $articleGroup->post('/view/{viewCode}', function (Request $request, Response $response, array $args) 
                 {
                     self::$handler = new ArticleViewHandler($request, $response, $args);
+                    return self::$handler->Handle();
+                });
+        
+                $articleGroup->get('/approveWithChanges/{editCode}', function (Request $request, Response $response, array $args) 
+                {
+                    self::$handler = new ArticleApproveWithChangesHandler($request, $response, $args);
                     return self::$handler->Handle();
                 });
             });

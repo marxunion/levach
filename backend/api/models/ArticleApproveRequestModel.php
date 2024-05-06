@@ -5,6 +5,8 @@ use Core\Error;
 use Core\Warning;
 use Core\Critical;
 
+use Api\Handlers\AdminSettingsGetHandler;
+
 use Base\BaseModel;
 
 class ArticleApproveRequestModel extends BaseModel
@@ -27,6 +29,7 @@ class ArticleApproveRequestModel extends BaseModel
         {
             if($this->database->get('statistics', 'rating', ['article_id' => $articleId]) > $ratingToRequestApprove)
             {
+                $this->database->update('articles', ['approvededitorially_status' => 1], ['id' => $articleId]);
                 $this->database->update('statistics', ['approvededitorially_status' => 1], ['article_id' => $articleId]);
             }
             else

@@ -73,6 +73,16 @@ class AdminArticleApproveModel extends BaseModel
                 $newTagsString = null;
             }
 
+            $this->database->update(
+                'articles', 
+                [
+                    'approvededitorially_status' => 3
+                ],
+                [
+                    'id' => $articleId
+                ]
+            );
+
             $this->database->insert(
                 'articles',
                 [

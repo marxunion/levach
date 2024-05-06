@@ -147,12 +147,11 @@
 		approvedEditoriallyStatus: 0
 	});
 	let statusesTexts = computed(() => 
-	(
-		{
+		({
 			premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
 			approvedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[statuses.approvedEditoriallyStatus.toString()]
-		}
-	));
+		})
+	);
 
 	let editorState = {
 		text: '',
@@ -462,6 +461,200 @@
 		}
 	});
 
+	const onRequestApproveArticle = async () => 
+	{
+		await getNewCsrfToken();
+
+        if(csrfTokenInput.value == null)
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            return;
+        }
+
+        const data = 
+        {
+            csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+        }
+
+        await axios.post('/api/article/edit/requestApprove/' + articleEditCode.value, data)
+        .then(async response =>
+        {
+            if(response.data.success)
+            {
+				fetchedData.value['canRequestApprove'] = false;
+				statuses.approvedEditoriallyStatus = 1;
+                openModal(InfoModal, {status: true, text: langData.value['articleRequestApproveSuccessfully']});
+            }
+            else
+            {
+                if(response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+        	}
+        })
+        .catch(error => 
+        {
+    	    if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+        });
+	}
+
+	const onRejectApproveWithChanges = async () =>
+	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
+
+		const data = 
+		{
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			status: 0
+		}
+
+		await axios.post('/api/article/approveWithChanges/' + articleEditCode.value, data)
+		.then(async response =>
+		{
+			if(response.data.success)
+            {
+                openModal(InfoModal, {status: true, text: langData.value['articleRejectApproveWithChangesSuccessfully']});
+            }
+            else
+            {
+                if(response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+        	}
+		})
+		.catch(error => 
+		{
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+		});
+	}
+
+	const onAcceptApproveWithChanges = async () =>
+	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
+
+		const data = 
+		{
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			status: 1
+		}
+
+		await axios.post('/api/article/approveWithChanges/' + articleEditCode.value, data)
+		.then(async response =>
+		{
+			if(response.data.success)
+            {
+                openModal(InfoModal, {status: true, text: langData.value['articleAcceptApproveWithChangesSuccessfully']});
+            }
+            else
+            {
+                if(response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+        	}
+		})
+		.catch(error => 
+		{
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+		});
+	}
+
+
 	watch(langData, () =>
 	{
 		editorState.language = LangDataHandler.currentLanguage.value;
@@ -489,18 +682,6 @@
 					});
 					return statisticsTemp;
 				});
-				
-				statuses = reactive({
-					premoderationStatus: fetchedData.value['premoderation_status'],
-					approvedEditoriallyStatus: fetchedData.value['approvededitorially_status']
-				});
-
-				statusesTexts = computed(() => 
-					({
-						premoderationStatus: ((langData.value['statuses'] as JsonData)['premoderationStatus'] as JsonData)[statuses.premoderationStatus.toString()],
-						approvedEditoriallyStatus: ((langData.value['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[statuses.approvedEditoriallyStatus.toString()]
-					})
-				);
 
 				editorState = reactive(
 				{
@@ -540,29 +721,29 @@
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['premoderationStatusText'] }}</p>
 							<div>
-								<img :src="`/src/assets/img/article/statuses/${statuses.premoderationStatus}.svg`" alt="premoderationStatus">
+								<img :src="`/src/assets/img/article/statuses/${fetchedData.value['premoderation_status']}.svg`" alt="premoderationStatus">
 								<p>{{ statusesTexts.premoderationStatus }}</p>
 							</div>
 						</div>
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['approvedEditoriallyStatusText'] }}</p>
 							<div>
-								<img :src="`/src/assets/img/article/statuses/${statuses.approvedEditoriallyStatus}.svg`" alt="approvedEditoriallyStatus">
+								<img :src="`/src/assets/img/article/statuses/${fetchedData.value['approvededitorially_status']}.svg`" alt="approvedEditoriallyStatus">
 								<p>{{ statusesTexts.approvedEditoriallyStatus }}</p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="main__article__block">
+			<div v-if="fetchedData['canRequestApprove']" class="main__article__block">
 				<p class="main__article__block__title">{{ langData['requestApproveTitle'] }}</p>
-				<button class="main__article__block__button requestApproveArticleButton">{{ langData['requestApproveButtonTitle'] }}</button>
+				<button @click="onRequestApproveArticle" class="main__article__block__button requestApproveArticleButton">{{ langData['requestApproveButtonTitle'] }}</button>
 			</div>
-			<div class="main__article__block">
+			<div v-if="fetchedData['approvededitorially_status'] == 3" class="main__article__block">
 				<p class="main__article__block__title">{{ langData['articleApprovedWithChangesTitle'] }}</p>
 				<div class="main__article__block__subblock">
-					<button class="main__article__block__button acceptArticleApprovedWithChangesButton">{{ langData['acceptArticleApprovedWithChangesButtonTitle'] }}</button>
-					<button class="main__article__block__button rejectArticleApprovedWithChangesButton">{{ langData['rejectArticleApprovedWithChangesButtonTitle'] }}</button>
+					<button @click="onAcceptApproveWithChanges" class="main__article__block__button acceptArticleApprovedWithChangesButton">{{ langData['acceptArticleApprovedWithChangesButtonTitle'] }}</button>
+					<button @click="onRejectApproveWithChanges" class="main__article__block__button rejectArticleApprovedWithChangesButton">{{ langData['rejectArticleApprovedWithChangesButtonTitle'] }}</button>
 				</div>
 			</div>
 			<div class="main__article__editorContainer">
