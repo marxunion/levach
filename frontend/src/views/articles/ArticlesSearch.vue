@@ -52,7 +52,6 @@
         }
     }
 
-
     // Preview
 	config(
 	{
