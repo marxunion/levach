@@ -17,7 +17,7 @@
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
-        "articleDeletedSuccessfully": "Статья была успешно удалена",
+        "articleDeleteSuccessfully": "Статья была успешно удалена",
         "articleRejectApproveSuccessfully": "Статья была успешно отклонена",
         "articleRejectPremoderateSuccessfully": "Статья была успешно отклонена",
         "articleAcceptPremoderateSuccessfully": "Статья была успешно премодерирована",
@@ -137,7 +137,7 @@
             "unknown": "An unknown error occurred. Try again"
         },
 
-        "articleDeletedSuccessfully": "Article was successfully deleted",
+        "articleDeleteSuccessfully": "Article was successfully deleted",
         "articleRejectApproveSuccessfully": "The article was successfully rejected",
         "articleRejectPremoderateSuccessfully": "The article was successfully rejected",
         "articleAcceptPremoderateSuccessfully": "Article was successfully premoderated",

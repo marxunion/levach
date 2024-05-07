@@ -358,7 +358,7 @@ import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 		{
 			if(response.data.success)
             {
-                const modal = await openModal(InfoModal, {status: true, text: langData.value['articlePremoderateSuccessfully']});
+                const modal = await openModal(InfoModal, {status: true, text: langData.value['articleRejectPremoderateSuccessfully']});
 				modal.onclose = function()
 				{
 					router.push('/admin/api/waitingPremoderate');
@@ -426,7 +426,7 @@ import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 		{
 			if(response.data.success)
             {
-                const modal = await openModal(InfoModal, {status: true, text: langData.value['articlePremoderateSuccessfully']});
+                const modal = await openModal(InfoModal, {status: true, text: langData.value['articleAcceptPremoderateSuccessfully']});
 				modal.onclose = function()
 				{
 					router.push('/admin/api/waitingPremoderate');

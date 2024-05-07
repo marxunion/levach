@@ -253,7 +253,7 @@
             {
                 if(response.data.success)
                 {
-                    await openModal(InfoModal, {status: true, text: langData.value['articleDeletedSuccessfully']});
+                    await openModal(InfoModal, {status: true, text: langData.value['articleDeleteSuccessfully']});
 
                     articles.value = reactive(articles.value.slice(0, currentSelectedArticleIndex.value).concat(articles.value.slice(currentSelectedArticleIndex.value + 1)));
                     if(articles.value.length == 0)
