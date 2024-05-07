@@ -53,7 +53,7 @@
 			openModal(LoaderModal);
 			const promises = files.map((file) => 
 			{
-				return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
+				return new Promise<{ data: { fileName: string } }>(resolve => 
 				{
 					const form = new FormData();
 					form.append('file', file);

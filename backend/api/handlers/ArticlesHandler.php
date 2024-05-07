@@ -86,10 +86,9 @@ class ArticlesHandler extends BaseHandlerRoute
                             if(strlen($this->parsedBody['searchTitle']) > 0)
                             {
                                 $searchTitle = $this->parsedBody['searchTitle'];
-                                $searchTags = $this->parsedBody['searchTags'];
-                                if(isset($searchTags))
+                                if(isset($this->parsedBody['searchTags']))
                                 {
-                                    $searchTagsString = '{'.implode(',', $searchTags).'}';
+                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
     
                                     $articleIds = $this->model->loadArticlesSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
                                     $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
@@ -206,10 +205,10 @@ class ArticlesHandler extends BaseHandlerRoute
                             if(strlen($this->parsedBody['searchTitle']) > 0)
                             {
                                 $searchTitle = $this->parsedBody['searchTitle'];
-                                $searchTags = $this->parsedBody['searchTags'];
-                                if(isset($searchTags))
+                                
+                                if(isset($this->parsedBody['searchTags']))
                                 {
-                                    $searchTagsString = '{'.implode(',', $searchTags).'}';
+                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
     
                                     $articleIds = $this->model->loadArticlesSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
                                     $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));

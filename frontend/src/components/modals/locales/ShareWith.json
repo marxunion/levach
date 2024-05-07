@@ -1,0 +1,16 @@
+{
+    "RU": 
+    {
+        "shareWithTitle": "Поделится через...",
+        "copyLinkTitle": "Скопировать ссылку",
+        "telegramTitle": "Telegram",
+        "facebookTitle": "Facebook"
+    },
+    "EN":
+    {
+        "shareWithTitle": "Share with...",
+        "copyLinkTitle": "Copy link",
+        "telegramTitle": "Telegram",
+        "facebookTitle": "Facebook"
+    }
+}

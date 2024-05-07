@@ -20,6 +20,8 @@
 	import { openModal, closeModal } from "jenesius-vue-modal";
 	import LoaderModal from "./../../components/modals/LoaderModal.vue";
     import InfoModal from "./../../components/modals/InfoModal.vue";
+	import ShareWith from "./../../components/modals/ShareWith.vue";
+	
 
     import { adminStatus, adminStatusReCheck } from './../../ts/AdminHandler'
 
@@ -607,6 +609,11 @@
             }
         });
 	}
+
+	const onShare = () => 
+	{
+		openModal(ShareWith, { link: 'http://localhost:8000/#/article/'+articleViewCode.value})
+	}
 </script>
 
 <template>
@@ -633,7 +640,7 @@
 					<div class="main__article__previewContainer__reactions__statistics">
 						<img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__previewContainer__reactions__statistics__icon ratingIcon">
 						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(fetchedData.statistics.rating) }}</p>
-						<img src="../../assets/img/article/share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
+						<img @click="onShare" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
 					</div>
 					<div class="main__article__previewContainer__reactions__comments">
 						<img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__previewContainer__reactions__comments__icon commentIcon">

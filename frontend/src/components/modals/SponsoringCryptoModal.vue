@@ -15,7 +15,7 @@
 
     const copyToClipboard = () => 
     {
-        navigator.clipboard.writeText(walletLink.value)
+        navigator.clipboard.writeText(walletLink.value);
         inputWallet.value.select();
     }
 
