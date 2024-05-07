@@ -121,8 +121,8 @@
 	
 	let editorState = reactive({
 		text: '',
-		language: ''
 	});
+
 
 	let newTag = ref('');
 	let tags : Ref<string[]> = ref([]);
@@ -524,11 +524,6 @@
 		}
 	});
 
-	watch(langData, () =>
-	{
-		editorState.language = LangDataHandler.currentLanguage.value;
-	});
-
     watch(() => editorState.text, () => 
     {
         checkChanges();
@@ -544,7 +539,6 @@
 				editorState = reactive(
 				{
 					text: fetchedData.value['text'],
-					language: LangDataHandler.currentLanguage.value
 				});
 
 				if(fetchedData.value['tags'] == null)
@@ -568,7 +562,7 @@
 	<main v-if="loaded" class="main">
 		<article v-if="fetchedData" class="main__article">
 			<div class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onChange="checkChanges" @onUploadImg="onUploadImg" :language="editorState.language" :preview="false" noIconfont/>
+				<MdEditor class="main__article__editorContainer__editor" v-model="fetchedData['text']" @onChange="checkChanges" @onUploadImg="onUploadImg" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ (langData['buttonTitles'] as JsonData)[currentChangesStatus] }}</button>	
 			</div>
 			<div class="main__article__editTags">

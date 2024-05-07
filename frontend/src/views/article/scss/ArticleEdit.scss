@@ -116,6 +116,10 @@
                 width: 96%;
                 color: $ArticleEditBlockTitle;
                 font-size: 21px;
+                &.linkForViewArticle
+                {
+                    width: auto;
+                }
             }
             &__button
             {
@@ -155,13 +159,82 @@
                     border: 3px solid $ArticleEditRejectArticleApprovedWithChangesButtonBorder;
                 }
             }
-        }
+            &__link
+            {
+                width: 95%;
+                height: 56px;
+                position: relative;
+                box-sizing: border-box;
+                margin-top: 16px;
+                margin-bottom: 16px;
+                &__input
+                {
+                    width: 100%;
+                    height: 100%;
+                    padding-left: 12px;
+                    font-size: 23px;
 
+                    background-color: $InfoModalWithLinkInputBG;
+                    color: $InfoModalWithLinkInputText;
+                    font-family: Roboto-Regular;
+
+                    border-radius: 15px;
+                    box-sizing: border-box;
+                    padding-left: 13px;
+                    padding-top: 4px;
+                    padding-bottom: 4px;
+                }
+                &__copyButton
+                {
+                    cursor: pointer;
+                    position: absolute;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 15px;
+                    top: 0;
+                    right: 0;
+                    width: 56px;
+                    height: 56px;
+
+                    background-color: $InfoModalWithLinkInputCopyButtonBG;
+                    &__icon
+                    {
+                        width: 60%;
+                        height: 60%;
+                    }
+                }
+            }
+        }
+        &__previewContainer
+        {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 14px;
+
+            background-color: $ArticleViewArticleBG;
+
+            box-sizing: border-box;
+            border-radius: 15px;
+
+            position: relative;
+
+            &__preview
+            {
+                width: 100%;
+                height: 100%;
+                border-radius: 15px;
+            }
+        }
         &__editorContainer
         {
-            margin-top: 14px;
-            min-height: 620px;
             width: 100%;
+            min-height: 620px;
+            
+            margin-top: 14px;
+
             border-radius: 15px;
             position: relative;
             &__editor

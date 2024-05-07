@@ -5,7 +5,7 @@
 
 	//import DropDown from "./../../components/DropDown.vue";
 
-	import { MdEditor, config } from 'md-editor-v3';
+	import { MdEditor, MdPreview, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
 	import { JsonData } from './../../ts/JsonHandler';
@@ -49,7 +49,7 @@
 
 	articleEditCode.value = route.params.articleEditCode as string;
 
-	const viewLink = ref('localhost:8000/#/');
+	const viewLink = ref('');
 
 	let fetchedData = ref();
 	let loaded = ref(false);
@@ -67,8 +67,11 @@
 	}) as unknown as Statistics);
 
 	let editorState = reactive({
-		text: '',
-		language: 'RU'
+		text: ''
+	});
+
+	let previewState = reactive({
+		text: ''
 	});
 
 	let newTag = ref('');
@@ -117,7 +120,19 @@
 				}
 				tags.value = fetchedData.value['tags'];
 				
-				editorState.text = fetchedData.value['text'];
+
+				if(fetchedData.value['approvededitorially_status'] == 2)
+				{
+					previewState.text = fetchedData.value['text'];
+				}
+				else
+				{
+					editorState.text = fetchedData.value['text'];
+				}
+				
+				
+
+				viewLink.value = "localhost:8000/#/article/" + fetchedData.value['view_code'];
 
 				loaded.value = true;
 			}
@@ -180,7 +195,7 @@
 
     const copyToClipboard = () => 
     {
-        navigator.clipboard.writeText(fetchedData.value['view_code'])
+        navigator.clipboard.writeText(viewLink.value)
         textInput.value.select();
     }
 
@@ -591,7 +606,7 @@
                 {
                     openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
                 }
-        	}
+			}
 		})
 		.catch(error => 
 		{
@@ -679,12 +694,6 @@
 		});
 	}
 
-
-	watch(langData, () =>
-	{
-		editorState.language = LangDataHandler.currentLanguage.value;
-	});
-
 	onMounted(async function()
 	{
 		await fetchData();
@@ -720,11 +729,12 @@
 					</div>
 				</div>
 			</div>
-			<div v-if="fetchedData['view_code']" class="main_article__block">
-				<div class="main_article__block__link">
-					<input v-model="fetchedData['view_code']" ref="textInput" type="text" class="form__link__input"></input>
-					<button class="form__link__copyButton" @click="copyToClipboard">
-						<img src="./../../assets/img/modals/CopyButton.svg" alt="Copy" class="form__link__copyButton__icon">
+			<div v-if="viewLink != ''" class="main__article__block">
+				<p class="main__article__block__title linkForViewArticle">{{ langData['linkForViewArticle'] }}</p>
+				<div class="main__article__block__link">
+					<input v-model="viewLink" ref="textInput" type="text" class="main__article__block__link__input"></input>
+					<button class="main__article__block__link__copyButton" @click="copyToClipboard">
+						<img src="./../../assets/img/modals/CopyButton.svg" alt="Copy" class="main__article__block__link__copyButton__icon">
 					</button>
 				</div>
 			</div>
@@ -739,10 +749,15 @@
 					<button @click="onRejectApproveWithChanges" class="main__article__block__button rejectArticleApprovedWithChangesButton">{{ langData['rejectArticleApprovedWithChangesButtonTitle'] }}</button>
 				</div>
 			</div>
-			<div v-if="fetchedData['approvededitorially_status'] != 2" class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="false" noIconfont/>
+			<div v-if="fetchedData['approvededitorially_status'] == 2 && fetchedData['editorially_status'] != 1" class="main__article__previewContainer">
+				<MdPreview class="main__article__previewContainer__preview" :modelValue="editorState.text" :language="LangDataHandler.currentLanguage.value"/>
+			</div>
+			
+			<div v-if="fetchedData['approvededitorially_status'] != 2 || fetchedData['editorially_status'] == 1" class="main__article__editorContainer">
+				<MdEditor class="main__article__editorContainer__editor" v-model="previewState.text" @onUploadImg="onUploadImg" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ langData['sendButton'] }}</button>	
 			</div>
+
 			<div v-if="fetchedData['approvededitorially_status'] != 2" class="main__article__editTags">
 				<div class="main__article__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">
 					<p class="main__article__editTags__tags__tag__title">{{ tag }}</p>
