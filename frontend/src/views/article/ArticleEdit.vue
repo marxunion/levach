@@ -3,8 +3,6 @@
 	import { useRoute } from 'vue-router';
 	import axios from 'axios';
 
-	//import DropDown from "./../../components/DropDown.vue";
-
 	import { MdEditor, MdPreview, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
@@ -24,6 +22,8 @@
 	import { LangDataHandler } from "./../../ts/LangDataHandler";
 
 	import { StringWithEnds } from "./../../ts/StringWithEnds";
+
+    import { adminStatus, adminStatusReCheck } from './../../ts/AdminHandler'
 
 	import './../../libs/font_2605852_prouiefeic';
 
@@ -696,6 +696,7 @@
 
 	onMounted(async function()
 	{
+		adminStatusReCheck();
 		await fetchData();
 	});
 </script>
@@ -753,7 +754,7 @@
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="editorState.text" :language="LangDataHandler.currentLanguage.value"/>
 			</div>
 			
-			<div v-if="fetchedData['approvededitorially_status'] != 2 || fetchedData['editorially_status'] == 1" class="main__article__editorContainer">
+			<div v-if="fetchedData['approvededitorially_status'] != 2 || fetchedData['editorially_status'] == 1 || adminStatus" class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="previewState.text" @onUploadImg="onUploadImg" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ langData['sendButton'] }}</button>	
 			</div>
