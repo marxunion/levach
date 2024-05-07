@@ -96,27 +96,27 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                                 }            
                                 else 
                                 {
-                                    throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Invalid length of article content");
+                                    throw new Warning(400, "Invalid length of article content", "Invalid length of article content");
                                 }
                             } 
                             else 
                             {
-                                throw new Warning(400, "Please add content for the article", "Empty article content");
+                                throw new Warning(400, "Empty article content", "Empty article content");
                             }
                         } 
                         else 
                         {
-                            throw new Warning(400, "The title must contain between 5 and 120 characters", "Invalid article title length");
+                            throw new Warning(400, "Invalid length of article title", "Invalid length of article title");
                         }
                     } 
                     else 
                     {
-                        throw new Warning(400, "Please add a title for the article", "Invalid article title");
+                        throw new Warning(400, "Invalid article title", "Invalid article title");
                     }
                 } 
                 else 
                 {
-                    throw new Warning(400, "Please add a title for the article", "Empty article title");
+                    throw new Warning(400, "Empty article title", "Empty article title");
                 }
             }
             else

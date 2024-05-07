@@ -174,7 +174,7 @@
 			const title = contentParts[0];
 			if(title.substring(0, 2) == '# ') 
 			{
-				if(title.length >= 5 && title.length <= 120) 
+				if(title.length >= 7 && title.length <= 120) 
 				{
 					if(contentParts.length >= 2) 
 					{
@@ -211,25 +211,25 @@
 								{
 									if(response.data.Warning)
 									{
-										if(response.data.Warning.message == "Please add a title for the article")
+										if(response.data.Warning.message == "Empty article title")
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
+										}
+										else if(response.data.Warning.message == "Invalid length of article title")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
+										}
+										else if(response.data.Warning.message == "Empty article content")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
+										}
+										else if(response.data.Warning.message == "Invalid length of article content")
+										{
+											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
 										}
 										else if(response.data.Warning.message == 'Article has duplicated tags')
 										{
 											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleDuplicatedTags']});
-										}
-										else if(response.data.Warning.message == "Title must contain between 5 and 120 characters")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
-										}
-										else if(response.data.Warning.message == "Please add content for the article")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
-										}
-										else if(response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
 										}
 										else
 										{

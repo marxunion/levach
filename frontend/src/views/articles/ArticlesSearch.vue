@@ -26,7 +26,7 @@
     import langsData from "./locales/Articles.json";
     import { LangDataHandler } from "./../../ts/LangDataHandler";
 
-    import { searchText } from "./../../ts/searchHelper";
+    import { searchText, searchQuery } from "./../../ts/searchHelper";
 
     import './../../libs/font_2605852_prouiefeic';
 
@@ -291,6 +291,16 @@
         }
     }
     
+    watch(searchQuery, async () => 
+    {
+        loading.value = true;
+        articles.value = reactive([]);
+        lastLoaded.value = 0;
+        searchQuery.value = false;
+
+        await fetchNewArticles();
+    });
+
     onMounted(async () => 
     {
         articles.value = [];

@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { ref } from 'vue';
-    import { useRouter } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
 
     import DropDown from "./DropDown.vue";
 
@@ -12,20 +12,34 @@
     import { LangDataHandler } from "./../ts/LangDataHandler";
     import langsData from "./locales/Header.json";
 
-    import { searchText } from "../ts/searchHelper";
+    import { searchText, searchQuery } from "../ts/searchHelper";
     
     import { defineEmits } from 'vue';
 
     const langData = LangDataHandler.initLangDataHandler("Header", langsData).langData;
 
+    const route = useRoute();
     const router = useRouter();
 
     const onSearchButton = () =>
     {
-        if(searchText.value.length > 0)
+        if(isCurrentRouteName('editoriallyArticles') ||  isCurrentRouteName('editoriallyArticles') || isCurrentRouteName('editoriallyApprovedArticles') || isCurrentRouteName('abyssArticles') || isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingApproval'))
+        {   
+            searchQuery.value = true;
+        }
+        else
         {
-            router.push('/articles/search/'+searchText.value);
-        }        
+            searchQuery.value = true;
+            if(searchText.value.length > 0)
+            {
+                router.push('/articles/search/'+searchText.value);
+            }
+        }
+    }
+
+    const isCurrentRouteName = (routeName: string) => 
+    {
+        return routeName == route.name ? true : false;
     }
 
     const emit = defineEmits();
