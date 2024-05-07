@@ -68,12 +68,12 @@
 
     const onChangeSortType = async (newSortType : number) => 
     {
+        loading.value = true;
         articles.value = reactive([]);
         lastLoaded.value = 0;
 
         currentSortType.value = newSortType;
 
-        loading.value = false;
         await fetchNewArticles();
     }
 
