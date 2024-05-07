@@ -60,9 +60,7 @@
 		previewState.language = LangDataHandler.currentLanguage.value;
 	});
 
-    const lastLoadedArticleId = ref(2147483645);
-    const lastLoadedArticleCreatedDate = ref(2147483645);
-    const lastLoadedArticleRate = ref(2147483645);
+    const lastLoaded = ref(0);
 
     const reloading = ref(false);
     const loading = ref(true);
@@ -71,16 +69,8 @@
     const onChangeSortType = async (newSortType : number) => 
     {
         articles.value = reactive([]);
-        lastLoadedArticleId.value = 2147483645;
+        lastLoaded.value = 0;
         
-        if(currentSortType.value === 0)
-        {
-            lastLoadedArticleCreatedDate.value = 2147483645;
-        }
-        else
-        {
-            lastLoadedArticleRate.value = 2147483645;
-        }
         currentSortType.value = newSortType;
 
         loading.value = true;
@@ -100,8 +90,7 @@
                     sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
                     category: 'ArticlesWaitingPremoderate',
                     count: 4,
-                    lastLoadedArticleId: lastLoadedArticleId.value,
-                    lastLoadedArticleRate: lastLoadedArticleRate.value
+                    lastLoaded: lastLoaded.value
                 }
             })
             .then(response => 
@@ -112,15 +101,11 @@
                     {
                         response.data.forEach((article : Article) => 
                         {
-                            if(lastLoadedArticleId.value > article.id)
-                            {
-                                lastLoadedArticleId.value = article.id;
-                            }
-                            lastLoadedArticleRate.value = article.statistics.rating;
                             article.currentSelectedVersion = article.versions.length;
-                            articles.value.push(article as Article);
+                            articles.value.push(article);
                         });
                     }
+                    lastLoaded.value = lastLoaded.value + 4;
                 }
             })
             .catch(error => 
@@ -137,8 +122,7 @@
                     sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
                     category: 'ArticlesWaitingPremoderate',
                     count: 4,
-                    lastLoadedArticleId: lastLoadedArticleId.value,
-                    lastLoadedArticleCreatedDate: lastLoadedArticleCreatedDate.value
+                    lastLoaded: lastLoaded.value,
                 }
             })
             .then(response => 
@@ -149,15 +133,11 @@
                     {
                         response.data.forEach((article : Article) => 
                         {
-                            if(lastLoadedArticleId.value > article.id)
-                            {
-                                lastLoadedArticleId.value = article.id;
-                            }
-                            lastLoadedArticleCreatedDate.value = article.statistics.created_date;
                             article.currentSelectedVersion = article.versions.length;
                             articles.value.push(article);
                         });
                     }
+                    lastLoaded.value = lastLoaded.value + 4;
                 }
             })
             .catch(error => 

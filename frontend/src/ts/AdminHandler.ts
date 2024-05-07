@@ -5,9 +5,6 @@ import { getIntCookie, checkCookie } from "./CookiesHelper";
 import { csrfTokenInput, getNewCsrfToken } from "./csrfTokenHelper";
 import { useRouter } from "vue-router";
 
-
-const router = useRouter();
-
 export const adminStatus = ref(false);
 
 export async function adminStatusReCheck() 
@@ -16,10 +13,11 @@ export async function adminStatusReCheck()
     if(checkCookie('admin_token') && checkCookie('admin_nickname') && checkCookie('admin_expiration_time'))
     {
         const expirationTime : number | null = getIntCookie('admin_expiration_time');
-        const currentTime : number = new Date().getTime();
+        const currentTime : number = new Date().getTime() / 1000;
 
         if(expirationTime != null)
         {
+            
             if(currentTime > expirationTime - 2)
             {
                 await getNewCsrfToken();
@@ -39,7 +37,7 @@ export async function adminStatusReCheck()
                 {
                     if(response.data.success)
                     {
-                        router.push("/");
+                        window.location.href = "/";
                     }
                 })
             }
