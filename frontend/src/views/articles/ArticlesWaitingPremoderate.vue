@@ -183,7 +183,7 @@
         }
     }
     
-    const acceptPremoderateArticle = async (articleViewCode : string) => 
+    const onAcceptPremoderateArticle = async (articleViewCode : string) => 
     {
         if(adminStatus.value)
         {
@@ -266,7 +266,7 @@
         }
     }
 
-    const rejectPremoderateArticle = async (articleViewCode : string) => 
+    const onRejectPremoderateArticle = async (articleViewCode : string) => 
     {
         if(adminStatus.value)
         {
@@ -395,14 +395,12 @@
                 <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
                 <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 
-                <div v-if="adminStatus" class="main__article__buttons">
-                    <a @click="currentSelectedArticleIndex = index;acceptPremoderateArticle(article.view_code)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
-                    <a @click="currentSelectedArticleIndex = index;rejectPremoderateArticle(article.view_code)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+                <div class="main__article__buttons">
+                    <a @click="currentSelectedArticleIndex = index;onAcceptPremoderateArticle(article.view_code)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
+                    <a @click="currentSelectedArticleIndex = index;onRejectPremoderateArticle(article.view_code)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
                     <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
                 </div>
-                <div v-else class="main__article__buttons oneButton">
-                    <a :href="'#/article/'+article.view_code" target="_blank" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
-                </div>
+
                 <div class="main__article__reactions">
                     <div class="main__article__reactions__statistics">
                         <img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">

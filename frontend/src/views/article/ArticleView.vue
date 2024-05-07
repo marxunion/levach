@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { ref, computed, reactive, watch, onMounted, onUnmounted } from 'vue';
-	import { useRoute } from 'vue-router';
+	import { useRoute, useRouter } from 'vue-router';
 	import axios from 'axios';
 
 	import { timestampToLocaleFormatedTime } from './../../ts/DateTimeHelper';
@@ -29,6 +29,7 @@
 	import { LangDataHandler } from "./../../ts/LangDataHandler";
 	
 	import './../../libs/font_2605852_prouiefeic';
+import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 
 	const langData = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
@@ -38,6 +39,7 @@
 	let currentVersion = ref(1);
 
 	const route = useRoute();
+	const router = useRouter();
 	const articleViewCode = ref<string | null>(null);
 
 	articleViewCode.value = route.params.articleViewCode as string;
@@ -334,6 +336,210 @@
 			clearInterval(intervalId);
 		}
 	});
+
+	const onRejectPremoderateArticle = async () =>
+	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
+
+		const data = 
+		{
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			status: 0
+		}
+
+		axios.post('/api/admin/article/premoderate/' + articleViewCode.value, data)
+		.then(async response =>
+		{
+			if(response.data.success)
+            {
+                const modal = await openModal(InfoModal, {status: true, text: langData.value['articlePremoderateSuccessfully']});
+				modal.onclose = function()
+				{
+					router.push('/admin/api/waitingPremoderate');
+				}
+            }
+            else
+            {
+                if(response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            }
+		})
+		.catch(error =>
+		{
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Critical)
+        	{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+            else
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+		});
+	}
+
+	const onAcceptPremoderateArticle = async () =>
+	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
+
+		const data = 
+		{
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			status: 1
+		}
+
+		axios.post('/api/admin/article/premoderate/' + articleViewCode.value, data)
+		.then(async response =>
+		{
+			if(response.data.success)
+            {
+                const modal = await openModal(InfoModal, {status: true, text: langData.value['articlePremoderateSuccessfully']});
+				modal.onclose = function()
+				{
+					router.push('/admin/api/waitingPremoderate');
+				}
+            }
+            else
+            {
+                if(response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            }
+		})
+		.catch(error =>
+		{
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Critical)
+        	{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+            else
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+		});
+	}
+
+	const onDeleteArticle = async () =>
+	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
+
+		const data = 
+		{
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+		}
+
+		axios.post('/api/admin/article/delete/' + articleViewCode.value, data)
+		.then(async response =>
+        {
+            if(response.data.success)
+            {
+                const modal = await openModal(InfoModal, {status: true, text: langData.value['articleDeleteSuccessfully']});
+				modal.onclose = function()
+				{
+					router.push('/');
+				}
+            }
+            else
+            {
+                if(response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            }
+        })
+        .catch(error => 
+        {
+            if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Critical)
+        	{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+            else
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+        });
+	}
+
 </script>
 
 <template>
@@ -343,8 +549,14 @@
 				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedData.versions[currentVersion-1].created_date) }}</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedData.versions[currentVersion-1].tags) }}</p>
+				
+				<div v-if="adminStatus" class="main__article__previewContainer__buttons">
+					<a @click="onRejectPremoderateArticle" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
+					<a @click="onAcceptPremoderateArticle" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
+				</div>
+
 				<div v-if="adminStatus" class="main__article__previewContainer__buttons oneButton">
-					<a class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
+					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 				</div>
 				<div class="main__article__previewContainer__reactions">
 					<div class="main__article__previewContainer__reactions__statistics">

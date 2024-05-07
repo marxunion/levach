@@ -314,14 +314,12 @@
                 <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
                 <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 
-                <div v-if="adminStatus" class="main__article__buttons">
-                    <a :href="'#/admin/article/approve/'+article.view_code" class="main__article__buttons__button approveArticleButton">{{ langData['approveArticleButton'] }}</a>
+                <div class="main__article__buttons">
+                    <a :href="'#/admin/article/approve/'+article.view_code" class="main__article__buttons__button acceptApproveArticleButton">{{ langData['acceptApproveArticleButton'] }}</a>
                     <a @click="currentSelectedArticleIndex = index;rejectApproveArticle(article.view_code)" class="main__article__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
                     <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
                 </div>
-                <div v-else class="main__article__buttons oneButton">
-                    <a :href="'#/article/'+article.view_code" target="_blank" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
-                </div>
+
                 <div class="main__article__reactions">
                     <div class="main__article__reactions__statistics">
                         <img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">

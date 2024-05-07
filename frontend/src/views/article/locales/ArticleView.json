@@ -17,10 +17,21 @@
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
+        "articleDeletedSuccessfully": "Статья была успешно удалена",
+        "articleRejectApproveSuccessfully": "Статья была успешно отклонена",
+        "articleRejectPremoderateSuccessfully": "Статья была успешно отклонена",
+        "articleAcceptPremoderateSuccessfully": "Статья была успешно премодерирована",
+
+        "approveArticleButton": "Одобрить",
+        "rejectApproveArticleButton": "Не одобрять",
+        "acceptPremoderateArticleButton": "Принять",
+        "rejectPremoderateArticleButton": "Отклонить",
+        "deleteArticleButton": "Удалить статью",
+
         "versionText": "Версия ",
         "commentsTitle": "Комментарии",
         "sortTitle": "Сортировать по:",
-        "deleteArticleButton": "Удалить статью",
+        
         "sortTypesNames": 
         [
             "популярности",
@@ -126,10 +137,20 @@
             "unknown": "An unknown error occurred. Try again"
         },
 
+        "articleDeletedSuccessfully": "Article was successfully deleted",
+        "articleRejectApproveSuccessfully": "The article was successfully rejected",
+        "articleRejectPremoderateSuccessfully": "The article was successfully rejected",
+        "articleAcceptPremoderateSuccessfully": "Article was successfully premoderated",
+
+        "approveArticleButton": "Approve",
+        "rejectApproveArticleButton": "Reject Approve",
+        "acceptPremoderateArticleButton": "Accept",
+        "rejectPremoderateArticleButton": "Reject",
+        "deleteArticleButton": "Delete article",
+
         "versionText": "Version ",
         "commentsTitle": "Comments",
         "sortTitle": "Sort by:",
-        "deleteArticleButton": "Delete article",
         "sortTypesNames": 
         [
             "popularity",

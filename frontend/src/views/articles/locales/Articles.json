@@ -43,7 +43,7 @@
         "articleAcceptPremoderateSuccessfully": "Статья была успешно премодерирована",
 
         "deleteArticleButton": "Удалить статью",
-        "approveArticleButton": "Одобрить",
+        "acceptApproveArticleButton": "Одобрить",
         "rejectApproveArticleButton": "Не одобрять",
         "acceptPremoderateArticleButton": "Принять",
         "rejectPremoderateArticleButton": "Отклонить",
@@ -172,7 +172,7 @@
         "articleAcceptPremoderateSuccessfully": "Article was successfully premoderated",
 
         "deleteArticleButton": "Delete article",
-        "approveArticleButton": "Approve",
+        "acceptApproveArticleButton": "Approve",
         "rejectApproveArticleButton": "Reject Approve",
         "acceptPremoderateArticleButton": "Accept",
         "rejectPremoderateArticleButton": "Reject",

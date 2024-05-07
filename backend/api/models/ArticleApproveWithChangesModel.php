@@ -34,8 +34,9 @@ class ArticleApproveWithChangesModel extends BaseModel
     {
         if($this->database->get('statistics', 'approvededitorially_status', ['article_id' => $articleId]) == 3)
         {
-            $this->database->update('articles', ['approvededitorially_status' => 2], ['id' => $articleId]);
-            $this->database->update('statistics', ['approvededitorially_status' => 2], ['article_id' => $articleId]);
+            $this->database->delete('articles', ['id' => $articleId, 'version_id[i]' => $statisticsData['current_version']]);
+            $this->database->update('articles', ['approvededitorially_status' => 2, 'version_id' => 1], ['id' => $articleId]);
+            $this->database->update('statistics', ['approvededitorially_status' => 2, 'current_version' => 1], ['article_id' => $articleId]);
         }
         else
         {
