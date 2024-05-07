@@ -13,7 +13,7 @@
         flex-direction: column;
         align-items: center;
         border-radius: 15px;
-        background-color: $articleAdminEditBG;
+        background-color: $ArticleAdminEditBG;
         &__title
         {
             margin-top: 12px;
@@ -61,22 +61,22 @@
                         
                         &.text
                         {
-                            color: $articleAdminEditFiltersInputText;
-                            background-color: $articleAdminEditFiltersInputBG;
+                            color: $ArticleAdminEditFiltersInputText;
+                            background-color: $ArticleAdminEditFiltersInputBG;
                             font-size: 16px;
                             padding-left: 10px;
                             transition: .4s;
                             box-sizing: border-box;
-                            border: 1px solid $articleAdminEditFiltersInputBorder;
+                            border: 1px solid $ArticleAdminEditFiltersInputBorder;
                             &:hover
                             {
-                                border: 1px solid $articleAdminEditFiltersInputBorderHover;
+                                border: 1px solid $ArticleAdminEditFiltersInputBorderHover;
                             }
                         }
                         &.number
                         {
-                            color: $articleAdminEditFiltersInputText;
-                            background-color: $articleAdminEditFiltersInputBG;
+                            color: $ArticleAdminEditFiltersInputText;
+                            background-color: $ArticleAdminEditFiltersInputBG;
                             width: 120px;
                             height: 35px;
 
@@ -86,7 +86,7 @@
                                 cursor: pointer;
                                 border-radius: 12px;
                                 margin: 3px;
-                                background-color: $articleAdminEditFiltersInputNumberButtonBG;
+                                background-color: $ArticleAdminEditFiltersInputNumberButtonBG;
 
                                 &:disabled
                                 {
@@ -98,20 +98,20 @@
                                 border-radius: 15px;
                                 height: 35px;
                                 padding: 0 !important;
-                                border: 1px solid $articleAdminEditFiltersInputBorder;
-                                color: $articleAdminEditFiltersInputText;
-                                background-color: $articleAdminEditFiltersInputBG;
+                                border: 1px solid $ArticleAdminEditFiltersInputBorder;
+                                color: $ArticleAdminEditFiltersInputText;
+                                background-color: $ArticleAdminEditFiltersInputBG;
                                 font-size: 16px;
                                 text-align: center;
                                 transition: .4s;
                                 box-sizing: border-box;
                                 &:hover
                                 {
-                                    border: 1px solid $articleAdminEditFiltersInputBorderHover;
+                                    border: 1px solid $ArticleAdminEditFiltersInputBorderHover;
                                 }
                                 &:focus
                                 {
-                                    border: 1px solid $articleAdminEditFiltersInputBorderFocus;
+                                    border: 1px solid $ArticleAdminEditFiltersInputBorderFocus;
                                 }
                             }
                         }
@@ -124,17 +124,17 @@
                                 height: 35px;
                                 padding: 0 !important;
                                 padding-left: 35px !important;
-                                color: $articleAdminEditFiltersInputText;
-                                background-color: $articleAdminEditFiltersInputBG;
+                                color: $ArticleAdminEditFiltersInputText;
+                                background-color: $ArticleAdminEditFiltersInputBG;
                                 font-size: 16px;
-                                border: 1px solid $articleAdminEditFiltersInputBorder;
+                                border: 1px solid $ArticleAdminEditFiltersInputBorder;
                                 &:hover
                                 {
-                                    border: 1px solid $articleAdminEditFiltersInputBorderHover;
+                                    border: 1px solid $ArticleAdminEditFiltersInputBorderHover;
                                 }
                                 &:focus
                                 {
-                                    border: 1px solid $articleAdminEditFiltersInputBorderFocus;
+                                    border: 1px solid $ArticleAdminEditFiltersInputBorderFocus;
                                 }
                             }
                         }
@@ -165,13 +165,13 @@
                 text-align: center;
                 line-height: 45px;
                 
-                color: $articleAdminEditButtonsApplyFiltersButtonText;
-                border: 2px solid $articleAdminEditButtonsApplyFiltersButtonBorder;
+                color: $ArticleAdminEditButtonsApplyFiltersButtonText;
+                border: 2px solid $ArticleAdminEditButtonsApplyFiltersButtonBorder;
 
                 &.delete
                 {
-                    color: $articleAdminEditButtonsDeleteSelectedButtonText;
-                    border: 2px solid $articleAdminEditButtonsDeleteSelectedButtonBorder;
+                    color: $ArticleAdminEditButtonsDeleteSelectedButtonText;
+                    border: 2px solid $ArticleAdminEditButtonsDeleteSelectedButtonBorder;
                 }
 
 
@@ -192,7 +192,7 @@
         flex-direction: column;
         align-items: center;
         border-radius: 15px;
-        background-color: $articleAdminEditBG;
+        background-color: $ArticleAdminEditBG;
         &__title
         {
             margin-top: 12px;

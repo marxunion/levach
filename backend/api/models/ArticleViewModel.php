@@ -17,10 +17,10 @@ class ArticleViewModel extends BaseModel
 
     public function viewArticle($articleId)
     {
-        $articleVersions = $this->database->select('articles', ['title', 'text', 'tags', 'created_date', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId, 'premoderation_status' => 2]);
+        $articleVersions = $this->database->select('articles', ['title', 'text', 'tags', 'created_date', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId, 'premoderation_status' => 2]);
         if(isset($articleVersions))
         {
-            $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId, 'premoderation_status' => 2]);
+            $articleStatistics = $this->database->get('statistics', ['rating', 'comments', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['article_id' => $articleId, 'premoderation_status' => 2]);
             if(isset($articleStatistics))
             {
                 foreach ($articleVersions as $versionNum => $versionInfo) 
@@ -34,8 +34,15 @@ class ArticleViewModel extends BaseModel
 
                 $article = [
                     'versions' => $articleVersions,
-                    'statistics' => $articleStatistics
+                    'statistics' => [
+                        'rating' => $articleStatistics['rating'],
+                        'comments' => $articleStatistics['comments']
+                    ],
+                    'editorially_status' => $articleStatistics['editorially_status'],
+                    'approvededitorially_status' => $articleStatistics['approvededitorially_status'],
+                    'premoderation_status' => $articleStatistics['premoderation_status']
                 ];
+                
                 return $article;
             }
         }
@@ -47,10 +54,10 @@ class ArticleViewModel extends BaseModel
 
     public function viewArticleAdmin($articleId)
     {
-        $articleVersions = $this->database->select('articles', ['title', 'text', 'tags', 'created_date', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId]);
+        $articleVersions = $this->database->select('articles', ['title', 'text', 'tags', 'created_date', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId]);
         if(isset($articleVersions))
         {
-            $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]);
+            $articleStatistics = $this->database->get('statistics', ['rating', 'comments', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['article_id' => $articleId]);
 
             foreach ($articleVersions as $versionNum => $versionInfo) 
             {
@@ -63,7 +70,13 @@ class ArticleViewModel extends BaseModel
     
             $article = [
                 'versions' => $articleVersions,
-                'statistics' => $articleStatistics
+                'statistics' => [
+                    'rating' => $articleStatistics['rating'],
+                    'comments' => $articleStatistics['comments']
+                ],
+                'editorially_status' => $articleStatistics['editorially_status'],
+                'approvededitorially_status' => $articleStatistics['approvededitorially_status'],
+                'premoderation_status' => $articleStatistics['premoderation_status']
             ];
             return $article;
         }

@@ -48,7 +48,7 @@
 
         width: 60%;
 
-        background-color: $articlesArticleBG;
+        background-color: $ArticlesArticleBG;
 
         border-radius: 15px;
         
@@ -80,7 +80,7 @@
             font-size: 20px;
             font-family: Roboto-Regular;
 
-            color: $articlesArticleTitleTime;
+            color: $ArticlesArticleTitleTime;
 
         }
 
@@ -128,43 +128,43 @@
                 text-align: center;
                 line-height: 45px;
                 
-                color: $articlesReadAllButtonText;
-                border: 2px solid $articlesReadAllButtonBorder;
+                color: $ArticlesReadAllButtonText;
+                border: 2px solid $ArticlesReadAllButtonBorder;
 
                 &.deleteArticleButton
                 {
-                    color: $articleRejectApproveArticleButtonText;
-                    border: 2px solid $articleRejectApproveArticleButtonBorder;
+                    color: $ArticleRejectApproveArticleButtonText;
+                    border: 2px solid $ArticleRejectApproveArticleButtonBorder;
                 }
 
                 &.acceptPremoderateArticleButton
                 {
-                    color: $articleAcceptPremoderateArticleButtonText;
-                    border: 2px solid $articleAcceptPremoderateArticleButtonBorder;
+                    color: $ArticleAcceptPremoderateArticleButtonText;
+                    border: 2px solid $ArticleAcceptPremoderateArticleButtonBorder;
                 }
 
                 &.rejectPremoderateArticleButton
                 {
-                    color: $articleRejectPremoderateArticleButtonText;
-                    border: 2px solid $articleRejectPremoderateArticleButtonBorder;
+                    color: $ArticleRejectPremoderateArticleButtonText;
+                    border: 2px solid $ArticleRejectPremoderateArticleButtonBorder;
                 }
 
                 &.acceptApproveArticleButton
                 {
-                    color: $articleAcceptApproveArticleButtonText;
-                    border: 2px solid $articleAcceptApproveArticleButtonBorder;
+                    color: $ArticleAcceptApproveArticleButtonText;
+                    border: 2px solid $ArticleAcceptApproveArticleButtonBorder;
                 }
 
                 &.rejectApproveArticleButton
                 {
-                    color: $articleRejectApproveArticleButtonText;
-                    border: 2px solid $articleRejectApproveArticleButtonBorder;
+                    color: $ArticleRejectApproveArticleButtonText;
+                    border: 2px solid $ArticleRejectApproveArticleButtonBorder;
                 }
 
                 &.readAllButton
                 {
-                    color: $articlesReadAllButtonText;
-                    border: 2px solid $articlesReadAllButtonBorder;
+                    color: $ArticlesReadAllButtonText;
+                    border: 2px solid $ArticlesReadAllButtonBorder;
                 }
 
                 transition: .4s;

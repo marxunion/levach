@@ -90,15 +90,40 @@
                     text-align: center;
                     line-height: 45px;
                     
-                    color: $articlesReadAllButtonText;
-                    border: 2px solid $articlesReadAllButtonBorder;
+                    color: $ArticlesReadAllButtonText;
+                    border: 2px solid $ArticlesReadAllButtonBorder;
     
+
                     &.deleteArticleButton
                     {
                         color: $ArticleViewDeleteArticleButtonText;
                         border: 2px solid $ArticleViewDeleteArticleButtonBorder;
                     }
-    
+
+                    &.acceptPremoderateArticleButton
+                    {
+                        color: $ArticleViewAcceptPremoderateArticleButtonText;
+                        border: 2px solid $ArticleViewAcceptPremoderateArticleButtonBorder;
+                    }
+
+                    &.rejectPremoderateArticleButton
+                    {
+                        color: $ArticleViewRejectPremoderateArticleButtonText;
+                        border: 2px solid $ArticleViewRejectPremoderateArticleButtonBorder;
+                    }
+
+                    &.acceptApproveArticleButton
+                    {
+                        color: $ArticleViewAcceptApproveArticleButtonText;
+                        border: 2px solid $ArticleViewAcceptApproveArticleButtonBorder;
+                    }
+
+                    &.rejectApproveArticleButton
+                    {
+                        color: $ArticleViewRejectApproveArticleButtonText;
+                        border: 2px solid $ArticleViewRejectApproveArticleButtonBorder;
+                    }
+        
                     transition: .4s;
                     transform: scale(1.00);
                     &:hover
