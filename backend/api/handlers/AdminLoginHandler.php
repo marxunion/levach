@@ -6,6 +6,8 @@ use Core\Critical;
 
 use Base\BaseHandlerRoute;
 
+use Api\Handlers\AdminStatusHandler;
+
 use Api\Models\AdminLoginModel;
 
 class AdminLoginHandler extends BaseHandlerRoute
@@ -22,16 +24,23 @@ class AdminLoginHandler extends BaseHandlerRoute
             {
                 if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
-                    if(isset($this->parsedBody['nickname']))
+                    if(!AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        if(!isset($this->parsedBody['password']))
+                        if(isset($this->parsedBody['nickname']))
                         {
-                            throw new Error(400, "Admin password not found", "Admin password not found");
+                            if(!isset($this->parsedBody['password']))
+                            {
+                                throw new Error(400, "Admin password not found", "Admin password not found");
+                            }
+                        }
+                        else
+                        {
+                            throw new Error(400, "Admin nickname not found", "Admin nickname not found");
                         }
                     }
                     else
                     {
-                        throw new Error(400, "Admin nickname not found", "Admin nickname not found");
+                        throw new Error(400, "Your already logged in", "Your already logged in");
                     }
                 }
                 else
