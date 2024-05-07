@@ -3,8 +3,6 @@
 	import { useRoute, useRouter } from 'vue-router';
 	import axios from 'axios';
 
-	//import DropDown from "./../../components/DropDown.vue";
-
 	import { MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
@@ -134,7 +132,7 @@
 			openModal(LoaderModal);
 			const promises = files.map((file) => 
 				{
-					return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
+					return new Promise<{ data: { fileName: string } }>(resolve => 
 					{
 						const form = new FormData();
 						form.append('file', file);

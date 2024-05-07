@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, watch, reactive, Ref, ComputedRef, computed, onMounted } from 'vue';
+	import { ref, reactive, Ref, ComputedRef, computed, onMounted } from 'vue';
 	import { useRoute } from 'vue-router';
 	import axios from 'axios';
 
@@ -206,7 +206,7 @@
 			openModal(LoaderModal);
 			const promises = files.map((file) => 
 				{
-					return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
+					return new Promise<{ data: { fileName: string } }>(resolve => 
 					{
 						const form = new FormData();
 						form.append('file', file);
