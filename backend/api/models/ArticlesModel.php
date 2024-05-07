@@ -11,7 +11,7 @@ class ArticlesModel extends BaseModel
     }
 
     # Article search
-    public function loadArticleSearchIdsByCreatedDateWithTags($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
+    public function loadArticlesSearchIdsByCreatedDateWithTags($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
         return $this->database->select(
             'statistics',
@@ -29,7 +29,7 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    public function loadArticleSearchIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
+    public function loadArticlesSearchIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
             'statistics',
@@ -46,7 +46,7 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    public function loadArticleSearchIdsByRateWithTags($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
+    public function loadArticlesSearchIdsByRateWithTags($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
         return $this->database->select(
             'statistics',
@@ -64,7 +64,7 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    public function loadArticleSearchIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
+    public function loadArticlesSearchIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
             'statistics',
