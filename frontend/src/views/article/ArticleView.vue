@@ -33,7 +33,7 @@ import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 
 	const langData = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
-	const fetchedData = ref()
+	const fetchedData = ref();
 	const loaded = ref(false);
 
 	let currentVersion = ref(1);
@@ -161,7 +161,7 @@ import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 			openModal(LoaderModal);
 			const promises = files.map((file) => 
 				{
-					return new Promise<{ data: { fileName: string } }>((resolve, reject) => 
+					return new Promise<{ data: { fileName: string } }>(resolve => 
 					{
 						const form = new FormData();
 						form.append('file', file);
@@ -337,6 +337,73 @@ import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 		}
 	});
 
+	const onRejectApproveArticle = async () =>
+	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
+
+		const data = 
+		{
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			status: 0
+		}
+		axios.post('/api/admin/article/approve/' + articleViewCode.value, data)
+		.then(async response =>
+		{
+			if(response.data.success)
+            {
+                const modal = await openModal(InfoModal, {status: true, text: langData.value['articleRejectApproveSuccessfully']});
+				modal.onclose = function()
+				{
+					router.push('/admin/api/articles/waitingApprove');
+				}
+            }
+            else
+            {
+                if(response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            }
+		})
+		.catch(error =>
+		{
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Critical)
+        	{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+            else
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+		});
+	}
+
 	const onRejectPremoderateArticle = async () =>
 	{
 		await getNewCsrfToken();
@@ -361,7 +428,7 @@ import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
                 const modal = await openModal(InfoModal, {status: true, text: langData.value['articleRejectPremoderateSuccessfully']});
 				modal.onclose = function()
 				{
-					router.push('/admin/api/waitingPremoderate');
+					router.push('/admin/api/articles/waitingPremoderate');
 				}
             }
             else
@@ -539,7 +606,6 @@ import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
             }
         });
 	}
-
 </script>
 
 <template>
@@ -550,12 +616,17 @@ import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedData.versions[currentVersion-1].tags) }}</p>
 				
-				<div v-if="adminStatus" class="main__article__previewContainer__buttons">
-					<a @click="onRejectPremoderateArticle" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
-					<a @click="onAcceptPremoderateArticle" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
-				</div>
+				<div v-if="adminStatus || fetchedData['approvededitorially_status'] == 1" class="main__article__previewContainer__buttons">
+					<a @click="onRejectApproveArticle()" class="main__article__previewContainer__buttons__button rejectApproveArticle">{{ langData['rejectApproveArticle'] }}</a>
+					<a :href="'#/admin/article/approve/'+articleViewCode" class="main__article__previewContainer__buttons__button acceptApproveArticle">{{ langData['acceptApproveArticle'] }}</a>
+					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 
-				<div v-if="adminStatus" class="main__article__previewContainer__buttons oneButton">
+				</div>
+				<div v-if="adminStatus || fetchedData['premoderation_status'] == 1" class="main__article__previewContainer__buttons">
+					<a @click="onRejectPremoderateArticle()" class="main__article__previewContainer__buttons__button rejectPremoderateArticle">{{ langData['rejectPremoderateArticle'] }}</a>
+					<a @click="onAcceptPremoderateArticle()" class="main__article__previewContainer__buttons__button acceptPremoderateArticle">{{ langData['acceptPremoderateArticle'] }}</a>
+				</div>
+				<div v-else class="main__article__previewContainer__buttons oneButton">
 					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 				</div>
 				<div class="main__article__previewContainer__reactions">
