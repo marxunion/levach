@@ -202,6 +202,21 @@
         await fetchNewArticles();
     });
 
+    watch(searchText, async () => 
+    {
+        if(searchText.value.length == 0)
+        {
+            loading.value = true;
+            articles.value = reactive([]);
+            lastLoaded.value = 0;
+            searchQuery.value = false;
+
+            console.log(searchText.value);
+            parseSearchData(searchText.value);
+            await fetchNewArticles();
+        }
+    });
+
     watch(searchQuery, async () =>
     {
         if(searchQuery.value)
@@ -239,7 +254,6 @@
             ps.removeEventListener('scroll', handleScroll)
         }
     });
-    
 
     const onAcceptPremoderateArticle = async (articleViewCode : string) => 
     {

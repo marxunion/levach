@@ -14,14 +14,19 @@
 
     const onSearchButton = () =>
     {
-        if(isCurrentRouteName('ArticlesSearch') || isCurrentRouteName('editoriallyArticles') ||  isCurrentRouteName('editoriallyArticles') || isCurrentRouteName('editoriallyApprovedArticles') || isCurrentRouteName('abyssArticles') || isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingApproval'))
+        if(isCurrentRouteName('editoriallyArticles') ||  isCurrentRouteName('editoriallyArticles') || isCurrentRouteName('editoriallyApprovedArticles') || isCurrentRouteName('abyssArticles') || isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingApproval'))
         {   
+            console.log("TEST");
+            console.log(searchQuery.value);
             searchQuery.value = true;
         }
         else
         {
-            searchQuery.value = true;
-            router.push('/articles/search/'+searchText.value);
+            if(searchText.value.length > 0)
+            {
+                searchQuery.value = true;
+                router.push('/articles/search/'+searchText.value);
+            }
         }
     }
 

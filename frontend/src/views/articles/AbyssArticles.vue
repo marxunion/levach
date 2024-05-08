@@ -191,6 +191,20 @@
         }
     }
     
+    watch(searchText, async () => 
+    {
+        if(searchText.value.length == 0)
+        {
+            loading.value = true;
+            articles.value = reactive([]);
+            lastLoaded.value = 0;
+            searchQuery.value = false;
+
+            console.log(searchText.value);
+            parseSearchData(searchText.value);
+            await fetchNewArticles();
+        }
+    });
 
     watch(searchQuery, async () =>
     {
