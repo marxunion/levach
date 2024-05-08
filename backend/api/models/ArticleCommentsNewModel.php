@@ -5,7 +5,7 @@ use Core\Error;
 
 use Base\BaseModel;
 
-class ArticleCommentsSetModel extends BaseModel
+class ArticleCommentsNewModel extends BaseModel
 {
     public function __construct()
     {

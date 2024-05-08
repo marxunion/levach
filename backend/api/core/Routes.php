@@ -31,7 +31,7 @@ use Api\Handlers\AdminArticleApprovePreloadHandler;
 
 use Api\Handlers\AdminArticleCommentsDeleteHandler;
 use Api\Handlers\ArticleCommentsGetHandler;
-use Api\Handlers\ArticleCommentsSetHandler;
+use Api\Handlers\ArticleCommentsNewHandler;
 ;
 use Api\Handlers\csrfTokenHandler;
 
@@ -72,15 +72,15 @@ class Routes
             });
             $apiGroup->group('/comments', function (RouteCollectorProxy $commentsGroup)
             {
-                $commentsGroup->post('/get', function (Request $request, Response $response) 
+                $commentsGroup->get('/get', function (Request $request, Response $response) 
                 {
                     self::$handler = new ArticleCommentsGetHandler($request, $response);
                     return self::$handler->Handle();
                 });
 
-                $commentsGroup->post('/set', function (Request $request, Response $response) 
+                $commentsGroup->post('/new', function (Request $request, Response $response) 
                 {
-                    self::$handler = new ArticleCommentCreateHandler($request, $response);
+                    self::$handler = new ArticleCommentsNewHandler($request, $response);
                     return self::$handler->Handle();
                 });
             

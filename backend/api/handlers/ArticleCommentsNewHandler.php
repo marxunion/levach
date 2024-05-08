@@ -6,9 +6,9 @@ use Core\Error;
 
 use Base\BaseHandlerRoute;
 
-use Api\Models\ArticleCommentsSetModel;
+use Api\Models\ArticleCommentsNewModel;
 
-class ArticleCommentsSetHandler extends BaseHandlerRoute
+class ArticleCommentsNewHandler extends BaseHandlerRoute
 {
     public function Init()
     {
@@ -25,11 +25,26 @@ class ArticleCommentsSetHandler extends BaseHandlerRoute
                     {
                         if(isset($this->parsedBody['commentType']))
                         {
-                            $this->model = new ArticleCommentsSetModel();
+                            if(isset($this->parsedBody['articleViewCode']))
+                            {
+                                if(isset($this->parsedBody['text']))
+                                {
+                                    $this->model = new ArticleCommentsNewModel();
+                                }
+                                else
+                                {
+                                    throw new Error(400, "Invalid comment text", "Invalid article text");
+                                }
+                                
+                            }
+                            else
+                            {
+                                throw new Error(400, "Invalid article viewcode", "Invalid article viewcode");
+                            }
                         }
                         else
                         {
-                            throw new Error(400, "Invalid admin token", "Invalid admin token");
+                            throw new Error(400, "Invalid comment type", "Invalid comment type");
                         }
                     }
                     else
@@ -55,39 +70,32 @@ class ArticleCommentsSetHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        if($this->parsedBody['commentType'] == 'article')
-        {   
-            if($this->parsedBody['articleViewCode'])
-            {
-
-            }
-            else
-            {
-
-            }
-        }
-        else if($this->parsedBody['commentType'] == 'comment')
+        $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
+        if(isset($articleId))
         {
-            if()
+            if($this->parsedBody['commentType'] == 'article')
             {
-
+                
             }
-            else
+            else if($this->parsedBody['commentType'] == 'comment') 
             {
-                if($this->parsedBody['commentType'])
+                if(isset($this->parsedBody['commentId']))
                 {
-    
+                    c
                 }
                 else
                 {
-                    
+
                 }
             }
-            
+            else
+            {
+                throw new Error(403, "Invalid article viewcode", "Invalid article code");
+            }
         }
         else
         {
-            throw new Error(403, "Invalid comment type", "Invalid comment type");
+            throw new Error(403, "Invalid article viewcode", "Invalid article code");
         }
     }
 }
