@@ -144,12 +144,7 @@
 		currentSortType.value = sortType;
 	}
 
-	// NewComment
-	let newCommentEditorState = reactive(
-	{
-		text: "",
-		language: LangDataHandler.currentLanguage.value
-	});
+	
 
 	watch(langData, () =>
 	{
@@ -157,156 +152,7 @@
 		newCommentEditorState.language = LangDataHandler.currentLanguage.value;
 	});
 
-	const onNewCommentUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
-	{
-		if(files.length > 0)
-		{
-			openModal(LoaderModal);
-			const promises = files.map((file) => 
-				{
-					return new Promise<{ data: { fileName: string } }>(resolve => 
-					{
-						const form = new FormData();
-						form.append('file', file);
-
-						axios.post('/api/media/img/upload', form, 
-						{
-							headers: 
-							{
-								'Content-Type': 'multipart/form-data'
-							}
-						})
-						.then((response) => 
-						{
-						
-							if (response.data) 
-							{
-								if(response.data.fileName)
-								{
-									resolve(response);
-								}
-								else 
-								{
-									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
-								}
-							}
-							else
-							{
-								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-
-							}
-						})
-						.catch((error) => 
-						{
-							if (error.response.data) 
-							{
-								if(error.response.data.Warning)
-								{
-									if(error.response.data.Warning.message == "UploadImage Invalid image type")
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
-									}
-									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
-									{
-										openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
-									}
-									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
-									}
-									else
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"] });
-									}
-									
-								}
-								else if(error.response.data.Error)
-								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-								else if(error.response.data.Critical)
-								{
-									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-								else 
-								{
-									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-							}
-							else
-							{
-								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-							}
-						});
-					});
-				}
-			);
-
-			const res = await Promise.all(promises);
-			
-			const successfulResults = res.filter(item => item !== null);
-
-			closeModal();
-			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
-		}
-	}
-
-	// Comments
-	const comments = ref(
-	[
-		{
-			id: "00000001",
-			time: '11:06 19.09.2022',
-			text: 'Test Comment1',
-			statistics: 
-			{
-				rating: 0
-			},
-			subcomments: [
-				{
-					id: "00000002",
-					time: '12:00 19.09.2022',
-					text: 'Test Subcomment1',
-					statistics: 
-					{
-						rating: 0
-					},
-					subcomments: [
-						{
-							id: "00000003",
-							time: '13:30 19.09.2022',
-							text: 'Test Subsubcomment1',
-							statistics: 
-							{
-								rating: 0
-							},
-							subcomments: []
-						}
-					]
-				},
-				{
-					id: "00000004",
-					time: '12:15 19.09.2022',
-					text: '# Test Subcomment2\n',
-					statistics: 
-					{
-						rating: 0
-					},
-					subcomments: []
-				}
-			]
-		},
-		{
-			id: "00000005",
-			time: '14:00 19.09.2022',
-			text: 'Test Comment2',
-			statistics: 
-			{
-				rating: 0
-			},
-			subcomments: []
-		}
-	]);
+	
 
 	let intervalId : NodeJS.Timeout | null = null;
 	onMounted(async function() {
@@ -614,6 +460,164 @@
 	{
 		openModal(ShareWith, { link: 'http://localhost:8000/#/article/'+articleViewCode.value})
 	}
+
+	// NewComment
+	let newCommentEditorState = reactive(
+	{
+		text: "",
+		language: LangDataHandler.currentLanguage.value
+	});
+
+	const onNewCommentUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
+	{
+		if(files.length > 0)
+		{
+			openModal(LoaderModal);
+			const promises = files.map((file) => 
+				{
+					return new Promise<{ data: { fileName: string } }>(resolve => 
+					{
+						const form = new FormData();
+						form.append('file', file);
+
+						axios.post('/api/media/img/upload', form, 
+						{
+							headers: 
+							{
+								'Content-Type': 'multipart/form-data'
+							}
+						})
+						.then((response) => 
+						{
+						
+							if (response.data) 
+							{
+								if(response.data.fileName)
+								{
+									resolve(response);
+								}
+								else 
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
+								}
+							}
+							else
+							{
+								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+
+							}
+						})
+						.catch((error) => 
+						{
+							if (error.response.data) 
+							{
+								if(error.response.data.Warning)
+								{
+									if(error.response.data.Warning.message == "UploadImage Invalid image type")
+									{
+										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
+									}
+									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
+									{
+										openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
+									}
+									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
+									{
+										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
+									}
+									else
+									{
+										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"] });
+									}
+									
+								}
+								else if(error.response.data.Error)
+								{
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+								}
+								else if(error.response.data.Critical)
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+								}
+								else 
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+								}
+							}
+							else
+							{
+								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+						});
+					});
+				}
+			);
+
+			const res = await Promise.all(promises);
+			
+			const successfulResults = res.filter(item => item !== null);
+
+			closeModal();
+			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
+		}
+	}
+
+	// Comments
+	const comments = ref(
+	[
+		{
+			id: "00000001",
+			time: '11:06 19.09.2022',
+			text: 'Test Comment1',
+			statistics: 
+			{
+				rating: 0
+			},
+			subcomments: [
+				{
+					id: "00000002",
+					time: '12:00 19.09.2022',
+					text: 'Test Subcomment1',
+					statistics: 
+					{
+						rating: 0
+					},
+					subcomments: [
+						{
+							id: "00000003",
+							time: '13:30 19.09.2022',
+							text: 'Test Subsubcomment1',
+							statistics: 
+							{
+								rating: 0
+							},
+							subcomments: []
+						}
+					]
+				},
+				{
+					id: "00000004",
+					time: '12:15 19.09.2022',
+					text: '# Test Subcomment2\n',
+					statistics: 
+					{
+						rating: 0
+					},
+					subcomments: []
+				}
+			]
+		},
+		{
+			id: "00000005",
+			time: '14:00 19.09.2022',
+			text: 'Test Comment2',
+			statistics: 
+			{
+				rating: 0
+			},
+			subcomments: []
+		}
+	]);
 </script>
 
 <template>
@@ -664,7 +668,12 @@
 
 				<div class="main__article__comments__newComment">
 					<MdEditor class="main__article__comments__newComment__editor" v-model="(newCommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImg" :language="newCommentEditorState.language" noIconfont :preview="false"/>
-					<img src="./../../assets/img/article/sendCommentButton.svg" alt="Send Button" class="main__article__comments__newComment__sendButton">
+					<img src="./../../assets/img/article/sendCommentButton.svg" alt="Send" class="main__article__comments__newComment__sendButton">
+					<img src="./../../assets/img/article/sendCommentButton.svg" alt="Send" class="main__article__comments__newComment__sendButton">
+					<div class="main__article__comments__newComment__reactions">
+						<img src="./../../assets/img/article/like.svg" alt="Like" class="main__article__comments__newComment__reactions">
+						<img src="./../../assets/img/article/dislike.svg" alt="Dislike" class="main__article__comments__newComment__reactions">
+					</div>
 				</div>
 				
 				<div class="main__article__comments__commentsList">

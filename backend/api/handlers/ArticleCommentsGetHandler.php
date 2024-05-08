@@ -9,7 +9,7 @@ use Base\BaseHandlerRoute;
 
 use Api\Models\ArticleCommentsGetModel;
 
-class ArticleCommentsSetHandler extends BaseHandlerRoute
+class ArticleCommentsGetHandler extends BaseHandlerRoute
 {
     public function Init()
     {
