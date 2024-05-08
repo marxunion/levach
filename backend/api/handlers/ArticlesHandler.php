@@ -66,8 +66,8 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
-            $searchTagsString = implode(',', $this->parsedBody['searchTags']);
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
             $articleIds = $this->model->loadEditoriallyArticlesSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
@@ -77,7 +77,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadEditoriallyArticlesSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
@@ -120,7 +120,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
             $articleIds = $this->model->loadEditoriallyArticlesSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
@@ -131,7 +131,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadEditoriallyArticlesSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
@@ -174,7 +174,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
             $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
@@ -185,7 +185,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
@@ -228,7 +228,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
             $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
@@ -239,7 +239,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
@@ -282,7 +282,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
             $articleIds = $this->model->loadAbyssArticlesSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
@@ -293,7 +293,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadAbyssArticlesSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
@@ -336,7 +336,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
             $articleIds = $this->model->loadAbyssArticlesSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
@@ -347,7 +347,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadAbyssArticlesSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
@@ -390,7 +390,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
             $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
@@ -401,7 +401,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
@@ -444,7 +444,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
             $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
@@ -455,7 +455,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
@@ -498,7 +498,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
             $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
@@ -509,7 +509,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
@@ -552,7 +552,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
             $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
@@ -563,7 +563,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
@@ -606,7 +606,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
             
             $articleIds = $this->model->loadArticlesSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
@@ -617,7 +617,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadArticlesSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
@@ -660,7 +660,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 throw new Error(400, "Invalid search tags", "Invalid search tags");
             }
 
-            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
             
             $articleIds = $this->model->loadArticlesSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
@@ -671,7 +671,7 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 if(strlen($this->parsedBody['searchTitle']) > 0)
                 {
-                    $searchTitle = $this->parsedBody['searchTitle'];
+                    $searchTitle = '%'.$this->parsedBody['searchTitle'].'%';
                     
                     $articleIds = $this->model->loadArticlesSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }

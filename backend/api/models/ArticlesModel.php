@@ -51,7 +51,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_title LIKE title AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
@@ -103,7 +103,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_title LIKE title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
@@ -290,6 +290,7 @@ class ArticlesModel extends BaseModel
         $bindings = [
             ':approvededitorially_status' => 2,
             ':editorially_status' => 1,
+
             ':count' => $count,
             ':lastLoaded' => $lastLoaded,
             ':tags' => $searchTags
@@ -305,6 +306,7 @@ class ArticlesModel extends BaseModel
         $bindings = [
             ':approvededitorially_status' => 2,
             ':editorially_status' => 1,
+
             ':count' => $count,
             ':lastLoaded' => $lastLoaded,
             ':title' => $searchTitle,
@@ -356,6 +358,7 @@ class ArticlesModel extends BaseModel
         $bindings = [
             ':approvededitorially_status' => 2,
             ':editorially_status' => 1,
+
             ':count' => $count,
             ':lastLoaded' => $lastLoaded,
             ':tags' => $searchTags
@@ -371,6 +374,7 @@ class ArticlesModel extends BaseModel
         $bindings = [
             ':approvededitorially_status' => 2,
             ':editorially_status' => 1,
+
             ':count' => $count,
             ':lastLoaded' => $lastLoaded,
             ':title' => $searchTitle,
@@ -423,13 +427,13 @@ class ArticlesModel extends BaseModel
 
     public function loadAbyssArticlesSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status_two != :approvededitorially_status_two AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
             ':editorially_status' => 1,
             ':approvededitorially_status' => 2,
-            ':approvededitorially_status_two' => 3
+            ':approvededitorially_status_two' => 3,
             
             ':count' => $count,
             ':lastLoaded' => $lastLoaded,
@@ -441,13 +445,13 @@ class ArticlesModel extends BaseModel
 
     public function loadAbyssArticlesSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status_two != :approvededitorially_status_two AND current_title LIKE :title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_title LIKE :title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
             ':editorially_status' => 1,
             ':approvededitorially_status' => 2,
-            ':approvededitorially_status_two' => 3
+            ':approvededitorially_status_two' => 3,
             
             ':count' => $count,
             ':lastLoaded' => $lastLoaded,
@@ -499,13 +503,13 @@ class ArticlesModel extends BaseModel
 
     public function loadAbyssArticlesSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND approvededitorially_status_two = :approvededitorially_status_two AND approvededitorially_status = :approvededitorially_status AND editorially_status != :editorially_status AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
             ':editorially_status' => 1,
             ':approvededitorially_status' => 2,
-            ':approvededitorially_status_two' => 3
+            ':approvededitorially_status_two' => 3,
             
             ':count' => $count,
             ':lastLoaded' => $lastLoaded,
@@ -517,13 +521,13 @@ class ArticlesModel extends BaseModel
 
     public function loadAbyssArticlesSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND approvededitorially_status_two = :approvededitorially_status_two AND approvededitorially_status = :approvededitorially_status AND editorially_status != :editorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
             ':editorially_status' => 1,
             ':approvededitorially_status' => 2,
-            ':approvededitorially_status_two' => 3
+            ':approvededitorially_status_two' => 3,
             
             ':count' => $count,
             ':lastLoaded' => $lastLoaded,
@@ -586,7 +590,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingApproveSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND approvededitorially_status = :approvededitorially_status AND current_title LIKE title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT article_id FROM statistics WHERE AND approvededitorially_status = :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':approvededitorially_status' => 1,
@@ -650,7 +654,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingApproveSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND approvededitorially_status = :approvededitorially_status AND current_title LIKE title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT article_id FROM statistics WHERE AND approvededitorially_status = :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':approvededitorially_status' => 1,
@@ -716,7 +720,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingPremoderateSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND premoderation_status = :premoderation_status AND current_title LIKE title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT article_id FROM statistics WHERE AND premoderation_status = :premoderation_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 1,
@@ -780,7 +784,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingPremoderateSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND premoderation_status = :premoderation_status AND current_title LIKE title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT article_id FROM statistics WHERE AND premoderation_status = :premoderation_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 1,
