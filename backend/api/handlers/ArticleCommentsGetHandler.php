@@ -13,7 +13,10 @@ class ArticleCommentsGetHandler extends BaseHandlerRoute
 {
     public function Init()
     {
+        if()
+        {
 
+        }
     }
 
     public function Process()

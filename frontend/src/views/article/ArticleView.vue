@@ -43,6 +43,64 @@
 
 	let currentVersion : Ref<number> = ref(1);
 
+
+	// Comments
+	const comments = ref(
+	[
+		{
+			id: "00000001",
+			time: '11:06 19.09.2022',
+			text: 'Test Comment1',
+			statistics: 
+			{
+				rating: 0
+			},
+			subcomments: [
+				{
+					id: "00000002",
+					time: '12:00 19.09.2022',
+					text: 'Test Subcomment1',
+					statistics: 
+					{
+						rating: 0
+					},
+					subcomments: [
+						{
+							id: "00000003",
+							time: '13:30 19.09.2022',
+							text: 'Test Subsubcomment1',
+							statistics: 
+							{
+								rating: 0
+							},
+							subcomments: []
+						}
+					]
+				},
+				{
+					id: "00000004",
+					time: '12:15 19.09.2022',
+					text: '# Test Subcomment2\n',
+					statistics: 
+					{
+						rating: 0
+					},
+					subcomments: []
+				}
+			]
+		},
+		{
+			id: "00000005",
+			time: '14:00 19.09.2022',
+			text: 'Test Comment2',
+			statistics: 
+			{
+				rating: 0
+			},
+			subcomments: []
+		}
+	])
+
 	const route = useRoute();
 	const router = useRouter();
 	const articleViewCode : Ref<string | null> = ref<string | null>(null);
@@ -462,9 +520,6 @@
 
 	const onLikeReactionClick = () =>
 	{
-		console.log('test');
-		console.log(currentCommentReaction.value);
-		
 		if(currentCommentReaction.value === 1)
 		{
 			currentCommentReaction.value = 0;
@@ -581,62 +636,7 @@
 		}
 	}
 
-	// Comments
-	const comments = ref(
-	[
-		{
-			id: "00000001",
-			time: '11:06 19.09.2022',
-			text: 'Test Comment1',
-			statistics: 
-			{
-				rating: 0
-			},
-			subcomments: [
-				{
-					id: "00000002",
-					time: '12:00 19.09.2022',
-					text: 'Test Subcomment1',
-					statistics: 
-					{
-						rating: 0
-					},
-					subcomments: [
-						{
-							id: "00000003",
-							time: '13:30 19.09.2022',
-							text: 'Test Subsubcomment1',
-							statistics: 
-							{
-								rating: 0
-							},
-							subcomments: []
-						}
-					]
-				},
-				{
-					id: "00000004",
-					time: '12:15 19.09.2022',
-					text: '# Test Subcomment2\n',
-					statistics: 
-					{
-						rating: 0
-					},
-					subcomments: []
-				}
-			]
-		},
-		{
-			id: "00000005",
-			time: '14:00 19.09.2022',
-			text: 'Test Comment2',
-			statistics: 
-			{
-				rating: 0
-			},
-			subcomments: []
-		}
-	]);
+	
 
 	watch(langData, () =>
 	{
