@@ -185,12 +185,17 @@
 
     watch(searchQuery, async () =>
     {
-        loading.value = true;
-        articles.value = reactive([]);
+        if(searchQuery.value)
+        {
+            loading.value = true;
+            articles.value = reactive([]);
+            lastLoaded.value = 0;
+            searchQuery.value = false;
 
-        parseSearchData(searchText.value);
-
-        await fetchNewArticles();
+            console.log(searchText.value);
+            parseSearchData(searchText.value);
+            await fetchNewArticles();
+        }
     });
     
     onMounted(async () => 

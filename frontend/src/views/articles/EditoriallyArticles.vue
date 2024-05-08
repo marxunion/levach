@@ -31,7 +31,6 @@
 
     import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
     
-
 	const langData = LangDataHandler.initLangDataHandler("EditoriallyArticles", langsData).langData;
 
     adminStatusReCheck();
@@ -56,6 +55,7 @@
         loading.value = true;
         articles.value = reactive([]);
         lastLoaded.value = 0;
+        searchQuery.value = false;
 
         currentSortType.value = newSortType;
 
@@ -93,6 +93,8 @@
             const searchParts : string[] = searchData.split('#');
             searchTitle = searchParts[0].trim();
             searchTags = searchParts.slice(1).map(tag => `${tag.trim()}`);
+            console.log(searchTitle);
+            console.log(searchTags);
         }
     } 
 
@@ -108,7 +110,7 @@
                 count: count,
                 lastLoaded: lastLoaded.value,
                 searchTitle: searchTitle,
-                searchTags: searchTags,
+                searchTags: searchTags
             }
         }
         else
@@ -130,7 +132,7 @@
                     category: 'EditoriallyArticles',
                     count: count,
                     lastLoaded: lastLoaded.value,
-                    searchTags: searchTags,
+                    searchTags: searchTags
                 }
             }
             else
@@ -146,7 +148,10 @@
 
         await axios.get('/api/articles', 
         {
-            params: params
+            params: params,
+            paramsSerializer: {
+                indexes: true,
+            }
         })
         .then(response => 
         {
@@ -189,12 +194,17 @@
     
     watch(searchQuery, async () =>
     {
-        loading.value = true;
-        articles.value = reactive([]);
+        if(searchQuery.value)
+        {
+            loading.value = true;
+            articles.value = reactive([]);
+            lastLoaded.value = 0;
+            searchQuery.value = false;
 
-        parseSearchData(searchText.value);
-
-        await fetchNewArticles();
+            console.log(searchText.value);
+            parseSearchData(searchText.value);
+            await fetchNewArticles();
+        }
     });
 
     onMounted(async () => 

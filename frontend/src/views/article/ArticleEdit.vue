@@ -750,7 +750,7 @@
 					<button @click="onRejectApproveWithChanges" class="main__article__block__button rejectArticleApprovedWithChangesButton">{{ langData['rejectArticleApprovedWithChangesButtonTitle'] }}</button>
 				</div>
 			</div>
-			<div v-if="fetchedData['approvededitorially_status'] == 2 && fetchedData['editorially_status'] != 1" class="main__article__previewContainer">
+			<div v-if="fetchedData['approvededitorially_status'] == 2 && fetchedData['editorially_status'] != 1 && !adminStatus" class="main__article__previewContainer">
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="editorState.text" :language="LangDataHandler.currentLanguage.value"/>
 			</div>
 			
@@ -759,7 +759,7 @@
 				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ langData['sendButton'] }}</button>	
 			</div>
 
-			<div v-if="fetchedData['approvededitorially_status'] != 2" class="main__article__editTags">
+			<div v-if="fetchedData['approvededitorially_status'] != 2 || fetchedData['editorially_status'] == 1 || adminStatus" class="main__article__editTags">
 				<div class="main__article__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">
 					<p class="main__article__editTags__tags__tag__title">{{ tag }}</p>
 					<button class="main__article__editTags__tags__tag__button" @click="removeTag(index)"><p>+</p></button>

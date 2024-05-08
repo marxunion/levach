@@ -1,6 +1,8 @@
 <?php
 namespace Api\Models;
 
+use Medoo\Medoo;
+
 use Base\BaseModel;
 
 class ArticlesModel extends BaseModel
@@ -11,58 +13,8 @@ class ArticlesModel extends BaseModel
     }
 
     // Article search
-    
-    public function loadArticlesSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "created_date" => "DESC",
-                ],
-                'premoderation_status' => 2,
-                'current_title[~]' => $searchTitle,
-                'approvededitorially_status[!]' => 3
-            ]
-        );
-    }
 
-    public function loadArticlesSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "created_date" => "DESC",
-                ],
-                'premoderation_status' => 2,
-                'current_tags &&' => $searchTags,
-                'approvededitorially_status[!]' => 3
-            ]
-        );
-    }
-
-    public function loadArticlesSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "created_date" => "DESC",
-                ],
-                'premoderation_status' => 2,
-                'current_title[~]' => $searchTitle,
-                'current_tags &&' => $searchTags,
-                'approvededitorially_status[!]' => 3
-            ]
-        );
-    }
+    // Rate
 
     public function loadArticlesSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
@@ -116,9 +68,126 @@ class ArticlesModel extends BaseModel
         );
     }
 
+    // Created Date
+
+    public function loadArticlesSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "created_date" => "DESC",
+                ],
+                'premoderation_status' => 2,
+                'current_title[~]' => $searchTitle,
+                'approvededitorially_status[!]' => 3
+            ]
+        );
+    }
+
+    public function loadArticlesSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "created_date" => "DESC",
+                ],
+                'premoderation_status' => 2,
+                'current_tags &&' => $searchTags,
+                'approvededitorially_status[!]' => 3
+            ]
+        );
+    }
+
+    public function loadArticlesSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "created_date" => "DESC",
+                ],
+                'premoderation_status' => 2,
+                'current_title[~]' => $searchTitle,
+                'current_tags &&' => $searchTags,
+                'approvededitorially_status[!]' => 3
+            ]
+        );
+    }
+
     // EditoriallyArticles
 
+    // Rate
+
+    public function loadEditoriallyArticlesIdsByRate($count = 4, $lastLoaded = 0)
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'editorially_status' => 1,
+            ]
+        );
+    }
+
+    public function loadEditoriallyArticlesSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'editorially_status' => 1,
+                'current_title[~]' => $searchTitle,
+            ]
+        );
+    }
+
+    public function loadEditoriallyArticlesSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
+    {
+        $sql = "SELECT article_id FROM statistics WHERE editorially_status = :status AND current_tags @> :tags";
+
+        $bindings = [
+            ':status' => 1,
+            ':tags' => $searchTags
+        ];
+
+        return $this->database->query($sql, $bindings)->fetchAll();
+    }
+
+    public function loadEditoriallyArticlesSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'editorially_status' => 1,
+                'current_title[~]' => $searchTitle,
+                'current_tags &&' => $searchTags,
+            ]
+        );
+    }
+    
     // Created date
+
     public function loadEditoriallyArticlesIdsByCreatedDate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
@@ -183,73 +252,79 @@ class ArticlesModel extends BaseModel
         );
     }
     
-    // Rate
-
-    public function loadEditoriallyArticlesIdsByRate($count = 4, $lastLoaded = 0)
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
-                ],
-                'editorially_status' => 1,
-            ]
-        );
-    }
-
-    public function loadEditoriallyArticlesSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
-                ],
-                'editorially_status' => 1,
-                'current_title[~]' => $searchTitle,
-            ]
-        );
-    }
-
-    public function loadEditoriallyArticlesSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
-                ],
-                'editorially_status' => 1,
-                'current_tags &&' => $searchTags,
-            ]
-        );
-    }
-
-    public function loadEditoriallyArticlesSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
-                ],
-                'editorially_status' => 1,
-                'current_title[~]' => $searchTitle,
-                'current_tags &&' => $searchTags,
-            ]
-        );
-    }
+    
 
     // EditoriallyApprovedArticles
+
+    // Rate
+
+    public function loadEditoriallyApprovedArticlesIdsByRate($count = 4, $lastLoaded = 0)
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'approvededitorially_status' => 2,
+                'editorially_status[!]' => 1,
+            ]
+        );
+    }
+    
+    public function loadEditoriallyApprovedArticlesSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'approvededitorially_status' => 2,
+                'editorially_status[!]' => 1,
+                'current_title[~]' => $searchTitle,
+            ]
+        );
+    }
+
+    public function loadEditoriallyApprovedArticlesSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'approvededitorially_status' => 2,
+                'editorially_status[!]' => 1,
+                'current_tags &&' => $searchTags,
+            ]
+        );
+    }
+
+    public function loadEditoriallyApprovedArticlesSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'approvededitorially_status' => 2,
+                'editorially_status[!]' => 1,
+                'current_title[~]' => $searchTitle,
+                'current_tags &&' => $searchTags,
+            ]
+        );
+    }
 
     // Created Date
 
@@ -320,158 +395,9 @@ class ArticlesModel extends BaseModel
             ]
         );
     }
-    
-    // Rate
-
-    public function loadEditoriallyApprovedArticlesIdsByRate($count = 4, $lastLoaded = 0)
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
-                ],
-                'approvededitorially_status' => 2,
-                'editorially_status[!]' => 1,
-            ]
-        );
-    }
-    
-    public function loadEditoriallyApprovedArticlesSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
-                ],
-                'approvededitorially_status' => 2,
-                'editorially_status[!]' => 1,
-                'current_title[~]' => $searchTitle,
-            ]
-        );
-    }
-
-    public function loadEditoriallyApprovedArticlesSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
-                ],
-                'approvededitorially_status' => 2,
-                'editorially_status[!]' => 1,
-                'current_tags &&' => $searchTags,
-            ]
-        );
-    }
-
-    public function loadEditoriallyApprovedArticlesSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
-                ],
-                'approvededitorially_status' => 2,
-                'editorially_status[!]' => 1,
-                'current_title[~]' => $searchTitle,
-                'current_tags &&' => $searchTags,
-            ]
-        );
-    }
-    
 
     // AbyssArticles
 
-    // Created Date
-
-    public function loadAbyssArticlesIdsByCreatedDate($count = 4, $lastLoaded = 0)
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "created_date" => "DESC",
-                ],
-                'premoderation_status' => 2,
-                'editorially_status[!]' => 1,
-                'approvededitorially_status[!]' => 2,
-                'approvededitorially_status[!]' => 3,
-            ]
-        );
-    }
-
-    public function loadAbyssArticlesSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "created_date" => "DESC",
-                ],
-                'premoderation_status' => 2,
-                'editorially_status[!]' => 1,
-                'approvededitorially_status[!]' => 2,
-                'approvededitorially_status[!]' => 3,
-                'current_title[~]' => $searchTitle,
-            ]
-        );
-    }
-
-    public function loadAbyssArticlesSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "created_date" => "DESC",
-                ],
-                'premoderation_status' => 2,
-                'editorially_status[!]' => 1,
-                'approvededitorially_status[!]' => 2,
-                'approvededitorially_status[!]' => 3,
-                'current_tags &&' => $searchTags,
-            ]
-        );
-    }
-
-    public function loadAbyssArticlesSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "created_date" => "DESC",
-                ],
-                'premoderation_status' => 2,
-                'editorially_status[!]' => 1,
-                'approvededitorially_status[!]' => 2,
-                'approvededitorially_status[!]' => 3,
-                'current_title[~]' => $searchTitle,
-                'current_tags &&' => $searchTags,
-            ]
-        );
-    }
-    
     // Rate
 
     public function loadAbyssArticlesIdsByRate($count = 4, $lastLoaded = 0)
@@ -550,11 +476,9 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    // ArticlesWaitingApprove
-
     // Created Date
 
-    public function loadArticlesWaitingApproveIdsByCreatedDate($count = 4, $lastLoaded = 0)
+    public function loadAbyssArticlesIdsByCreatedDate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
             'statistics',
@@ -564,12 +488,15 @@ class ArticlesModel extends BaseModel
                 "ORDER" => [
                     "created_date" => "DESC",
                 ],
-                'approvededitorially_status' => 1,
+                'premoderation_status' => 2,
+                'editorially_status[!]' => 1,
+                'approvededitorially_status[!]' => 2,
+                'approvededitorially_status[!]' => 3,
             ]
         );
     }
 
-    public function loadArticlesWaitingApproveSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
+    public function loadAbyssArticlesSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
             'statistics',
@@ -579,13 +506,16 @@ class ArticlesModel extends BaseModel
                 "ORDER" => [
                     "created_date" => "DESC",
                 ],
-                'approvededitorially_status' => 1,
+                'premoderation_status' => 2,
+                'editorially_status[!]' => 1,
+                'approvededitorially_status[!]' => 2,
+                'approvededitorially_status[!]' => 3,
                 'current_title[~]' => $searchTitle,
             ]
         );
     }
 
-    public function loadArticlesWaitingApproveSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
+    public function loadAbyssArticlesSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
         return $this->database->select(
             'statistics',
@@ -595,13 +525,16 @@ class ArticlesModel extends BaseModel
                 "ORDER" => [
                     "created_date" => "DESC",
                 ],
-                'approvededitorially_status' => 1,
+                'premoderation_status' => 2,
+                'editorially_status[!]' => 1,
+                'approvededitorially_status[!]' => 2,
+                'approvededitorially_status[!]' => 3,
                 'current_tags &&' => $searchTags,
             ]
         );
     }
 
-    public function loadArticlesWaitingApproveSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
+    public function loadAbyssArticlesSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
         return $this->database->select(
             'statistics',
@@ -611,13 +544,18 @@ class ArticlesModel extends BaseModel
                 "ORDER" => [
                     "created_date" => "DESC",
                 ],
-                'approvededitorially_status' => 1,
+                'premoderation_status' => 2,
+                'editorially_status[!]' => 1,
+                'approvededitorially_status[!]' => 2,
+                'approvededitorially_status[!]' => 3,
                 'current_title[~]' => $searchTitle,
                 'current_tags &&' => $searchTags,
             ]
         );
     }
-    
+
+    // ArticlesWaitingApprove
+
     // Rate
 
     public function loadArticlesWaitingApproveSearchIdsByRate($count = 4, $lastLoaded = 0)
@@ -684,7 +622,139 @@ class ArticlesModel extends BaseModel
         );
     }
 
+    // Created Date
+
+    public function loadArticlesWaitingApproveIdsByCreatedDate($count = 4, $lastLoaded = 0)
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "created_date" => "DESC",
+                ],
+                'approvededitorially_status' => 1,
+            ]
+        );
+    }
+
+    public function loadArticlesWaitingApproveSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "created_date" => "DESC",
+                ],
+                'approvededitorially_status' => 1,
+                'current_title[~]' => $searchTitle,
+            ]
+        );
+    }
+
+    public function loadArticlesWaitingApproveSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "created_date" => "DESC",
+                ],
+                'approvededitorially_status' => 1,
+                'current_tags &&' => $searchTags,
+            ]
+        );
+    }
+
+    public function loadArticlesWaitingApproveSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "created_date" => "DESC",
+                ],
+                'approvededitorially_status' => 1,
+                'current_title[~]' => $searchTitle,
+                'current_tags &&' => $searchTags,
+            ]
+        );
+    }
+
     // ArticlesWaitingPremoderate
+
+    // Rate
+
+    public function loadArticlesWaitingPremoderateIdsByRate($count = 4, $lastLoaded = 0)
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'premoderation_status' => 1,
+            ]
+        );
+    }
+
+    public function loadArticlesWaitingPremoderateSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'premoderation_status' => 1,
+                'current_title[~]' => $searchTitle,
+            ]
+        );
+    }
+
+    public function loadArticlesWaitingPremoderateSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'premoderation_status' => 1,
+                'current_tags &&' => $searchTags,
+            ]
+        );
+    }
+
+    public function loadArticlesWaitingPremoderateSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
+    {
+        return $this->database->select(
+            'statistics',
+            'article_id',
+            [
+                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
+                "ORDER" => [
+                    "rating" => "DESC",
+                ],
+                'premoderation_status' => 1,
+                'current_title[~]' => $searchTitle,
+                'current_tags &&' => $searchTags,
+            ]
+        );
+    }
 
     // Created Date
 
@@ -744,72 +814,6 @@ class ArticlesModel extends BaseModel
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
                     "created_date" => "DESC",
-                ],
-                'premoderation_status' => 1,
-                'current_title[~]' => $searchTitle,
-                'current_tags &&' => $searchTags,
-            ]
-        );
-    }
-    
-    // Rate
-
-    public function loadArticlesWaitingPremoderateIdsByRate($count = 4, $lastLoaded = 0)
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
-                ],
-                'premoderation_status' => 1,
-            ]
-        );
-    }
-
-    public function loadArticlesWaitingPremoderateSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
-                ],
-                'premoderation_status' => 1,
-                'current_title[~]' => $searchTitle,
-            ]
-        );
-    }
-
-    public function loadArticlesWaitingPremoderateSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
-                ],
-                'premoderation_status' => 1,
-                'current_tags &&' => $searchTags,
-            ]
-        );
-    }
-
-    public function loadArticlesWaitingPremoderateSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
-    {
-        return $this->database->select(
-            'statistics',
-            'article_id',
-            [
-                'LIMIT' => [$lastLoaded, $lastLoaded + $count],
-                "ORDER" => [
-                    "rating" => "DESC",
                 ],
                 'premoderation_status' => 1,
                 'current_title[~]' => $searchTitle,

@@ -17,6 +17,34 @@ class ArticlesHandler extends BaseHandlerRoute
         if(is_array($parsedBody))
         {
             $this->parsedBody = $parsedBody;
+
+            if(isset($this->parsedBody['count']))
+            {
+                if($this->parsedBody['count'] > 8)
+                {
+                    $this->parsedBody['count'] = 8;
+                }
+            }
+            else
+            {
+                $this->parsedBody['count'] = 4;
+            }
+            
+            if(!isset($this->parsedBody['category']))
+            {
+                $this->parsedBody['category'] = 'editoriallyArticles';
+            }
+            
+            if(!isset($this->parsedBody['lastLoaded']))
+            {
+                $this->parsedBody['lastLoaded'] = 0;
+            }
+            
+            if(!isset($this->parsedBody['sortType']))
+            {
+                $this->parsedBody['sortType'] = 'rate';
+            }
+
             $this->cookiesBody = $this->request->getCookieParams();
         }
         else
@@ -39,9 +67,9 @@ class ArticlesHandler extends BaseHandlerRoute
             }
 
             $searchTitle = $this->parsedBody['searchTitle'];
-            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+            $searchTagsString = implode(',', $this->parsedBody['searchTags']);
 
-            $articleIds = $this->model->loadEditoriallyArticlesSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadEditoriallyArticlesSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -51,7 +79,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadEditoriallyArticlesSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadEditoriallyArticlesSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -60,11 +88,11 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else if(isset($this->parsedBody['searchTags']))
             {
+                
                 if(is_array($this->parsedBody['searchTags']))
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-
-                    $articleIds = $this->model->loadEditoriallyArticlesSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadEditoriallyArticlesSearchTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -73,7 +101,7 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else
             {
-                $articleIds = $this->model->loadEditoriallyArticlesIdsByRate($count, $lastLoaded);
+                $articleIds = $this->model->loadEditoriallyArticlesIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
         }
         $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
@@ -95,7 +123,7 @@ class ArticlesHandler extends BaseHandlerRoute
             $searchTitle = $this->parsedBody['searchTitle'];
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-            $articleIds = $this->model->loadEditoriallyArticlesSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadEditoriallyArticlesSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -105,7 +133,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadEditoriallyArticlesSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadEditoriallyArticlesSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -118,7 +146,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-                    $articleIds = $this->model->loadEditoriallyArticlesSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadEditoriallyArticlesSearchTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -127,7 +155,7 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else
             {
-                $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedDate($count, $lastLoaded);
+                $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
         }
         $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
@@ -149,7 +177,7 @@ class ArticlesHandler extends BaseHandlerRoute
             $searchTitle = $this->parsedBody['searchTitle'];
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-            $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -159,7 +187,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -172,7 +200,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -181,7 +209,7 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else
             {
-                $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByRate($count, $lastLoaded);
+                $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
         }
         $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
@@ -203,7 +231,7 @@ class ArticlesHandler extends BaseHandlerRoute
             $searchTitle = $this->parsedBody['searchTitle'];
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-            $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -213,7 +241,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -226,7 +254,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -235,7 +263,7 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else
             {
-                $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedDate($count, $lastLoaded);
+                $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
         }
         $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
@@ -257,7 +285,7 @@ class ArticlesHandler extends BaseHandlerRoute
             $searchTitle = $this->parsedBody['searchTitle'];
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-            $articleIds = $this->model->loadAbyssArticlesSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadAbyssArticlesSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -267,7 +295,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadAbyssArticlesSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadAbyssArticlesSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -280,7 +308,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-                    $articleIds = $this->model->loadAbyssArticlesSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadAbyssArticlesSearchTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -289,7 +317,7 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else
             {
-                $articleIds = $this->model->loadAbyssArticlesIdsByRate($count, $lastLoaded);
+                $articleIds = $this->model->loadAbyssArticlesIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
         }
         $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
@@ -311,7 +339,7 @@ class ArticlesHandler extends BaseHandlerRoute
             $searchTitle = $this->parsedBody['searchTitle'];
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-            $articleIds = $this->model->loadAbyssArticlesSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadAbyssArticlesSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -321,7 +349,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadAbyssArticlesSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadAbyssArticlesSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -334,7 +362,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-                    $articleIds = $this->model->loadAbyssArticlesSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadAbyssArticlesSearchTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -343,7 +371,7 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else
             {
-                $articleIds = $this->model->loadAbyssArticlesIdsByCreatedDate($count, $lastLoaded);
+                $articleIds = $this->model->loadAbyssArticlesIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
         }
         $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
@@ -365,7 +393,7 @@ class ArticlesHandler extends BaseHandlerRoute
             $searchTitle = $this->parsedBody['searchTitle'];
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-            $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -375,7 +403,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -388,7 +416,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -397,7 +425,7 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else
             {
-                $articleIds = $this->model->loadArticlesWaitingApproveIdsByRate($count, $lastLoaded);
+                $articleIds = $this->model->loadArticlesWaitingApproveIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
         }
         $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
@@ -419,7 +447,7 @@ class ArticlesHandler extends BaseHandlerRoute
             $searchTitle = $this->parsedBody['searchTitle'];
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-            $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -429,7 +457,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -442,7 +470,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -451,7 +479,7 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else
             {
-                $articleIds = $this->model->loadArticlesWaitingApproveIdsByCreatedDate($count, $lastLoaded);
+                $articleIds = $this->model->loadArticlesWaitingApproveIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
         }
         $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
@@ -473,7 +501,7 @@ class ArticlesHandler extends BaseHandlerRoute
             $searchTitle = $this->parsedBody['searchTitle'];
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-            $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -483,7 +511,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -496,7 +524,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -505,7 +533,7 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else
             {
-                $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByRate($count, $lastLoaded);
+                $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
         }
         $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
@@ -527,7 +555,7 @@ class ArticlesHandler extends BaseHandlerRoute
             $searchTitle = $this->parsedBody['searchTitle'];
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-            $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -537,7 +565,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -550,7 +578,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -559,7 +587,7 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else
             {
-                $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByCreatedDate($count, $lastLoaded);
+                $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
         }
         $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
@@ -581,7 +609,7 @@ class ArticlesHandler extends BaseHandlerRoute
             $searchTitle = $this->parsedBody['searchTitle'];
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
             
-            $articleIds = $this->model->loadArticlesSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadArticlesSearchTitleTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -591,7 +619,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadArticlesSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadArticlesSearchTitleIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -604,7 +632,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-                    $articleIds = $this->model->loadArticlesSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadArticlesSearchTagsIdsByRate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -635,7 +663,7 @@ class ArticlesHandler extends BaseHandlerRoute
             $searchTitle = $this->parsedBody['searchTitle'];
             $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
             
-            $articleIds = $this->model->loadArticlesSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+            $articleIds = $this->model->loadArticlesSearchTitleTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle, $searchTagsString);
         }
         else
         {
@@ -645,7 +673,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTitle = $this->parsedBody['searchTitle'];
                     
-                    $articleIds = $this->model->loadArticlesSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                    $articleIds = $this->model->loadArticlesSearchTitleIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTitle);
                 }
                 else
                 {
@@ -658,7 +686,7 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
 
-                    $articleIds = $this->model->loadArticlesSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                    $articleIds = $this->model->loadArticlesSearchTagsIdsByCreatedDate($this->parsedBody['count'], $this->parsedBody['lastLoaded'], $searchTagsString);
                 }
                 else
                 {
@@ -675,67 +703,35 @@ class ArticlesHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        $count = 4;
-        if(isset($this->parsedBody['count']))
-        {
-            $count = $this->parsedBody['count'];
-            if($count > 8)
-            {
-                $count = 8;
-            }
-        }
-        
-        if(isset($this->parsedBody['category']))
-        {
-            $category = $this->parsedBody['category'];
-        }
-        else
-        {
-            $category = 'editoriallyArticles';
-        }
-        
-        if(isset($this->parsedBody['lastLoaded']))
-        {
-            $lastLoaded = $this->parsedBody['lastLoaded'];
-        }
-        else
-        {
-            $lastLoaded = 0;
-        }
-
-        
         if(isset($this->parsedBody['sortType']))
         {
-            $sortType = $this->parsedBody['sortType'];
-            $articleIds = null;
-        
-            if($sortType == 'created_date')
+            if($this->parsedBody['sortType'] == 'rate')
             {
                 if(AdminStatusHandler::isAdmin($this->cookiesBody))
                 {
-                    if($category == 'EditoriallyArticles')
+                    if($this->parsedBody['category'] == 'EditoriallyArticles')
                     {
-                        loadEditoriallyArticlesByCreatedDate();
+                        $this->loadEditoriallyArticlesByRate();
                     }
-                    else if($category == 'EditoriallyApprovedArticles')
+                    else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
                     {
-                        loadEditoriallyApprovedArticlesByCreatedDate();
+                        $this->loadEditoriallyApprovedArticlesByRate();
                     }
-                    else if($category == 'AbyssArticles')
+                    else if($this->parsedBody['category'] == 'AbyssArticles')
                     {
-                        loadAbyssArticlesByCreatedDate();
+                        $this->loadAbyssArticlesByRate();
                     }
-                    else if($category == 'ArticlesWaitingApprove')
+                    else if($this->parsedBody['category'] == 'ArticlesWaitingApprove')
                     {
-                        loadArticlesWaitingApproveByCreatedDate();
+                        $this->loadArticlesWaitingApproveByRate();
                     }
-                    else if($category == 'ArticlesWaitingPremoderate')
+                    else if($this->parsedBody['category'] == 'ArticlesWaitingPremoderate')
                     {
-                        loadArticlesWaitingPremoderateByCreatedDate();
+                        $this->loadArticlesWaitingPremoderateByRate();
                     }
-                    else if($category == 'ArticlesSearch')
+                    else if($this->parsedBody['category'] == 'ArticlesSearch')
                     {
-                        loadArticlesSearchByCreatedDate();
+                        $this->loadArticlesSearchByRate();
                     }
                     else
                     {
@@ -744,21 +740,21 @@ class ArticlesHandler extends BaseHandlerRoute
                 }
                 else
                 {
-                    if($category == 'EditoriallyArticles')
+                    if($this->parsedBody['category'] == 'EditoriallyArticles')
                     {
-                        loadEditoriallyArticlesByCreatedDate();
+                        $this->loadEditoriallyArticlesByRate();
                     }
-                    else if($category == 'EditoriallyApprovedArticles')
+                    else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
                     {
-                        loadEditoriallyApprovedArticlesByCreatedDate();
+                        $this->loadEditoriallyApprovedArticlesByRate();
                     }
-                    else if($category == 'AbyssArticles')
+                    else if($this->parsedBody['category'] == 'AbyssArticles')
                     {
-                        loadAbyssArticlesByCreatedDate();
+                        $this->loadAbyssArticlesByRate();
                     }
-                    else if($category == 'ArticlesSearch')
+                    else if($this->parsedBody['category'] == 'ArticlesSearch')
                     {
-                        loadArticlesSearchByCreatedDate()
+                        $this->loadArticlesSearchByRate();
                     }
                     else
                     {
@@ -766,33 +762,33 @@ class ArticlesHandler extends BaseHandlerRoute
                     }
                 }
             }
-            else if($sortType == 'rate')
+            else if($this->parsedBody['sortType'] == 'created_date')
             {
                 if(AdminStatusHandler::isAdmin($this->cookiesBody))
                 {
-                    if($category == 'EditoriallyArticles')
+                    if($this->parsedBody['category'] == 'EditoriallyArticles')
                     {
-                        loadEditoriallyArticlesByRate();
+                        $this->loadEditoriallyArticlesByCreatedDate();
                     }
-                    else if($category == 'EditoriallyApprovedArticles')
+                    else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
                     {
-                        loadEditoriallyApprovedArticlesByRate();
+                        $this->loadEditoriallyApprovedArticlesByCreatedDate();
                     }
-                    else if($category == 'AbyssArticles')
+                    else if($this->parsedBody['category'] == 'AbyssArticles')
                     {
-                        loadAbyssArticlesByRate();
+                        $this->loadAbyssArticlesByCreatedDate();
                     }
-                    else if($category == 'ArticlesWaitingApprove')
+                    else if($this->parsedBody['category'] == 'ArticlesWaitingApprove')
                     {
-                        loadArticlesWaitingApproveByRate();
+                        $this->loadArticlesWaitingApproveByCreatedDate();
                     }
-                    else if($category == 'ArticlesWaitingPremoderate')
+                    else if($this->parsedBody['category'] == 'ArticlesWaitingPremoderate')
                     {
-                        loadArticlesWaitingPremoderateByRate();
+                        $this->loadArticlesWaitingPremoderateByCreatedDate();
                     }
-                    else if($category == 'ArticlesSearch')
+                    else if($this->parsedBody['category'] == 'ArticlesSearch')
                     {
-                        loadArticlesSearchByRate();
+                        $this->loadArticlesSearchByCreatedDate();
                     }
                     else
                     {
@@ -801,21 +797,21 @@ class ArticlesHandler extends BaseHandlerRoute
                 }
                 else
                 {
-                    if($category == 'EditoriallyArticles')
+                    if($this->parsedBody['category'] == 'EditoriallyArticles')
                     {
-                        loadEditoriallyArticlesByRate();
+                        $this->loadEditoriallyArticlesByCreatedDate();
                     }
-                    else if($category == 'EditoriallyApprovedArticles')
+                    else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
                     {
-                        loadEditoriallyApprovedArticlesByRate();
+                        $this->loadEditoriallyApprovedArticlesByCreatedDate();
                     }
-                    else if($category == 'AbyssArticles')
+                    else if($this->parsedBody['category'] == 'AbyssArticles')
                     {
-                        loadAbyssArticlesByRate();
+                        $this->loadAbyssArticlesByCreatedDate();
                     }
-                    else if($category == 'ArticlesSearch')
+                    else if($this->parsedBody['category'] == 'ArticlesSearch')
                     {
-                        loadArticlesSearchByRate();
+                        $this->loadArticlesSearchByCreatedDate();
                     }
                     else
                     {
