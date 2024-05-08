@@ -24,6 +24,655 @@ class ArticlesHandler extends BaseHandlerRoute
             throw new Error(400, "Please select sortType", "Please select sortType");
         }
     }
+
+    private function loadEditoriallyArticlesByRate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+            $articleIds = $this->model->loadEditoriallyArticlesSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadEditoriallyArticlesSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadEditoriallyArticlesSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                $articleIds = $this->model->loadEditoriallyArticlesIdsByRate($count, $lastLoaded);
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
+    }
+
+    private function loadEditoriallyArticlesByCreatedDate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+            $articleIds = $this->model->loadEditoriallyArticlesSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadEditoriallyArticlesSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadEditoriallyArticlesSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedDate($count, $lastLoaded);
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
+    }
+
+    private function loadEditoriallyApprovedArticlesByRate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+            $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByRate($count, $lastLoaded);
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
+    }
+
+    private function loadEditoriallyApprovedArticlesByCreatedDate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+            $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedDate($count, $lastLoaded);
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
+    }
+
+    private function loadAbyssArticlesByRate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+            $articleIds = $this->model->loadAbyssArticlesSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadAbyssArticlesSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadAbyssArticlesSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                $articleIds = $this->model->loadAbyssArticlesIdsByRate($count, $lastLoaded);
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
+    }
+
+    private function loadAbyssArticlesByCreatedDate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+            $articleIds = $this->model->loadAbyssArticlesSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadAbyssArticlesSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadAbyssArticlesSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                $articleIds = $this->model->loadAbyssArticlesIdsByCreatedDate($count, $lastLoaded);
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
+    }
+
+    private function loadArticlesWaitingApproveByRate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+            $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                $articleIds = $this->model->loadArticlesWaitingApproveIdsByRate($count, $lastLoaded);
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
+    }
+
+    private function loadArticlesWaitingApproveByCreatedDate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+            $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadArticlesWaitingApproveSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                $articleIds = $this->model->loadArticlesWaitingApproveIdsByCreatedDate($count, $lastLoaded);
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
+    }
+
+    private function loadArticlesWaitingPremoderateByRate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+            $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByRate($count, $lastLoaded);
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
+    }
+
+    private function loadArticlesWaitingPremoderateByCreatedDate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+            $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByCreatedDate($count, $lastLoaded);
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
+    }
+
+    private function loadArticlesSearchByRate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+            
+            $articleIds = $this->model->loadArticlesSearchTitleTagsIdsByRate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadArticlesSearchTitleIdsByRate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadArticlesSearchTagsIdsByRate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                throw new Error(400, "Invalid search request", "Invalid search request");
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
+    }
+
+    private function loadArticlesSearchByCreatedDate()
+    {
+        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        {
+            if(!strlen($this->parsedBody['searchTitle']))
+            {
+                throw new Error(400, "Invalid search title", "Invalid search title");
+            }
+            if(!is_array($this->parsedBody['searchTags']))
+            {
+                throw new Error(400, "Invalid search tags", "Invalid search tags");
+            }
+
+            $searchTitle = $this->parsedBody['searchTitle'];
+            $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+            
+            $articleIds = $this->model->loadArticlesSearchTitleTagsIdsByCreatedDate($count, $lastLoaded, $searchTitle, $searchTagsString);
+        }
+        else
+        {
+            if(isset($this->parsedBody['searchTitle']))
+            {
+                if(strlen($this->parsedBody['searchTitle']) > 0)
+                {
+                    $searchTitle = $this->parsedBody['searchTitle'];
+                    
+                    $articleIds = $this->model->loadArticlesSearchTitleIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search title", "Invalid search title");
+                }
+            }
+            else if(isset($this->parsedBody['searchTags']))
+            {
+                if(is_array($this->parsedBody['searchTags']))
+                {
+                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
+
+                    $articleIds = $this->model->loadArticlesSearchTagsIdsByCreatedDate($count, $lastLoaded, $searchTagsString);
+                }
+                else
+                {
+                    throw new Error(400, "Invalid search tags", "Invalid search tags");
+                }
+            }
+            else
+            {
+                throw new Error(400, "Invalid search request", "Invalid search request");
+            }
+        }
+        $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
+    }
+
     public function Process()
     {
         $count = 4;
@@ -66,188 +715,27 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     if($category == 'EditoriallyArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadEditoriallyArticlesSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadEditoriallyArticlesSearch($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadEditoriallyArticlesSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadEditoriallyArticlesSearch($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedDate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
-                        }
+                        loadEditoriallyArticlesByCreatedDate();
                     }
                     else if($category == 'EditoriallyApprovedArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticlesSearch($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticlesSearch($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedDate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
-                        }
+                        loadEditoriallyApprovedArticlesByCreatedDate();
                     }
                     else if($category == 'AbyssArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadAbyssArticlesSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadAbyssArticlesSearch($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadAbyssArticlesSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadAbyssArticlesSearch($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadAbyssArticlesIdsByCreatedDate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
-                        }
+                        loadAbyssArticlesByCreatedDate();
                     }
                     else if($category == 'ArticlesWaitingApprove')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadArticlesWaitingApproveSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproveSearch($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadArticlesWaitingApproveSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproveSearch($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadArticlesWaitingApproveIdsByCreatedDate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
-                        }
+                        loadArticlesWaitingApproveByCreatedDate();
                     }
                     else if($category == 'ArticlesWaitingPremoderate')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderateSearch($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderateSearch($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByCreatedDate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
-                        }
+                        loadArticlesWaitingPremoderateByCreatedDate();
                     }
                     else if($category == 'ArticlesSearch')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadArticlesSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadArticlesSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            throw new Error(400, "Not found search title", "Not found search title");
-                        }
+                        loadArticlesSearchByCreatedDate();
                     }
                     else
                     {
@@ -258,130 +746,19 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     if($category == 'EditoriallyArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadArticlesSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadArticlesSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadEditoriallyArticlesIdsByCreatedDate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
-                        }
+                        loadEditoriallyArticlesByCreatedDate();
                     }
                     else if($category == 'EditoriallyApprovedArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByCreatedDate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
-                        }
+                        loadEditoriallyApprovedArticlesByCreatedDate();
                     }
                     else if($category == 'AbyssArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadAbyssArticlessSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->AbyssArticles($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadAbyssArticlesSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->AbyssArticles($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadAbyssArticlesIdsByCreatedDate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
-                        }
+                        loadAbyssArticlesByCreatedDate();
                     }
                     else if($category == 'ArticlesSearch')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadArticlesSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadArticlesSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            throw new Error(400, "Not found search title", "Not found search title");
-                        }
+                        loadArticlesSearchByCreatedDate()
                     }
                     else
                     {
@@ -395,195 +772,27 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     if($category == 'EditoriallyArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadEditoriallyArticlesSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadEditoriallyArticlesSearchIdsByRate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadEditoriallyArticlesIdsByRate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
-                        }
+                        loadEditoriallyArticlesByRate();
                     }
                     else if($category == 'EditoriallyApprovedArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchIdsByRate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {                        
-                            $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByRate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
-                        }
+                        loadEditoriallyApprovedArticlesByRate();
                     }
                     else if($category == 'AbyssArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadAbyssArticlesSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadAbyssArticlesSearchIdsByRate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadAbyssArticlesIdsByRate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
-                        }
+                        loadAbyssArticlesByRate();
                     }
-                    
                     else if($category == 'ArticlesWaitingApprove')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadArticlesWaitingApproveSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadArticlesWaitingApproveSearchIdsByRate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadArticlesWaitingApproveIdsByRate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
-                        }
+                        loadArticlesWaitingApproveByRate();
                     }
                     else if($category == 'ArticlesWaitingPremoderate')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadArticlesWaitingPremoderateSearchIdsByRate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadArticlesWaitingPremoderateIdsByRate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadArticlesWaitingPremoderate($articleIds));
-                        }
+                        loadArticlesWaitingPremoderateByRate();
                     }
                     else if($category == 'ArticlesSearch')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadArticlesSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadArticlesSearchIdsByRate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            throw new Error(400, "Not found search title", "Not found search title");
-                        }
+                        loadArticlesSearchByRate();
                     }
                     else
                     {
@@ -594,130 +803,19 @@ class ArticlesHandler extends BaseHandlerRoute
                 {
                     if($category == 'EditoriallyArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadEditoriallyArticlesSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadEditoriallyArticlesSearchIdsByRate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadEditoriallyArticlesIdsByRate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadEditoriallyArticles($articleIds));
-                        }
+                        loadEditoriallyArticlesByRate();
                     }
                     else if($category == 'EditoriallyApprovedArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadEditoriallyApprovedArticlesSearchIdsByRate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadEditoriallyApprovedArticlesIdsByRate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadEditoriallyApprovedArticles($articleIds));
-                        }
+                        loadEditoriallyApprovedArticlesByRate();
                     }
                     else if($category == 'AbyssArticles')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadAbyssArticlesSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadAbyssArticlesSearchIdsByRate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            $articleIds = $this->model->loadAbyssArticlesIdsByRate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
-                        }
+                        loadAbyssArticlesByRate();
                     }
                     else if($category == 'ArticlesSearch')
                     {
-                        if(isset($this->parsedBody['searchTitle']))
-                        {
-                            if(strlen($this->parsedBody['searchTitle']) > 0)
-                            {
-                                $searchTitle = $this->parsedBody['searchTitle'];
-                                
-                                if(isset($this->parsedBody['searchTags']))
-                                {
-                                    $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
-    
-                                    $articleIds = $this->model->loadArticlesSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                                else
-                                {
-                                    $articleIds = $this->model->loadArticlesSearchIdsByRate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesSearch($articleIds));
-                                }
-                            }
-                            else
-                            {
-                                throw new Error(400, "Not found search title", "Not found search title");
-                            }
-                        }
-                        else
-                        {
-                            throw new Error(400, "Not found search title", "Not found search title");
-                        }
+                        loadArticlesSearchByRate();
                     }
                     else
                     {
@@ -729,7 +827,6 @@ class ArticlesHandler extends BaseHandlerRoute
             {
                 throw new Error(400, "Invalid sortType", "Invalid sortType");
             }
-            
         }
         else
         {

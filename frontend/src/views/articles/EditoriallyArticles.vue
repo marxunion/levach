@@ -26,7 +26,7 @@
     import { LangDataHandler } from "./../../ts/LangDataHandler";
     
     import './../../libs/font_2605852_prouiefeic';
-    
+
     import { searchText, searchQuery } from '../../ts/searchHelper';
 
     import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
