@@ -93,8 +93,11 @@
             const searchParts : string[] = searchData.split('#');
             searchTitle = searchParts[0].trim();
             searchTags = searchParts.slice(1).map(tag => `${tag.trim()}`);
-            console.log(searchTitle);
-            console.log(searchTags);
+        }
+        else
+        {
+            searchTitle = '';
+            searchTags = [];
         }
     } 
 
@@ -219,7 +222,6 @@
         loading.value = true;
 
         parseSearchData(searchText.value);
-
         await fetchNewArticles();
     });
 

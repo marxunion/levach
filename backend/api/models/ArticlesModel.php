@@ -542,7 +542,7 @@ class ArticlesModel extends BaseModel
 
     // Rate
 
-    public function loadArticlesWaitingApproveSearchIdsByRate($count = 4, $lastLoaded = 0)
+    public function loadArticlesWaitingApproveIdsByRate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
             'statistics',

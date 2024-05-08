@@ -90,9 +90,17 @@
 
     const parseSearchData = (searchData : string) => 
     {
-        const searchParts : string[] = searchData.split('#');
-        searchTitle = searchParts[0].trim();
-        searchTags = searchParts.slice(1).map(tag => `${tag.trim()}`);
+        if(searchData.length > 0)
+        {
+            const searchParts : string[] = searchData.split('#');
+            searchTitle = searchParts[0].trim();
+            searchTags = searchParts.slice(1).map(tag => `${tag.trim()}`);
+        }
+        else
+        {
+            searchTitle = '';
+            searchTags = [];
+        }
     } 
 
     const fetchNewArticles = async (count : number = 4) => 
@@ -222,6 +230,7 @@
         }
 
         loading.value = true;
+        parseSearchData(searchText.value);
         await fetchNewArticles();
     });
 
