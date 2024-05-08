@@ -16,6 +16,8 @@
     import { LangDataHandler } from './../ts/LangDataHandler';
     import langsData from './locales/SideBar.json';
 
+    import { searchText } from '../ts/searchHelper';
+
     import { csrfTokenInput, getNewCsrfToken } from '../ts/csrfTokenHelper';
     import { articles, articleReloading } from '../ts/ArticlesHelper';
     
@@ -143,7 +145,7 @@
             <a class="sidebar__links__link"
                 v-for="link in links"
                     :href="`#${link.routeUri}`"
-                    @click="forceReload();emit('toggleBurger')"
+                    @click="searchText='';forceReload();emit('toggleBurger')"
                     :class="{ active: isCurrentRouteName(link.routeName) }">
                 {{ link.text }}
             </a>
