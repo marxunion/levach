@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
+    import { ref, Ref, ComputedRef, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
     import { useRoute } from 'vue-router';
     import axios from 'axios';
 
@@ -36,50 +36,35 @@
 
 	const langData = LangDataHandler.initLangDataHandler("ArticlesSearch", langsData).langData;
 
-    // Sort
-	const currentSortType = ref(0);
-    const currentSelectedArticleIndex = ref(0);
+    adminStatusReCheck();
 
-    const sortTypesNames = computed(() => langData.value['sortTypesNames'] as string[]);
-
-    const searchData : string = route.params.searchData as string;
-
-    if(searchData != null)
+    if(!searchQuery)
     {
-        if(searchData.length > 0)
+        const searchData : string = route.params.searchData as string;
+
+        if(searchData != null)
         {
-            searchText.value = searchData;
+            if(searchData.length > 0)
+            {
+                searchText.value = searchData;
+            }
         }
     }
 
-    // Preview
-	config(
-	{
-		editorConfig: 
-		{
-			languageUserDefined: 
-			{
-				'RU': langsData['RU'],
-				'EN': langsData['EN']
-			}
-		}
-	});
+    const lastLoaded : Ref<number> = ref(0);
+    const currentSelectedArticleIndex : Ref<number> = ref(0);
 
-	let previewState = reactive(
-	{
-		language: LangDataHandler.currentLanguage.value
-	});
+    const reloading : Ref<boolean> = ref(false);
+    const loading : Ref<boolean> = ref(true);
 
-    watch(langData, () =>
-	{
-		previewState.language = LangDataHandler.currentLanguage.value;
-	});
-
-    const lastLoaded = ref(0);
-
-    const reloading = ref(false);
-    const loading = ref(true);
     const scrollTarget = ref(null);
+
+    let searchTitle : string = '';
+    let searchTags : string[] = [];
+
+    // Sort
+	const currentSortType : Ref<number> = ref(0);
+    const sortTypesNames  : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
 
     const onChangeSortType = async (newSortType : number) => 
     {
@@ -92,107 +77,115 @@
         await fetchNewArticles();
     }
 
-    adminStatusReCheck();
-
-    const fetchNewArticles = async () => 
-    {
-        if(currentSortType.value === 0)
+    // Preview
+    config(
         {
-            const searchData : string = route.params.searchData as string;
-                
-            if(searchData != null)
+            editorConfig: 
             {
-                if(searchData.length > 0)
+                languageUserDefined: 
                 {
-                    const searchParts : string[] = searchData.split('#');
-                    const searchTitle : string = searchParts[0].trim();
-                    const searchTags : string[] = searchParts.slice(1).map(tag => `${tag.trim()}`);
-                        
-                    let data;
-                        
-                    if(searchTags.length > 0)
-                    {
-                        data = {
-                            sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                            category: 'ArticlesSearch',
-                            count: 4,
-                            lastLoaded: lastLoaded.value,
-                            searchTitle: searchTitle,
-                            searchTags: searchTags
-                        }
-                    }
-                    else
-                    {
-                        data = {
-                            sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                            category: 'ArticlesSearch',
-                            count: 4,
-                            lastLoaded: lastLoaded.value,
-                            searchTitle: searchTitle
-                        }
-                    }
-
-                    await axios.get('/api/articles', 
-                    {
-                        params: data
-                    })
-                    .then(response => 
-                    {
-                        if(response.data !== null)
-                        {
-                            if(Array.isArray(response.data))
-                            {
-                                response.data.forEach((article : Article) => 
-                                {
-                                    article.currentSelectedVersion = article.versions.length;
-                                    articles.value.push(article);
-                                });
-                            }
-                            lastLoaded.value = lastLoaded.value + 4;
-                        }
-                    })
-                    .catch(error => 
-                    {
-                        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-                    });
+                    'RU': langsData['RU'],
+                    'EN': langsData['EN']
                 }
+            }
+        }
+    );
+
+	let previewState = reactive(
+	{
+		language: LangDataHandler.currentLanguage.value
+	});
+
+    watch(langData, () =>
+	{
+		previewState.language = LangDataHandler.currentLanguage.value;
+	});
+
+
+    const parseSearchData = (searchData : string) => 
+    {
+        const searchParts : string[] = searchData.split('#');
+        searchTitle = searchParts[0].trim();
+        searchTags = searchParts.slice(1).map(tag => `${tag.trim()}`);
+    } 
+
+    const fetchNewArticles = async (count : number = 4) => 
+    {
+        let params;
+                        
+        if(searchTitle.length > 0 && searchTags.length > 0)
+        {
+            params = {
+                sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
+                category: 'ArticlesSearch',
+                count: count,
+                lastLoaded: lastLoaded.value,
+                searchTitle: searchTitle,
+                searchTags: searchTags,
             }
         }
         else
         {
-            await axios.get('/api/articles', 
+            if(searchTitle.length > 0)
             {
-                params: 
-                {
+                params = {
                     sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
                     category: 'ArticlesSearch',
-                    count: 4,
-                    lastLoaded: lastLoaded,
+                    count: count,
+                    lastLoaded: lastLoaded.value,
+                    searchTitle: searchTitle,
                 }
-            })
-            .then(response => 
+            }
+            else
             {
-                if(response.data !== null)
-                {
-                    if(Array.isArray(response.data))
-                    {
-                        response.data.forEach((article : Article) => 
-                        {
-                            article.currentSelectedVersion = article.versions.length;
-                            articles.value.push(article);
-                        });
-                    }
-                    lastLoaded.value = lastLoaded.value + 4;
+                params = {
+                    sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
+                    category: 'ArticlesSearch',
+                    count: count,
+                    lastLoaded: lastLoaded.value,
+                    searchTags: searchTags,
                 }
-            })
-            .catch(error => 
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-            });
+            }
         }
+                
+        await axios.get('/api/articles', 
+        {
+            params: params
+        })
+        .then(response => 
+        {
+            if(response.data !== null)
+            {
+                if(Array.isArray(response.data))
+                {
+                    response.data.forEach((article : Article) => 
+                    {
+                        article.currentSelectedVersion = article.versions.length;
+                        articles.value.push(article);
+                        lastLoaded.value++;
+                    });
+                }
+            }
+        })
+        .catch(error => 
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+        });
+        
         loading.value = false;
         reloading.value = false;
     }
+
+    watch(searchQuery, async () => 
+    {
+        loading.value = true;
+        articles.value = reactive([]);
+        lastLoaded.value = 0;
+        searchQuery.value = false;
+
+        parseSearchData(searchText.value);
+        await fetchNewArticles();
+    });
 
     const handleScroll = async () => 
     {
@@ -207,6 +200,30 @@
             }
         }
     } 
+
+    onMounted(async () => 
+    {
+        articles.value = [];
+        let ps = document.querySelector('.ps');
+        if(ps != null)
+        {
+            ps.addEventListener('scroll', handleScroll)
+        }
+
+        loading.value = true;
+
+        parseSearchData(searchText.value);
+        await fetchNewArticles();
+    });
+
+    onBeforeUnmount(() => 
+    {
+        let ps = document.querySelector('.ps');
+        if(ps != null)
+        {
+            ps.removeEventListener('scroll', handleScroll)
+        }
+    });
 
     const deleteArticle = async (articleViewCode : string) => 
     {
@@ -290,38 +307,6 @@
             openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
         }
     }
-    
-    watch(searchQuery, async () => 
-    {
-        loading.value = true;
-        articles.value = reactive([]);
-        lastLoaded.value = 0;
-        searchQuery.value = false;
-
-        await fetchNewArticles();
-    });
-
-    onMounted(async () => 
-    {
-        articles.value = [];
-        let ps = document.querySelector('.ps');
-        if(ps != null)
-        {
-            ps.addEventListener('scroll', handleScroll)
-        }
-
-        loading.value = true;
-        await fetchNewArticles();
-    });
-
-    onBeforeUnmount(() => 
-    {
-        let ps = document.querySelector('.ps');
-        if(ps != null)
-        {
-            ps.removeEventListener('scroll', handleScroll)
-        }
-    });
 </script>
 
 <template>

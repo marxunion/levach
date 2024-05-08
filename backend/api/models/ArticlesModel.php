@@ -402,9 +402,9 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    # ArticlesWaitingApproval
+    # ArticlesWaitingApprove
 
-    public function loadArticlesWaitingApprovalIdsByCreatedDate($count = 4, $lastLoaded = 0)
+    public function loadArticlesWaitingApproveIdsByCreatedDate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
             'statistics',
@@ -419,7 +419,7 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    public function loadArticlesWaitingApprovalSearchIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
+    public function loadArticlesWaitingApproveSearchIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
             'statistics',
@@ -435,7 +435,7 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    public function loadArticlesWaitingApprovalSearchIdsByCreatedDateWithTags($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
+    public function loadArticlesWaitingApproveSearchIdsByCreatedDateWithTags($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
         return $this->database->select(
             'statistics',
@@ -452,7 +452,7 @@ class ArticlesModel extends BaseModel
         );
     }
     
-    public function loadArticlesWaitingApprovalSearchIdsByRate($count = 4, $lastLoaded = 0)
+    public function loadArticlesWaitingApproveSearchIdsByRate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
             'statistics',
@@ -467,7 +467,7 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    public function loadArticlesWaitingApprovalSearchIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
+    public function loadArticlesWaitingApproveSearchIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
             'statistics',
@@ -483,7 +483,7 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    public function loadArticlesWaitingApprovalSearchIdsByRateWithTags($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
+    public function loadArticlesWaitingApproveSearchIdsByRateWithTags($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
         return $this->database->select(
             'statistics',
@@ -870,9 +870,9 @@ class ArticlesModel extends BaseModel
         }
     }
 
-    # ArticlesWaitingApproval
+    # ArticlesWaitingApprove
 
-    public function loadArticlesWaitingApproval($articleIds)
+    public function loadArticlesWaitingApprove($articleIds)
     {
         if($articleIds)
         {

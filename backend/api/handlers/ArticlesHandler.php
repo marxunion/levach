@@ -157,7 +157,7 @@ class ArticlesHandler extends BaseHandlerRoute
                             $this->response = $this->response->withJson($this->model->loadAbyssArticles($articleIds));
                         }
                     }
-                    else if($category == 'ArticlesWaitingApproval')
+                    else if($category == 'ArticlesWaitingApprove')
                     {
                         if(isset($this->parsedBody['searchTitle']))
                         {
@@ -168,13 +168,13 @@ class ArticlesHandler extends BaseHandlerRoute
                                 {
                                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
     
-                                    $articleIds = $this->model->loadArticlesWaitingApprovalSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprovalSearch($articleIds));
+                                    $articleIds = $this->model->loadArticlesWaitingApproveSearchIdsByCreatedDateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproveSearch($articleIds));
                                 }
                                 else
                                 {
-                                    $articleIds = $this->model->loadArticlesWaitingApprovalSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprovalSearch($articleIds));
+                                    $articleIds = $this->model->loadArticlesWaitingApproveSearchIdsByCreatedDate($count, $lastLoaded, $searchTitle);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproveSearch($articleIds));
                                 }
                             }
                             else
@@ -184,8 +184,8 @@ class ArticlesHandler extends BaseHandlerRoute
                         }
                         else
                         {
-                            $articleIds = $this->model->loadArticlesWaitingApprovalIdsByCreatedDate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproval($articleIds));
+                            $articleIds = $this->model->loadArticlesWaitingApproveIdsByCreatedDate($count, $lastLoaded);
+                            $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
                         }
                     }
                     else if($category == 'ArticlesWaitingPremoderate')
@@ -490,7 +490,7 @@ class ArticlesHandler extends BaseHandlerRoute
                         }
                     }
                     
-                    else if($category == 'ArticlesWaitingApproval')
+                    else if($category == 'ArticlesWaitingApprove')
                     {
                         if(isset($this->parsedBody['searchTitle']))
                         {
@@ -502,13 +502,13 @@ class ArticlesHandler extends BaseHandlerRoute
                                 {
                                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';
     
-                                    $articleIds = $this->model->loadArticlesWaitingApprovalSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproval($articleIds));
+                                    $articleIds = $this->model->loadArticlesWaitingApproveSearchIdsByRateWithTags($count, $lastLoaded, $searchTitle, $searchTagsString);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
                                 }
                                 else
                                 {
-                                    $articleIds = $this->model->loadArticlesWaitingApprovalSearchIdsByRate($count, $lastLoaded, $searchTitle);
-                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproval($articleIds));
+                                    $articleIds = $this->model->loadArticlesWaitingApproveSearchIdsByRate($count, $lastLoaded, $searchTitle);
+                                    $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
                                 }
                             }
                             else
@@ -518,8 +518,8 @@ class ArticlesHandler extends BaseHandlerRoute
                         }
                         else
                         {
-                            $articleIds = $this->model->loadArticlesWaitingApprovalIdsByRate($count, $lastLoaded);
-                            $this->response = $this->response->withJson($this->model->loadArticlesWaitingApproval($articleIds));
+                            $articleIds = $this->model->loadArticlesWaitingApproveIdsByRate($count, $lastLoaded);
+                            $this->response = $this->response->withJson($this->model->loadArticlesWaitingApprove($articleIds));
                         }
                     }
                     else if($category == 'ArticlesWaitingPremoderate')

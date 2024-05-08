@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
+    import { ref, Ref, computed, ComputedRef, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
     import axios from 'axios';
 
     import Loader from "./../../components/Loader.vue";
@@ -25,47 +25,30 @@
     import langsData from "./locales/Articles.json";
     import { LangDataHandler } from "./../../ts/LangDataHandler";
 
+    import { searchText, searchQuery } from "./../../ts/searchHelper";
+
     import './../../libs/font_2605852_prouiefeic';
 
     import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 
 	const langData = LangDataHandler.initLangDataHandler("AbyssArticles", langsData).langData;
 
-    // Sort
-	const currentSortType = ref(0);
+    adminStatusReCheck();
+
+    const lastLoaded : Ref<number> = ref(0);
     const currentSelectedArticleIndex = ref(0);
 
-    const sortTypesNames = computed(() => langData.value['sortTypesNames'] as string[]);
+    const reloading : Ref<boolean> = ref(false);
+    const loading : Ref<boolean> = ref(true);
 
-    // Preview
-	config(
-	{
-		editorConfig: 
-		{
-			languageUserDefined: 
-			{
-				'RU': langsData['RU'],
-				'EN': langsData['EN']
-			}
-		}
-	});
-
-	let previewState = reactive(
-	{
-		language: LangDataHandler.currentLanguage.value
-	});
-
-    watch(langData, () =>
-	{
-		previewState.language = LangDataHandler.currentLanguage.value;
-	});
-
-    const lastLoaded = ref(0);
-
-    const reloading = ref(false);
-    const loading = ref(true);
     const scrollTarget = ref(null);
-    
+
+    let searchTitle : string = '';
+    let searchTags : string[] = [];
+
+    // Sort
+	const currentSortType = ref(0);
+    const sortTypesNames = computed(() => langData.value['sortTypesNames'] as string[]);
 
     const onChangeSortType = async (newSortType : number) => 
     {
@@ -78,74 +61,109 @@
         await fetchNewArticles();
     }
 
-    adminStatusReCheck();
-
-    const fetchNewArticles = async () => 
-    {
-        if(currentSortType.value === 0)
+    // Preview
+    config(
         {
-            await axios.get('/api/articles', 
+            editorConfig: 
             {
-                params: 
+                languageUserDefined: 
                 {
-                    sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
-                    category: 'AbyssArticles',
-                    count: 4,
-                    lastLoaded: lastLoaded.value,
+                    'RU': langsData['RU'],
+                    'EN': langsData['EN']
                 }
-            })
-            .then(response => 
-            {
-                if(response.data !== null)
-                {
-                    if(Array.isArray(response.data))
-                    {
-                        response.data.forEach((article : Article) => 
-                        {
-                            article.currentSelectedVersion = article.versions.length;
-                            articles.value.push(article);
-                        });
-                    }
-                    lastLoaded.value = lastLoaded.value + 4;
-                }
-            })
-            .catch(error => 
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-            });
+            }
+        }
+    );
+
+	let previewState = reactive(
+	{
+		language: LangDataHandler.currentLanguage.value
+	});
+
+    watch(langData, () =>
+	{
+		previewState.language = LangDataHandler.currentLanguage.value;
+	});
+
+
+    const parseSearchData = (searchData : string) => 
+    {
+        const searchParts : string[] = searchData.split('#');
+        searchTitle = searchParts[0].trim();
+        searchTags = searchParts.slice(1).map(tag => `${tag.trim()}`);
+    }
+
+    const fetchNewArticles = async (count: number = 4) => 
+    {
+        let params;
+
+        if(searchTitle.length > 0 && searchTags.length > 0)
+        {
+            params = {
+                sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
+                category: 'AbyssArticles',
+                count: count,
+                lastLoaded: lastLoaded.value,
+                searchTitle: searchTitle,
+                searchTags: searchTags,
+            }
         }
         else
         {
-            await axios.get('/api/articles', 
+            if(searchTitle.length > 0)
             {
-                params: 
-                {
+                params = {
                     sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
                     category: 'AbyssArticles',
-                    count: 4,
+                    count: count,
                     lastLoaded: lastLoaded.value,
+                    searchTitle: searchTitle,
                 }
-            })
-            .then(response => 
+            }
+            else if(searchTags.length > 0)
             {
-                if(response.data !== null)
-                {
-                    if(Array.isArray(response.data))
-                    {
-                        response.data.forEach((article : Article) => 
-                        {
-                            article.currentSelectedVersion = article.versions.length;
-                            articles.value.push(article);
-                        });
-                    }
-                    lastLoaded.value = lastLoaded.value + 4;
+                params = {
+                    sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
+                    category: 'AbyssArticles',
+                    count: count,
+                    lastLoaded: lastLoaded.value,
+                    searchTags: searchTags,
                 }
-            })
-            .catch(error => 
+            }
+            else
             {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
-            });
+                params = {
+                    sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
+                    category: 'AbyssArticles',
+                    count: count,
+                    lastLoaded: lastLoaded.value
+                }
+            }
         }
+
+        await axios.get('/api/articles', 
+        {
+            params: params
+        })
+        .then(response => 
+        {
+            if(response.data !== null)
+            {
+                if(Array.isArray(response.data))
+                {
+                    response.data.forEach((article : Article) => 
+                    {
+                        article.currentSelectedVersion = article.versions.length;
+                        articles.value.push(article);
+                        lastLoaded.value++;
+                    });
+                }
+            }
+        })
+        .catch(error => 
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+        });
         loading.value = false;
         reloading.value = false;
     }
@@ -164,6 +182,39 @@
         }
     }
     
+
+    watch(searchQuery, async () =>
+    {
+        loading.value = true;
+        articles.value = reactive([]);
+
+        parseSearchData(searchText.value);
+
+        await fetchNewArticles();
+    });
+    
+    onMounted(async () => 
+    {
+        articles.value = [];
+        let ps = document.querySelector('.ps');
+        if(ps != null)
+        {
+            ps.addEventListener('scroll', handleScroll)
+        }
+
+        loading.value = true;
+        await fetchNewArticles();
+    });
+
+    onBeforeUnmount(() => 
+    {
+        let ps = document.querySelector('.ps');
+        if(ps != null)
+        {
+            ps.removeEventListener('scroll', handleScroll)
+        }
+    });
+
     const deleteArticle = async (articleViewCode : string) => 
     {
         if(adminStatus.value)
@@ -247,27 +298,6 @@
         }
     }
 
-    onMounted(async () => 
-    {
-        articles.value = [];
-        let ps = document.querySelector('.ps');
-        if(ps != null)
-        {
-            ps.addEventListener('scroll', handleScroll)
-        }
-
-        loading.value = true;
-        await fetchNewArticles();
-    });
-
-    onBeforeUnmount(() => 
-    {
-        let ps = document.querySelector('.ps');
-        if(ps != null)
-        {
-            ps.removeEventListener('scroll', handleScroll)
-        }
-    });
 </script>
 
 <template>
