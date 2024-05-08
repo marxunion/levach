@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, computed, reactive, watch, onMounted, onUnmounted } from 'vue';
+	import { ref, Ref, computed, ComputedRef, reactive, watch, onMounted, onUnmounted } from 'vue';
 	import { useRoute, useRouter } from 'vue-router';
 	import axios from 'axios';
 
@@ -36,18 +36,18 @@
 
 	const langData = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
-	const fetchedData = ref();
-	const loaded = ref(false);
+	adminStatusReCheck();
 
-	let currentVersion = ref(1);
+	const fetchedData : Ref<any> = ref();
+	const loaded : Ref<boolean> = ref(false);
+
+	let currentVersion : Ref<number> = ref(1);
 
 	const route = useRoute();
 	const router = useRouter();
-	const articleViewCode = ref<string | null>(null);
-
+	const articleViewCode : Ref<string | null> = ref<string | null>(null);
+ 
 	articleViewCode.value = route.params.articleViewCode as string;
-
-	adminStatusReCheck();
 
 	async function fetchData()
 	{
@@ -135,24 +135,14 @@
 	// Comments 
 
 	// Sort
-	const currentSortType = ref();
+	const currentSortType : Ref<number> = ref(0);
 
-	const sortTypesNames = computed(() => langData.value['sortTypesNames'] as string[]);
+	const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
 
 	const onChangeSortType = (sortType : number) => 
 	{
 		currentSortType.value = sortType;
 	}
-
-	
-
-	watch(langData, () =>
-	{
-		previewState.language = LangDataHandler.currentLanguage.value;
-		newCommentEditorState.language = LangDataHandler.currentLanguage.value;
-	});
-
-	
 
 	let intervalId : NodeJS.Timeout | null = null;
 	onMounted(async function() {
@@ -462,11 +452,40 @@
 	}
 
 	// NewComment
+
+	const currentCommentReaction : Ref<number> = ref(0);
 	let newCommentEditorState = reactive(
 	{
 		text: "",
 		language: LangDataHandler.currentLanguage.value
 	});
+
+	const onLikeReactionClick = () =>
+	{
+		console.log('test');
+		console.log(currentCommentReaction.value);
+		
+		if(currentCommentReaction.value === 1)
+		{
+			currentCommentReaction.value = 0;
+		}
+		else
+		{
+			currentCommentReaction.value = 1;
+		}
+	}
+
+	const onDislikeReactionClick = () =>
+	{
+		if(currentCommentReaction.value === 2)
+		{
+			currentCommentReaction.value = 0;
+		}
+		else
+		{
+			currentCommentReaction.value = 2;
+		}
+	}
 
 	const onNewCommentUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
 	{
@@ -618,6 +637,12 @@
 			subcomments: []
 		}
 	]);
+
+	watch(langData, () =>
+	{
+		previewState.language = LangDataHandler.currentLanguage.value;
+		newCommentEditorState.language = LangDataHandler.currentLanguage.value;
+	});
 </script>
 
 <template>
@@ -669,10 +694,12 @@
 				<div class="main__article__comments__newComment">
 					<MdEditor class="main__article__comments__newComment__editor" v-model="(newCommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImg" :language="newCommentEditorState.language" noIconfont :preview="false"/>
 					<img src="./../../assets/img/article/sendCommentButton.svg" alt="Send" class="main__article__comments__newComment__sendButton">
-					<img src="./../../assets/img/article/sendCommentButton.svg" alt="Send" class="main__article__comments__newComment__sendButton">
 					<div class="main__article__comments__newComment__reactions">
-						<img src="./../../assets/img/article/like.svg" alt="Like" class="main__article__comments__newComment__reactions">
-						<img src="./../../assets/img/article/dislike.svg" alt="Dislike" class="main__article__comments__newComment__reactions">
+						<img v-if="currentCommentReaction === 1" @click="onLikeReactionClick()" src="./../../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="main__article__comments__newComment__reactions__reaction">
+						<img v-else @click="onLikeReactionClick()" src="./../../assets/img/article/comments/like.svg" alt="Like" class="main__article__comments__newComment__reactions__reaction">
+						
+						<img v-if="currentCommentReaction === 2" @click="onDislikeReactionClick()" src="./../../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="main__article__comments__newComment__reactions__reaction">
+						<img v-else @click="onDislikeReactionClick()" src="./../../assets/img/article/comments/dislike.svg" alt="Dislike" class="main__article__comments__newComment__reactions__reaction">
 					</div>
 				</div>
 				

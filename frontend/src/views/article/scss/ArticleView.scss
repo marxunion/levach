@@ -239,6 +239,20 @@
                     min-height: 260px;
                     border-radius: 15px;
                 }
+                &__reactions
+                {
+                    position: absolute;
+                    display: flex;
+                    bottom: 15px;
+                    left: 15px;
+                    &__reaction
+                    {
+                        cursor: pointer;
+                        margin-left: 8px;
+                        width: 30px;
+                        transition: .5s;
+                    }
+                }
                 &__sendButton
                 {
                     cursor: pointer;
