@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, Ref, computed, ComputedRef, reactive, watch, onMounted, onUnmounted } from 'vue';
+	import { ref, Ref, computed, ComputedRef, reactive, watch, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
 	import { useRoute, useRouter } from 'vue-router';
 	import axios from 'axios';
 
@@ -34,7 +34,7 @@
 	
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 
-	import { Comment, comments } from '../../ts/CommentsHelper';
+	import { comments } from '../../ts/CommentsHelper';
 
 	const langData = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
@@ -43,9 +43,11 @@
 	const fetchedData : Ref<any> = ref();
 	const loading : Ref<boolean> = ref(true);
 	const commentsLoading : Ref<boolean> = ref(true);
+	const commentsReloading : Ref<boolean> = ref(true);
 
 	let currentVersion : Ref<number> = ref(1);
 
+	let scrollTarget = ref(null);
 
 	// Comments
 	const route = useRoute();
@@ -136,10 +138,75 @@
 		language: LangDataHandler.currentLanguage.value
 	});
 
-	
+
 	// Comments 
 
-	// Sort
+	const fetchNewComments = async (count : number = 8) =>
+	{
+		await axios.get('api/article/comments/get/'+articleViewCode.value)
+		.then(response => 
+		{
+			if(response.data.success)
+			{
+			 	
+			}
+			else
+			{
+				if(response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+			}
+		})
+		.catch(error => 
+		{
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+		});
+
+	}
+
+	const handleScroll = async () => 
+    {
+        const scrollElement = scrollTarget.value;
+        if (scrollElement !== null && !loading.value && !commentsReloading.value) 
+        {
+            const bottomDistance = (scrollElement as HTMLElement).getBoundingClientRect().bottom - window.innerHeight;
+            if (bottomDistance <= 0) 
+            {
+                commentsReloading.value = true;
+                await fetchNewComments();
+            }
+        }
+    }
+
+	// Comments sort
 	const currentSortType : Ref<number> = ref(0);
 
 	const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
@@ -157,12 +224,21 @@
 			if (fetchedData.value != null) 
 			{
 				currentVersion.value = fetchedData.value.versions.length;
+
+				comments.value = [];
+				let ps = document.querySelector('.ps');
+				if(ps != null)
+				{
+					ps.addEventListener('scroll', handleScroll)
+				}
+
+				loading.value = true;
+				await fetchNewComments();
+
 				intervalId = setInterval(async () => 
 				{
 					fetchedData.value = await fetchData();
 				}, 10000);
-
-				
 			}
 			loading.value = false;
 		} 
@@ -173,13 +249,24 @@
 		}
 	});
 
-	onUnmounted(() => 
-	{
+	onMounted(async () => 
+    {
+        
+    });
+
+    onBeforeUnmount(() => 
+    {
 		if(intervalId != null)
 		{
 			clearInterval(intervalId);
 		}
-	});
+
+        let ps = document.querySelector('.ps');
+        if(ps != null)
+        {
+            ps.removeEventListener('scroll', handleScroll)
+        }
+    });
 
 	const onRejectApproveArticle = async () =>
 	{
@@ -713,8 +800,13 @@
 					</div>
 				</div>
 				
-				<div v-if="commentsLoading" class="main__article__comments__commentsList">
+				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
 					<CommentsList v-for="comment in comments" :key="comment.comment_id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
+					<div ref="scrollTarget" style="height: 100px;"></div>
+					<Loader v-if="commentsReloading"/>
+				</div>
+				<div v-else class="main__article__comments__commentsList">
+					<Loader/>
 				</div>
 			</div>
 		</article>
