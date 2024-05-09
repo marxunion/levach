@@ -39,7 +39,7 @@ class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRoute
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-
+            $this->model->getSubcomments($articleId, $this->parsedBody['comment_id']);
         }
         else
         {

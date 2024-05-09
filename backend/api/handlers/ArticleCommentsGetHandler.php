@@ -54,22 +54,22 @@ class ArticleCommentsGetHandler extends BaseHandlerRoute
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            if()
+            if($this->parsedBody['sortType'] == 'rate')
             {
-
+                $this->model->getCommentsByRate($articleId, $this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
-            else if()
+            else if($this->parsedBody['sortType'] == 'created_date')
             {
-
+                $this->model->getCommentsByCreatedDate($articleId, $this->parsedBody['count'], $this->parsedBody['lastLoaded']);
             }
             else
             {
-                
+                throw new Error(400, "Invalid sortType", "Invalid sortType");
             }
         }
         else
         {
-            throw new Error(403, "Invalid article viewCode", "Invalid article viewCode");
+            throw new Error(400, "Invalid article viewCode", "Invalid article viewCode");
         }
     }
 }

@@ -18,4 +18,18 @@ class ArticleCommentsGetModel extends BaseModel
     {
         return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
+    public function getSubcomments($articleId, $commentId)
+    {
+
+    }
+
+    public function getCommentsByRate($articleId, $count, $lastLoaded)
+    {
+
+    }
+
+    public function getCommentsByCreatedDate($articleId, $count, $lastLoaded)
+    {
+
+    }
 }
