@@ -1,7 +1,5 @@
 <script setup lang="ts">
-	import { reactive, defineProps } from 'vue';
-	
-	defineProps(['comment', 'level']);
+	import { ref, Ref, reactive, defineProps } from 'vue';
 
 	import { MdPreview, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
@@ -13,7 +11,15 @@
 	import { LangDataHandler } from "./../ts/LangDataHandler";
 	import langsData from "./locales/CommentsList.json";
 
+	import { timestampToLocaleFormatedTime } from '../ts/DateTimeHelper';
+
+	import { Comment } from '../ts/CommentsHelper';
+
+	const props = defineProps(['articleViewCode', 'comment', 'level']);
+
 	const langData = LangDataHandler.initLangDataHandler("CommentsList", langsData).langData;
+
+	const loading : Ref<boolean> = ref(true);
 
 	adminStatusReCheck();
 
@@ -35,14 +41,24 @@
 	{
 		language: LangDataHandler.currentLanguage.value
 	});
+
+	const onNewSubComment = () => 
+	{
+
+	}
+
+	const onCommentDelete = (commentId : number) => 
+	{
+
+	}
 </script>
 
 <template>
 	<div class="comment" :style="{ marginLeft: `${5 * level}%` }">
 		<div class="comment__header">
 			
-			<p class="comment__header__title id">#{{ comment.id }}</p>
-			<p class="comment__header__title time">{{ comment.time }}</p>
+			<p class="comment__header__title id">#{{ comment.comment_id }}</p>
+			<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
 		</div>
 		<MdPreview class="comment__text" :modelValue="comment.text" :language="previewState.language"/>
 		<div class="comment__bar">
@@ -56,7 +72,7 @@
 			</div>
 		</div>
 	</div>
-	<CommentsList v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" />
+	<CommentsList v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" />
 </template>
 
 <style lang="scss" scoped src="./scss/CommentsList.scss"></style>

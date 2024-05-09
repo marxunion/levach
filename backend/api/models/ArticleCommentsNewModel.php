@@ -19,6 +19,14 @@ class ArticleCommentsNewModel extends BaseModel
 
     public function newComment($articleId, $text = '', $ratingInfluence = 0)
     {
+        $newCommentId = 1;
+        $lastCommentId = $this->database->max('comments', 'id', ['article_id' => $articleId]);
+
+        if($lastCommentId != null) 
+        {
+            $newCommentId = $lastCommentId + 1;
+        }
+
         'comments', 
         [
             'article_id' => $articleId,
@@ -32,6 +40,14 @@ class ArticleCommentsNewModel extends BaseModel
 
     public function newSubcomment($articleId, $parentCommentId, $text = '', $ratingInfluence = 0)
     {
+        $newCommentId = 1;
+        $lastCommentId = $this->database->max('comments', 'id', ['article_id' => $articleId]);
+
+        if($lastCommentId != null) 
+        {
+            $newCommentId = $lastCommentId + 1;
+        }
+
         $this->database->insert(
             'comments', 
             [

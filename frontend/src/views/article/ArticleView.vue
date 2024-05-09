@@ -34,6 +34,8 @@
 	
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
 
+	import { Comment, comments } from '../../ts/CommentsHelper';
+
 	const langData = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
 	adminStatusReCheck();
@@ -45,61 +47,7 @@
 
 
 	// Comments
-	const comments = ref(
-	[
-		{
-			id: "00000001",
-			time: '11:06 19.09.2022',
-			text: 'Test Comment1',
-			statistics: 
-			{
-				rating: 0
-			},
-			subcomments: [
-				{
-					id: "00000002",
-					time: '12:00 19.09.2022',
-					text: 'Test Subcomment1',
-					statistics: 
-					{
-						rating: 0
-					},
-					subcomments: [
-						{
-							id: "00000003",
-							time: '13:30 19.09.2022',
-							text: 'Test Subsubcomment1',
-							statistics: 
-							{
-								rating: 0
-							},
-							subcomments: []
-						}
-					]
-				},
-				{
-					id: "00000004",
-					time: '12:15 19.09.2022',
-					text: '# Test Subcomment2\n',
-					statistics: 
-					{
-						rating: 0
-					},
-					subcomments: []
-				}
-			]
-		},
-		{
-			id: "00000005",
-			time: '14:00 19.09.2022',
-			text: 'Test Comment2',
-			statistics: 
-			{
-				rating: 0
-			},
-			subcomments: []
-		}
-	])
+	
 
 	const route = useRoute();
 	const router = useRouter();
@@ -707,7 +655,7 @@
 				</div>
 				
 				<div class="main__article__comments__commentsList">
-					<CommentsList v-for="comment in comments" :key="comment.id" :comment="comment" :level="0"/>
+					<CommentsList v-for="comment in comments" :key="comment.comment_id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
 				</div>
 			</div>
 		</article>

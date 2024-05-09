@@ -16,7 +16,7 @@ class ArticleNewModel extends BaseModel
         $newArticleId = 1;
         $lastArticleId = $this->database->max('articles', 'id');
 
-        if($lastArticleId !== '') 
+        if($lastArticleId != null) 
         {
             $newArticleId = $lastArticleId + 1;
         }
