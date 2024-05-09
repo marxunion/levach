@@ -20,7 +20,15 @@ class ArticleCommentsGetHandler extends BaseHandlerRoute
                 $parsedBody = $this->request->getQueryParams();
                 if(isset($this->parsedBody['count']))
                 {
-                    if(!isset($this->parsedBody['lastLoaded']))
+                    if(isset($this->parsedBody['lastLoaded']))
+                    {
+                        if(!isset($this->parsedBody['sortType']))
+                        {
+                            $this->parsedBody['sortType'] = 'rate';
+                        }
+                        $this->model = new ArticleCommentsGetModel();
+                    }
+                    else
                     {
                         throw new Error(400, "Invalid comments lastLoaded", "Invalid comments lastLoaded");
                     }
@@ -46,11 +54,22 @@ class ArticleCommentsGetHandler extends BaseHandlerRoute
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            
+            if()
+            {
+
+            }
+            else if()
+            {
+
+            }
+            else
+            {
+                
+            }
         }
         else
         {
-            throw new Error(403, "Invalid article viewcode", "Invalid article code");
+            throw new Error(403, "Invalid article viewCode", "Invalid article viewCode");
         }
     }
 }

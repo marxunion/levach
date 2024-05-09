@@ -18,13 +18,9 @@ class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRoute
             if($this->request->getQueryParams())
             {
                 $parsedBody = $this->request->getQueryParams();
-                if(isset($this->parsedBody['comment_id']))
+                if(!isset($this->parsedBody['comment_id']))
                 {
-
-                }
-                else
-                {
-                    throw new Error(400, "Invalid comments count", "Invalid comments count");
+                    throw new Error(400, "Invalid comment id", "Invalid comment id");
                 }
             }
             else
@@ -43,11 +39,11 @@ class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRoute
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            
+
         }
         else
         {
-            throw new Error(403, "Invalid article viewcode", "Invalid article code");
+            throw new Error(403, "Invalid article viewCode", "Invalid article viewCode");
         }
     }
 }

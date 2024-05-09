@@ -82,7 +82,7 @@ class ArticleCommentsNewHandler extends BaseHandlerRouteWith
         }
         else
         {
-            throw new Error(403, "Invalid article viewcode", "Invalid article code");
+            throw new Error(403, "Invalid article viewCode", "Invalid article viewCode");
         }
     }
 }

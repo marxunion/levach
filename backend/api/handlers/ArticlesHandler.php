@@ -49,7 +49,7 @@ class ArticlesHandler extends BaseHandlerRoute
         }
         else
         {
-            throw new Error(400, "Please select sortType", "Please select sortType");
+            throw new Error(400, "Invalid query", "Invalid query");
         }
     }
 
@@ -703,130 +703,123 @@ class ArticlesHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        if(isset($this->parsedBody['sortType']))
+        if($this->parsedBody['sortType'] == 'rate')
         {
-            if($this->parsedBody['sortType'] == 'rate')
+            if(AdminStatusHandler::isAdmin($this->cookiesBody))
             {
-                if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                if($this->parsedBody['category'] == 'EditoriallyArticles')
                 {
-                    if($this->parsedBody['category'] == 'EditoriallyArticles')
-                    {
-                        $this->loadEditoriallyArticlesByRate();
-                    }
-                    else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
-                    {
-                        $this->loadEditoriallyApprovedArticlesByRate();
-                    }
-                    else if($this->parsedBody['category'] == 'AbyssArticles')
-                    {
-                        $this->loadAbyssArticlesByRate();
-                    }
-                    else if($this->parsedBody['category'] == 'ArticlesWaitingApprove')
-                    {
-                        $this->loadArticlesWaitingApproveByRate();
-                    }
-                    else if($this->parsedBody['category'] == 'ArticlesWaitingPremoderate')
-                    {
-                        $this->loadArticlesWaitingPremoderateByRate();
-                    }
-                    else if($this->parsedBody['category'] == 'ArticlesSearch')
-                    {
-                        $this->loadArticlesSearchByRate();
-                    }
-                    else
-                    {
-                        throw new Error(400, "Invalid category", "Invalid category");
-                    }
+                    $this->loadEditoriallyArticlesByRate();
+                }
+                else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
+                {
+                    $this->loadEditoriallyApprovedArticlesByRate();
+                }
+                else if($this->parsedBody['category'] == 'AbyssArticles')
+                {
+                    $this->loadAbyssArticlesByRate();
+                }
+                else if($this->parsedBody['category'] == 'ArticlesWaitingApprove')
+                {
+                    $this->loadArticlesWaitingApproveByRate();
+                }
+                else if($this->parsedBody['category'] == 'ArticlesWaitingPremoderate')
+                {
+                    $this->loadArticlesWaitingPremoderateByRate();
+                }
+                else if($this->parsedBody['category'] == 'ArticlesSearch')
+                {
+                    $this->loadArticlesSearchByRate();    
                 }
                 else
                 {
-                    if($this->parsedBody['category'] == 'EditoriallyArticles')
-                    {
-                        $this->loadEditoriallyArticlesByRate();
-                    }
-                    else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
-                    {
-                        $this->loadEditoriallyApprovedArticlesByRate();
-                    }
-                    else if($this->parsedBody['category'] == 'AbyssArticles')
-                    {
-                        $this->loadAbyssArticlesByRate();
-                    }
-                    else if($this->parsedBody['category'] == 'ArticlesSearch')
-                    {
-                        $this->loadArticlesSearchByRate();
-                    }
-                    else
-                    {
-                        throw new Error(400, "Invalid category", "Invalid category");
-                    }
-                }
-            }
-            else if($this->parsedBody['sortType'] == 'created_date')
-            {
-                if(AdminStatusHandler::isAdmin($this->cookiesBody))
-                {
-                    if($this->parsedBody['category'] == 'EditoriallyArticles')
-                    {
-                        $this->loadEditoriallyArticlesByCreatedDate();
-                    }
-                    else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
-                    {
-                        $this->loadEditoriallyApprovedArticlesByCreatedDate();
-                    }
-                    else if($this->parsedBody['category'] == 'AbyssArticles')
-                    {
-                        $this->loadAbyssArticlesByCreatedDate();
-                    }
-                    else if($this->parsedBody['category'] == 'ArticlesWaitingApprove')
-                    {
-                        $this->loadArticlesWaitingApproveByCreatedDate();
-                    }
-                    else if($this->parsedBody['category'] == 'ArticlesWaitingPremoderate')
-                    {
-                        $this->loadArticlesWaitingPremoderateByCreatedDate();
-                    }
-                    else if($this->parsedBody['category'] == 'ArticlesSearch')
-                    {
-                        $this->loadArticlesSearchByCreatedDate();
-                    }
-                    else
-                    {
-                        throw new Error(400, "Invalid category", "Invalid category");
-                    }
-                }
-                else
-                {
-                    if($this->parsedBody['category'] == 'EditoriallyArticles')
-                    {
-                        $this->loadEditoriallyArticlesByCreatedDate();
-                    }
-                    else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
-                    {
-                        $this->loadEditoriallyApprovedArticlesByCreatedDate();
-                    }
-                    else if($this->parsedBody['category'] == 'AbyssArticles')
-                    {
-                        $this->loadAbyssArticlesByCreatedDate();
-                    }
-                    else if($this->parsedBody['category'] == 'ArticlesSearch')
-                    {
-                        $this->loadArticlesSearchByCreatedDate();
-                    }
-                    else
-                    {
-                        throw new Error(400, "Invalid category", "Invalid category");
-                    }
+                    throw new Error(400, "Invalid category", "Invalid category");
                 }
             }
             else
             {
-                throw new Error(400, "Invalid sortType", "Invalid sortType");
+                if($this->parsedBody['category'] == 'EditoriallyArticles')
+                {
+                    $this->loadEditoriallyArticlesByRate();
+                }
+                else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
+                {
+                    $this->loadEditoriallyApprovedArticlesByRate();
+                }
+                else if($this->parsedBody['category'] == 'AbyssArticles')
+                {
+                    $this->loadAbyssArticlesByRate();
+                }
+                else if($this->parsedBody['category'] == 'ArticlesSearch')
+                {
+                    $this->loadArticlesSearchByRate();
+                }
+                else
+                {
+                    throw new Error(400, "Invalid category", "Invalid category");
+                }
+            }
+        }
+        else if($this->parsedBody['sortType'] == 'created_date')
+        {
+            if(AdminStatusHandler::isAdmin($this->cookiesBody))
+            {
+                if($this->parsedBody['category'] == 'EditoriallyArticles')
+                {
+                    $this->loadEditoriallyArticlesByCreatedDate();
+                }
+                else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
+                {
+                    $this->loadEditoriallyApprovedArticlesByCreatedDate();
+                }
+                else if($this->parsedBody['category'] == 'AbyssArticles')
+                {
+                    $this->loadAbyssArticlesByCreatedDate();
+                }
+                else if($this->parsedBody['category'] == 'ArticlesWaitingApprove')
+                {
+                    $this->loadArticlesWaitingApproveByCreatedDate();
+                }
+                else if($this->parsedBody['category'] == 'ArticlesWaitingPremoderate')
+                {
+                    $this->loadArticlesWaitingPremoderateByCreatedDate();
+                }
+                else if($this->parsedBody['category'] == 'ArticlesSearch')
+                {
+                    $this->loadArticlesSearchByCreatedDate();
+                }
+                else
+                {
+                    throw new Error(400, "Invalid category", "Invalid category");
+                }
+            }
+            else
+            {
+                if($this->parsedBody['category'] == 'EditoriallyArticles')
+                {
+                    $this->loadEditoriallyArticlesByCreatedDate();
+                }
+                else if($this->parsedBody['category'] == 'EditoriallyApprovedArticles')
+                {
+                    $this->loadEditoriallyApprovedArticlesByCreatedDate();
+                }
+                else if($this->parsedBody['category'] == 'AbyssArticles')
+                {
+                    $this->loadAbyssArticlesByCreatedDate();
+                }
+                else if($this->parsedBody['category'] == 'ArticlesSearch')
+                {
+                    $this->loadArticlesSearchByCreatedDate();
+                }
+                else
+                {
+                    throw new Error(400, "Invalid category", "Invalid category");
+                }
             }
         }
         else
         {
-            throw new Error(400, "Please select sortType", "Please select sortType");
+            throw new Error(400, "Invalid sortType", "Invalid sortType");
         }
     }
 }
