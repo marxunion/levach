@@ -120,7 +120,7 @@
         },
 
         "commentCreatedSuccessfully": "Comment successfully created",
-        "commentDeleteSuccessfully": "Comment was successfully deleted",
+        "commentDeletedSuccessfully": "Comment successfully deleted",
 
         "titleAnswer": "Answer",
         "titleDelete": "Delete",

@@ -137,10 +137,10 @@
             "unknown": "An unknown error occurred. Try again"
         },
 
-        "articleDeleteSuccessfully": "Article was successfully deleted",
-        "articleRejectApproveSuccessfully": "The article was successfully rejected",
-        "articleRejectPremoderateSuccessfully": "The article was successfully rejected",
-        "articleAcceptPremoderateSuccessfully": "Article was successfully premoderated",
+        "articleDeleteSuccessfully": "Article successfully deleted",
+        "articleRejectApproveSuccessfully": "Article successfully rejected",
+        "articleRejectPremoderateSuccessfully": "Article successfully rejected",
+        "articleAcceptPremoderateSuccessfully": "Article successfully premoderated",
 
         "commentCreatedSuccessfully": "Comment successfully created",
 

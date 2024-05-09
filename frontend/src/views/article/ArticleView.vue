@@ -41,7 +41,8 @@
 	adminStatusReCheck();
 
 	const fetchedData : Ref<any> = ref();
-	const loaded : Ref<boolean> = ref(false);
+	const loading : Ref<boolean> = ref(true);
+	const commentsLoading : Ref<boolean> = ref(true);
 
 	let currentVersion : Ref<number> = ref(1);
 
@@ -163,11 +164,11 @@
 
 				
 			}
-			loaded.value = true;
+			loading.value = false;
 		} 
 		catch 
 		{
-			loaded.value = true;
+			loading.value = false;
 			fetchedData.value = null;
 		}
 	});
@@ -604,7 +605,7 @@
 		{
 			if(response.data.success)
 			{
-				
+			 	openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
 			}
 			else
 			{
@@ -655,7 +656,7 @@
 </script>
 
 <template>
-	<main v-if="loaded" class="main">
+	<main v-if="!loading" class="main">
 		<article v-if="fetchedData" class="main__article">
 			<div class="main__article__previewContainer">
 				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedData.versions[currentVersion-1].created_date) }}</p>
@@ -712,7 +713,7 @@
 					</div>
 				</div>
 				
-				<div class="main__article__comments__commentsList">
+				<div v-if="commentsLoading" class="main__article__comments__commentsList">
 					<CommentsList v-for="comment in comments" :key="comment.comment_id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
 				</div>
 			</div>

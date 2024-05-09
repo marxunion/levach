@@ -15,7 +15,7 @@
 
 	import { timestampToLocaleFormatedTime } from '../ts/DateTimeHelper';
 
-	import { Comment } from '../ts/CommentsHelper';
+	//import { Comment } from '../ts/CommentsHelper';
 
 	import InfoModal from './modals/InfoModal.vue';
 	import { closeModal, openModal } from 'jenesius-vue-modal';
@@ -210,7 +210,7 @@
 		{
 			if(response.data.success)
 			{
-
+				openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
 			}
 			else
 			{
@@ -264,17 +264,55 @@
 		}
 
 		const data = {
-			'comment_id': props.comment.comment_id,
+			comment_id: props.comment.comment_id,
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
 		}
-		await axios.post('/api/admin/article/comments/delete'+props.articleViewCode)
+
+		await axios.post('/api/admin/article/comments/delete'+props.articleViewCode, data)
 		.then(response => 
 		{
-
+			if(response.data.success)
+			{
+				openModal(InfoModal, {status: true, text: langData.value['commentDeletedSuccessfully']});
+			}
+			else
+			{
+				if(response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+			}
 		})
-		.catch(error => 
+		.catch(error =>
 		{
-
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
 		});
 	}
 
