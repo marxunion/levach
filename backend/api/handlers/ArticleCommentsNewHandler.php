@@ -19,44 +19,38 @@ class ArticleCommentsNewHandler extends BaseHandlerRouteWith
             
             if(isset($this->parsedBody['csrfToken']))
             {
-                if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
+                
+                        if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        if(isset($this->parsedBody['commentType']))
+                        if(isset($this->args['viewCode']))
                         {
-                            if(isset($this->args['viewCode']))
+                            if(isset($this->parsedBody['text']))
                             {
-                                if(isset($this->parsedBody['text']))
+                                $this->ratingInfluence = 0;
+                                if(isset($this->parsedBody['rating_influence']))
                                 {
-                                    $this->ratingInfluence = 0;
-                                    if(isset($this->parsedBody['rating_influence']))
+                                    if($this->parsedBody['rating_influence'] == 1)
                                     {
-                                        if($this->parsedBody['rating_influence'] == 1)
-                                        {
-                                            $this->ratingInfluence = 1;
-                                        }
-                                        else if($this->parsedBody['rating_influence'] == 2)
-                                        {
-                                            $this->ratingInfluence = -1;
-                                        }
+                                        $this->ratingInfluence = 1;
                                     }
-                                    $this->model = new ArticleCommentsNewModel();
+                                    else if($this->parsedBody['rating_influence'] == 2)
+                                    {
+                                        $this->ratingInfluence = -1;
+                                    }
                                 }
-                                else
-                                {
-                                    throw new Error(400, "Invalid comment text", "Invalid article text");
-                                }
-                                
+                                $this->model = new ArticleCommentsNewModel();
                             }
                             else
                             {
-                                throw new Error(400, "Invalid article viewcode", "Invalid article viewcode");
+                                throw new Error(400, "Invalid comment text", "Invalid article text");
                             }
+                            
                         }
                         else
                         {
-                            throw new Error(400, "Invalid comment type", "Invalid comment type");
+                            throw new Error(400, "Invalid article viewcode", "Invalid article viewcode");
                         }
                     }
                     else
@@ -85,25 +79,7 @@ class ArticleCommentsNewHandler extends BaseHandlerRouteWith
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            if($this->parsedBody['commentType'] == 'comment')
-            {
-                $this->model->newComment($articleId, $this->parsedBody['text'], $this->ratingInfluence);
-            }
-            else if($this->parsedBody['commentType'] == 'subcomment') 
-            {
-                if(isset($this->parsedBody['parent_comment_id']))
-                {
-                    $this->model->newSubcomment($articleId, $this->parsedBody['parent_comment_id'], $this->parsedBody['text'], $this->ratingInfluence);
-                }
-                else
-                {
-                    throw new Error(403, "Invalid comment id", "Invalid comment id");
-                }
-            }
-            else
-            {
-                throw new Error(403, "Invalid article viewcode", "Invalid article code");
-            }
+            $this->model->newComment($articleId, $this->parsedBody['text'], $this->ratingInfluence);
         }
         else
         {
