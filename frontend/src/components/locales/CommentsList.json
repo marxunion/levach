@@ -17,6 +17,9 @@
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
+        "commentCreatedSuccessfully": "Комментарий умпешно создан",
+        "commentDeletedSuccessfully": "Комментарий успешно удалён",
+
         "titleAnswer": "Ответить",
         "titleDelete": "Удалить",
 

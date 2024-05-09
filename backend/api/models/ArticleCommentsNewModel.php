@@ -27,15 +27,17 @@ class ArticleCommentsNewModel extends BaseModel
             $newCommentId = $lastCommentId + 1;
         }
 
-        'comments', 
-        [
-            'article_id' => $articleId,
-            'parent_comment_id' => null,
-            'text' => $text,
-            'rating' => 0,
-            'rating_influence' => $ratingInfluence,
-            'created_date' => time()
-        ]
+        $this->database->insert(
+            'comments', 
+            [
+                'article_id' => $articleId,
+                'parent_comment_id' => null,
+                'text' => $text,
+                'rating' => 0,
+                'rating_influence' => $ratingInfluence,
+                'created_date' => time()
+            ]
+        );
     }
 
     public function newSubcomment($articleId, $parentCommentId, $text = '', $ratingInfluence = 0)

@@ -22,6 +22,8 @@
         "articleRejectPremoderateSuccessfully": "Статья была успешно отклонена",
         "articleAcceptPremoderateSuccessfully": "Статья была успешно премодерирована",
 
+        "commentCreatedSuccessfully": "Комментарий умпешно создан",
+
         "approveArticleButton": "Одобрить",
         "rejectApproveArticleButton": "Не одобрять",
         "acceptPremoderateArticleButton": "Принять",

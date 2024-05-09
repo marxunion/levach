@@ -600,7 +600,7 @@
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
 		}
 
-		await axios.post('/api/article/comments/new', data)
+		await axios.post('/api/article/comments/new/'+articleViewCode.value, data)
 		.then(response => 
 		{
 			if(response.data.success)
