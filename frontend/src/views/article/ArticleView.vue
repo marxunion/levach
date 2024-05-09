@@ -518,7 +518,7 @@
 		language: LangDataHandler.currentLanguage.value
 	});
 
-	const onLikeReactionClick = () =>
+	const onLikeReaction = () =>
 	{
 		if(currentCommentReaction.value === 1)
 		{
@@ -530,7 +530,7 @@
 		}
 	}
 
-	const onDislikeReactionClick = () =>
+	const onDislikeReaction = () =>
 	{
 		if(currentCommentReaction.value === 2)
 		{
@@ -636,7 +636,10 @@
 		}
 	}
 
-	
+	const onCreateNewComment = () =>
+	{
+
+	}
 
 	watch(langData, () =>
 	{
@@ -693,13 +696,13 @@
 
 				<div class="main__article__comments__newComment">
 					<MdEditor class="main__article__comments__newComment__editor" v-model="(newCommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImg" :language="newCommentEditorState.language" noIconfont :preview="false"/>
-					<img src="./../../assets/img/article/sendCommentButton.svg" alt="Send" class="main__article__comments__newComment__sendButton">
+					<img @click="onCreateNewComment()" src="./../../assets/img/article/sendCommentButton.svg" alt="Send" class="main__article__comments__newComment__sendButton">
 					<div class="main__article__comments__newComment__reactions">
-						<img v-if="currentCommentReaction === 1" @click="onLikeReactionClick()" src="./../../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="main__article__comments__newComment__reactions__reaction">
-						<img v-else @click="onLikeReactionClick()" src="./../../assets/img/article/comments/like.svg" alt="Like" class="main__article__comments__newComment__reactions__reaction">
+						<img v-if="currentCommentReaction === 1" @click="onLikeReaction()" src="./../../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="main__article__comments__newComment__reactions__reaction">
+						<img v-else @click="onLikeReaction()" src="./../../assets/img/article/comments/like.svg" alt="Like" class="main__article__comments__newComment__reactions__reaction">
 						
-						<img v-if="currentCommentReaction === 2" @click="onDislikeReactionClick()" src="./../../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="main__article__comments__newComment__reactions__reaction">
-						<img v-else @click="onDislikeReactionClick()" src="./../../assets/img/article/comments/dislike.svg" alt="Dislike" class="main__article__comments__newComment__reactions__reaction">
+						<img v-if="currentCommentReaction === 2" @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="main__article__comments__newComment__reactions__reaction">
+						<img v-else @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislike.svg" alt="Dislike" class="main__article__comments__newComment__reactions__reaction">
 					</div>
 				</div>
 				
