@@ -2,7 +2,7 @@ import { ref, Ref } from 'vue';
 
 export interface Comment
 {
-    comment_id: number,
+    id: number,
     parent_comment_id: number,
 
     text: string,

@@ -28,7 +28,7 @@
 
 	const langData = LangDataHandler.initLangDataHandler("CommentsList", langsData).langData;
 
-	const loading : Ref<boolean> = ref(true);
+	const loading : Ref<boolean> = ref(false);
 
 	const answerStatus = ref(0);
 
@@ -58,6 +58,50 @@
 		text: "",
 		language: LangDataHandler.currentLanguage.value
 	});
+
+	// Subcomments 
+	const fetchSubomments = async () =>
+	{
+		let params = {
+			id: props.comment.id
+		}
+		await axios.get('api/article/comments/subcomments/get'+props.articleViewCode, 
+		{
+			params: params
+		})
+		.then(response => 
+		{
+			if(response.data !== null)
+			{
+				if(Array.isArray(response.data))
+				{
+					response.data.forEach((article : Comment) => 
+					{
+						props.comment.subcomments.push(article);
+					});
+				}
+			}
+		})
+		.catch(error => 
+		{
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+		});
+	}
 
 	// NewSubcomment
 
@@ -199,7 +243,7 @@
 
 		const data = {
 			type: 'subcomment',
-			parent_comment_id: props.comment.comment_id,
+			parent_comment_id: props.comment.id,
 			text: newSubcommentEditorState.text,
 			rating_influence: currentSubcommentReaction.value,
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
@@ -264,7 +308,7 @@
 		}
 
 		const data = {
-			comment_id: props.comment.comment_id,
+			id: props.comment.id,
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
 		}
 
@@ -325,7 +369,7 @@
 <template>
 	<div class="comment" :style="{ marginLeft: `${5 * level}%` }">
 		<div class="comment__header">
-			<p class="comment__header__title id">#{{ comment.comment_id }}</p>
+			<p class="comment__header__title id">#{{ comment.id }}</p>
 			<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
 		</div>
 		<MdPreview class="comment__text" :modelValue="comment.text" :language="previewState.language"/>

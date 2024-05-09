@@ -175,7 +175,22 @@
         })
         .catch(error => 
         {
-            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
+            if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
         });
         
         loading.value = false;

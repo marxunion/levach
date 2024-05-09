@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, Ref, computed, ComputedRef, reactive, watch, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
+	import { ref, Ref, computed, ComputedRef, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
 	import { useRoute, useRouter } from 'vue-router';
 	import axios from 'axios';
 
@@ -56,7 +56,7 @@
  
 	articleViewCode.value = route.params.articleViewCode as string;
 
-	async function fetchData()
+	async function fetchArticleData()
 	{
 		return await axios.get('/api/article/view/'+articleViewCode.value)
 		.then(response =>
@@ -143,12 +143,216 @@
 
 	const fetchNewComments = async (count : number = 8) =>
 	{
-		await axios.get('api/article/comments/get/'+articleViewCode.value)
+		let params = {
+			count: count
+		}
+		await axios.get('api/article/comments/get/'+articleViewCode.value, 
+		{
+			params: params
+		})
+		.then(response => 
+		{
+			if(response.data !== null)
+			{
+			 	
+			}
+		})
+		.catch(error => 
+		{
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+		});
+
+	}
+
+	const handleCommentsScroll = async () => 
+    {
+        const scrollElement = scrollTarget.value;
+        if (scrollElement !== null && !loading.value && !commentsReloading.value) 
+        {
+            const bottomDistance = (scrollElement as HTMLElement).getBoundingClientRect().bottom - window.innerHeight;
+            if (bottomDistance <= 0) 
+            {
+                commentsReloading.value = true;
+                await fetchNewComments();
+            }
+        }
+    }
+
+	// Comments sort
+	const currentSortType : Ref<number> = ref(0);
+
+	const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
+
+	const onChangeSortType = (sortType : number) => 
+	{
+		currentSortType.value = sortType;
+	}
+	
+	// NewComment
+
+	const currentCommentReaction : Ref<number> = ref(0);
+	let newCommentEditorState = reactive(
+	{
+		text: "",
+		language: LangDataHandler.currentLanguage.value
+	});
+
+	const onLikeReaction = () =>
+	{
+		if(currentCommentReaction.value === 1)
+		{
+			currentCommentReaction.value = 0;
+		}
+		else
+		{
+			currentCommentReaction.value = 1;
+		}
+	}
+
+	const onDislikeReaction = () =>
+	{
+		if(currentCommentReaction.value === 2)
+		{
+			currentCommentReaction.value = 0;
+		}
+		else
+		{
+			currentCommentReaction.value = 2;
+		}
+	}
+
+	const onNewCommentUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
+	{
+		if(files.length > 0)
+		{
+			openModal(LoaderModal);
+			const promises = files.map((file) => 
+				{
+					return new Promise<{ data: { fileName: string } }>(resolve => 
+					{
+						const form = new FormData();
+						form.append('file', file);
+
+						axios.post('/api/media/img/upload', form, 
+						{
+							headers: 
+							{
+								'Content-Type': 'multipart/form-data'
+							}
+						})
+						.then((response) => 
+						{
+						
+							if (response.data) 
+							{
+								if(response.data.fileName)
+								{
+									resolve(response);
+								}
+								else 
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
+								}
+							}
+							else
+							{
+								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+
+							}
+						})
+						.catch((error) => 
+						{
+							if (error.response.data) 
+							{
+								if(error.response.data.Warning)
+								{
+									if(error.response.data.Warning.message == "UploadImage Invalid image type")
+									{
+										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
+									}
+									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
+									{
+										openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
+									}
+									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
+									{
+										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
+									}
+									else
+									{
+										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"] });
+									}
+									
+								}
+								else if(error.response.data.Error)
+								{
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+								}
+								else if(error.response.data.Critical)
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+								}
+								else 
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+								}
+							}
+							else
+							{
+								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+						});
+					});
+				}
+			);
+
+			const res = await Promise.all(promises);
+			
+			const successfulResults = res.filter(item => item !== null);
+
+			closeModal();
+			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
+		}
+	}
+
+	const onCreateNewComment = async () =>
+	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
+
+		const data = {
+			type: 'comment',
+			text: newCommentEditorState.text,
+			rating_influence: currentCommentReaction.value,
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
+		}
+
+		await axios.post('/api/article/comments/new/'+articleViewCode.value, data)
 		.then(response => 
 		{
 			if(response.data.success)
 			{
-			 	
+			 	openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
 			}
 			else
 			{
@@ -189,38 +393,13 @@
                 openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 			}
 		});
-
-	}
-
-	const handleScroll = async () => 
-    {
-        const scrollElement = scrollTarget.value;
-        if (scrollElement !== null && !loading.value && !commentsReloading.value) 
-        {
-            const bottomDistance = (scrollElement as HTMLElement).getBoundingClientRect().bottom - window.innerHeight;
-            if (bottomDistance <= 0) 
-            {
-                commentsReloading.value = true;
-                await fetchNewComments();
-            }
-        }
-    }
-
-	// Comments sort
-	const currentSortType : Ref<number> = ref(0);
-
-	const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
-
-	const onChangeSortType = (sortType : number) => 
-	{
-		currentSortType.value = sortType;
 	}
 
 	let intervalId : NodeJS.Timeout | null = null;
 	onMounted(async function() {
 		try 
 		{
-			fetchedData.value = await fetchData();
+			fetchedData.value = await fetchArticleData();
 			if (fetchedData.value != null) 
 			{
 				currentVersion.value = fetchedData.value.versions.length;
@@ -229,7 +408,7 @@
 				let ps = document.querySelector('.ps');
 				if(ps != null)
 				{
-					ps.addEventListener('scroll', handleScroll)
+					ps.addEventListener('scroll', handleCommentsScroll)
 				}
 
 				loading.value = true;
@@ -237,7 +416,7 @@
 
 				intervalId = setInterval(async () => 
 				{
-					fetchedData.value = await fetchData();
+					fetchedData.value = await fetchArticleData();
 				}, 10000);
 			}
 			loading.value = false;
@@ -249,11 +428,6 @@
 		}
 	});
 
-	onMounted(async () => 
-    {
-        
-    });
-
     onBeforeUnmount(() => 
     {
 		if(intervalId != null)
@@ -264,7 +438,7 @@
         let ps = document.querySelector('.ps');
         if(ps != null)
         {
-            ps.removeEventListener('scroll', handleScroll)
+            ps.removeEventListener('scroll', handleCommentsScroll)
         }
     });
 
@@ -543,198 +717,6 @@
 		openModal(ShareWith, { link: 'http://localhost:8000/#/article/'+articleViewCode.value})
 	}
 
-	// NewComment
-
-	const currentCommentReaction : Ref<number> = ref(0);
-	let newCommentEditorState = reactive(
-	{
-		text: "",
-		language: LangDataHandler.currentLanguage.value
-	});
-
-	const onLikeReaction = () =>
-	{
-		if(currentCommentReaction.value === 1)
-		{
-			currentCommentReaction.value = 0;
-		}
-		else
-		{
-			currentCommentReaction.value = 1;
-		}
-	}
-
-	const onDislikeReaction = () =>
-	{
-		if(currentCommentReaction.value === 2)
-		{
-			currentCommentReaction.value = 0;
-		}
-		else
-		{
-			currentCommentReaction.value = 2;
-		}
-	}
-
-	const onNewCommentUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
-	{
-		if(files.length > 0)
-		{
-			openModal(LoaderModal);
-			const promises = files.map((file) => 
-				{
-					return new Promise<{ data: { fileName: string } }>(resolve => 
-					{
-						const form = new FormData();
-						form.append('file', file);
-
-						axios.post('/api/media/img/upload', form, 
-						{
-							headers: 
-							{
-								'Content-Type': 'multipart/form-data'
-							}
-						})
-						.then((response) => 
-						{
-						
-							if (response.data) 
-							{
-								if(response.data.fileName)
-								{
-									resolve(response);
-								}
-								else 
-								{
-									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
-								}
-							}
-							else
-							{
-								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-
-							}
-						})
-						.catch((error) => 
-						{
-							if (error.response.data) 
-							{
-								if(error.response.data.Warning)
-								{
-									if(error.response.data.Warning.message == "UploadImage Invalid image type")
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
-									}
-									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
-									{
-										openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
-									}
-									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
-									}
-									else
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"] });
-									}
-									
-								}
-								else if(error.response.data.Error)
-								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-								else if(error.response.data.Critical)
-								{
-									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-								else 
-								{
-									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-							}
-							else
-							{
-								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-							}
-						});
-					});
-				}
-			);
-
-			const res = await Promise.all(promises);
-			
-			const successfulResults = res.filter(item => item !== null);
-
-			closeModal();
-			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
-		}
-	}
-
-	const onCreateNewComment = async () =>
-	{
-		await getNewCsrfToken();
-
-		if(csrfTokenInput.value == null)
-		{
-			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-			return;
-		}
-
-		const data = {
-			type: 'comment',
-			text: newCommentEditorState.text,
-			rating_influence: currentCommentReaction.value,
-			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
-		}
-
-		await axios.post('/api/article/comments/new/'+articleViewCode.value, data)
-		.then(response => 
-		{
-			if(response.data.success)
-			{
-			 	openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
-			}
-			else
-			{
-				if(response.data.Warning)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-                }
-                else if(response.data.Error)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else if(response.data.Critical)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-			}
-		})
-		.catch(error => 
-		{
-			if(error.response.data.Warning)
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-            }
-            else if(error.response.data.Error)
-            {
-				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-			else if(error.response.data.Critical)
-			{
-				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-			else
-			{
-                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-		});
-	}
-
 	watch(langData, () =>
 	{
 		previewState.language = LangDataHandler.currentLanguage.value;
@@ -801,7 +783,7 @@
 				</div>
 				
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
-					<CommentsList v-for="comment in comments" :key="comment.comment_id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
+					<CommentsList v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
 					<div ref="scrollTarget" style="height: 100px;"></div>
 					<Loader v-if="commentsReloading"/>
 				</div>
