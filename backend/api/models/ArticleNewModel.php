@@ -13,8 +13,8 @@ class ArticleNewModel extends BaseModel
     }
     public function newArticle($title, $text, $tags, $viewCode, $editCode)
     {
-        $lastArticleId = $this->database->max('articles', 'id');
         $newArticleId = 1;
+        $lastArticleId = $this->database->max('articles', 'id');
 
         if($lastArticleId !== '') 
         {
