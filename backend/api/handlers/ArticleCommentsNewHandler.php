@@ -30,13 +30,13 @@ class ArticleCommentsNewHandler extends BaseHandlerRouteWith
                                 if(isset($this->parsedBody['text']))
                                 {
                                     $this->ratingInfluence = 0;
-                                    if(isset($this->parsedBody['reactionType']))
+                                    if(isset($this->parsedBody['rating_influence']))
                                     {
-                                        if($this->parsedBody['reactionType'] == 1)
+                                        if($this->parsedBody['rating_influence'] == 1)
                                         {
                                             $this->ratingInfluence = 1;
                                         }
-                                        else if($this->parsedBody['reactionType'] == 2)
+                                        else if($this->parsedBody['rating_influence'] == 2)
                                         {
                                             $this->ratingInfluence = -1;
                                         }
