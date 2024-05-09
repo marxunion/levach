@@ -19,8 +19,7 @@ class ArticleCommentsNewHandler extends BaseHandlerRouteWith
             
             if(isset($this->parsedBody['csrfToken']))
             {
-                
-                        if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
+                if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
@@ -50,7 +49,7 @@ class ArticleCommentsNewHandler extends BaseHandlerRouteWith
                         }
                         else
                         {
-                            throw new Error(400, "Invalid article viewcode", "Invalid article viewcode");
+                            throw new Error(400, "Invalid article viewCode", "Invalid article viewCode");
                         }
                     }
                     else

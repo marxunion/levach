@@ -30,6 +30,7 @@ class ArticleCommentsNewModel extends BaseModel
         $this->database->insert(
             'comments', 
             [
+                'id': $newCommentId,
                 'article_id' => $articleId,
                 'parent_comment_id' => $parentCommentId,
                 'text' => $text,

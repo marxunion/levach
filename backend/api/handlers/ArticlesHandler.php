@@ -12,11 +12,11 @@ class ArticlesHandler extends BaseHandlerRoute
 {
     public function Init()
     {
-        $this->model = new ArticlesModel();
-        $parsedBody = $this->request->getQueryParams();
-        if(is_array($parsedBody))
+        if(is_array($this->request->getQueryParams()))
         {
-            $this->parsedBody = $parsedBody;
+            $this->parsedBody = $this->request->getQueryParams();
+
+            $this->model = new ArticlesModel();
 
             if(isset($this->parsedBody['count']))
             {
