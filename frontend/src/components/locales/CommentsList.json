@@ -1,6 +1,22 @@
 {
     "RU":
     {
+        "warnings": 
+        {
+            "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку",
+
+            "imageMaxSize": "Размер загружаемого изображения должен быть не больше {size}МБ",
+            "imageUnallowedType": "Расширение загружаемого изображения не поддерживается",
+            "imageNeedImage": "Пожалуйста загрузите хотяб одно изображение"
+        },
+
+        "errors": 
+        {
+            "articleNotFound": "Статья не найдена",
+
+            "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
+        },
+
         "titleAnswer": "Ответить",
         "titleDelete": "Удалить",
 
@@ -87,6 +103,25 @@
     },
     "EN":
     {
+        "warnings": 
+        {
+            "unknown": "An unknown error occurred. Try again",
+
+            "imageMaxSize": "The size of the uploaded image must be no larger than {size}MB",
+            "imageUnallowedType": "The extension of the uploaded image is not supported",
+            "imageNeedImage": "Please upload at least one image"
+        },
+
+        "errors": 
+        {
+            "articleNotFound": "Article not found",
+
+            "unknown": "An unknown error occurred. Try again"
+        },
+
+        "commentCreatedSuccessfully": "Comment successfully created",
+        "commentDeleteSuccessfully": "Comment was successfully deleted",
+
         "titleAnswer": "Answer",
         "titleDelete": "Delete",
 

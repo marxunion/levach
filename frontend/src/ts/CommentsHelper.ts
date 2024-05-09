@@ -7,6 +7,7 @@ export interface Comment
 
     text: string,
     rating: number,
+    rating_influence: number,
     created_date: number,
 
     subcomments: Comment[] | null

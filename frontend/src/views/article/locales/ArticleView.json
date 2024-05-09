@@ -142,6 +142,8 @@
         "articleRejectPremoderateSuccessfully": "The article was successfully rejected",
         "articleAcceptPremoderateSuccessfully": "Article was successfully premoderated",
 
+        "commentCreatedSuccessfully": "Comment successfully created",
+
         "approveArticleButton": "Approve",
         "rejectApproveArticleButton": "Reject Approve",
         "acceptPremoderateArticleButton": "Accept",

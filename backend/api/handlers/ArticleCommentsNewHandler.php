@@ -91,9 +91,9 @@ class ArticleCommentsNewHandler extends BaseHandlerRouteWith
             }
             else if($this->parsedBody['commentType'] == 'subcomment') 
             {
-                if(isset($this->parsedBody['parentCommentId']))
+                if(isset($this->parsedBody['parent_comment_id']))
                 {
-                    $this->model->newSubcomment($articleId, $this->parsedBody['parentCommentId'], $this->parsedBody['text'], $this->ratingInfluence);
+                    $this->model->newSubcomment($articleId, $this->parsedBody['parent_comment_id'], $this->parsedBody['text'], $this->ratingInfluence);
                 }
                 else
                 {

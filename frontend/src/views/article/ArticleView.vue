@@ -47,8 +47,6 @@
 
 
 	// Comments
-	
-
 	const route = useRoute();
 	const router = useRouter();
 	const articleViewCode : Ref<string | null> = ref<string | null>(null);
@@ -584,9 +582,69 @@
 		}
 	}
 
-	const onCreateNewComment = () =>
+	const onCreateNewComment = async () =>
 	{
+		await getNewCsrfToken();
 
+		if(csrfTokenInput.value == null)
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
+
+		const data = {
+			type: 'comment',
+			text: newCommentEditorState.text,
+			rating_influence: currentCommentReaction.value,
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
+		}
+
+		await axios.post('/api/article/comments/new', data)
+		.then(response => 
+		{
+			if(response.data.success)
+			{
+				
+			}
+			else
+			{
+				if(response.data.Warning)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+                else if(response.data.Error)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else if(response.data.Critical)
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+			}
+		})
+		.catch(error => 
+		{
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+		});
 	}
 
 	watch(langData, () =>
