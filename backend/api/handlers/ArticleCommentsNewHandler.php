@@ -8,7 +8,7 @@ use Base\BaseHandlerRoute;
 
 use Api\Models\ArticleCommentsNewModel;
 
-class ArticleCommentsNewHandler extends BaseHandlerRoute
+class ArticleCommentsNewHandler extends BaseHandlerRouteWith
 {
     public function Init()
     {
@@ -25,10 +25,22 @@ class ArticleCommentsNewHandler extends BaseHandlerRoute
                     {
                         if(isset($this->parsedBody['commentType']))
                         {
-                            if(isset($this->parsedBody['articleViewCode']))
+                            if(isset($this->args['viewCode']))
                             {
                                 if(isset($this->parsedBody['text']))
                                 {
+                                    $this->ratingInfluence = 0;
+                                    if(isset($this->parsedBody['reactionType']))
+                                    {
+                                        if($this->parsedBody['reactionType'] == 1)
+                                        {
+                                            $this->ratingInfluence = 1;
+                                        }
+                                        else if($this->parsedBody['reactionType'] == 2)
+                                        {
+                                            $this->ratingInfluence = -1;
+                                        }
+                                    }
                                     $this->model = new ArticleCommentsNewModel();
                                 }
                                 else
@@ -73,19 +85,19 @@ class ArticleCommentsNewHandler extends BaseHandlerRoute
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            if($this->parsedBody['commentType'] == 'article')
+            if($this->parsedBody['commentType'] == 'comment')
             {
-                
+                $this->model->newComment($articleId, $this->parsedBody['text'], $this->ratingInfluence);
             }
-            else if($this->parsedBody['commentType'] == 'comment') 
+            else if($this->parsedBody['commentType'] == 'subcomment') 
             {
-                if(isset($this->parsedBody['commentId']))
+                if(isset($this->parsedBody['parentCommentId']))
                 {
-                    c
+                    $this->model->newSubcomment($articleId, $this->parsedBody['parentCommentId'], $this->parsedBody['text'], $this->ratingInfluence);
                 }
                 else
                 {
-
+                    throw new Error(403, "Invalid comment id", "Invalid comment id");
                 }
             }
             else
