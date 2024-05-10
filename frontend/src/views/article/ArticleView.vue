@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { ref, Ref, computed, ComputedRef, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
-	import { useRoute, useRouter } from 'vue-router';
+	import { useRoute, useRouter, RouteLocationNormalizedLoaded, Router } from 'vue-router';
 	import axios from 'axios';
 
 	import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
@@ -42,18 +42,20 @@
 
 	const lastLoadedComment : Ref<number> = ref(0);
 	const fetchedData : Ref<any> = ref();
+	
 	const loading : Ref<boolean> = ref(true);
+
 	const commentsLoading : Ref<boolean> = ref(true);
 	const commentsReloading : Ref<boolean> = ref(true);
 
 	let currentVersion : Ref<number> = ref(1);
 
-	let scrollTarget = ref(null);
+	let scrollTarget : Ref<HTMLElement | null> = ref(null);
 
 	// Comments
-	const route = useRoute();
-	const router = useRouter();
-	const articleViewCode : Ref<string | null> = ref<string | null>(null);
+	const route : RouteLocationNormalizedLoaded = useRoute();
+	const router : Router = useRouter();
+	const articleViewCode : Ref<string | null> = ref(null);
  
 	articleViewCode.value = route.params.articleViewCode as string;
 

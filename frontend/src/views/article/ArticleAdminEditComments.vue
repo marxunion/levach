@@ -14,7 +14,6 @@
 	import langsData from "./locales/ArticleAdminEditComments.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 
-
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
 
     // Filters

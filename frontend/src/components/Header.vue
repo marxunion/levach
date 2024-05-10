@@ -39,7 +39,7 @@
         }
     }
 
-    const isCurrentRouteName = (routeName: string) => 
+    const isCurrentRouteName = (routeName: string) : boolean => 
     {
         return routeName == route.name ? true : false;
     }

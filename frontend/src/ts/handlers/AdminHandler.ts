@@ -8,7 +8,6 @@ export const adminStatus : Ref<boolean> = ref(false);
 
 export async function adminStatusReCheck() 
 {
-   
     if(checkCookie('admin_token') && checkCookie('admin_nickname') && checkCookie('admin_expiration_time'))
     {
         const expirationTime : number | null = getIntCookie('admin_expiration_time');
