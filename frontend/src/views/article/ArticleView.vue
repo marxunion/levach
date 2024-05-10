@@ -146,7 +146,7 @@
 	{
 		let params = {
 			count: count,
-			lastLoadedComment: lastLoadedComment.value
+			lastLoaded: lastLoadedComment.value
 		}
 		await axios.get('api/article/comments/get/'+articleViewCode.value, 
 		{
@@ -207,11 +207,13 @@
 
 	const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
 
-	const onChangeSortType = (sortType : number) => 
+	const onChangeSortType = async (sortType : number) => 
 	{
 		commentsLoading.value = true;
+		lastLoadedComment.value = 0;
 		comments.value = [];
 		currentSortType.value = sortType;
+		await fetchNewComments();
 	}
 	
 	// NewComment
@@ -797,8 +799,11 @@
 				
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
 					<CommentsList v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
-					<div ref="scrollTarget" style="height: 100px;"></div>
-					<Loader v-if="commentsReloading"/>
+					<div ref="scrollTarget" style="height: 10px;"></div>
+					<div v-if="commentsReloading" class="main__article__comments__commentsList__reloader">
+						<Loader/>
+					</div>
+					
 				</div>
 				<div v-else class="main__article__comments__commentsList load">
 					<Loader/>

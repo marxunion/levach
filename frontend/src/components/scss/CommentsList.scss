@@ -41,6 +41,7 @@
     {
         display: flex;
         align-items: center;
+        
         &__actions
         {
             display: flex;
@@ -88,6 +89,45 @@
                 font-size: 18px;
                 font-family: Roboto-Regular;
                 margin-left: 8px;
+            }
+        }
+    }
+    &__newSubcomment
+    {
+        width: 97%;
+        margin-top: 12px;
+        position: relative;
+        &__editor
+        {
+            width: 100%;
+            height: auto !important;
+            min-height: 260px;
+            border-radius: 15px;
+        }
+        &__reactions
+        {
+            position: absolute;
+            display: flex;
+            bottom: 15px;
+            left: 15px;
+            &__reaction
+            {
+                cursor: pointer;
+                margin-left: 8px;
+                width: 30px;
+                transition: .5s;
+            }
+        }
+        &__sendButton
+        {
+            cursor: pointer;
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            transition: .3s;
+            &:hover
+            {
+                transform: scale(1.1);
             }
         }
     }

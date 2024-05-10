@@ -27,6 +27,7 @@ class ArticleCommentsSubcommentsGetModel extends BaseModel
                 'id',
                 'text',
                 'rating',
+                'created_date',
                 'rating_influence'
             ], 
             [

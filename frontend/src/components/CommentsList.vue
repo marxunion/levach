@@ -3,7 +3,7 @@
 
 	import axios from 'axios';
 
-	import { MdPreview, config } from 'md-editor-v3';
+	import { MdEditor, MdPreview, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
 	import { adminStatus, adminStatusReCheck } from './../ts/AdminHandler'
@@ -16,6 +16,7 @@
 	import { timestampToLocaleFormatedTime } from '../ts/DateTimeHelper';
 
 	//import { Comment } from '../ts/CommentsHelper';
+	import Loader from './Loader.vue';
 
 	import InfoModal from './modals/InfoModal.vue';
 	import { closeModal, openModal } from 'jenesius-vue-modal';
@@ -23,6 +24,7 @@
 	import LoaderModal from './modals/LoaderModal.vue';
 
 	import { csrfTokenInput, getNewCsrfToken } from '../ts/csrfTokenHelper';
+
 
 	const props = defineProps(['articleViewCode', 'comment', 'level']);
 
@@ -362,7 +364,14 @@
 
 	const onCreateAnswer = () => 
 	{
-		answerStatus.value = 1;
+		if(answerStatus.value == 1)
+		{
+			answerStatus.value = 0;
+		}
+		else
+		{
+			answerStatus.value = 1;
+		}
 	}
 </script>
 
@@ -380,23 +389,31 @@
 			</div>
 			<div class="comment__bar__reactions">
 				<img src="../assets/img/article/rating.png" alt="Rating: " class="comment__bar__reactions__icon ratingIcon">
-				<p class="comment__bar__reactions__title likeCounter">{{ abbreviateNumber(comment['statistics']['rating']) }}</p>
+				<p class="comment__bar__reactions__title likeCounter">{{ abbreviateNumber(comment.rating) }}</p>
 			</div>
 		</div>
 	</div>
-	<div v-if="answerStatus" class="main__article__comments__newSubcomment">
-		<MdEditor class="main__article__comments__newSubcomment__editor" v-model="(newSubcommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImg" :language="newSubcommentEditorState.language" noIconfont :preview="false"/>
-		<img @click="onCreateNewSubcomment()" src="./../../assets/img/article/sendCommentButton.svg" alt="Send" class="main__article__comments__newSubcomment__sendButton">
-		<div class="main__article__comments__newSubcomment__reactions">
-			<img v-if="currentSubcommentReaction === 1" @click="onLikeReaction()" src="./../../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="main__article__comments__newSubcomment__reactions__reaction">
-			<img v-else @click="onLikeReaction()" src="./../../assets/img/article/comments/like.svg" alt="Like" class="main__article__comments__newSubcomment__reactions__reaction">
+	<div v-if="answerStatus" class="comment__newSubcomment">
+		<MdEditor class="comment__newSubcomment__editor" v-model="(newSubcommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImg" :language="newSubcommentEditorState.language" noIconfont :preview="false"/>
+		<img @click="onCreateNewSubcomment()" src="./../assets/img/article/sendCommentButton.svg" alt="Send" class="comment__newSubcomment__sendButton">
+		<div class="comment__newSubcomment__reactions">
+			<img v-if="currentSubcommentReaction === 1" @click="onLikeReaction()" src="./../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="comment__newSubcomment__reactions__reaction">
+			<img v-else @click="onLikeReaction()" src="./../assets/img/article/comments/like.svg" alt="Like" class="comment__newSubcomment__reactions__reaction">
 						
-			<img v-if="currentSubcommentReaction === 2" @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="main__article__comments__newSubcomment__reactions__reaction">
-			<img v-else @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislike.svg" alt="Dislike" class="main__article__comments__newSubcomment__reactions__reaction">
+			<img v-if="currentSubcommentReaction === 2" @click="onDislikeReaction()" src="./../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="comment__newSubcomment__reactions__reaction">
+			<img v-else @click="onDislikeReaction()" src="./../assets/img/article/comments/dislike.svg" alt="Dislike" class="comment__newSubcomment__reactions__reaction">
 		</div>
 	</div>
 	
-	<CommentsList v-if="loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" />
+	<CommentsList v-if="!loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" />
+	<Loader v-else />
 </template>
+
+<style lang="css">
+	.comment__newSubcomment__editor .md-editor-footer
+    {
+		display: none;
+	}
+</style>
 
 <style lang="scss" scoped src="./scss/CommentsList.scss"></style>

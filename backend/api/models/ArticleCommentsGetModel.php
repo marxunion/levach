@@ -26,6 +26,7 @@ class ArticleCommentsGetModel extends BaseModel
                 'id',
                 'text', 
                 'rating',
+                'created_date',
                 'rating_influence'
             ], 
             [
@@ -57,6 +58,7 @@ class ArticleCommentsGetModel extends BaseModel
                 'id',
                 'text', 
                 'rating',
+                'created_date',
                 'rating_influence'
             ], 
             [
@@ -88,6 +90,7 @@ class ArticleCommentsGetModel extends BaseModel
                 'id',
                 'text', 
                 'rating',
+                'created_date',
                 'rating_influence'
             ], 
             [
