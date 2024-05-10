@@ -7,7 +7,7 @@ use Core\Critical;
 
 use Base\BaseHandlerRouteWithArgs;
 
-use Api\Models\ArticleCommentsGetModel;
+use Api\Models\ArticleCommentsSubcommentsGetModel;
 
 class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRouteWithArgs
 {
@@ -17,8 +17,13 @@ class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRouteWithArgs
         {
             if($this->request->getQueryParams())
             {
-                $parsedBody = $this->request->getQueryParams();
-                if(!isset($this->parsedBody['comment_id']))
+                
+                $this->parsedBody = $this->request->getQueryParams();
+                if(isset($this->parsedBody['comment_id']))
+                {
+                    $this->model = new ArticleCommentsSubcommentsGetModel();
+                }
+                else
                 {
                     throw new Error(400, "Invalid comment id", "Invalid comment id");
                 }
@@ -39,7 +44,7 @@ class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRouteWithArgs
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            $this->model->getSubcomments($articleId, $this->parsedBody['comment_id']);
+            $this->response = $this->response->withJson($this->model->getSubcomments($articleId, $this->parsedBody['comment_id']));
         }
         else
         {

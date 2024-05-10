@@ -25,7 +25,8 @@ class ArticleCommentsGetModel extends BaseModel
             [
                 'id',
                 'text', 
-                'rating'
+                'rating',
+                'rating_influence'
             ], 
             [
                 "ORDER" => [
@@ -55,14 +56,16 @@ class ArticleCommentsGetModel extends BaseModel
             [
                 'id',
                 'text', 
-                'rating'
+                'rating',
+                'rating_influence'
             ], 
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
                     "rating" => "DESC",
                 ],
-                'article_id' => $articleId
+                'article_id' => $articleId,
+                'parent_comment_id' => null
             ]
         );
 
@@ -84,14 +87,16 @@ class ArticleCommentsGetModel extends BaseModel
             [
                 'id',
                 'text', 
-                'rating'
+                'rating',
+                'rating_influence'
             ], 
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
                     "created_date" => "DESC",
                 ],
-                'article_id' => $articleId
+                'article_id' => $articleId,
+                'parent_comment_id' => null
             ]
         );
 

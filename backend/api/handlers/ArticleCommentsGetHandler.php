@@ -25,7 +25,7 @@ class ArticleCommentsGetHandler extends BaseHandlerRouteWithArgs
             }
             if(empty($this->parsedBody['count']))
             {
-                $this->parsedBody['count'] = 8;
+                $this->parsedBody['count'] = 5;
             }
             if(empty($this->parsedBody['lastLoaded']))
             {

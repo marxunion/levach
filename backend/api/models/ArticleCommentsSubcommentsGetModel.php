@@ -19,21 +19,22 @@ class ArticleCommentsSubcommentsGetModel extends BaseModel
         return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
 
-    public function getSubcomments($articleId, $commentId)
+    public function getSubcomments($articleId, $parentCommentId)
     {
         $comments = $this->database->select(
             'comments', 
             [
                 'id',
                 'text',
-                'rating'
+                'rating',
+                'rating_influence'
             ], 
             [
                 "ORDER" => [
                     "created_date" => "DESC",
                 ],
                 'article_id' => $articleId, 
-                'parent_comment_id' => $parent_comment_id
+                'parent_comment_id' => $parentCommentId
             ]
         );
 
