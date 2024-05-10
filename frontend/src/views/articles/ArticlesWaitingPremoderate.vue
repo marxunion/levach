@@ -4,10 +4,12 @@
 
     import Loader from "./../../components/Loader.vue";
     import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
-    import { tagsArrayToString } from '../../ts/helpers/TagsHelper'
-    import { JsonData } from '../../ts/helpers/JsonHelper';
+    import { tagsArrayToString } from '../../ts/helpers/TagsHelper';
 
-    import { Article, articleReloading, articles } from '../../ts/handlers/ArticlesHandler';
+    import { JsonData } from '../../ts/interfaces/JsonData';
+    import { Article } from '../../ts/interfaces/Article'; 
+
+    import { articleReloading, articles } from '../../ts/handlers/ArticlesHandler';
 
     import DropDown from './../../components/DropDown.vue';
     import DropDownVersion from './../../components/DropDownVersion.vue';
@@ -47,8 +49,8 @@
     let searchTags : string[] = [];
     
     // Sort 
-
     const currentSortType : Ref<number> = ref(0);
+    
     const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
 
     const onChangeSortType = async (newSortType : number) => 

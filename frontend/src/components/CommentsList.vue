@@ -20,7 +20,7 @@
 
 	import InfoModal from './modals/InfoModal.vue';
 	import { closeModal, openModal } from 'jenesius-vue-modal';
-	import { JsonData } from '../ts/helpers/JsonHelper';
+	import { JsonData } from '../ts/interfaces/JsonData';
 	import LoaderModal from './modals/LoaderModal.vue';
 
 	import { csrfTokenInput, getNewCsrfToken } from '../ts/handlers/CSRFTokenHandler';

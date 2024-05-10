@@ -12,7 +12,7 @@
 
     import VueNumberInput from '@chenfengyuan/vue-number-input';
 
-    import { JsonData } from "../../ts/helpers/JsonHelper";
+    import { JsonData } from "../../ts/interfaces/JsonData";
 
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/AdminModal.json";

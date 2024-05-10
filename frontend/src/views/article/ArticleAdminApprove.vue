@@ -6,7 +6,7 @@
 	import { MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
-	import { JsonData } from '../../ts/helpers/JsonHelper';
+	import { JsonData } from '../../ts/interfaces/JsonData';
 
 	import Loader from "./../../components/Loader.vue";
 

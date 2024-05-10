@@ -3,7 +3,7 @@
 	import { useRouter } from 'vue-router';
 	import axios from 'axios';
 
-	import { JsonData } from '../../ts/helpers/JsonHelper';
+	import { JsonData } from '../../ts/interfaces/JsonData';
 
 	import { MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';

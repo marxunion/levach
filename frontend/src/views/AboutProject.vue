@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { computed } from 'vue';
 	
-	import { JsonData } from '../ts/helpers/JsonHelper';
+	import { JsonData } from '../ts/interfaces/JsonData';
 
 	import { LangDataHandler } from '../ts/handlers/LangDataHandler';
 	import langsData from './locales/AboutProject.json';

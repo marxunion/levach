@@ -1,4 +1,4 @@
-import { JsonData } from '../helpers/JsonHelper';
+import { JsonData } from './JsonData';
 
 interface End
 {

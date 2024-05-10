@@ -1,16 +1,5 @@
 import { ref, Ref } from 'vue';
 
-export interface Comment
-{
-    id: number,
-    parent_comment_id: number,
-
-    text: string,
-    rating: number,
-    rating_influence: number,
-    created_date: number,
-
-    subcomments: Comment[] | null
-}
+import { Comment } from './../interfaces/Comment'; 
 
 export const comments : Ref<Comment[]> = ref([]);

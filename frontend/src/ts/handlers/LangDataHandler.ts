@@ -1,14 +1,14 @@
-import { ref, computed } from 'vue';
+import { ref, Ref, computed } from 'vue';
 import mainconfig from '../../configs/main.json';
 
-import { JsonData } from '../helpers/JsonHelper';
+import { JsonData } from '../interfaces/JsonData';
 
 export class LangDataHandler 
 {
-    private langsData: JsonData;
+    private langsData : JsonData;
 
     public static readonly langs = mainconfig['langs'];
-    public static readonly currentLanguage = ref(localStorage.getItem('language') || 'RU');
+    public static readonly currentLanguage : Ref<string> = ref(localStorage.getItem('language') || 'RU');
     
     private constructor(data: JsonData)
     {

@@ -5,7 +5,7 @@
 
 	import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
 	import { tagsArrayToString } from '../../ts/helpers/TagsHelper'
-	import { JsonData } from '../../ts/helpers/JsonHelper';
+	import { JsonData } from '../../ts/interfaces/JsonData';
 
 	import Loader from "./../../components/Loader.vue";
 

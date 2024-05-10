@@ -3,7 +3,7 @@
     import { useRoute } from 'vue-router';
     import axios from 'axios';
 
-    import { JsonData } from '../ts/helpers/JsonHelper';
+    import { JsonData } from '../ts/interfaces/JsonData';
 
     import { openModal } from "jenesius-vue-modal";
     import InfoModal from './modals/InfoModal.vue';

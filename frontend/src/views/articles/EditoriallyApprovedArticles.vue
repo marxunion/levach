@@ -4,10 +4,12 @@
 
     import Loader from "./../../components/Loader.vue";
     import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
-    import { tagsArrayToString } from '../../ts/helpers/TagsHelper'
-    import { JsonData } from '../../ts/helpers/JsonHelper';
+    import { tagsArrayToString } from '../../ts/helpers/TagsHelper';
+    
+    import { JsonData } from '../../ts/interfaces/JsonData';
+    import { Article } from '../../ts/interfaces/Article'; 
 
-    import { Article, articles } from '../../ts/handlers/ArticlesHandler';
+    import { articles } from '../../ts/handlers/ArticlesHandler';
 
     import DropDown from './../../components/DropDown.vue';
     import DropDownVersion from './../../components/DropDownVersion.vue';
