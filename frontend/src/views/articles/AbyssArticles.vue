@@ -40,8 +40,8 @@
     const lastLoaded : Ref<number> = ref(0);
     const currentSelectedArticleIndex = ref(0);
 
-    const reloading : Ref<boolean> = ref(false);
     const loading : Ref<boolean> = ref(true);
+    const reloading : Ref<boolean> = ref(false);
 
     const scrollTarget : Ref<HTMLElement | null> = ref(null);
 
@@ -197,7 +197,7 @@
 
     const handleScroll = async () => 
     {
-        const scrollElement = scrollTarget.value;
+        const scrollElement : HTMLElement | null = scrollTarget.value;
         if (scrollElement !== null && !loading.value && !reloading.value) 
         {
             const bottomDistance = (scrollElement as HTMLElement).getBoundingClientRect().bottom - window.innerHeight;

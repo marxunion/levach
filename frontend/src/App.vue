@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, Ref } from 'vue';
+import { RouteLocationNormalizedLoaded } from 'vue-router';
+
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 import Header from './components/Header.vue';
 import SideBar from './components/SideBar.vue';
@@ -8,17 +10,16 @@ import { container } from "jenesius-vue-modal";
 
 import { csrfTokenInput, getNewCsrfToken } from './ts/handlers/CSRFTokenHandler';
 
-
-const isBurgerActive = ref(false);
+const isBurgerActive : Ref<boolean> = ref(false);
 
 const toggleBurger = () => 
 {
     isBurgerActive.value = !isBurgerActive.value;
 }
 
-const route = useRoute();
+const route : RouteLocationNormalizedLoaded = useRoute();
 
-const scroll = ref(null);
+const scroll : Ref<HTMLElement | null> = ref(null);
 
 watch(() => route.path, () => 
 {

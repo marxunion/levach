@@ -3,7 +3,7 @@
 
     import { JsonData } from "../../ts/interfaces/JsonData";
 
-    import { useRoute, useRouter } from 'vue-router';
+    import { useRoute, useRouter, RouteLocationNormalizedLoaded,  Router } from 'vue-router';
     
     import axios from "axios";
 
@@ -21,14 +21,14 @@
     
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AdminModal", langsData).langData;
 
-    const route = useRoute();
-    const router = useRouter();
+    const route : RouteLocationNormalizedLoaded = useRoute();
+    const router : Router = useRouter();
 
     const checkedRememberMe : Ref<boolean> = ref(false);
     const nickname : Ref<string> = ref('');
     const password : Ref<string> = ref('');
 
-    const isCurrentRouteName = (routeName: string) => 
+    const isCurrentRouteName = (routeName: string) : boolean => 
     {
         return routeName == route.name ? true : false;
     }

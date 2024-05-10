@@ -8,7 +8,13 @@
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler('AboutProject', langsData).langData;
 
-	const sectionData = computed(() => 
+	interface Section
+	{
+		title: string;
+		description: string;
+	}
+
+	const sectionData : ComputedRef<Section[]> = computed(() => 
 	{
 		const sections : JsonData[] = (langData.value as JsonData)['sections'] as JsonData[];
  		return sections.map((section: JsonData) => 
