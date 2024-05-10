@@ -5,11 +5,11 @@ use Core\Error;
 use Core\Warning;
 use Core\Critical;
 
-use Base\BaseHandlerRoute;
+use Base\BaseHandlerRouteWithArgs;
 
 use Api\Models\ArticleCommentsGetModel;
 
-class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRoute
+class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {

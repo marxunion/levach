@@ -32,7 +32,9 @@ use Api\Handlers\AdminArticleApprovePreloadHandler;
 use Api\Handlers\AdminArticleCommentsDeleteHandler;
 use Api\Handlers\ArticleCommentsGetHandler;
 use Api\Handlers\ArticleCommentsNewHandler;
-;
+use Api\Handlers\ArticleCommentsSubcommentsGetHandler;
+use Api\Handlers\ArticleCommentsSubcommentsNewHandler;
+
 use Api\Handlers\csrfTokenHandler;
 
 use Api\Handlers\AdminSettingsGetHandler;
@@ -69,26 +71,6 @@ class Routes
             {
                 self::$handler = new StatusHandler($request, $response);
                 return self::$handler->Handle();
-            });
-            $apiGroup->group('/comments', function (RouteCollectorProxy $commentsGroup)
-            {
-                $commentsGroup->get('/get', function (Request $request, Response $response) 
-                {
-                    self::$handler = new ArticleCommentsGetHandler($request, $response);
-                    return self::$handler->Handle();
-                });
-
-                $commentsGroup->post('/new', function (Request $request, Response $response) 
-                {
-                    self::$handler = new ArticleCommentsNewHandler($request, $response);
-                    return self::$handler->Handle();
-                });
-            
-                $commentsGroup->post('/delete', function (Request $request, Response $response) 
-                {
-                    self::$handler = new AdminArticleCommentsDeleteHandler($request, $response);
-                    return self::$handler->Handle();
-                });
             });
             $apiGroup->group('/admin', function (RouteCollectorProxy $adminGroup) 
             {
@@ -194,6 +176,43 @@ class Routes
                 {
                     self::$handler = new ArticleNewHandler($request, $response);
                     return self::$handler->Handle();
+                });
+
+                $articleGroup->group('/comments', function (RouteCollectorProxy $articleCommentsGroup)
+                {
+                    $articleCommentsGroup->get('/get/{viewCode}', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new ArticleCommentsGetHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
+    
+                    $articleCommentsGroup->post('/new', function (Request $request, Response $response) 
+                    {
+                        self::$handler = new ArticleCommentsNewHandler($request, $response);
+                        return self::$handler->Handle();
+                    });
+
+                    $articleCommentsGroup->group('/subcomments', function (RouteCollectorProxy $articleCommentsSubcommentsGroup)
+                    {
+                        $articleCommentsSubcommentsGroup->get('/get/{viewCode}', function (Request $request, Response $response, array $args)
+                        {
+                            self::$handler = new ArticleCommentsSubcommentsGetHandler($request, $response, $args);
+                            return self::$handler->Handle();
+                        });
+        
+                        $articleCommentsSubcommentsGroup->post('/new', function (Request $request, Response $response) 
+                        {
+                            self::$handler = new ArticleCommentsSubcommentsNewHandler($request, $response);
+                            return self::$handler->Handle();
+                        });
+
+                    });
+                
+                    $articleCommentsGroup->post('/delete', function (Request $request, Response $response) 
+                    {
+                        self::$handler = new AdminArticleCommentsDeleteHandler($request, $response);
+                        return self::$handler->Handle();
+                    });
                 });
 
                 $articleGroup->group('/edit', function (RouteCollectorProxy $articleEditGroup) 

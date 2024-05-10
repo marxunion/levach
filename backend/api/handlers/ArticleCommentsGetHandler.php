@@ -5,43 +5,37 @@ use Core\Error;
 use Core\Warning;
 use Core\Critical;
 
-use Base\BaseHandlerRoute;
+use Base\BaseHandlerRouteWithArgs;
 
 use Api\Models\ArticleCommentsGetModel;
 
-class ArticleCommentsGetHandler extends BaseHandlerRoute
+class ArticleCommentsGetHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
         if(isset($this->args['viewCode']))
         {
-            if($this->request->getQueryParams())
+            if(empty($this->request->getQueryParams()))
             {
-                $parsedBody = $this->request->getQueryParams();
-                if(isset($this->parsedBody['count']))
-                {
-                    if(isset($this->parsedBody['lastLoaded']))
-                    {
-                        if(!isset($this->parsedBody['sortType']))
-                        {
-                            $this->parsedBody['sortType'] = 'rate';
-                        }
-                        $this->model = new ArticleCommentsGetModel();
-                    }
-                    else
-                    {
-                        throw new Error(400, "Invalid comments lastLoaded", "Invalid comments lastLoaded");
-                    }
-                }
-                else
-                {
-                    throw new Error(400, "Invalid comments count", "Invalid comments count");
-                }
+                $this->parsedBody = [];
             }
             else
             {
-                throw new Error(400, "Invalid query params", "Invalid query params");
+                $this->parsedBody = $this->request->getQueryParams();
             }
+            if(empty($this->parsedBody['count']))
+            {
+                $this->parsedBody['count'] = 8;
+            }
+            if(empty($this->parsedBody['lastLoaded']))
+            {
+                $this->parsedBody['lastLoaded'] = 0;
+            }
+            if(empty($this->parsedBody['sortType']))
+            {
+                $this->parsedBody['sortType'] = 'rate';
+            }
+            $this->model = new ArticleCommentsGetModel();
         }
         else
         {
@@ -56,11 +50,11 @@ class ArticleCommentsGetHandler extends BaseHandlerRoute
         {
             if($this->parsedBody['sortType'] == 'rate')
             {
-                $this->model->getCommentsByRate($articleId, $this->parsedBody['count'], $this->parsedBody['lastLoaded']);
+                $this->response = $this->response->withJson($this->model->getCommentsByRate($articleId, $this->parsedBody['count'], $this->parsedBody['lastLoaded']));
             }
             else if($this->parsedBody['sortType'] == 'created_date')
             {
-                $this->model->getCommentsByCreatedDate($articleId, $this->parsedBody['count'], $this->parsedBody['lastLoaded']);
+                $this->response = $this->response->withJson($this->model->getCommentsByCreatedDate($articleId, $this->parsedBody['count'], $this->parsedBody['lastLoaded']));
             }
             else
             {

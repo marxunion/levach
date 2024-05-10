@@ -21,10 +21,31 @@ class ArticleCommentsSubcommentsGetModel extends BaseModel
 
     public function getSubcomments($articleId, $commentId)
     {
-        
-        if()
-        {
+        $comments = $this->database->select(
+            'comments', 
+            [
+                'id',
+                'text',
+                'rating'
+            ], 
+            [
+                "ORDER" => [
+                    "created_date" => "DESC",
+                ],
+                'article_id' => $articleId, 
+                'parent_comment_id' => $parent_comment_id
+            ]
+        );
 
+        foreach ($comments as &$comment) 
+        {
+            $subcomments = $this->getSubcomments($articleId, $comment['id']);
+            if(!empty($subcomments)) 
+            {
+                $comment['subcomments'] = $subcomments;
+            }
         }
+
+        return $comments;
     }
 }
