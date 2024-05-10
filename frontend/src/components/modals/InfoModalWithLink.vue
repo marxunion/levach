@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { ref, onMounted } from "vue";
 
-    import { LangDataHandler } from "./../../ts/LangDataHandler";
+    import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/InfoModalWithLink.json";
     
     const props = defineProps(["status", "text", "link", "text2"]);

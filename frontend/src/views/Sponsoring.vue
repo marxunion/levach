@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { LangDataHandler } from "./../ts/LangDataHandler";
+	import { LangDataHandler } from "../ts/handlers/LangDataHandler";
 	import langsData from "./locales/Sponsoring.json";
 
 	import { openModal } from "jenesius-vue-modal";

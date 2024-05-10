@@ -3,11 +3,11 @@
     import axios from 'axios';
 
     import Loader from "./../../components/Loader.vue";
-    import { timestampToLocaleFormatedTime } from './../../ts/DateTimeHelper';
-    import { tagsArrayToString } from './../../ts/TagsHelper'
-    import { JsonData } from './../../ts/JsonHandler';
+    import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
+    import { tagsArrayToString } from '../../ts/helpers/TagsHelper'
+    import { JsonData } from '../../ts/helpers/JsonHelper';
 
-    import { Article, articles } from '../../ts/ArticlesHelper';
+    import { Article, articles } from '../../ts/handlers/ArticlesHandler';
 
     import DropDown from './../../components/DropDown.vue';
     import DropDownVersion from './../../components/DropDownVersion.vue';
@@ -15,21 +15,21 @@
     import { MdPreview, config } from 'md-editor-v3';
     import 'md-editor-v3/lib/style.css';
 
-    import { adminStatus, adminStatusReCheck } from './../../ts/AdminHandler';
+    import { adminStatus, adminStatusReCheck } from '../../ts/handlers/AdminHandler';
 
-    import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
+    import { abbreviateNumber } from '../../ts/helpers/numberHelper';
 
 	import { openModal } from "jenesius-vue-modal";
     import InfoModal from "./../../components/modals/InfoModal.vue";
 
     import langsData from "./locales/Articles.json";
-    import { LangDataHandler } from "./../../ts/LangDataHandler";
+    import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 
-    import { searchText, searchQuery } from "./../../ts/searchHelper";
+    import { searchText, searchQuery } from "../../ts/handlers/SearchHandler";
 
     import './../../libs/font_2605852_prouiefeic';
 
-    import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
+    import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
 	const langData = LangDataHandler.initLangDataHandler("AbyssArticles", langsData).langData;
 

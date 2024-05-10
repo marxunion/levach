@@ -3,9 +3,9 @@
 	import { useRoute, useRouter } from 'vue-router';
 	import axios from 'axios';
 
-	import { timestampToLocaleFormatedTime } from './../../ts/DateTimeHelper';
-	import { tagsArrayToString } from './../../ts/TagsHelper'
-	import { JsonData } from './../../ts/JsonHandler';
+	import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
+	import { tagsArrayToString } from '../../ts/helpers/TagsHelper'
+	import { JsonData } from '../../ts/helpers/JsonHelper';
 
 	import Loader from "./../../components/Loader.vue";
 
@@ -23,18 +23,18 @@
 	import ShareWith from "./../../components/modals/ShareWith.vue";
 	
 
-    import { adminStatus, adminStatusReCheck } from './../../ts/AdminHandler'
+    import { adminStatus, adminStatusReCheck } from '../../ts/handlers/AdminHandler'
 
-	import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
+	import { abbreviateNumber } from '../../ts/helpers/numberHelper';
 
 	import langsData from "./locales/ArticleView.json";
-	import { LangDataHandler } from "./../../ts/LangDataHandler";
+	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 	
 	import './../../libs/font_2605852_prouiefeic';
 	
-	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
+	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
-	import { comments } from '../../ts/CommentsHelper';
+	import { comments } from '../../ts/handlers/CommentsHandler';
 
 	const langData = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 

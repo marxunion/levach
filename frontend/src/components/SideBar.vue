@@ -3,23 +3,23 @@
     import { useRoute } from 'vue-router';
     import axios from 'axios';
 
-    import { JsonData } from '../ts/JsonHandler';
+    import { JsonData } from '../ts/helpers/JsonHelper';
 
     import { openModal } from "jenesius-vue-modal";
     import InfoModal from './modals/InfoModal.vue';
     import AdminModal from "./../components/modals/AdminModal.vue";
 
-    import { adminStatus, adminStatusReCheck } from './../ts/AdminHandler';
+    import { adminStatus, adminStatusReCheck } from '../ts/handlers/AdminHandler';
 
-    import { forceReload } from '../ts/ComponentsReloadHelper';
+    import { forceReload } from '../ts/helpers/ComponentsReloadHelper';
 
-    import { LangDataHandler } from './../ts/LangDataHandler';
+    import { LangDataHandler } from '../ts/handlers/LangDataHandler';
     import langsData from './locales/SideBar.json';
 
-    import { searchText } from '../ts/searchHelper';
+    import { searchText } from '../ts/handlers/SearchHandler';
 
-    import { csrfTokenInput, getNewCsrfToken } from '../ts/csrfTokenHelper';
-    import { articles, articleReloading } from '../ts/ArticlesHelper';
+    import { csrfTokenInput, getNewCsrfToken } from '../ts/handlers/CSRFTokenHandler';
+    import { articles, articleReloading } from '../ts/handlers/ArticlesHandler';
     
     const langData = LangDataHandler.initLangDataHandler("SideBar", langsData).langData;
 

@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 
-import { adminStatus, adminStatusReCheck } from './ts/AdminHandler';
+import { adminStatus, adminStatusReCheck } from './ts/handlers/AdminHandler';
 
 // Article
 import ArticleView from './views/article/ArticleView.vue';

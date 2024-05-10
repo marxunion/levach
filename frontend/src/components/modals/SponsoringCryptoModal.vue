@@ -3,7 +3,7 @@
 
     import axios from 'axios';
 
-    import { LangDataHandler } from "./../../ts/LangDataHandler";
+    import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/SponsoringCryptoModal.json";
 
     const langData = LangDataHandler.initLangDataHandler("SponsoringCryptoModal", langsData).langData;

@@ -10,7 +10,7 @@
 	import CommentsList from "./../../components/CommentsList.vue";
 
 	import langsData from "./locales/AdminEditComments.json";
-	import { LangDataHandler } from "./../../ts/LangDataHandler";
+	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 
     const langData = LangDataHandler.initLangDataHandler("AdminEditComments", langsData).langData;
 

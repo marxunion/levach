@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue';
-import mainconfig from '../configs/main.json';
+import mainconfig from '../../configs/main.json';
 
-import { JsonData } from './JsonHandler';
+import { JsonData } from '../helpers/JsonHelper';
 
 export class LangDataHandler 
 {

@@ -1,6 +1,19 @@
-export function abbreviateNumber(number: number): string 
+export function padNumberWithZeroes(num: number) : string 
 {
-    // Numbers abbreviates
+    let numStr: string = num.toString();
+    
+    let zeroesToAdd: number = 8 - numStr.length;
+    
+    for (let i = 0; i < zeroesToAdd; i++) 
+    {
+        numStr = '0' + numStr;
+    }
+    
+    return numStr;
+}
+
+export function abbreviateNumber(number: number) : string 
+{
     const siSymbol: string[] = ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc"];
     
     if (number === 0) 

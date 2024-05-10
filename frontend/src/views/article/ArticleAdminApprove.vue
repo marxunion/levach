@@ -6,7 +6,7 @@
 	import { MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
-	import { JsonData } from './../../ts/JsonHandler';
+	import { JsonData } from '../../ts/helpers/JsonHelper';
 
 	import Loader from "./../../components/Loader.vue";
 
@@ -17,15 +17,15 @@
 
 	import langsData from "./locales/ArticleAdminApprove.json";
 
-	import { LangDataHandler } from "./../../ts/LangDataHandler";
+	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 
 	import './../../libs/font_2605852_prouiefeic';
 
-	import { timestampToLocaleFormatedTime } from '../../ts/DateTimeHelper';
+	import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
 
-	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
+	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
-    import { arraysAreEqual } from '../../ts/ArrayHelper';
+    import { arraysAreEqual } from '../../ts/helpers/ArrayHelper';
 
 	const langData = LangDataHandler.initLangDataHandler("ArticleAdminApprove", langsData).langData;
 

@@ -5,19 +5,19 @@
     
     import axios from "axios";
 
-    import { adminStatus, adminStatusReCheck } from "../../ts/AdminHandler";
+    import { adminStatus, adminStatusReCheck } from "../../ts/handlers/AdminHandler";
 
     import InfoModal from "./InfoModal.vue";
     import { pushModal, closeModal, openModal } from "jenesius-vue-modal";
 
     import VueNumberInput from '@chenfengyuan/vue-number-input';
 
-    import { JsonData } from "../../ts/JsonHandler";
+    import { JsonData } from "../../ts/helpers/JsonHelper";
 
-    import { LangDataHandler } from "./../../ts/LangDataHandler";
+    import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/AdminModal.json";
 
-    import { csrfTokenInput, getNewCsrfToken } from "../../ts/csrfTokenHelper";
+    import { csrfTokenInput, getNewCsrfToken } from "../../ts/handlers/CSRFTokenHandler";
     
     const langData = LangDataHandler.initLangDataHandler("AdminModal", langsData).langData;
 

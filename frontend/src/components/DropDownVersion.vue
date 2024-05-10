@@ -2,7 +2,7 @@
 import "./scss/DropDown.scss";
 import { ref, computed, defineProps, defineEmits } from "vue";
 
-import { LangDataHandler } from "./../ts/LangDataHandler";
+import { LangDataHandler } from "../ts/handlers/LangDataHandler";
 import langsData from "./locales/DropDownVersion.json";
 
 const langData = LangDataHandler.initLangDataHandler("DropDownVersion", langsData).langData;

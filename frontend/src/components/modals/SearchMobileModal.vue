@@ -2,10 +2,10 @@
     import { ref, Ref } from "vue";
     import { useRoute, useRouter } from 'vue-router';
 
-    import { LangDataHandler } from "./../../ts/LangDataHandler";
+    import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/SearchMobileModal.json";
     
-    import { searchQuery, searchText } from "../../ts/searchHelper";
+    import { searchQuery, searchText } from "../../ts/handlers/SearchHandler";
     
     const langData = LangDataHandler.initLangDataHandler("SearchMobileModal", langsData).langData;
 

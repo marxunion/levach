@@ -3,7 +3,7 @@
 	import { useRouter } from 'vue-router';
 	import axios from 'axios';
 
-	import { JsonData } from './../../ts/JsonHandler';
+	import { JsonData } from '../../ts/helpers/JsonHelper';
 
 	import { MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
@@ -13,12 +13,12 @@
     import InfoModal from "./../../components/modals/InfoModal.vue";
 	import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
 
-	import { LangDataHandler } from "./../../ts/LangDataHandler";
+	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 	import langsData from "./locales/ArticleNew.json";
 
 	import './../../libs/font_2605852_prouiefeic';
 
-	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
+	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
 	const langData = LangDataHandler.initLangDataHandler("ArticleNew", langsData).langData;
 

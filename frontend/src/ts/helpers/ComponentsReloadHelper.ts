@@ -1,6 +1,6 @@
-import { ref, nextTick } from 'vue'
+import { ref, Ref, nextTick } from 'vue'
 
-export const componentsShow = ref(true);
+export const componentsShow : Ref<boolean> = ref(true);
 
 export const forceReload = async () => 
 {

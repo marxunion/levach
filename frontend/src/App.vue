@@ -6,7 +6,7 @@ import SideBar from './components/SideBar.vue';
 import { useRoute } from 'vue-router';
 import { container } from "jenesius-vue-modal";
 
-import { csrfTokenInput, getNewCsrfToken } from './ts/csrfTokenHelper';
+import { csrfTokenInput, getNewCsrfToken } from './ts/handlers/CSRFTokenHandler';
 
 
 const isBurgerActive = ref(false);

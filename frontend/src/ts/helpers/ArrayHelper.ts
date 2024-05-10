@@ -1,4 +1,4 @@
-export function arraysAreEqual(arr1 : Array<any>, arr2 : Array<any>) 
+export function arraysAreEqual(arr1 : Array<any>, arr2 : Array<any>) : boolean
 {
     if (arr1.length !== arr2.length) 
     {

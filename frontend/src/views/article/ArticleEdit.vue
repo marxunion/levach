@@ -6,7 +6,7 @@
 	import { MdEditor, MdPreview, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
-	import { JsonData } from './../../ts/JsonHandler';
+	import { JsonData } from '../../ts/helpers/JsonHelper';
 
 	import Loader from "./../../components/Loader.vue";
 
@@ -15,21 +15,21 @@
 	import InfoModal from "./../../components/modals/InfoModal.vue";
     import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
 
-	import { abbreviateNumber } from './../../ts/AbbreviateNumberHelper';
+	import { abbreviateNumber } from '../../ts/helpers/numberHelper';
 
 	import langsData from "./locales/ArticleEdit.json";
 
-	import { LangDataHandler } from "./../../ts/LangDataHandler";
+	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 
-	import { StringWithEnds } from "./../../ts/StringWithEnds";
+	import { StringWithEnds } from "../../ts/interfaces/StringWithEnds";
 
-    import { adminStatus, adminStatusReCheck } from './../../ts/AdminHandler'
+    import { adminStatus, adminStatusReCheck } from '../../ts/handlers/AdminHandler'
 
 	import './../../libs/font_2605852_prouiefeic';
 
-	import { timestampToLocaleFormatedTime } from '../../ts/DateTimeHelper';
+	import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
 
-	import { csrfTokenInput, getNewCsrfToken } from '../../ts/csrfTokenHelper';
+	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 	
 	interface Statistic 
 	{

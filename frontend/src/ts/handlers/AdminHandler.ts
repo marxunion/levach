@@ -1,11 +1,10 @@
-import { ref } from "vue";
+import { ref, Ref } from "vue";
 import axios from "axios";
 
-import { getIntCookie, checkCookie } from "./CookiesHelper";
-import { csrfTokenInput, getNewCsrfToken } from "./csrfTokenHelper";
-import { useRouter } from "vue-router";
+import { getIntCookie, checkCookie } from "../helpers/CookiesHelper";
+import { csrfTokenInput, getNewCsrfToken } from "./CSRFTokenHandler";
 
-export const adminStatus = ref(false);
+export const adminStatus : Ref<boolean> = ref(false);
 
 export async function adminStatusReCheck() 
 {

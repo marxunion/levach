@@ -9,10 +9,10 @@
     import { openModal } from "jenesius-vue-modal";
     import SearchMobileModal from "./../components/modals/SearchMobileModal.vue";
 
-    import { LangDataHandler } from "./../ts/LangDataHandler";
+    import { LangDataHandler } from "../ts/handlers/LangDataHandler";
     import langsData from "./locales/Header.json";
 
-    import { searchText, searchQuery } from "../ts/searchHelper";
+    import { searchText, searchQuery } from "../ts/handlers/SearchHandler";
     
     import { defineEmits } from 'vue';
 

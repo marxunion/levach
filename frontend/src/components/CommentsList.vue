@@ -6,24 +6,24 @@
 	import { MdEditor, MdPreview, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
-	import { adminStatus, adminStatusReCheck } from './../ts/AdminHandler'
+	import { adminStatus, adminStatusReCheck } from '../ts/handlers/AdminHandler'
 
-	import { abbreviateNumber } from './../ts/AbbreviateNumberHelper';
+	import { abbreviateNumber } from '../ts/helpers/numberHelper';
 	
-	import { LangDataHandler } from "./../ts/LangDataHandler";
+	import { LangDataHandler } from "../ts/handlers/LangDataHandler";
 	import langsData from "./locales/CommentsList.json";
 
-	import { timestampToLocaleFormatedTime } from '../ts/DateTimeHelper';
+	import { timestampToLocaleFormatedTime } from '../ts/helpers/DateTimeHelper';
 
 	//import { Comment } from '../ts/CommentsHelper';
 	import Loader from './Loader.vue';
 
 	import InfoModal from './modals/InfoModal.vue';
 	import { closeModal, openModal } from 'jenesius-vue-modal';
-	import { JsonData } from '../ts/JsonHandler';
+	import { JsonData } from '../ts/helpers/JsonHelper';
 	import LoaderModal from './modals/LoaderModal.vue';
 
-	import { csrfTokenInput, getNewCsrfToken } from '../ts/csrfTokenHelper';
+	import { csrfTokenInput, getNewCsrfToken } from '../ts/handlers/CSRFTokenHandler';
 
 
 	const props = defineProps(['articleViewCode', 'comment', 'level']);
