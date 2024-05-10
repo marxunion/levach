@@ -55,7 +55,7 @@
     const onChangeSortType = async (newSortType : number) => 
     {
         loading.value = true;
-        articles.value = reactive([]);
+        articles.value = [];
         lastLoaded.value = 0;
 
         currentSortType.value = newSortType;
@@ -211,7 +211,7 @@
     watch(articleReloading, async () => 
     {
         loading.value = true;
-        articles.value = reactive([]);
+        articles.value = [];
         lastLoaded.value = 0;
         searchQuery.value = false;
         articleReloading.value = false;
@@ -225,7 +225,7 @@
         if(searchText.value.length == 0)
         {
             loading.value = true;
-            articles.value = reactive([]);
+            articles.value = [];
             lastLoaded.value = 0;
             searchQuery.value = false;
 
@@ -240,7 +240,7 @@
         if(searchQuery.value)
         {
             loading.value = true;
-            articles.value = reactive([]);
+            articles.value = [];
             lastLoaded.value = 0;
             searchQuery.value = false;
 

@@ -40,6 +40,7 @@
 
 	adminStatusReCheck();
 
+	const lastLoadedComment : Ref<number> = ref(0);
 	const fetchedData : Ref<any> = ref();
 	const loading : Ref<boolean> = ref(true);
 	const commentsLoading : Ref<boolean> = ref(true);
@@ -144,7 +145,8 @@
 	const fetchNewComments = async (count : number = 8) =>
 	{
 		let params = {
-			count: count
+			count: count,
+			lastLoadedComment: lastLoadedComment.value
 		}
 		await axios.get('api/article/comments/get/'+articleViewCode.value, 
 		{
@@ -154,7 +156,13 @@
 		{
 			if(response.data !== null)
 			{
-			 	
+			 	if(Array.isArray(response.data))
+				{
+					response.data.forEach(comment => {
+						comments.value.push(comment);
+						lastLoadedComment.value++;
+					});
+				}
 			}
 		})
 		.catch(error => 
@@ -176,7 +184,8 @@
                 openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 			}
 		});
-
+		commentsReloading.value = false;
+		commentsLoading.value = false;
 	}
 
 	const handleCommentsScroll = async () => 
@@ -200,6 +209,8 @@
 
 	const onChangeSortType = (sortType : number) => 
 	{
+		commentsLoading.value = true;
+		comments.value = [];
 		currentSortType.value = sortType;
 	}
 	
@@ -411,7 +422,9 @@
 					ps.addEventListener('scroll', handleCommentsScroll)
 				}
 
-				loading.value = true;
+				commentsReloading.value = true;
+				commentsLoading.value = true;
+
 				await fetchNewComments();
 
 				intervalId = setInterval(async () => 
@@ -787,7 +800,7 @@
 					<div ref="scrollTarget" style="height: 100px;"></div>
 					<Loader v-if="commentsReloading"/>
 				</div>
-				<div v-else class="main__article__comments__commentsList">
+				<div v-else class="main__article__comments__commentsList load">
 					<Loader/>
 				</div>
 			</div>

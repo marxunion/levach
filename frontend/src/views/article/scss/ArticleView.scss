@@ -269,6 +269,11 @@
             &__commentsList
             {
                 width: 95%;
+                &.load
+                {
+                    display: flex;
+                    justify-content: center;
+                }
             }
         }
     }
