@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import "./scss/DropDown.scss";
-import { ref, onMounted, defineProps, defineEmits, watch } from "vue";
+import { ref, Ref, onMounted, defineProps, defineEmits, watch } from "vue";
 
 const props = defineProps(["options", "default", "tabindex"]);
 const emits = defineEmits(["inputOnMounted","input","inputIndex"]);
 
-
-const selectedIndex = ref(0);
+const selectedIndex : Ref<number> = ref(0);
 const selected = ref(props.default || (props.options.length > 0 ? props.options[0] : null));
 
 watch(props, () => 
@@ -14,7 +13,7 @@ watch(props, () =>
 	selected.value = props.options[selectedIndex.value];
 });
 
-const open = ref(false);
+const open : Ref<boolean> = ref(false);
 
 onMounted(() => 
 {

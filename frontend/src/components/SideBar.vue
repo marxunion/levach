@@ -1,6 +1,6 @@
 <script setup lang="ts">
-    import { nextTick, computed } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { computed, ComputedRef } from 'vue';
+    import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
     import axios from 'axios';
 
     import { JsonData } from '../ts/interfaces/JsonData';
@@ -21,12 +21,14 @@
     import { csrfTokenInput, getNewCsrfToken } from '../ts/handlers/CSRFTokenHandler';
     import { articles, articleReloading } from '../ts/handlers/ArticlesHandler';
     
-    const langData = LangDataHandler.initLangDataHandler("SideBar", langsData).langData;
+    const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("SideBar", langsData).langData;
 
-    const route = useRoute();
+    const route : RouteLocationNormalizedLoaded = useRoute();
 
     const { isBurgerActive } = defineProps(['isBurgerActive']);
     const emit = defineEmits();
+
+    adminStatusReCheck();
 
     const links = computed(() => 
         {

@@ -1,25 +1,33 @@
 <script setup lang="ts">
-    import { ref, onMounted } from "vue";
+    import { ref, Ref, ComputedRef, onMounted } from "vue";
+
+    import { JsonData } from "../../ts/interfaces/JsonData";
 
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/InfoModalWithLink.json";
     
     const props = defineProps(["status", "text", "link", "text2"]);
 
-    const langData = LangDataHandler.initLangDataHandler("InfoModalWithLink", langsData).langData;
+    const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("InfoModalWithLink", langsData).langData;
 
-    const inputText = ref(props.link);
-    const textInput = ref();
+    const inputText : Ref<string> = ref(props.link as string);
+    const textInput : Ref<HTMLInputElement | null> = ref(null);
 
     const copyToClipboard = () => 
     {
         navigator.clipboard.writeText(inputText.value)
-        textInput.value.select();
+        if(textInput.value !== null)
+        {
+            textInput.value.select();
+        }
     }
 
     onMounted(() => 
     {
-        textInput.value.select();
+        if(textInput.value !== null)
+        {
+            textInput.value.select();
+        }
     });
 </script>
 

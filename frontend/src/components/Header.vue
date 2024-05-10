@@ -1,8 +1,10 @@
 <script setup lang="ts">
-    import { ref } from 'vue';
-    import { useRoute, useRouter } from 'vue-router';
+    import { ComputedRef } from 'vue';
+    import { useRoute, useRouter, RouteLocationNormalizedLoaded, Router } from 'vue-router';
 
     import DropDown from "./DropDown.vue";
+
+    import { JsonData } from '../ts/interfaces/JsonData';
 
     import "./scss/Header.scss"
 
@@ -16,17 +18,15 @@
     
     import { defineEmits } from 'vue';
 
-    const langData = LangDataHandler.initLangDataHandler("Header", langsData).langData;
+    const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("Header", langsData).langData;
 
-    const route = useRoute();
-    const router = useRouter();
+    const route : RouteLocationNormalizedLoaded = useRoute();
+    const router : Router = useRouter();
 
     const onSearchButton = () =>
     {
         if(isCurrentRouteName('editoriallyArticles') ||  isCurrentRouteName('editoriallyArticles') || isCurrentRouteName('editoriallyApprovedArticles') || isCurrentRouteName('abyssArticles') || isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingApproval'))
-        {   
-            console.log("TEST");
-            console.log(searchQuery.value);
+        {
             searchQuery.value = true;
         }
         else

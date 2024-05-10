@@ -1,11 +1,15 @@
 <script setup lang="ts">
+	import { ComputedRef } from 'vue';
+
 	import { LangDataHandler } from "../ts/handlers/LangDataHandler";
 	import langsData from "./locales/Sponsoring.json";
+
+	import { JsonData } from "../ts/interfaces/JsonData";
 
 	import { openModal } from "jenesius-vue-modal";
 	import SponsoringCryptoModal from "./../components/modals/SponsoringCryptoModal.vue";
 
-	const langData = LangDataHandler.initLangDataHandler("Sponsoring", langsData).langData;
+	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("Sponsoring", langsData).langData;
 </script>
 
 <template>

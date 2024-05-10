@@ -25,7 +25,7 @@
 
     import { adminStatus, adminStatusReCheck } from '../../ts/handlers/AdminHandler'
 
-	import { abbreviateNumber } from '../../ts/helpers/numberHelper';
+	import { abbreviateNumber } from '../../ts/helpers/NumberHelper';
 
 	import langsData from "./locales/ArticleView.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
@@ -36,7 +36,7 @@
 
 	import { comments } from '../../ts/handlers/CommentsHandler';
 
-	const langData = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
+	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
 	adminStatusReCheck();
 

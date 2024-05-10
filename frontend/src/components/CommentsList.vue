@@ -8,7 +8,7 @@
 
 	import { adminStatus, adminStatusReCheck } from '../ts/handlers/AdminHandler'
 
-	import { abbreviateNumber } from '../ts/helpers/numberHelper';
+	import { abbreviateNumber } from '../ts/helpers/NumberHelper';
 	
 	import { LangDataHandler } from "../ts/handlers/LangDataHandler";
 	import langsData from "./locales/CommentsList.json";
@@ -32,7 +32,7 @@
 
 	const loading : Ref<boolean> = ref(false);
 
-	const answerStatus = ref(0);
+	const answerStatus : Ref<number> = ref(0);
 
 	adminStatusReCheck();
 

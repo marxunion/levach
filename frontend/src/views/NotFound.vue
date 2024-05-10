@@ -1,10 +1,12 @@
 <script setup lang="ts">
-	import { ref } from "vue";
+	import { ComputedRef } from "vue";
+
+	import { JsonData } from "../ts/interfaces/JsonData";
 
 	import { LangDataHandler } from "../ts/handlers/LangDataHandler";
 	import langsData from "./locales/NotFound.json";
 
-	const langData = LangDataHandler.initLangDataHandler("NotFound", langsData).langData;
+	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("NotFound", langsData).langData;
 </script>
 
 <template>

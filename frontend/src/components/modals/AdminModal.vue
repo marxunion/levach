@@ -1,5 +1,7 @@
 <script setup lang="ts">
-    import { onMounted, reactive, ref } from "vue";
+    import { onMounted, Ref, ComputedRef, ref } from "vue";
+
+    import { JsonData } from "../../ts/interfaces/JsonData";
 
     import { useRoute, useRouter } from 'vue-router';
     
@@ -12,21 +14,19 @@
 
     import VueNumberInput from '@chenfengyuan/vue-number-input';
 
-    import { JsonData } from "../../ts/interfaces/JsonData";
-
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/AdminModal.json";
 
     import { csrfTokenInput, getNewCsrfToken } from "../../ts/handlers/CSRFTokenHandler";
     
-    const langData = LangDataHandler.initLangDataHandler("AdminModal", langsData).langData;
+    const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AdminModal", langsData).langData;
 
     const route = useRoute();
     const router = useRouter();
 
-    const checkedRememberMe = ref(false);
-    const nickname = ref('');
-    const password = ref('');
+    const checkedRememberMe : Ref<boolean> = ref(false);
+    const nickname : Ref<string> = ref('');
+    const password : Ref<string> = ref('');
 
     const isCurrentRouteName = (routeName: string) => 
     {

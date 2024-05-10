@@ -1,12 +1,14 @@
 <script setup lang="ts">
-    import { ref } from "vue";
+    import { ComputedRef } from "vue";
+
+    import { JsonData } from "../../ts/interfaces/JsonData";
 
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/InfoModal.json";
     
     defineProps(["status", "text"]);
 
-    const langData = LangDataHandler.initLangDataHandler("InfoModal", langsData).langData;
+    const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("InfoModal", langsData).langData;
 </script>
 
 <template>

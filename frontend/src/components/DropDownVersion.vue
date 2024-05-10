@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import "./scss/DropDown.scss";
-import { ref, computed, defineProps, defineEmits } from "vue";
+import { ref, computed, ComputedRef, defineProps, defineEmits } from "vue";
+
+import { JsonData } from "../ts/interfaces/JsonData";
 
 import { LangDataHandler } from "../ts/handlers/LangDataHandler";
 import langsData from "./locales/DropDownVersion.json";
 
-const langData = LangDataHandler.initLangDataHandler("DropDownVersion", langsData).langData;
+
+const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("DropDownVersion", langsData).langData;
 
 const props = defineProps(["maxVersion"]);
 const emits = defineEmits(["input"]);

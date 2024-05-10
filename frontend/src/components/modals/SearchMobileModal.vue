@@ -1,23 +1,23 @@
 <script setup lang="ts">
-    import { ref, Ref } from "vue";
-    import { useRoute, useRouter } from 'vue-router';
+    import { ComputedRef } from "vue";
+    import { useRoute, useRouter, RouteLocationNormalizedLoaded, Router } from 'vue-router';
+
+    import { JsonData } from "../../ts/interfaces/JsonData";
 
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/SearchMobileModal.json";
     
     import { searchQuery, searchText } from "../../ts/handlers/SearchHandler";
     
-    const langData = LangDataHandler.initLangDataHandler("SearchMobileModal", langsData).langData;
+    const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("SearchMobileModal", langsData).langData;
 
-    const route = useRoute();
-    const router = useRouter();
+    const route : RouteLocationNormalizedLoaded = useRoute();
+    const router : Router = useRouter();
 
     const onSearchButton = () =>
     {
         if(isCurrentRouteName('editoriallyArticles') ||  isCurrentRouteName('editoriallyArticles') || isCurrentRouteName('editoriallyApprovedArticles') || isCurrentRouteName('abyssArticles') || isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingApproval'))
-        {   
-            console.log("TEST");
-            console.log(searchQuery.value);
+        {
             searchQuery.value = true;
         }
         else

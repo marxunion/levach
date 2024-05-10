@@ -1,6 +1,8 @@
 <script setup lang="ts">
-	import { ref, reactive } from 'vue';
+	import { ref, reactive, ComputedRef } from 'vue';
 	// import axios from 'axios';
+
+	import { JsonData } from '../../ts/interfaces/JsonData';
 
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css'
@@ -12,7 +14,8 @@
 	import langsData from "./locales/ArticleAdminEditComments.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 
-    const langData = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
+
+    const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
 
     // Filters
     const dateFilter = reactive(

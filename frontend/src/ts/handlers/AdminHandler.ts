@@ -16,7 +16,6 @@ export async function adminStatusReCheck()
 
         if(expirationTime != null)
         {
-            
             if(currentTime > expirationTime - 2)
             {
                 await getNewCsrfToken();

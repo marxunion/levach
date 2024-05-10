@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import { ref, watch, reactive, Ref, onMounted } from 'vue';
-	import { useRoute, useRouter } from 'vue-router';
+	import { ref, watch, reactive, Ref, ComputedRef, onMounted } from 'vue';
+	import { useRoute, useRouter, Router, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
 	import { MdEditor, config } from 'md-editor-v3';
@@ -27,13 +27,13 @@
 
     import { arraysAreEqual } from '../../ts/helpers/ArrayHelper';
 
-	const langData = LangDataHandler.initLangDataHandler("ArticleAdminApprove", langsData).langData;
+	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminApprove", langsData).langData;
 
-    const currentChangesStatus = ref(0);
+    const currentChangesStatus : Ref<number> = ref(0);
 
-	const route = useRoute();
-    const router = useRouter();
-	const articleViewCode = ref<string | null>(null);
+	const route : RouteLocationNormalizedLoaded = useRoute();
+    const router : Router = useRouter();
+	const articleViewCode : Ref<string | null> = ref(null);
 
 	articleViewCode.value = route.params.articleViewCode as string;
 	

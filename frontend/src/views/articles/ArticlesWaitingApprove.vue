@@ -19,7 +19,7 @@
 
     import { adminStatus, adminStatusReCheck } from '../../ts/handlers/AdminHandler';
 
-    import { abbreviateNumber } from '../../ts/helpers/numberHelper';
+    import { abbreviateNumber } from '../../ts/helpers/NumberHelper';
 
 	import { openModal } from "jenesius-vue-modal";
     import InfoModal from "./../../components/modals/InfoModal.vue";
@@ -33,7 +33,7 @@
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
-	const langData = LangDataHandler.initLangDataHandler("ArticlesWaitingApprove", langsData).langData;
+	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticlesWaitingApprove", langsData).langData;
 
     adminStatusReCheck();
 
@@ -43,7 +43,7 @@
     const reloading : Ref<boolean> = ref(false);
     const loading : Ref<boolean> = ref(true);
 
-    const scrollTarget = ref(null);
+    const scrollTarget : Ref<HTMLElement | null> = ref(null);
 
     let searchTitle : string = '';
     let searchTags : string[] = [];

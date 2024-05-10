@@ -1,16 +1,16 @@
 <script setup lang="ts">
-	import { computed } from 'vue';
+	import { computed, ComputedRef } from 'vue';
 	
 	import { JsonData } from '../ts/interfaces/JsonData';
 
 	import { LangDataHandler } from '../ts/handlers/LangDataHandler';
 	import langsData from './locales/AboutProject.json';
 
-	const langData = LangDataHandler.initLangDataHandler('AboutProject', langsData).langData;
+	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler('AboutProject', langsData).langData;
 
 	const sectionData = computed(() => 
 	{
-		const sections = (langData.value as JsonData)['sections'] as JsonData[];
+		const sections : JsonData[] = (langData.value as JsonData)['sections'] as JsonData[];
  		return sections.map((section: JsonData) => 
 		{
 			const title : string = section['title'] as string;

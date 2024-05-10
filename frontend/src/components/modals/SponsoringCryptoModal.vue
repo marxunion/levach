@@ -1,22 +1,28 @@
 <script setup lang="ts">
-    import { ref, onMounted } from "vue";
+    import { ref, Ref, ComputedRef, onMounted } from "vue";
 
     import axios from 'axios';
+
+    import { JsonData } from "../../ts/interfaces/JsonData";
 
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/SponsoringCryptoModal.json";
 
-    const langData = LangDataHandler.initLangDataHandler("SponsoringCryptoModal", langsData).langData;
+    const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("SponsoringCryptoModal", langsData).langData;
 
     const props = defineProps(["crypto"]); 
 
-    const walletLink = ref('');
-    const inputWallet = ref();
+    const walletLink : Ref<string> = ref('');
+    const inputWallet : Ref<HTMLInputElement | null> = ref(null);
 
     const copyToClipboard = () => 
     {
         navigator.clipboard.writeText(walletLink.value);
-        inputWallet.value.select();
+        if(inputWallet.value !== null)
+        {
+            inputWallet.value.select();
+        }
+        
     }
 
     onMounted(() => 
@@ -34,7 +40,10 @@
             }
         });
 
-        inputWallet.value.select();
+        if(inputWallet.value !== null)
+        {
+            inputWallet.value.select();
+        }
     });
 </script>
 

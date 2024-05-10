@@ -1,12 +1,15 @@
 <script setup lang="ts">
-    import { ref } from "vue";
+    import { ComputedRef } from "vue";
+
+    import { JsonData } from "../../ts/interfaces/JsonData";
 
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/ShareWith.json";
+
     
     const props = defineProps(["link"]);
 
-    const langData = LangDataHandler.initLangDataHandler("ShareWith", langsData).langData;
+    const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ShareWith", langsData).langData;
 
     const copyLinkButton = () =>
     {

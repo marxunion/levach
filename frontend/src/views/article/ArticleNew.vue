@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, watch, reactive, Ref } from 'vue';
+	import { ref, watch, reactive, Ref, ComputedRef} from 'vue';
 	import { useRouter } from 'vue-router';
 	import axios from 'axios';
 
@@ -20,7 +20,7 @@
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
-	const langData = LangDataHandler.initLangDataHandler("ArticleNew", langsData).langData;
+	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleNew", langsData).langData;
 
 	//Editor
 	config(

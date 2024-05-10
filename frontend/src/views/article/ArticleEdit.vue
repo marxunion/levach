@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import { ref, reactive, Ref, ComputedRef, computed, onMounted } from 'vue';
-	import { useRoute } from 'vue-router';
+	import { ref, reactive, computed, Ref, ComputedRef, onMounted } from 'vue';
+	import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
 	import { MdEditor, MdPreview, config } from 'md-editor-v3';
@@ -15,7 +15,7 @@
 	import InfoModal from "./../../components/modals/InfoModal.vue";
     import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
 
-	import { abbreviateNumber } from '../../ts/helpers/numberHelper';
+	import { abbreviateNumber } from '../../ts/helpers/NumberHelper';
 
 	import langsData from "./locales/ArticleEdit.json";
 
@@ -42,17 +42,17 @@
 		[statisticName: string]: Statistic;
 	}
 
-	const langData = LangDataHandler.initLangDataHandler("ArticleEdit", langsData).langData;
+	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleEdit", langsData).langData;
 
-	const route = useRoute();
-	const articleEditCode = ref<string | null>(null);
+	const route : RouteLocationNormalizedLoaded = useRoute();
+	const articleEditCode : Ref<string | null> = ref(null);
 
 	articleEditCode.value = route.params.articleEditCode as string;
 
-	const viewLink = ref('');
+	const viewLink : Ref<string> = ref('');
 
 	let fetchedData = ref();
-	let loaded = ref(false);
+	let loaded : Ref<boolean> = ref(false);
 	
 	let statistics : ComputedRef<Statistics> = computed(() => 
 	({
