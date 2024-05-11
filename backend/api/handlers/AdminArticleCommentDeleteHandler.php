@@ -4,13 +4,13 @@ namespace Api\Handlers;
 use Core\Critical;
 use Core\Error;
 
-use Base\BaseHandlerRoute;
+use Base\BaseHandlerRouteWithArgs;
 
 use Api\Handlers\AdminStatusHandler;
 
 use Api\Models\AdminArticleCommentsDeleteModel;
 
-class AdminArticleCommentDeleteHandler extends BaseHandlerRoute
+class AdminArticleCommentDeleteHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
@@ -27,7 +27,7 @@ class AdminArticleCommentDeleteHandler extends BaseHandlerRoute
                     {
                         if(isset($this->args['viewCode']))
                         {
-                            if(isset($this->parsedBody['csrfToken']))
+                            if(isset($this->parsedBody['commentId']))
                             {
                                 $this->model = new AdminArticleApprovePreloadModel();
                             }
@@ -64,6 +64,15 @@ class AdminArticleCommentDeleteHandler extends BaseHandlerRoute
 
     public function Process()
     {
-
+        $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
+        if(isset($articleId))
+        {
+            $this->model->deleteComment($articleId, $this->parsedBody['commentId']);
+            $this->response = $this->response->withJson(['success' => true]);
+        }
+        else
+        {
+            throw new Error(403, "Invalid article viewCode", "Invalid article viewCode");
+        }
     }
 }

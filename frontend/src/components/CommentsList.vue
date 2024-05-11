@@ -313,11 +313,11 @@
 		}
 
 		const data = {
-			id: props.comment.id,
+			commentId: props.comment.id,
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
 		}
 
-		await axios.post('/api/admin/article/comments/delete/'+props.articleViewCode, data)
+		await axios.post('/api/admin/article/comment/delete/'+props.articleViewCode, data)
 		.then(response => 
 		{
 			if(response.data.success)
