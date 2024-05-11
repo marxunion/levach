@@ -21,7 +21,6 @@
 	import LoaderModal from "./../../components/modals/LoaderModal.vue";
     import InfoModal from "./../../components/modals/InfoModal.vue";
 	import ShareWith from "./../../components/modals/ShareWith.vue";
-	
 
     import { adminStatus, adminStatusReCheck } from '../../ts/handlers/AdminHandler'
 
@@ -41,7 +40,7 @@
 	adminStatusReCheck();
 
 	const lastLoadedComment : Ref<number> = ref(0);
-	const fetchedData : Ref<any> = ref();
+	const fetchedArticleData : Ref<any> = ref();
 	
 	const loading : Ref<boolean> = ref(true);
 
@@ -52,7 +51,6 @@
 
 	let scrollTarget : Ref<HTMLElement | null> = ref(null);
 
-	// Comments
 	const route : RouteLocationNormalizedLoaded = useRoute();
 	const router : Router = useRouter();
 	const articleViewCode : Ref<string | null> = ref(null);
@@ -66,60 +64,12 @@
 		{
 			if(response.data.versions)
 			{
-				return response.data;
-			}
-			else
-			{
-				if(response.data.Warning)
-				{
-					return null;
-				}
-				else if(response.data.Error)
-				{
-					if(response.data.Error.message == "Article not found")
-					{
-						return null;
-					}
-					else
-					{
-						return null;
-					}
-				}
-				else if(response.data.Critical)
-				{
-					return null;
-				}
-				else
-				{
-					return null;
-				}
+				fetchedArticleData.value = response.data;
 			}
 		})
 		.catch(error =>
 		{
-			if(error.response.data.Warning)
-			{
-				return null;
-			}
-			else if(error.response.data.Error)
-			{
-				if(error.response.data.Error.message == "Article not found")
-				{
-					return null;
-				}
-				else
-				{
-					return null;
-				}
-			}
-			else if(error.response.data.Critical)
-			{
-				return null;
-			}
-			else
-			{
-				return null;
-			}
+			fetchedArticleData.value = null;
 		});
 	}
 
@@ -145,7 +95,7 @@
 	// Comments 
 
 	// Comments sort
-	const currentSortType : Ref<number> = ref(0);
+	const currentCommentsSortType : Ref<number> = ref(0);
 
 	const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
 
@@ -154,7 +104,8 @@
 		commentsLoading.value = true;
 		lastLoadedComment.value = 0;
 		comments.value = [];
-		currentSortType.value = sortType;
+		currentCommentsSortType.value = sortType;
+
 		await fetchNewComments();
 	}
 
@@ -163,7 +114,7 @@
 		let params = {
 			count: count,
 			lastLoaded: lastLoadedComment.value,
-			sortType: langData.value['sortTypes']
+			sortType: (langData.value['sortTypes'] as JsonData)[currentCommentsSortType.value]
 		}
 		await axios.get('api/article/comments/get/'+articleViewCode.value, 
 		{
@@ -219,8 +170,6 @@
         }
     }
 
-	
-	
 	// NewComment
 
 	const currentCommentReaction : Ref<number> = ref(0);
@@ -371,6 +320,7 @@
 			if(response.data.success)
 			{
 			 	openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
+				await fetchArticleData();
 				if(comments.value.length < 4)
 				{
 					await fetchNewComments();
@@ -421,10 +371,10 @@
 	onMounted(async function() {
 		try 
 		{
-			fetchedData.value = await fetchArticleData();
-			if (fetchedData.value != null) 
+			await fetchArticleData();
+			if (fetchedArticleData.value != null) 
 			{
-				currentVersion.value = fetchedData.value.versions.length;
+				currentVersion.value = fetchedArticleData.value.versions.length;
 
 				comments.value = [];
 				let ps = document.querySelector('.ps');
@@ -440,7 +390,7 @@
 
 				intervalId = setInterval(async () => 
 				{
-					fetchedData.value = await fetchArticleData();
+					await fetchArticleData();
 				}, 10000);
 			}
 			loading.value = false;
@@ -448,7 +398,6 @@
 		catch 
 		{
 			loading.value = false;
-			fetchedData.value = null;
 		}
 	});
 
@@ -750,18 +699,18 @@
 
 <template>
 	<main v-if="!loading" class="main">
-		<article v-if="fetchedData" class="main__article">
+		<article v-if="fetchedArticleData" class="main__article">
 			<div class="main__article__previewContainer">
-				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedData.versions[currentVersion-1].created_date) }}</p>
-				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedData.versions[currentVersion-1].text" :language="previewState.language"/>
-				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedData.versions[currentVersion-1].tags) }}</p>
+				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedArticleData.versions[currentVersion-1].created_date) }}</p>
+				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion-1].text" :language="previewState.language"/>
+				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedArticleData.versions[currentVersion-1].tags) }}</p>
 				
-				<div v-if="adminStatus && fetchedData['approvededitorially_status'] == 1" class="main__article__previewContainer__buttons">
+				<div v-if="adminStatus && fetchedArticleData['approvededitorially_status'] == 1" class="main__article__previewContainer__buttons">
 					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 					<a @click="onRejectApproveArticle()" class="main__article__previewContainer__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
 					<a :href="'#/admin/article/approve/'+articleViewCode" class="main__article__previewContainer__buttons__button acceptApproveArticleButton">{{ langData['acceptApproveArticleButton'] }}</a>
 				</div>
-				<div v-else-if="adminStatus && fetchedData['premoderation_status'] == 1" class="main__article__previewContainer__buttons">
+				<div v-else-if="adminStatus && fetchedArticleData['premoderation_status'] == 1" class="main__article__previewContainer__buttons">
 					<a @click="onRejectPremoderateArticle()" class="main__article__previewContainer__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
 					<a @click="onAcceptPremoderateArticle()" class="main__article__previewContainer__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
 				</div>
@@ -771,17 +720,17 @@
 				<div class="main__article__previewContainer__reactions">
 					<div class="main__article__previewContainer__reactions__statistics">
 						<img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__previewContainer__reactions__statistics__icon ratingIcon">
-						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(fetchedData.statistics.rating) }}</p>
+						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(fetchedArticleData.statistics.rating) }}</p>
 						<img @click="onShare" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
 					</div>
 					<div class="main__article__previewContainer__reactions__comments">
 						<img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__previewContainer__reactions__comments__icon commentIcon">
-						<p class="main__article__previewContainer__reactions__comments__title commentsCounter">{{ abbreviateNumber(fetchedData.statistics.comments) }}</p>
+						<p class="main__article__previewContainer__reactions__comments__title commentsCounter">{{ abbreviateNumber(fetchedArticleData.statistics.comments) }}</p>
 					</div>
 				</div>
 				
 				<DropDownVersion
-				:max-version="fetchedData.versions.length"
+				:max-version="fetchedArticleData.versions.length"
 				class="main__article__previewContainer__selectVersion" 
 				@input="(version : number) => currentVersion = version" />
 			</div>
@@ -790,7 +739,7 @@
 					<p class="main__article__comments__header__title">{{ langData['commentsTitle'] }}</p>
 					<div class="main__article__comments__header__sort">
 						<p class="main__article__comments__header__sort__title">{{ langData['sortTitle'] }}</p>
-						<DropDown :options="sortTypesNames" :default="sortTypesNames[currentSortType]" class="main__article__comments__header__sort__selectSortType" @inputIndex="onChangeSortType" />
+						<DropDown :options="sortTypesNames" :default="sortTypesNames[currentCommentsSortType]" class="main__article__comments__header__sort__selectSortType" @inputIndex="onChangeSortType" />
 					</div>
 				</div>
 
