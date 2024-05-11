@@ -38,7 +38,7 @@
     adminStatusReCheck();
 
     const lastLoaded : Ref<number> = ref(0);
-    const currentSelectedArticleIndex = ref(0);
+    const currentSelectedArticleIndex : Ref<number> = ref(0);
 
     const loading : Ref<boolean> = ref(true);
     const reloading : Ref<boolean> = ref(false);
@@ -102,7 +102,6 @@
             searchTitle = '';
             searchTags = [];
         }
-        
     }
 
     const fetchNewArticles = async (count: number = 4) => 

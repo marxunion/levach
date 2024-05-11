@@ -40,6 +40,12 @@
             "дате размещения"
         ],
 
+        "sortTypes": 
+        [
+            "rate",
+            "created_date"
+        ],
+
         "toolbarTips": 
         {
             "bold": "Жирный",
@@ -160,7 +166,13 @@
             "popularity",
             "posting date"
         ],
-        
+
+        "sortTypes": 
+        [
+            "rate",
+            "created_date"
+        ],
+
         "toolbarTips": 
         {
             "bold": "bold",

@@ -8,14 +8,13 @@
 
 	import { adminStatus, adminStatusReCheck } from '../ts/handlers/AdminHandler'
 
-	import { abbreviateNumber } from '../ts/helpers/NumberHelper';
+	import { padNumberWithZeroes, abbreviateNumber } from '../ts/helpers/NumberHelper';
 	
 	import { LangDataHandler } from "../ts/handlers/LangDataHandler";
 	import langsData from "./locales/CommentsList.json";
 
 	import { timestampToLocaleFormatedTime } from '../ts/helpers/DateTimeHelper';
 
-	//import { Comment } from '../ts/CommentsHelper';
 	import Loader from './Loader.vue';
 
 	import InfoModal from './modals/InfoModal.vue';
@@ -378,7 +377,7 @@
 <template>
 	<div class="comment" :style="{ marginLeft: `${5 * level}%` }">
 		<div class="comment__header">
-			<p class="comment__header__title id">#{{ comment.id }}</p>
+			<p class="comment__header__title id">#{{ padNumberWithZeroes(comment.id) }}</p>
 			<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
 		</div>
 		<MdPreview class="comment__text" :modelValue="comment.text" :language="previewState.language"/>

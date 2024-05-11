@@ -125,7 +125,6 @@
 	let newTag : Ref<string> = ref('');
 	let tags : Ref<string[]> = ref([]);
 
-	
 
     const checkChanges = async () =>
     {

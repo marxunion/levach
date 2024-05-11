@@ -186,9 +186,9 @@ class Routes
                         return self::$handler->Handle();
                     });
     
-                    $articleCommentsGroup->post('/new', function (Request $request, Response $response) 
+                    $articleCommentsGroup->post('/new/{viewCode}', function (Request $request, Response $response, array $args) 
                     {
-                        self::$handler = new ArticleCommentsNewHandler($request, $response);
+                        self::$handler = new ArticleCommentsNewHandler($request, $response, $args);
                         return self::$handler->Handle();
                     });
 
@@ -200,9 +200,9 @@ class Routes
                             return self::$handler->Handle();
                         });
         
-                        $articleCommentsSubcommentsGroup->post('/new', function (Request $request, Response $response) 
+                        $articleCommentsSubcommentsGroup->post('/new/{viewCode}', function (Request $request, Response $response, array $args) 
                         {
-                            self::$handler = new ArticleCommentsSubcommentsNewHandler($request, $response);
+                            self::$handler = new ArticleCommentsSubcommentsNewHandler($request, $response, $args);
                             return self::$handler->Handle();
                         });
 

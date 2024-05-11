@@ -1,15 +1,15 @@
-export function padNumberWithZeroes(num: number) : string 
+export function padNumberWithZeroes(number: number) : string 
 {
-    let numStr: string = num.toString();
+    let numberStr: string = number.toString();
     
-    let zeroesToAdd: number = 8 - numStr.length;
+    let zeroesToAdd: number = 8 - numberStr.length;
     
     for (let i = 0; i < zeroesToAdd; i++) 
     {
-        numStr = '0' + numStr;
+        numberStr = '0' + numberStr;
     }
     
-    return numStr;
+    return numberStr;
 }
 
 export function abbreviateNumber(number: number) : string 

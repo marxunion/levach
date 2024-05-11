@@ -4,11 +4,11 @@ namespace Api\Handlers;
 use Core\Critical;
 use Core\Error;
 
-use Base\BaseHandlerRoute;
+use Base\BaseHandlerRouteWithArgs;
 
 use Api\Models\ArticleCommentsNewModel;
 
-class ArticleCommentsNewHandler extends BaseHandlerRouteWith
+class ArticleCommentsNewHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
@@ -27,16 +27,16 @@ class ArticleCommentsNewHandler extends BaseHandlerRouteWith
                         {
                             if(isset($this->parsedBody['text']))
                             {
-                                $this->ratingInfluence = 0;
+                                $this->parsedBody['ratingInfluence'] = 0;
                                 if(isset($this->parsedBody['rating_influence']))
                                 {
                                     if($this->parsedBody['rating_influence'] == 1)
                                     {
-                                        $this->ratingInfluence = 1;
+                                        $this->parsedBody['ratingInfluence'] = 1;
                                     }
                                     else if($this->parsedBody['rating_influence'] == 2)
                                     {
-                                        $this->ratingInfluence = -1;
+                                        $this->parsedBody['ratingInfluence'] = -1;
                                     }
                                 }
                                 $this->model = new ArticleCommentsNewModel();
@@ -78,7 +78,8 @@ class ArticleCommentsNewHandler extends BaseHandlerRouteWith
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            $this->model->newComment($articleId, $this->parsedBody['text'], $this->ratingInfluence);
+            $this->model->newComment($articleId, $this->parsedBody['text'], $this->parsedBody['ratingInfluence']);
+            $this->response = $this->response->withJson(['success' => true]);
         }
         else
         {

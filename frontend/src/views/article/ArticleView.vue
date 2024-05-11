@@ -144,11 +144,26 @@
 
 	// Comments 
 
+	// Comments sort
+	const currentSortType : Ref<number> = ref(0);
+
+	const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
+
+	const onChangeSortType = async (sortType : number) => 
+	{
+		commentsLoading.value = true;
+		lastLoadedComment.value = 0;
+		comments.value = [];
+		currentSortType.value = sortType;
+		await fetchNewComments();
+	}
+
 	const fetchNewComments = async (count : number = 8) =>
 	{
 		let params = {
 			count: count,
-			lastLoaded: lastLoadedComment.value
+			lastLoaded: lastLoadedComment.value,
+			sortType: langData.value['sortTypes']
 		}
 		await axios.get('api/article/comments/get/'+articleViewCode.value, 
 		{
@@ -204,19 +219,7 @@
         }
     }
 
-	// Comments sort
-	const currentSortType : Ref<number> = ref(0);
-
-	const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
-
-	const onChangeSortType = async (sortType : number) => 
-	{
-		commentsLoading.value = true;
-		lastLoadedComment.value = 0;
-		comments.value = [];
-		currentSortType.value = sortType;
-		await fetchNewComments();
-	}
+	
 	
 	// NewComment
 
@@ -363,11 +366,15 @@
 		}
 
 		await axios.post('/api/article/comments/new/'+articleViewCode.value, data)
-		.then(response => 
+		.then(async response => 
 		{
 			if(response.data.success)
 			{
 			 	openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
+				if(comments.value.length < 4)
+				{
+					await fetchNewComments();
+				}
 			}
 			else
 			{
