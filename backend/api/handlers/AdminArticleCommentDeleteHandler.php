@@ -10,7 +10,7 @@ use Api\Handlers\AdminStatusHandler;
 
 use Api\Models\AdminArticleCommentsDeleteModel;
 
-class AdminArticleCommentsDeleteHandler extends BaseHandlerRoute
+class AdminArticleCommentDeleteHandler extends BaseHandlerRoute
 {
     public function Init()
     {

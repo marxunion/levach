@@ -5,7 +5,7 @@ use Core\Error;
 
 use Base\BaseModel;
 
-class ArticleCommentsNewModel extends BaseModel
+class ArticleCommentSubcommentNewModel extends BaseModel
 {
     public function __construct()
     {
@@ -17,7 +17,7 @@ class ArticleCommentsNewModel extends BaseModel
         return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
 
-    public function newComment($articleId, $text = '', $ratingInfluence = 0)
+    public function newSubcomment($articleId, $parentCommentId, $text = '', $ratingInfluence = 0)
     {
         $newCommentId = 1;
         $lastCommentId = $this->database->max('comments', 'id', ['article_id' => $articleId]);
@@ -32,7 +32,7 @@ class ArticleCommentsNewModel extends BaseModel
             [
                 'id' => $newCommentId,
                 'article_id' => $articleId,
-                'parent_comment_id' => null,
+                'parent_comment_id' => $parentCommentId,
                 'text' => $text,
                 'rating' => 0,
                 'rating_influence' => $ratingInfluence,

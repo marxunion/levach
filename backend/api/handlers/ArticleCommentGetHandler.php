@@ -7,9 +7,9 @@ use Core\Critical;
 
 use Base\BaseHandlerRouteWithArgs;
 
-use Api\Models\ArticleCommentsSubcommentsGetModel;
+use Api\Models\ArticleCommentGetModel;
 
-class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRouteWithArgs
+class ArticleCommentGetHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
@@ -21,7 +21,7 @@ class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRouteWithArgs
                 $this->parsedBody = $this->request->getQueryParams();
                 if(isset($this->parsedBody['commentId']))
                 {
-                    $this->model = new ArticleCommentsSubcommentsGetModel();
+                    $this->model = new ArticleCommentGetModel();
                 }
                 else
                 {

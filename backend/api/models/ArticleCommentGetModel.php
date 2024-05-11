@@ -7,7 +7,7 @@ use Core\Critical;
 
 use Base\BaseModel;
 
-class ArticleCommentsSubcommentsGetModel extends BaseModel
+class ArticleCommentGetModel extends BaseModel
 {
     public function __construct()
     {
