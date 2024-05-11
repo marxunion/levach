@@ -61,28 +61,25 @@
 	});
 
 	// Subcomments 
-	const refetchSubcomments = async () =>
+	const refetchComment = async () =>
 	{
 		props.comment.subcomments = [];
 
 		let params = {
 			commentId: props.comment.id
 		}
-		await axios.get('api/article/comments/subcomments/get/'+props.articleViewCode, 
+		await axios.get('api/article/comment/get/'+props.articleViewCode, 
 		{
 			params: params
 		})
 		.then(response => 
 		{
-			if(response.data !== null)
+			if(response.data)
 			{
-				if(Array.isArray(response.data))
-				{
-					response.data.forEach((comment : Comment) => 
-					{
-						props.comment.subcomments.push(comment);
-					});
-				}
+				props.comment.id = response.data.id;
+				props.comment.created_date = response.data.created_date;
+				props.comment.rating = response.data.rating;
+				props.comment.subcomments = response.data.subcomments;
 			}
 		})
 		.catch(error => 
@@ -252,14 +249,17 @@
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
 		}
 
-		await axios.post('/api/article/comments/subcomments/new/'+props.articleViewCode, data)
+		await axios.post('/api/article/comment/subcomment/new/'+props.articleViewCode, data)
 		.then(async response => 
 		{
 			if(response.data.success)
 			{	
 				openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
+				
+				answerStatus.value = 0;
+				newSubcommentEditorState.text = '';
 				loading.value = true;
-				await refetchSubcomments();
+				await refetchComment();
 			}
 			else
 			{

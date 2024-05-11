@@ -29,7 +29,7 @@ class ArticleCommentGetModel extends BaseModel
                 'rating',
                 'created_date',
                 'rating_influence'
-            ], 
+            ],
             [
                 "ORDER" => [
                     "created_date" => "DESC",
@@ -49,5 +49,31 @@ class ArticleCommentGetModel extends BaseModel
         }
 
         return $comments;
+    }
+
+    public function getComment($articleId, $commentId)
+    {
+        $comment = $this->database->get(
+            'comments', 
+            [
+                'id',
+                'text',
+                'rating',
+                'created_date',
+                'rating_influence'
+            ], 
+            [
+                'article_id' => $articleId, 
+                'id' => $commentId
+            ]
+        );
+
+        $subcomments = $this->getSubcomments($articleId, $commentId);
+        if(!empty($subcomments)) 
+        {
+            $comment['subcomments'] = $subcomments;
+        }
+
+        return $comment;
     }
 }

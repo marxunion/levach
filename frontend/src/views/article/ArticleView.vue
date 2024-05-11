@@ -314,7 +314,7 @@
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
 		}
 
-		await axios.post('/api/article/comments/new/'+articleViewCode.value, data)
+		await axios.post('/api/article/comment/new/'+articleViewCode.value, data)
 		.then(async response => 
 		{
 			if(response.data.success)

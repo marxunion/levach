@@ -44,7 +44,7 @@ class ArticleCommentGetHandler extends BaseHandlerRouteWithArgs
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            $this->response = $this->response->withJson($this->model->getSubcomments($articleId, $this->parsedBody['commentId']));
+            $this->response = $this->response->withJson($this->model->getComment($articleId, $this->parsedBody['commentId']));
         }
         else
         {

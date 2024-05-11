@@ -186,9 +186,7 @@ class Routes
                     self::$handler = new ArticleNewHandler($request, $response);
                     return self::$handler->Handle();
                 });
-
-                ArticleCommentGetModel
-
+                
                 $articleGroup->group('/comment', function (RouteCollectorProxy $articleCommentGroup)
                 {
                     $articleCommentGroup->get('/get/{viewCode}', function (Request $request, Response $response, array $args) 

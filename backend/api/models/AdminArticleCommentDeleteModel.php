@@ -12,13 +12,8 @@ class AdminArticleCommentDeleteModel extends BaseModel
         parent::__construct();
     }
 
-    public function deleteSubcomments()
+    public function deleteComment($articleId, $commentId)
     {
-
-    }
-    
-    public function deleteComment()
-    {
-
+        $this->database->delete('comments', ['article_id' => $articleId, 'comment_id' => $commentId]);
     }
 }
