@@ -24,6 +24,8 @@
 
 	import { csrfTokenInput, getNewCsrfToken } from '../ts/handlers/CSRFTokenHandler';
 
+	import { lastLoadedComment } from '../ts/handlers/CommentsHandler';
+
 
 	const props = defineProps(['articleViewCode', 'comment', 'level']);
 
@@ -80,6 +82,13 @@
 				props.comment.created_date = response.data.created_date;
 				props.comment.rating = response.data.rating;
 				props.comment.subcomments = response.data.subcomments;
+			}
+			else
+			{
+				props.comment.id = null;
+				props.comment.created_date = null;
+				props.comment.rating = null;
+				props.comment.subcomments = null;
 			}
 		})
 		.catch(error => 
@@ -234,72 +243,75 @@
 
 	const onCreateNewSubcomment = async () => 
 	{
-		await getNewCsrfToken();
-
-		if(csrfTokenInput.value == null)
+		if(newSubcommentEditorState.text.length > 0)
 		{
-			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-			return;
+			await getNewCsrfToken();
+
+			if(csrfTokenInput.value == null)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+				return;
+			}
+
+			const data = {
+				parent_comment_id: props.comment.id,
+				text: newSubcommentEditorState.text,
+				rating_influence: currentSubcommentReaction.value,
+				csrfToken: (csrfTokenInput.value as HTMLInputElement).value
+			}
+
+			await axios.post('/api/article/comment/subcomment/new/'+props.articleViewCode, data)
+			.then(async response => 
+			{
+				if(response.data.success)
+				{	
+					openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
+					
+					answerStatus.value = 0;
+					newSubcommentEditorState.text = '';
+					loading.value = true;
+					await refetchComment();
+				}
+				else
+				{
+					if(response.data.Warning)
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+					}
+					else if(response.data.Error)
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+					}
+					else if(response.data.Critical)
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+					}
+					else
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+					}
+				}
+			})
+			.catch(error =>
+			{
+				if(error.response.data.Warning)
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+				}
+				else if(error.response.data.Error)
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+				}
+				else if(error.response.data.Critical)
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+				}
+				else
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+				}
+			});
 		}
-
-		const data = {
-			parent_comment_id: props.comment.id,
-			text: newSubcommentEditorState.text,
-			rating_influence: currentSubcommentReaction.value,
-			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
-		}
-
-		await axios.post('/api/article/comment/subcomment/new/'+props.articleViewCode, data)
-		.then(async response => 
-		{
-			if(response.data.success)
-			{	
-				openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
-				
-				answerStatus.value = 0;
-				newSubcommentEditorState.text = '';
-				loading.value = true;
-				await refetchComment();
-			}
-			else
-			{
-				if(response.data.Warning)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-                }
-                else if(response.data.Error)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else if(response.data.Critical)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-			}
-		})
-		.catch(error =>
-		{
-			if(error.response.data.Warning)
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-            }
-            else if(error.response.data.Error)
-            {
-				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-			else if(error.response.data.Critical)
-			{
-				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-			else
-			{
-                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-		});
 	}
 
 	const onCommentDelete = async () => 
@@ -318,11 +330,17 @@
 		}
 
 		await axios.post('/api/admin/article/comment/delete/'+props.articleViewCode, data)
-		.then(response => 
+		.then(async response => 
 		{
 			if(response.data.success)
 			{
+				if(props.comment.parent_comment_id == null)
+				{
+					lastLoadedComment.value = lastLoadedComment.value - 1;
+				}
+				
 				openModal(InfoModal, {status: true, text: langData.value['commentDeletedSuccessfully']});
+				await refetchComment();
 			}
 			else
 			{
@@ -379,34 +397,37 @@
 </script>
 
 <template>
-	<div class="comment" :style="{ marginLeft: `${5 * level}%` }">
-		<div class="comment__header">
-			<p class="comment__header__title id">#{{ padNumberWithZeroes(comment.id) }}</p>
-			<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
-		</div>
-		<MdPreview class="comment__text" :modelValue="comment.text" :language="previewState.language"/>
-		<div class="comment__bar">
-			<div class="comment__bar__actions">
-				<p @click="onCreateAnswer()" class="comment__bar__actions__action">{{ langData['titleAnswer'] }}</p>
-				<p @click="onCommentDelete()" v-if="adminStatus" class="comment__bar__actions__action">{{ langData['titleDelete'] }}</p>
+	<div v-if="comment.id != null">
+		<div class="comment" :style="{ marginLeft: `${5 * level}%` }">
+			<div class="comment__header">
+				<p class="comment__header__title id">#{{ padNumberWithZeroes(comment.id) }}</p>
+				<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
 			</div>
-			<div class="comment__bar__reactions">
-				<img src="../assets/img/article/rating.png" alt="Rating: " class="comment__bar__reactions__icon ratingIcon">
-				<p class="comment__bar__reactions__title likeCounter">{{ abbreviateNumber(comment.rating) }}</p>
+			<MdPreview class="comment__text" :modelValue="comment.text" :language="previewState.language"/>
+			<div class="comment__bar">
+				<div class="comment__bar__actions">
+					<p @click="onCreateAnswer()" class="comment__bar__actions__action">{{ langData['titleAnswer'] }}</p>
+					<p @click="onCommentDelete()" v-if="adminStatus" class="comment__bar__actions__action">{{ langData['titleDelete'] }}</p>
+				</div>
+				<div class="comment__bar__reactions">
+					<img src="../assets/img/article/rating.png" alt="Rating: " class="comment__bar__reactions__icon ratingIcon">
+					<p class="comment__bar__reactions__title likeCounter">{{ abbreviateNumber(comment.rating) }}</p>
+				</div>
+			</div>
+		</div>
+		<div v-if="answerStatus" class="comment__newSubcomment">
+			<MdEditor class="comment__newSubcomment__editor" v-model="(newSubcommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImg" :language="newSubcommentEditorState.language" noIconfont :preview="false"/>
+			<img @click="onCreateNewSubcomment()" src="./../assets/img/article/sendCommentButton.svg" alt="Send" class="comment__newSubcomment__sendButton">
+			<div class="comment__newSubcomment__reactions">
+				<img v-if="currentSubcommentReaction === 1" @click="onLikeReaction()" src="./../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="comment__newSubcomment__reactions__reaction">
+				<img v-else @click="onLikeReaction()" src="./../assets/img/article/comments/like.svg" alt="Like" class="comment__newSubcomment__reactions__reaction">
+							
+				<img v-if="currentSubcommentReaction === 2" @click="onDislikeReaction()" src="./../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="comment__newSubcomment__reactions__reaction">
+				<img v-else @click="onDislikeReaction()" src="./../assets/img/article/comments/dislike.svg" alt="Dislike" class="comment__newSubcomment__reactions__reaction">
 			</div>
 		</div>
 	</div>
-	<div v-if="answerStatus" class="comment__newSubcomment">
-		<MdEditor class="comment__newSubcomment__editor" v-model="(newSubcommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImg" :language="newSubcommentEditorState.language" noIconfont :preview="false"/>
-		<img @click="onCreateNewSubcomment()" src="./../assets/img/article/sendCommentButton.svg" alt="Send" class="comment__newSubcomment__sendButton">
-		<div class="comment__newSubcomment__reactions">
-			<img v-if="currentSubcommentReaction === 1" @click="onLikeReaction()" src="./../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="comment__newSubcomment__reactions__reaction">
-			<img v-else @click="onLikeReaction()" src="./../assets/img/article/comments/like.svg" alt="Like" class="comment__newSubcomment__reactions__reaction">
-						
-			<img v-if="currentSubcommentReaction === 2" @click="onDislikeReaction()" src="./../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="comment__newSubcomment__reactions__reaction">
-			<img v-else @click="onDislikeReaction()" src="./../assets/img/article/comments/dislike.svg" alt="Dislike" class="comment__newSubcomment__reactions__reaction">
-		</div>
-	</div>
+	
 	
 	<CommentsList v-if="!loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" />
 	<Loader v-else />

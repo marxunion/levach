@@ -27,7 +27,7 @@ class ArticleCommentSubcommentNewHandler extends BaseHandlerRouteWithArgs
                         {
                             if(isset($this->parsedBody['parent_comment_id']))
                             {
-                                if(isset($this->parsedBody['text']))
+                                if(!empty($this->parsedBody['text']))
                                 {
                                     $this->parsedBody['ratingInfluence'] = 0;
                                     if(isset($this->parsedBody['rating_influence']))

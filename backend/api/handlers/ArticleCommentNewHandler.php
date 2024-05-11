@@ -25,7 +25,7 @@ class ArticleCommentNewHandler extends BaseHandlerRouteWithArgs
                     {
                         if(isset($this->args['viewCode']))
                         {
-                            if(isset($this->parsedBody['text']))
+                            if(!empty($this->parsedBody['text']))
                             {
                                 $this->parsedBody['ratingInfluence'] = 0;
                                 if(isset($this->parsedBody['rating_influence']))

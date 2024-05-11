@@ -8,7 +8,7 @@ use Base\BaseHandlerRouteWithArgs;
 
 use Api\Handlers\AdminStatusHandler;
 
-use Api\Models\AdminArticleCommentsDeleteModel;
+use Api\Models\AdminArticleCommentDeleteModel;
 
 class AdminArticleCommentDeleteHandler extends BaseHandlerRouteWithArgs
 {
@@ -29,7 +29,7 @@ class AdminArticleCommentDeleteHandler extends BaseHandlerRouteWithArgs
                         {
                             if(isset($this->parsedBody['commentId']))
                             {
-                                $this->model = new AdminArticleApprovePreloadModel();
+                                $this->model = new AdminArticleCommentDeleteModel();
                             }
                             else
                             {

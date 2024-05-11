@@ -66,13 +66,7 @@
 		}
 	}) as unknown as Statistics);
 
-	let editorState = reactive({
-		text: ''
-	});
-
-	let previewState = reactive({
-		text: ''
-	});
+	let articleText : Ref<string> = ref('');
 
 	let newTag = ref('');
 	let tags : Ref<string[]> = ref([]);
@@ -120,18 +114,8 @@
 				}
 				tags.value = fetchedData.value['tags'];
 				
-
-				if(fetchedData.value['approvededitorially_status'] == 2)
-				{
-					previewState.text = fetchedData.value['text'];
-				}
-				else
-				{
-					editorState.text = fetchedData.value['text'];
-				}
+				articleText.value = fetchedData.value['text'];
 				
-				
-
 				viewLink.value = "localhost:8000/#/article/" + fetchedData.value['view_code'];
 
 				loaded.value = true;
@@ -316,7 +300,10 @@
 
 	const onSendButton = async () =>
 	{
-		const contentParts = (editorState.text as string).split('\n');
+		const contentParts = articleText.value.split('\n');
+
+		console.log(contentParts);
+		
 
 		if(contentParts.length >= 1) 
 		{
@@ -341,7 +328,7 @@
 							const data = 
 							{
 								csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-								text: editorState.text, 
+								text: articleText.value, 
 								tags: tags.value
 							}
 
@@ -751,11 +738,11 @@
 				</div>
 			</div>
 			<div v-if="fetchedData['approvededitorially_status'] == 2 && fetchedData['editorially_status'] != 1 && !adminStatus" class="main__article__previewContainer">
-				<MdPreview class="main__article__previewContainer__preview" :modelValue="editorState.text" :language="LangDataHandler.currentLanguage.value"/>
+				<MdPreview class="main__article__previewContainer__preview" :modelValue="articleText" :language="LangDataHandler.currentLanguage.value"/>
 			</div>
 			
 			<div v-if="fetchedData['approvededitorially_status'] != 2 || fetchedData['editorially_status'] == 1 || adminStatus" class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="previewState.text" @onUploadImg="onUploadImg" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
+				<MdEditor class="main__article__editorContainer__editor" v-model="articleText" @onUploadImg="onUploadImg" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ langData['sendButton'] }}</button>	
 			</div>
 

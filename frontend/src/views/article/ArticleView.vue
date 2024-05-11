@@ -33,13 +33,13 @@
 	
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
-	import { comments } from '../../ts/handlers/CommentsHandler';
+	import { comments, lastLoadedComment } from '../../ts/handlers/CommentsHandler';
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
 	adminStatusReCheck();
 
-	const lastLoadedComment : Ref<number> = ref(0);
+	
 	const fetchedArticleData : Ref<any> = ref();
 	
 	const loading : Ref<boolean> = ref(true);
@@ -299,72 +299,75 @@
 
 	const onCreateNewComment = async () =>
 	{
-		await getNewCsrfToken();
-
-		if(csrfTokenInput.value == null)
+		if(newCommentEditorState.text.length > 0)
 		{
-			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-			return;
-		}
+			await getNewCsrfToken();
 
-		const data = {
-			type: 'comment',
-			text: newCommentEditorState.text,
-			rating_influence: currentCommentReaction.value,
-			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
-		}
-
-		await axios.post('/api/article/comment/new/'+articleViewCode.value, data)
-		.then(async response => 
-		{
-			if(response.data.success)
+			if(csrfTokenInput.value == null)
 			{
-			 	openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
-				await fetchArticleData();
-				if(comments.value.length < 4)
+				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+				return;
+			}
+
+			const data = {
+				type: 'comment',
+				text: newCommentEditorState.text,
+				rating_influence: currentCommentReaction.value,
+				csrfToken: (csrfTokenInput.value as HTMLInputElement).value
+			}
+
+			await axios.post('/api/article/comment/new/'+articleViewCode.value, data)
+			.then(async response => 
+			{
+				if(response.data.success)
 				{
+					openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
+					await fetchArticleData();
+					commentsLoading.value = true;
+					lastLoadedComment.value = 0;
+					comments.value = [];
 					await fetchNewComments();
 				}
-			}
-			else
+				else
+				{
+					if(response.data.Warning)
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+					}
+					else if(response.data.Error)
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+					}
+					else if(response.data.Critical)
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+					}
+					else
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+					}
+				}
+			})
+			.catch(error => 
 			{
-				if(response.data.Warning)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-                }
-                else if(response.data.Error)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else if(response.data.Critical)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-			}
-		})
-		.catch(error => 
-		{
-			if(error.response.data.Warning)
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-            }
-            else if(error.response.data.Error)
-            {
-				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-			else if(error.response.data.Critical)
-			{
-				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-			else
-			{
-                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-		});
+				if(error.response.data.Warning)
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+				}
+				else if(error.response.data.Error)
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+				}
+				else if(error.response.data.Critical)
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+				}
+				else
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+				}
+			});
+		}
 	}
 
 	let intervalId : NodeJS.Timeout | null = null;
