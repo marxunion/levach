@@ -39,7 +39,6 @@
 
 	adminStatusReCheck();
 
-	
 	const fetchedArticleData : Ref<any> = ref();
 	
 	const loading : Ref<boolean> = ref(true);
@@ -321,6 +320,7 @@
 			{
 				if(response.data.success)
 				{
+					newCommentEditorState.text = '';
 					openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
 					await fetchArticleData();
 					commentsLoading.value = true;

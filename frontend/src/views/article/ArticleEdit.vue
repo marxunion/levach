@@ -742,7 +742,7 @@
 			</div>
 			
 			<div v-if="fetchedData['approvededitorially_status'] != 2 || fetchedData['editorially_status'] == 1 || adminStatus" class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="articleText" @onUploadImg="onUploadImg" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
+				<MdEditor class="main__article__editorContainer__editor" v-model="articleTextnewSubcommentEditorState.text" @onUploadImg="onUploadImg" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ langData['sendButton'] }}</button>	
 			</div>
 

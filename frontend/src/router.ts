@@ -91,7 +91,7 @@ function addAdminRoutes()
         path: '/admin',
         children: [
             { path: '/edit/comments', component: AdminEditComments, name: "AdminEditComments" },
-            { path: 'article/editComments/:articleId', component: ArticleAdminEditComments, name: "ArticleAdminEditComments" },
+            { path: 'article/editComments/:articleViewCode', component: ArticleAdminEditComments, name: "ArticleAdminEditComments" },
             { path: 'article/approve/:articleViewCode', component: ArticleAdminApprove, name: "ArticleAdminApprove"},
             { path: 'articles/waitingApproval/', component: ArticlesWaitingApprove, props: {currentRoute: "articlesWaitingApproval"}, name: "articlesWaitingApproval" },
             { path: 'articles/waitingPremoderate/', component: ArticlesWaitingPremoderate, props: {currentRoute: "articlesWaitingPremoderate"}, name: "articlesWaitingPremoderate" },

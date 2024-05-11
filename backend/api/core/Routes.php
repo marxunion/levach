@@ -29,6 +29,9 @@ use Api\Handlers\AdminArticleApproveHandler;
 use Api\Handlers\AdminArticleDeleteHandler;
 use Api\Handlers\AdminArticleApprovePreloadHandler;
 
+use Api\Handlers\AdminArticleCommentsGetHandler;
+use Api\Handlers\AdminArticleCommentsDeleteHandler;
+
 use Api\Handlers\AdminArticleCommentDeleteHandler;
 use Api\Handlers\ArticleCommentsGetHandler;
 use Api\Handlers\ArticleCommentNewHandler;
@@ -94,6 +97,21 @@ class Routes
                     {
                         self::$handler = new AdminArticlePremoderateHandler($request, $response, $args);
                         return self::$handler->Handle();
+                    });
+
+                    $adminArticleGroup->group('/comments', function (RouteCollectorProxy $adminArticleCommentsGroup) 
+                    {
+                        $adminArticleCommentsGroup->post('/get/{viewCode}', function (Request $request, Response $response, array $args) 
+                        {
+                            self::$handler = new AdminArticleCommentsGetHandler($request, $response, $args);
+                            return self::$handler->Handle();
+                        });
+
+                        $adminArticleCommentsGroup->post('/delete/{viewCode}', function (Request $request, Response $response, array $args) 
+                        {
+                            self::$handler = new AdminArticleCommentsDeleteHandler($request, $response, $args);
+                            return self::$handler->Handle();
+                        });
                     });
 
                     $adminArticleGroup->group('/comment', function (RouteCollectorProxy $adminArticleCommentGroup) 
@@ -186,7 +204,7 @@ class Routes
                     self::$handler = new ArticleNewHandler($request, $response);
                     return self::$handler->Handle();
                 });
-                
+
                 $articleGroup->group('/comment', function (RouteCollectorProxy $articleCommentGroup)
                 {
                     $articleCommentGroup->get('/get/{viewCode}', function (Request $request, Response $response, array $args) 

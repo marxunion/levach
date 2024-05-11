@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, reactive, ComputedRef } from 'vue';
+	import { ref, reactive, Ref, ComputedRef, onMounted } from 'vue';
 	// import axios from 'axios';
 
 	import { JsonData } from '../../ts/interfaces/JsonData';
@@ -14,13 +14,37 @@
 	import langsData from "./locales/ArticleAdminEditComments.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 
+	import { comments } from '../../ts/handlers/CommentsHandler';
+import axios from 'axios';
+
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
 
-    // Filters
+	const loading : Ref<boolean> = ref(true);
+	const articleViewCode : Ref<string | null> = ref(null);
+
+	const fetchedArticleData = ref();
+
+
+	async function fetchArticleData()
+	{
+		return await axios.get('/api/article/view/'+articleViewCode.value)
+		.then(response =>
+		{
+			if(response.data.versions)
+			{
+				fetchedArticleData.value = response.data;
+			}
+		})
+		.catch(error =>
+		{
+			fetchedArticleData.value = null;
+		});
+	}
+
     const dateFilter = reactive(
     {
-        before: null,
-        after: null
+        before: Date.now() - (1000 * 60 * 60 * 24 * 30),
+        after: Date.now()
     });
 	
 	const dateFormat = (date : Date) => 
@@ -36,75 +60,31 @@
 	}
 
 	// Comments
-	const comments = ref(
-	[
-		{
-			id: "00000001",
-			time: '11:06 19.09.2022',
-			text: 'Test Comment1',
-			statistics: 
-			{
-				rating: 0
-			},
-			subcomments: [
-				{
-					id: "00000002",
-					time: '12:00 19.09.2022',
-					text: 'Test Subcomment1',
-					statistics: 
-					{
-						rating: 0
-					},
-					subcomments: [
-						{
-							id: "00000003",
-							time: '13:30 19.09.2022',
-							text: 'Test Subsubcomment1',
-							statistics: 
-							{
-								rating: 0
-							},
-							subcomments: []
-						}
-					]
-				},
-				{
-					id: "00000004",
-					time: '12:15 19.09.2022',
-					text: 'Test Subcomment2',
-					statistics: 
-					{
-						rating: 0
-					},
-					subcomments: []
-				}
-			]
-		},
-		{
-			id: "00000005",
-			time: '14:00 19.09.2022',
-			text: 'Test Comment2',
-			statistics: 
-			{
-				rating: 0
-			},
-			subcomments: []
-		}
-	]);
-	const value = ref(1);
+	const articlesCountToFetch : Ref<number> = ref(100);
+
+	const fetchNewComments = async () => 
+	{
+	}
+
+	onMounted(async () => 
+	{
+		await fetchArticleData();
+		comments.value = [];
+		await fetchNewComments()
+	});
 </script>
 
 <template>
 	<main class="main">
 		<div class="main__filters">
-            <div class="main__filters__title">{{ langData['filtersTitle'] }}</div>
+			<div class="main__filters__title">{{ langData['filtersTitle'] }}</div>
             <div class="main__filters__blocks">
 				
                 <div class="main__filters__blocks__block">
                     <p class="main__filters__blocks__block__title">{{ langData['commentsCountTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['commentsCountTitle1'] }}</p>
-						<VueNumberInput v-model="value" :min="1" class="main__filters__blocks__block__content__input number" controls></VueNumberInput>
+						<VueNumberInput v-model="articlesCountToFetch" :min="1" class="main__filters__blocks__block__content__input number" controls></VueNumberInput>
                         <p class="main__filters__blocks__block__content__text">{{ langData['commentsCountTitle2'] }}</p>
                     </div>
                 </div>
@@ -130,10 +110,10 @@
 				<a class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
 		</div>
-		<div class="main__comments">
+		<div v-if="loading" class="main__comments">
             <p class="main__comments__title">{{ langData['commentsTitle'] }}</p>
 			<div class="main__comments__commentsList">
-				<CommentsList v-for="comment in comments" :key="comment.id" :comment="comment" :level="0"/>
+				<CommentsList v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
 			</div>
 		</div>
 	</main>

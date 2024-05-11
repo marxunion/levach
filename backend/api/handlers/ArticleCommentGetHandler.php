@@ -17,7 +17,6 @@ class ArticleCommentGetHandler extends BaseHandlerRouteWithArgs
         {
             if($this->request->getQueryParams())
             {
-                
                 $this->parsedBody = $this->request->getQueryParams();
                 if(isset($this->parsedBody['commentId']))
                 {
