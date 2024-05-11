@@ -17,8 +17,8 @@ class AdminArticleCommentsDeleteModel extends BaseModel
         return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
 
-    public function deleteComments($articleId, $commentId)
+    public function deleteComments($articleId, $count, $dateBefore, $dateAfter, $text)
     {
-        $this->database->delete('comments', ['article_id' => $articleId, 'id' => $commentId]);
+        $this->database->delete('comments', ['article_id' => $articleId, 'count' => $coun]);
     }
 }
