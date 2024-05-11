@@ -11,4 +11,14 @@ class AdminArticleCommentsDeleteModel extends BaseModel
     {
         parent::__construct();
     }
+
+    public function deleteSubcomments()
+    {
+
+    }
+    
+    public function deleteComment()
+    {
+
+    }
 }

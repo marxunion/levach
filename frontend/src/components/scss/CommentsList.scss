@@ -74,14 +74,7 @@
 
             &__icon
             {
-                cursor: pointer;
                 margin-left: 16px;
-                transition: .6s ease-out;
-                transform: scale(1);
-                &:hover
-                {
-                    transform: scale(1.1);
-                }
             }
             &__title
             {

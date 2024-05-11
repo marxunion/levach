@@ -6,9 +6,9 @@ use Core\Error;
 
 use Base\BaseHandlerRouteWithArgs;
 
-use Api\Models\ArticleCommentsNewModel;
+use Api\Models\ArticleCommentsSubcommentsNewModel;
 
-class ArticleCommentsNewHandler extends BaseHandlerRouteWithArgs
+class ArticleCommentsSubcommentsNewHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
@@ -41,7 +41,7 @@ class ArticleCommentsNewHandler extends BaseHandlerRouteWithArgs
                                             $this->parsedBody['ratingInfluence'] = -1;
                                         }
                                     }
-                                    $this->model = new ArticleCommentsNewModel();
+                                    $this->model = new ArticleCommentsSubcommentsNewModel();
                                 }
                                 else
                                 {

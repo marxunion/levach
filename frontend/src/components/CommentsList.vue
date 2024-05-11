@@ -61,12 +61,14 @@
 	});
 
 	// Subcomments 
-	const fetchSubomments = async () =>
+	const refetchSubcomments = async () =>
 	{
+		props.comment.subcomments = [];
+
 		let params = {
-			id: props.comment.id
+			commentId: props.comment.id
 		}
-		await axios.get('api/article/comments/subcomments/get'+props.articleViewCode, 
+		await axios.get('api/article/comments/subcomments/get/'+props.articleViewCode, 
 		{
 			params: params
 		})
@@ -76,9 +78,9 @@
 			{
 				if(Array.isArray(response.data))
 				{
-					response.data.forEach((article : Comment) => 
+					response.data.forEach((comment : Comment) => 
 					{
-						props.comment.subcomments.push(article);
+						props.comment.subcomments.push(comment);
 					});
 				}
 			}
@@ -102,6 +104,7 @@
                 openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 			}
 		});
+		loading.value = false;
 	}
 
 	// NewSubcomment
@@ -243,19 +246,20 @@
 		}
 
 		const data = {
-			type: 'subcomment',
 			parent_comment_id: props.comment.id,
 			text: newSubcommentEditorState.text,
 			rating_influence: currentSubcommentReaction.value,
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
 		}
 
-		await axios.post('/api/article/comments/new/'+props.articleViewCode, data)
-		.then(response => 
+		await axios.post('/api/article/comments/subcomments/new/'+props.articleViewCode, data)
+		.then(async response => 
 		{
 			if(response.data.success)
-			{
+			{	
 				openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
+				loading.value = true;
+				await refetchSubcomments();
 			}
 			else
 			{
@@ -313,7 +317,7 @@
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
 		}
 
-		await axios.post('/api/admin/article/comments/delete'+props.articleViewCode, data)
+		await axios.post('/api/admin/article/comments/delete/'+props.articleViewCode, data)
 		.then(response => 
 		{
 			if(response.data.success)

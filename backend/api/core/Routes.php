@@ -96,6 +96,15 @@ class Routes
                         return self::$handler->Handle();
                     });
 
+                    $adminArticleGroup->group('/comments', function (RouteCollectorProxy $adminArticleCommentsGroup) 
+                    {
+                        $adminArticleCommentsGroup->post('/delete/{viewCode}', function (Request $request, Response $response, array $args) 
+                        {
+                            self::$handler = new AdminArticleCommentsDeleteHandler($request, $response, $args);
+                            return self::$handler->Handle();
+                        });
+                    });
+
                     $adminArticleGroup->group('/approve', function (RouteCollectorProxy $adminApproveArticleGroup) 
                     {
                         $adminApproveArticleGroup->post('/{viewCode}', function (Request $request, Response $response, array $args) 

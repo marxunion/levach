@@ -19,7 +19,7 @@ class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRouteWithArgs
             {
                 
                 $this->parsedBody = $this->request->getQueryParams();
-                if(isset($this->parsedBody['comment_id']))
+                if(isset($this->parsedBody['commentId']))
                 {
                     $this->model = new ArticleCommentsSubcommentsGetModel();
                 }
@@ -44,7 +44,7 @@ class ArticleCommentsSubcommentsGetHandler extends BaseHandlerRouteWithArgs
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            $this->response = $this->response->withJson($this->model->getSubcomments($articleId, $this->parsedBody['comment_id']));
+            $this->response = $this->response->withJson($this->model->getSubcomments($articleId, $this->parsedBody['commentId']));
         }
         else
         {

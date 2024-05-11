@@ -5,7 +5,7 @@ use Core\Error;
 
 use Base\BaseModel;
 
-class ArticleCommentsNewModel extends BaseModel
+class ArticleCommentsSubcommentsNewModel extends BaseModel
 {
     public function __construct()
     {
@@ -30,7 +30,7 @@ class ArticleCommentsNewModel extends BaseModel
         $this->database->insert(
             'comments', 
             [
-                'id': $newCommentId,
+                'id' => $newCommentId,
                 'article_id' => $articleId,
                 'parent_comment_id' => $parentCommentId,
                 'text' => $text,
