@@ -52,7 +52,7 @@ class AdminSettingsGetHandler extends BaseHandlerRoute
         {
             $this->parsedBody = $parsedBody;
             
-            if(isset($this->parsedBody['csrfToken']))
+            if(!empty($this->parsedBody['csrfToken']))
             {
                 if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
