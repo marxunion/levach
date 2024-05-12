@@ -119,20 +119,18 @@
         articles.value = [];
     });
 
-    const onDeleteSelected = async () => 
-	{
-		loading.value = true;
-		await deleteArticleComments();
-	}
-
-	const onApplyFilters = async () => 
+    const onApplyFilters = async () => 
 	{
 		loading.value = true;
 		articles.value = [];
 		await fetchArticleComments();
 	}
 
-    
+    const onDeleteSelected = async () => 
+	{
+		loading.value = true;
+		await deleteArticleComments();
+	}
 </script>
 
 <template>
@@ -194,8 +192,8 @@
                 </div>
             </div>
             <div class="main__filters__buttons">
-				<a class="main__filters__buttons__button">{{ langData['applyFiltersButton'] }}</a>
-				<a class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
+				<a @click="onApplyFilters()" class="main__filters__buttons__button">{{ langData['applyFiltersButton'] }}</a>
+				<a @click="onDeleteSelected()" class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
 		</div>
 		<div v-if="!loading" class="main__comments">

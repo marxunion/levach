@@ -135,17 +135,17 @@
 		}
 	});
 
-	const onDeleteSelected = async () => 
-	{
-		commentsLoading.value = true;
-		await deleteComments();
-	}
-
 	const onApplyFilters = async () => 
 	{
 		commentsLoading.value = true;
 		comments.value = [];
 		await fetchComments();
+	}
+
+	const onDeleteSelected = async () => 
+	{
+		commentsLoading.value = true;
+		await deleteComments();
 	}
 </script>
 
