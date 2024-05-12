@@ -25,7 +25,7 @@ class AdminArticleCommentsGetHandler extends BaseHandlerRouteWithArgs
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        if(isset($this->args['viewCode']))
+                        if(!empty($this->args['viewCode']))
                         {
                             if(empty($this->parsedBody['count']))
                             {

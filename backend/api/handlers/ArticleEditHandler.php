@@ -14,7 +14,7 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
-        if(isset($this->args['editCode']))
+        if(!empty($this->args['editCode']))
         {
             $this->model = new ArticleEditModel();
             $parsedBody = $this->request->getParsedBody();
@@ -24,7 +24,7 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                 $this->parsedBody = $parsedBody;
                 $this->cookiesBody = $this->request->getCookieParams();
                 
-                if(!isset($this->parsedBody['text']))
+                if(empty($this->parsedBody['text']))
                 {
                     throw new Warning(400, "Please add a title for the article", "Empty article title");
                 }

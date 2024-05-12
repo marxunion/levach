@@ -17,13 +17,13 @@ class ArticleCommentSubcommentNewHandler extends BaseHandlerRouteWithArgs
         {
             $this->parsedBody = $parsedBody;
             
-            if(isset($this->parsedBody['csrfToken']))
+            if(!empty($this->parsedBody['csrfToken']))
             {
                 if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        if(isset($this->args['viewCode']))
+                        if(!empty($this->args['viewCode']))
                         {
                             if(isset($this->parsedBody['parent_comment_id']))
                             {
@@ -33,7 +33,7 @@ class ArticleCommentSubcommentNewHandler extends BaseHandlerRouteWithArgs
                                     {
                                         $this->parsedBody['parent_comment_id'] = 2147483647;
                                     }
-                                    
+
                                     if(!empty($this->parsedBody['text']))
                                     {
                                         $this->parsedBody['ratingInfluence'] = 0;
