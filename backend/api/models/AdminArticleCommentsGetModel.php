@@ -39,7 +39,7 @@ class ArticleCommentsGetModel extends BaseModel
             ],
             [
                 'article_id' => $this->articleId,
-                'id' => $comment['id']
+                'id' => $comment['parent_comment_id']
             ]
         );
         if($parentComment)
