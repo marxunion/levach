@@ -147,6 +147,21 @@ class Routes
                 
                 $adminGroup->group('/articles', function (RouteCollectorProxy $adminArticlesGroup) 
                 {
+                    $adminArticlesGroup->group('/comments', function (RouteCollectorProxy $adminArticlesCommentsGroup) 
+                    {
+                        $adminArticlesCommentsGroup->post('/get/{viewCode}', function (Request $request, Response $response, array $args) 
+                        {
+                            self::$handler = new AdminArticlesCommentsGetHandler($request, $response, $args);
+                            return self::$handler->Handle();
+                        });
+
+                        $adminArticlesCommentsGroup->post('/delete/{viewCode}', function (Request $request, Response $response, array $args) 
+                        {
+                            self::$handler = new AdminArticlesCommentsDeleteHandler($request, $response, $args);
+                            return self::$handler->Handle();
+                        });
+                    });
+
                     $adminArticlesGroup->post('/rejectAllApprove', function (Request $request, Response $response) 
                     {
                         self::$handler = new AdminRejectAllApproveHandler($request, $response);
