@@ -1,6 +1,7 @@
 <?php
 namespace Core;
 
+use PDO;
 use Medoo\Medoo;
 
 use Core\Settings;
@@ -17,7 +18,8 @@ class Database
             'database_name' => Settings::getSetting("DB_NAME"),
             'server' => Settings::getSetting("DB_HOST"),
             'username' => Settings::getSetting("DB_USER"),
-            'password' => Settings::getSetting("DB_PASSWORD")
+            'password' => Settings::getSetting("DB_PASSWORD"),
+            'option' => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]
         ]);
     }
 

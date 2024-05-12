@@ -1,6 +1,8 @@
 <?php
 namespace Api\Models;
 
+use PDO;
+
 use Core\Error;
 use Core\Warning;
 use Core\Critical;
@@ -118,13 +120,15 @@ class AdminArticleCommentsGetModel extends BaseModel
 
         $comments = $this->database->query($sql, $bindings)->fetchAll();
 
+        $comments = array_values($comments);
+
         foreach ($comments as $key => $comment) 
         {
             if($this->checkParents($comment))
             {
                 unset($comments[$key]);
             }
-            
+
             $subcomments = $this->getSubcomments($comment['id']);
             if(!empty($subcomments)) 
             {

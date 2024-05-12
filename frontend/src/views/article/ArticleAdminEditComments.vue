@@ -80,12 +80,11 @@
 		{
 			if(response.data)
 			{
-				if(Array.isArray(response.data))
+				console.log(response.data);
+				
+				for (let index = 0; index < response.data.length; index++) 
 				{
-					response.data.forEach(comment => 
-					{
-						comments.value.push(comment);
-					});
+					comments.value.push(response.data[index]);
 				}
 			}
 		})
