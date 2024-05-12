@@ -1,9 +1,11 @@
+import { Comment } from './Comment'; 
+
 export interface ArticleVersion
 {
     version_id: number,
     title: string,
     text: string,
-    tags: Array<string>,
+    tags: string[],
     editorially_status: number,
     premoderation_status: number,
     approvededitorially_status: number,
@@ -11,17 +13,24 @@ export interface ArticleVersion
 }
 export interface Statistics
 {
+    current_title: string,
+    current_text: string,
+    current_tags: string[],
     created_date: number,
     rating: number,
     comments: number,
+    editorially_status: number,
+    premoderation_status: number,
+    approvededitorially_status: number,
     currentVersion: number
 } 
 
 export interface Article
 {
     id: number,
-    versions: Array<ArticleVersion>,
+    versions: ArticleVersion[],
     statistics: Statistics,
     view_code: string,
+    comments: Comment[]
     currentSelectedVersion: number
 }

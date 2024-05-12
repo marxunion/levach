@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, reactive, Ref, ComputedRef, onMounted } from 'vue';
+	import { ref, Ref, ComputedRef, onMounted } from 'vue';
 	import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
@@ -22,15 +22,13 @@
 
 	import { comments } from '../../ts/handlers/CommentsHandler';
 
-
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
 
 	const route : RouteLocationNormalizedLoaded = useRoute();
 
 	const loading : Ref<boolean> = ref(true);
 	const commentsLoading : Ref<boolean> = ref(true);
-	const articleViewCode : Ref<string | null> = ref(null);
-	articleViewCode.value = route.params.articleViewCode as string;
+	const articleViewCode : Ref<string> = ref(route.params.articleViewCode as string);
 	
 	const fetchedArticleData : Ref<Article | null> = ref(null);
 
@@ -52,11 +50,12 @@
 		loading.value = false;
 	}
 
-    const dateBefore = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
-	const dateAfter = ref(Date.now());
-
-	// Comments
+	// Filters
 	const commentsCountToFetch : Ref<number> = ref(20);
+
+    const dateBefore : Ref<number> = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
+	const dateAfter : Ref<number> = ref(Date.now());
+	
 	const articleCommentRegexPattern : Ref <string> = ref('');
 
 	const fetchComments = async () => 

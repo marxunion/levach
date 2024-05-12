@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import { ref, reactive, ComputedRef } from 'vue';
-	// import axios from 'axios';
+	import { ref, Ref, ComputedRef, onMounted, onUnmounted } from 'vue';
+	import axios from 'axios';
 
     import { JsonData } from '../../ts/interfaces/JsonData';
 
@@ -9,207 +9,130 @@
 
 	import VueNumberInput from '@chenfengyuan/vue-number-input';
 
+	import Loader from '../../components/Loader.vue';
 	import CommentsList from "./../../components/CommentsList.vue";
 
 	import langsData from "./locales/AdminEditComments.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
+    import { articles } from '../../ts/handlers/ArticlesHandler';
+    import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
     
     import { dateFormat } from '../../ts/helpers/DateTimeHelper';
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AdminEditComments", langsData).langData;
 
-    const articlesCountToFetch = ref(10);
-    const commentsCountToFetch = ref(20);
-
+    const loading : Ref<boolean> = ref(true);
 
     // Filters
-    const articlesDateBefore = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
-    const articlesDateAfter = ref(Date.now());
-
-    const commentsDateBefore = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
-    const commentsDateAfter = ref(Date.now());
-
-	// Comments
-	const articles = ref(
-        [
-            {
-                title: "Test Article 1",
-                comments: 
-                [
-                    {
-                        id: "00000001",
-                        time: '11:06 19.09.2022',
-                        text: 'Test Comment1',
-                        statistics: 
-                        {
-                            rating: 44
-                        },
-                        subcomments: [
-                            {
-                                id: "00000002",
-                                time: '12:00 19.09.2022',
-                                text: 'Test Subcomment1',
-                                statistics: 
-                                {
-                                    rating: 44
-                                },
-                                subcomments: [
-                                    {
-                                        id: "00000003",
-                                        time: '13:30 19.09.2022',
-                                        text: 'Test Subsubcomment1',
-                                        statistics: 
-                                        {
-                                            rating: 44
-                                        },
-                                        subcomments: []
-                                    }
-                                ]
-                            },
-                            {
-                                id: "00000004",
-                                time: '12:15 19.09.2022',
-                                text: 'Test Subcomment2',
-                                statistics: 
-                                {
-                                    rating: 44
-                                },
-                                subcomments: []
-                            }
-                        ]
-                    },
-                    {
-                        id: "00000005",
-                        time: '14:00 19.09.2022',
-                        text: 'Test Comment2',
-                        statistics: 
-                        {
-                            rating: 44
-                        },
-                        subcomments: []
-                    }
-                ]
-            },
-            {
-                title: "Test Article 2",
-                comments: 
-                [
-                    {
-                        id: "00000001",
-                        time: '11:06 19.09.2022',
-                        text: 'Test Comment1',
-                        statistics: 
-                        {
-                            rating: 44
-                        },
-                        subcomments: [
-                            {
-                                id: "00000002",
-                                time: '12:00 19.09.2022',
-                                text: 'Test Subcomment1',
-                                statistics: 
-                                {
-                                    rating: 44
-                                },
-                                subcomments: [
-                                    {
-                                        id: "00000003",
-                                        time: '13:30 19.09.2022',
-                                        text: 'Test Subsubcomment1',
-                                        statistics: 
-                                        {
-                                            rating: 44
-                                        },
-                                        subcomments: []
-                                    }
-                                ]
-                            },
-                            {
-                                id: "00000004",
-                                time: '12:15 19.09.2022',
-                                text: 'Test Subcomment2',
-                                statistics: 
-                                {
-                                    rating: 44
-                                },
-                                subcomments: []
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-            title: "Test Article 3",
-            comments: 
-            [
-                {
-                    id: "00000001",
-                    time: '11:06 19.09.2022',
-                    text: 'Test Comment1',
-                    statistics: 
-                    {
-                        rating: 44
-                    },
-                    subcomments: [
-                        {
-                            id: "00000002",
-                            time: '12:00 19.09.2022',
-                            text: 'Test Subcomment1',
-                            statistics: 
-                            {
-                                rating: 44
-                            },
-                            subcomments: [
-                                {
-                                    id: "00000003",
-                                    time: '13:30 19.09.2022',
-                                    text: 'Test Subsubcomment1',
-                                    statistics: 
-                                    {
-                                        rating: 44
-                                    },
-                                    subcomments: []
-                                }
-                            ]
-                        },
-                        {
-                            id: "00000004",
-                            time: '12:15 19.09.2022',
-                            text: 'Test Subcomment2',
-                            statistics: 
-                            {
-                                rating: 44
-                            },
-                            subcomments: []
-                        }
-                    ]
-                },
-                {
-                    id: "00000005",
-                    time: '14:00 19.09.2022',
-                    text: 'Test Comment2',
-                    statistics: 
-                    {
-                        rating: 44
-                    },
-                    subcomments: []
-                },
-                {
-                    id: "00000006",
-                    time: '14:00 19.09.2022',
-                    text: 'Test Comment2',
-                    statistics: 
-                    {
-                        rating: 44
-                    },
-                    subcomments: []
-                }
-	        ]
-            }
-        ]
-    );
+    const articlesCountToFetch = ref(10);
+    const commentsCountToFetch = ref(20);
     
-	
+    const articlesDateBefore : Ref<number> = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
+    const articlesDateAfter : Ref<number> = ref(Date.now());
+
+    const commentsDateBefore : Ref<number> = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
+    const commentsDateAfter : Ref<number> = ref(Date.now());
+
+    const articleRegexPattern : Ref <string> = ref('');
+    const commentRegexPattern : Ref <string> = ref('');
+
+    const fetchArticleComments = async () => 
+	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			return;
+		}
+
+		const data = {
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			articlesCount: articlesCountToFetch.value,
+            commentsCount: commentsCountToFetch.value,
+			articlesDateBefore: Math.round(articlesDateBefore.value / 1000),
+            articlesDateAfter: Math.round(articlesDateAfter.value / 1000),
+			commentsDateBefore: Math.round(commentsDateBefore.value / 1000),
+            commentsDateAfter: Math.round(commentsDateAfter.value / 1000),
+			articleRegexPattern: articleRegexPattern.value,
+            commentRegexPattern: commentRegexPattern.value
+		}
+		await axios.post('/api/admin/articles/comments/get', data)
+		.then(response => 
+		{
+			if(response.data)
+			{
+				console.log(response.data);
+				
+				for (let index = 0; index < response.data.length; index++) 
+				{
+					articles.value.push(response.data[index]);
+				}
+			}
+		})
+		.catch(error =>
+		{
+
+		});
+		loading.value = false;
+	}
+
+	const deleteArticleComments = async () => 
+	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			return;
+		}
+
+		const data = {
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			articlesCount: articlesCountToFetch.value,
+            commentsCount: commentsCountToFetch.value,
+			articlesDateBefore: Math.round(articlesDateBefore.value / 1000),
+            articlesDateAfter: Math.round(articlesDateAfter.value / 1000),
+			commentsDateBefore: Math.round(commentsDateBefore.value / 1000),
+            commentsDateAfter: Math.round(commentsDateAfter.value / 1000),
+			articleRegexPattern: articleRegexPattern.value,
+            commentRegexPattern: commentRegexPattern.value
+		}
+		await axios.post('/api/admin/articles/comments/delete/', data)
+		.then(response => 
+		{
+			articles.value = [];
+		})
+		.catch(error =>
+		{
+
+		});
+		loading.value = false;
+	}
+
+    onMounted(() => 
+    {
+        loading.value = true;
+
+    });
+
+    onUnmounted(() => 
+    {
+        articles.value = [];
+    });
+
+    const onDeleteSelected = async () => 
+	{
+		loading.value = true;
+		await deleteArticleComments();
+	}
+
+	const onApplyFilters = async () => 
+	{
+		loading.value = true;
+		articles.value = [];
+		await fetchArticleComments();
+	}
+
+    
 </script>
 
 <template>
@@ -238,7 +161,7 @@
                     <p class="main__filters__blocks__block__title">{{ langData['articleContentTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['containingTitle1'] }}</p>
-                        <input type="text" class="main__filters__blocks__block__content__input text">
+                        <input v-model="articleRegexPattern" type="text" class="main__filters__blocks__block__content__input text">
                     </div>
                 </div>
             </div>
@@ -266,7 +189,7 @@
                     <p class="main__filters__blocks__block__title">{{ langData['commentContentTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['containingTitle1'] }}</p>
-                        <input type="text" class="main__filters__blocks__block__content__input text">
+                        <input v-model="commentRegexPattern" type="text" class="main__filters__blocks__block__content__input text">
                     </div>
                 </div>
             </div>
@@ -275,15 +198,19 @@
 				<a class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
 		</div>
-		<div class="main__comments">
-            <p class="main__comments__title">{{ langData['commentsTitle'] }}</p>
-            <article class="main__comments__articles" v-for="article in articles">
-                <p class="main__comments__articles__title">{{ article.title }}</p>
+		<div v-if="!loading" class="main__comments">
+            <p v-if="articles.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
+            <p v-else class="main__comments__title">{{ langData['commentsNotFoundTitle'] }}</p>
+            <article v-if="articles.length > 0" class="main__comments__articles" v-for="article in articles">
+                <p class="main__comments__articles__title">{{ article.statistics.current_title }}</p>
                 <div class="main__comments__articles__articleComments">
-                    <CommentsList  v-for="comment in article.comments" :key="comment.id" :comment="comment" :level="0"/>
+                    <CommentsList v-for="comment in article.comments" :key="comment.id" :comment="comment" :articleViewCode="article.view_code" :level="0"/>
                 </div>
             </article>
 		</div>
+        <div v-else class="main__comments">
+            <Loader />
+        </div>
 	</main>
     
 </template>
