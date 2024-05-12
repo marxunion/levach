@@ -108,10 +108,11 @@
 		loading.value = false;
 	}
 
-    onMounted(() => 
+    onMounted(async () => 
     {
         loading.value = true;
-
+        articles.value = [];
+        await fetchArticleComments();
     });
 
     onUnmounted(() => 

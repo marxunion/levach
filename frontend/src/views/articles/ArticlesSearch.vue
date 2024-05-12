@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, Ref, ComputedRef, computed, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
+    import { ref, Ref, ComputedRef, computed, reactive, watch, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
     import { useRoute } from 'vue-router';
     import axios from 'axios';
 
@@ -250,6 +250,11 @@
         {
             ps.removeEventListener('scroll', handleScroll)
         }
+    });
+
+    onUnmounted(() => 
+    {
+        articles.value = [];
     });
 
     const deleteArticle = async (articleViewCode : string) => 
