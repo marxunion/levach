@@ -9,6 +9,12 @@ use Base\BaseModel;
 
 class ArticleCommentsGetModel extends BaseModel
 {
+    private $articleId;
+    private $dateBefore;
+    private $dateAfter;
+    private $regexPattern;
+
+
     public function __construct()
     {
         parent::__construct();
@@ -19,7 +25,41 @@ class ArticleCommentsGetModel extends BaseModel
         return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
 
-    public function getSubcomments($articleId,  $count, $dateBefore, $dateAfter, $text)
+    public function checkParents($comment)
+    {
+        $parentComment = $this->database->get(
+            'comments', 
+            [
+                'id',
+                'text',
+                'rating',
+                'created_date',
+                'rating_influence',
+                'parent_comment_id'
+            ],
+            [
+                'article_id' => $this->articleId,
+                'id' => $comment['id']
+            ]
+        );
+        if($parentComment)
+        {
+            if($parentComment['created_date'] > $this->dateBefore && $parentComment['created_date'] < $this->dateAfter && preg_match($comment['text'], $regexPattern))
+            {
+                return true;
+            }
+            else
+            {
+                return checkParents($parentComment);
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function getSubcomments($parentCommentId)
     {
         $comments = $this->database->select(
             'comments', 
@@ -35,7 +75,7 @@ class ArticleCommentsGetModel extends BaseModel
                 "ORDER" => [
                     "created_date" => "DESC",
                 ],
-                'article_id' => $articleId, 
+                'article_id' => $this->articleId,
                 'parent_comment_id' => $parentCommentId
             ]
         );
@@ -52,8 +92,13 @@ class ArticleCommentsGetModel extends BaseModel
         return $comments;
     }
 
-    public function getComments($articleId, $count, $dateBefore, $dateAfter, $text)
+    public function getComments($articleId, $count, $dateBefore, $dateAfter, $regexPattern)
     {
+        $this->articleId = $articleId;
+        $this->dateBefore = $dateBefore;
+        $this->dateAfter = $dateAfter;
+        $this->regexPattern = $regexPattern;
+
         $comments = $this->database->select(
             'comments', 
             [
@@ -69,14 +114,19 @@ class ArticleCommentsGetModel extends BaseModel
                 "ORDER" => [
                     "created_date" => "DESC",
                 ],
-                'article_id' => $articleId,
-                'parent_comment_id' => null
+                'article_id' => $this->articleId,
+                'created_date[<>]' => [$this->dateBefore, $this->dateAfter],
+                'text[REGEXP]' => $this->regexPattern
             ]
         );
 
-        foreach ($comments as &$comment) 
+        foreach ($comments as $key => $comment) 
         {
-            $subcomments = $this->getSubcomments($articleId, $count, $dateBefore, $dateAfter, $text);
+            if(checkParents($comment))
+            {
+                unset($comments[$key]);
+            }
+            $subcomments = $this->getSubcomments($comment['id']);
             if(!empty($subcomments)) 
             {
                 $comment['subcomments'] = $subcomments;
