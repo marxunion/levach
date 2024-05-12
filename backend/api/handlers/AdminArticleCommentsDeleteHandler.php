@@ -80,7 +80,8 @@ class AdminArticleCommentsDeleteHandler extends BaseHandlerRouteWithArgs
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            $this->response = $this->response->withJson($this->model->deleteComments($articleId, $this->parsedBody['count'], $this->parsedBody['dateBefore'], $this->parsedBody['dateAfter'], $this->parsedBody['regexPattern']));
+            $this->model->deleteComments($articleId, $this->parsedBody['count'], $this->parsedBody['dateBefore'], $this->parsedBody['dateAfter'], $this->parsedBody['regexPattern']);
+            $this->response = $this->response->withJson(['success' => true]);
         }
         else
         {

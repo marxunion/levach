@@ -49,7 +49,7 @@ class AdminArticleCommentsGetModel extends BaseModel
             {
                 if($parentComment['created_date'] > $this->dateBefore && $parentComment['created_date'] < $this->dateAfter && preg_match('/'.$this->regexPattern.'/', $parentComment['text'] ))
                 {
-                    return true;
+                    return false;
                 }
                 else
                 {
@@ -58,12 +58,12 @@ class AdminArticleCommentsGetModel extends BaseModel
             }
             else
             {
-                return false;
+                return true;
             }
         }
         else
         {
-            return false;
+            return true;
         }
     }
 
@@ -119,23 +119,21 @@ class AdminArticleCommentsGetModel extends BaseModel
         ];
 
         $comments = $this->database->query($sql, $bindings)->fetchAll();
+        $commentsReturn = [];
 
-        $comments = array_values($comments);
-
-        foreach ($comments as $key => $comment) 
+        foreach ($comments as &$comment) 
         {
             if($this->checkParents($comment))
             {
-                unset($comments[$key]);
-            }
-
-            $subcomments = $this->getSubcomments($comment['id']);
-            if(!empty($subcomments)) 
-            {
-                $comments[$key]['subcomments'] = $subcomments;
+                $subcomments = $this->getSubcomments($comment['id']);
+                if(!empty($subcomments)) 
+                {
+                    $comment['subcomments'] = $subcomments;
+                }
+                array_push($commentsReturn, $comment);
             }
         }
 
-        return $comments;
+        return $commentsReturn;
     }
 }
