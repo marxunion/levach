@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "./scss/DropDown.scss";
-import { ref, Ref, onMounted, defineProps, defineEmits, watch } from "vue";
+import { ref, watch, Ref, onMounted, defineProps, defineEmits } from "vue";
 
 const props = defineProps(["options", "default", "tabindex"]);
 const emits = defineEmits(["inputOnMounted","input","inputIndex"]);

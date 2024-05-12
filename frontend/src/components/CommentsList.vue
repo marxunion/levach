@@ -1,6 +1,5 @@
 <script setup lang="ts">
-	import { watch, ref, Ref, reactive, defineProps } from 'vue';
-
+	import { ref, reactive, watch, Ref, defineProps } from 'vue';
 	import axios from 'axios';
 
 	import { MdEditor, MdPreview, config } from 'md-editor-v3';

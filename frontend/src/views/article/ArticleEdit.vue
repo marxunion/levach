@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, reactive, computed, Ref, ComputedRef, onMounted } from 'vue';
+	import { ref, computed, Ref, ComputedRef, onMounted } from 'vue';
 	import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
