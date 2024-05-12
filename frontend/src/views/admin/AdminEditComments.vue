@@ -61,8 +61,6 @@
 		{
 			if(response.data)
 			{
-				console.log(response.data);
-				
 				for (let index = 0; index < response.data.length; index++) 
 				{
 					articles.value.push(response.data[index]);

@@ -10,9 +10,12 @@ use Base\BaseModel;
 class AdminArticlesCommentsGetModel extends BaseModel
 {
     private $articleId;
-    private $dateBefore;
-    private $dateAfter;
-    private $regexPattern;
+    private $articleDateBefore;
+    private $articleDateAfter;
+    private $commentDateBefore;
+    private $commentDateAfter;
+    private $articleRegexPattern;
+    private $commentRegexPattern;
 
     public function __construct()
     {
@@ -109,11 +112,11 @@ class AdminArticlesCommentsGetModel extends BaseModel
         $this->articleRegexPattern = $articleRegexPattern;
         $this->commentRegexPattern = $commentRegexPattern;
 
-        $sql = "SELECT article_id, text FROM statistics WHERE created_date BETWEEN :date_before AND :date_after AND text ~ :regex_pattern ORDER BY created_date DESC LIMIT :count";  
+        $sql = "SELECT article_id, current_title FROM statistics WHERE created_date BETWEEN :date_before AND :date_after AND current_text ~ :regex_pattern ORDER BY created_date DESC LIMIT :count";  
         $bindings = [
             ':date_before' => $this->articleDateBefore,
             ':date_after' => $this->articleDateAfter,
-            ':regex_pattern' => $this->regexPattern,
+            ':regex_pattern' => $this->articleRegexPattern,
             ':count' => $articlesCount
         ];
 
@@ -122,11 +125,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
 
         foreach ($articles as &$article) 
         {
-            $articleToReturn = [
-                "statistics": [
-                    "text": $article['text']
-                ]
-            ];
+            
             $this->articleId = $article['article_id'];
             
             $sql = "SELECT id, text, rating, created_date, rating_influence, parent_comment_id FROM comments WHERE article_id = :article_id AND created_date BETWEEN :date_before AND :date_after AND text ~ :regex_pattern ORDER BY created_date DESC LIMIT :count";  
@@ -154,8 +153,16 @@ class AdminArticlesCommentsGetModel extends BaseModel
                 }
             }
 
-            $articleToReturn['comments'] = $commentsReturn;
-            array_push($articlesReturn, $articleToReturn);
+            if(!empty($commentsReturn)) 
+            {
+                $articleToReturn = [
+                    "statistics" => [
+                        "current_title" => $article['current_title']
+                    ],
+                    "comments" => $commentsReturn
+                ];
+                array_push($articlesReturn, $articleToReturn);
+            }
         }
         return $articlesReturn;
     }

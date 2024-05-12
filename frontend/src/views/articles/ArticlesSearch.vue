@@ -209,7 +209,6 @@
             lastLoaded.value = 0;
             searchQuery.value = false;
 
-            console.log(searchText.value);
             parseSearchData(searchText.value);
             await fetchNewArticles();
         }

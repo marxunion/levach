@@ -302,9 +302,6 @@
 	{
 		const contentParts = articleText.value.split('\n');
 
-		console.log(contentParts);
-		
-
 		if(contentParts.length >= 1) 
 		{
 			const title = contentParts[0];
