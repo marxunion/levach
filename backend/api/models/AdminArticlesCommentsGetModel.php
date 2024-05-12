@@ -7,7 +7,7 @@ use Core\Critical;
 
 use Base\BaseModel;
 
-class AdminArticleCommentsGetModel extends BaseModel
+class AdminArticlesCommentsGetModel extends BaseModel
 {
     private $articleId;
     private $dateBefore;

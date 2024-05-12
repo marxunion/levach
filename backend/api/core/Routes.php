@@ -31,6 +31,8 @@ use Api\Handlers\AdminArticleApprovePreloadHandler;
 
 use Api\Handlers\AdminArticleCommentsGetHandler;
 use Api\Handlers\AdminArticleCommentsDeleteHandler;
+use Api\Handlers\AdminArticlesCommentsGetHandler;
+use Api\Handlers\AdminArticlesCommentsDeleteHandler;
 
 use Api\Handlers\AdminArticleCommentDeleteHandler;
 use Api\Handlers\ArticleCommentsGetHandler;
@@ -148,15 +150,15 @@ class Routes
                 {
                     $adminArticlesGroup->group('/comments', function (RouteCollectorProxy $adminArticlesCommentsGroup) 
                     {
-                        $adminArticlesCommentsGroup->post('/get/{viewCode}', function (Request $request, Response $response, array $args) 
+                        $adminArticlesCommentsGroup->post('/get', function (Request $request, Response $response) 
                         {
-                            self::$handler = new AdminArticlesCommentsGetHandler($request, $response, $args);
+                            self::$handler = new AdminArticlesCommentsGetHandler($request, $response);
                             return self::$handler->Handle();
                         });
 
-                        $adminArticlesCommentsGroup->post('/delete/{viewCode}', function (Request $request, Response $response, array $args) 
+                        $adminArticlesCommentsGroup->post('/delete', function (Request $request, Response $response) 
                         {
-                            self::$handler = new AdminArticlesCommentsDeleteHandler($request, $response, $args);
+                            self::$handler = new AdminArticlesCommentsDeleteHandler($request, $response);
                             return self::$handler->Handle();
                         });
                     });

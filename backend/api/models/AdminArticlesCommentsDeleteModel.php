@@ -5,7 +5,7 @@ use Core\Error;
 
 use Base\BaseModel;
 
-class AdminArticleCommentsDeleteModel extends BaseModel
+class AdminArticlesCommentsDeleteModel extends BaseModel
 {
     public function __construct()
     {
