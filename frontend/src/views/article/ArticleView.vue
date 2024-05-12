@@ -765,7 +765,6 @@
 					<div v-if="commentsReloading" class="main__article__comments__commentsList__reloader">
 						<Loader/>
 					</div>
-					
 				</div>
 				<div v-else class="main__article__comments__commentsList load">
 					<Loader/>

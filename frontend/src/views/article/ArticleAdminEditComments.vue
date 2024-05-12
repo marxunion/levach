@@ -95,6 +95,34 @@
 		commentsLoading.value = false;
 	}
 
+	const deleteComments = async () => 
+	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			return;
+		}
+
+		const data = {
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			count: commentsCountToFetch.value,
+			dateBefore: Math.round(dateBefore.value / 1000),
+			dateAfter: Math.round(dateAfter.value / 1000),
+			regexPattern: articleCommentRegexPattern.value
+		}
+		await axios.post('/api/admin/article/comments/delete/'+articleViewCode.value, data)
+		.then(response => 
+		{
+			comments.value = [];
+		})
+		.catch(error =>
+		{
+
+		});
+		commentsLoading.value = false;
+	}
+
 	onMounted(async () => 
 	{
 		commentsLoading.value = true;
@@ -108,11 +136,17 @@
 		}
 	});
 
+	const onDeleteSelected = async () => 
+	{
+		commentsLoading.value = true;
+		await deleteComments();
+	}
+
 	const onApplyFilters = async () => 
 	{
 		commentsLoading.value = true;
 		comments.value = [];
-		await fetchComments()
+		await fetchComments();
 	}
 </script>
 
@@ -149,7 +183,7 @@
             </div>
 			<div class="main__filters__buttons">
 				<a @click="onApplyFilters()" class="main__filters__buttons__button">{{ langData['applyFiltersButton'] }}</a>
-				<a class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
+				<a @click="onDeleteSelected()" class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
 		</div>
 		<div v-if="!commentsLoading" class="main__comments">
