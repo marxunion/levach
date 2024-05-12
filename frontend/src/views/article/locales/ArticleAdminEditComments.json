@@ -20,7 +20,8 @@
         "dateSelectText": "Выбрать",
         "dateCancelText": "Отмена",
 
-        "commentsTitle": "Комментарии по заданным фильтрам"
+        "commentsTitle": "Комментарии по заданным фильтрам",
+        "commentsNotFoundTitle": "Комментарии по заданным фильтрам не найдены"
     },
     "EN":
     {
@@ -43,6 +44,7 @@
         "dateSelectText": "Select",
         "dateCancelText": "Cancel",
 
-        "commentsTitle": "Comment on specified filters"
+        "commentsTitle": "Comment on specified filters",
+        "commentsNotFoundTitle": "Comment on specified filters not found"
     }
 }

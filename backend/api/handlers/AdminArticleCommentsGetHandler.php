@@ -44,7 +44,7 @@ class AdminArticleCommentsGetHandler extends BaseHandlerRouteWithArgs
 
                             if(empty($this->parsedBody['regexPattern']))
                             {
-                                $this->parsedBody['regexPattern'] = '';
+                                $this->parsedBody['regexPattern'] = '[a-z0-9]*';
                             }
 
                             $this->model = new AdminArticleCommentsGetModel();

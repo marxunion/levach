@@ -42,9 +42,9 @@ class AdminArticleCommentsDeleteHandler extends BaseHandlerRouteWithArgs
                                 $this->parsedBody['dateAfter'] = time();
                             }
 
-                            if(empty($this->parsedBody['text']))
+                            if(empty($this->parsedBody['regexPattern']))
                             {
-                                $this->parsedBody['text'] = '';
+                                $this->parsedBody['regexPattern'] = '';
                             }
 
                             $this->model = new AdminArticleCommentsDeleteModel();

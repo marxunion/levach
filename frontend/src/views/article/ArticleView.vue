@@ -125,7 +125,8 @@
 			{
 			 	if(Array.isArray(response.data))
 				{
-					response.data.forEach(comment => {
+					response.data.forEach(comment => 
+					{
 						comments.value.push(comment);
 						lastLoadedComment.value++;
 					});

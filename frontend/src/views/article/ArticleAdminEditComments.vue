@@ -9,13 +9,15 @@
 
 	import VueNumberInput from '@chenfengyuan/vue-number-input';
 
+	import Loader from '../../components/Loader.vue';
 	import CommentsList from "./../../components/CommentsList.vue";
 
 	import langsData from "./locales/ArticleAdminEditComments.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 
 	import { comments } from '../../ts/handlers/CommentsHandler';
-import axios from 'axios';
+
+	import axios from 'axios';
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
 
@@ -62,15 +64,32 @@ import axios from 'axios';
 	// Comments
 	const articlesCountToFetch : Ref<number> = ref(100);
 
-	const fetchNewComments = async () => 
+	const fetchComments = async () => 
 	{
+		await axios.post('api/admin/article/comments/get/'+articleViewCode.value)
+		.then(response => 
+		{
+			if(response.data)
+			{
+				if(Array.isArray(response.data))
+				{
+					response.data.forEach(comment => 
+					{
+						comments.value.push(comment);
+					});
+				}
+			}
+		})
+		loading.value = false;
 	}
 
 	onMounted(async () => 
 	{
+		loading.value = true;
 		await fetchArticleData();
+		dateFilter.before = fetchedArticleData.value.created_date;
 		comments.value = [];
-		await fetchNewComments()
+		await fetchComments()
 	});
 </script>
 
@@ -110,12 +129,14 @@ import axios from 'axios';
 				<a class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
 		</div>
-		<div v-if="loading" class="main__comments">
-            <p class="main__comments__title">{{ langData['commentsTitle'] }}</p>
-			<div class="main__comments__commentsList">
+		<div v-if="!loading" class="main__comments">
+            <p v-if="comments.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
+			<p v-else class="main__comments__title">{{ langData['commentsNotFoundTitle'] }}</p>
+			<div v-if="comments.length > 0" class="main__comments__commentsList">
 				<CommentsList v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
 			</div>
 		</div>
+		<Loader v-else/>
 	</main>
 </template>
 
