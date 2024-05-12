@@ -1,8 +1,12 @@
 <script setup lang="ts">
 	import { ref, reactive, Ref, ComputedRef, onMounted } from 'vue';
-	// import axios from 'axios';
+	import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
+	import axios from 'axios';
 
 	import { JsonData } from '../../ts/interfaces/JsonData';
+	import { Article } from '../../ts/interfaces/Article';
+
+	import { dateFormat } from '../../ts/helpers/DateTimeHelper';
 
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css'
@@ -13,23 +17,26 @@
 	import CommentsList from "./../../components/CommentsList.vue";
 
 	import langsData from "./locales/ArticleAdminEditComments.json";
+	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 
 	import { comments } from '../../ts/handlers/CommentsHandler';
 
-	import axios from 'axios';
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
 
+	const route : RouteLocationNormalizedLoaded = useRoute();
+
 	const loading : Ref<boolean> = ref(true);
+	const commentsLoading : Ref<boolean> = ref(true);
 	const articleViewCode : Ref<string | null> = ref(null);
-
-	const fetchedArticleData = ref();
-
+	articleViewCode.value = route.params.articleViewCode as string;
+	
+	const fetchedArticleData : Ref<Article | null> = ref(null);
 
 	async function fetchArticleData()
 	{
-		return await axios.get('/api/article/view/'+articleViewCode.value)
+		await axios.get('/api/article/view/'+articleViewCode.value)
 		.then(response =>
 		{
 			if(response.data.versions)
@@ -41,32 +48,34 @@
 		{
 			fetchedArticleData.value = null;
 		});
+
+		loading.value = false;
 	}
 
-    const dateFilter = reactive(
-    {
-        before: Date.now() - (1000 * 60 * 60 * 24 * 30),
-        after: Date.now()
-    });
-	
-	const dateFormat = (date : Date) => 
-	{
-		const day = ("0" + date.getDate()).slice(-2);
-		const month = ("0" + (date.getMonth() + 1)).slice(-2);
-		const year = date.getFullYear();
-
-		const hours = ("0" + (date.getHours())).slice(-2);
-		const minutes = ("0" + (date.getMinutes())).slice(-2);
-
-		return `${hours}:${minutes} ${day}.${month}.${year}`;
-	}
+    const dateBefore = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
+	const dateAfter = ref(Date.now());
 
 	// Comments
-	const articlesCountToFetch : Ref<number> = ref(100);
+	const commentsCountToFetch : Ref<number> = ref(20);
+	const articleCommentRegexPattern : Ref <string> = ref('');
 
 	const fetchComments = async () => 
 	{
-		await axios.post('api/admin/article/comments/get/'+articleViewCode.value)
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			return;
+		}
+
+		const data = {
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			count: commentsCountToFetch.value,
+			dateBefore: Math.round(dateBefore.value / 1000),
+			dateAfter: Math.round(dateAfter.value / 1000),
+			regexPattern: articleCommentRegexPattern.value
+		}
+		await axios.post('/api/admin/article/comments/get/'+articleViewCode.value, data)
 		.then(response => 
 		{
 			if(response.data)
@@ -80,21 +89,36 @@
 				}
 			}
 		})
-		loading.value = false;
+		.catch(error =>
+		{
+
+		});
+		commentsLoading.value = false;
 	}
 
 	onMounted(async () => 
 	{
-		loading.value = true;
+		commentsLoading.value = true;
 		await fetchArticleData();
-		dateFilter.before = fetchedArticleData.value.created_date;
+		if(fetchedArticleData.value != null)
+		{
+			dateBefore.value = fetchedArticleData.value.versions[fetchedArticleData.value.versions.length-1].created_date * 1000;
+			comments.value = [];
+			commentsLoading.value = true;
+			await fetchComments()
+		}
+	});
+
+	const onApplyFilters = async () => 
+	{
+		commentsLoading.value = true;
 		comments.value = [];
 		await fetchComments()
-	});
+	}
 </script>
 
 <template>
-	<main class="main">
+	<main v-if="!loading && fetchedArticleData" class="main">
 		<div class="main__filters">
 			<div class="main__filters__title">{{ langData['filtersTitle'] }}</div>
             <div class="main__filters__blocks">
@@ -103,7 +127,7 @@
                     <p class="main__filters__blocks__block__title">{{ langData['commentsCountTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['commentsCountTitle1'] }}</p>
-						<VueNumberInput v-model="articlesCountToFetch" :min="1" class="main__filters__blocks__block__content__input number" controls></VueNumberInput>
+						<VueNumberInput v-model="commentsCountToFetch" :min="1" class="main__filters__blocks__block__content__input number" controls></VueNumberInput>
                         <p class="main__filters__blocks__block__content__text">{{ langData['commentsCountTitle2'] }}</p>
                     </div>
                 </div>
@@ -111,25 +135,25 @@
                     <p class="main__filters__blocks__block__title">{{ langData['dateCommentSendTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateCommentSendTitle1'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="dateFilter.before" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="dateBefore" teleport-center ></VueDatePicker>
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateCommentSendTitle2'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="dateFilter.after" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="dateAfter" teleport-center ></VueDatePicker>
                     </div>
                 </div>
                 <div class="main__filters__blocks__block">
                     <p class="main__filters__blocks__block__title">{{ langData['commentContentTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['commentContentTitle1'] }}</p>
-                        <input type="text" class="main__filters__blocks__block__content__input text">
+                        <input v-model="articleCommentRegexPattern" type="text" class="main__filters__blocks__block__content__input text">
                     </div>
                 </div>
             </div>
 			<div class="main__filters__buttons">
-				<a class="main__filters__buttons__button">{{ langData['applyFiltersButton'] }}</a>
+				<a @click="onApplyFilters()" class="main__filters__buttons__button">{{ langData['applyFiltersButton'] }}</a>
 				<a class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
 		</div>
-		<div v-if="!loading" class="main__comments">
+		<div v-if="!commentsLoading" class="main__comments">
             <p v-if="comments.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
 			<p v-else class="main__comments__title">{{ langData['commentsNotFoundTitle'] }}</p>
 			<div v-if="comments.length > 0" class="main__comments__commentsList">
@@ -137,6 +161,12 @@
 			</div>
 		</div>
 		<Loader v-else/>
+	</main>
+	<main v-else-if="!loading" class="main">
+		<h1 class="main__title">{{ langData['articleNotFoundTitle'] }}</h1>
+	</main>
+	<main v-else class="main">
+		<Loader />
 	</main>
 </template>
 

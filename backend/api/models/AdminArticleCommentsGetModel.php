@@ -7,13 +7,12 @@ use Core\Critical;
 
 use Base\BaseModel;
 
-class ArticleCommentsGetModel extends BaseModel
+class AdminArticleCommentsGetModel extends BaseModel
 {
     private $articleId;
     private $dateBefore;
     private $dateAfter;
     private $regexPattern;
-
 
     public function __construct()
     {
@@ -27,30 +26,37 @@ class ArticleCommentsGetModel extends BaseModel
 
     public function checkParents($comment)
     {
-        $parentComment = $this->database->get(
-            'comments', 
-            [
-                'id',
-                'text',
-                'rating',
-                'created_date',
-                'rating_influence',
-                'parent_comment_id'
-            ],
-            [
-                'article_id' => $this->articleId,
-                'id' => $comment['parent_comment_id']
-            ]
-        );
-        if($parentComment)
+        if($comment['parent_comment_id'] != null)
         {
-            if($parentComment['created_date'] > $this->dateBefore && $parentComment['created_date'] < $this->dateAfter && preg_match($comment['text'], $regexPattern))
+            $parentComment = $this->database->get(
+                'comments', 
+                [
+                    'id',
+                    'text',
+                    'rating',
+                    'created_date',
+                    'rating_influence',
+                    'parent_comment_id'
+                ],
+                [
+                    'article_id' => $this->articleId,
+                    'id' => $comment['parent_comment_id']
+                ]
+            );
+            if($parentComment)
             {
-                return true;
+                if($parentComment['created_date'] > $this->dateBefore && $parentComment['created_date'] < $this->dateAfter && preg_match('/'.$this->regexPattern.'/', $parentComment['text'] ))
+                {
+                    return true;
+                }
+                else
+                {
+                    return $this->checkParents($parentComment);
+                }
             }
             else
             {
-                return checkParents($parentComment);
+                return false;
             }
         }
         else
@@ -80,15 +86,17 @@ class ArticleCommentsGetModel extends BaseModel
             ]
         );
 
-        foreach ($comments as &$comment) 
+        if(!empty($comments)) 
         {
-            $subcomments = $this->getSubcomments($articleId, $comment['id']);
-            if(!empty($subcomments)) 
+            foreach ($comments as &$comment) 
             {
-                $comment['subcomments'] = $subcomments;
+                $subcomments = $this->getSubcomments($comment['id']);
+                if(!empty($subcomments)) 
+                {
+                    $comment['subcomments'] = $subcomments;
+                }
             }
         }
-
         return $comments;
     }
 
@@ -99,39 +107,31 @@ class ArticleCommentsGetModel extends BaseModel
         $this->dateAfter = $dateAfter;
         $this->regexPattern = $regexPattern;
 
-        $comments = $this->database->select(
-            'comments', 
-            [
-                'id',
-                'text', 
-                'rating',
-                'created_date',
-                'rating_influence',
-                'parent_comment_id'
-            ], 
-            [
-                'LIMIT' => $count,
-                "ORDER" => [
-                    "created_date" => "DESC",
-                ],
-                'article_id' => $this->articleId,
-                'created_date[<>]' => [$this->dateBefore, $this->dateAfter],
-                'text[REGEXP]' => $this->regexPattern
-            ]
-        );
+        $sql = "SELECT id, text, rating, created_date, rating_influence, parent_comment_id FROM comments WHERE article_id = :article_id AND created_date BETWEEN :date_before AND :date_after AND text ~ :regex_pattern ORDER BY created_date DESC LIMIT :count";  
+        $bindings = [
+            ':article_id' => $this->articleId,
+            ':date_before' => $this->dateBefore,
+            ':date_after' => $this->dateAfter,
+            ':regex_pattern' => $this->regexPattern,
+            ':count' => $count
+        ];
+
+        $comments = $this->database->query($sql, $bindings)->fetchAll();
 
         foreach ($comments as $key => $comment) 
         {
-            if(checkParents($comment))
+            if($this->checkParents($comment))
             {
                 unset($comments[$key]);
             }
+            
             $subcomments = $this->getSubcomments($comment['id']);
             if(!empty($subcomments)) 
             {
-                $comment['subcomments'] = $subcomments;
+                $comments[$key]['subcomments'] = $subcomments;
             }
         }
+
         return $comments;
     }
 }

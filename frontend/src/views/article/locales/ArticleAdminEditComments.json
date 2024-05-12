@@ -20,6 +20,7 @@
         "dateSelectText": "Выбрать",
         "dateCancelText": "Отмена",
 
+        "articleNotFoundTitle": "Статья не найдена",
         "commentsTitle": "Комментарии по заданным фильтрам",
         "commentsNotFoundTitle": "Комментарии по заданным фильтрам не найдены"
     },
@@ -44,6 +45,7 @@
         "dateSelectText": "Select",
         "dateCancelText": "Cancel",
 
+        "articleNotFoundTitle": "Article not found",
         "commentsTitle": "Comment on specified filters",
         "commentsNotFoundTitle": "Comment on specified filters not found"
     }
