@@ -28,7 +28,7 @@ class AdminArticleCommentsDeleteModel extends BaseModel
             AND text ~ :regex_pattern 
             ORDER BY created_date DESC 
             LIMIT :count
-        );";
+        ) AND article_id = :article_id;";
 
         $bindings = [
             ':article_id' => $articleId,
