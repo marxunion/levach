@@ -57,7 +57,6 @@ use Api\Handlers\SponsoringHandler;
 use Api\Handlers\StatusHandler;
 use Api\Handlers\UnknownHandler;
 
-
 class Routes
 {
     private static App $app;

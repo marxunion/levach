@@ -1,8 +1,6 @@
 <?php
 namespace Api\Models;
 
-use PDO;
-
 use Core\Error;
 use Core\Warning;
 use Core\Critical;
