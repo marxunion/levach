@@ -13,9 +13,16 @@ class MediaLoadImageHandler extends BaseHandlerRouteWithArgs
 
     public function Init()
     {
-        $this->file = $this->args['file'];
+        if(!empty($this->args['file']))
+        {
+            $this->file = $this->args['file'];
             
-        $this->filePath = __DIR__.'/../../../media/img/'.$this->args['file'];
+            $this->filePath = __DIR__.'/../../../media/img/'.$this->args['file'];
+        }
+        else
+        {
+            throw new Warning(404, "LoadImage File not found", "LoadImage File not found, filePath=".$this->filePath);
+        }
     }
     public function Process()
     {
@@ -26,7 +33,6 @@ class MediaLoadImageHandler extends BaseHandlerRouteWithArgs
         else
         {
             throw new Warning(404, "LoadImage File not found", "LoadImage File not found, filePath=".$this->filePath);
-            return;
         }
     }
 }

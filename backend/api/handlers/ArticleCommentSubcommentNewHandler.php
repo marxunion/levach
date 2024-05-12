@@ -27,25 +27,37 @@ class ArticleCommentSubcommentNewHandler extends BaseHandlerRouteWithArgs
                         {
                             if(isset($this->parsedBody['parent_comment_id']))
                             {
-                                if(!empty($this->parsedBody['text']))
+                                if(is_numeric($this->parsedBody['parent_comment_id']))
                                 {
-                                    $this->parsedBody['ratingInfluence'] = 0;
-                                    if(isset($this->parsedBody['rating_influence']))
+                                    if($this->parsedBody['parent_comment_id'] > 2147483646)
                                     {
-                                        if($this->parsedBody['rating_influence'] == 1)
-                                        {
-                                            $this->parsedBody['ratingInfluence'] = 1;
-                                        }
-                                        else if($this->parsedBody['rating_influence'] == 2)
-                                        {
-                                            $this->parsedBody['ratingInfluence'] = -1;
-                                        }
+                                        $this->parsedBody['parent_comment_id'] = 2147483647;
                                     }
-                                    $this->model = new ArticleCommentSubcommentNewModel();
+                                    
+                                    if(!empty($this->parsedBody['text']))
+                                    {
+                                        $this->parsedBody['ratingInfluence'] = 0;
+                                        if(isset($this->parsedBody['rating_influence']))
+                                        {
+                                            if($this->parsedBody['rating_influence'] == 1)
+                                            {
+                                                $this->parsedBody['ratingInfluence'] = 1;
+                                            }
+                                            else if($this->parsedBody['rating_influence'] == 2)
+                                            {
+                                                $this->parsedBody['ratingInfluence'] = -1;
+                                            }
+                                        }
+                                        $this->model = new ArticleCommentSubcommentNewModel();
+                                    }
+                                    else
+                                    {
+                                        throw new Error(400, "Invalid comment text", "Invalid article text");
+                                    }
                                 }
                                 else
                                 {
-                                    throw new Error(400, "Invalid comment text", "Invalid article text");
+                                    throw new Error(400, "Invalid parent comment id", "Invalid parent comment id");
                                 }
                             }
                             else

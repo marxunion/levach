@@ -24,7 +24,7 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
                     {
                         if(isset($this->parsedBody['status']))
                         { 
-                            if(isset($this->args['viewCode']))
+                            if(!empty($this->args['viewCode']))
                             {
                                 $this->model = new AdminArticlePremoderateModel();
                             }

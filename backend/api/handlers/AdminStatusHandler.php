@@ -11,13 +11,13 @@ class AdminStatusHandler extends BaseHandlerRoute
 {
     public static function isAdmin($cookiesBody)
     {
-        if(isset($cookiesBody['admin_token']))
+        if(!empty($cookiesBody['admin_token']))
         {
             $token = $cookiesBody['admin_token'];
-            if(isset($cookiesBody['admin_nickname']))
+            if(!empty($cookiesBody['admin_nickname']))
             {
                 $nickname = $cookiesBody['admin_nickname'];
-                if(isset($cookiesBody['admin_expiration_time']))
+                if(!empty($cookiesBody['admin_expiration_time']))
                 {
                     $expirationTime = $cookiesBody['admin_expiration_time'];
                     return AdminStatusModel::_isAdmin($token, $nickname, $expirationTime);
@@ -64,7 +64,7 @@ class AdminStatusHandler extends BaseHandlerRoute
                 if(isset($this->cookiesBody['admin_expiration_time']))
                 {
                     $expirationTime = $this->cookiesBody['admin_expiration_time'];
-                    $this->response = $this->response->withStatus(200)->withJson($this->model->isAdmin($token, $nickname, $expirationTime));
+                    $this->response = $this->response->withJson($this->model->isAdmin($token, $nickname, $expirationTime));
                 }
                 else
                 {

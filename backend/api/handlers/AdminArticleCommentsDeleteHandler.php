@@ -19,7 +19,7 @@ class AdminArticleCommentsDeleteHandler extends BaseHandlerRouteWithArgs
         {
             $this->parsedBody = $parsedBody;
             
-            if(isset($this->parsedBody['csrfToken']))
+            if(!empty($this->parsedBody['csrfToken']))
             {
                 if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
@@ -31,15 +31,57 @@ class AdminArticleCommentsDeleteHandler extends BaseHandlerRouteWithArgs
                             {
                                 $this->parsedBody['count'] = 0;
                             }
+                            else
+                            {
+                                if(is_numeric($this->parsedBody['count']))
+                                {
+                                    if($this->parsedBody['count'] > 10000)
+                                    {
+                                        $this->parsedBody['count'] = 10000;
+                                    }
+                                }
+                                else
+                                {
+                                    $this->parsedBody['count'] = 0;
+                                }
+                            }
 
                             if(empty($this->parsedBody['dateBefore']))
                             {
                                 $this->parsedBody['dateBefore'] = 0;
                             }
+                            else
+                            {
+                                if(is_numeric($this->parsedBody['dateBefore']))
+                                {
+                                    if($this->parsedBody['dateBefore'] > 2147483646)
+                                    {
+                                        $this->parsedBody['dateBefore'] = 2147483647;
+                                    }
+                                }
+                                else
+                                {
+                                    $this->parsedBody['dateBefore'] = 0;
+                                }
+                            }
 
                             if(empty($this->parsedBody['dateAfter']))
                             {
                                 $this->parsedBody['dateAfter'] = time();
+                            }
+                            else
+                            {
+                                if(is_numeric($this->parsedBody['dateAfter']))
+                                {
+                                    if($this->parsedBody['dateAfter'] > 2147483646)
+                                    {
+                                        $this->parsedBody['dateAfter'] = 2147483647;
+                                    }
+                                }
+                                else
+                                {
+                                    $this->parsedBody['dateAfter'] = 0;
+                                }
                             }
 
                             if(empty($this->parsedBody['regexPattern']))

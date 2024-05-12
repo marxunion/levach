@@ -88,7 +88,7 @@ class AdminLoginHandler extends BaseHandlerRoute
                 setcookie('admin_token', $token, $expirationTime, '/');
                 setcookie('admin_nickname', $nickname, $expirationTime, '/');
                 setcookie('admin_expiration_time', $expirationTime, $expirationTime, '/');
-                $this->response = $this->response->withStatus(200)->withJson(['success' => true]);
+                $this->response = $this->response->withJson(['success' => true]);
             }
             else
             {

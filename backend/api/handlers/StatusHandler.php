@@ -20,7 +20,7 @@ class StatusHandler extends BaseHandlerRoute
             $cpuLoad = SystemInfo::getServerLoad();
             $diskInfo = SystemInfo::getDiskInfo();
             
-            $this->response = $this->response->withStatus(200)->withJson([
+            $this->response = $this->response->withJson([
                 "status" => true,
                 "OS" => PHP_OS,
                 "OS FullInfo" => php_uname(),
@@ -45,7 +45,7 @@ class StatusHandler extends BaseHandlerRoute
         }
         else
         {
-            $this->response = $this->response->withStatus(200)->withJson([
+            $this->response = $this->response->withJson([
                 "status" => true,
                 "Request time" => ((time() - $_SERVER['REQUEST_TIME_FLOAT'])*1000).'ms',
                 "Current date" => date('Y-m-d H:i:s'),

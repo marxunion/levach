@@ -649,7 +649,7 @@ class ArticlesHandler extends BaseHandlerRoute
 
     private function loadArticlesSearchByCreatedDate()
     {
-        if(isset($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
+        if(!empty($this->parsedBody['searchTitle']) && isset($this->parsedBody['searchTags']))
         {
             if(!strlen($this->parsedBody['searchTitle']))
             {

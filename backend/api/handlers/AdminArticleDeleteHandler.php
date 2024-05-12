@@ -16,13 +16,13 @@ class AdminArticleDeleteHandler extends BaseHandlerRouteWithArgs
         {
             $this->parsedBody = $parsedBody;
             
-            if(isset($this->parsedBody['csrfToken']))
+            if(!empty($this->parsedBody['csrfToken']))
             {
                 if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        if(isset($this->args['viewCode']))
+                        if(!empty($this->args['viewCode']))
                         {
                             $this->model = new AdminArticleDeleteModel();
                         }

@@ -18,11 +18,11 @@ class ArticleEditPreloadHandler extends BaseHandlerRouteWithArgs
         {
             $this->parsedBody = $parsedBody;
             
-            if(isset($this->parsedBody['csrfToken']))
+            if(!empty($this->parsedBody['csrfToken']))
             {
                 if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
-                    if(isset($this->args['editCode']))
+                    if(!empty($this->args['editCode']))
                     {
                         $this->model = new ArticleEditPreloadModel();
                     }

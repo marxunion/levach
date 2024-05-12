@@ -31,30 +31,114 @@ class AdminArticlesCommentsDeleteHandler extends BaseHandlerRouteWithArgs
                             {
                                 $this->parsedBody['articlesCount'] = 0;
                             }
+                            else
+                            {
+                                if(is_numeric($this->parsedBody['articlesCount']))
+                                {
+                                    if($this->parsedBody['articlesCount'] > 10000)
+                                    {
+                                        $this->parsedBody['articlesCount'] = 10000;
+                                    }
+                                }
+                                else
+                                {
+                                    $this->parsedBody['articlesCount'] = 0;
+                                }
+                            }
 
                             if(empty($this->parsedBody['commentsCount']))
                             {
                                 $this->parsedBody['commentsCount'] = 0;
+                            }
+                            else
+                            {
+                                if(is_numeric($this->parsedBody['commentsCount']))
+                                {
+                                    if($this->parsedBody['commentsCount'] > 10000)
+                                    {
+                                        $this->parsedBody['commentsCount'] = 10000;
+                                    }
+                                }
+                                else
+                                {
+                                    $this->parsedBody['commentsCount'] = 0;
+                                }
                             }
 
                             if(empty($this->parsedBody['articleDateBefore']))
                             {
                                 $this->parsedBody['articleDateBefore'] = 0;
                             }
+                            else
+                            {
+                                if(is_numeric($this->parsedBody['articleDateBefore']))
+                                {
+                                    if($this->parsedBody['articleDateBefore'] > 2147483646)
+                                    {
+                                        $this->parsedBody['articleDateBefore'] = 2147483647;
+                                    }
+                                }
+                                else
+                                {
+                                    $this->parsedBody['articleDateBefore'] = 0;
+                                }
+                            }
 
                             if(empty($this->parsedBody['articleDateAfter']))
                             {
                                 $this->parsedBody['articleDateAfter'] = time();
+                            }
+                            else
+                            {
+                                if(is_numeric($this->parsedBody['articleDateAfter']))
+                                {
+                                    if($this->parsedBody['articleDateAfter'] > 2147483646)
+                                    {
+                                        $this->parsedBody['articleDateAfter'] = 2147483647;
+                                    }
+                                }
+                                else
+                                {
+                                    $this->parsedBody['articleDateAfter'] = 0;
+                                }
                             }
 
                             if(empty($this->parsedBody['commentDateBefore']))
                             {
                                 $this->parsedBody['commentDateBefore'] = 0;
                             }
+                            else
+                            {
+                                if(is_numeric($this->parsedBody['commentDateBefore']))
+                                {
+                                    if($this->parsedBody['commentDateBefore'] > 2147483646)
+                                    {
+                                        $this->parsedBody['commentDateBefore'] = 2147483647;
+                                    }
+                                }
+                                else
+                                {
+                                    $this->parsedBody['commentDateBefore'] = 0;
+                                }
+                            }
 
                             if(empty($this->parsedBody['commentDateAfter']))
                             {
                                 $this->parsedBody['commentDateAfter'] = time();
+                            }
+                            else
+                            {
+                                if(is_numeric($this->parsedBody['commentDateAfter']))
+                                {
+                                    if($this->parsedBody['commentDateAfter'] > 2147483646)
+                                    {
+                                        $this->parsedBody['commentDateAfter'] = 2147483647;
+                                    }
+                                }
+                                else
+                                {
+                                    $this->parsedBody['commentDateAfter'] = 0;
+                                }
                             }
 
                             if(empty($this->parsedBody['articleRegexPattern']))
@@ -97,15 +181,7 @@ class AdminArticlesCommentsDeleteHandler extends BaseHandlerRouteWithArgs
 
     public function Process()
     {
-        $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
-        if(isset($articleId))
-        {
-            $this->model->deleteComments($this->parsedBody['articlesCount'], $this->parsedBody['commentsCount'], $this->parsedBody['articleDateBefore'], $this->parsedBody['articleDateAfter'], $this->parsedBody['commentDateBefore'], $this->parsedBody['commentDateAfter'], $this->parsedBody['articleRegexPattern'], $this->parsedBody['commentRegexPattern']);
-            $this->response = $this->response->withJson(['success' => true]);
-        }
-        else
-        {
-            throw new Error(403, "Invalid article viewCode", "Invalid article viewCode");
-        }
+        $this->model->deleteComments($this->parsedBody['articlesCount'], $this->parsedBody['commentsCount'], $this->parsedBody['articleDateBefore'], $this->parsedBody['articleDateAfter'], $this->parsedBody['commentDateBefore'], $this->parsedBody['commentDateAfter'], $this->parsedBody['articleRegexPattern'], $this->parsedBody['commentRegexPattern']);
+        $this->response = $this->response->withJson(['success' => true]);=
     }
 }

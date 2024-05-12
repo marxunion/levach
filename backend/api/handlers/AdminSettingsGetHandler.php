@@ -19,17 +19,17 @@ class AdminSettingsGetHandler extends BaseHandlerRoute
 
     public static function getSetting($settingName)
     {
-        if(isset($settingName))
+        if(!empty($settingName))
         {
             $responseData = AdminSettingsGetModel::_getSetting($settingName);
-            if(isset($responseData))
+            if(!empty($responseData))
             {
                 return $responseData;
             }
             else
             {
                 $responseData = Settings::getSetting('default_'.$settingName);
-                if(isset($responseData))
+                if(!empty($responseData))
                 {
                     return $responseData;
                 }

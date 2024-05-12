@@ -29,7 +29,7 @@ class AdminQuitHandler extends BaseHandlerRoute
         if(is_array($parsedBody))
         {
             $this->parsedBody = $parsedBody;
-            if(isset($this->parsedBody['csrfToken']))
+            if(!empty($this->parsedBody['csrfToken']))
             {
                 if(!csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
@@ -48,16 +48,16 @@ class AdminQuitHandler extends BaseHandlerRoute
     }
     public function Process()
     {
-        if(isset($this->cookiesBody['admin_token']))
+        if(!empty($this->cookiesBody['admin_token']))
         {
             $token = $this->cookiesBody['admin_token'];
-            if(isset($this->cookiesBody['admin_nickname']))
+            if(!empty($this->cookiesBody['admin_nickname']))
             {
                 $nickname = $this->cookiesBody['admin_nickname'];
-                if(isset($this->cookiesBody['admin_expiration_time']))
+                if(!empty($this->cookiesBody['admin_expiration_time']))
                 {
                     $expirationTime = $this->cookiesBody['admin_expiration_time'];
-                    $this->response = $this->response->withStatus(200)->withJson($this->model->quit($token, $nickname, $expirationTime));
+                    $this->response = $this->response->withJson($this->model->quit($token, $nickname, $expirationTime));
                     setcookie('admin_token', '', -1, '/');
                     setcookie('admin_nickname', '', -1, '/');
                     setcookie('admin_expiration_time', '', -1, '/');

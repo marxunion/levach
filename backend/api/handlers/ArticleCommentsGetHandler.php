@@ -13,7 +13,7 @@ class ArticleCommentsGetHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
-        if(isset($this->args['viewCode']))
+        if(!empty($this->args['viewCode']))
         {
             if(empty($this->request->getQueryParams()))
             {

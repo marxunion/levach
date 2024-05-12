@@ -19,17 +19,24 @@ class AdminArticleCommentDeleteHandler extends BaseHandlerRouteWithArgs
         {
             $this->parsedBody = $parsedBody;
             
-            if(isset($this->parsedBody['csrfToken']))
+            if(!empty($this->parsedBody['csrfToken']))
             {
                 if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        if(isset($this->args['viewCode']))
+                        if(!empty($this->args['viewCode']))
                         {
                             if(isset($this->parsedBody['commentId']))
                             {
-                                $this->model = new AdminArticleCommentDeleteModel();
+                                if(is_numeric($this->parsedBody['commentId']))
+                                {
+                                    $this->model = new AdminArticleCommentDeleteModel();
+                                }
+                                else
+                                {
+                                    throw new Error(400, "Comment not found", "Comment not found");
+                                }
                             }
                             else
                             {

@@ -178,7 +178,7 @@ class CustomExceptionHandler extends ErrorHandler
         }
         else
         {
-            $this->exceptionDetails['code'] = $this->exception->getCode();
+            $this->exceptionDetails['code'] = 500;
             $this->exceptionDetails['message'] = "Unknown Error";
             $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
         }

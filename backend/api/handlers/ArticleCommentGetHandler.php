@@ -13,14 +13,25 @@ class ArticleCommentGetHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
-        if(isset($this->args['viewCode']))
+        if(!empty($this->args['viewCode']))
         {
             if($this->request->getQueryParams())
             {
                 $this->parsedBody = $this->request->getQueryParams();
                 if(isset($this->parsedBody['commentId']))
                 {
-                    $this->model = new ArticleCommentGetModel();
+                    if(is_numeric($this->parsedBody['commentId']))
+                    {
+                        if($this->parsedBody['commentId'] > 2147483646)
+                        {
+                            $this->parsedBody['commentId'] = 2147483647;
+                        }
+                        $this->model = new ArticleCommentGetModel();
+                    }
+                    else
+                    {
+                        throw new Error(400, "Invalid comment id", "Invalid comment id");
+                    }
                 }
                 else
                 {
