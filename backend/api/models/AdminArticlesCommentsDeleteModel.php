@@ -17,7 +17,7 @@ class AdminArticleCommentsDeleteModel extends BaseModel
         return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
 
-    public function deleteComments($count, $dateBefore, $dateAfter, $regexPattern)
+    public function deleteComments($articlesCount, $commentsCount, $articleDateBefore, $articleDateAfter, $commentDateBefore, $commentDateAfter, $articleRegexPattern, $commentRegexPattern)
     {
         $sql = "DELETE FROM comments
         WHERE id IN (

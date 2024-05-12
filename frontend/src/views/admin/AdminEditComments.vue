@@ -13,34 +13,21 @@
 
 	import langsData from "./locales/AdminEditComments.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
-
+    
+    import { dateFormat } from '../../ts/helpers/DateTimeHelper';
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AdminEditComments", langsData).langData;
 
+    const articlesCountToFetch = ref(10);
+    const commentsCountToFetch = ref(20);
+
+
     // Filters
-    const dateFilter = reactive(
-    {
-        before: null,
-        after: null
-    });
+    const articlesDateBefore = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
+    const articlesDateAfter = ref(Date.now());
 
-    const dateFilter2 = reactive(
-    {
-        before: null,
-        after: null
-    });
-
-	const dateFormat = (date : Date) => 
-	{
-		const day = ("0" + date.getDate()).slice(-2);
-		const month = ("0" + (date.getMonth() + 1)).slice(-2);
-		const year = date.getFullYear();
-
-        const hours = ("0" + (date.getHours())).slice(-2);
-		const minutes = ("0" + (date.getMinutes())).slice(-2);
-
-		return `${hours}:${minutes} ${day}.${month}.${year}`;
-	}
+    const commentsDateBefore = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
+    const commentsDateAfter = ref(Date.now());
 
 	// Comments
 	const articles = ref(
@@ -222,8 +209,7 @@
         ]
     );
     
-	const value = ref(1);
-    const value2 = ref(1);
+	
 </script>
 
 <template>
@@ -235,7 +221,7 @@
                     <p class="main__filters__blocks__block__title">{{ langData['articlesCountTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['countTitle1'] }}</p>
-						<VueNumberInput v-model="value" :min="1" class="main__filters__blocks__block__content__input number" controls></VueNumberInput>
+						<VueNumberInput v-model="articlesCountToFetch" :min="1" class="main__filters__blocks__block__content__input number" controls></VueNumberInput>
                         <p class="main__filters__blocks__block__content__text">{{ langData['countTitle2'] }}</p>
                     </div>
                 </div>
@@ -243,9 +229,9 @@
                     <p class="main__filters__blocks__block__title">{{ langData['dateArticlePublishTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle1'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="dateFilter.before" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="articlesDateBefore" teleport-center ></VueDatePicker>
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle2'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="dateFilter.after" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="articlesDateAfter" teleport-center ></VueDatePicker>
                     </div>
                 </div>
                 <div class="main__filters__blocks__block">
@@ -263,7 +249,7 @@
                     <p class="main__filters__blocks__block__title">{{ langData['commentsCountTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['countTitle1'] }}</p>
-						<VueNumberInput v-model="value2" :min="1" class="main__filters__blocks__block__content__input number" controls></VueNumberInput>
+						<VueNumberInput v-model="commentsCountToFetch" :min="1" class="main__filters__blocks__block__content__input number" controls></VueNumberInput>
                         <p class="main__filters__blocks__block__content__text">{{ langData['countTitle2'] }}</p>
                     </div>
                 </div>
@@ -271,9 +257,9 @@
                     <p class="main__filters__blocks__block__title">{{ langData['dateCommentSendTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle1'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="dateFilter2.before" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="commentsDateBefore" teleport-center ></VueDatePicker>
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle2'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="dateFilter2.after" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="commentsDateAfter" teleport-center ></VueDatePicker>
                     </div>
                 </div>
                 <div class="main__filters__blocks__block">
