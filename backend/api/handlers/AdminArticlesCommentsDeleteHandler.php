@@ -4,13 +4,13 @@ namespace Api\Handlers;
 use Core\Critical;
 use Core\Error;
 
-use Base\BaseHandlerRouteWithArgs;
+use Base\BaseHandlerRoute;
 
 use Api\Handlers\AdminStatusHandler;
 
 use Api\Models\AdminArticlesCommentsDeleteModel;
 
-class AdminArticlesCommentsDeleteHandler extends BaseHandlerRouteWithArgs
+class AdminArticlesCommentsDeleteHandler extends BaseHandlerRoute
 {
     public function Init()
     {

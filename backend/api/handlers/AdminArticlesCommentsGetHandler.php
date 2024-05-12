@@ -4,13 +4,13 @@ namespace Api\Handlers;
 use Core\Critical;
 use Core\Error;
 
-use Base\BaseHandlerRouteWithArgs;
+use Base\BaseHandlerRoute;
 
 use Api\Handlers\AdminStatusHandler;
 
 use Api\Models\AdminArticlesCommentsGetModel;
 
-class AdminArticlesCommentsGetHandler extends BaseHandlerRouteWithArgs
+class AdminArticlesCommentsGetHandler extends BaseHandlerRoute
 {
     public function Init()
     {
