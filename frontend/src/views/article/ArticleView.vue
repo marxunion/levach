@@ -33,6 +33,7 @@
 	
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
+		
 	import { comments, lastLoadedComment } from '../../ts/handlers/CommentsHandler';
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
@@ -710,6 +711,11 @@
 	{
 		previewState.language = LangDataHandler.currentLanguage.value;
 		newCommentEditorState.language = LangDataHandler.currentLanguage.value;
+	});
+
+	watch(lastLoadedComment, async () => 
+	{
+		await fetchArticleData();
 	});
 </script>
 
