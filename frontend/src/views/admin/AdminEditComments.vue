@@ -18,7 +18,7 @@
     import { articles } from '../../ts/handlers/ArticlesHandler';
     import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
     
-    import { dateFormat } from '../../ts/helpers/DateTimeHelper';
+    import { dateFormat, timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
 
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AdminEditComments", langsData).langData;
@@ -29,11 +29,11 @@
     const articlesCountToFetch = ref(10);
     const commentsCountToFetch = ref(20);
     
-    const articlesDateBefore : Ref<number> = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
-    const articlesDateAfter : Ref<number> = ref(Date.now());
+    const articleDateBefore : Ref<number> = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
+    const articleDateAfter : Ref<number> = ref(Date.now());
 
-    const commentsDateBefore : Ref<number> = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
-    const commentsDateAfter : Ref<number> = ref(Date.now());
+    const commentDateBefore : Ref<number> = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
+    const commentDateAfter : Ref<number> = ref(Date.now());
 
     const articleRegexPattern : Ref <string> = ref('');
     const commentRegexPattern : Ref <string> = ref('');
@@ -51,10 +51,10 @@
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
 			articlesCount: articlesCountToFetch.value,
             commentsCount: commentsCountToFetch.value,
-			articlesDateBefore: Math.round(articlesDateBefore.value / 1000),
-            articlesDateAfter: Math.round(articlesDateAfter.value / 1000),
-			commentsDateBefore: Math.round(commentsDateBefore.value / 1000),
-            commentsDateAfter: Math.round(commentsDateAfter.value / 1000),
+			articleDateBefore: Math.round(articleDateBefore.value / 1000),
+            articleDateAfter: Math.round(articleDateAfter.value / 1000),
+			commentDateBefore: Math.round(commentDateBefore.value / 1000),
+            commentDateAfter: Math.round(commentDateAfter.value / 1000),
 			articleRegexPattern: articleRegexPattern.value,
             commentRegexPattern: commentRegexPattern.value
 		}
@@ -92,10 +92,10 @@
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
 			articlesCount: articlesCountToFetch.value,
             commentsCount: commentsCountToFetch.value,
-			articlesDateBefore: Math.round(articlesDateBefore.value / 1000),
-            articlesDateAfter: Math.round(articlesDateAfter.value / 1000),
-			commentsDateBefore: Math.round(commentsDateBefore.value / 1000),
-            commentsDateAfter: Math.round(commentsDateAfter.value / 1000),
+			articleDateBefore: Math.round(articleDateBefore.value / 1000),
+            articleDateAfter: Math.round(articleDateAfter.value / 1000),
+			commentDateBefore: Math.round(commentDateBefore.value / 1000),
+            commentDateAfter: Math.round(commentDateAfter.value / 1000),
 			articleRegexPattern: articleRegexPattern.value,
             commentRegexPattern: commentRegexPattern.value
 		}
@@ -135,6 +135,7 @@
 		loading.value = true;
 		await deleteArticleComments();
 	}
+    
 </script>
 
 <template>
@@ -154,9 +155,9 @@
                     <p class="main__filters__blocks__block__title">{{ langData['dateArticlePublishTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle1'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="articlesDateBefore" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="articleDateBefore" teleport-center ></VueDatePicker>
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle2'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="articlesDateAfter" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="articleDateAfter" teleport-center ></VueDatePicker>
                     </div>
                 </div>
                 <div class="main__filters__blocks__block">
@@ -182,9 +183,9 @@
                     <p class="main__filters__blocks__block__title">{{ langData['dateCommentSendTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle1'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="commentsDateBefore" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="commentDateBefore" teleport-center ></VueDatePicker>
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle2'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="commentsDateAfter" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="commentDateAfter" teleport-center ></VueDatePicker>
                     </div>
                 </div>
                 <div class="main__filters__blocks__block">
@@ -204,7 +205,9 @@
             <p v-if="articles.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
             <p v-else class="main__comments__title">{{ langData['commentsNotFoundTitle'] }}</p>
             <article v-if="articles.length > 0" class="main__comments__articles" v-for="article in articles">
-                <p class="main__comments__articles__title">{{ article.statistics.current_title }}</p>
+                <p class="main__comments__articles__title time"> {{ timestampToLocaleFormatedTime(article.statistics.created_date) }}</p>
+                <a :href="'#/article/'+article.view_code" target="_blank" class="main__comments__articles__title text">{{ article.statistics.current_title }}</a>
+
                 <div class="main__comments__articles__articleComments">
                     <CommentsList v-for="comment in article.comments" :key="comment.id" :comment="comment" :articleViewCode="article.view_code" :level="0"/>
                 </div>

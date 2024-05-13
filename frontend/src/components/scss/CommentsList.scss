@@ -18,17 +18,18 @@
         {
             font-size: 18px;
             font-family: Roboto-Regular;
+            &.id
+            {
+                font-size: 17px;
+                color: $commentsListCommentTitleId;
+            }
+            &.time
+            {
+                padding-left: 2%;
+                color: $commentsListCommentTitleTime;
+            }
         }
-        & .id
-        {
-            font-size: 17px;
-            color: $commentsListCommentTitleId;
-        }
-        & .time
-        {
-            padding-left: 2%;
-            color: $commentsListCommentTitleTime;
-        }
+        
     }
     
     &__text

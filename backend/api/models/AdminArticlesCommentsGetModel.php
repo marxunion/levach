@@ -106,10 +106,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
         $this->commentDateAfter = $commentDateAfter;
         $this->commentRegexPattern = $commentRegexPattern;
 
-        echo($this->commentDateBefore);
-        echo($this->commentDateAfter);
-
-        $sql = "SELECT article_id, current_title FROM statistics WHERE created_date BETWEEN :date_before AND :date_after AND current_text ~ :regex_pattern ORDER BY created_date DESC LIMIT :count";  
+        $sql = "SELECT article_id, current_title, created_date FROM statistics WHERE created_date BETWEEN :date_before AND :date_after AND current_text ~ :regex_pattern ORDER BY created_date DESC LIMIT :count";  
         $bindings = [
             ':date_before' => $articleDateBefore,
             ':date_after' => $articleDateAfter,
@@ -119,7 +116,6 @@ class AdminArticlesCommentsGetModel extends BaseModel
 
         $articles = $this->database->query($sql, $bindings)->fetchAll();
 
-        var_dump($articles);
         $articlesReturn = [];
 
         foreach ($articles as &$article) 
@@ -156,9 +152,11 @@ class AdminArticlesCommentsGetModel extends BaseModel
             {
                 $articleToReturn = [
                     "statistics" => [
-                        "current_title" => $article['current_title']
+                        "current_title" => $article['current_title'],
+                        "created_date" => $article['created_date']
                     ],
                     "comments" => $commentsReturn,
+                    
                     'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $this->articleId])
                 ];
                 array_push($articlesReturn, $articleToReturn);
