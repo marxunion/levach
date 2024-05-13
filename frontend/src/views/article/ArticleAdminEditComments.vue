@@ -87,10 +87,6 @@
                         comments.value.push(comment);
                     });
                 }
-				for (let index = 0; index < response.data.length; index++) 
-				{
-					comments.value.push(response.data[index]);
-				}
 			}
 		})
 		.catch(error =>
