@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, reactive, watch, Ref, defineProps } from 'vue';
+	import { ref, reactive, watch, Ref, defineProps, defineEmits } from 'vue';
 	import axios from 'axios';
 
 	import { MdEditor, MdPreview, config } from 'md-editor-v3';
@@ -27,6 +27,8 @@
 
 
 	const props = defineProps(['articleViewCode', 'comment', 'level']);
+
+	const emits = defineEmits(["onDeletedSubcomment", "onCreatedNewSubcomment"]);
 
 	const langData = LangDataHandler.initLangDataHandler("CommentsList", langsData).langData;
 
@@ -269,6 +271,7 @@
 					answerStatus.value = 0;
 					newSubcommentEditorState.text = '';
 					loading.value = true;
+					emits('onCreatedNewSubcomment');
 					await refetchComment();
 				}
 				else
@@ -337,8 +340,10 @@
 				{
 					lastLoadedComment.value = lastLoadedComment.value - 1;
 				}
+
 				
 				openModal(InfoModal, {status: true, text: langData.value['commentDeletedSuccessfully']});
+				emits('onDeletedSubcomment');
 				await refetchComment();
 			}
 			else
@@ -393,6 +398,16 @@
 			answerStatus.value = 1;
 		}
 	}
+
+	const onCreatedNewSubcomment =  async () => 
+	{
+		emits('onCreatedNewSubcomment');
+	}
+
+	const onDeletedSubcomment =  async () => 
+	{
+		emits('onDeletedSubcomment');
+	}
 </script>
 
 <template>
@@ -428,7 +443,7 @@
 	</div>
 	
 	
-	<CommentsList v-if="!loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" />
+	<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-if="!loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" />
 	<Loader v-else />
 </template>
 

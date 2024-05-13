@@ -713,10 +713,15 @@
 		newCommentEditorState.language = LangDataHandler.currentLanguage.value;
 	});
 
-	watch(lastLoadedComment, async () => 
+	const onCreatedNewSubcomment =  async () => 
 	{
 		await fetchArticleData();
-	});
+	}
+
+	const onDeletedSubcomment =  async () => 
+	{
+		await fetchArticleData();
+	}
 </script>
 
 <template>
@@ -778,7 +783,7 @@
 				</div>
 				
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
-					<CommentsList v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
+					<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
 					<div ref="scrollTarget" style="height: 10px;"></div>
 					<div v-if="commentsReloading" class="main__article__comments__commentsList__reloader">
 						<Loader/>

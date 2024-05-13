@@ -93,6 +93,17 @@
                                 {
                                     opacity: .9;
                                 }
+
+                                &::before
+                                {
+                                    height: 2px !important;
+                                }
+
+                                &::after
+                                {
+                                    width: 2px !important;
+                                }
+
                             }
                             & input
                             {
