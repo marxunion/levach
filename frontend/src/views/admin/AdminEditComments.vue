@@ -99,7 +99,7 @@
 			articleRegexPattern: articleRegexPattern.value,
             commentRegexPattern: commentRegexPattern.value
 		}
-		await axios.post('/api/admin/articles/comments/delete/', data)
+		await axios.post('/api/admin/articles/comments/delete', data)
 		.then(response => 
 		{
 			articles.value = [];
