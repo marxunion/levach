@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, reactive, computed, watch, Ref, ComputedRef, onMounted, onBeforeUnmount } from 'vue';
+	import { ref, reactive, computed, watch, Ref, ComputedRef, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
 	import { useRoute, useRouter, RouteLocationNormalizedLoaded, Router } from 'vue-router';
 	import axios from 'axios';
 
@@ -326,6 +326,7 @@
 					await fetchArticleData();
 					commentsLoading.value = true;
 					lastLoadedComment.value = 0;
+					currentCommentReaction.value = 0;
 					comments.value = [];
 					await fetchNewComments();
 				}
@@ -389,6 +390,8 @@
 
 				commentsReloading.value = true;
 				commentsLoading.value = true;
+				lastLoadedComment.value = 0;
+				currentCommentReaction.value = 0;
 
 				await fetchNewComments();
 
@@ -418,6 +421,15 @@
             ps.removeEventListener('scroll', handleCommentsScroll)
         }
     });
+	
+	onUnmounted(() =>
+	{
+		commentsReloading.value = true;
+		commentsLoading.value = true;
+		lastLoadedComment.value = 0;
+		currentCommentReaction.value = 0;
+		comments.value = [];
+	});
 
 	const onRejectApproveArticle = async () =>
 	{

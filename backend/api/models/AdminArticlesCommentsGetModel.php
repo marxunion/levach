@@ -10,11 +10,8 @@ use Base\BaseModel;
 class AdminArticlesCommentsGetModel extends BaseModel
 {
     private $articleId;
-    private $articleDateBefore;
-    private $articleDateAfter;
     private $commentDateBefore;
     private $commentDateAfter;
-    private $articleRegexPattern;
     private $commentRegexPattern;
 
     public function __construct()
@@ -105,18 +102,15 @@ class AdminArticlesCommentsGetModel extends BaseModel
 
     public function getComments($articlesCount, $commentsCount, $articleDateBefore, $articleDateAfter, $commentDateBefore, $commentDateAfter, $articleRegexPattern, $commentRegexPattern)
     {
-        $this->articleDateBefore = $articleDateBefore;
-        $this->articleDateAfter = $articleDateAfter;
         $this->commentDateBefore = $commentDateBefore;
         $this->commentDateAfter = $commentDateAfter;
-        $this->articleRegexPattern = $articleRegexPattern;
         $this->commentRegexPattern = $commentRegexPattern;
 
         $sql = "SELECT article_id, current_title FROM statistics WHERE created_date BETWEEN :date_before AND :date_after AND current_text ~ :regex_pattern ORDER BY created_date DESC LIMIT :count";  
         $bindings = [
-            ':date_before' => $this->articleDateBefore,
-            ':date_after' => $this->articleDateAfter,
-            ':regex_pattern' => $this->articleRegexPattern,
+            ':date_before' => $articleDateBefore,
+            ':date_after' => $articleDateAfter,
+            ':regex_pattern' => $articleRegexPattern,
             ':count' => $articlesCount
         ];
 
@@ -159,7 +153,8 @@ class AdminArticlesCommentsGetModel extends BaseModel
                     "statistics" => [
                         "current_title" => $article['current_title']
                     ],
-                    "comments" => $commentsReturn
+                    "comments" => $commentsReturn,
+                    'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $this->articleId])
                 ];
                 array_push($articlesReturn, $articleToReturn);
             }
