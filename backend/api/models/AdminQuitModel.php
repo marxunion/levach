@@ -28,7 +28,6 @@ class AdminQuitModel extends BaseModel
                             if(password_verify($expirationTime, $adminInfo['expiration_time_encrypted']))
                             {
                                 $this->database->delete('admins_tokens', ['token' => $token]);
-                                return ['success' => true];
                             }
                             else
                             {

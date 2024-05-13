@@ -57,10 +57,11 @@ class AdminQuitHandler extends BaseHandlerRoute
                 if(!empty($this->cookiesBody['admin_expiration_time']))
                 {
                     $expirationTime = $this->cookiesBody['admin_expiration_time'];
-                    $this->response = $this->response->withJson($this->model->quit($token, $nickname, $expirationTime));
+                    $this->model->quit($token, $nickname, $expirationTime)
                     setcookie('admin_token', '', -1, '/');
                     setcookie('admin_nickname', '', -1, '/');
                     setcookie('admin_expiration_time', '', -1, '/');
+                    $this->response = $this->response->withJson(['success' => true]);
                 }
                 else
                 {
