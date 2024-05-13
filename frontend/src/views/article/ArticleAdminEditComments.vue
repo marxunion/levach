@@ -5,6 +5,7 @@
 
 	import { JsonData } from '../../ts/interfaces/JsonData';
 	import { Article } from '../../ts/interfaces/Article';
+	import { Comment } from '../../ts/interfaces/Comment';
 
 	import { dateFormat } from '../../ts/helpers/DateTimeHelper';
 
@@ -79,6 +80,13 @@
 		{
 			if(response.data)
 			{
+				if(Array.isArray(comments.value))
+                {
+                    response.data.forEach((comment : Comment) => 
+                    {
+                        comments.value.push(comment);
+                    });
+                }
 				for (let index = 0; index < response.data.length; index++) 
 				{
 					comments.value.push(response.data[index]);

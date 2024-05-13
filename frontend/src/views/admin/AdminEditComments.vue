@@ -3,6 +3,7 @@
 	import axios from 'axios';
 
     import { JsonData } from '../../ts/interfaces/JsonData';
+    import { Article } from '../../ts/interfaces/Article';
 
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css'
@@ -18,6 +19,7 @@
     import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
     
     import { dateFormat } from '../../ts/helpers/DateTimeHelper';
+
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AdminEditComments", langsData).langData;
 
@@ -61,10 +63,13 @@
 		{
 			if(response.data)
 			{
-				for (let index = 0; index < response.data.length; index++) 
-				{
-					articles.value.push(response.data[index]);
-				}
+                if(Array.isArray(articles.value))
+                {
+                    response.data.forEach((article : Article) => 
+                    {
+                        articles.value.push(article);
+                    });
+                }
 			}
 		})
 		.catch(error =>
