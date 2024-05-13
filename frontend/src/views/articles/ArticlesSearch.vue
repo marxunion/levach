@@ -12,6 +12,7 @@
 
     import { articles } from '../../ts/handlers/ArticlesHandler';
 
+    import ShareWith from '../../components/modals/ShareWith.vue';
     import DropDown from './../../components/DropDown.vue';
     import DropDownVersion from './../../components/DropDownVersion.vue';
 
@@ -338,6 +339,11 @@
             openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']})
         }
     }
+
+    const onShare = (articleViewCode : string) => 
+	{
+		openModal(ShareWith, { link: 'http://localhost:8000/#/article/'+articleViewCode})
+	}
 </script>
 
 <template>
@@ -367,7 +373,7 @@
                     <div class="main__article__reactions__statistics">
                         <img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
                         <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.statistics.rating) }}</p>
-                        <img src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
+                        <img @click="onShare(article.view_code)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                     </div>
                     <div class="main__article__reactions__comments">
                         <img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">

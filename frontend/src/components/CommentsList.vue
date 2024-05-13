@@ -406,6 +406,8 @@
 
 	const onDeletedSubcomment =  async () => 
 	{
+		loading.value = true;
+		await refetchComment();
 		emits('onDeletedSubcomment');
 	}
 </script>
