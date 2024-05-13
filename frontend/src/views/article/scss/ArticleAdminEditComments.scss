@@ -14,7 +14,7 @@
         flex-direction: column;
         align-items: center;
         border-radius: 15px;
-        background-color: $ArticleAdminEditBG;
+        background-color: $ArticleAdminEditCommentsBG;
         &__title
         {
             margin-top: 12px;
@@ -62,22 +62,22 @@
                         
                         &.text
                         {
-                            color: $ArticleAdminEditFiltersInputText;
-                            background-color: $ArticleAdminEditFiltersInputBG;
+                            color: $ArticleAdminEditCommentsFiltersInputText;
+                            background-color: $ArticleAdminEditCommentsFiltersInputBG;
                             font-size: 16px;
                             padding-left: 10px;
                             transition: .4s;
                             box-sizing: border-box;
-                            border: 1px solid $ArticleAdminEditFiltersInputBorder;
+                            border: 1px solid $ArticleAdminEditCommentsFiltersInputBorder;
                             &:hover
                             {
-                                border: 1px solid $ArticleAdminEditFiltersInputBorderHover;
+                                border: 1px solid $ArticleAdminEditCommentsFiltersInputBorderHover;
                             }
                         }
                         &.number
                         {
-                            color: $ArticleAdminEditFiltersInputText;
-                            background-color: $ArticleAdminEditFiltersInputBG;
+                            color: $ArticleAdminEditCommentsFiltersInputText;
+                            background-color: $ArticleAdminEditCommentsFiltersInputBG;
                             width: 120px;
                             height: 35px;
 
@@ -87,7 +87,7 @@
                                 cursor: pointer;
                                 border-radius: 12px;
                                 margin: 3px;
-                                background-color: $ArticleAdminEditFiltersInputNumberButtonBG;
+                                background-color: $ArticleAdminEditCommentsFiltersInputNumberButtonBG;
 
                                 &:disabled
                                 {
@@ -99,20 +99,20 @@
                                 border-radius: 15px;
                                 height: 35px;
                                 padding: 0 !important;
-                                border: 1px solid $ArticleAdminEditFiltersInputBorder;
-                                color: $ArticleAdminEditFiltersInputText;
-                                background-color: $ArticleAdminEditFiltersInputBG;
+                                border: 1px solid $ArticleAdminEditCommentsFiltersInputBorder;
+                                color: $ArticleAdminEditCommentsFiltersInputText;
+                                background-color: $ArticleAdminEditCommentsFiltersInputBG;
                                 font-size: 16px;
                                 text-align: center;
                                 transition: .4s;
                                 box-sizing: border-box;
                                 &:hover
                                 {
-                                    border: 1px solid $ArticleAdminEditFiltersInputBorderHover;
+                                    border: 1px solid $ArticleAdminEditCommentsFiltersInputBorderHover;
                                 }
                                 &:focus
                                 {
-                                    border: 1px solid $ArticleAdminEditFiltersInputBorderFocus;
+                                    border: 1px solid $ArticleAdminEditCommentsFiltersInputBorderFocus;
                                 }
                             }
                         }
@@ -125,17 +125,17 @@
                                 height: 35px;
                                 padding: 0 !important;
                                 padding-left: 35px !important;
-                                color: $ArticleAdminEditFiltersInputText;
-                                background-color: $ArticleAdminEditFiltersInputBG;
+                                color: $ArticleAdminEditCommentsFiltersInputText;
+                                background-color: $ArticleAdminEditCommentsFiltersInputBG;
                                 font-size: 16px;
-                                border: 1px solid $ArticleAdminEditFiltersInputBorder;
+                                border: 1px solid $ArticleAdminEditCommentsFiltersInputBorder;
                                 &:hover
                                 {
-                                    border: 1px solid $ArticleAdminEditFiltersInputBorderHover;
+                                    border: 1px solid $ArticleAdminEditCommentsFiltersInputBorderHover;
                                 }
                                 &:focus
                                 {
-                                    border: 1px solid $ArticleAdminEditFiltersInputBorderFocus;
+                                    border: 1px solid $ArticleAdminEditCommentsFiltersInputBorderFocus;
                                 }
                             }
                         }
@@ -166,13 +166,13 @@
                 text-align: center;
                 line-height: 45px;
                 
-                color: $ArticleAdminEditButtonsApplyFiltersButtonText;
-                border: 2px solid $ArticleAdminEditButtonsApplyFiltersButtonBorder;
+                color: $ArticleAdminEditCommentsButtonsApplyFiltersButtonText;
+                border: 2px solid $ArticleAdminEditCommentsButtonsApplyFiltersButtonBorder;
 
                 &.delete
                 {
-                    color: $ArticleAdminEditButtonsDeleteSelectedButtonText;
-                    border: 2px solid $ArticleAdminEditButtonsDeleteSelectedButtonBorder;
+                    color: $ArticleAdminEditCommentsButtonsDeleteSelectedButtonText;
+                    border: 2px solid $ArticleAdminEditCommentsButtonsDeleteSelectedButtonBorder;
                 }
 
 
@@ -193,7 +193,7 @@
         flex-direction: column;
         align-items: center;
         border-radius: 15px;
-        background-color: $ArticleAdminEditBG;
+        background-color: $ArticleAdminEditCommentsBG;
         &__title
         {
             margin-top: 12px;
