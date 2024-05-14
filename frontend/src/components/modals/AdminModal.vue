@@ -4,8 +4,6 @@
     import { JsonData } from "../../ts/interfaces/JsonData";
 
     import { useRoute, useRouter, RouteLocationNormalizedLoaded,  Router } from 'vue-router';
-    
-    import { RecaptchaV2State } from 'vue-recaptcha'
 
     import axios from "axios";
 
@@ -549,9 +547,6 @@
         <button @click="onSaveSettingsButton" class="form__button saveSettings">{{ langData["formPanelButtonSaveSettings"] }}</button>
         <button @click="onQuitButton" class="form__button quit">{{ langData["formPanelButtonQuit"] }}</button>
     </div>
-    <ChallengeV2 v-slot="{ state }" v-model="response">
-        <button>{{ map[state as RecaptchaV2State] }}{{ response ? ` ${response.slice(0, 6)}...` : '' }}</button>
-    </ChallengeV2>
 </template>
 
 <style lang="scss" src="./scss/AdminModal.scss"></style>
