@@ -1,6 +1,8 @@
 <script setup lang="ts">
     import { onMounted, Ref, ComputedRef, ref } from "vue";
 
+    import Catcha from "../Captcha.vue";
+
     import { JsonData } from "../../ts/interfaces/JsonData";
 
     import { useRoute, useRouter, RouteLocationNormalizedLoaded,  Router } from 'vue-router';
@@ -491,17 +493,7 @@
         }
     });
 
-    const map = 
-    {
-        [RecaptchaV2State.Init]: 'Click to Challenge',
-        [RecaptchaV2State.Verified]: 'Verified',
-        [RecaptchaV2State.Expired]: 'Expired',
-        [RecaptchaV2State.Error]: 'Error',
-    }
-
-    const response = ref()
-
-
+    
     adminStatusReCheck();
 </script>
 
@@ -518,7 +510,8 @@
                 <input v-model="password" :placeholder="(langData['formLoginPasswordPlaceholder'] as string)" class="form__fields__field__input text" type="password">
             </div>
         </div>
-
+        <Catcha class="form__captcha"/>
+        
         <label class="form__checkbox">{{ langData["formLoginCheckboxRememberMe"] }}
             <input type="checkbox" v-model="checkedRememberMe">
             <span class="form__checkbox__checkmark"></span>
@@ -543,10 +536,12 @@
                 <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.article_need_rating_to_approve_editorially" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
         </div>
+        <Catcha class="form__captcha"/>
 
         <button @click="onSaveSettingsButton" class="form__button saveSettings">{{ langData["formPanelButtonSaveSettings"] }}</button>
         <button @click="onQuitButton" class="form__button quit">{{ langData["formPanelButtonQuit"] }}</button>
     </div>
+    
 </template>
 
 <style lang="scss" src="./scss/AdminModal.scss"></style>

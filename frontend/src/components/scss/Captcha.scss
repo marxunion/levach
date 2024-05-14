@@ -1,0 +1,17 @@
+@import "../../scss/vars.scss";
+@import "../../scss/mixins.scss";
+
+.captcha
+{
+    &__text
+    {
+        font-family: Roboto-Regular;
+        width: 96%;
+        text-align: center;
+        &__link
+        {
+            font-family: Roboto-Regular;
+            color: $CatchaTextLink !important;
+        }
+    }
+}
