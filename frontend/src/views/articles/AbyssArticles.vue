@@ -3,7 +3,6 @@
     import axios from 'axios';
 
     import Loader from "./../../components/Loader.vue";
-    import Captcha from '../../components/Captcha.vue';
 
     import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
     import { tagsArrayToString } from '../../ts/helpers/TagsHelper';
@@ -37,10 +36,6 @@
     import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AbyssArticles", langsData).langData;
-
-    const captcha : Ref<{ execute: () => void } | null> = ref(null);
-
-    const captchaToken : Ref<string> = ref('');
 
     adminStatusReCheck();
 
@@ -283,18 +278,9 @@
                 return;
             }
 
-            captcha.value?.execute();
-
-			if(captchaToken.value == '')
-			{
-				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-				return;
-			}
-
             const data = 
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-                captchaToken: captchaToken.value,
                 status: 0,
             }
 
@@ -367,21 +353,6 @@
 	{
 		openModal(ShareWith, { link: 'http://localhost:8000/#/article/'+articleViewCode})
 	}
-
-	const onCaptchaVerify = (token: string) => 
-    {
-        captchaToken.value = token;
-    };
-
-    const onCaptchaExpired = () =>
-    {
-        captchaToken.value = '';
-    }
-
-    const onCaptchaError = () =>
-    {
-        captchaToken.value = '';
-    }
 </script>
 
 <template>
@@ -393,7 +364,6 @@
 				<DropDown :options="sortTypesNames" :default="sortTypesNames[currentSortType]" class="main__header__sort__select" @inputIndex="onChangeSortType" />
 			</div>
 		</div>
-        <Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		<article class="main__article" v-if="articles.length > 0 && !loading" v-for="(article, index) in articles" :key="article.id">
             <div class="main__article__block" v-if="article.versions[article.currentSelectedVersion-1]">
                 <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion-1].created_date) }}</p>
