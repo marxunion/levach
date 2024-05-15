@@ -42,6 +42,7 @@
 	const captcha : Ref<{ execute: () => void } | null> = ref(null);
 
 	let captchaVerifyCallback : (token: string) => void;
+
 	adminStatusReCheck();
 
 	const fetchedArticleData : Ref<any> = ref();
@@ -213,106 +214,103 @@
 
 	const onNewCommentUploadImgRequest = async (captchaToken : string) => 
 	{
-		if(uploadedFiles.length > 0)
-		{
-			openModal(LoaderModal);
-			const promises = uploadedFiles.map((file) => 
+		openModal(LoaderModal);
+		const promises = uploadedFiles.map((file) => 
+			{
+				return new Promise<{ data: { fileName: string } }>(resolve => 
 				{
-					return new Promise<{ data: { fileName: string } }>(resolve => 
+					const form = new FormData();
+
+					form.append('file', file);
+					form.append('captchaToken', captchaToken);
+
+					axios.post('/api/media/img/upload', form, 
 					{
-						const form = new FormData();
-
-						form.append('file', file);
-						form.append('captchaToken', captchaToken);
-
-						axios.post('/api/media/img/upload', form, 
+						headers: 
 						{
-							headers: 
-							{
-								'Content-Type': 'multipart/form-data'
-							}
-						})
-						.then((response) => 
+							'Content-Type': 'multipart/form-data'
+						}
+					})
+					.then((response) => 
+					{
+						if (response.data) 
 						{
-						
-							if (response.data) 
+							if(response.data.fileName)
 							{
-								if(response.data.fileName)
-								{
-									resolve(response);
-								}
-								else 
-								{
-									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
-								}
+								resolve(response);
 							}
-							else
+							else 
 							{
-								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-
+								openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
 							}
-						})
-						.catch((error) => 
+						}
+						else
 						{
-							if (error.response.data) 
-							{
-								if(error.response.data.Warning)
+							openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+						}
+					})
+					.catch((error) => 
+					{
+						if (error.response.data) 
+						{
+							if(error.response.data.Warning)
 								{
-									if(error.response.data.Warning.message == "UploadImage Invalid image type")
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
-									}
-									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
-									{
-										openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
-									}
-									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
-									}
-									else
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"] });
-									}
-									
-								}
-								else if(error.response.data.Error)
+								if(error.response.data.Warning.message == "UploadImage Invalid image type")
 								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
 								}
-								else if(error.response.data.Critical)
+								else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
 								{
-									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+									openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
 								}
-								else 
+								else if(error.response.data.Warning.message == "UploadImage Invalid image type")
 								{
-									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
 								}
+								else
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"] });
+								}	
 							}
-							else
+							else if(error.response.data.Error)
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+							else if(error.response.data.Critical)
 							{
 								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
 							}
-						});
+							else 
+							{
+								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+						}
+						else
+						{
+							openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+						}
 					});
-				}
-			);
+				});
+			}
+		);
 
-			const res = await Promise.all(promises);
+		const res = await Promise.all(promises);
 			
-			const successfulResults = res.filter(item => item !== null);
+		const successfulResults = res.filter(item => item !== null);
 
-			closeModal();
-			uploadedCallback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
-		}
+		closeModal();
+		uploadedCallback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
 	}
 
 	const onNewCommentUploadImgValidate = async (files: File[], callback: (urls: string[]) => void) => 
 	{
-		uploadedFiles = files;
-		uploadedCallback = callback;
-		captchaVerifyCallback = onNewCommentUploadImgRequest;
-		captcha.value?.execute();
+		if(files.length > 0)
+		{
+			uploadedFiles = files;
+			uploadedCallback = callback;
+			captchaVerifyCallback = onNewCommentUploadImgRequest;
+			captcha.value?.execute();
+		}
 	}
 
 	const onCreateNewCommentRequest = async (captchaToken : string) =>

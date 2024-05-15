@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, reactive, watch, Ref, defineProps, defineEmits } from 'vue';
+	import { ref, reactive, watch, Ref, onMounted, defineProps, defineEmits } from 'vue';
 	import axios from 'axios';
 
 	import { MdEditor, MdPreview, config } from 'md-editor-v3';
@@ -35,13 +35,12 @@
 
 	const captcha : Ref<{ execute: () => void } | null> = ref(null);
 
-	const captchaToken : Ref<string> = ref('');
+	let captchaVerifyCallback : (token: string) => void;
+
 
 	const loading : Ref<boolean> = ref(false);
 
 	const answerStatus : Ref<number> = ref(0);
-
-	adminStatusReCheck();
 
 	// Preview
 
@@ -147,107 +146,108 @@
 		}
 	}
 
-	const onNewCommentUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
+	let uploadedFiles : File[];
+	let uploadedCallback : (urls: string[]) => void;
+
+	const onNewCommentUploadImgRequest = async (captchaToken : string) => 
+	{
+		openModal(LoaderModal);
+		const promises = uploadedFiles.map((file) => 
+			{
+				return new Promise<{ data: { fileName: string } }>(resolve => 
+				{
+					const form = new FormData();
+
+					form.append('file', file);
+					form.append('captchaToken', captchaToken);
+
+					axios.post('/api/media/img/upload', form, 
+					{
+						headers: 
+						{
+								'Content-Type': 'multipart/form-data'
+						}
+					})
+					.then((response) => 
+					{
+						if (response.data) 
+						{
+							if(response.data.fileName)
+							{
+								resolve(response);
+							}
+							else 
+							{
+								openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
+							}
+						}
+						else
+						{
+							openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+						}
+					})
+					.catch((error) => 
+					{
+						if (error.response.data) 
+						{
+							if(error.response.data.Warning)
+							{
+								if(error.response.data.Warning.message == "UploadImage Invalid image type")
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
+								}
+								else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
+								{
+									openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
+								}
+								else if(error.response.data.Warning.message == "UploadImage Invalid image type")
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
+								}
+								else
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"] });
+								}
+								
+							}
+							else if(error.response.data.Error)
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+							else if(error.response.data.Critical)
+							{
+								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+							else 
+							{
+								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+						}	
+						else
+						{
+							openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+						}
+					});
+				});
+			}
+		);
+
+		const res = await Promise.all(promises);
+			
+		const successfulResults = res.filter(item => item !== null);
+
+		closeModal();
+		uploadedCallback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
+	}
+
+	const onNewCommentUploadImgValidate = async (files: File[], callback: (urls: string[]) => void) => 
 	{
 		if(files.length > 0)
 		{
-			openModal(LoaderModal);
-			const promises = files.map((file) => 
-				{
-					return new Promise<{ data: { fileName: string } }>(resolve => 
-					{
-						const form = new FormData();
-
-						captcha.value?.execute();
-		
-						if(captchaToken.value == '')
-						{
-							openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-							return;
-						}
-
-						form.append('file', file);
-						form.append('captchaToken', captchaToken.value);
-
-						axios.post('/api/media/img/upload', form, 
-						{
-							headers: 
-							{
-								'Content-Type': 'multipart/form-data'
-							}
-						})
-						.then((response) => 
-						{
-						
-							if (response.data) 
-							{
-								if(response.data.fileName)
-								{
-									resolve(response);
-								}
-								else 
-								{
-									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
-								}
-							}
-							else
-							{
-								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-
-							}
-						})
-						.catch((error) => 
-						{
-							if (error.response.data) 
-							{
-								if(error.response.data.Warning)
-								{
-									if(error.response.data.Warning.message == "UploadImage Invalid image type")
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
-									}
-									else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
-									{
-										openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
-									}
-									else if(error.response.data.Warning.message == "UploadImage Invalid image type")
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
-									}
-									else
-									{
-										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"] });
-									}
-									
-								}
-								else if(error.response.data.Error)
-								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-								else if(error.response.data.Critical)
-								{
-									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-								else 
-								{
-									openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-								}
-							}
-							else
-							{
-								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-							}
-						});
-					});
-				}
-			);
-
-			const res = await Promise.all(promises);
-			
-			const successfulResults = res.filter(item => item !== null);
-
-			closeModal();
-			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
+			uploadedFiles = files;
+			uploadedCallback = callback;
+			captchaVerifyCallback = onNewCommentUploadImgRequest;
+			captcha.value?.execute();
 		}
 	}
 
@@ -257,79 +257,49 @@
 		newSubcommentEditorState.language = LangDataHandler.currentLanguage.value;
 	});
 
-	const onCreateNewSubcomment = async () => 
+	const onCreateNewSubcommentRequest = async (captchaToken : string) => 
 	{
-		if(newSubcommentEditorState.text.length > 0)
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
 		{
-			await getNewCsrfToken();
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
 
-			if(csrfTokenInput.value == null)
-			{
-				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-				return;
-			}
+		const data = {
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken,
+			commentId: props.comment.id,
+			parent_comment_id: props.comment.id,
+			text: newSubcommentEditorState.text,
+			rating_influence: currentSubcommentReaction.value
+		}
 
-			captcha.value?.execute();
-		
-			if(captchaToken.value == '')
-			{
-				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-				return;
-			}
-
-			const data = {
-				csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-				captchaToken: captchaToken.value,
-				commentId: props.comment.id,
-				parent_comment_id: props.comment.id,
-				text: newSubcommentEditorState.text,
-				rating_influence: currentSubcommentReaction.value
-			}
-
-			await axios.post('/api/article/comment/subcomment/new/'+props.articleViewCode, data)
-			.then(async response => 
-			{
-				if(response.data.success)
-				{	
-					openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
+		await axios.post('/api/article/comment/subcomment/new/'+props.articleViewCode, data)
+		.then(async response => 
+		{
+			if(response.data.success)
+			{	
+				openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
 					
-					answerStatus.value = 0;
-					newSubcommentEditorState.text = '';
-					loading.value = true;
-					emits('onCreatedNewSubcomment');
-					await refetchComment();
-				}
-				else
-				{
-					if(response.data.Warning)
-					{
-						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-					}
-					else if(response.data.Error)
-					{
-						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-					}
-					else if(response.data.Critical)
-					{
-						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-					}
-					else
-					{
-						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-					}
-				}
-			})
-			.catch(error =>
+				answerStatus.value = 0;
+				newSubcommentEditorState.text = '';
+				loading.value = true;
+				emits('onCreatedNewSubcomment');
+				await refetchComment();
+			}
+			else
 			{
-				if(error.response.data.Warning)
+				if(response.data.Warning)
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
 				}
-				else if(error.response.data.Error)
+				else if(response.data.Error)
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 				}
-				else if(error.response.data.Critical)
+				else if(response.data.Critical)
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 				}
@@ -337,7 +307,35 @@
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 				}
-			});
+			}
+		})
+		.catch(error =>
+		{
+			if(error.response.data.Warning)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Error)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+		});
+	}
+
+	const onCreateNewSubcommentValidate = async () => 
+	{
+		if(newSubcommentEditorState.text.length > 0)
+		{
+			captchaVerifyCallback = onCreateNewSubcommentRequest;
+			captcha.value?.execute();
 		}
 	}
 
@@ -351,18 +349,9 @@
 			return;
 		}
 
-		captcha.value?.execute();
-		
-		if(captchaToken.value == '')
-		{
-			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-			return;
-		}
-
 		const data = {
 			
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			captchaToken: captchaToken.value,
 			commentId: props.comment.id
 		}
 
@@ -433,6 +422,11 @@
 		}
 	}
 
+	onMounted(() => 
+	{
+		adminStatusReCheck();
+	});
+
 	const onCreatedNewSubcomment =  async () => 
 	{
 		emits('onCreatedNewSubcomment');
@@ -447,17 +441,12 @@
 
 	const onCaptchaVerify = (token: string) => 
     {
-        captchaToken.value = token;
+        captchaVerifyCallback(token);
     };
-
-    const onCaptchaExpired = () =>
-    {
-        captchaToken.value = '';
-    }
 
     const onCaptchaError = () =>
     {
-        captchaToken.value = '';
+        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
     }
 </script>
 
@@ -481,8 +470,8 @@
 			</div>
 		</div>
 		<div v-if="answerStatus" class="comment__newSubcomment">
-			<MdEditor class="comment__newSubcomment__editor" v-model="(newSubcommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImg" :language="newSubcommentEditorState.language" noIconfont :preview="false"/>
-			<img @click="onCreateNewSubcomment()" src="./../assets/img/article/sendCommentButton.svg" alt="Send" class="comment__newSubcomment__sendButton">
+			<MdEditor class="comment__newSubcomment__editor" v-model="(newSubcommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImgValidate" :language="newSubcommentEditorState.language" noIconfont :preview="false"/>
+			<img @click="onCreateNewSubcommentValidate()" src="./../assets/img/article/sendCommentButton.svg" alt="Send" class="comment__newSubcomment__sendButton">
 			<div class="comment__newSubcomment__reactions">
 				<img v-if="currentSubcommentReaction === 1" @click="onLikeReaction()" src="./../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="comment__newSubcomment__reactions__reaction">
 				<img v-else @click="onLikeReaction()" src="./../assets/img/article/comments/like.svg" alt="Like" class="comment__newSubcomment__reactions__reaction">
@@ -490,7 +479,7 @@
 				<img v-if="currentSubcommentReaction === 2" @click="onDislikeReaction()" src="./../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="comment__newSubcomment__reactions__reaction">
 				<img v-else @click="onDislikeReaction()" src="./../assets/img/article/comments/dislike.svg" alt="Dislike" class="comment__newSubcomment__reactions__reaction">
 			</div>
-			<Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
+			<Captcha @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</div>
 	</div>
 	
