@@ -8,14 +8,10 @@
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css'
 
-    import { openModal } from 'jenesius-vue-modal';
-    import InfoModal from '../../components/modals/InfoModal.vue';
-
 	import VueNumberInput from '@chenfengyuan/vue-number-input';
 
 	import Loader from '../../components/Loader.vue';
 	import CommentsList from "./../../components/CommentsList.vue";
-    import Captcha from '../../components/Captcha.vue';
 
 	import langsData from "./locales/AdminEditComments.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
@@ -26,10 +22,6 @@
 
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AdminEditComments", langsData).langData;
-
-    const captcha : Ref<{ execute: () => void } | null> = ref(null);
-
-    const captchaToken : Ref<string> = ref('');
 
     const loading : Ref<boolean> = ref(true);
 
@@ -54,17 +46,8 @@
 			return;
 		}
 
-        captcha.value?.execute();
-
-        if(captchaToken.value == '')
-        {
-            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-            return;
-        }
-
 		const data = {
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-            captchaToken: captchaToken.value,
 			articlesCount: articlesCountToFetch.value,
             commentsCount: commentsCountToFetch.value,
 			articleDateBefore: Math.round(articleDateBefore.value / 1000),
@@ -104,17 +87,8 @@
 			return;
 		}
 
-        captcha.value?.execute();
-
-        if(captchaToken.value == '')
-        {
-            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-            return;
-        }
-
 		const data = {
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-            captchaToken: captchaToken.value,
 			articlesCount: articlesCountToFetch.value,
             commentsCount: commentsCountToFetch.value,
 			articleDateBefore: Math.round(articleDateBefore.value / 1000),
@@ -160,21 +134,6 @@
 		loading.value = true;
 		await deleteArticleComments();
 	}
-
-    const onCaptchaVerify = (token: string) => 
-    {
-        captchaToken.value = token;
-    };
-
-    const onCaptchaExpired = () =>
-    {
-        captchaToken.value = '';
-    }
-
-    const onCaptchaError = () =>
-    {
-        captchaToken.value = '';
-    }
 </script>
 
 <template>
@@ -239,7 +198,6 @@
 				<a @click="onApplyFilters()" class="main__filters__buttons__button">{{ langData['applyFiltersButton'] }}</a>
 				<a @click="onDeleteSelected()" class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
-            <Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="main__filters__captcha"/>
 		</div>
 		<div v-if="!loading" class="main__comments">
             <p v-if="articles.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>

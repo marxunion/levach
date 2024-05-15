@@ -1,10 +1,6 @@
 {
     "RU":
     {
-        "warnings": 
-        {
-            "captcha": "Ошибка решения капчи"
-        },
         "filtersTitle": "Фильтры",
         
         "commentsCountTitle": "Количество комментариев",
@@ -30,10 +26,6 @@
     },
     "EN":
     {
-        "warnings": 
-        {
-            "captcha": "Captcha solving error"
-        },
         "filtersTitle": "Filters",
         "commentsCountTitle": "Comments count",
         "commentsCountTitle1": "Select",

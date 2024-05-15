@@ -25,7 +25,7 @@
 
     const captcha : Ref<{ execute: () => void } | null> = ref(null);
 
-    const captchaToken : Ref<string> = ref('');
+    let captchaVerifyCallback : (token: string) => void;
 
     adminStatusReCheck();
 
@@ -506,17 +506,12 @@
 
     const onCaptchaVerify = (token: string) => 
     {
-        captchaToken.value = token;
+        captchaVerifyCallback(token);
     };
-
-    const onCaptchaExpired = () =>
-    {
-        captchaToken.value = '';
-    }
 
     const onCaptchaError = () =>
     {
-        captchaToken.value = '';
+        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
     }
 </script>
 
@@ -533,7 +528,7 @@
                 <input v-model="password" :placeholder="(langData['formLoginPasswordPlaceholder'] as string)" class="form__fields__field__input text" type="password">
             </div>
         </div>
-        <Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="form__captcha"/>
+        <Captcha @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="form__captcha"/>
         
         <label class="form__checkbox">{{ langData["formLoginCheckboxRememberMe"] }}
             <input type="checkbox" v-model="checkedRememberMe">
@@ -559,7 +554,6 @@
                 <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.article_need_rating_to_approve_editorially" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
         </div>
-        <Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="form__captcha"/>
 
         <button @click="onSaveSettingsButton" class="form__button saveSettings">{{ langData["formPanelButtonSaveSettings"] }}</button>
         <button @click="onQuitButton" class="form__button quit">{{ langData["formPanelButtonQuit"] }}</button>
