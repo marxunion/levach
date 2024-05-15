@@ -542,7 +542,7 @@
 			return;
 		}
 
-		captcha.value?.execute();
+		await captcha.value?.execute();
 		
 		if(captchaToken.value == '')
 		{

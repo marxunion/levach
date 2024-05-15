@@ -37,6 +37,13 @@
 		  	<p class="main__block__title" :key="section.title">{{ section.title }}</p>
 			<p class="main__block__description" :key="section.description">{{ section.description }}</p>
 		</div>
+		<div class="main__captcha">
+			<p class="main__captcha__text">
+				{{ langData['captchaText'] }}
+				<a class="main__captcha__text__link" target="_blank" href="https://policies.google.com/privacy">{{ langData['captchaTextLinkPrivacyPolicy'] }}</a>{{ langData['captchaText1'] }}
+				<a class="main__captcha__text__link" target="_blank" href="https://policies.google.com/terms">{{ langData['captchaTextLinkPrivacyTermsOfService'] }}</a>{{ langData['captchaText2'] }}
+			</p>
+		</div>
 	</main>
 </template>
 

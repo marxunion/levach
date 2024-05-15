@@ -20,14 +20,20 @@
         emits('onVerify', response);
     }
 
-    const onExpired = () => 
-    {
-        emits('onExpired');
-    }
-
     const onError = () => 
     {
         emits('onError');
+    }
+
+    const reset = () => 
+    {
+        recaptcha.value?.reset();
+    }
+
+    const onExpired = () => 
+    {
+        reset();
+        emits('onExpired');
     }
 
     const execute = () => 
@@ -58,12 +64,6 @@
 
 <template>
     <div class="captcha">
-        <p class="captcha__text">
-            {{ langData['captchaText'] }}
-            <a class="captcha__text__link" target="_blank" href="https://policies.google.com/privacy">{{ langData['captchaTextLinkPrivacyPolicy'] }}</a>{{ langData['captchaText1'] }}
-            <a class="captcha__text__link" target="_blank" href="https://policies.google.com/terms">{{ langData['captchaTextLinkPrivacyTermsOfService'] }}</a>{{ langData['captchaText2'] }}
-        </p>
-        
         <div class="captcha__handler">
             <vue-recaptcha
                 ref="recaptcha"

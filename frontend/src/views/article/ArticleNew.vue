@@ -26,7 +26,7 @@
 
 	const captcha : Ref<{ execute: () => void } | null> = ref(null);
 
-	const captchaToken : Ref<string> = ref('');
+	let captchaVerifyCallback : (token: string) => void;
 
 	const router : Router = useRouter();
 
@@ -83,7 +83,115 @@
 	}
 
 	
-	const onSendButton = async function ()
+	const onSendButtonRequest = async function (captchaToken: string)
+	{
+		if(csrfTokenInput.value == null)
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
+		const data = {
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken,
+			text: editorState.text,
+			tags: tags.value
+		}
+		await axios.post('/api/article/new', data)
+		.then(async response => 
+		{
+			if (response.data.editCode) 
+			{
+				const modal = await openModal(InfoModalWithLink, { status: true, text: langData.value['articleCreatedSuccessfully'], link: "https://" + window.location.hostname + "/#/article/edit/" + response.data.editCode, text2: (langData.value['warnings'] as JsonData)['articleEditCodeCopy'] })
+
+				modal.onclose = function () 
+				{
+					router.push("/article/edit/" + response.data.editCode);
+				};
+			} 
+			else 
+			{
+				if (response.data.Warning) 
+				{
+					if (response.data.Warning.message == "Empty article title") 
+					{
+						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle'] });
+					} 
+					else if (response.data.Warning.message == "Invalid length of article title") 
+					{
+						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols'] });
+					} 
+					else if (response.data.Warning.message == "Empty article content") 
+					{
+						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent'] });
+					} 
+					else if (response.data.Warning.message == "Invalid length of article content") 
+					{
+						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols'] });
+					} 
+					else if (response.data.Warning.message == 'Article has duplicated tags') 
+					{
+						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleDuplicatedTags'] });
+					} 
+					else 
+					{
+						openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+					}
+				} 
+				else if (response.data.Error) 
+				{
+					openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+				} 
+				else if (response.data.Critical) 
+				{
+					openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+				} 
+				else 
+				{
+					openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+				}
+			}
+		})
+		.catch(error => 
+		{
+			if (error.response.data.Warning) 
+			{
+				if (error.response.data.Warning.message == "Please add a title for the article") 
+				{
+					openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle'] });
+				} 
+				else if (error.response.data.Warning.message == "Title must contain between 5 and 120 characters") 
+				{
+					openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols'] });
+				} 
+				else if (error.response.data.Warning.message == "Please add content for the article") 
+				{
+					openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent'] });
+				} 
+				else if (error.response.data.Warning.message == "Article content must contain between 25 and 10000 characters") 
+				{
+					openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols'] });
+				} 
+				else 
+				{
+					openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+				}
+			} 
+			else if (error.response.data.Error) 
+			{
+				openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+			} 
+			else if (error.response.data.Critical) 
+			{
+				openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+			} 
+			else 
+			{
+				openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+			}
+		});
+	}
+	
+	const onSendButtonValidate = async function ()
 	{
 		const contentParts = (editorState.text as string).split('\n');
 
@@ -100,121 +208,10 @@
 						if(content.length >= 25 && content.length <= 10000) 
 						{
 							await getNewCsrfToken();
-
-							if(csrfTokenInput.value == null)
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-								return;
-							}
 							
 							captcha.value?.execute();
 
-							if(captchaToken.value == '')
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-								return;
-							}
-
-							const data = {
-								csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-								captchaToken: captchaToken.value,
-								text: editorState.text,
-								tags: tags.value
-							}
-
-							await axios.post('/api/article/new', data)
-							.then(async response => 
-							{
-								if(response.data.editCode)
-								{
-									const modal = await openModal(InfoModalWithLink, {status: true, text: langData.value['articleCreatedSuccessfully'], link: "https://"+window.location.hostname + "/#/article/edit/" + response.data.editCode, text2: (langData.value['warnings'] as JsonData)['articleEditCodeCopy']})
-									
-									modal.onclose = function()
-									{
-										router.push("/article/edit/" + response.data.editCode);
-									}
-								}
-								else
-								{
-									if(response.data.Warning)
-									{
-										if(response.data.Warning.message == "Empty article title")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
-										}
-										else if(response.data.Warning.message == "Invalid length of article title")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
-										}
-										else if(response.data.Warning.message == "Empty article content")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
-										}
-										else if(response.data.Warning.message == "Invalid length of article content")
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
-										}
-										else if(response.data.Warning.message == 'Article has duplicated tags')
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleDuplicatedTags']});
-										}
-										else
-										{
-											openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-										}
-									}
-									else if(response.data.Error)
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-									}
-									else if(response.data.Critical)
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-									}
-									else
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-									}
-								}
-							})
-							.catch(error => 
-							{
-								if(error.response.data.Warning)
-								{
-									if(error.response.data.Warning.message == "Please add a title for the article")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle']})
-									}
-									else if(error.response.data.Warning.message == "Title must contain between 5 and 120 characters")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
-									}
-									else if(error.response.data.Warning.message == "Please add content for the article")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent']})
-									}
-									else if(error.response.data.Warning.message == "Article content must contain between 25 and 10000 characters")
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols']})
-									}
-									else
-									{
-										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-									}
-								}
-								else if(error.response.data.Error)
-								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-								}
-								else if(error.response.data.Critical)
-								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-								}
-								else
-								{
-									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-								}
-							});
+							captchaVerifyCallback = onSendButtonRequest;
 						}
 						else
 						{
@@ -243,12 +240,15 @@
 		}	
 	}
 
-	const onUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
+	let uploadedFiles : File[];
+	let uploadedCallback : (urls: string[]) => void;
+
+	const onUploadImgRequest = async (captchaToken : string) => 
 	{
-		if(files.length > 0)
+		if(uploadedFiles.length > 0)
 		{
 			openModal(LoaderModal);
-			const promises = files.map((file) => 
+			const promises = uploadedFiles.map((file) => 
 			{
 				return new Promise<{ data: { fileName: string } }>(resolve => 
 				{
@@ -256,14 +256,8 @@
 
 					captcha.value?.execute();
 
-					if(captchaToken.value == '')
-					{
-						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-						return;
-					}
-
 					form.append('file', file);
-					form.append('captchaToken', captchaToken.value);
+					form.append('captchaToken', captchaToken);
 
 					axios.post('/api/media/img/upload', form, 
 					{
@@ -339,23 +333,31 @@
 			const successfulResults = res.filter(item => item !== null);
 
 			closeModal();
-			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
+			uploadedCallback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
 		}
+	}
+
+	const onUploadImgValidate = async (files: File[], callback: (urls: string[]) => void) => 
+	{
+		uploadedFiles = files;
+		uploadedCallback = callback;
+		captcha.value?.execute();
+		captchaVerifyCallback = onUploadImgRequest;
 	}
 
 	const onCaptchaVerify = (token: string) => 
     {
-        captchaToken.value = token;
+		captchaVerifyCallback(token);
     };
 
     const onCaptchaExpired = () =>
     {
-        captchaToken.value = '';
+        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
     }
 
     const onCaptchaError = () =>
     {
-        captchaToken.value = '';
+        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
     }
 </script>
 
@@ -363,8 +365,8 @@
 	<main class="main">
 		<article class="main__article">
 			<div class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImg" :language="editorState.language" :preview="true" noIconfont/>
-				<button class="main__article__editorContainer__sendButton" @click="onSendButton()">{{ langData['sendButton'] }}</button>	
+				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImgValidate" :language="editorState.language" :preview="true" noIconfont/>
+				<button class="main__article__editorContainer__sendButton" @click="onSendButtonValidate()">{{ langData['sendButton'] }}</button>	
 			</div>	
 			<div class="main__article__editTags">
 				<div class="main__article__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">
