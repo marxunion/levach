@@ -20,7 +20,7 @@ class AdminRejectAllPremoderateHandler extends BaseHandlerRoute
             
             if(!empty($this->parsedBody['csrfToken']))
             {
-                if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
+                if(CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {

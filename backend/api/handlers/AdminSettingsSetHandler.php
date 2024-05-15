@@ -8,7 +8,7 @@ use Base\BaseHandlerRoute;
 
 use Api\Models\AdminSettingsSetModel;
 
-use Api\Handlers\csrfTokenHandler;
+use Api\Handlers\CSRFTokenHandler;
 
 class AdminSettingsSetHandler extends BaseHandlerRoute
 {
@@ -77,7 +77,7 @@ class AdminSettingsSetHandler extends BaseHandlerRoute
             
             if(!empty($this->parsedBody['csrfToken']))
             {
-                if(csrfTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
+                if(CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {

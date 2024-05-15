@@ -40,7 +40,7 @@ use Api\Handlers\ArticleCommentNewHandler;
 use Api\Handlers\ArticleCommentGetHandler;
 use Api\Handlers\ArticleCommentSubcommentNewHandler;
 
-use Api\Handlers\csrfTokenHandler;
+use Api\Handlers\CSRFTokenHandler;
 
 use Api\Handlers\AdminSettingsGetHandler;
 use Api\Handlers\AdminSettingsSetHandler;
@@ -195,9 +195,16 @@ class Routes
                 });
             });
 
+
+            $apiGroup->get('/captchaToken', function (Request $request, Response $response) 
+            {
+                self::$handler = new CaptchaTokenHandler($request, $response);
+                return self::$handler->Handle();
+            });
+
             $apiGroup->get('/csrfToken', function (Request $request, Response $response) 
             {
-                self::$handler = new csrfTokenHandler($request, $response);
+                self::$handler = new CSRFTokenHandler($request, $response);
                 return self::$handler->Handle();
             });
 

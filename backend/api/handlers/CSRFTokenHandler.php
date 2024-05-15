@@ -5,7 +5,7 @@ use Core\Error;
 
 use Base\BaseHandlerRoute;
 
-class csrfTokenHandler extends BaseHandlerRoute
+class CSRFTokenHandler extends BaseHandlerRoute
 {
     public static function checkCsrfToken($token)
     {

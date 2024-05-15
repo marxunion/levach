@@ -7,7 +7,7 @@ use Base\BaseHandlerRoute;
 
 use Api\Models\ArticleNewModel;
 
-use Api\Handlers\csrfTokenHandler;
+use Api\Handlers\CSRFTokenHandler;
 
 class ArticleNewHandler extends BaseHandlerRoute
 {
