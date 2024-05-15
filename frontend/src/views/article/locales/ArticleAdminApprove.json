@@ -16,6 +16,7 @@
 
         "warnings": 
         {
+            "captcha": "Ошибка решения капчи",
             "articleEditLinkCopyWarning": "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию",
 
             "articleNotFound": "Статья для редактирования не найдена",
@@ -152,6 +153,7 @@
 
         "warnings": 
         {
+            "captcha": "Captcha solving error",
             "articleEditLink": "Don't forget to save the link or your article will not be editable",
 
             "articleNotFound": "Article for edit not found",

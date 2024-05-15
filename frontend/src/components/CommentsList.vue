@@ -11,6 +11,7 @@
 	
 	import { LangDataHandler } from "../ts/handlers/LangDataHandler";
 	import langsData from "./locales/CommentsList.json";
+	import Captcha from './Captcha.vue';
 
 	import { timestampToLocaleFormatedTime } from '../ts/helpers/DateTimeHelper';
 
@@ -31,6 +32,10 @@
 	const emits = defineEmits(["onDeletedSubcomment", "onCreatedNewSubcomment"]);
 
 	const langData = LangDataHandler.initLangDataHandler("CommentsList", langsData).langData;
+
+	const captcha : Ref<{ execute: () => void } | null> = ref(null);
+
+	const captchaToken : Ref<string> = ref('');
 
 	const loading : Ref<boolean> = ref(false);
 
@@ -410,6 +415,21 @@
 		await refetchComment();
 		emits('onDeletedSubcomment');
 	}
+
+	const onCaptchaVerify = (token: string) => 
+    {
+        captchaToken.value = token;
+    };
+
+    const onCaptchaExpired = () =>
+    {
+        captchaToken.value = '';
+    }
+
+    const onCaptchaError = () =>
+    {
+        captchaToken.value = '';
+    }
 </script>
 
 <template>
@@ -441,6 +461,7 @@
 				<img v-if="currentSubcommentReaction === 2" @click="onDislikeReaction()" src="./../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="comment__newSubcomment__reactions__reaction">
 				<img v-else @click="onDislikeReaction()" src="./../assets/img/article/comments/dislike.svg" alt="Dislike" class="comment__newSubcomment__reactions__reaction">
 			</div>
+			<Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</div>
 	</div>
 	

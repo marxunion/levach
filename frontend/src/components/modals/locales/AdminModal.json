@@ -7,6 +7,7 @@
 
         "warnings": 
         {
+            "captcha": "Ошибка решения капчи",
             "needLogin": "Вероятно ваша авторизационная сессия устарела. Попробуйте повторить попытку или перезайдите",
 
             "needNickname": "Пожалуйста укажите ваш никнейм",
@@ -46,6 +47,7 @@
         
         "warnings": 
         {
+            "captcha": "Captcha solving error",
             "needLogin": "Your authorisation session is probably out of date. Try again or login again",
 
             "needNickname": "Please ether your nickname",

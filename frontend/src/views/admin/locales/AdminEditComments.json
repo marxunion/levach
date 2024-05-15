@@ -1,6 +1,9 @@
 {
     "RU":
     {
+        "warnings": {
+            "captcha": "Ошибка решения капчи"
+        },
         "filtersArticleTitle": "Фильтры cтатьи",
         "filtersCommentsTitle": "Фильтры комментария",
         
@@ -31,6 +34,9 @@
     },
     "EN":
     {
+        "warnings": {
+            "captcha": "Captcha solving error"
+        },
         "filtersArticleTitle": "Article Filters",
         "filtersCommentsTitle": "Comment Filters",
 

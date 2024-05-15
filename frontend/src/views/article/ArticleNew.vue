@@ -107,6 +107,14 @@
 								return;
 							}
 							
+							captcha.value?.execute();
+
+							if(captchaToken.value == '')
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+								return;
+							}
+
 							const data = {
 								csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
 								text: editorState.text,
