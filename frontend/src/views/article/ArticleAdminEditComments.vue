@@ -7,9 +7,6 @@
 	import { Article } from '../../ts/interfaces/Article';
 	import { Comment } from '../../ts/interfaces/Comment';
 
-	import { openModal } from 'jenesius-vue-modal';
-	import InfoModal from '../../components/modals/InfoModal.vue';
-
 	import { dateFormat } from '../../ts/helpers/DateTimeHelper';
 
     import VueDatePicker from '@vuepic/vue-datepicker';
@@ -19,7 +16,6 @@
 
 	import Loader from '../../components/Loader.vue';
 	import CommentsList from "./../../components/CommentsList.vue";
-	import Captcha from '../../components/Captcha.vue';
 
 	import langsData from "./locales/ArticleAdminEditComments.json";
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
@@ -29,10 +25,6 @@
 
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
-
-	const captcha : Ref<{ execute: () => void } | null> = ref(null);
-
-	const captchaToken : Ref<string> = ref('');
 
 	const route : RouteLocationNormalizedLoaded = useRoute();
 
@@ -114,17 +106,8 @@
 			return;
 		}
 
-		captcha.value?.execute();
-
-        if(captchaToken.value == '')
-        {
-            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-        	return;
-		}
-
 		const data = {
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			captchaToken: captchaToken.value,
 			count: commentsCountToFetch.value,
 			dateBefore: Math.round(dateBefore.value / 1000),
 			dateAfter: Math.round(dateAfter.value / 1000),
@@ -167,21 +150,6 @@
 		commentsLoading.value = true;
 		await deleteComments();
 	}
-
-	const onCaptchaVerify = (token: string) => 
-    {
-        captchaToken.value = token;
-    };
-
-    const onCaptchaExpired = () =>
-    {
-        captchaToken.value = '';
-    }
-
-    const onCaptchaError = () =>
-    {
-        captchaToken.value = '';
-    }
 </script>
 
 <template>
@@ -219,7 +187,6 @@
 				<a @click="onApplyFilters()" class="main__filters__buttons__button">{{ langData['applyFiltersButton'] }}</a>
 				<a @click="onDeleteSelected()" class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
-			<Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="main__filters__captcha"/>
 		</div>
 		<div v-if="!commentsLoading" class="main__comments">
             <p v-if="comments.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>

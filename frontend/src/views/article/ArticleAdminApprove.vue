@@ -14,7 +14,6 @@
 	import LoaderModal from "./../../components/modals/LoaderModal.vue";
 	import InfoModal from "./../../components/modals/InfoModal.vue";
     import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
-    import Captcha from '../../components/Captcha.vue';
 
 	import langsData from "./locales/ArticleAdminApprove.json";
 
@@ -29,10 +28,6 @@
     import { arraysAreEqual } from '../../ts/helpers/ArrayHelper';
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminApprove", langsData).langData;
-
-    const captcha : Ref<{ execute: () => void } | null> = ref(null);
-
-    const captchaToken : Ref<string> = ref('');
 
     const currentChangesStatus : Ref<number> = ref(0);
 
@@ -201,18 +196,9 @@
                                     return;
                                 }
 
-                                captcha.value?.execute();
-
-                                if(captchaToken.value == '')
-                                {
-                                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-                                    return;
-                                }
-
                                 const data = 
                                 {
                                     csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-                                    captchaToken: captchaToken.value,
                                     status: 2,
                                     text: editorState.text, 
                                     tags: tags.value
@@ -373,19 +359,9 @@
                 openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
                 return;
             }
-
-            captcha.value?.execute();
-
-            if(captchaToken.value == '')
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-                return;
-            }
-
             const data = 
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-                captchaToken: captchaToken.value,
                 status: 1,
             }
 
@@ -455,16 +431,6 @@
 						const form = new FormData();
 
                         form.append('file', file);
-
-                        captcha.value?.execute();
-
-                        if(captchaToken.value == '')
-                        {
-                            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-                            return;
-                        }
-						
-                        form.append('captchaToken', captchaToken.value);
 
 						axios.post('/api/media/img/upload', form, 
 						{
@@ -589,21 +555,6 @@
 			fetchedData.value = null;
 		}
 	});
-
-    const onCaptchaVerify = (token: string) => 
-    {
-        captchaToken.value = token;
-    };
-
-    const onCaptchaExpired = () =>
-    {
-        captchaToken.value = '';
-    }
-
-    const onCaptchaError = () =>
-    {
-        captchaToken.value = '';
-    }
 </script>
 
 <template>
@@ -623,7 +574,6 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
-            <Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</article>
 		<article v-else class="main__article">
 			<h1 class="main__article__title">{{ (langData['errors'] as JsonData)['articleForApproveNotFound'] }}</h1>

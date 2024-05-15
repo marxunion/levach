@@ -342,8 +342,8 @@
 	{
 		uploadedFiles = files;
 		uploadedCallback = callback;
-		captcha.value?.execute();
 		captchaVerifyCallback = onUploadImgRequest;
+		captcha.value?.execute();
 	}
 
 	const onCaptchaVerify = (token: string) => 

@@ -42,7 +42,6 @@
 	const captcha : Ref<{ execute: () => void } | null> = ref(null);
 
 	let captchaVerifyCallback : (token: string) => void;
-
 	adminStatusReCheck();
 
 	const fetchedArticleData : Ref<any> = ref();
@@ -312,8 +311,8 @@
 	{
 		uploadedFiles = files;
 		uploadedCallback = callback;
-		captcha.value?.execute();
 		captchaVerifyCallback = onNewCommentUploadImgRequest;
+		captcha.value?.execute();
 	}
 
 	const onCreateNewCommentRequest = async (captchaToken : string) =>
@@ -333,7 +332,7 @@
 			text: newCommentEditorState.text,
 			rating_influence: currentCommentReaction.value
 		}
-
+	
 		await axios.post('/api/article/comment/new/'+articleViewCode.value, data)
 		.then(async response => 
 		{
@@ -358,7 +357,7 @@
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 				}
-					else if(response.data.Critical)
+				else if(response.data.Critical)
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 				}
@@ -389,12 +388,11 @@
 		});
 	}
 
-	const onCreateNewCommentValidate = async  () =>
+	const onCreateNewCommentValidate = async () =>
 	{
 		if(newCommentEditorState.text.length > 0)
 		{
 			captchaVerifyCallback = onCreateNewCommentRequest;
-
 			captcha.value?.execute();
 		}
 	}
@@ -458,7 +456,7 @@
 		comments.value = [];
 	});
 
-	const onRejectApproveArticleRequest = async (captchaToken : string) =>
+	const onRejectApproveArticle = async () =>
 	{
 		await getNewCsrfToken();
 
@@ -471,7 +469,6 @@
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			captchaToken: captchaToken,
 			status: 0
 		}
 		axios.post('/api/admin/article/approve/' + articleViewCode.value, data)
@@ -526,14 +523,7 @@
 		});
 	}
 
-	const onRejectApproveArticleValidate = async () =>
-	{
-		captchaVerifyCallback = onRejectApproveArticleRequest;
-
-		captcha.value?.execute();
-	}
-
-	const onRejectPremoderateArticleRequest = async (captchaToken : string) =>
+	const onRejectPremoderateArticle = async () =>
 	{
 		await getNewCsrfToken();
 
@@ -546,7 +536,6 @@
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			captchaToken: captchaToken,
 			status: 0
 		}
 
@@ -602,14 +591,7 @@
 		});
 	}
 
-	const onRejectPremoderateArticleValidate = async () =>
-	{
-		captchaVerifyCallback = onRejectPremoderateArticleRequest;
-
-		captcha.value?.execute();
-	}
-
-	const onAcceptPremoderateArticleRequest = async (captchaToken : string) =>
+	const onAcceptPremoderateArticle = async () =>
 	{
 		await getNewCsrfToken();
 
@@ -622,7 +604,6 @@
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			captchaToken: captchaToken,
 			status: 1
 		}
 
@@ -678,14 +659,7 @@
 		});
 	}
 
-	const onAcceptPremoderateArticleValidate = async () =>
-	{
-		captchaVerifyCallback = onAcceptPremoderateArticleRequest;
-
-		captcha.value?.execute();
-	}
-
-	const onDeleteArticleRequest = async (captchaToken : string) =>
+	const onDeleteArticle = async () =>
 	{
 		await getNewCsrfToken();
 
@@ -697,8 +671,7 @@
 
 		const data = 
 		{
-			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			captchaToken: captchaToken
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
 		}
 
 		axios.post('/api/admin/article/delete/' + articleViewCode.value, data)
@@ -753,13 +726,6 @@
         });
 	}
 
-	const onDeleteArticleValidate = async () =>
-	{
-		captchaVerifyCallback = onDeleteArticleRequest;
-
-		captcha.value?.execute();
-	}
-
 	const onShare = () => 
 	{
 		openModal(ShareWith, { link: 'http://localhost:8000/#/article/'+articleViewCode.value})
@@ -795,23 +761,22 @@
 <template>
 	<main v-if="!loading" class="main">
 		<article v-if="fetchedArticleData" class="main__article">
-			<Captcha @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 			<div class="main__article__previewContainer">
 				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedArticleData.versions[currentVersion-1].created_date) }}</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedArticleData.versions[currentVersion-1].tags) }}</p>
 				
 				<div v-if="adminStatus && fetchedArticleData['approvededitorially_status'] == 1" class="main__article__previewContainer__buttons">
-					<a @click="onDeleteArticleValidate()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
-					<a @click="onRejectApproveArticleValidate()" class="main__article__previewContainer__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
+					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
+					<a @click="onRejectApproveArticle()" class="main__article__previewContainer__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
 					<a :href="'#/admin/article/approve/'+articleViewCode" class="main__article__previewContainer__buttons__button acceptApproveArticleButton">{{ langData['acceptApproveArticleButton'] }}</a>
 				</div>
 				<div v-else-if="adminStatus && fetchedArticleData['premoderation_status'] == 1" class="main__article__previewContainer__buttons">
-					<a @click="onRejectPremoderateArticleValidate()" class="main__article__previewContainer__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
-					<a @click="onAcceptPremoderateArticleValidate()" class="main__article__previewContainer__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
+					<a @click="onRejectPremoderateArticle()" class="main__article__previewContainer__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+					<a @click="onAcceptPremoderateArticle()" class="main__article__previewContainer__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
 				</div>
 				<div v-else-if="adminStatus" class="main__article__previewContainer__buttons oneButton">
-					<a @click="onDeleteArticleValidate()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
+					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 				</div>
 				<div class="main__article__previewContainer__reactions">
 					<div class="main__article__previewContainer__reactions__statistics">
@@ -849,7 +814,7 @@
 						<img v-if="currentCommentReaction === 2" @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="main__article__comments__newComment__reactions__reaction">
 						<img v-else @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislike.svg" alt="Dislike" class="main__article__comments__newComment__reactions__reaction">
 					</div>
-					
+					<Captcha @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 				</div>
 				
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
