@@ -30,7 +30,7 @@
     const nickname : Ref<string> = ref('');
     const password : Ref<string> = ref('');
 
-    const captcha : Ref<HTMLElement | null> = ref(null);
+    const captcha = ref(null);
 
     const isCurrentRouteName = (routeName: string) : boolean => 
     {

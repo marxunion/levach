@@ -24,7 +24,7 @@
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleNew", langsData).langData;
 
-	const captcha : Ref<HTMLElement | null> = ref(null);
+	const captcha = ref(null);
 
 	const router : Router = useRouter();
 

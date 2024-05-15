@@ -21,8 +21,9 @@
     
     import { dateFormat, timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
 
-
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AdminEditComments", langsData).langData;
+
+    const captcha = ref(null);
 
     const loading : Ref<boolean> = ref(true);
 
@@ -200,7 +201,7 @@
 				<a @click="onApplyFilters()" class="main__filters__buttons__button">{{ langData['applyFiltersButton'] }}</a>
 				<a @click="onDeleteSelected()" class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
-            <Captcha class="main__filters__captcha"/>
+            <Captcha ref="captcha" class="main__filters__captcha"/>
 		</div>
 		<div v-if="!loading" class="main__comments">
             <p v-if="articles.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>

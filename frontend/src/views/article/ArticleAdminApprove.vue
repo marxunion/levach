@@ -28,8 +28,9 @@
 
     import { arraysAreEqual } from '../../ts/helpers/ArrayHelper';
 
-
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminApprove", langsData).langData;
+
+    const captcha = ref(null);
 
     const currentChangesStatus : Ref<number> = ref(0);
 

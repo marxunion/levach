@@ -26,7 +26,7 @@
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
 
-	const captcha : Ref<HTMLElement | null> = ref(null);
+	const captcha = ref(null);
 
 	const route : RouteLocationNormalizedLoaded = useRoute();
 
