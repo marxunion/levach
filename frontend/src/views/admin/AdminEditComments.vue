@@ -12,6 +12,7 @@
 
 	import Loader from '../../components/Loader.vue';
 	import CommentsList from "./../../components/CommentsList.vue";
+    import Captcha from '../../components/Captcha.vue';
 
 	import langsData from "./locales/AdminEditComments.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
@@ -200,6 +201,7 @@
 				<a @click="onApplyFilters()" class="main__filters__buttons__button">{{ langData['applyFiltersButton'] }}</a>
 				<a @click="onDeleteSelected()" class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
+            <Captcha class="main__filters__captcha"/>
 		</div>
 		<div v-if="!loading" class="main__comments">
             <p v-if="articles.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>

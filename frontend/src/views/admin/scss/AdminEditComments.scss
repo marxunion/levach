@@ -143,7 +143,6 @@
                 }
             }
         }
-
         &__buttons
         {
             display: flex;
@@ -151,7 +150,6 @@
             align-items: center;
             width: 95%;
             margin-top: 15px;
-            margin-bottom: 20px;
             &__button
             {
                 cursor: pointer;
@@ -183,6 +181,10 @@
                     transform: scale(1.05);
                 }
             }
+        }
+        &__captcha
+        {
+            margin-bottom: 2%;
         }
     }
     &__comments

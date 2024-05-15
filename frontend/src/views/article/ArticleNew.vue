@@ -338,7 +338,7 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
-			<Captcha class="form__captcha"/>
+			<Captcha class="main__article__captcha"/>
 		</article>
 	</main>
 </template>
