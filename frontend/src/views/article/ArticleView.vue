@@ -41,7 +41,7 @@
 
 	const captcha : Ref<{ execute: () => void } | null> = ref(null);
 
-	const captchaToken : Ref<string> = ref('');
+	let captchaVerifyCallback : (token: string) => void;
 
 	adminStatusReCheck();
 
@@ -209,27 +209,22 @@
 		}
 	}
 
-	const onNewCommentUploadImg = async (files: File[], callback: (urls: string[]) => void) => 
+	let uploadedFiles : File[];
+	let uploadedCallback : (urls: string[]) => void;
+
+	const onNewCommentUploadImgRequest = async (captchaToken : string) => 
 	{
-		if(files.length > 0)
+		if(uploadedFiles.length > 0)
 		{
 			openModal(LoaderModal);
-			const promises = files.map((file) => 
+			const promises = uploadedFiles.map((file) => 
 				{
 					return new Promise<{ data: { fileName: string } }>(resolve => 
 					{
 						const form = new FormData();
 
-						captcha.value?.execute();
-
-						if(captchaToken.value == '')
-						{
-							openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-							return;
-						}
-
 						form.append('file', file);
-						form.append('captchaToken', captchaToken.value);
+						form.append('captchaToken', captchaToken);
 
 						axios.post('/api/media/img/upload', form, 
 						{
@@ -309,83 +304,61 @@
 			const successfulResults = res.filter(item => item !== null);
 
 			closeModal();
-			callback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
+			uploadedCallback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
 		}
 	}
 
-	const onCreateNewComment = async () =>
+	const onNewCommentUploadImgValidate = async (files: File[], callback: (urls: string[]) => void) => 
 	{
-		if(newCommentEditorState.text.length > 0)
+		uploadedFiles = files;
+		uploadedCallback = callback;
+		captcha.value?.execute();
+		captchaVerifyCallback = onNewCommentUploadImgRequest;
+	}
+
+	const onCreateNewCommentRequest = async (captchaToken : string) =>
+	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
 		{
-			await getNewCsrfToken();
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
 
-			if(csrfTokenInput.value == null)
+		const data = {
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken,
+			type: 'comment',
+			text: newCommentEditorState.text,
+			rating_influence: currentCommentReaction.value
+		}
+
+		await axios.post('/api/article/comment/new/'+articleViewCode.value, data)
+		.then(async response => 
+		{
+			if(response.data.success)
 			{
-				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-				return;
+				newCommentEditorState.text = '';
+				openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
+				await fetchArticleData();
+				commentsLoading.value = true;
+				lastLoadedComment.value = 0;
+				currentCommentReaction.value = 0;
+				comments.value = [];
+				await fetchNewComments();
 			}
-
-			captcha.value?.execute();
-
-            if(captchaToken.value == '')
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-                return;
-            }
-
-			const data = {
-				csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-				captchaToken: captchaToken.value,
-				type: 'comment',
-				text: newCommentEditorState.text,
-				rating_influence: currentCommentReaction.value
-			}
-
-			await axios.post('/api/article/comment/new/'+articleViewCode.value, data)
-			.then(async response => 
+			else
 			{
-				if(response.data.success)
-				{
-					newCommentEditorState.text = '';
-					openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
-					await fetchArticleData();
-					commentsLoading.value = true;
-					lastLoadedComment.value = 0;
-					currentCommentReaction.value = 0;
-					comments.value = [];
-					await fetchNewComments();
-				}
-				else
-				{
-					if(response.data.Warning)
-					{
-						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-					}
-					else if(response.data.Error)
-					{
-						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-					}
-					else if(response.data.Critical)
-					{
-						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-					}
-					else
-					{
-						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-					}
-				}
-			})
-			.catch(error => 
-			{
-				if(error.response.data.Warning)
+				if(response.data.Warning)
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
 				}
-				else if(error.response.data.Error)
+				else if(response.data.Error)
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 				}
-				else if(error.response.data.Critical)
+					else if(response.data.Critical)
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 				}
@@ -393,7 +366,36 @@
 				{
 					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 				}
-			});
+			}
+		})
+		.catch(error => 
+		{
+			if(error.response.data.Warning)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Error)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+		});
+	}
+
+	const onCreateNewCommentValidate = async  () =>
+	{
+		if(newCommentEditorState.text.length > 0)
+		{
+			captchaVerifyCallback = onCreateNewCommentRequest;
+
+			captcha.value?.execute();
 		}
 	}
 
@@ -456,7 +458,7 @@
 		comments.value = [];
 	});
 
-	const onRejectApproveArticle = async () =>
+	const onRejectApproveArticleRequest = async (captchaToken : string) =>
 	{
 		await getNewCsrfToken();
 
@@ -466,18 +468,10 @@
 			return;
 		}
 
-		captcha.value?.execute();
-
-		if(captchaToken.value == '')
-		{
-			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-			return;
-		}
-
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			captchaToken: captchaToken.value,
+			captchaToken: captchaToken,
 			status: 0
 		}
 		axios.post('/api/admin/article/approve/' + articleViewCode.value, data)
@@ -532,7 +526,14 @@
 		});
 	}
 
-	const onRejectPremoderateArticle = async () =>
+	const onRejectApproveArticleValidate = async () =>
+	{
+		captchaVerifyCallback = onRejectApproveArticleRequest;
+
+		captcha.value?.execute();
+	}
+
+	const onRejectPremoderateArticleRequest = async (captchaToken : string) =>
 	{
 		await getNewCsrfToken();
 
@@ -542,18 +543,10 @@
 			return;
 		}
 
-		await captcha.value?.execute();
-		
-		if(captchaToken.value == '')
-		{
-			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-			return;
-		}
-
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			captchaToken: captchaToken.value,
+			captchaToken: captchaToken,
 			status: 0
 		}
 
@@ -609,7 +602,14 @@
 		});
 	}
 
-	const onAcceptPremoderateArticle = async () =>
+	const onRejectPremoderateArticleValidate = async () =>
+	{
+		captchaVerifyCallback = onRejectPremoderateArticleRequest;
+
+		captcha.value?.execute();
+	}
+
+	const onAcceptPremoderateArticleRequest = async (captchaToken : string) =>
 	{
 		await getNewCsrfToken();
 
@@ -619,18 +619,10 @@
 			return;
 		}
 
-		captcha.value?.execute();
-
-		if(captchaToken.value == '')
-		{
-			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-			return;
-		}
-
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			captchaToken: captchaToken.value,
+			captchaToken: captchaToken,
 			status: 1
 		}
 
@@ -686,7 +678,14 @@
 		});
 	}
 
-	const onDeleteArticle = async () =>
+	const onAcceptPremoderateArticleValidate = async () =>
+	{
+		captchaVerifyCallback = onAcceptPremoderateArticleRequest;
+
+		captcha.value?.execute();
+	}
+
+	const onDeleteArticleRequest = async (captchaToken : string) =>
 	{
 		await getNewCsrfToken();
 
@@ -696,18 +695,10 @@
 			return;
 		}
 
-		captcha.value?.execute();
-
-		if(captchaToken.value == '')
-		{
-			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-			return;
-		}
-
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			captchaToken: captchaToken.value
+			captchaToken: captchaToken
 		}
 
 		axios.post('/api/admin/article/delete/' + articleViewCode.value, data)
@@ -762,6 +753,13 @@
         });
 	}
 
+	const onDeleteArticleValidate = async () =>
+	{
+		captchaVerifyCallback = onDeleteArticleRequest;
+
+		captcha.value?.execute();
+	}
+
 	const onShare = () => 
 	{
 		openModal(ShareWith, { link: 'http://localhost:8000/#/article/'+articleViewCode.value})
@@ -785,39 +783,35 @@
 
     const onCaptchaVerify = (token: string) => 
     {
-        captchaToken.value = token;
+		captchaVerifyCallback(token);
     };
-
-    const onCaptchaExpired = () =>
-    {
-        captchaToken.value = '';
-    }
 
     const onCaptchaError = () =>
     {
-        captchaToken.value = '';
+        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
     }
 </script>
 
 <template>
 	<main v-if="!loading" class="main">
 		<article v-if="fetchedArticleData" class="main__article">
+			<Captcha @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 			<div class="main__article__previewContainer">
 				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedArticleData.versions[currentVersion-1].created_date) }}</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedArticleData.versions[currentVersion-1].tags) }}</p>
 				
 				<div v-if="adminStatus && fetchedArticleData['approvededitorially_status'] == 1" class="main__article__previewContainer__buttons">
-					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
-					<a @click="onRejectApproveArticle()" class="main__article__previewContainer__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
+					<a @click="onDeleteArticleValidate()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
+					<a @click="onRejectApproveArticleValidate()" class="main__article__previewContainer__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
 					<a :href="'#/admin/article/approve/'+articleViewCode" class="main__article__previewContainer__buttons__button acceptApproveArticleButton">{{ langData['acceptApproveArticleButton'] }}</a>
 				</div>
 				<div v-else-if="adminStatus && fetchedArticleData['premoderation_status'] == 1" class="main__article__previewContainer__buttons">
-					<a @click="onRejectPremoderateArticle()" class="main__article__previewContainer__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
-					<a @click="onAcceptPremoderateArticle()" class="main__article__previewContainer__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
+					<a @click="onRejectPremoderateArticleValidate()" class="main__article__previewContainer__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+					<a @click="onAcceptPremoderateArticleValidate()" class="main__article__previewContainer__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
 				</div>
 				<div v-else-if="adminStatus" class="main__article__previewContainer__buttons oneButton">
-					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
+					<a @click="onDeleteArticleValidate()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 				</div>
 				<div class="main__article__previewContainer__reactions">
 					<div class="main__article__previewContainer__reactions__statistics">
@@ -846,8 +840,8 @@
 				</div>
 
 				<div class="main__article__comments__newComment">
-					<MdEditor class="main__article__comments__newComment__editor" v-model="(newCommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImg" :language="newCommentEditorState.language" noIconfont :preview="false"/>
-					<img @click="onCreateNewComment()" src="./../../assets/img/article/sendCommentButton.svg" alt="Send" class="main__article__comments__newComment__sendButton">
+					<MdEditor class="main__article__comments__newComment__editor" v-model="(newCommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImgValidate" :language="newCommentEditorState.language" noIconfont :preview="false"/>
+					<img @click="onCreateNewCommentValidate()" src="./../../assets/img/article/sendCommentButton.svg" alt="Send" class="main__article__comments__newComment__sendButton">
 					<div class="main__article__comments__newComment__reactions">
 						<img v-if="currentCommentReaction === 1" @click="onLikeReaction()" src="./../../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="main__article__comments__newComment__reactions__reaction">
 						<img v-else @click="onLikeReaction()" src="./../../assets/img/article/comments/like.svg" alt="Like" class="main__article__comments__newComment__reactions__reaction">
@@ -855,7 +849,7 @@
 						<img v-if="currentCommentReaction === 2" @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="main__article__comments__newComment__reactions__reaction">
 						<img v-else @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislike.svg" alt="Dislike" class="main__article__comments__newComment__reactions__reaction">
 					</div>
-					<Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
+					
 				</div>
 				
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
