@@ -18,6 +18,7 @@
     const onVerify = (response : string) => 
     {
         emits('onVerify', response);
+        reset();
     }
 
     const onError = () => 
@@ -45,7 +46,6 @@
         execute
     })
 
-    // 
     onUnmounted(() =>
     {
         const element = document.querySelector('[style="visibility: hidden; position: absolute; width: 100%; top: -10000px; left: 0px; right: 0px; transition: visibility 0s linear 0.3s, opacity 0.3s linear; opacity: 0;"]');

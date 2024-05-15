@@ -209,9 +209,9 @@
 						{
 							await getNewCsrfToken();
 							
-							captcha.value?.execute();
-
 							captchaVerifyCallback = onSendButtonRequest;
+
+							captcha.value?.execute();
 						}
 						else
 						{
@@ -350,11 +350,6 @@
 		captchaVerifyCallback(token);
     };
 
-    const onCaptchaExpired = () =>
-    {
-        openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
-    }
-
     const onCaptchaError = () =>
     {
         openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
@@ -378,7 +373,7 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
-			<Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
+			<Captcha @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</article>
 	</main>
 </template>
