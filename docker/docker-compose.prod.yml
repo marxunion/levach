@@ -21,6 +21,8 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+
+      RECAPTCHA_SECRETKEY: ${RECAPTCHA_SECRETKEY}
     volumes:
       - ./:/var/www/levach/
       - ./php/php.ini-prod:/usr/local/etc/php/php.ini
