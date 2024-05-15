@@ -14,6 +14,7 @@
 	import LoaderModal from "./../../components/modals/LoaderModal.vue";
 	import InfoModal from "./../../components/modals/InfoModal.vue";
     import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
+	import Captcha from '../../components/Captcha.vue';
 
 	import { abbreviateNumber } from '../../ts/helpers/NumberHelper';
 
@@ -753,6 +754,7 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
+			<Captcha class="form__captcha"/>
 		</article>
 		<article v-else class="main__article">
 			<h1 class="main__article__title">{{ (langData['errors'] as JsonData)['articleForEditNotFound'] }}</h1>

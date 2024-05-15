@@ -12,6 +12,7 @@
 	import LoaderModal from "./../../components/modals/LoaderModal.vue";
     import InfoModal from "./../../components/modals/InfoModal.vue";
 	import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
+	import Captcha from '../../components/Captcha.vue';
 
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 	import langsData from "./locales/ArticleNew.json";
@@ -19,6 +20,7 @@
 	import './../../libs/font_2605852_prouiefeic';
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
+
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleNew", langsData).langData;
 
@@ -336,6 +338,7 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
+			<Captcha class="form__captcha"/>
 		</article>
 	</main>
 </template>

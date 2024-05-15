@@ -14,6 +14,7 @@
 	import LoaderModal from "./../../components/modals/LoaderModal.vue";
 	import InfoModal from "./../../components/modals/InfoModal.vue";
     import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
+    import Captcha from '../../components/Captcha.vue';
 
 	import langsData from "./locales/ArticleAdminApprove.json";
 
@@ -26,6 +27,7 @@
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
     import { arraysAreEqual } from '../../ts/helpers/ArrayHelper';
+
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminApprove", langsData).langData;
 
@@ -574,6 +576,7 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
+            <Captcha class="form__captcha"/>
 		</article>
 		<article v-else class="main__article">
 			<h1 class="main__article__title">{{ (langData['errors'] as JsonData)['articleForApproveNotFound'] }}</h1>
