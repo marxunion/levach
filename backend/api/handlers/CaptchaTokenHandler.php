@@ -9,6 +9,9 @@ class CaptchaTokenHandler extends BaseHandlerRoute
 {
     public static function checkCaptchaToken($token)
     {
-        
+        if()
+        {
+            
+        }
     }
 }
