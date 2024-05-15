@@ -64,6 +64,7 @@
 
 		const data = {
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+            captchaToken: captchaToken.value,
 			articlesCount: articlesCountToFetch.value,
             commentsCount: commentsCountToFetch.value,
 			articleDateBefore: Math.round(articleDateBefore.value / 1000),
@@ -113,6 +114,7 @@
 
 		const data = {
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+            captchaToken: captchaToken.value,
 			articlesCount: articlesCountToFetch.value,
             commentsCount: commentsCountToFetch.value,
 			articleDateBefore: Math.round(articleDateBefore.value / 1000),

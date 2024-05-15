@@ -7,7 +7,9 @@
 
         "articleCreatedSuccessfully": "Ваша статья отправлена на премодерацию, Для управления и редактирования вашей статьи воспользуйтесь следующей ссылкой:",
 
-        "warnings": {
+        "warnings": 
+        {
+            "captcha": "Ошибка решения капчи",
             "articleEditCodeCopy": "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию",
 
             "articleNeedTitle": "Пожалуйста добавьте заголовок для статьи",
@@ -26,7 +28,8 @@
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
-        "errors": {
+        "errors": 
+        {
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
         
@@ -61,7 +64,8 @@
             "catalog": "Каталог",
             "github": "Исходный код"
         },
-        "titleItem": {
+        "titleItem": 
+        {
             "h1": "Заголовок 1-го ур.",
             "h2": "Заголовок 2-го ур.",
             "h3": "Заголовок 3-го ур.",
@@ -69,12 +73,14 @@
             "h5": "Заголовок 5-го ур.",
             "h6": "Заголовок 6-го ур."
         },
-        "imgTitleItem": {
+        "imgTitleItem": 
+        {
             "link": "Добавить ссылку на изображение",
             "upload": "Загрузить изображение",
             "clip2upload": "Из буфера обмена"
         },
-        "linkModalTips": {
+        "linkModalTips": 
+        {
             "linkTitle": "Добавить ссылку",
             "imageTitle": "Добавить изображение",
             "descLabel": "Описание:",
@@ -83,16 +89,19 @@
             "urlLabelPlaceHolder": "Введите ссылку...",
             "buttonOK": "ОК"
         },
-        "clipModalTips": {
+        "clipModalTips": 
+        {
             "title": "Обрезать изображение",
             "buttonUpload": "Загрузить"
         },
-        "copyCode": {
+        "copyCode": 
+        {
             "text": "Скопировать",
             "successTips": "Скопировано!",
             "failTips": "Не удалось скопировать!"
         },
-        "mermaid": {
+        "mermaid": 
+        {
             "flow": "Цепная",
             "sequence": "Последовательная",
             "gantt": "Временная",
@@ -102,11 +111,13 @@
             "relationship": "Реляционная",
             "journey": "Путевая"
         },
-        "katex": {
+        "katex": 
+        {
             "inline": "Встроенная",
             "block": "Блочная"
         },
-        "footer": {
+        "footer": 
+        {
             "markdownTotal": "Кол-во символов",
             "scrollAuto": "Автопрокрутка"
         }
@@ -119,7 +130,9 @@
         
         "articleCreatedSuccessfully": "Your article has been sent for pre-moderation, Use the following link to manage and edit your article:",
         
-        "warnings": {
+        "warnings": 
+        {
+            "captcha": "Captcha solving error",
             "articleEditLink": "Don't forget to save the link or your article will not be editable",
 
             "articleNeedTitle": "Please add a title for the article",

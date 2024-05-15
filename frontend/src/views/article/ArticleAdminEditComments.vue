@@ -7,6 +7,9 @@
 	import { Article } from '../../ts/interfaces/Article';
 	import { Comment } from '../../ts/interfaces/Comment';
 
+	import { openModal } from 'jenesius-vue-modal';
+	import InfoModal from '../../components/modals/InfoModal.vue';
+
 	import { dateFormat } from '../../ts/helpers/DateTimeHelper';
 
     import VueDatePicker from '@vuepic/vue-datepicker';
@@ -23,6 +26,7 @@
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
 
 	import { comments } from '../../ts/handlers/CommentsHandler';
+
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
 
@@ -108,6 +112,14 @@
 		if(csrfTokenInput.value == null)
 		{
 			return;
+		}
+
+		captcha.value?.execute();
+
+        if(captchaToken.value == '')
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+        	return;
 		}
 
 		const data = {

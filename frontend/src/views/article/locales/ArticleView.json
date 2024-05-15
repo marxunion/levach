@@ -3,6 +3,7 @@
     {
         "warnings": 
         {
+            "captcha": "Ошибка решения капчи",
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку",
 
             "imageMaxSize": "Размер загружаемого изображения должен быть не больше {size}МБ",
@@ -77,7 +78,8 @@
             "catalog": "Каталог",
             "github": "Исходный код"
         },
-        "titleItem": {
+        "titleItem": 
+        {
             "h1": "Заголовок 1-го ур.",
             "h2": "Заголовок 2-го ур.",
             "h3": "Заголовок 3-го ур.",
@@ -85,12 +87,14 @@
             "h5": "Заголовок 5-го ур.",
             "h6": "Заголовок 6-го ур."
         },
-        "imgTitleItem": {
+        "imgTitleItem": 
+        {
             "link": "Добавить ссылку на изображение",
             "upload": "Загрузить изображение",
             "clip2upload": "Из буфера обмена"
         },
-        "linkModalTips": {
+        "linkModalTips": 
+        {
             "linkTitle": "Добавить ссылку",
             "imageTitle": "Добавить изображение",
             "descLabel": "Описание:",
@@ -99,16 +103,19 @@
             "urlLabelPlaceHolder": "Введите ссылку...",
             "buttonOK": "ОК"
         },
-        "clipModalTips": {
+        "clipModalTips": 
+        {
             "title": "Обрезать изображение",
             "buttonUpload": "Загрузить"
         },
-        "copyCode": {
+        "copyCode": 
+        {
             "text": "Скопировать",
             "successTips": "Скопировано!",
             "failTips": "Не удалось скопировать!"
         },
-        "mermaid": {
+        "mermaid": 
+        {
             "flow": "Цепная",
             "sequence": "Последовательная",
             "gantt": "Временная",
@@ -118,11 +125,13 @@
             "relationship": "Реляционная",
             "journey": "Путевая"
         },
-        "katex": {
+        "katex": 
+        {
             "inline": "Встроенная",
             "block": "Блочная"
         },
-        "footer": {
+        "footer": 
+        {
             "markdownTotal": "Кол-во символов",
             "scrollAuto": "Автопрокрутка"
         }
@@ -131,6 +140,7 @@
     {
         "warnings": 
         {
+            "captcha": "Captcha solving error",
             "unknown": "An unknown error occurred. Try again",
 
             "imageMaxSize": "The size of the uploaded image must be no larger than {size}MB",
