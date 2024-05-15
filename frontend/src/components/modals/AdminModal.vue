@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { onMounted, Ref, ComputedRef, ref } from "vue";
 
-    import Catcha from "../Captcha.vue";
+    import Captcha from "../Captcha.vue";
 
     import { JsonData } from "../../ts/interfaces/JsonData";
 
@@ -29,6 +29,8 @@
     const checkedRememberMe : Ref<boolean> = ref(false);
     const nickname : Ref<string> = ref('');
     const password : Ref<string> = ref('');
+
+    const captcha : Ref<Captcha> = ref(null);
 
     const isCurrentRouteName = (routeName: string) : boolean => 
     {
@@ -510,7 +512,7 @@
                 <input v-model="password" :placeholder="(langData['formLoginPasswordPlaceholder'] as string)" class="form__fields__field__input text" type="password">
             </div>
         </div>
-        <Catcha ref="captcha" class="form__captcha"/>
+        <Captcha ref="captcha" class="form__captcha"/>
         
         <label class="form__checkbox">{{ langData["formLoginCheckboxRememberMe"] }}
             <input type="checkbox" v-model="checkedRememberMe">
@@ -536,7 +538,7 @@
                 <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.article_need_rating_to_approve_editorially" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
         </div>
-        <Catcha ref="captcha" class="form__captcha"/>
+        <Captcha ref="captcha" class="form__captcha"/>
 
         <button @click="onSaveSettingsButton" class="form__button saveSettings">{{ langData["formPanelButtonSaveSettings"] }}</button>
         <button @click="onQuitButton" class="form__button quit">{{ langData["formPanelButtonQuit"] }}</button>
