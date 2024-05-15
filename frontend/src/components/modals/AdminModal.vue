@@ -510,7 +510,7 @@
                 <input v-model="password" :placeholder="(langData['formLoginPasswordPlaceholder'] as string)" class="form__fields__field__input text" type="password">
             </div>
         </div>
-        <Catcha class="form__captcha"/>
+        <Catcha ref="captcha" class="form__captcha"/>
         
         <label class="form__checkbox">{{ langData["formLoginCheckboxRememberMe"] }}
             <input type="checkbox" v-model="checkedRememberMe">
@@ -536,7 +536,7 @@
                 <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.article_need_rating_to_approve_editorially" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
         </div>
-        <Catcha class="form__captcha"/>
+        <Catcha ref="captcha" class="form__captcha"/>
 
         <button @click="onSaveSettingsButton" class="form__button saveSettings">{{ langData["formPanelButtonSaveSettings"] }}</button>
         <button @click="onQuitButton" class="form__button quit">{{ langData["formPanelButtonQuit"] }}</button>

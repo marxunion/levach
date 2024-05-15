@@ -576,7 +576,7 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
-            <Captcha class="main__article__captcha"/>
+            <Captcha ref="captcha" class="main__article__captcha"/>
 		</article>
 		<article v-else class="main__article">
 			<h1 class="main__article__title">{{ (langData['errors'] as JsonData)['articleForApproveNotFound'] }}</h1>

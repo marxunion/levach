@@ -136,7 +136,6 @@
 		loading.value = true;
 		await deleteArticleComments();
 	}
-    
 </script>
 
 <template>
