@@ -124,6 +124,7 @@
 
 		const data = {
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken.value,
 			count: commentsCountToFetch.value,
 			dateBefore: Math.round(dateBefore.value / 1000),
 			dateAfter: Math.round(dateAfter.value / 1000),

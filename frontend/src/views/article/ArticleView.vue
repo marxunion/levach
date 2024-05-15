@@ -8,6 +8,7 @@
 	import { JsonData } from '../../ts/interfaces/JsonData';
 
 	import Loader from "./../../components/Loader.vue";
+	import Captcha from '../../components/Captcha.vue';
 
 	import DropDown from '../../components/DropDown.vue';
 	import DropDownVersion from "./../../components/DropDownVersion.vue";
@@ -37,6 +38,10 @@
 	import { comments, lastLoadedComment } from '../../ts/handlers/CommentsHandler';
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
+
+	const captcha : Ref<{ execute: () => void } | null> = ref(null);
+
+	const captchaToken : Ref<string> = ref('');
 
 	adminStatusReCheck();
 
@@ -214,7 +219,17 @@
 					return new Promise<{ data: { fileName: string } }>(resolve => 
 					{
 						const form = new FormData();
+
+						captcha.value?.execute();
+
+						if(captchaToken.value == '')
+						{
+							openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+							return;
+						}
+
 						form.append('file', file);
+						form.append('captchaToken', captchaToken.value);
 
 						axios.post('/api/media/img/upload', form, 
 						{
@@ -310,11 +325,20 @@
 				return;
 			}
 
+			captcha.value?.execute();
+
+            if(captchaToken.value == '')
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+                return;
+            }
+
 			const data = {
+				csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+				captchaToken: captchaToken.value,
 				type: 'comment',
 				text: newCommentEditorState.text,
-				rating_influence: currentCommentReaction.value,
-				csrfToken: (csrfTokenInput.value as HTMLInputElement).value
+				rating_influence: currentCommentReaction.value
 			}
 
 			await axios.post('/api/article/comment/new/'+articleViewCode.value, data)
@@ -442,9 +466,18 @@
 			return;
 		}
 
+		captcha.value?.execute();
+
+		if(captchaToken.value == '')
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+			return;
+		}
+
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken.value,
 			status: 0
 		}
 		axios.post('/api/admin/article/approve/' + articleViewCode.value, data)
@@ -509,9 +542,18 @@
 			return;
 		}
 
+		captcha.value?.execute();
+		
+		if(captchaToken.value == '')
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+			return;
+		}
+
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken.value,
 			status: 0
 		}
 
@@ -577,9 +619,18 @@
 			return;
 		}
 
+		captcha.value?.execute();
+
+		if(captchaToken.value == '')
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+			return;
+		}
+
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken.value,
 			status: 1
 		}
 
@@ -645,9 +696,18 @@
 			return;
 		}
 
+		captcha.value?.execute();
+
+		if(captchaToken.value == '')
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+			return;
+		}
+
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken.value
 		}
 
 		axios.post('/api/admin/article/delete/' + articleViewCode.value, data)
@@ -722,6 +782,21 @@
 	{
 		await fetchArticleData();
 	}
+
+    const onCaptchaVerify = (token: string) => 
+    {
+        captchaToken.value = token;
+    };
+
+    const onCaptchaExpired = () =>
+    {
+        captchaToken.value = '';
+    }
+
+    const onCaptchaError = () =>
+    {
+        captchaToken.value = '';
+    }
 </script>
 
 <template>
@@ -780,6 +855,7 @@
 						<img v-if="currentCommentReaction === 2" @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="main__article__comments__newComment__reactions__reaction">
 						<img v-else @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislike.svg" alt="Dislike" class="main__article__comments__newComment__reactions__reaction">
 					</div>
+					<Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 				</div>
 				
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">

@@ -12,6 +12,7 @@
 	import LoaderModal from "./../../components/modals/LoaderModal.vue";
     import InfoModal from "./../../components/modals/InfoModal.vue";
 	import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
+	
 	import Captcha from '../../components/Captcha.vue';
 
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
@@ -20,7 +21,6 @@
 	import './../../libs/font_2605852_prouiefeic';
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
-
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleNew", langsData).langData;
 
@@ -117,6 +117,7 @@
 
 							const data = {
 								csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+								captchaToken: captchaToken.value,
 								text: editorState.text,
 								tags: tags.value
 							}
@@ -252,7 +253,17 @@
 				return new Promise<{ data: { fileName: string } }>(resolve => 
 				{
 					const form = new FormData();
+
+					captcha.value?.execute();
+
+					if(captchaToken.value == '')
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+						return;
+					}
+
 					form.append('file', file);
+					form.append('captchaToken', captchaToken.value);
 
 					axios.post('/api/media/img/upload', form, 
 					{

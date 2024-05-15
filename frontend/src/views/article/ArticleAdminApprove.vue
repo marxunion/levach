@@ -212,6 +212,7 @@
                                 const data = 
                                 {
                                     csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+                                    captchaToken: captchaToken.value,
                                     status: 2,
                                     text: editorState.text, 
                                     tags: tags.value
@@ -384,6 +385,7 @@
             const data = 
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+                captchaToken: captchaToken.value,
                 status: 1,
             }
 
@@ -451,7 +453,18 @@
 					return new Promise<{ data: { fileName: string } }>(resolve => 
 					{
 						const form = new FormData();
-						form.append('file', file);
+
+                        form.append('file', file);
+
+                        captcha.value?.execute();
+
+                        if(captchaToken.value == '')
+                        {
+                            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+                            return;
+                        }
+						
+                        form.append('captchaToken', captchaToken.value);
 
 						axios.post('/api/media/img/upload', form, 
 						{

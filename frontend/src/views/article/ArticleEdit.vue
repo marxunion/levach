@@ -14,6 +14,7 @@
 	import LoaderModal from "./../../components/modals/LoaderModal.vue";
 	import InfoModal from "./../../components/modals/InfoModal.vue";
     import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
+
 	import Captcha from '../../components/Captcha.vue';
 
 	import { abbreviateNumber } from '../../ts/helpers/NumberHelper';
@@ -88,7 +89,7 @@
 
         const data = 
         {
-            csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+            csrfToken: (csrfTokenInput.value as HTMLInputElement).value
         }
 		
 		return await axios.post('/api/article/edit/preload/'+articleEditCode.value, data)
@@ -198,7 +199,17 @@
 					return new Promise<{ data: { fileName: string } }>(resolve => 
 					{
 						const form = new FormData();
+
+						captcha.value?.execute();
+
+                        if(captchaToken.value == '')
+                        {
+                            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+                            return;
+                        }
+
 						form.append('file', file);
+						form.append('captchaToken', captchaToken.value);
 
 						axios.post('/api/media/img/upload', form, 
 						{

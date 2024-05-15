@@ -157,7 +157,17 @@
 					return new Promise<{ data: { fileName: string } }>(resolve => 
 					{
 						const form = new FormData();
+
+						captcha.value?.execute();
+		
+						if(captchaToken.value == '')
+						{
+							openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+							return;
+						}
+
 						form.append('file', file);
+						form.append('captchaToken', captchaToken.value);
 
 						axios.post('/api/media/img/upload', form, 
 						{
@@ -259,11 +269,21 @@
 				return;
 			}
 
+			captcha.value?.execute();
+		
+			if(captchaToken.value == '')
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+				return;
+			}
+
 			const data = {
+				csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+				captchaToken: captchaToken.value,
+				commentId: props.comment.id,
 				parent_comment_id: props.comment.id,
 				text: newSubcommentEditorState.text,
-				rating_influence: currentSubcommentReaction.value,
-				csrfToken: (csrfTokenInput.value as HTMLInputElement).value
+				rating_influence: currentSubcommentReaction.value
 			}
 
 			await axios.post('/api/article/comment/subcomment/new/'+props.articleViewCode, data)
@@ -331,9 +351,19 @@
 			return;
 		}
 
+		captcha.value?.execute();
+		
+		if(captchaToken.value == '')
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
+			return;
+		}
+
 		const data = {
-			commentId: props.comment.id,
-			csrfToken: (csrfTokenInput.value as HTMLInputElement).value
+			
+			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken.value,
+			commentId: props.comment.id
 		}
 
 		await axios.post('/api/admin/article/comment/delete/'+props.articleViewCode, data)
@@ -346,7 +376,6 @@
 					lastLoadedComment.value = lastLoadedComment.value - 1;
 				}
 
-				
 				openModal(InfoModal, {status: true, text: langData.value['commentDeletedSuccessfully']});
 				emits('onDeletedSubcomment');
 				await refetchComment();

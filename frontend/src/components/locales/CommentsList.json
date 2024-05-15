@@ -3,6 +3,7 @@
     {
         "warnings": 
         {
+            "captcha": "Ошибка решения капчи",
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку",
 
             "imageMaxSize": "Размер загружаемого изображения должен быть не больше {size}МБ",
@@ -116,6 +117,7 @@
     {
         "warnings": 
         {
+            "captcha": "Captcha solving error",
             "unknown": "An unknown error occurred. Try again",
 
             "imageMaxSize": "The size of the uploaded image must be no larger than {size}MB",
