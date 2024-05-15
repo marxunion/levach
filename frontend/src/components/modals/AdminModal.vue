@@ -47,7 +47,110 @@
         article_need_rating_to_approve_editorially: 0
     });
 
-    const onLoginButton = async () => 
+    const onLoginButtonRequest = async () => 
+    {
+        await getNewCsrfToken();
+
+        if(csrfTokenInput.value == null)
+        {
+            pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            return;
+        }
+
+        const data = 
+        {
+            csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			nickname: nickname.value,
+			password: password.value,
+            rememberMe: checkedRememberMe.value
+		}
+
+        await axios.post('/api/admin/login', data)
+		 .then(response => 
+		{
+            if(response.data.success)
+            {
+                closeModal();
+                openModal(InfoModal, {status: true, text: langData.value['successfullyLogin']}); 
+            }
+            else
+            {
+                if(response.data.Warning)
+                {
+                    if(response.data.Warning.message == 'Please ether nickname')
+                    {
+                        pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needNickname']});
+                    }
+                    else if(response.data.Warning.message == 'Please ether password')
+                    {
+                        pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needPassword']});
+                    }
+                    else
+                    {
+                        pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                    }
+                }
+                        else if(response.data.Error)
+                        {
+                            if(response.data.Error.message == 'Admin nickname or password is incorrect')
+                            {
+                                pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['incorrectNicknameOrPassword']});
+                            }
+                            else
+                            {
+                                pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                            }
+                        }
+                        else if(response.data.Critical)
+                        {
+                            pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                        }
+                        else
+                        {
+                            pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                        }
+                    }
+                })
+        .catch(error => 
+        {
+            if(error.response.data.Warning)
+            {
+                if(error.response.data.Warning.message == 'Please ether nickname')
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needNickname']});
+                }
+                else if(error.data.Warning.message == 'Please ether password')
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needPassword']});
+                }
+                else
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                }
+            }
+            else if(error.response.data.Error)
+            {
+                if(error.response.data.Error.message == 'Admin nickname or password is incorrect')
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['incorrectNicknameOrPassword']});
+                }
+                else
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            }
+            else if(error.response.data.Critical)
+            {
+                pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+            else
+            {
+                pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+            }
+        })
+    }
+
+    const onLoginButtonValidate = async () => 
     {
         if(nickname.value.length > 0)
         {
@@ -535,7 +638,7 @@
             <span class="form__checkbox__checkmark"></span>
         </label>
         
-        <button @click="onLoginButton" class="form__button login">{{ langData["formLoginButton"] }}</button>
+        <button @click="onLoginButtonValidate" class="form__button login">{{ langData["formLoginButton"] }}</button>
     </div>
     <div v-else class="form">
         <p class="form__title">{{ langData["formPanelTitle"] }}</p>
