@@ -15,26 +15,30 @@
     const recaptchaSitekey = ref('6LfaS9spAAAAAFo0_FElcn_sYvxjb3wlt8czk2E2');
     const recaptcha : Ref<VueRecaptcha | null> = ref(null);
 
-    const onVerify = () => 
+    const onVerify = (response : string) => 
     {
-        emits('onVerify');
-    };
+        emits('onVerify', response);
+    }
 
     const onExpired = () => 
     {
         emits('onExpired');
-    };
+    }
 
     const onError = () => 
     {
         emits('onError');
-    };
+    }
 
-    const executeRecaptcha = () => 
+    const execute = () => 
     {
-        const recaptchaInstance = recaptcha.value?.execute();
-    };
+        recaptcha.value?.execute();
+    }
     
+    defineExpose({
+        execute
+    })
+
     // 
     onUnmounted(() =>
     {

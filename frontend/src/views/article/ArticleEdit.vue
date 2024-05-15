@@ -45,7 +45,9 @@
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleEdit", langsData).langData;
 
-	const captcha = ref(null);
+	const captcha : Ref<{ execute: () => void } | null> = ref(null);
+
+	const tokenCaptcha : Ref<string> = ref('');
 
 	const route : RouteLocationNormalizedLoaded = useRoute();
 	const articleEditCode : Ref<string | null> = ref(null);
@@ -686,6 +688,21 @@
 		adminStatusReCheck();
 		await fetchData();
 	});
+
+	const onCaptchaVerify = (token: string) => 
+    {
+        tokenCaptcha.value = token;
+    };
+
+    const onCaptchaExpired = () =>
+    {
+        tokenCaptcha.value = '';
+    }
+
+    const onCaptchaError = () =>
+    {
+        tokenCaptcha.value = '';
+    }
 </script>
 
 <template>
@@ -756,7 +773,7 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
-			<Captcha ref="captcha" class="main__article__captcha"/>
+			<Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</article>
 		<article v-else class="main__article">
 			<h1 class="main__article__title">{{ (langData['errors'] as JsonData)['articleForEditNotFound'] }}</h1>

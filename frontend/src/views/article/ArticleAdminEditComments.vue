@@ -26,7 +26,9 @@
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
 
-	const captcha = ref(null);
+	const captcha : Ref<{ execute: () => void } | null> = ref(null);
+
+	const tokenCaptcha : Ref<string> = ref('');
 
 	const route : RouteLocationNormalizedLoaded = useRoute();
 
@@ -152,6 +154,21 @@
 		commentsLoading.value = true;
 		await deleteComments();
 	}
+
+	const onCaptchaVerify = (token: string) => 
+    {
+        tokenCaptcha.value = token;
+    };
+
+    const onCaptchaExpired = () =>
+    {
+        tokenCaptcha.value = '';
+    }
+
+    const onCaptchaError = () =>
+    {
+        tokenCaptcha.value = '';
+    }
 </script>
 
 <template>
@@ -189,7 +206,7 @@
 				<a @click="onApplyFilters()" class="main__filters__buttons__button">{{ langData['applyFiltersButton'] }}</a>
 				<a @click="onDeleteSelected()" class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
-			<Captcha ref="captcha" class="main__filters__captcha"/>
+			<Captcha @on-verify="onCaptchaVerify" @on-expired="onCaptchaExpired" @on-error="onCaptchaError" ref="captcha" class="main__filters__captcha"/>
 		</div>
 		<div v-if="!commentsLoading" class="main__comments">
             <p v-if="comments.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
