@@ -45,6 +45,8 @@
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleEdit", langsData).langData;
 
+	const captcha : Ref<HTMLElement | null> = ref(null);
+
 	const route : RouteLocationNormalizedLoaded = useRoute();
 	const articleEditCode : Ref<string | null> = ref(null);
 

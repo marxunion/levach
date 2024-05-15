@@ -26,6 +26,8 @@
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminEditComments", langsData).langData;
 
+	const captcha : Ref<HTMLElement | null> = ref(null);
+
 	const route : RouteLocationNormalizedLoaded = useRoute();
 
 	const loading : Ref<boolean> = ref(true);
@@ -187,7 +189,7 @@
 				<a @click="onApplyFilters()" class="main__filters__buttons__button">{{ langData['applyFiltersButton'] }}</a>
 				<a @click="onDeleteSelected()" class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
-			<Captcha class="main__filters__captcha"/>
+			<Captcha ref="captcha" class="main__filters__captcha"/>
 		</div>
 		<div v-if="!commentsLoading" class="main__comments">
             <p v-if="comments.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>

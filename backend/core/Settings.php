@@ -19,7 +19,9 @@ class Settings
             'DB_NAME' => $_ENV['DB_NAME'],
             'DB_HOST' => $_ENV['DB_HOST'],
             'DB_USER' => $_ENV['DB_USER'],
-            'DB_PASSWORD' => $_ENV['DB_PASSWORD']
+            'DB_PASSWORD' => $_ENV['DB_PASSWORD'],
+
+            'RECAPTCHA_SECRETKEY' => $_ENV['RECAPTCHA_SECRETKEY']
         ];
 
         if($_ENV['DEBUG_MODE'] == "true")
