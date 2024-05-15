@@ -8,6 +8,9 @@
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css'
 
+    import { openModal } from 'jenesius-vue-modal';
+    import InfoModal from '../../components/modals/InfoModal.vue';
+
 	import VueNumberInput from '@chenfengyuan/vue-number-input';
 
 	import Loader from '../../components/Loader.vue';
@@ -21,11 +24,12 @@
     
     import { dateFormat, timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
 
+
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AdminEditComments", langsData).langData;
 
     const captcha : Ref<{ execute: () => void } | null> = ref(null);
 
-    const tokenCaptcha : Ref<string> = ref('');
+    const captchaToken : Ref<string> = ref('');
 
     const loading : Ref<boolean> = ref(true);
 
@@ -45,11 +49,18 @@
     const fetchArticleComments = async () => 
 	{
 		await getNewCsrfToken();
-
-		if(csrfTokenInput.value == null)
+        if(csrfTokenInput.value == null)
 		{
 			return;
 		}
+
+        captcha.value?.execute();
+
+        if(captchaToken.value == '')
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            return;
+        }	
 
 		const data = {
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
@@ -142,17 +153,17 @@
 
     const onCaptchaVerify = (token: string) => 
     {
-        tokenCaptcha.value = token;
+        captchaToken.value = token;
     };
 
     const onCaptchaExpired = () =>
     {
-        tokenCaptcha.value = '';
+        captchaToken.value = '';
     }
 
     const onCaptchaError = () =>
     {
-        tokenCaptcha.value = '';
+        captchaToken.value = '';
     }
 </script>
 

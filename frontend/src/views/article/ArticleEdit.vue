@@ -47,7 +47,7 @@
 
 	const captcha : Ref<{ execute: () => void } | null> = ref(null);
 
-	const tokenCaptcha : Ref<string> = ref('');
+	const captchaToken : Ref<string> = ref('');
 
 	const route : RouteLocationNormalizedLoaded = useRoute();
 	const articleEditCode : Ref<string | null> = ref(null);
@@ -691,17 +691,17 @@
 
 	const onCaptchaVerify = (token: string) => 
     {
-        tokenCaptcha.value = token;
+        captchaToken.value = token;
     };
 
     const onCaptchaExpired = () =>
     {
-        tokenCaptcha.value = '';
+        captchaToken.value = '';
     }
 
     const onCaptchaError = () =>
     {
-        tokenCaptcha.value = '';
+        captchaToken.value = '';
     }
 </script>
 
