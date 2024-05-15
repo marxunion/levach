@@ -320,6 +320,14 @@
 
 	const onSendButtonRequest = async (captchaToken: string) => 
 	{
+		await getNewCsrfToken();
+
+		if(csrfTokenInput.value == null)
+		{
+			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+			return;
+		}
+
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
@@ -507,25 +515,16 @@
 		}
 	});
 
-	const onRequestApproveArticle = async () => 
+	const onRequestApproveArticleRequest = async (captchaToken: string) => 
 	{
-		await getNewCsrfToken();
-
-        if(csrfTokenInput.value == null)
-        {
-            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-            return;
-        }
-
 		captchaVerifyCallback = onSendButtonValidate;
 
 		captcha.value?.execute();
 
-		
-
         const data = 
         {
             csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken
         }
 
         await axios.post('/api/article/edit/requestApprove/' + articleEditCode.value, data)
@@ -578,7 +577,15 @@
         });
 	}
 
-	const onRejectApproveWithChanges = async () =>
+	const onRequestApproveArticleValidate = async () => 
+	{
+		captchaVerifyCallback = onRequestApproveArticleRequest;
+
+		captcha.value?.execute();
+	}
+
+
+	const onRejectApproveWithChangesRequest = async (captchaToken: string) =>
 	{
 		await getNewCsrfToken();
 
@@ -591,6 +598,7 @@
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken,
 			status: 0
 		}
 
@@ -643,7 +651,14 @@
 		});
 	}
 
-	const onAcceptApproveWithChanges = async () =>
+	const onRejectApproveWithChangesValidate = async () =>
+	{
+		captchaVerifyCallback = onRejectApproveWithChangesRequest;
+
+		captcha.value?.execute();
+	}
+
+	const onAcceptApproveWithChangesRequest = async (captchaToken: string) =>
 	{
 		await getNewCsrfToken();
 
@@ -656,6 +671,7 @@
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			captchaToken: captchaToken,
 			status: 1
 		}
 
@@ -706,6 +722,13 @@
                 openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
 			}
 		});
+	}
+
+	const onAcceptApproveWithChangesValidate = async () =>
+	{
+		captchaVerifyCallback = onAcceptApproveWithChangesRequest;
+
+		captcha.value?.execute();
 	}
 
 	onMounted(async function()
@@ -765,13 +788,13 @@
 			</div>
 			<div v-if="fetchedData['canRequestApprove']" class="main__article__block">
 				<p class="main__article__block__title">{{ langData['requestApproveTitle'] }}</p>
-				<button @click="onRequestApproveArticle" class="main__article__block__button requestApproveArticleButton">{{ langData['requestApproveButtonTitle'] }}</button>
+				<button @click="onRequestApproveArticleValidate" class="main__article__block__button requestApproveArticleButton">{{ langData['requestApproveButtonTitle'] }}</button>
 			</div>
 			<div v-if="fetchedData['approvededitorially_status'] == 3" class="main__article__block">
 				<p class="main__article__block__title">{{ langData['articleApprovedWithChangesTitle'] }}</p>
 				<div class="main__article__block__subblock">
-					<button @click="onAcceptApproveWithChanges" class="main__article__block__button acceptArticleApprovedWithChangesButton">{{ langData['acceptArticleApprovedWithChangesButtonTitle'] }}</button>
-					<button @click="onRejectApproveWithChanges" class="main__article__block__button rejectArticleApprovedWithChangesButton">{{ langData['rejectArticleApprovedWithChangesButtonTitle'] }}</button>
+					<button @click="onAcceptApproveWithChangesValidate" class="main__article__block__button acceptArticleApprovedWithChangesButton">{{ langData['acceptArticleApprovedWithChangesButtonTitle'] }}</button>
+					<button @click="onRejectApproveWithChangesValidate" class="main__article__block__button rejectArticleApprovedWithChangesButton">{{ langData['rejectArticleApprovedWithChangesButtonTitle'] }}</button>
 				</div>
 			</div>
 			<div v-if="fetchedData['approvededitorially_status'] == 2 && fetchedData['editorially_status'] != 1 && !adminStatus" class="main__article__previewContainer">

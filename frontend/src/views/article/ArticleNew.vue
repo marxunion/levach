@@ -85,11 +85,14 @@
 	
 	const onSendButtonRequest = async function (captchaToken: string)
 	{
-		if(csrfTokenInput.value == null)
-		{
-			openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-			return;
-		}
+		await getNewCsrfToken();
+
+        if(csrfTokenInput.value == null)
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            return;
+        }
+		
 		const data = {
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
 			captchaToken: captchaToken,
@@ -207,8 +210,6 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25 && content.length <= 10000) 
 						{
-							await getNewCsrfToken();
-							
 							captchaVerifyCallback = onSendButtonRequest;
 
 							captcha.value?.execute();
