@@ -67,7 +67,7 @@
 		}
 
         await axios.post('/api/admin/login', data)
-		 .then(response => 
+		.then(response => 
 		{
             if(response.data.success)
             {
@@ -91,27 +91,27 @@
                         pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
                     }
                 }
-                        else if(response.data.Error)
-                        {
-                            if(response.data.Error.message == 'Admin nickname or password is incorrect')
-                            {
-                                pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['incorrectNicknameOrPassword']});
-                            }
-                            else
-                            {
-                                pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                            }
-                        }
-                        else if(response.data.Critical)
-                        {
-                            pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                        }
-                        else
-                        {
-                            pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                        }
+                else if(response.data.Error)
+                {
+                    if(response.data.Error.message == 'Admin nickname or password is incorrect')
+                    {
+                        pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['incorrectNicknameOrPassword']});
                     }
-                })
+                    else
+                    {
+                        pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                    }
+                }
+                else if(response.data.Critical)
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+                else
+                {
+                    pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                }
+            }
+        })
         .catch(error => 
         {
             if(error.response.data.Warning)
