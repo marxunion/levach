@@ -1,8 +1,6 @@
 <?php
 namespace Api\Models;
 
-use Core\Error;
-
 use Base\BaseModel;
 
 class AdminArticlePremoderateModel extends BaseModel

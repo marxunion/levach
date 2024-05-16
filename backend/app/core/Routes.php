@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Core\Settings;
 
-use Core\Warning;
+use Core\Error;
 
 class Routes
 {

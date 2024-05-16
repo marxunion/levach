@@ -1,6 +1,7 @@
 <?php
 namespace Api\Models;
 
+use Core\Warning;
 use Core\Error;
 
 use Base\BaseModel;

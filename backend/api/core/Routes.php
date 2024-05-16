@@ -8,7 +8,6 @@ use Slim\App;
 
 use Base\BaseHandler;
 use Base\BaseHandlerRoute;
-use Base\EmptyHandlerRoute;
 
 use Api\Handlers\ArticleApproveWithChangesHandler;
 
