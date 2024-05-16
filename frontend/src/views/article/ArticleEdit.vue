@@ -516,14 +516,6 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25 && content.length <= 10000) 
 						{
-							await getNewCsrfToken();
-
-							if(csrfTokenInput.value == null)
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-								return;
-							}
-
 							captchaVerifyCallback = onSendButtonRequest;
 
 							captcha.value?.execute();
