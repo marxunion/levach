@@ -142,7 +142,14 @@
 				} 
 				else if (response.data.Error) 
 				{
-					openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+					if(response.data.Error.message == "Invalid captcha solving")
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+					}
+					else
+					{
+						openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+					}
 				} 
 				else if (response.data.Critical) 
 				{
@@ -181,7 +188,14 @@
 			} 
 			else if (error.response.data.Error) 
 			{
-				openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+				if(error.response.data.Error.message == "Invalid captcha solving")
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+				}
+				else
+				{
+					openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
+				}
 			} 
 			else if (error.response.data.Critical) 
 			{

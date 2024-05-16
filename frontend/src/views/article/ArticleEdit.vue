@@ -422,7 +422,11 @@
 					else if (response.data.Error.message == "Please make changes for edit") 
 					{
 						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleNeedChanges'] });
-					} 
+					}
+					else if(response.data.Error.message == "Invalid captcha solving")
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+					}
 					else 
 					{
 						openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
@@ -477,7 +481,12 @@
 				{
 					openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['articleNeedChanges'] });
 				}
-				else {
+				if(error.response.data.Error.message == "Invalid captcha solving")
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+				}
+				else 
+				{
 					openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
 				}
 			} 

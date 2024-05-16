@@ -249,7 +249,7 @@
 							if (response.data) 
 							{
 								if(response.data.Warning)
-									{
+								{
 									if(response.data.Warning.message == "Invalid image type")
 									{
 										openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
@@ -276,7 +276,7 @@
 									else
 									{
 										openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-									};
+									}
 								}
 								else if(response.data.Critical)
 								{

@@ -183,7 +183,45 @@
 						}
 						else
 						{
-							openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							if(response.data.Warning)
+							{
+								if(response.data.Warning.message == "Invalid image type")
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
+								}
+								else if(response.data.Warning.message == "File size exceeds the maximum allowable file size")
+								{
+									openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', response.data.Warning.params.max_upload_filesize_mb)});
+								}
+								else if(response.data.Warning.message == "Invalid image type")
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
+								}
+								else
+								{
+									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["unknown"] });
+								}
+								
+							}
+							else if(response.data.Error)
+							{
+								if(response.data.Error.message == "Invalid captcha solving")
+								{
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+								}
+								else
+								{
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+								}
+							}
+							else if(response.data.Critical)
+							{
+								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+							else 
+							{
+								openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
 						}
 					})
 					.catch((error) => 
@@ -212,7 +250,14 @@
 							}
 							else if(error.response.data.Error)
 							{
-								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+								if(error.response.data.Error.message == "Invalid captcha solving")
+								{
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+								}
+								else
+								{
+									openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+								}
 							}
 							else if(error.response.data.Critical)
 							{
@@ -297,7 +342,14 @@
 				}
 				else if(response.data.Error)
 				{
-					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+					if(response.data.Error.message == "Invalid captcha solving")
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+					}
+					else
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+					}
 				}
 				else if(response.data.Critical)
 				{
@@ -317,7 +369,14 @@
 			}
 			else if(error.response.data.Error)
 			{
-				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+				if(error.response.data.Error.message == "Invalid captcha solving")
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+				}
+				else
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+				}
 			}
 			else if(error.response.data.Critical)
 			{
