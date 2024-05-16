@@ -106,7 +106,7 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                         } 
                         else 
                         {
-                            throw new Warning(400, "Invalid length of article title", "Invalid length of article title");
+                            throw new Warning(400, "Title must contain between 5 and 120 characters", "Title must contain between 5 and 120 characters");
                         }
                     } 
                     else 

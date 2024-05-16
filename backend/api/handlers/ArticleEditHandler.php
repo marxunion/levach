@@ -113,7 +113,7 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                     } 
                     else 
                     {
-                        throw new Warning(400, "The title must contain between 5 and 120 characters", "The title must contain between 5 and 120 characters");
+                        throw new Warning(400, "Title must contain between 5 and 120 characters", "Title must contain between 5 and 120 characters");
                     }
                 } 
                 else 
