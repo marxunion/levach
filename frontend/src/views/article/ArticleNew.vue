@@ -115,7 +115,7 @@
 			{
 				if (response.data.Warning) 
 				{
-					if (response.data.Warning.message == "Empty article title") 
+					if (response.data.Warning.message == "Please add a title for the article") 
 					{
 						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleNeedTitle'] });
 					} 
@@ -123,11 +123,11 @@
 					{
 						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols'] });
 					} 
-					else if (response.data.Warning.message == "Empty article content") 
+					else if (response.data.Warning.message == "Please add content for the article") 
 					{
 						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent'] });
 					} 
-					else if (response.data.Warning.message == "Invalid length of article content") 
+					else if (response.data.Warning.message == "Article content must contain between 25 and 10000 characters") 
 					{
 						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols'] });
 					} 
@@ -287,15 +287,15 @@
 					{
 						if(error.response.data.Warning)
 						{
-							if(error.response.data.Warning.message == "UploadImage Invalid image type")
+							if(error.response.data.Warning.message == "Invalid image type")
 							{
 								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
 							}
-							else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
+							else if(error.response.data.Warning.message == "File size exceeds the maximum allowable file size")
 							{
 								openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
 							}
-							else if(error.response.data.Warning.message == "UploadImage Invalid image type")
+							else if(error.response.data.Warning.message == "Invalid image type")
 							{
 								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
 							}
@@ -306,7 +306,14 @@
 						}
 						else if(error.response.data.Error)
 						{
-							openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							if(error.response.data.Error.message == "Invalid captcha solving")
+                            {
+                                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+                        	}
+							else
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
 						}
 						else if(error.response.data.Critical)
 						{

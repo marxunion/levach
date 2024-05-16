@@ -26,7 +26,7 @@ class ArticleApproveWithChangesHandler extends BaseHandlerRouteWithArgs
                     }
                     else
                     {
-                        throw new Error(404, "Article for edit not found", "Article for edit not found");
+                        throw new Error(404, "Article for editing not found", "Article for editing not found");
                     }
                 }
                 else
@@ -68,7 +68,7 @@ class ArticleApproveWithChangesHandler extends BaseHandlerRouteWithArgs
         }
         else
         {
-            throw new Error(404, "Article for edit not found", "Article for edit not found");
+            throw new Error(404, "Article for editing not found", "Article for editing not found");
         }
     }
 }

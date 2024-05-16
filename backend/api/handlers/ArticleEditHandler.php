@@ -1,6 +1,7 @@
 <?php
 namespace Api\Handlers;
 
+use Core\Error;
 use Core\Warning;
 
 use Base\BaseHandlerRouteWithArgs;
@@ -8,35 +9,64 @@ use Base\BaseModel;
 
 use Api\Models\ArticleEditModel;
 
+use Api\Handlers\CaptchaTokenHandler;
 use Api\Handlers\AdminStatusHandler;
 
 class ArticleEditHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
-        if(!empty($this->args['editCode']))
-        {
-            $this->model = new ArticleEditModel();
-            $parsedBody = $this->request->getParsedBody();
+        $parsedBody = $this->request->getParsedBody();
             
-            if(is_array($parsedBody))
+        if(is_array($parsedBody))
+        {
+            $this->parsedBody = $parsedBody;
+            if(!empty($this->parsedBody['captchaToken']))
             {
-                $this->parsedBody = $parsedBody;
-                $this->cookiesBody = $this->request->getCookieParams();
-                
-                if(empty($this->parsedBody['text']))
+                if(CaptchaTokenHandler::checkCaptchaToken($this->request->getServerParam('REMOTE_ADDR'), $this->parsedBody['captchaToken']))
                 {
-                    throw new Warning(400, "Please add a title for the article", "Empty article title");
+                    if(!empty($this->parsedBody['csrfToken']))
+                    {
+                        if(CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
+                        {
+                            if(!empty($this->args['editCode']))
+                            {
+                                $this->model = new ArticleEditModel();
+                                $this->cookiesBody = $this->request->getCookieParams();
+
+                                if(empty($this->parsedBody['text']))
+                                {
+                                    throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
+                                }
+                            }
+                            else
+                            {
+                                throw new Warning(404, "Article for editing not found", "Article for editing not found");
+                            }
+                        }
+                        else
+                        {
+                            throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+                        }
+                    }
+                    else
+                    {
+                        throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+                    }
+                }
+                else
+                {
+                    throw new Error(400, "Invalid captcha solving", "Invalid captcha solving");
                 }
             }
             else
             {
-                throw new Warning(400, "Please add a title for the article", "Empty article title");
+                throw new Error(400, "Invalid captcha solving", "Invalid captcha solving");
             }
         }
         else
         {
-            throw new Warning(404, "Article for editing not found", "Article for edit not found");
+            throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
         }
     }
 
@@ -73,27 +103,27 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                             } 
                             else 
                             {
-                                throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Invalid length of article content");
+                                throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Article content must contain between 25 and 10000 characters");
                             }
                         } 
                         else 
                         {
-                            throw new Warning(400, "Please add content for the article", "Empty article content");
+                            throw new Warning(400, "Please add content for the article", "Please add content for the article");
                         }
                     } 
                     else 
                     {
-                        throw new Warning(400, "The title must contain between 5 and 120 characters", "Invalid article title length");
+                        throw new Warning(400, "The title must contain between 5 and 120 characters", "The title must contain between 5 and 120 characters");
                     }
                 } 
                 else 
                 {
-                    throw new Warning(400, "Please add a title for the article", "Invalid article title");
+                    throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
                 }
             } 
             else 
             {
-                throw new Warning(400, "Please add a title for the article", "Empty article title");
+                throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
             }
         }
         else

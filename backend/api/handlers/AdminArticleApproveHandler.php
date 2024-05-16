@@ -96,12 +96,12 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                                 }            
                                 else 
                                 {
-                                    throw new Warning(400, "Invalid length of article content", "Invalid length of article content");
+                                    throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Article content must contain between 25 and 10000 characters");
                                 }
                             } 
                             else 
                             {
-                                throw new Warning(400, "Empty article content", "Empty article content");
+                                throw new Warning(400, "Please add content for the article", "Please add content for the article");
                             }
                         } 
                         else 
@@ -111,12 +111,12 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                     } 
                     else 
                     {
-                        throw new Warning(400, "Invalid article title", "Invalid article title");
+                        throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
                     }
                 } 
                 else 
                 {
-                    throw new Warning(400, "Empty article title", "Empty article title");
+                    throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
                 }
             }
             else

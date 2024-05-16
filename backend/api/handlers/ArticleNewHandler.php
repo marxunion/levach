@@ -1,12 +1,14 @@
 <?php
 namespace Api\Handlers;
 
+use Core\Error;
 use Core\Warning;
 
 use Base\BaseHandlerRoute;
 
 use Api\Models\ArticleNewModel;
 
+use Api\Handlers\CaptchaTokenHandler;
 use Api\Handlers\CSRFTokenHandler;
 
 class ArticleNewHandler extends BaseHandlerRoute
@@ -19,16 +21,44 @@ class ArticleNewHandler extends BaseHandlerRoute
         if(is_array($parsedBody))
         {
             $this->parsedBody = $parsedBody;
-            $this->cookiesBody = $this->request->getCookieParams();
-
-            if(empty($this->parsedBody['text']))
+            if(!empty($this->parsedBody['captchaToken']))
             {
-                throw new Warning(400, "Please add a title for the article", "Empty article title");
+                if(CaptchaTokenHandler::checkCaptchaToken($this->request->getServerParam('REMOTE_ADDR'), $this->parsedBody['captchaToken']))
+                {
+                    if(!empty($this->parsedBody['csrfToken']))
+                    {
+                        if(CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
+                        {
+                            $this->cookiesBody = $this->request->getCookieParams();
+                
+                            if(empty($this->parsedBody['text']))
+                            {
+                                throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
+                            }
+                        }
+                        else
+                        {
+                            throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+                        }
+                    }
+                    else
+                    {
+                        throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+                    }
+                }
+                else
+                {
+                    throw new Error(400, "Invalid captcha solving", "Invalid captcha solving");
+                }
+            }
+            else
+            {
+                throw new Error(400, "Invalid captcha solving", "Invalid captcha solving");
             }
         }
         else
         {
-            throw new Warning(400, "Please add a title for the article", "Empty article title");
+            throw new Warning(400, "Invalid request", "Invalid request");
         }
     }
 
@@ -84,27 +114,27 @@ class ArticleNewHandler extends BaseHandlerRoute
                         } 
                         else 
                         {
-                            throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Invalid length of article content");
+                            throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Article content must contain between 25 and 10000 characters");
                         }
                     } 
                     else 
                     {
-                        throw new Warning(400, "Please add content for the article", "Empty article content");
+                        throw new Warning(400, "Please add content for the article", "Please add content for the article");
                     }
                 } 
                 else 
                 {
-                    throw new Warning(400, "Title must contain between 5 and 120 characters", "Invalid article title length");
+                    throw new Warning(400, "Title must contain between 5 and 120 characters", "The title must contain between 5 and 120 characters");
                 }
             } 
             else 
             {
-                throw new Warning(400, "Please add a title for the article.", "Invalid article title");
+                throw new Warning(400, "Please add a title for the article.", "Please add a title for the article");
             }
         } 
         else 
         {
-            throw new Warning(400, "Please add a title for the article", "Empty article title");
+            throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
         }
     }
 }

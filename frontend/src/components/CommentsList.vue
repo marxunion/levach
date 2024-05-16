@@ -192,15 +192,15 @@
 						{
 							if(error.response.data.Warning)
 							{
-								if(error.response.data.Warning.message == "UploadImage Invalid image type")
+								if(error.response.data.Warning.message == "Invalid image type")
 								{
 									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
 								}
-								else if(error.response.data.Warning.message == "UploadImage File size exceeds the maximum allowable file size")
+								else if(error.response.data.Warning.message == "File size exceeds the maximum allowable file size")
 								{
 									openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
 								}
-								else if(error.response.data.Warning.message == "UploadImage Invalid image type")
+								else if(error.response.data.Warning.message == "Invalid image type")
 								{
 									openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
 								}

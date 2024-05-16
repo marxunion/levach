@@ -241,7 +241,7 @@
             "captcha": "Captcha solving error",
             "articleEditLink": "Don't forget to save the link or your article will not be editable",
 
-            "articleNotFound": "Article for edit not found",
+            "articleNotFound": "Article for editing not found",
             "articleNeedTitle": "Please add a title for the article",
             "articleTitleSymbols": "Article title cannot be less than 5 characters and exceed 120 characters",
             "articleNeedContent": "Please add content for the article",
@@ -262,7 +262,7 @@
 
         "errors": 
         {
-            "articleForEditNotFound": "Article for edit not found",
+            "articleForEditNotFound": "Article for editing not found",
 
             "articleNeedChanges": "Please make any changes to edit article",
 

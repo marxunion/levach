@@ -9,15 +9,45 @@ use Core\Critical;
 
 use Base\BaseHandlerRoute;
 
+use Api\Handlers\CaptchaTokenHandler;
 use Api\Handlers\AdminSettingsGetHandler;
 
 class MediaUploadImageHandler extends BaseHandlerRoute
 {
+    public function Init()
+    {
+        $parsedBody = $this->request->getParsedBody();
+        
+        if(is_array($parsedBody))
+        {
+            $this->parsedBody = $parsedBody;
+            if(!empty($this->parsedBody['captchaToken']))
+            {
+                if(CaptchaTokenHandler::checkCaptchaToken($this->request->getServerParam('REMOTE_ADDR'), $this->parsedBody['captchaToken']))
+                {
+                    $this->cookiesBody = $this->request->getCookieParams();
+                }
+                else
+                {
+                    throw new Error(400, "Invalid captcha solving", "Invalid captcha solving");
+                }
+            }
+            else
+            {
+                throw new Error(400, "Invalid captcha solving", "Invalid captcha solving");
+            } 
+        }
+        else
+        {
+            throw new Warning(400, "Invalid request body", "Invalid request body");
+        }
+    }
     public function Process()
     {
+        var_dump($this->request->getParsedBody());
         if(count($this->request->getUploadedFiles()) < 1)
         {
-            throw new Warning(400,"UploadImage File not uploaded", "UploadImage File not uploaded");
+            throw new Warning(400,"File not uploaded", "File not uploaded");
             return;
         }
 
@@ -31,7 +61,7 @@ class MediaUploadImageHandler extends BaseHandlerRoute
                     
                 if ($uploadedFile->getSize() > $maxFileSize) 
                 {
-                    throw new Warning(400, "UploadImage File size exceeds the maximum allowable file size", "UploadImage File size exceeds the maximum allowable file size", ['max_upload_filesize_mb' => $maxUploadFilesizeMB]);
+                    throw new Warning(400, "File size exceeds the maximum allowable file size", "File size exceeds the maximum allowable file size", ['max_upload_filesize_mb' => $maxUploadFilesizeMB]);
                     return;
                 }
                 $allowedTypes = 
@@ -59,7 +89,7 @@ class MediaUploadImageHandler extends BaseHandlerRoute
                 }
                 else
                 {
-                    throw new Warning(400, "UploadImage Invalid image type", "UploadImage Invalid image type");
+                    throw new Warning(400, "Invalid image type", "Invalid image type");
                 }
             }
             else
@@ -69,7 +99,7 @@ class MediaUploadImageHandler extends BaseHandlerRoute
         } 
         else 
         {
-            throw new Warning(400, "UploadImage File not uploaded", "UploadImage File not uploaded");
+            throw new Warning(400, "File not uploaded", "File not uploaded");
         }
     }
 }

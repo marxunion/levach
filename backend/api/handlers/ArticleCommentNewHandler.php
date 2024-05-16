@@ -16,55 +16,68 @@ class ArticleCommentNewHandler extends BaseHandlerRouteWithArgs
         if(is_array($parsedBody))
         {
             $this->parsedBody = $parsedBody;
-            
-            if(!empty($this->parsedBody['csrfToken']))
+            if(!empty($this->parsedBody['captchaToken']))
             {
-                if(CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
+                if(CaptchaTokenHandler::checkCaptchaToken($this->request->getServerParam('REMOTE_ADDR'), $this->parsedBody['captchaToken']))
                 {
-                    if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
+                    if(!empty($this->parsedBody['csrfToken']))
                     {
-                        if(!empty($this->args['viewCode']))
+                        if(CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                         {
-                            if(!empty($this->parsedBody['text']))
+                            if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                             {
-                                $this->parsedBody['ratingInfluence'] = 0;
-                                if(isset($this->parsedBody['rating_influence']))
+                                if(!empty($this->args['viewCode']))
                                 {
-                                    if($this->parsedBody['rating_influence'] == 1)
+                                    if(!empty($this->parsedBody['text']))
                                     {
-                                        $this->parsedBody['ratingInfluence'] = 1;
+                                        $this->parsedBody['ratingInfluence'] = 0;
+                                        if(isset($this->parsedBody['rating_influence']))
+                                        {
+                                            if($this->parsedBody['rating_influence'] == 1)
+                                            {
+                                                $this->parsedBody['ratingInfluence'] = 1;
+                                            }
+                                            else if($this->parsedBody['rating_influence'] == 2)
+                                            {
+                                                $this->parsedBody['ratingInfluence'] = -1;
+                                            }
+                                        }
+                                        $this->model = new ArticleCommentNewModel();
                                     }
-                                    else if($this->parsedBody['rating_influence'] == 2)
+                                    else
                                     {
-                                        $this->parsedBody['ratingInfluence'] = -1;
+                                        throw new Error(400, "Invalid comment text", "Invalid article text");
                                     }
+                                    
                                 }
-                                $this->model = new ArticleCommentNewModel();
+                                else
+                                {
+                                    throw new Error(400, "Invalid article viewCode", "Invalid article viewCode");
+                                }
                             }
                             else
                             {
-                                throw new Error(400, "Invalid comment text", "Invalid article text");
+                                throw new Error(400, "Invalid admin token", "Invalid admin token");
                             }
-                            
                         }
                         else
                         {
-                            throw new Error(400, "Invalid article viewCode", "Invalid article viewCode");
+                            throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
                         }
                     }
                     else
                     {
-                        throw new Error(400, "Invalid admin token", "Invalid admin token");
+                        throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
                     }
                 }
                 else
                 {
-                    throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+                    throw new Error(400, "Invalid captcha solving", "Invalid captcha solving");
                 }
             }
             else
             {
-                throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+                throw new Error(400, "Invalid captcha solving", "Invalid captcha solving");
             }
         }
         else
