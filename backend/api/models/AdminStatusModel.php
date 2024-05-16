@@ -104,7 +104,7 @@ class AdminStatusModel extends BaseModel
                     }
                     else
                     {
-                        throw new Error(400, "Invalid admin token", "Invalid admin token");
+                        throw new Error(403, "Invalid admin token", "Invalid admin token");
                     }
                 }
                 else

@@ -55,7 +55,7 @@ class AdminLoginHandler extends BaseHandlerRoute
         }
         else
         {
-            throw new Error(400, "Admin nickname not found", "Admin nickname not found");
+            throw new Error(400, "Invalid request body", "Invalid request body");
         }
     }
     public function Process()

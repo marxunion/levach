@@ -41,7 +41,7 @@ class ArticleApproveRequestHandler extends BaseHandlerRouteWithArgs
         }
         else
         {
-            throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+            throw new Error(400, "Invalid request body", "Invalid request body");
         }
     }
 

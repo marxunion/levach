@@ -39,7 +39,7 @@ class MediaUploadImageHandler extends BaseHandlerRoute
         }
         else
         {
-            throw new Warning(400, "Invalid request body", "Invalid request body");
+            throw new Error(400, "Invalid request body", "Invalid request body");
         }
     }
     public function Process()

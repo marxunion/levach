@@ -58,7 +58,7 @@ class ArticleNewHandler extends BaseHandlerRoute
         }
         else
         {
-            throw new Warning(400, "Invalid request", "Invalid request");
+            throw new Error(400, "Invalid request body", "Invalid request body");
         }
     }
 

@@ -12,9 +12,10 @@ class ArticlesHandler extends BaseHandlerRoute
 {
     public function Init()
     {
-        if(is_array($this->request->getQueryParams()))
+        $parsedBody = $this->request->getQueryParams();
+        if(is_array($parsedBody))
         {
-            $this->parsedBody = $this->request->getQueryParams();
+            $this->parsedBody = $parsedBody;
 
             $this->model = new ArticlesModel();
 
@@ -49,7 +50,7 @@ class ArticlesHandler extends BaseHandlerRoute
         }
         else
         {
-            throw new Error(400, "Invalid query", "Invalid query");
+            throw new Error(400, "Invalid request body", "Invalid request body");
         }
     }
 

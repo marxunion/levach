@@ -66,7 +66,7 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
         }
         else
         {
-            throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
+            throw new Error(400, "Invalid request body", "Invalid request body");
         }
     }
 
