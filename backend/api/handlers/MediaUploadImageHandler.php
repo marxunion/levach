@@ -5,6 +5,7 @@ use Core\Settings;
 use Core\Database;
 
 use Core\Warning;
+use Core\Error;
 use Core\Critical;
 
 use Base\BaseHandlerRoute;
@@ -25,7 +26,14 @@ class MediaUploadImageHandler extends BaseHandlerRoute
             {
                 if(CaptchaTokenHandler::checkCaptchaToken($this->request->getServerParam('REMOTE_ADDR'), $this->parsedBody['captchaToken']))
                 {
-                    $this->cookiesBody = $this->request->getCookieParams();
+                    if(count($this->request->getUploadedFiles()) > 0)
+                    {
+                        $this->cookiesBody = $this->request->getCookieParams();
+                    }
+                    else
+                    {
+                        throw new Warning(400,"File not uploaded", "File not uploaded");
+                    }
                 }
                 else
                 {
@@ -44,14 +52,8 @@ class MediaUploadImageHandler extends BaseHandlerRoute
     }
     public function Process()
     {
-        var_dump($this->request->getParsedBody());
-        if(count($this->request->getUploadedFiles()) < 1)
-        {
-            throw new Warning(400,"File not uploaded", "File not uploaded");
-            return;
-        }
-
         $uploadedFile = $this->request->getUploadedFiles()['file'];
+
         if ($uploadedFile->getError() === UPLOAD_ERR_OK) 
         {
             $maxUploadFilesizeMB = AdminSettingsGetHandler::getSetting('max_upload_filesize_mb');
