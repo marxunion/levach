@@ -17,8 +17,6 @@ class ArticlesHandler extends BaseHandlerRoute
         {
             $this->parsedBody = $parsedBody;
 
-            $this->model = new ArticlesModel();
-
             if(isset($this->parsedBody['count']))
             {
                 if($this->parsedBody['count'] > 8)
@@ -47,6 +45,8 @@ class ArticlesHandler extends BaseHandlerRoute
             }
 
             $this->cookiesBody = $this->request->getCookieParams();
+
+            $this->model = new ArticlesModel();
         }
         else
         {

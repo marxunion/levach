@@ -13,7 +13,6 @@ class AdminQuitHandler extends BaseHandlerRoute
 {
     public function Init()
     {
-        $this->model = new AdminQuitModel();
         $cookiesBody = $this->request->getCookieParams();
         $parsedBody = $this->request->getParsedBody();
 
@@ -31,7 +30,11 @@ class AdminQuitHandler extends BaseHandlerRoute
             $this->parsedBody = $parsedBody;
             if(!empty($this->parsedBody['csrfToken']))
             {
-                if(!CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
+                if(CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
+                {
+                    $this->model = new AdminQuitModel();
+                }
+                else
                 {
                     throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
                 }

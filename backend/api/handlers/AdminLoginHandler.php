@@ -14,7 +14,7 @@ class AdminLoginHandler extends BaseHandlerRoute
 {
     public function Init()
     {
-        $this->model = new AdminLoginModel();
+        
         $parsedBody = $this->request->getParsedBody();
 
         if(is_array($parsedBody))
@@ -26,9 +26,13 @@ class AdminLoginHandler extends BaseHandlerRoute
                 {
                     if(!AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        if(isset($this->parsedBody['nickname']))
+                        if(!empty($this->parsedBody['nickname']))
                         {
-                            if(!isset($this->parsedBody['password']))
+                            if(!empty($this->parsedBody['password']))
+                            {
+                                $this->model = new AdminLoginModel();
+                            }
+                            else
                             {
                                 throw new Error(400, "Admin password not found", "Admin password not found");
                             }

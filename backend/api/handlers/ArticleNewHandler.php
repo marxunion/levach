@@ -31,6 +31,7 @@ class ArticleNewHandler extends BaseHandlerRoute
                             if(!empty($this->parsedBody['text']))
                             {
                                 $this->cookiesBody = $this->request->getCookieParams();
+                                
                                 $this->model = new ArticleNewModel();
                             }
                             else

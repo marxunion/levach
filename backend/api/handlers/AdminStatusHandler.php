@@ -40,12 +40,14 @@ class AdminStatusHandler extends BaseHandlerRoute
 
     public function Init()
     {
-        $this->model = new AdminStatusModel();
+        
         $cookiesBody = $this->request->getCookieParams();
 
         if(is_array($cookiesBody))
         {
             $this->cookiesBody = $cookiesBody;
+
+            $this->model = new AdminStatusModel();
         }
         else
         {

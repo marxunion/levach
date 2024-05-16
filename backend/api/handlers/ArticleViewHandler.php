@@ -16,6 +16,7 @@ class ArticleViewHandler extends BaseHandlerRouteWithArgs
         if(!empty($this->args['viewCode']))
         {
             $this->cookiesBody = $this->request->getCookieParams();
+            
             $this->model = new ArticleViewModel();
         }
         else

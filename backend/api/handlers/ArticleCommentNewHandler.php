@@ -41,6 +41,7 @@ class ArticleCommentNewHandler extends BaseHandlerRouteWithArgs
                                                 $this->parsedBody['ratingInfluence'] = -1;
                                             }
                                         }
+                                        
                                         $this->model = new ArticleCommentNewModel();
                                     }
                                     else

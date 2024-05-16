@@ -33,8 +33,9 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                             {
                                 if(!empty($this->parsedBody['text']))
                                 {
-                                    $this->model = new ArticleEditModel();
                                     $this->cookiesBody = $this->request->getCookieParams();
+
+                                    $this->model = new ArticleEditModel();
                                 }
                                 else
                                 {
