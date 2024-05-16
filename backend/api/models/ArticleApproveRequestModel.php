@@ -2,8 +2,6 @@
 namespace Api\Models;
 
 use Core\Error;
-use Core\Warning;
-use Core\Critical;
 
 use Api\Handlers\AdminSettingsGetHandler;
 

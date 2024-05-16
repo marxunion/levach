@@ -12,7 +12,6 @@ use Slim\Psr7\Stream;
 use Core\Settings;
 use Core\Warning;
 use Core\Error;
-use Core\Critical;
 use Core\Logger;
 use Core\Database;
 

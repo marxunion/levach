@@ -18,7 +18,6 @@ class CustomException extends Exception
         return $this->params;
     }
 
-
     public function __construct(int $code = 0, string $message = "", string $extendedMessage = "", array $params = [], ?Throwable $previous = null)
     {
         $this->extendedMessage = $extendedMessage;

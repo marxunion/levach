@@ -1,6 +1,8 @@
 <?php
 namespace Base;
 
+use Core\Critical;
+
 use Core\Database;
 
 class BaseModel

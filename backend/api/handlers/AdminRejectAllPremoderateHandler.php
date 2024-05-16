@@ -3,7 +3,6 @@ namespace Api\Handlers;
 
 use Core\Error;
 use Core\Warning;
-use Core\Critical;
 
 use Base\BaseHandlerRoute;
 
