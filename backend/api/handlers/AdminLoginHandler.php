@@ -6,9 +6,10 @@ use Core\Critical;
 
 use Base\BaseHandlerRoute;
 
-use Api\Handlers\AdminStatusHandler;
-
 use Api\Models\AdminLoginModel;
+
+use Api\Handlers\CaptchaTokenHandler;
+use Api\Handlers\AdminStatusHandler;
 
 class AdminLoginHandler extends BaseHandlerRoute
 {
@@ -19,7 +20,7 @@ class AdminLoginHandler extends BaseHandlerRoute
         if(is_array($parsedBody))
         {
             $this->parsedBody = $parsedBody;
-            
+
             if(!empty($this->parsedBody['captchaToken']))
             {
                 if(CaptchaTokenHandler::checkCaptchaToken($this->request->getServerParam('REMOTE_ADDR'), $this->parsedBody['captchaToken']))
