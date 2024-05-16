@@ -14,47 +14,61 @@ class AdminLoginHandler extends BaseHandlerRoute
 {
     public function Init()
     {
-        
         $parsedBody = $this->request->getParsedBody();
 
         if(is_array($parsedBody))
         {
             $this->parsedBody = $parsedBody;
-            if(!empty($this->parsedBody['csrfToken']))
+            
+            if(!empty($this->parsedBody['captchaToken']))
             {
-                if(CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
+                if(CaptchaTokenHandler::checkCaptchaToken($this->request->getServerParam('REMOTE_ADDR'), $this->parsedBody['captchaToken']))
                 {
-                    if(!AdminStatusHandler::isAdmin($this->request->getCookieParams()))
+                    if(!empty($this->parsedBody['csrfToken']))
                     {
-                        if(!empty($this->parsedBody['nickname']))
+                        if(CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                         {
-                            if(!empty($this->parsedBody['password']))
+                            if(!AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                             {
-                                $this->model = new AdminLoginModel();
+                                if(!empty($this->parsedBody['nickname']))
+                                {
+                                    if(!empty($this->parsedBody['password']))
+                                    {
+                                        $this->model = new AdminLoginModel();
+                                    }
+                                    else
+                                    {
+                                        throw new Error(400, "Admin password not found", "Admin password not found");
+                                    }
+                                }
+                                else
+                                {
+                                    throw new Error(400, "Admin nickname not found", "Admin nickname not found");
+                                }
                             }
                             else
                             {
-                                throw new Error(400, "Admin password not found", "Admin password not found");
+                                throw new Error(400, "Your already logged in", "Your already logged in");
                             }
                         }
                         else
                         {
-                            throw new Error(400, "Admin nickname not found", "Admin nickname not found");
+                            throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
                         }
                     }
                     else
                     {
-                        throw new Error(400, "Your already logged in", "Your already logged in");
+                        throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
                     }
                 }
                 else
                 {
-                    throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+                    throw new Error(400, "Invalid captcha solving", "Invalid captcha solving");
                 }
             }
             else
             {
-                throw new Error(403, "Invalid CSRF token", "Invalid CSRF token");
+                throw new Error(400, "Invalid captcha solving", "Invalid captcha solving");
             }
         }
         else
