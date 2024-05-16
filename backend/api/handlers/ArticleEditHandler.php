@@ -31,10 +31,12 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                         {
                             if(!empty($this->args['editCode']))
                             {
-                                $this->model = new ArticleEditModel();
-                                $this->cookiesBody = $this->request->getCookieParams();
-
-                                if(empty($this->parsedBody['text']))
+                                if(!empty($this->parsedBody['text']))
+                                {
+                                    $this->model = new ArticleEditModel();
+                                    $this->cookiesBody = $this->request->getCookieParams();
+                                }
+                                else
                                 {
                                     throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
                                 }

@@ -23,20 +23,27 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        if(isset($this->parsedBody['status']))
+                        if(!empty($this->args['viewCode']))
                         {
-                            if(!empty($this->args['viewCode']))
+                            if(isset($this->parsedBody['status']))
                             {
-                                $this->model = new AdminArticleApproveModel();
+                                if(!empty($this->parsedBody['text']))
+                                {
+                                    $this->model = new AdminArticleApproveModel();
+                                }
+                                else
+                                {
+                                    throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
+                                }
                             }
                             else
                             {
-                                throw new Warning(404, "Article for approve not found", "Article for approve not found");
+                                throw new Error(404, "Approved status not found", "Approved status not found");
                             }
                         }
                         else
                         {
-                            throw new Error(404, "Approved status not found", "Approved status not found");
+                            throw new Warning(404, "Article for approve not found", "Article for approve not found");
                         }
                     }
                     else

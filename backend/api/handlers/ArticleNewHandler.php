@@ -15,7 +15,6 @@ class ArticleNewHandler extends BaseHandlerRoute
 {
     public function Init()
     {
-        $this->model = new ArticleNewModel();
         $parsedBody = $this->request->getParsedBody();
 
         if(is_array($parsedBody))
@@ -29,9 +28,12 @@ class ArticleNewHandler extends BaseHandlerRoute
                     {
                         if(CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                         {
-                            $this->cookiesBody = $this->request->getCookieParams();
-                
-                            if(empty($this->parsedBody['text']))
+                            if(!empty($this->parsedBody['text']))
+                            {
+                                $this->cookiesBody = $this->request->getCookieParams();
+                                $this->model = new ArticleNewModel();
+                            }
+                            else
                             {
                                 throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
                             }
@@ -129,7 +131,7 @@ class ArticleNewHandler extends BaseHandlerRoute
             } 
             else 
             {
-                throw new Warning(400, "Please add a title for the article.", "Please add a title for the article");
+                throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
             }
         } 
         else 

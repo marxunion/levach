@@ -1,7 +1,6 @@
 <?php
 namespace Api\Handlers;
 
-use Core\Critical;
 use Core\Error;
 
 use Base\BaseHandlerRouteWithArgs;
@@ -48,7 +47,6 @@ class ArticleCommentNewHandler extends BaseHandlerRouteWithArgs
                                     {
                                         throw new Error(400, "Invalid comment text", "Invalid article text");
                                     }
-                                    
                                 }
                                 else
                                 {
