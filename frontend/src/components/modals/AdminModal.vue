@@ -47,7 +47,7 @@
         article_need_rating_to_approve_editorially: 0
     });
 
-    const onLoginButtonRequest = async () => 
+    const onLoginButtonRequest = async (captchaToken : string) => 
     {
         await getNewCsrfToken();
 
@@ -60,6 +60,7 @@
         const data = 
         {
             csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+            captchaToken: captchaToken,
 			nickname: nickname.value,
 			password: password.value,
             rememberMe: checkedRememberMe.value
