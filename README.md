@@ -16,19 +16,19 @@ Rename php-example to php and ether your information
 ### Configure .env
 Rename .env-example to .env and ether your auth information
 
-### Database Backup
+### Make database backup
 ```bash
 docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.backup.yml up -d
 docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.backup.yml down
 ```
 
-### Database Migration Import
+### Make database migration (Import)
 ```bash
 docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.migration.import.yml up -d
 docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.migration.import.yml down
 ```
 
-### Database Migration Export
+### Make database migration (Export)
 ```bash
 docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.migration.export.yml up -d
 docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.migration.export.yml down
