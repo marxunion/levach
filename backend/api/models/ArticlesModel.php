@@ -7,11 +7,6 @@ use Base\BaseModel;
 
 class ArticlesModel extends BaseModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     // Article search
 
     // Rate

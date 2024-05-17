@@ -9,21 +9,16 @@ use Base\BaseModel;
 
 class AdminSettingsSetModel extends BaseModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public static function _setSetting($settingName, $settingValue)
     {
         $database = Database::getConnection();
 
         if($database)
         {
-            $result = $this->database->update('settings', ['value' => $settingValue], ['name' => $settingName]);
+            $result = $database->update('settings', ['value' => $settingValue], ['name' => $settingName]);
             if ($result->rowCount() == 0) 
             {
-                $this->database->insert('settings', ['name' => $settingName, 'value' => $settingValue]);
+                $database->insert('settings', ['name' => $settingName, 'value' => $settingValue]);
             }
             return true;
         }

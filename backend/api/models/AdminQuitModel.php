@@ -8,11 +8,6 @@ use Base\BaseModel;
 
 class AdminQuitModel extends BaseModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function quit($token, $nickname, $expirationTime)
     {
         if(isset($token))

@@ -5,11 +5,6 @@ use Base\BaseModel;
 
 class AdminRejectAllPremoderateModel extends BaseModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function rejectAllPremoderateModel()
     {
         $articleIds = $this->database->select('statistics', 'article_id', ['premoderation_status' => 1]);

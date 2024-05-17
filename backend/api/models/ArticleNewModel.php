@@ -7,10 +7,6 @@ use Base\BaseModel;
 
 class ArticleNewModel extends BaseModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
     public function newArticle($title, $text, $tags, $viewCode, $editCode)
     {
         $newArticleId = 1;

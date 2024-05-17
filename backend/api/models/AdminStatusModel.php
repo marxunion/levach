@@ -8,11 +8,6 @@ use Base\BaseModel;
 
 class AdminStatusModel extends BaseModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public static function _isAdmin($token, $nickname, $expirationTime)
     {
         if(isset($token))

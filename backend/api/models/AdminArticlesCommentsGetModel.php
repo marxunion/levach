@@ -9,11 +9,6 @@ class AdminArticlesCommentsGetModel extends BaseModel
     private $commentDateBefore;
     private $commentDateAfter;
     private $commentRegexPattern;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
     
     public function getArticleByViewCode($viewCode)
     {

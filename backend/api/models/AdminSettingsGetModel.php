@@ -9,11 +9,6 @@ use Base\BaseModel;
 
 class AdminSettingsGetModel extends BaseModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public static function _getSetting($settingName)
     {
         $database = Database::getConnection();

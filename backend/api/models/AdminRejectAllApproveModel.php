@@ -5,11 +5,6 @@ use Base\BaseModel;
 
 class AdminRejectAllApproveModel extends BaseModel
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function rejectAllApproveModel()
     {
         $this->database->update('articles', ['approvededitorially_status' => 0], ['approvededitorially_status' => 1]);
