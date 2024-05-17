@@ -2,6 +2,7 @@
 namespace Api\Models;
 
 use Core\Database;
+
 use Core\Critical;
 
 use Base\BaseModel;
@@ -19,8 +20,11 @@ class AdminSettingsSetModel extends BaseModel
 
         if($database)
         {
-            $database->update('settings', ['value' => $settingValue], ['name' => $settingName]);
-            $database->insert('settings', ['name' => $settingName, 'value' => $settingValue]);
+            $result = $this->database->update('settings', ['value' => $settingValue], ['name' => $settingName]);
+            if ($result->rowCount() == 0) 
+            {
+                $this->database->insert('settings', ['name' => $settingName, 'value' => $settingValue]);
+            }
             return true;
         }
         else
@@ -31,7 +35,10 @@ class AdminSettingsSetModel extends BaseModel
 
     public function setSetting($settingName, $settingValue)
     {
-        $this->database->update('settings', ['value' => $settingValue], ['name' => $settingName]);
-        $this->database->insert('settings', ['name' => $settingName, 'value' => $settingValue]);
+        $result = $this->database->update('settings', ['value' => $settingValue], ['name' => $settingName]);
+        if ($result->rowCount() == 0) 
+        {
+            $this->database->insert('settings', ['name' => $settingName, 'value' => $settingValue]);
+        }
     }
 }
