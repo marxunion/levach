@@ -924,11 +924,11 @@
 					<button @click="onRejectApproveWithChanges" class="main__article__block__button rejectArticleApprovedWithChangesButton">{{ langData['rejectArticleApprovedWithChangesButtonTitle'] }}</button>
 				</div>
 			</div>
-			<div v-if="fetchedArticleData.statistics.approvededitorially_status == 2 && fetchedArticleData.statistics.editorially_status != 1 && !adminStatus" class="main__article__previewContainer">
+			<div v-if="fetchedArticleData.statistics.approvededitorially_status > 0 && fetchedArticleData.statistics.editorially_status != 1 && !adminStatus" class="main__article__previewContainer">
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="articleText" :language="LangDataHandler.currentLanguage.value"/>
 			</div>
 			
-			<div v-if="fetchedArticleData.statistics.approvededitorially_status != 2 || fetchedArticleData.statistics.editorially_status == 1 || adminStatus" class="main__article__editorContainer">
+			<div v-if="fetchedArticleData.statistics.approvededitorially_status == 0 || fetchedArticleData.statistics.editorially_status == 1 || adminStatus" class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="articleText" @onUploadImg="onUploadImgValidate" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
 				<button v-if="currentChangesStatus" class="main__article__editorContainer__sendButton" @click="onSendButtonValidate">{{ langData['sendButton'] }}</button>	
 			</div>

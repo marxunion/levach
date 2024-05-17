@@ -28,7 +28,7 @@ class ArticleEditModel extends BaseModel
         
         if(isset($articleData))
         {
-            if($articleData['approvededitorially_status'] != 2)
+            if($articleData['approvededitorially_status'] == 0)
             {
                 if(isset($articleData['edit_timeout_to_date']))
                 {
