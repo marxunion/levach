@@ -1,6 +1,7 @@
 .vscode
 .env
 php
+database/backups
 
 # Frontend
 frontend/.vite

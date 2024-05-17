@@ -59,3 +59,12 @@ services:
     command: sh -c "npm install && npm run build"
     networks:
       - app-network
+  composer:
+    container_name: COMPOSER
+    image: composer:latest
+    volumes:
+      - ./backend:/var/www/levach/backend
+    working_dir: /var/www/levach/backend
+    command: install
+    depends_on:
+      - php

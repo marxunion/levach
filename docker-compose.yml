@@ -15,17 +15,7 @@ services:
     expose:
       - "5432"
     networks:
-      - app-network
-
-  composer:
-    container_name: COMPOSER
-    image: composer:latest
-    volumes:
-      - ./backend:/var/www/levach/backend
-    working_dir: /var/www/levach/backend
-    command: install
-    depends_on:
-      - php
+      - app-network  
 
 networks:
   app-network:

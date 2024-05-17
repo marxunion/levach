@@ -5,7 +5,7 @@ services:
     container_name: PHP
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/php/Dockerfile
     environment:
       DEBUG_MODE: ${DEBUG_MODE}
       IS_DEBUG_SERVER: true
@@ -82,6 +82,15 @@ services:
       - postgres
     networks:
       - app-network
+  composer:
+    container_name: COMPOSER
+    image: composer:latest
+    volumes:
+      - ./backend:/var/www/levach/backend
+    working_dir: /var/www/levach/backend
+    command: install
+    depends_on:
+      - php
 
 volumes:
   pgadmin-data:
