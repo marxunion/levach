@@ -86,7 +86,7 @@ services:
     container_name: COMPOSER
     image: composer:latest
     volumes:
-      - ./backend:/var/www/levach/backend
+      - ./backend:/var/www/levach/backend:rw
     working_dir: /var/www/levach/backend
     command: install
     depends_on:

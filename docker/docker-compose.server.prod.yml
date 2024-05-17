@@ -5,7 +5,7 @@ services:
     container_name: PHP
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/php/Dockerfile
     environment:
       DEBUG_MODE: ${DEBUG_MODE}
       IS_DEBUG_SERVER: false
@@ -24,8 +24,8 @@ services:
 
       RECAPTCHA_SECRETKEY: ${RECAPTCHA_SECRETKEY}
     volumes:
-      - ./:/var/www/levach/
-      - ./php/php.ini-prod:/usr/local/etc/php/php.ini
+      - ./:/var/www/levach:rw
+      - ./php/php.ini-prod:/usr/local/etc/php/php.ini:rw
     expose:
       - "9000"
     depends_on:
@@ -37,10 +37,10 @@ services:
     container_name: NGINX
     image: nginx:latest
     volumes:
-      - ./nginx/prod.conf:/etc/nginx/conf.d/default.conf
-      - ./media:/var/www/levach/media
-      - ./frontend:/var/www/levach/frontend
-      - ./backend:/var/www/levach/backend
+      - ./nginx/prod.conf:/etc/nginx/conf.d/default.conf:rw
+      - ./media:/var/www/levach/media:rw
+      - ./frontend:/var/www/levach/frontend:rw
+      - ./backend:/var/www/levach/backend:rw
       - ./robots.txt:/var/www/levach/robots.txt:rw
     environment:
       HOSTNAME: ${HOSTNAME}
