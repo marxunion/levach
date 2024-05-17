@@ -10,9 +10,9 @@ services:
       DEBUG_MODE: ${DEBUG_MODE}
       IS_DEBUG_SERVER: false
 
-      default_article_edit_timeout_minutes: ${default_article_edit_timeout_minutes}
-      default_max_upload_filesize_mb: ${default_max_upload_filesize_mb}
-      default_article_need_rating_to_approve_editorially: ${default_article_need_rating_to_approve_editorially}
+      default_changeable_article_edit_timeout_minutes: ${default_changeable_article_edit_timeout_minutes}
+      default_changeable_max_upload_filesize_mb: ${default_changeable_max_upload_filesize_mb}
+      default_changeable_article_need_rating_to_approve_editorially: ${default_changeable_article_need_rating_to_approve_editorially}
 
       HOSTNAME: ${HOSTNAME}
 

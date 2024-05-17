@@ -1,3 +1,8 @@
 {
-    "langs": ["RU", "EN"]
+    "langs": ["RU", "EN"],
+    "settings": {
+        "article_edit_timeout_minutes": 1,
+        "max_upload_filesize_mb": 1,
+        "article_need_rating_to_approve_editorially": 1
+    }
 }

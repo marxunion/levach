@@ -1,6 +1,8 @@
 <script setup lang="ts">
     import { onMounted, Ref, ComputedRef, ref } from "vue";
 
+    import mainconfig from '../../configs/main.json';
+
     import Captcha from "../Captcha.vue";
 
     import { JsonData } from "../../ts/interfaces/JsonData";
@@ -41,11 +43,12 @@
         return routeName == route.name ? true : false;
     }
 
-    const settings = ref({
-        article_edit_timeout_minutes: 0,
-        max_upload_filesize_mb: 0,
-        article_need_rating_to_approve_editorially: 0
-    });
+    interface Settings
+	{
+		[settingName: string]: number;
+	}
+
+    const settings : Ref<Settings> = ref(mainconfig['settings']);
 
     const onLoginButtonRequest = async (captchaToken : string) => 
     {
@@ -97,6 +100,10 @@
                     {
                         pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['incorrectNicknameOrPassword']});
                     }
+                    else if(response.data.Error.message == "Invalid captcha solving")
+                    {
+                        openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+                    }
                     else
                     {
                         pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
@@ -135,6 +142,10 @@
                 {
                     pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['incorrectNicknameOrPassword']});
                 }
+                else if(error.response.data.Error.message == "Invalid captcha solving")
+				{
+					openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+				}
                 else
                 {
                     pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
@@ -418,26 +429,72 @@
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value
             }
 
-            await axios.post('/api/admin/settings/get', data)
-            .then(response => 
+            settings.value['article_edit_timeout_minutes'] = 1;
+
+            Object.keys(settings.value).forEach(async (settingName : string) => 
             {
-                if(response.data)
+                await axios.post('/api/admin/settings/get/'+settingName, data)
+                .then(response => 
                 {
-                    settings.value = response.data;
-                }
-                else
-                {
-                    if(response.data.Warning)
+                    if(response.data)
                     {
-                        if(response.data.Warning.message == 'Admin token not found')
+                        settings.value[settingName] = response.data;
+                    }
+                    else
+                    {
+                        if(response.data.Warning)
+                        {
+                            if(response.data.Warning.message == 'Admin token not found')
+                            {
+                                pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
+                            }
+                            else if(response.data.Warning.message == 'Admin nickname not found')
+                            {
+                                pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
+                            }
+                            else if(response.data.Warning.message == 'Admin expiration_time not found')
+                            {
+                                pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
+                            }
+                            else
+                            {
+                                pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+                            }
+                        }
+                        else if(response.data.Error)
+                        {
+                            if(response.data.Error.message == 'Invalid admin token')
+                            {
+                                pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
+                            }
+                            else
+                            {
+                                pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                            }
+                        }
+                        else if(response.data.Critical)
+                        {
+                            pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                        }
+                        else
+                        {
+                            pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+                        }
+                    }
+                })
+                .catch(error => 
+                {
+                    if(error.response.data.Warning)
+                    {
+                        if(error.response.data.Warning.message == 'Admin token not found')
                         {
                             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
                         }
-                        else if(response.data.Warning.message == 'Admin nickname not found')
+                        else if(error.response.data.Warning.message == 'Admin nickname not found')
                         {
                             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
                         }
-                        else if(response.data.Warning.message == 'Admin expiration_time not found')
+                        else if(error.response.data.Warning.message == 'Admin expiration_time not found')
                         {
                             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
                         }
@@ -446,9 +503,9 @@
                             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
                         }
                     }
-                    else if(response.data.Error)
+                    else if(error.response.data.Error)
                     {
-                        if(response.data.Error.message == 'Invalid admin token')
+                        if(error.response.data.Error.message == 'Invalid admin token')
                         {
                             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
                         }
@@ -457,7 +514,7 @@
                             pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
                         }
                     }
-                    else if(response.data.Critical)
+                    else if(error.response.data.Critical)
                     {
                         pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
                     }
@@ -465,49 +522,9 @@
                     {
                         pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
                     }
-                }
-            })
-            .catch(error => 
-            {
-                if(error.response.data.Warning)
-                {
-                    if(error.response.data.Warning.message == 'Admin token not found')
-                    {
-                        pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
-                    }
-                    else if(error.response.data.Warning.message == 'Admin nickname not found')
-                    {
-                        pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
-                    }
-                    else if(error.response.data.Warning.message == 'Admin expiration_time not found')
-                    {
-                        pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
-                    }
-                    else
-                    {
-                        pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-                    }
-                }
-                else if(error.response.data.Error)
-                {
-                    if(error.response.data.Error.message == 'Invalid admin token')
-                    {
-                        pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['needLogin']});
-                    }
-                    else
-                    {
-                        pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                    }
-                }
-                else if(error.response.data.Critical)
-                {
-                    pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else
-                {
-                    pushModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
+                });
             });
+            
         }
     });
 

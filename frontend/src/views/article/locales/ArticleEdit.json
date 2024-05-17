@@ -22,7 +22,6 @@
 
         "warnings": 
         {
-            "captcha": "Ошибка решения капчи",
             "articleEditLinkCopyWarning": "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию",
 
             "articleNotFound": "Статья для редактирования не найдена",
@@ -46,6 +45,7 @@
 
         "errors": 
         {
+            "captcha": "Ошибка решения капчи",
             "articleForEditNotFound": "Статья для редактирования не найдена",
 
             "articleNeedChanges": "Пожалуйста внесите какие-либо правки для изменения статьи",
@@ -238,7 +238,6 @@
 
         "warnings": 
         {
-            "captcha": "Captcha solving error",
             "articleEditLink": "Don't forget to save the link or your article will not be editable",
 
             "articleNotFound": "Article for editing not found",
@@ -262,6 +261,7 @@
 
         "errors": 
         {
+            "captcha": "Captcha solving error",
             "articleForEditNotFound": "Article for editing not found",
 
             "articleNeedChanges": "Please make any changes to edit article",

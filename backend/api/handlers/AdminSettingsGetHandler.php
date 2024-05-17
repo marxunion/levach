@@ -5,13 +5,13 @@ use Core\Error;
 
 use Core\Settings;
 
-use Base\BaseHandlerRoute;
+use Base\BaseHandlerRouteWithArgs;
 
 use Api\Models\AdminSettingsGetModel;
 
 use Api\Handlers\CSRFTokenHandler;
 
-class AdminSettingsGetHandler extends BaseHandlerRoute
+class AdminSettingsGetHandler extends BaseHandlerRouteWithArgs
 {
     public static function getAllSettings()
     {
@@ -29,7 +29,7 @@ class AdminSettingsGetHandler extends BaseHandlerRoute
             }
             else
             {
-                $responseData = Settings::getSetting('default_'.$settingName);
+                $responseData = Settings::getSetting('default_changeable_'.$settingName);
                 if(!empty($responseData))
                 {
                     return $responseData;
@@ -59,7 +59,14 @@ class AdminSettingsGetHandler extends BaseHandlerRoute
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        $this->model = new AdminSettingsGetModel();
+                        if(!empty($this->args['settingName']))
+                        {
+                            $this->model = new AdminSettingsGetModel();
+                        }
+                        else
+                        {
+                            throw new Error(404, "Please set setting for select", "Please set setting for select");
+                        }
                     }
                     else
                     {
@@ -84,29 +91,22 @@ class AdminSettingsGetHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        if(isset($this->parsedBody['settingName']))
+        $responseData = $this->model->getSetting($this->args['settingName']);
+        if(!empty($responseData))
         {
-            $responseData = $this->model->getSetting($this->parsedBody['settingName']);
-            if(isset($responseData))
+            $this->response = $this->response->withJson($responseData);
+        }
+        else
+        {
+            $responseData = Settings::getSetting('default_changeable_'.$this->args['settingName']);
+            if(!empty($responseData))
             {
                 $this->response = $this->response->withJson($responseData);
             }
             else
             {
-                $responseData = Settings::getSetting('default_'.$settingName);
-                if(isset($responseData))
-                {
-                    $this->response = $this->response->withJson($responseData);
-                }
-                else
-                {
-                    throw new Error(404, "Selected setting not found", "Selected setting not found");
-                }
+                throw new Error(404, "Selected setting not found", "Selected setting not found");
             }
-        }   
-        else
-        {
-            $this->response = $this->response->withJson($this->model->getAllSettings());
         }
     }
 }

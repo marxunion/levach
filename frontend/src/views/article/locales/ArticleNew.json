@@ -9,7 +9,6 @@
 
         "warnings": 
         {
-            "captcha": "Ошибка решения капчи",
             "articleEditCodeCopy": "Не забудьте сохранить ссылку, иначе ваша статья будет не доступна к редактированию",
 
             "articleNeedTitle": "Пожалуйста добавьте заголовок для статьи",
@@ -30,6 +29,7 @@
 
         "errors": 
         {
+            "captcha": "Ошибка решения капчи",
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
         
@@ -132,7 +132,6 @@
         
         "warnings": 
         {
-            "captcha": "Captcha solving error",
             "articleEditLink": "Don't forget to save the link or your article will not be editable",
 
             "articleNeedTitle": "Please add a title for the article",
@@ -152,7 +151,9 @@
             "unknown": "An unknown error occurred. Try again"
         },
 
-        "errors": {
+        "errors": 
+        {
+            "captcha": "Captcha solving error",
             "unknown": "An unknown error occurred. Try again"
         },
 

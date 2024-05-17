@@ -3,7 +3,6 @@
     {
         "warnings": 
         {
-            "captcha": "Ошибка решения капчи",
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку",
 
             "imageMaxSize": "Размер загружаемого изображения должен быть не больше {size}МБ",
@@ -13,6 +12,7 @@
 
         "errors": 
         {
+            "captcha": "Ошибка решения капчи",
             "articleNotFound": "Статья не найдена",
 
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
@@ -140,7 +140,6 @@
     {
         "warnings": 
         {
-            "captcha": "Captcha solving error",
             "unknown": "An unknown error occurred. Try again",
 
             "imageMaxSize": "The size of the uploaded image must be no larger than {size}MB",
@@ -150,6 +149,7 @@
 
         "errors": 
         {
+            "captcha": "Captcha solving error",
             "articleNotFound": "Article not found",
 
             "unknown": "An unknown error occurred. Try again"
