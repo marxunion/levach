@@ -38,7 +38,7 @@ docker-compose -f docker-compose.yml -f docker/docker-compose.server.dev.yml up 
 After builded PHP image:
 ```bash
 docker-compose -f docker-compose.yml -f docker/docker-compose.server.dev.yml up
-``
+```
 OR
 ```bash
 docker-compose -f docker-compose.yml -f docker/docker-compose.server.dev.yml up -d
