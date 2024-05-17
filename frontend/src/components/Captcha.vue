@@ -50,11 +50,11 @@
     {
         const elements : NodeListOf<Element> = document.querySelectorAll('[style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.5;"]');
 
-        elements.forEach(element => {
+        elements.forEach(element => 
+        {
             if(element) 
             {
                 const parent : HTMLElement | null = element.parentElement;
-
                 if(parent)
                 {
                     const grandParent : HTMLElement | null = parent.parentElement;
