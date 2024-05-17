@@ -36,8 +36,17 @@
 	const articleViewCode : Ref<string | null> = ref(null);
 
 	articleViewCode.value = route.params.articleViewCode as string;
-	
-	async function fetchData()
+
+    let articleText : Ref<string> = ref('');
+
+	let fetchedData = ref();
+	let loaded : Ref<boolean> = ref(false);
+
+    let newTag : Ref<string> = ref('');
+	let tags : Ref<string[]> = ref([]);
+    
+
+    async function fetchData()
 	{
 		await getNewCsrfToken();
 
@@ -49,7 +58,7 @@
 
         const data = 
         {
-            csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+            csrfToken: (csrfTokenInput.value as HTMLInputElement).value
         }
 		
 		return await axios.post('/api/admin/article/approve/preload/'+articleViewCode.value, data)
@@ -57,24 +66,42 @@
 		{
 			if(response.data.title)
 			{
-				return response.data;
+				fetchedData.value = response.data;
+
+				if(fetchedData.value['tags'] == null)
+				{
+					fetchedData.value['tags'] = [];
+				}
+				Object.assign(tags.value, fetchedData.value['tags']);
+
+                articleText.value = fetchedData.value['text'];
+
+				loaded.value = true;
 			}
 			else
 			{
 				if(response.data.Warning)
 				{
+					loaded.value = true;
+					fetchedData.value = null;
 					return null;
 				}
 				else if(response.data.Error)
 				{
+					loaded.value = true;
+					fetchedData.value = null;
 					return null;
 				}
 				else if(response.data.Critical)
 				{
+					loaded.value = true;
+					fetchedData.value = null;
 					return null;
 				}
 				else
 				{
+					loaded.value = true;
+					fetchedData.value = null;
 					return null;
 				}
 			}
@@ -87,30 +114,24 @@
 			}
 			else if(error.response.data.Error)
 			{
+				loaded.value = true;
+				fetchedData.value = null;
 				return null;
 			}
 			else if(error.response.data.Critical)
 			{
+				loaded.value = true;
+				fetchedData.value = null;
 				return null;
 			}
 			else
 			{
+				loaded.value = true;
+				fetchedData.value = null;
 				return null;
 			}
 		});
 	}
-
-	let fetchedData = ref();
-	let loaded : Ref<boolean> = ref(false);
-	
-	let editorState = reactive({
-		text: '',
-	});
-
-
-	let newTag : Ref<string> = ref('');
-	let tags : Ref<string[]> = ref([]);
-
 
     const checkChanges = async () =>
     {
@@ -118,7 +139,7 @@
         {
             
         }, 1500);
-        if(editorState.text != fetchedData.value['text'] || !arraysAreEqual(tags.value, fetchedData.value['tags']))
+        if(articleText.value != fetchedData.value['text'] || !arraysAreEqual(tags.value, fetchedData.value['tags']))
         {
             currentChangesStatus.value = 1;
             return true;
@@ -129,7 +150,7 @@
             return false;
         }
     }
-
+	
 	const addTag = () => 
 	{
 		if(!tags.value.includes(newTag.value.trim()))
@@ -160,7 +181,7 @@
 	{
         if(await checkChanges())
         {
-            const contentParts = (editorState.text as string).split('\n');
+            const contentParts = (articleText.value as string).split('\n');
 
             if(contentParts.length >= 1) 
             {
@@ -186,7 +207,7 @@
                                 {
                                     csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
                                     status: 2,
-                                    text: editorState.text, 
+                                    text: articleText.value, 
                                     tags: tags.value
                                 }
 
@@ -539,7 +560,7 @@
 		}
 	});
 
-    watch(() => editorState.text, () => 
+    watch(() => articleText.value, () => 
     {
         checkChanges();
     });
@@ -548,22 +569,8 @@
 	{
 		try 
 		{
-			fetchedData.value = await fetchData();
-			if(fetchedData.value != null)
-			{
-				editorState = reactive(
-				{
-					text: fetchedData.value['text'],
-				});
-
-				if(fetchedData.value['tags'] == null)
-				{
-					fetchedData.value['tags'] = [];
-				}
-
-                Object.assign(tags, fetchedData.value['tags']);
-			}
-			loaded.value = true;
+            loaded.value = false;
+			await fetchData();
 		} 
 		catch (error) 
 		{
@@ -577,7 +584,7 @@
 	<main v-if="loaded" class="main">
 		<article v-if="fetchedData" class="main__article">
 			<div class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="fetchedData['text']" @onChange="checkChanges" @onUploadImg="onUploadImg" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
+				<MdEditor class="main__article__editorContainer__editor" v-model="articleText" @onChange="checkChanges" @onUploadImg="onUploadImg" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ (langData['buttonTitles'] as JsonData)[currentChangesStatus] }}</button>	
 			</div>
 			<div class="main__article__editTags">

@@ -25,7 +25,7 @@
 
         "commentCreatedSuccessfully": "Комментарий умпешно создан",
 
-        "approveArticleButton": "Одобрить",
+        "acceptApproveArticleButton": "Одобрить",
         "rejectApproveArticleButton": "Не одобрять",
         "acceptPremoderateArticleButton": "Принять",
         "rejectPremoderateArticleButton": "Отклонить",
@@ -162,7 +162,7 @@
 
         "commentCreatedSuccessfully": "Comment successfully created",
 
-        "approveArticleButton": "Approve",
+        "acceptApproveArticleButton": "Approve",
         "rejectApproveArticleButton": "Reject Approve",
         "acceptPremoderateArticleButton": "Accept",
         "rejectPremoderateArticleButton": "Reject",

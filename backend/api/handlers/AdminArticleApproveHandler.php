@@ -27,14 +27,7 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                         {
                             if(isset($this->parsedBody['status']))
                             {
-                                if(!empty($this->parsedBody['text']))
-                                {
-                                    $this->model = new AdminArticleApproveModel();
-                                }
-                                else
-                                {
-                                    throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
-                                }
+                                $this->model = new AdminArticleApproveModel();
                             }
                             else
                             {
@@ -84,6 +77,10 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
             }
             else if($this->parsedBody['status'] == 2)
             {
+                if(empty($this->parsedBody['text']))
+                {
+                    throw new Warning(400, "Please add a title for the article", "Please add a title for the article");
+                }
                 $contentParts = explode("\n", $this->parsedBody['text']);
                 if (count($contentParts) >= 1) 
                 {

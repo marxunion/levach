@@ -37,6 +37,8 @@
 		
 	import { comments, lastLoadedComment } from '../../ts/handlers/CommentsHandler';
 
+	import { Article } from '../../ts/interfaces/Article';
+
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
 	const captcha : Ref<{ execute: () => void } | null> = ref(null);
@@ -45,9 +47,10 @@
 
 	adminStatusReCheck();
 
-	const fetchedArticleData : Ref<any> = ref();
+	const fetchedArticleData : Ref<Article | null> = ref(null);
 	
 	const loading : Ref<boolean> = ref(true);
+	const dropDownReloading : Ref<boolean> = ref(false);
 
 	const commentsLoading : Ref<boolean> = ref(true);
 	const commentsReloading : Ref<boolean> = ref(true);
@@ -64,12 +67,22 @@
 
 	async function fetchArticleData()
 	{
-		return await axios.get('/api/article/view/'+articleViewCode.value)
-		.then(response =>
+		await axios.get('/api/article/view/'+articleViewCode.value)
+		.then(async response =>
 		{
 			if(response.data.versions)
 			{
 				fetchedArticleData.value = response.data;
+				if(fetchedArticleData.value != null) 
+				{
+					if(currentVersion.value != fetchedArticleData.value.versions.length)
+					{
+						dropDownReloading.value = true;
+						await setTimeout(() => {}, 1000);
+						currentVersion.value = fetchedArticleData.value.versions.length;
+						dropDownReloading.value = false;
+					}
+				}
 			}
 		})
 		.catch(error =>
@@ -461,39 +474,33 @@
 	}
 
 	let intervalId : NodeJS.Timeout | null = null;
-	onMounted(async function() {
-		try 
+	onMounted(async () => 
+	{
+		await fetchArticleData();
+		if (fetchedArticleData.value != null) 
 		{
-			await fetchArticleData();
-			if (fetchedArticleData.value != null) 
+			currentVersion.value = fetchedArticleData.value.versions.length;
+
+			comments.value = [];
+			let ps = document.querySelector('.ps');
+			if(ps != null)
 			{
-				currentVersion.value = fetchedArticleData.value.versions.length;
-
-				comments.value = [];
-				let ps = document.querySelector('.ps');
-				if(ps != null)
-				{
-					ps.addEventListener('scroll', handleCommentsScroll)
-				}
-
-				commentsReloading.value = true;
-				commentsLoading.value = true;
-				lastLoadedComment.value = 0;
-				currentCommentReaction.value = 0;
-
-				await fetchNewComments();
-
-				intervalId = setInterval(async () => 
-				{
-					await fetchArticleData();
-				}, 10000);
+				ps.addEventListener('scroll', handleCommentsScroll)
 			}
-			loading.value = false;
-		} 
-		catch 
-		{
-			loading.value = false;
+
+			commentsReloading.value = true;
+			commentsLoading.value = true;
+			lastLoadedComment.value = 0;
+			currentCommentReaction.value = 0;
+
+			await fetchNewComments();
+
+			intervalId = setInterval(async () => 
+			{
+				await fetchArticleData();
+			}, 10000);
 		}
+		loading.value = false;
 	});
 
     onBeforeUnmount(() => 
@@ -542,7 +549,7 @@
                 const modal = await openModal(InfoModal, {status: true, text: langData.value['articleRejectApproveSuccessfully']});
 				modal.onclose = function()
 				{
-					router.push('/admin/articles/waitingApprove');
+					router.push('/admin/articles/waitingApproval');
 				}
             }
             else
@@ -829,12 +836,12 @@
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedArticleData.versions[currentVersion-1].tags) }}</p>
 				
-				<div v-if="adminStatus && fetchedArticleData['approvededitorially_status'] == 1" class="main__article__previewContainer__buttons">
+				<div v-if="adminStatus && fetchedArticleData.statistics.approvededitorially_status == 1" class="main__article__previewContainer__buttons">
 					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 					<a @click="onRejectApproveArticle()" class="main__article__previewContainer__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
 					<a :href="'#/admin/article/approve/'+articleViewCode" class="main__article__previewContainer__buttons__button acceptApproveArticleButton">{{ langData['acceptApproveArticleButton'] }}</a>
 				</div>
-				<div v-else-if="adminStatus && fetchedArticleData['premoderation_status'] == 1" class="main__article__previewContainer__buttons">
+				<div v-else-if="adminStatus && fetchedArticleData.statistics.premoderation_status == 1" class="main__article__previewContainer__buttons">
 					<a @click="onRejectPremoderateArticle()" class="main__article__previewContainer__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
 					<a @click="onAcceptPremoderateArticle()" class="main__article__previewContainer__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
 				</div>
@@ -854,6 +861,7 @@
 				</div>
 				
 				<DropDownVersion
+				v-if="!dropDownReloading"
 				:max-version="fetchedArticleData.versions.length"
 				class="main__article__previewContainer__selectVersion" 
 				@input="(version : number) => currentVersion = version" />

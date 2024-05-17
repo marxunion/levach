@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, computed, Ref, ComputedRef, onMounted } from 'vue';
+	import { ref, computed, watch, Ref, ComputedRef, onMounted, onBeforeUnmount } from 'vue';
 	import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
@@ -32,6 +32,8 @@
 	import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
+
+	import { arraysAreEqual } from '../../ts/helpers/ArrayHelper';
 	
 	interface Statistic 
 	{
@@ -53,12 +55,14 @@
 	const route : RouteLocationNormalizedLoaded = useRoute();
 	const articleEditCode : Ref<string | null> = ref(null);
 
+	const currentChangesStatus : Ref<number> = ref(0);
+
 	articleEditCode.value = route.params.articleEditCode as string;
 
 	const viewLink : Ref<string> = ref('');
 
 	let fetchedData = ref();
-	let loaded : Ref<boolean> = ref(false);
+	let loading : Ref<boolean> = ref(true);
 	
 	let statistics : ComputedRef<Statistics> = computed(() => 
 	({
@@ -77,7 +81,7 @@
 	let newTag = ref('');
 	let tags : Ref<string[]> = ref([]);
 
-	async function fetchData()
+	async function fetchArticleData()
 	{
 		await getNewCsrfToken();
 
@@ -92,7 +96,7 @@
             csrfToken: (csrfTokenInput.value as HTMLInputElement).value
         }
 		
-		return await axios.post('/api/article/edit/preload/'+articleEditCode.value, data)
+		await axios.post('/api/article/edit/preload/'+articleEditCode.value, data)
 		.then(response =>
 		{
 			if(response.data.title)
@@ -118,39 +122,29 @@
 				{
 					fetchedData.value['tags'] = [];
 				}
-				tags.value = fetchedData.value['tags'];
-				
+				Object.assign(tags.value, fetchedData.value['tags']);
+
 				articleText.value = fetchedData.value['text'];
 				
 				viewLink.value = "localhost:8000/#/article/" + fetchedData.value['view_code'];
-
-				loaded.value = true;
 			}
 			else
 			{
 				if(response.data.Warning)
 				{
-					loaded.value = true;
 					fetchedData.value = null;
-					return null;
 				}
 				else if(response.data.Error)
 				{
-					loaded.value = true;
 					fetchedData.value = null;
-					return null;
 				}
 				else if(response.data.Critical)
 				{
-					loaded.value = true;
 					fetchedData.value = null;
-					return null;
 				}
 				else
 				{
-					loaded.value = true;
 					fetchedData.value = null;
-					return null;
 				}
 			}
 		})
@@ -162,180 +156,118 @@
 			}
 			else if(error.response.data.Error)
 			{
-				loaded.value = true;
 				fetchedData.value = null;
-				return null;
 			}
 			else if(error.response.data.Critical)
 			{
-				loaded.value = true;
 				fetchedData.value = null;
-				return null;
 			}
 			else
 			{
-				loaded.value = true;
 				fetchedData.value = null;
-				return null;
 			}
 		});
+		loading.value = false;
 	}
-	
-	const textInput = ref();
 
-    const copyToClipboard = () => 
-    {
-        navigator.clipboard.writeText(viewLink.value)
-        textInput.value.select();
-    }
-
-	let uploadedFiles : File[];
-	let uploadedCallback : (urls: string[]) => void;
-
-	const onUploadImgRequest = async (captchaToken : string) => 
+	async function refetchArticleData()
 	{
-		openModal(LoaderModal);
-		const promises = uploadedFiles.map((file) => 
+		await getNewCsrfToken();
+
+        if(csrfTokenInput.value == null)
+        {
+            openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            return;
+        }
+
+        const data = 
+        {
+            csrfToken: (csrfTokenInput.value as HTMLInputElement).value
+        }
+		
+		await axios.post('/api/article/edit/preload/'+articleEditCode.value, data)
+		.then(response =>
 		{
-			return new Promise<{ data: { fileName: string } }>(resolve => 
+			if(response.data.title)
 			{
-				const form = new FormData();
-
-				form.append('file', file);
-				form.append('captchaToken', captchaToken);
-
-				axios.post('/api/media/img/upload', form, 
+				fetchedData.value = response.data;
+				statistics = computed(() => 
 				{
-					headers: 
+					const statisticsTemp : Statistics = {}
+					let statisticName;
+					(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
 					{
-						'Content-Type': 'multipart/form-data'
-					}
-				})
-				.then(response => 
-				{
-					if (response.data) 
-					{
-						if(response.data.fileName)
+						statisticName = statistic['statisticName'] as string;
+						statisticsTemp[statisticName] = 
 						{
-							resolve(response);
+							count: fetchedData.value['statistics'][statisticName],
+							title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
 						}
-						else 
-						{
-							openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
-						}
-					}
-					else
-					{
-						if(response.data.Warning)
-						{
-							if(response.data.Warning.message == "Invalid image type")
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
-							}
-							else if(response.data.Warning.message == "File size exceeds the maximum allowable file size")
-							{
-								openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', response.data.Warning.params.max_upload_filesize_mb)});
-							}
-							else if(response.data.Warning.message == "Invalid image type")
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
-							}
-							else
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
-							}
-						}
-						else if(response.data.Error)
-						{
-							if(response.data.Error.message == "Invalid captcha solving")
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
-							}
-							else
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-							}
-						}
-						else if(response.data.Critical)
-						{
-							openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-						}
-						else 
-						{
-							openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-						}
-					}
-				})
-				.catch(error => 
-				{
-					if (error.response.data) 
-					{
-						if(error.response.data.Warning)
-						{
-							if(error.response.data.Warning.message == "Invalid image type")
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
-							}
-							else if(error.response.data.Warning.message == "File size exceeds the maximum allowable file size")
-							{
-								openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
-							}
-							else if(error.response.data.Warning.message == "Invalid image type")
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
-							}
-							else
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
-							}
-						}
-						else if(error.response.data.Error)
-						{
-							if(error.response.data.Error.message == "Invalid captcha solving")
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
-							}
-							else
-							{
-								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-							}
-						}
-						else if(error.response.data.Critical)
-						{
-							openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-						}
-						else 
-						{
-							openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-						}
-					}
-					else
-					{
-						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
-					}
+					});
+					return statisticsTemp;
 				});
-			});
-		});
-
-		const res = await Promise.all(promises);
-			
-		const successfulResults = res.filter(item => item !== null);
-
-		closeModal();
-		uploadedCallback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
-	}
-
-	const onUploadImgValidate = async (files: File[], callback: (urls: string[]) => void) => 
-	{
-		if(files.length > 0)
+			}
+			else
+			{
+				if(response.data.Warning)
+				{
+					fetchedData.value = null;
+				}
+				else if(response.data.Error)
+				{
+					fetchedData.value = null;
+				}
+				else if(response.data.Critical)
+				{
+					fetchedData.value = null;
+				}
+				else
+				{
+					fetchedData.value = null;
+				}
+			}
+		})
+		.catch(error =>
 		{
-			uploadedFiles = files;
-			uploadedCallback = callback;
-			captchaVerifyCallback = onUploadImgRequest;
-			captcha.value?.execute();
-		}
+			if(error.response.data.Warning)
+			{
+				return null;
+			}
+			else if(error.response.data.Error)
+			{
+				fetchedData.value = null;
+			}
+			else if(error.response.data.Critical)
+			{
+				fetchedData.value = null;
+			}
+			else
+			{
+				fetchedData.value = null;
+			}
+		});
+		loading.value = false;
 	}
 
+	const checkChanges = async () =>
+    {
+        await setTimeout(() => 
+        {
+            
+        }, 1500);
+
+        if(articleText.value != fetchedData.value['text'] || !arraysAreEqual(tags.value, fetchedData.value['tags']))
+        {
+            currentChangesStatus.value = 1;
+            return true;
+        }
+        else
+        {
+            currentChangesStatus.value = 0;
+            return false;
+        }
+    }
+	
 	const addTag = () => 
 	{
 		if(!tags.value.includes(newTag.value.trim()))
@@ -344,6 +276,7 @@
 			{
 				tags.value.push(newTag.value.trim());
 				newTag.value = '';
+				checkChanges();
 			}
 			else
 			{
@@ -358,7 +291,16 @@
 	const removeTag = (index: number) => 
 	{
 		tags.value.splice(index, 1);
+		checkChanges();
 	}
+
+	const viewLinkTextInput = ref();
+
+    const copyToClipboard = () => 
+    {
+        navigator.clipboard.writeText(viewLink.value)
+        viewLinkTextInput.value.select();
+    }
 
 	const onSendButtonRequest = async (captchaToken: string) => 
 	{
@@ -383,6 +325,10 @@
 		{
 			if (response.data.success) 
 			{
+				fetchedData.value['text'] = articleText.value;
+				Object.assign(fetchedData.value['tags'], tags.value);
+				checkChanges();
+
 				openModal(InfoModalWithLink, { status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning'] });
 			} 
 			else 
@@ -546,6 +492,153 @@
 		}	
 	}
 
+	let uploadedFiles : File[];
+	let uploadedCallback : (urls: string[]) => void;
+
+	const onUploadImgRequest = async (captchaToken : string) => 
+	{
+		openModal(LoaderModal);
+		const promises = uploadedFiles.map((file) => 
+		{
+			return new Promise<{ data: { fileName: string } }>(resolve => 
+			{
+				const form = new FormData();
+
+				form.append('file', file);
+				form.append('captchaToken', captchaToken);
+
+				axios.post('/api/media/img/upload', form, 
+				{
+					headers: 
+					{
+						'Content-Type': 'multipart/form-data'
+					}
+				})
+				.then(response => 
+				{
+					if (response.data) 
+					{
+						if(response.data.fileName)
+						{
+							resolve(response);
+						}
+						else 
+						{
+							openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
+						}
+					}
+					else
+					{
+						if(response.data.Warning)
+						{
+							if(response.data.Warning.message == "Invalid image type")
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
+							}
+							else if(response.data.Warning.message == "File size exceeds the maximum allowable file size")
+							{
+								openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', response.data.Warning.params.max_upload_filesize_mb)});
+							}
+							else if(response.data.Warning.message == "Invalid image type")
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
+							}
+							else
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
+							}
+						}
+						else if(response.data.Error)
+						{
+							if(response.data.Error.message == "Invalid captcha solving")
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+							}
+							else
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+						}
+						else if(response.data.Critical)
+						{
+							openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+						}
+						else 
+						{
+							openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+						}
+					}
+				})
+				.catch(error => 
+				{
+					if (error.response.data) 
+					{
+						if(error.response.data.Warning)
+						{
+							if(error.response.data.Warning.message == "Invalid image type")
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageNeedImage"]});
+							}
+							else if(error.response.data.Warning.message == "File size exceeds the maximum allowable file size")
+							{
+								openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)["imageMaxSize"] as string).replace('{size}', error.response.data.Warning.params.max_upload_filesize_mb)});
+							}
+							else if(error.response.data.Warning.message == "Invalid image type")
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["imageUnallowedType"]});
+							}
+							else
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)["unknown"]});
+							}
+						}
+						else if(error.response.data.Error)
+						{
+							if(error.response.data.Error.message == "Invalid captcha solving")
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["captcha"]});
+							}
+							else
+							{
+								openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+							}
+						}
+						else if(error.response.data.Critical)
+						{
+							openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+						}
+						else 
+						{
+							openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+						}
+					}
+					else
+					{
+						openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)["unknown"]});
+					}
+				});
+			});
+		});
+
+		const res = await Promise.all(promises);
+			
+		const successfulResults = res.filter(item => item !== null);
+
+		closeModal();
+		uploadedCallback(successfulResults.map((item) => '/api/media/img/'+item.data.fileName));
+	}
+
+	const onUploadImgValidate = async (files: File[], callback: (urls: string[]) => void) => 
+	{
+		if(files.length > 0)
+		{
+			uploadedFiles = files;
+			uploadedCallback = callback;
+			captchaVerifyCallback = onUploadImgRequest;
+			captcha.value?.execute();
+		}
+	}
+
 	config(
 	{
 		editorConfig: 
@@ -637,7 +730,8 @@
 			if(response.data.success)
             {
                 openModal(InfoModal, {status: true, text: langData.value['articleRejectApproveWithChangesSuccessfully']});
-				await fetchData();
+				loading.value = true;
+				await fetchArticleData();
             }
             else
             {
@@ -702,7 +796,8 @@
 			if(response.data.success)
             {
                 openModal(InfoModal, {status: true, text: langData.value['articleAcceptApproveWithChangesSuccessfully']});
-				await fetchData();
+				loading.value = true;
+				await fetchArticleData();
             }
             else
             {
@@ -745,11 +840,30 @@
 		});
 	}
 
-	onMounted(async function()
+	let intervalId : NodeJS.Timeout | null = null;
+	onMounted(async () =>
 	{
+		loading.value = true;
 		adminStatusReCheck();
-		await fetchData();
+		await fetchArticleData();
+		intervalId = setInterval(async () => 
+		{
+			await refetchArticleData();
+		}, 10000);
 	});
+
+	onBeforeUnmount(() => 
+    {
+		if(intervalId != null)
+		{
+			clearInterval(intervalId);
+		}
+	});
+
+	watch(() => articleText.value, () => 
+    {
+        checkChanges();
+    });
 
 	const onCaptchaVerify = (token: string) => 
     {
@@ -763,7 +877,7 @@
 </script>
 
 <template>
-	<main v-if="loaded" class="main">
+	<main v-if="!loading" class="main">
 		<article v-if="fetchedData" class="main__article">
 			<div class="main__article__info">
 				<div class="main__article__info__statistics">
@@ -794,7 +908,7 @@
 			<div v-if="viewLink != ''" class="main__article__block">
 				<p class="main__article__block__title linkForViewArticle">{{ langData['linkForViewArticle'] }}</p>
 				<div class="main__article__block__link">
-					<input v-model="viewLink" ref="textInput" type="text" class="main__article__block__link__input"></input>
+					<input v-model="viewLink" ref="viewLinkTextInput" type="text" class="main__article__block__link__input"></input>
 					<button class="main__article__block__link__copyButton" @click="copyToClipboard">
 						<img src="./../../assets/img/modals/CopyButton.svg" alt="Copy" class="main__article__block__link__copyButton__icon">
 					</button>
@@ -817,7 +931,7 @@
 			
 			<div v-if="fetchedData['approvededitorially_status'] != 2 || fetchedData['editorially_status'] == 1 || adminStatus" class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="articleText" @onUploadImg="onUploadImgValidate" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
-				<button class="main__article__editorContainer__sendButton" @click="onSendButtonValidate">{{ langData['sendButton'] }}</button>	
+				<button v-if="currentChangesStatus" class="main__article__editorContainer__sendButton" @click="onSendButtonValidate">{{ langData['sendButton'] }}</button>	
 			</div>
 
 			<div v-if="fetchedData['approvededitorially_status'] != 2 || fetchedData['editorially_status'] == 1 || adminStatus" class="main__article__editTags">
