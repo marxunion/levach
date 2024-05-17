@@ -54,7 +54,7 @@
         </a>
         <div class="header__bar">
             <div class="header__bar__search">
-                <input v-model="searchText" :placeholder="(langData['search'] as string)" type="text" class="header__bar__search__input">
+                <input @keyup.enter="onSearchButton" v-model="searchText" :placeholder="(langData['search'] as string)" type="text" class="header__bar__search__input">
                 <a @click="onSearchButton" class="header__bar__search__button"></a>
             </div>
             <div class="header__bar__subbar">

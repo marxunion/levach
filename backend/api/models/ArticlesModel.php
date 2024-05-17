@@ -406,7 +406,7 @@ class ArticlesModel extends BaseModel
         );
     }
 
-    public function loadAbyssArticleSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
+    public function loadAbyssArticlesSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
             'statistics',
