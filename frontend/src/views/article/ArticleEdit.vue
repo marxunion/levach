@@ -3,6 +3,8 @@
 	import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
+	import { tagsArrayToString } from '../../ts/helpers/TagsHelper';
+
 	import { MdEditor, MdPreview, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
@@ -936,6 +938,7 @@
 			</div>
 			<div v-if="fetchedArticleData.statistics.approvededitorially_status > 0 && fetchedArticleData.statistics.editorially_status != 1 && !adminStatus" class="main__article__previewContainer">
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="articleText" :language="LangDataHandler.currentLanguage.value"/>
+				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(tags) }}</p>
 			</div>
 			
 			<div v-if="fetchedArticleData.statistics.approvededitorially_status == 0 || fetchedArticleData.statistics.editorially_status == 1 || adminStatus" class="main__article__editorContainer">
@@ -943,7 +946,7 @@
 				<button v-if="currentChangesStatus" class="main__article__editorContainer__sendButton" @click="onSendButtonValidate">{{ langData['sendButton'] }}</button>	
 			</div>
 
-			<div v-if="fetchedArticleData.statistics.approvededitorially_status != 2 || fetchedArticleData.statistics.editorially_status == 1 || adminStatus" class="main__article__editTags">
+			<div v-if="fetchedArticleData.statistics.approvededitorially_status == 0 || fetchedArticleData.statistics.editorially_status == 1 || adminStatus" class="main__article__editTags">
 				<div class="main__article__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">
 					<p class="main__article__editTags__tags__tag__title">{{ tag }}</p>
 					<button class="main__article__editTags__tags__tag__button" @click="removeTag(index)"><p>+</p></button>

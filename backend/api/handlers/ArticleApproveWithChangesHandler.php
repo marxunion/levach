@@ -49,7 +49,6 @@ class ArticleApproveWithChangesHandler extends BaseHandlerRouteWithArgs
     {
         $articleId = $this->model->getArticleIdByEditCode($this->args['editCode']);
 
-        
         if($articleId)
         {
             if($this->parsedBody['status'] == 0)

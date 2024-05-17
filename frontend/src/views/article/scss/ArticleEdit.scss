@@ -221,6 +221,14 @@
 
             position: relative;
 
+            &__tags
+            {
+                width: 95%;
+                font-size: 20px;
+                color: $ArticleEditTagsText;
+                margin-bottom: 1%;
+            }
+
             &__preview
             {
                 width: 100%;
