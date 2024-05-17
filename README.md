@@ -16,25 +16,17 @@ Rename php-example to php and ether your information
 ### Configure .env
 Rename .env-example to .env and ether your auth information
 
-### Make database backup
+### Database Migration Import
 ```bash
-docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.backup.yml up -d
-docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.backup.yml down
+docker exec POSTGRES sh /var/www/levach/scripts/postgres.migration.import.sh
 ```
 
-### Make database migration (Import)
+### Database Migration Export
 ```bash
-docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.migration.import.yml up -d
-docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.migration.import.yml down
+docker exec POSTGRES sh /var/www/levach/scripts/postgres.migration.export.sh
 ```
 
-### Make database migration (Export)
-```bash
-docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.migration.export.yml up -d
-docker-compose -f docker-compose.yml -f docker/docker-compose.postgres.migration.export.yml down
-```
-
-### Run in DevMode
+### Run server in DevMode
 ```bash
 docker-compose -f docker-compose.yml -f docker/docker-compose.server.dev.yml up --build
 ```
@@ -52,7 +44,7 @@ OR
 docker-compose -f docker-compose.yml -f docker/docker-compose.server.dev.yml up -d
 ```
 
-### Run in ProductionMode
+### Run server in ProductionMode
 ```bash
 docker-compose -f docker-compose.yml -f docker/docker-compose.server.prod.yml up --build
 ```
