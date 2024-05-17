@@ -87,8 +87,6 @@
 
 	async function fetchArticleData()
 	{
-		console.log('fetchArticleData');
-
 		await getNewCsrfToken();
 
         if(csrfTokenInput.value == null)
@@ -213,24 +211,36 @@
 			if(response.data)
 			{
 				fetchedArticleData.value = response.data;
-				statistics = computed(() => 
+				if(fetchedArticleData.value)
 				{
-					const statisticsTemp : Statistics = {}
-					let statisticName;
-					(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
+					statistics = computed(() => 
 					{
-						if(fetchedArticleData.value)
+						const statisticsTemp : Statistics = {}
+						let statisticName;
+						(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
 						{
-							statisticName = statistic['statisticName'] as string;
-							statisticsTemp[statisticName] = 
+							if(fetchedArticleData.value)
 							{
-								count: fetchedArticleData.value.statistics[statisticName],
-								title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
+								statisticName = statistic['statisticName'] as string;
+								statisticsTemp[statisticName] = 
+								{
+									count: fetchedArticleData.value.statistics[statisticName],
+									title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
+								}
 							}
-						}
+						});
+						return statisticsTemp;
 					});
-					return statisticsTemp;
-				});
+					
+					
+					viewLink.value = "localhost:8000/#/article/" + fetchedArticleData.value.view_code;
+					if(fetchedArticleData.value.statistics.approvededitorially_status > 0 && fetchedArticleData.value.statistics.editorially_status == 0 && !adminStatus.value)
+					{
+						Object.assign(tags.value, fetchedArticleData.value.statistics.current_tags);
+
+						articleText.value = fetchedArticleData.value.statistics.current_text;
+					}
+				}
 			}
 		})
 		loading.value = false;
