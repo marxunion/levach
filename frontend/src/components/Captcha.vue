@@ -48,17 +48,24 @@
 
     onUnmounted(() =>
     {
-        const element = document.querySelector('[style="visibility: hidden; position: absolute; width: 100%; top: -10000px; left: 0px; right: 0px; transition: visibility 0s linear 0.3s, opacity 0.3s linear; opacity: 0;"]');
+        const elements : NodeListOf<Element> = document.querySelectorAll('[style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.5;"]');
 
-        if(element) 
+        elements.forEach(element => 
         {
-            const parent = element.parentElement;
-
-            if(parent)
+            if(element) 
             {
-                parent.removeChild(element);
+                const parent : HTMLElement | null = element.parentElement;
+
+                if(parent)
+                {
+                    const grandParent : HTMLElement | null = parent.parentElement;
+                    if(grandParent)
+                    {
+                        grandParent.removeChild(parent);
+                    }
+                }
             }
-        }
+        });
     });
 </script>
 

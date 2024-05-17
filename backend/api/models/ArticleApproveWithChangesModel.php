@@ -17,7 +17,7 @@ class ArticleApproveWithChangesModel extends BaseModel
 
     public function rejectApproveWithChanges($articleId)
     {
-        $statisticsData = $this->database->get('statistics', ['current_version', 'approvededitorially_status'], ['article_id' => $articleId])
+        $statisticsData = $this->database->get('statistics', ['current_version', 'approvededitorially_status'], ['article_id' => $articleId]);
         if($statisticsData['approvededitorially_status'] == 3)
         {
             $this->database->delete('articles', ['id' => $articleId, 'version_id' => $statisticsData['current_version']]);

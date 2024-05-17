@@ -35,7 +35,7 @@ class ArticleEditPreloadModel extends BaseModel
             $ratingToRequestApprove = AdminSettingsGetHandler::getSetting("article_need_rating_to_approve_editorially");
             if(isset($ratingToRequestApprove))
             {
-                if($articleStatistics['rating'] > $ratingToRequestApprove)
+                if($articleStatistics['rating'] >= $ratingToRequestApprove)
                 {
                     $article['canRequestApprove'] = true;
                 }
