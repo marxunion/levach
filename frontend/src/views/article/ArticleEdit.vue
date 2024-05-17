@@ -35,6 +35,8 @@
 
 	import { arraysAreEqual } from '../../ts/helpers/ArrayHelper';
 	
+	import { Article } from '../../ts/interfaces/Article';
+	
 	interface Statistic 
 	{
 		count: number;
@@ -61,8 +63,10 @@
 
 	const viewLink : Ref<string> = ref('');
 
-	let fetchedData = ref();
+	let fetchedArticleData : Ref<Article | null> = ref(null);
 	let loading : Ref<boolean> = ref(true);
+
+	let reloading : Ref<boolean> = ref(false);
 	
 	let statistics : ComputedRef<Statistics> = computed(() => 
 	({
@@ -83,6 +87,8 @@
 
 	async function fetchArticleData()
 	{
+		console.log('fetchArticleData');
+
 		await getNewCsrfToken();
 
         if(csrfTokenInput.value == null)
@@ -98,53 +104,68 @@
 		
 		await axios.post('/api/article/edit/preload/'+articleEditCode.value, data)
 		.then(response =>
-		{
-			if(response.data.title)
+		{	
+			if(response.data)
 			{
-				fetchedData.value = response.data;
-				statistics = computed(() => 
-				{
-					const statisticsTemp : Statistics = {}
-					let statisticName;
-					(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
-					{
-						statisticName = statistic['statisticName'] as string;
-						statisticsTemp[statisticName] = 
-						{
-							count: fetchedData.value['statistics'][statisticName],
-							title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
-						}
-					});
-					return statisticsTemp;
-				});
-
-				if(fetchedData.value['tags'] == null)
-				{
-					fetchedData.value['tags'] = [];
-				}
-				Object.assign(tags.value, fetchedData.value['tags']);
-
-				articleText.value = fetchedData.value['text'];
 				
-				viewLink.value = "localhost:8000/#/article/" + fetchedData.value['view_code'];
+				fetchedArticleData.value = response.data;
+				if(fetchedArticleData.value)
+				{
+					statistics = computed(() => 
+					{
+						const statisticsTemp : Statistics = {}
+						let statisticName : string;
+						(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
+						{
+							statisticName = statistic['statisticName'] as string;
+							if(fetchedArticleData.value)
+							{
+								if(fetchedArticleData.value.statistics[statisticName])
+								{
+									statisticsTemp[statisticName] = 
+									{
+										count: fetchedArticleData.value.statistics[statisticName],
+										title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
+									}
+								}
+								
+							}
+							
+						});
+						
+						console.log(statisticsTemp);
+						
+						return statisticsTemp;
+					});
+
+					if(fetchedArticleData.value.statistics.current_tags == null)
+					{
+						fetchedArticleData.value.statistics.current_tags = [];
+					}
+					Object.assign(tags.value, fetchedArticleData.value.statistics.current_tags);
+
+					articleText.value = fetchedArticleData.value.statistics.current_text;
+					
+					viewLink.value = "localhost:8000/#/article/" + fetchedArticleData.value.view_code;
+				}
 			}
 			else
 			{
 				if(response.data.Warning)
 				{
-					fetchedData.value = null;
+					fetchedArticleData.value = null;
 				}
 				else if(response.data.Error)
 				{
-					fetchedData.value = null;
+					fetchedArticleData.value = null;
 				}
 				else if(response.data.Critical)
 				{
-					fetchedData.value = null;
+					fetchedArticleData.value = null;
 				}
 				else
 				{
-					fetchedData.value = null;
+					fetchedArticleData.value = null;
 				}
 			}
 		})
@@ -152,22 +173,23 @@
 		{
 			if(error.response.data.Warning)
 			{
-				return null;
+				fetchedArticleData.value = null;
 			}
 			else if(error.response.data.Error)
 			{
-				fetchedData.value = null;
+				fetchedArticleData.value = null;
 			}
 			else if(error.response.data.Critical)
 			{
-				fetchedData.value = null;
+				fetchedArticleData.value = null;
 			}
 			else
 			{
-				fetchedData.value = null;
+				fetchedArticleData.value = null;
 			}
 		});
 		loading.value = false;
+		reloading.value = false;
 	}
 
 	async function refetchArticleData()
@@ -188,65 +210,31 @@
 		await axios.post('/api/article/edit/preload/'+articleEditCode.value, data)
 		.then(response =>
 		{
-			if(response.data.title)
+			if(response.data)
 			{
-				fetchedData.value = response.data;
+				fetchedArticleData.value = response.data;
 				statistics = computed(() => 
 				{
 					const statisticsTemp : Statistics = {}
 					let statisticName;
 					(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
 					{
-						statisticName = statistic['statisticName'] as string;
-						statisticsTemp[statisticName] = 
+						if(fetchedArticleData.value)
 						{
-							count: fetchedData.value['statistics'][statisticName],
-							title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
+							statisticName = statistic['statisticName'] as string;
+							statisticsTemp[statisticName] = 
+							{
+								count: fetchedArticleData.value.statistics[statisticName],
+								title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
+							}
 						}
 					});
 					return statisticsTemp;
 				});
 			}
-			else
-			{
-				if(response.data.Warning)
-				{
-					fetchedData.value = null;
-				}
-				else if(response.data.Error)
-				{
-					fetchedData.value = null;
-				}
-				else if(response.data.Critical)
-				{
-					fetchedData.value = null;
-				}
-				else
-				{
-					fetchedData.value = null;
-				}
-			}
 		})
-		.catch(error =>
-		{
-			if(error.response.data.Warning)
-			{
-				return null;
-			}
-			else if(error.response.data.Error)
-			{
-				fetchedData.value = null;
-			}
-			else if(error.response.data.Critical)
-			{
-				fetchedData.value = null;
-			}
-			else
-			{
-				fetchedData.value = null;
-			}
-		});
 		loading.value = false;
+		reloading.value = false;
 	}
 
 	const checkChanges = async () =>
@@ -256,16 +244,19 @@
             
         }, 1500);
 
-        if(articleText.value != fetchedData.value['text'] || !arraysAreEqual(tags.value, fetchedData.value['tags']))
-        {
-            currentChangesStatus.value = 1;
-            return true;
-        }
-        else
-        {
-            currentChangesStatus.value = 0;
-            return false;
-        }
+		if(fetchedArticleData.value)
+		{
+			if(articleText.value != fetchedArticleData.value.statistics.current_text || !arraysAreEqual(tags.value, fetchedArticleData.value.statistics.current_tags))
+			{
+				currentChangesStatus.value = 1;
+				return true;
+			}
+			else
+			{
+				currentChangesStatus.value = 0;
+				return false;
+			}
+		}
     }
 	
 	const addTag = () => 
@@ -325,11 +316,15 @@
 		{
 			if (response.data.success) 
 			{
-				fetchedData.value['text'] = articleText.value;
-				Object.assign(fetchedData.value['tags'], tags.value);
-				checkChanges();
+				if(fetchedArticleData.value)
+				{
+					fetchedArticleData.value.statistics.current_text = articleText.value;
+					Object.assign(fetchedArticleData.value.statistics.current_tags, tags.value);
+					checkChanges();
 
-				openModal(InfoModalWithLink, { status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning'] });
+					openModal(InfoModalWithLink, { status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning'] });
+				}
+				
 			} 
 			else 
 			{
@@ -663,9 +658,13 @@
         {
             if(response.data.success)
             {
-				fetchedData.value['canRequestApprove'] = false;
-				fetchedData.value['approvededitorially_status'] = 1;
-                openModal(InfoModal, {status: true, text: langData.value['articleRequestApproveSuccessfully']});
+				if(fetchedArticleData.value != null)
+				{
+					fetchedArticleData.value.statistics['canRequestApprove'] = false;
+					fetchedArticleData.value.statistics['approvededitorially_status'] = 1;
+                	openModal(InfoModal, {status: true, text: langData.value['articleRequestApproveSuccessfully']});
+				}
+				
             }
             else
             {
@@ -878,7 +877,7 @@
 
 <template>
 	<main v-if="!loading" class="main">
-		<article v-if="fetchedData" class="main__article">
+		<article v-if="fetchedArticleData" class="main__article">
 			<div class="main__article__info">
 				<div class="main__article__info__statistics">
 					<div class="main__article__info__statistics__statistic" v-for="(status, index) in statistics" :key="index">
@@ -891,15 +890,15 @@
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['premoderationStatusText'] }}</p>
 							<div>
-								<img :src="`/src/assets/img/article/statuses/${fetchedData['premoderation_status']}.svg`" alt="premoderationStatus">
-								<p>{{ ((langData['statuses'] as JsonData)['premoderationStatus'] as JsonData)[fetchedData['premoderation_status'].toString()] }}</p>
+								<img :src="`/src/assets/img/article/statuses/${fetchedArticleData.statistics.premoderation_status}.svg`" alt="premoderationStatus">
+								<p>{{ ((langData['statuses'] as JsonData)['premoderationStatus'] as JsonData)[fetchedArticleData.statistics.premoderation_status.toString()] }}</p>
 							</div>
 						</div>
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['approvedEditoriallyStatusText'] }}</p>
 							<div>
-								<img :src="`/src/assets/img/article/statuses/${fetchedData['approvededitorially_status']}.svg`" alt="approvedEditoriallyStatus">
-								<p>{{ ((langData['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[fetchedData['approvededitorially_status'].toString()] }}</p>
+								<img :src="`/src/assets/img/article/statuses/${fetchedArticleData.statistics.approvededitorially_status}.svg`" alt="approvedEditoriallyStatus">
+								<p>{{ ((langData['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[fetchedArticleData.statistics.approvededitorially_status.toString()] }}</p>
 							</div>
 						</div>
 					</div>
@@ -914,27 +913,27 @@
 					</button>
 				</div>
 			</div>
-			<div v-if="fetchedData['canRequestApprove']" class="main__article__block">
+			<div v-if="fetchedArticleData.canRequestApprove" class="main__article__block">
 				<p class="main__article__block__title">{{ langData['requestApproveTitle'] }}</p>
 				<button @click="onRequestApproveArticle" class="main__article__block__button requestApproveArticleButton">{{ langData['requestApproveButtonTitle'] }}</button>
 			</div>
-			<div v-if="fetchedData['approvededitorially_status'] == 3" class="main__article__block">
+			<div v-if="fetchedArticleData.statistics.approvededitorially_status == 3">
 				<p class="main__article__block__title">{{ langData['articleApprovedWithChangesTitle'] }}</p>
 				<div class="main__article__block__subblock">
 					<button @click="onAcceptApproveWithChanges" class="main__article__block__button acceptArticleApprovedWithChangesButton">{{ langData['acceptArticleApprovedWithChangesButtonTitle'] }}</button>
 					<button @click="onRejectApproveWithChanges" class="main__article__block__button rejectArticleApprovedWithChangesButton">{{ langData['rejectArticleApprovedWithChangesButtonTitle'] }}</button>
 				</div>
 			</div>
-			<div v-if="fetchedData['approvededitorially_status'] == 2 && fetchedData['editorially_status'] != 1 && !adminStatus" class="main__article__previewContainer">
+			<div v-if="fetchedArticleData.statistics.approvededitorially_status == 2 && fetchedArticleData.statistics.editorially_status != 1 && !adminStatus" class="main__article__previewContainer">
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="articleText" :language="LangDataHandler.currentLanguage.value"/>
 			</div>
 			
-			<div v-if="fetchedData['approvededitorially_status'] != 2 || fetchedData['editorially_status'] == 1 || adminStatus" class="main__article__editorContainer">
+			<div v-if="fetchedArticleData.statistics.approvededitorially_status != 2 || fetchedArticleData.statistics.editorially_status == 1 || adminStatus" class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="articleText" @onUploadImg="onUploadImgValidate" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
 				<button v-if="currentChangesStatus" class="main__article__editorContainer__sendButton" @click="onSendButtonValidate">{{ langData['sendButton'] }}</button>	
 			</div>
 
-			<div v-if="fetchedData['approvededitorially_status'] != 2 || fetchedData['editorially_status'] == 1 || adminStatus" class="main__article__editTags">
+			<div v-if="fetchedArticleData.statistics.approvededitorially_status != 2 || fetchedArticleData.statistics.editorially_status == 1 || adminStatus" class="main__article__editTags">
 				<div class="main__article__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">
 					<p class="main__article__editTags__tags__tag__title">{{ tag }}</p>
 					<button class="main__article__editTags__tags__tag__button" @click="removeTag(index)"><p>+</p></button>

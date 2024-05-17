@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, watch, reactive, Ref, ComputedRef, onMounted } from 'vue';
+	import { ref, watch, Ref, ComputedRef, onMounted } from 'vue';
 	import { useRoute, useRouter, Router, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
@@ -27,6 +27,8 @@
 
     import { arraysAreEqual } from '../../ts/helpers/ArrayHelper';
 
+    import { Article } from '../../ts/interfaces/Article';
+
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleAdminApprove", langsData).langData;
 
     const currentChangesStatus : Ref<number> = ref(0);
@@ -39,13 +41,12 @@
 
     let articleText : Ref<string> = ref('');
 
-	let fetchedData = ref();
-	let loaded : Ref<boolean> = ref(false);
+	let fetchedArticleData : Ref<Article | null> = ref(null);
+	let loading : Ref<boolean> = ref(true);
 
     let newTag : Ref<string> = ref('');
 	let tags : Ref<string[]> = ref([]);
     
-
     async function fetchData()
 	{
 		await getNewCsrfToken();
@@ -61,74 +62,62 @@
             csrfToken: (csrfTokenInput.value as HTMLInputElement).value
         }
 		
-		return await axios.post('/api/admin/article/approve/preload/'+articleViewCode.value, data)
+		await axios.post('/api/admin/article/approve/preload/'+articleViewCode.value, data)
 		.then(response =>
 		{
-			if(response.data.title)
+			if(response.data)
 			{
-				fetchedData.value = response.data;
+				fetchedArticleData.value = response.data;
 
-				if(fetchedData.value['tags'] == null)
-				{
-					fetchedData.value['tags'] = [];
-				}
-				Object.assign(tags.value, fetchedData.value['tags']);
+                if(fetchedArticleData.value)
+                {
+                    if(fetchedArticleData.value.statistics.current_tags == null)
+                    {
+                        fetchedArticleData.value.statistics.current_tags = [];
+                    }
+                    Object.assign(tags.value, fetchedArticleData.value.statistics.current_tags);
 
-                articleText.value = fetchedData.value['text'];
-
-				loaded.value = true;
+                    articleText.value = fetchedArticleData.value.statistics.current_text;
+                }
 			}
 			else
 			{
 				if(response.data.Warning)
 				{
-					loaded.value = true;
-					fetchedData.value = null;
-					return null;
+					fetchedArticleData.value = null;
 				}
 				else if(response.data.Error)
 				{
-					loaded.value = true;
-					fetchedData.value = null;
-					return null;
+					fetchedArticleData.value = null;
 				}
 				else if(response.data.Critical)
 				{
-					loaded.value = true;
-					fetchedData.value = null;
-					return null;
+					fetchedArticleData.value = null;
 				}
 				else
 				{
-					loaded.value = true;
-					fetchedData.value = null;
-					return null;
+					fetchedArticleData.value = null;
 				}
 			}
+            loading.value = false;
 		})
 		.catch(error =>
 		{
 			if(error.response.data.Warning)
 			{
-				return null;
+				fetchedArticleData.value = null;
 			}
 			else if(error.response.data.Error)
 			{
-				loaded.value = true;
-				fetchedData.value = null;
-				return null;
+				fetchedArticleData.value = null;
 			}
 			else if(error.response.data.Critical)
 			{
-				loaded.value = true;
-				fetchedData.value = null;
-				return null;
+				fetchedArticleData.value = null;
 			}
 			else
 			{
-				loaded.value = true;
-				fetchedData.value = null;
-				return null;
+				fetchedArticleData.value = null;
 			}
 		});
 	}
@@ -139,15 +128,18 @@
         {
             
         }, 1500);
-        if(articleText.value != fetchedData.value['text'] || !arraysAreEqual(tags.value, fetchedData.value['tags']))
+        if(fetchedArticleData.value)
         {
-            currentChangesStatus.value = 1;
-            return true;
-        }
-        else
-        {
-            currentChangesStatus.value = 0;
-            return false;
+            if(articleText.value != fetchedArticleData.value.statistics.current_text || !arraysAreEqual(tags.value, fetchedArticleData.value.statistics.current_tags))
+            {
+                currentChangesStatus.value = 1;
+                return true;
+            }
+            else
+            {
+                currentChangesStatus.value = 0;
+                return false;
+            }
         }
     }
 	
@@ -567,22 +559,14 @@
 
 	onMounted(async function()
 	{
-		try 
-		{
-            loaded.value = false;
-			await fetchData();
-		} 
-		catch (error) 
-		{
-			loaded.value = true;
-			fetchedData.value = null;
-		}
+        loading.value = true;
+		await fetchData();
 	});
 </script>
 
 <template>
-	<main v-if="loaded" class="main">
-		<article v-if="fetchedData" class="main__article">
+	<main v-if="!loading" class="main">
+		<article v-if="fetchedArticleData" class="main__article">
 			<div class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="articleText" @onChange="checkChanges" @onUploadImg="onUploadImg" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButton">{{ (langData['buttonTitles'] as JsonData)[currentChangesStatus] }}</button>	

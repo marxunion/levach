@@ -13,6 +13,7 @@ export interface ArticleVersion
 }
 export interface Statistics
 {
+    [statisticName: string]: any;
     current_title: string,
     current_text: string,
     current_tags: string[],
@@ -32,5 +33,6 @@ export interface Article
     statistics: Statistics,
     view_code: string,
     comments: Comment[]
-    currentSelectedVersion: number
+    currentSelectedVersion: number,
+    canRequestApprove: boolean
 }

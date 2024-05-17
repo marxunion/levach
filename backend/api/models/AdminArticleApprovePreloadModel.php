@@ -17,17 +17,15 @@ class AdminArticleApprovePreloadModel extends BaseModel
 
     public function viewArticle($articleId)
     {
-        $article = $this->database->get('articles', ['title', 'text' ,'tags','created_date', 'premoderation_status', 'approvededitorially_status', 'editorially_status'], ['id' => $articleId, 'ORDER' => ['version_id' => 'DESC'], 'LIMIT' => 1]);
-        $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]);
+        $article['statistics'] = $this->database->get('statistics', ['current_title', 'current_text' ,'current_tags','created_date', 'rating', 'comments', 'premoderation_status', 'approvededitorially_status', 'editorially_status'], ['article_id' => $articleId]);
 
-        if($article['tags'] != null)
+        if($article['statistics']['current_tags'] != null)
         {
-            $tagsString = substr(substr($article["tags"], 1), 0, -1);
+            $tagsString = substr(substr($article['statistics']['current_tags'], 1), 0, -1);
 
-            $article['tags'] = explode(',', $tagsString);
+            $article['statistics']['current_tags'] = explode(',', $tagsString);
         }
 
-        $article['statistics'] = $articleStatistics;
         return $article;
     }
 }

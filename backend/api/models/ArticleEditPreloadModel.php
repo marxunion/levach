@@ -19,23 +19,23 @@ class ArticleEditPreloadModel extends BaseModel
     
     public function viewArticle($articleId)
     {
-        $article = $this->database->get('articles', ['title', 'text' ,'tags','created_date', 'premoderation_status', 'approvededitorially_status', 'editorially_status'], ['id' => $articleId, 'ORDER' => ['version_id' => 'DESC'], 'LIMIT' => 1]);
-        $articleStatistics = $this->database->get('statistics', ['rating', 'comments'], ['article_id' => $articleId]);
+        $article = [];
+        $article['statistics'] = $this->database->get('statistics', ['current_tags', 'current_title', 'current_text', 'created_date', 'premoderation_status', 'approvededitorially_status', 'editorially_status', 'rating', 'comments'], ['article_id' => $articleId]);
         $article['view_code'] = $this->database->get('codes', 'view_code', ['article_id' => $articleId]);
 
-        if($article['tags'] != null)
+        if($article['statistics']['current_tags'] != null)
         {
-            $tagsString = substr(substr($article["tags"], 1), 0, -1);
+            $tagsString = substr(substr($article['statistics']["current_tags"], 1), 0, -1);
 
-            $article['tags'] = explode(',', $tagsString);
+            $article['statistics']['current_tags'] = explode(',', $tagsString);
         }
 
-        if($article['approvededitorially_status'] == 0)
+        if($article['statistics']['approvededitorially_status'] == 0)
         {
             $ratingToRequestApprove = AdminSettingsGetHandler::getSetting("article_need_rating_to_approve_editorially");
             if(isset($ratingToRequestApprove))
             {
-                if($articleStatistics['rating'] >= $ratingToRequestApprove)
+                if($article['statistics']['rating'] >= $ratingToRequestApprove)
                 {
                     $article['canRequestApprove'] = true;
                 }
@@ -53,8 +53,6 @@ class ArticleEditPreloadModel extends BaseModel
         {
             $article['canRequestApprove'] = false;
         }
-
-        $article['statistics'] = $articleStatistics;
 
         return $article;
     }
