@@ -524,8 +524,11 @@
 				</div>
 				<div class="comment__bar__reactions">
 					<img src="../assets/img/article/rating.png" alt="Rating: " class="comment__bar__reactions__icon ratingIcon">
-					<p class="comment__bar__reactions__title likeCounter">{{ abbreviateNumber(comment.rating) }}</p>
+					<p class="comment__bar__reactions__title">{{ abbreviateNumber(comment.rating) }}</p>
+					<p v-if="comment.rating_influence > 0" class="comment__bar__reactions__title ratingInfluenceUp"> {{ comment.rating_influence }}</p>
+					<p v-else-if="comment.rating_influence < 0" class="comment__bar__reactions__title ratingInfluenceDown"> {{ comment.rating_influence }}</p>
 				</div>
+				
 			</div>
 		</div>
 		<div v-if="answerStatus" class="comment__newSubcomment">
