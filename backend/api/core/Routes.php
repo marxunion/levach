@@ -73,9 +73,9 @@ class Routes
             {
                 $adminGroup->group('/settings', function (RouteCollectorProxy $adminSettingsGroup) 
                 {
-                    $adminSettingsGroup->post('/get/{settingName}', function (Request $request, Response $response, array $args) 
+                    $adminSettingsGroup->post('/get', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminSettingsGetHandler($request, $response, $args);
+                        self::$handler = new AdminSettingsGetHandler($request, $response);
                         return self::$handler->Handle();
                     });
 

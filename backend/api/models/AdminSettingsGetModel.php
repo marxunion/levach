@@ -14,27 +14,6 @@ class AdminSettingsGetModel extends BaseModel
         parent::__construct();
     }
 
-    public static function _getAllSettings()
-    {
-        $database = Database::getConnection();
-        if($database)
-        {
-            $data = $database->select('settings', '*');
-            $settings = [];
-
-            foreach ($data as &$setting) 
-            {
-                $settings[$setting['name']] = $setting['value'];
-            }
-
-            return $settings;
-        }
-        else
-        {
-            throw new Critical(500, "Failed to establish database connenction", "Failed to establish database connenction");
-        }
-    }
-
     public static function _getSetting($settingName)
     {
         $database = Database::getConnection();
@@ -47,19 +26,6 @@ class AdminSettingsGetModel extends BaseModel
         {
             throw new Critical(500, "Failed to establish database connenction", "Failed to establish database connenction");
         }
-    }
-
-    public function getAllSettings()
-    {
-        $data = $this->database->select('settings', '*');
-        $settings = [];
-
-        foreach ($data as &$setting) 
-        {
-            $settings[$setting['name']] = $setting['value'];
-        }
-        
-        return $settings;
     }
 
     public function getSetting($settingName)
