@@ -41,7 +41,6 @@ class Logger extends MonologLogger
 
     public function error(Stringable|string $message, array $context = []) : void
     {
-
         $currentDate = date('Y-m-d H:i:s');
         parent::pushHandler(new StreamHandler(__DIR__.'/../logs/errors/'.$currentDate.'.log', Level::Debug));
         parent::error($message);
@@ -49,7 +48,6 @@ class Logger extends MonologLogger
 
     public function critical(Stringable|string $message, array $context = []) : void
     {
-
         $currentDate = date('Y-m-d H:i:s');
         parent::pushHandler(new StreamHandler(__DIR__.'/../logs/errors/critical/'.$currentDate.'.log', Level::Debug));
         parent::critical($message);
