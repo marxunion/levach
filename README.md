@@ -62,7 +62,6 @@ docker exec POSTGRES sh /var/www/levach/scripts/postgres.migration.import.sh
 docker exec POSTGRES sh /var/www/levach/scripts/postgres.migration.export.sh
 ```
 
-
 ### Create admin account
 ```bash
 docker exec POSTGRES sh /var/www/levach/scripts/admin.create.account.sh
