@@ -115,7 +115,6 @@ services:
     depends_on:
       - php
 
-
 networks:
   app-network:
     driver: bridge
