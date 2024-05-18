@@ -18,38 +18,38 @@ Rename .env-example to .env and ether your auth information
 
 ### Run server in DevMode
 ```bash
-docker-compose -f docker/docker-compose.server.dev.yml up --build
+docker-compose -f docker-compose.server.dev.yml up --build
 ```
 OR
 ```bash
-docker-compose -f docker/docker-compose.server.dev.yml up --build -d
+docker-compose -f docker-compose.server.dev.yml up --build -d
 ```
 
 After builded PHP image:
 ```bash
-docker-compose -f docker/docker-compose.server.dev.yml up
+docker-compose -f docker-compose.server.dev.yml up
 ```
 OR
 ```bash
-docker-compose -f docker/docker-compose.server.dev.yml up -d
+docker-compose -f docker-compose.server.dev.yml up -d
 ```
 
 ### Run server in ProductionMode
 ```bash
-docker-compose -f docker/docker-compose.server.prod.yml up --build
+docker-compose -f docker-compose.server.prod.yml up --build
 ```
 OR
 ```bash
-docker-compose -f docker/docker-compose.server.prod.yml up --build -d
+docker-compose -f docker-compose.server.prod.yml up --build -d
 ```
 
 After builded PHP image:
 ```bash
-docker-compose -f docker/docker-compose.server.prod.yml up
+docker-compose -f docker-compose.server.prod.yml up
 ```
 OR
 ```bash
-docker-compose -f docker/docker-compose.server.prod.yml up -d
+docker-compose -f docker-compose.server.prod.yml up -d
 ```
 
 ### Database Migration Import
