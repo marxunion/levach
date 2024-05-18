@@ -9,38 +9,29 @@ use Base\BaseModel;
 
 class AdminLoginModel extends BaseModel
 {
-    public function login($nickname, $password)
+    public function login(string $nickname, string $password)
     {
-        if(isset($nickname))
-        {
-            if(isset($password))
-            {
-                $passwordEncrypted = $this->database->get('admins', 'password', ['nickname' => $nickname]);
-                if(isset($passwordEncrypted))
-                {
-                    if(password_verify($password, $passwordEncrypted))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        throw new Error(400, "Admin nickname or password is incorrect", "Admin nickname or password is incorrect");
-                    }
-                }
-                else
-                {
-                    throw new Error(400, "Admin nickname or password is incorrect", "Admin nickname or password is incorrect");
-                }
-            }
-            else
-            {
-                throw new Warning(400, "Please ether password", "Please ether password");
-            }
-        } 
-        else
+        if(empty($nickname))
         {
             throw new Warning(400, "Please ether nickname", "Please ether nickname");
         }
+        if(empty($password))
+        {
+            throw new Warning(400, "Please ether password", "Please ether password");
+        }
+
+        $passwordEncrypted = $this->database->get('admins', 'password', ['nickname' => $nickname]);
+        if(empty($passwordEncrypted))
+        {
+            throw new Error(400, "Admin nickname or password is incorrect", "Admin nickname or password is incorrect");
+        }
+
+        if(!password_verify($password, $passwordEncrypted))
+        {
+            throw new Error(400, "Admin nickname or password is incorrect", "Admin nickname or password is incorrect");
+        }
+        
+        return true;
     } 
     public function safeToken($token, $nickname, $expirationTime)
     {
