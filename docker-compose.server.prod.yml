@@ -21,7 +21,7 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
-
+      
       RECAPTCHA_SECRETKEY: ${RECAPTCHA_SECRETKEY}
     volumes:
       - ./:/var/www/levach:rw
@@ -67,8 +67,12 @@ services:
     environment:
       DB_HOST: ${DB_HOST}
       DB_NAME: ${DB_NAME}
+      POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+      ADMIN_DEFAULT_NAME: ${ADMIN_DEFAULT_NAME}
+      ADMIN_DEFAULT_PASSWORD_ENCRYPTED: ${ADMIN_DEFAULT_PASSWORD_ENCRYPTED}
     volumes:
       - ./:/var/www/levach/:rw
       - postgres_data:/var/lib/postgresql/data
