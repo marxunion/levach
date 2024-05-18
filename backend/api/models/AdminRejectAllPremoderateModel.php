@@ -8,7 +8,7 @@ class AdminRejectAllPremoderateModel extends BaseModel
     public function rejectAllPremoderateModel()
     {
         $articleIds = $this->database->select('statistics', 'article_id', ['premoderation_status' => 1]);
-        foreach ($articleIds as &$articleId) 
+        foreach($articleIds as &$articleId) 
         {
             $this->database->delete('codes', ['article_id' => $articleId]);
             $this->database->delete('comments', ['article_id' => $articleId]);

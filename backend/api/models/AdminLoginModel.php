@@ -25,7 +25,6 @@ class AdminLoginModel extends BaseModel
         {
             throw new Error(400, "Admin nickname or password is incorrect", "Admin nickname or password is incorrect");
         }
-
         if(!password_verify($password, $passwordEncrypted))
         {
             throw new Error(400, "Admin nickname or password is incorrect", "Admin nickname or password is incorrect");

@@ -65,7 +65,7 @@ class CustomExceptionHandler extends ErrorHandler
                 }
                 else
                 {
-                    switch ($this->exceptionType) 
+                    switch($this->exceptionType) 
                     {
                         case Error::class:
                             $this->exceptionDetails['message'] = "Unknown error";
@@ -95,7 +95,7 @@ class CustomExceptionHandler extends ErrorHandler
             }
             else
             {
-                switch ($this->exceptionType) 
+                switch($this->exceptionType) 
                 {
                     case Error::class:
                         $this->exceptionDetails['message'] = "Unknown error";
@@ -122,7 +122,7 @@ class CustomExceptionHandler extends ErrorHandler
             $message = $this->exception->getMessage();
             if($message == "")
             {
-                switch ($this->exceptionType) 
+                switch($this->exceptionType) 
                 {
                     case Error::class:
                         $this->exceptionDetails['message'] = "Unknown error";
@@ -142,7 +142,7 @@ class CustomExceptionHandler extends ErrorHandler
         $logMessage = 'Code: '.$this->exceptionDetails['code'].' | Message: '.$message.' | File: '.$this->exception->getFile().' | Line: '.$this->exception->getLine().' | Trace: '.$this->exception->getTraceAsString();
         
         $response = $this->responseFactory->createResponse($this->exceptionDetails['code']);
-        switch ($this->exceptionType) 
+        switch($this->exceptionType) 
         {
             case Error::class:
                 $responsePayload = json_encode(['Error' => $this->exceptionDetails]);

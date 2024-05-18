@@ -26,7 +26,7 @@ class MediaLoadImageHandler extends BaseHandlerRouteWithArgs
     }
     public function Process()
     {
-        if (file_exists($this->filePath))
+        if(file_exists($this->filePath))
         {
             $this->response = $this->response->withFile($this->filePath);
         }

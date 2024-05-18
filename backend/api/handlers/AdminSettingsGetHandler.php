@@ -94,7 +94,7 @@ class AdminSettingsGetHandler extends BaseHandlerRoute
     public function Process()
     {
         $settingsToReturn = [];
-        foreach ($this->parsedBody['settings'] as &$settingName) 
+        foreach($this->parsedBody['settings'] as &$settingName) 
         {
             $responseData = $this->model->getSetting($settingName);
             if(!empty($responseData))

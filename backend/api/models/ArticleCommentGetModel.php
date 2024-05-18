@@ -31,7 +31,7 @@ class ArticleCommentGetModel extends BaseModel
             ]
         );
 
-        foreach ($comments as &$comment) 
+        foreach($comments as &$comment) 
         {
             $subcomments = $this->getSubcomments($articleId, $comment['id']);
             if(!empty($subcomments)) 

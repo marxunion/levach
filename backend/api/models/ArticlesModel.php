@@ -806,7 +806,7 @@ class ArticlesModel extends BaseModel
                 if(count($articleIds) > 0)
                 {
                     $articles = [];
-                    foreach ($articleIds as &$articleId) 
+                    foreach($articleIds as &$articleId) 
                     {
                         $articleVersions = $this->database->select(
                             'articles', 
@@ -828,7 +828,7 @@ class ArticlesModel extends BaseModel
                             ]
                         );
                         
-                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        foreach($articleVersions as $versionNum => $versionInfo) 
                         {
                             if ($versionInfo['tags'] != null) 
                             {
@@ -874,7 +874,7 @@ class ArticlesModel extends BaseModel
                 if(count($articleIds) > 0)
                 {
                     $articles = [];
-                    foreach ($articleIds as &$articleId) 
+                    foreach($articleIds as &$articleId) 
                     {
                         $articleVersions = $this->database->select(
                             'articles', 
@@ -894,7 +894,7 @@ class ArticlesModel extends BaseModel
                             ]
                         );
 
-                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        foreach($articleVersions as $versionNum => $versionInfo) 
                         {
                             if ($versionInfo['tags'] != null) 
                             {
@@ -940,7 +940,7 @@ class ArticlesModel extends BaseModel
                 if(count($articleIds) > 0)
                 {
                     $articles = [];
-                    foreach ($articleIds as &$articleId) 
+                    foreach($articleIds as &$articleId) 
                     {
                         $articleVersions = $this->database->select(
                             'articles', 
@@ -961,7 +961,7 @@ class ArticlesModel extends BaseModel
                             ]
                         );
 
-                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        foreach($articleVersions as $versionNum => $versionInfo) 
                         {
                             if ($versionInfo['tags'] != null) 
                             {
@@ -1007,7 +1007,7 @@ class ArticlesModel extends BaseModel
                 if(count($articleIds) > 0)
                 {
                     $articles = [];
-                    foreach ($articleIds as &$articleId) 
+                    foreach($articleIds as &$articleId) 
                     {
                         $articleVersions = $this->database->select(
                             'articles', 
@@ -1030,7 +1030,7 @@ class ArticlesModel extends BaseModel
                             ]
                         );
 
-                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        foreach($articleVersions as $versionNum => $versionInfo) 
                         {
                             if ($versionInfo['tags'] != null) 
                             {
@@ -1076,7 +1076,7 @@ class ArticlesModel extends BaseModel
                 if(count($articleIds) > 0)
                 {
                     $articles = [];
-                    foreach ($articleIds as &$articleId) 
+                    foreach($articleIds as &$articleId) 
                     {
                         $articleVersions =  $this->database->select(
                             'articles', 
@@ -1097,7 +1097,7 @@ class ArticlesModel extends BaseModel
                             ]
                         );
                         
-                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        foreach($articleVersions as $versionNum => $versionInfo) 
                         {
                             if ($versionInfo['tags'] != null) 
                             {
@@ -1143,7 +1143,7 @@ class ArticlesModel extends BaseModel
                 if(count($articleIds) > 0)
                 {
                     $articles = [];
-                    foreach ($articleIds as &$articleId) 
+                    foreach($articleIds as &$articleId) 
                     {
                         $articleVersions = $this->database->select(
                             'articles', 
@@ -1163,7 +1163,7 @@ class ArticlesModel extends BaseModel
                             ]
                         );
 
-                        foreach ($articleVersions as $versionNum => $versionInfo) 
+                        foreach($articleVersions as $versionNum => $versionInfo) 
                         {
                             if ($versionInfo['tags'] != null) 
                             {

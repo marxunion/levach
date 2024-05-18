@@ -89,7 +89,6 @@ class ArticlesHandler extends BaseHandlerRoute
             }
             else if(isset($this->parsedBody['searchTags']))
             {
-                
                 if(is_array($this->parsedBody['searchTags']))
                 {
                     $searchTagsString = '{'.implode(',', $this->parsedBody['searchTags']).'}';

@@ -13,7 +13,8 @@ class CaptchaTokenHandler extends BaseHandlerRoute
     public static function checkCaptchaToken($remoteIp, $token)
     {
         $client = new Client();
-        $response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
+        $response = $client->post('https://www.google.com/recaptcha/api/siteverify', 
+        [
             'form_params' => [
                 'secret' => Settings::getSetting('RECAPTCHA_SECRETKEY'),
                 'response' => $token,
@@ -23,7 +24,7 @@ class CaptchaTokenHandler extends BaseHandlerRoute
 
         $body = json_decode($response->getBody());
         
-        if ($body->success) 
+        if($body->success) 
         {
             return true;
         } 

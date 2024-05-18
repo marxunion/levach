@@ -18,7 +18,7 @@ class AdminSettingsSetHandler extends BaseHandlerRoute
         {
             if(is_array($settings))
             {
-                foreach ($settings as $settingName => $settingValue) 
+                foreach($settings as $settingName => $settingValue) 
                 {
                     $this->model->setSetting($settingName, $settingValue);
                 }
@@ -110,7 +110,7 @@ class AdminSettingsSetHandler extends BaseHandlerRoute
         {
             if(is_array($this->parsedBody['settings']))
             {
-                foreach ($this->parsedBody['settings'] as $settingName => $settingValue) 
+                foreach($this->parsedBody['settings'] as $settingName => $settingValue) 
                 {
                     $this->model->setSetting($settingName, $settingValue);
                 }

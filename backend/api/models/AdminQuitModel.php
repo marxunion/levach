@@ -14,12 +14,10 @@ class AdminQuitModel extends BaseModel
         {
             throw new Warning(400, "Admin token not found", "Admin token not found");
         }
-
         if(empty($nickname))
         {
             throw new Warning(400, "Admin nickname not found", "Admin nickname not found");
         }
-
         if(empty($expirationTime))
         {
             throw new Warning(400, "Admin expiration_time not found", "Admin expiration_time not found");
@@ -34,12 +32,10 @@ class AdminQuitModel extends BaseModel
         {
             throw new Error(400, "Invalid nickname for token", "Invalid nickname for token");
         }
-
         if(!password_verify($expirationTime, $adminInfo['expiration_time_encrypted']))
         {
             throw new Error(400, "Invalid expiration_time for token", "Invalid expiration_time for token");
         }
-
         $this->database->delete('admins_tokens', ['token' => $token]);
     }   
 }

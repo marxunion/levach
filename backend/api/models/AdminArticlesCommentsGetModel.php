@@ -79,7 +79,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
 
         if(!empty($comments)) 
         {
-            foreach ($comments as &$comment) 
+            foreach($comments as &$comment) 
             {
                 $subcomments = $this->getSubcomments($comment['id']);
                 if(!empty($subcomments)) 
@@ -109,7 +109,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
 
         $articlesReturn = [];
 
-        foreach ($articles as &$article) 
+        foreach($articles as &$article) 
         {
             $this->articleId = $article['article_id'];
             
@@ -125,7 +125,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
             $comments = $this->database->query($sql, $bindings)->fetchAll();
             $commentsReturn = [];
 
-            foreach ($comments as &$comment) 
+            foreach($comments as &$comment) 
             {
                 if($this->checkParents($comment))
                 {

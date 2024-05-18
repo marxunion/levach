@@ -36,7 +36,7 @@ class ArticleViewModel extends BaseModel
             $articleStatistics = $this->database->get('statistics', ['rating', 'comments', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['article_id' => $articleId, 'premoderation_status' => 2]);
             if(isset($articleStatistics))
             {
-                foreach ($articleVersions as $versionNum => $versionInfo) 
+                foreach($articleVersions as $versionNum => $versionInfo) 
                 {
                     if ($versionInfo['tags'] != null) 
                     {
@@ -89,7 +89,7 @@ class ArticleViewModel extends BaseModel
         {
             $articleStatistics = $this->database->get('statistics', ['rating', 'comments', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['article_id' => $articleId]);
 
-            foreach ($articleVersions as $versionNum => $versionInfo) 
+            foreach($articleVersions as $versionNum => $versionInfo) 
             {
                 if ($versionInfo['tags'] != null) 
                 {
