@@ -16,7 +16,7 @@ class AdminSettingsSetModel extends BaseModel
         if($database)
         {
             $result = $database->update('settings', ['value' => $settingValue], ['name' => $settingName]);
-            if ($result->rowCount() == 0) 
+            if($result->rowCount() == 0) 
             {
                 $database->insert('settings', ['name' => $settingName, 'value' => $settingValue]);
             }
@@ -31,7 +31,7 @@ class AdminSettingsSetModel extends BaseModel
     public function setSetting($settingName, $settingValue)
     {
         $result = $this->database->update('settings', ['value' => $settingValue], ['name' => $settingName]);
-        if ($result->rowCount() == 0) 
+        if($result->rowCount() == 0) 
         {
             $this->database->insert('settings', ['name' => $settingName, 'value' => $settingValue]);
         }

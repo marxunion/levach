@@ -25,7 +25,7 @@ class Database
 
     public static function getConnection() 
     {
-        if (!isset(self::$connection)) 
+        if(!isset(self::$connection)) 
         {
             self::establishConnection();
         }

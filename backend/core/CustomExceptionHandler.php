@@ -34,7 +34,7 @@ class CustomExceptionHandler extends ErrorHandler
         $this->exception = $exception;
         $this->exceptionType = get_class($exception);
         
-        if ($this->exceptionType == Error::class || $this->exceptionType == Warning::class || $this->exceptionType == Critical::class) 
+        if($this->exceptionType == Error::class || $this->exceptionType == Warning::class || $this->exceptionType == Critical::class) 
         {
             return $this->handleCustomException();
         }

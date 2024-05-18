@@ -64,19 +64,19 @@ class AdminStatusModel extends BaseModel
 
         $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'expiration_time_encrypted'], ['token' => $token]);
 
-        if (!$adminInfo) 
+        if(!$adminInfo) 
         {
             throw new Error(403, "Invalid admin token", "Invalid admin token");
         }
-        if (!password_verify($nickname, $adminInfo['nickname_encrypted'])) 
+        if(!password_verify($nickname, $adminInfo['nickname_encrypted'])) 
         {
             throw new Error(400, "Invalid nickname for token", "Invalid nickname for token");
         }
-        if (!password_verify($expirationTime, $adminInfo['expiration_time_encrypted'])) 
+        if(!password_verify($expirationTime, $adminInfo['expiration_time_encrypted'])) 
         {
             throw new Error(400, "Invalid expiration_time for token", "Invalid expiration_time for token");
         }
-        if (time() >= $expirationTime) 
+        if(time() >= $expirationTime) 
         {
             throw new Error(400, "Token already expired", "Token already expired");
         }

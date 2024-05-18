@@ -69,18 +69,18 @@ class ArticleNewHandler extends BaseHandlerRoute
     {
         $contentParts = explode("\n", $this->parsedBody['text']);
 
-        if (count($contentParts) >= 1) 
+        if(count($contentParts) >= 1) 
         {
             $title = $contentParts[0];
-            if (strpos($title, '# ') === 0) 
+            if(strpos($title, '# ') === 0) 
             {
                 $title = substr($title, 2);
-                if (strlen($title) >= 5 && strlen($title) <= 120) 
+                if(strlen($title) >= 5 && strlen($title) <= 120) 
                 {
-                    if (count($contentParts) >= 2) 
+                    if(count($contentParts) >= 2) 
                     {
                         $content = implode("\n", array_slice($contentParts, 1));
-                        if (strlen($content) >= 25 && strlen($content) <= 10000) 
+                        if(strlen($content) >= 25 && strlen($content) <= 10000) 
                         {
                             if(AdminStatusHandler::isAdmin($this->cookiesBody))
                             {

@@ -20,7 +20,7 @@ class Logger extends MonologLogger
 
     public static function initInstance($name) : self
     {
-        if (!isset(self::$instance)) 
+        if(!isset(self::$instance)) 
         {
             self::$instance = new self($name);
         }
@@ -29,7 +29,7 @@ class Logger extends MonologLogger
 
     public static function getInstance() : self|null
     {
-        if (isset(self::$instance)) 
+        if(isset(self::$instance)) 
         {
             return self::$instance;
         }

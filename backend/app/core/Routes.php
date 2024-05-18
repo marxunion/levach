@@ -30,7 +30,7 @@ class Routes
             {
                 $file = __DIR__ . '/../frontend/dist/' . $args['file'];
 
-                if (file_exists($file)) 
+                if(file_exists($file)) 
                 {
                     return $response->withFile($file);
                 } 
@@ -44,7 +44,7 @@ class Routes
             {
                 $file = __DIR__ . '/../frontend/index.html';
                 
-                if (file_exists($file)) 
+                if(file_exists($file)) 
                 {
                     return $response->withFile($file);
                 } 

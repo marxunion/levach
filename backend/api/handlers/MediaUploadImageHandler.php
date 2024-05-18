@@ -54,14 +54,14 @@ class MediaUploadImageHandler extends BaseHandlerRoute
     {
         $uploadedFile = $this->request->getUploadedFiles()['file'];
 
-        if ($uploadedFile->getError() === UPLOAD_ERR_OK) 
+        if($uploadedFile->getError() === UPLOAD_ERR_OK) 
         {
             $maxUploadFilesizeMB = AdminSettingsGetHandler::getSetting('max_upload_filesize_mb');
             if(isset($maxUploadFilesizeMB))
             {
                 $maxFileSize = $maxUploadFilesizeMB * 1024 * 1024;
                     
-                if ($uploadedFile->getSize() > $maxFileSize) 
+                if($uploadedFile->getSize() > $maxFileSize) 
                 {
                     throw new Warning(400, "File size exceeds the maximum allowable file size", "File size exceeds the maximum allowable file size", ['max_upload_filesize_mb' => $maxUploadFilesizeMB]);
                     return;

@@ -830,7 +830,7 @@ class ArticlesModel extends BaseModel
                         
                         foreach($articleVersions as $versionNum => $versionInfo) 
                         {
-                            if ($versionInfo['tags'] != null) 
+                            if($versionInfo['tags'] != null) 
                             {
                                 $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
                                 $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
@@ -896,7 +896,7 @@ class ArticlesModel extends BaseModel
 
                         foreach($articleVersions as $versionNum => $versionInfo) 
                         {
-                            if ($versionInfo['tags'] != null) 
+                            if($versionInfo['tags'] != null) 
                             {
                                 $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
                                 $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
@@ -963,7 +963,7 @@ class ArticlesModel extends BaseModel
 
                         foreach($articleVersions as $versionNum => $versionInfo) 
                         {
-                            if ($versionInfo['tags'] != null) 
+                            if($versionInfo['tags'] != null) 
                             {
                                 $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
                                 $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
@@ -1032,7 +1032,7 @@ class ArticlesModel extends BaseModel
 
                         foreach($articleVersions as $versionNum => $versionInfo) 
                         {
-                            if ($versionInfo['tags'] != null) 
+                            if($versionInfo['tags'] != null) 
                             {
                                 $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
                                 $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
@@ -1099,7 +1099,7 @@ class ArticlesModel extends BaseModel
                         
                         foreach($articleVersions as $versionNum => $versionInfo) 
                         {
-                            if ($versionInfo['tags'] != null) 
+                            if($versionInfo['tags'] != null) 
                             {
                                 $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
                                 $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
@@ -1165,7 +1165,7 @@ class ArticlesModel extends BaseModel
 
                         foreach($articleVersions as $versionNum => $versionInfo) 
                         {
-                            if ($versionInfo['tags'] != null) 
+                            if($versionInfo['tags'] != null) 
                             {
                                 $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
                                 $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
