@@ -66,3 +66,9 @@ docker exec POSTGRES sh /var/www/levach/scripts/postgres.migration.export.sh
 ```bash
 docker exec POSTGRES sh /var/www/levach/scripts/admin.create.account.sh
 ```
+
+### Set permissions for edit
+```bash
+sudo chmod 777 logs/*
+sudo chmod 777 media/*
+```
