@@ -5,7 +5,7 @@ services:
     container_name: PHP
     build:
       context: .
-      dockerfile: docker/php/Dockerfile
+      dockerfile: Dockerfile
     environment:
       DEBUG_MODE: ${DEBUG_MODE}
       IS_DEBUG_SERVER: true
