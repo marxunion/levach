@@ -113,7 +113,6 @@ class CustomExceptionHandler extends ErrorHandler
             }
             
             $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
-    
         }
 
         $message = $this->exception->getExtendedMessage();
