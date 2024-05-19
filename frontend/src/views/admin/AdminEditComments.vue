@@ -26,8 +26,8 @@
     const loading : Ref<boolean> = ref(true);
 
     // Filters
-    const articlesCountToFetch = ref(10);
-    const commentsCountToFetch = ref(20);
+    const articlesCountToFetch : Ref<number> = ref(10);
+    const commentsCountToFetch : Ref<number> = ref(20);
     
     const articleDateBefore : Ref<number> = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
     const articleDateAfter : Ref<number> = ref(Date.now());

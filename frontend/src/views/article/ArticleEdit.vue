@@ -84,7 +84,7 @@
 
 	let articleText : Ref<string> = ref('');
 
-	let newTag = ref('');
+	let newTag : Ref<string> = ref('');
 	let tags : Ref<string[]> = ref([]);
 
 	async function fetchArticleData()
