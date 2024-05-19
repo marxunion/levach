@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { ref, Ref, ComputedRef, computed, reactive, watch, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
     import axios from 'axios';
 
     import Loader from "./../../components/Loader.vue";
@@ -36,7 +36,7 @@
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
-    const route = useRoute();
+    const route : RouteLocationNormalizedLoaded = useRoute();
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticlesSearch", langsData).langData;
 
@@ -48,8 +48,8 @@
     {
         if(searchData.length > 0)
         {
-            searchQuery.value = false;
             searchText.value = searchData;
+            searchQuery.value = false;
         }
     }
 
@@ -80,7 +80,6 @@
         await fetchNewArticles();
     }
 
-    // Preview
     config(
         {
             editorConfig: 
