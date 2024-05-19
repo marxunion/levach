@@ -46,7 +46,8 @@
         "captchaTextLinkPrivacyPolicy": "Privacy Policy",
         "captchaTextLinkPrivacyTermsOfService": "Terms of Service"
     },
-    "EN": {
+    "EN": 
+    {
         "titleAboutProject": "About Us",
         "descriptionBoldAboutProject": "Levach",
         "descriptionAboutProject": " - a hybrid of an anonymous forum and an online magazine designed for anonymous communication in the left political discourse. Welcome.",

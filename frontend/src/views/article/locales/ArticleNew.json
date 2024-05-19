@@ -188,7 +188,8 @@
             "catalog": "catalog",
             "github": "source code"
         },
-        "titleItem": {
+        "titleItem": 
+        {
             "h1": "Lv1 Heading",
             "h2": "Lv2 Heading",
             "h3": "Lv3 Heading",
@@ -196,12 +197,14 @@
             "h5": "Lv5 Heading",
             "h6": "Lv6 Heading"
         },
-        "imgTitleItem": {
+        "imgTitleItem": 
+        {
             "link": "Add Img Link",
             "upload": "Upload Img",
             "clip2upload": "Clip Upload"
         },
-        "linkModalTips": {
+        "linkModalTips": 
+        {
             "linkTitle": "Add Link",
             "imageTitle": "Add Image",
             "descLabel": "Desc:",
@@ -210,16 +213,19 @@
             "urlLabelPlaceHolder": "Enter a link...",
             "buttonOK": "OK"
         },
-        "clipModalTips": {
+        "clipModalTips": 
+        {
             "title": "Crop Image",
             "buttonUpload": "Upload"
         },
-        "copyCode": {
+        "copyCode": 
+        {
             "text": "Copy",
             "successTips": "Copied!",
             "failTips": "Copy failed!"
         },
-        "mermaid": {
+        "mermaid": 
+        {
             "flow": "flow",
             "sequence": "sequence",
             "gantt": "gantt",
@@ -229,11 +235,13 @@
             "relationship": "relationship",
             "journey": "journey"
         },
-        "katex": {
+        "katex": 
+        {
             "inline": "inline",
             "block": "block"
         },
-        "footer": {
+        "footer": 
+        {
             "markdownTotal": "Character Count",
             "scrollAuto": "Scroll Auto"
         }
