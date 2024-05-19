@@ -5,7 +5,6 @@
 
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/ShareWith.json";
-
     
     const props = defineProps(["link"]);
 
