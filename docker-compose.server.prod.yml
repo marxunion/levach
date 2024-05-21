@@ -45,7 +45,7 @@ services:
     depends_on:
       - composer
     ports:
-      - "80:80"
+      - "8081:80"
     networks:
       - app-network
   node:
