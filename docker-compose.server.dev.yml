@@ -43,7 +43,7 @@ services:
     environment:
       HOSTNAME: ${HOSTNAME}
     depends_on:
-      - composer
+      - php
     ports:
       - "8080:80"
     networks:
@@ -58,6 +58,8 @@ services:
     command: sh -c "npm install && npm run dev"
     environment:
       VITE_API_URL: http://nginx/api/
+    depends_on:
+      - postgres
     ports:
       - "8000:8000"
     networks:
@@ -79,6 +81,8 @@ services:
     volumes:
       - ./:/var/www/levach/:rw
       - postgres_data:/var/lib/postgresql/data
+    depends_on:
+      - composer
     networks:
       - app-network
   pgadmin:
@@ -103,8 +107,6 @@ services:
       - ./backend:/var/www/levach/backend:rw
     working_dir: /var/www/levach/backend
     command: install
-    depends_on:
-      - php
 
 networks:
   app-network:

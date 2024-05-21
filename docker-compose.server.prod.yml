@@ -43,17 +43,21 @@ services:
     environment:
       HOSTNAME: ${HOSTNAME}
     depends_on:
-      - composer
+      - php
     ports:
       - "8086:80"
     networks:
       - app-network
+    depends_on:
+      - composer
   node:
     container_name: NODEJS
     image: node:hydrogen-slim
     working_dir: /var/www/levach/frontend
     volumes:
       - ./frontend:/var/www/levach/frontend
+    depends_on:
+      - postgres
     command: sh -c "npm install && npm run build"
     networks:
       - app-network
@@ -74,6 +78,8 @@ services:
     volumes:
       - ./:/var/www/levach/:rw
       - postgres_data:/var/lib/postgresql/data
+    depends_on:
+      - composer
     networks:
       - app-network  
   
@@ -84,8 +90,6 @@ services:
       - ./backend:/var/www/levach/backend
     working_dir: /var/www/levach/backend
     command: install
-    depends_on:
-      - php
 
 networks:
   app-network:
