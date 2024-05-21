@@ -37,22 +37,22 @@ class Routes
                 } 
                 else
                 {
-                    throw new Error(404, "File not found", "File not found");
+                    return $response->withFile(new Error(404, "File not found", "File not found"));
                 }
             });
 
             $app->get('/', function (Request $request, Response $response) 
             {
-                $file = __DIR__ . '/../../frontend/index.html';
-                echo($file);
+                $file = __DIR__ . '/../../../frontend/index.html';
+                //echo($file);
                 if(file_exists($file)) 
                 {
-                    echo("Exist");
+                    //echo("Exist");
                     return $response->withFile($file);
                 } 
                 else 
                 {
-                    throw new Error(404, "File not found", "File not found");
+                    return $response->withFile(new Error(404, "File not found", "File not found"));
                 }
             });
         }
