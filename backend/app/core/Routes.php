@@ -37,7 +37,7 @@ class Routes
                 } 
                 else
                 {
-                    return new Error(404, "File not found", "File not found");
+                    return $response->withJson(throw new Error(404, "File not found", "File not found"));
                 }
             });
 
@@ -51,7 +51,7 @@ class Routes
                 } 
                 else 
                 {
-                    return new Error(404, "File not found", "File not found");
+                    return $response->withJson(throw new Error(404, "File not found", "File not found"));
                 }
             });
         }
