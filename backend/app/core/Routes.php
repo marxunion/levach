@@ -43,11 +43,10 @@ class Routes
 
             $app->get('/', function (Request $request, Response $response) 
             {
-                $file = __DIR__ . '/../../../frontend/index.html';
-                //echo($file);
+                $file = __DIR__ . '/../../frontend/index.html';
+
                 if(file_exists($file)) 
                 {
-                    //echo("Exist");
                     return $response->withFile($file);
                 } 
                 else 
