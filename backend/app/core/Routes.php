@@ -29,7 +29,7 @@ class Routes
         {
             self::$app->get('/frontend/assets/{file:.*}', function (Request $request, Response $response, array $args) 
             {
-                $file = __DIR__ . '/../frontend/dist/' . $args['file'];
+                $file = __DIR__ . '/../../frontend/dist/' . $args['file'];
 
                 if(file_exists($file)) 
                 {
@@ -43,7 +43,7 @@ class Routes
 
             $app->get('/', function (Request $request, Response $response) 
             {
-                $file = __DIR__ . '/../frontend/index.html';
+                $file = __DIR__ . '/../../frontend/index.html';
                 echo($file);
                 if(file_exists($file)) 
                 {
