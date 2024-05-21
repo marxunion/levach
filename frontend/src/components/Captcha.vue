@@ -1,14 +1,14 @@
 <script setup lang="ts">
-    import { ref, Ref, ComputedRef, defineEmits, onUnmounted } from "vue";
+    import { ref, Ref, /*ComputedRef,*/ defineEmits, onUnmounted } from "vue";
 
     import { VueRecaptcha } from 'vue-recaptcha';
 
-    import { JsonData } from "../ts/interfaces/JsonData";
+    //import { JsonData } from "../ts/interfaces/JsonData";
 
-    import { LangDataHandler } from "../ts/handlers/LangDataHandler";
-    import langsData from "./locales/Captcha.json";
+    //import { LangDataHandler } from "../ts/handlers/LangDataHandler";
+    //import langsData from "./locales/Captcha.json";
     
-    const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("Captcha", langsData).langData;
+    //const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("Captcha", langsData).langData;
 
     const emits = defineEmits(["onVerify", "onExpired", "onError"]);
 

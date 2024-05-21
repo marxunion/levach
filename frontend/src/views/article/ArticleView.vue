@@ -87,7 +87,7 @@
 				}
 			}
 		})
-		.catch(error =>
+		.catch(() =>
 		{
 			fetchedArticleData.value = null;
 		});

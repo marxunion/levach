@@ -44,7 +44,7 @@
 				fetchedArticleData.value = response.data;
 			}
 		})
-		.catch(error =>
+		.catch(() =>
 		{
 			fetchedArticleData.value = null;
 		});
@@ -90,7 +90,7 @@
                 }
 			}
 		})
-		.catch(error =>
+		.catch(() =>
 		{
 
 		});
@@ -114,11 +114,11 @@
 			regexPattern: articleCommentRegexPattern.value
 		}
 		await axios.post('/api/admin/article/comments/delete/'+articleViewCode.value, data)
-		.then(response => 
+		.then(() => 
 		{
 			comments.value = [];
 		})
-		.catch(error =>
+		.catch(() =>
 		{
 
 		});

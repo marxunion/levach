@@ -114,7 +114,7 @@ if(adminStatus)
     addAdminRoutes();
 }
 
-watch(adminStatus, (newVal, oldVal) => 
+watch(adminStatus, (newVal) => 
 {
     if (newVal) 
     {

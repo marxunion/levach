@@ -71,7 +71,7 @@
                 }
 			}
 		})
-		.catch(error =>
+		.catch(() =>
 		{
 
 		});
@@ -99,11 +99,11 @@
             commentRegexPattern: commentRegexPattern.value
 		}
 		await axios.post('/api/admin/articles/comments/delete', data)
-		.then(response => 
+		.then(() => 
 		{
 			articles.value = [];
 		})
-		.catch(error =>
+		.catch(() =>
 		{
 
 		});
