@@ -39,6 +39,8 @@
 	
 	import { Article } from '../../ts/interfaces/Article';
 	
+	import settings from '../../configs/main.json';
+	
 	interface Statistic 
 	{
 		count: number;
@@ -107,10 +109,11 @@
 		{	
 			if(response.data)
 			{
-				
 				fetchedArticleData.value = response.data;
 				if(fetchedArticleData.value)
 				{
+					console.log("Test 2");
+					console.log(statistics.value);
 					statistics = computed(() => 
 					{
 						const statisticsTemp : Statistics = {}
@@ -120,23 +123,18 @@
 							statisticName = statistic['statisticName'] as string;
 							if(fetchedArticleData.value)
 							{
-								if(fetchedArticleData.value.statistics[statisticName])
+								statisticsTemp[statisticName] = 
 								{
-									statisticsTemp[statisticName] = 
-									{
-										count: fetchedArticleData.value.statistics[statisticName],
-										title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
-									}
+									count: fetchedArticleData.value.statistics[statisticName],
+									title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
 								}
-								
 							}
 							
 						});
-						
-						console.log(statisticsTemp);
-						
 						return statisticsTemp;
 					});
+					console.log("Test 3");
+					console.log(statistics.value);
 
 					if(fetchedArticleData.value.statistics.current_tags == null)
 					{
@@ -146,7 +144,7 @@
 
 					articleText.value = fetchedArticleData.value.statistics.current_text;
 					
-					viewLink.value = "localhost:8000/#/article/" + fetchedArticleData.value.view_code;
+					viewLink.value = "https://" + settings['domainName'] + "/#/article/" + fetchedArticleData.value.view_code;
 				}
 			}
 			else
@@ -188,7 +186,13 @@
 				fetchedArticleData.value = null;
 			}
 		});
+		console.log("Test 4");
+
+		console.log(loading.value);
+		
 		loading.value = false;
+
+		console.log(loading.value);
 		reloading.value = false;
 	}
 
@@ -235,7 +239,7 @@
 					});
 					
 					
-					viewLink.value = "localhost:8000/#/article/" + fetchedArticleData.value.view_code;
+					viewLink.value = "https://" + settings['domainName'] + "/#/article/" + fetchedArticleData.value.view_code;
 					if(fetchedArticleData.value.statistics.approvededitorially_status > 0 && fetchedArticleData.value.statistics.editorially_status == 0 && !adminStatus.value)
 					{
 						Object.assign(tags.value, fetchedArticleData.value.statistics.current_tags);
@@ -888,7 +892,7 @@
 </script>
 
 <template>
-	<main v-if="!loading" class="main">
+	<main v-if="!loading && !reloading" class="main">
 		<article v-if="fetchedArticleData" class="main__article">
 			<div class="main__article__info">
 				<div class="main__article__info__statistics">
@@ -916,7 +920,7 @@
 					</div>
 				</div>
 			</div>
-			<div v-if="viewLink != ''" class="main__article__block">
+			<div v-if="viewLink != '' && (adminStatus || fetchedArticleData.statistics.premoderation_status == 2)" class="main__article__block">
 				<p class="main__article__block__title linkForViewArticle">{{ langData['linkForViewArticle'] }}</p>
 				<div class="main__article__block__link">
 					<input v-model="viewLink" ref="viewLinkTextInput" type="text" class="main__article__block__link__input"></input>

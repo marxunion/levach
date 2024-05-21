@@ -26,8 +26,6 @@ services:
     volumes:
       - ./:/var/www/levach/:rw
       - ./php/php.ini-dev:/usr/local/etc/php/php.ini:rw
-    expose:
-      - "9000"
     depends_on:
       - node
     networks:
@@ -61,9 +59,7 @@ services:
     environment:
       VITE_API_URL: http://nginx/api/
     ports:
-     - 8000:8000
-    expose:
-      - "8000"
+      - "8000:8000"
     networks:
       - app-network
 
@@ -83,13 +79,8 @@ services:
     volumes:
       - ./:/var/www/levach/:rw
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    expose:
-      - "5432"
     networks:
-      - app-network  
-
+      - app-network
   pgadmin:
     container_name: PGADMIN
     image: elestio/pgadmin:latest

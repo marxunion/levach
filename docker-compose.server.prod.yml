@@ -26,8 +26,6 @@ services:
     volumes:
       - ./:/var/www/levach:rw
       - ./php/php.ini-prod:/usr/local/etc/php/php.ini:rw
-    expose:
-      - "9000"
     depends_on:
       - node
     networks:
@@ -76,10 +74,6 @@ services:
     volumes:
       - ./:/var/www/levach/:rw
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    expose:
-      - "5432"
     networks:
       - app-network  
   

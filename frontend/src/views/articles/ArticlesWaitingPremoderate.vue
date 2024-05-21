@@ -35,6 +35,8 @@
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
+    import settings from '../../configs/main.json';
+
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticlesWaitingPremoderate", langsData).langData;
 	
     adminStatusReCheck();
@@ -446,7 +448,7 @@
 
     const onShare = (articleViewCode : string) => 
 	{
-		openModal(ShareWith, { link: 'http://localhost:8000/#/article/'+articleViewCode})
+		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + articleViewCode})
 	}
 
 </script>

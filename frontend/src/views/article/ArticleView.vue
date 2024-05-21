@@ -39,6 +39,8 @@
 
 	import { Article } from '../../ts/interfaces/Article';
 
+	import settings from '../../configs/main.json';
+
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
 	const captcha : Ref<{ execute: () => void } | null> = ref(null);
@@ -798,7 +800,7 @@
 
 	const onShare = () => 
 	{
-		openModal(ShareWith, { link: 'http://localhost:8000/#/article/'+articleViewCode.value})
+		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + articleViewCode.value})
 	}
 
 	watch(langData, () =>
