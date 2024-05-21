@@ -18,6 +18,7 @@ class Routes
         
         if(Settings::getSetting("IS_DEBUG_SERVER"))
         {
+            echo(2323);
             self::$app->get('/', function (Request $request, Response $response) 
             {
                 header('Location: http://localhost:8000');
@@ -42,6 +43,7 @@ class Routes
 
             $app->get('/', function (Request $request, Response $response) 
             {
+                echo(2323232);
                 $file = __DIR__ . '/../frontend/index.html';
                 
                 if(file_exists($file)) 
