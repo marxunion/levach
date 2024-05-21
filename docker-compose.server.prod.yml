@@ -48,8 +48,6 @@ services:
       - "8086:80"
     networks:
       - app-network
-    depends_on:
-      - composer
   node:
     container_name: NODEJS
     image: node:hydrogen-slim
