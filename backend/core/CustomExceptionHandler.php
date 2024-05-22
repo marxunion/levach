@@ -31,7 +31,7 @@ class CustomExceptionHandler extends ErrorHandler
 
     public function __invoke(ServerRequestInterface $request, Throwable $exception, bool $displayErrorDetails, bool $logErrors, bool $logErrorDetails): ResponseInterface
     {
-        echo("Test");
+        
         $this->exception = $exception;
         $this->exceptionType = get_class($exception);
         
@@ -45,6 +45,7 @@ class CustomExceptionHandler extends ErrorHandler
 
     private function handleCustomException() : ResponseInterface
     {
+        echo("Test");
         $this->exceptionDetails['code'] = $this->exception->getCode();
         
         if(Settings::getSetting("DEBUG_MODE"))
@@ -86,6 +87,7 @@ class CustomExceptionHandler extends ErrorHandler
         }
         else
         {
+            echo("Test 2");
             $this->exceptionDetails['params'] = $this->exception->getParams();
             
             $message = $this->exception->getMessage();
