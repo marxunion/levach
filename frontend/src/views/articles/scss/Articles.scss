@@ -91,15 +91,21 @@
             color: $ArticleViewTagsText;
         }
 
-        &__preview
+        &__block
         {
-            max-height: 700px;
-
+            overflow: hidden;
             border-radius: 15px;
             * 
             {
                 overflow: hidden;
             }
+        }
+
+        &__preview
+        {
+            max-height: 600px;
+            overflow: hidden;
+            border-radius: 15px;
         }
 
         &__buttons

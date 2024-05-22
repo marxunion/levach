@@ -406,6 +406,21 @@
 </template>
 
 <style lang="scss">
+.main__article__block
+{
+    overflow: hidden;
+    border-radius: 15px;
+    * 
+    {
+        overflow: hidden;
+    }   
+}
+.main__article__preview
+{
+    max-height: 600px;
+    overflow: hidden;
+    border-radius: 15px;
+}
 @media(max-width: 1050px)
 {
     .main
