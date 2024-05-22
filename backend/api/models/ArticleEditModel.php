@@ -43,6 +43,10 @@ class ArticleEditModel extends BaseModel
                             {
                                 if(count($newTags) > 0)
                                 {
+                                    foreach ($newTags as $key => $value) 
+                                    {
+                                        $newTags[$key] = trim($newTags[$key]);
+                                    }
                                     if(count($newTags) == count(array_unique($newTags)))
                                     {
                                         $newTagsString = '{'.implode(',', $newTags).'}';
@@ -145,9 +149,13 @@ class ArticleEditModel extends BaseModel
                 {
                     if(count($newTags) > 0)
                     {
+                        foreach ($newTags as $key => $value) 
+                        {
+                            $newTags[$key] = trim($newTags[$key]);
+                        }
                         if(count($newTags) == count(array_unique($newTags)))
                         {
-                            $newTagsString = '{'.implode(',', $newTags).'}';
+                            $newTagsString = "{".implode(',', $newTags).'}';
                         }
                         else
                         {

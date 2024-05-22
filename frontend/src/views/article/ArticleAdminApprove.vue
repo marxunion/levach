@@ -145,11 +145,11 @@
 	
 	const addTag = () => 
 	{
-		if(!tags.value.includes(newTag.value.trim()))
+		if(!tags.value.includes(newTag.value.split(" ").join("")))
 		{
 			if (newTag.value.length >= 1 && newTag.value.length <= 40)
 			{
-				tags.value.push(newTag.value.trim());
+				tags.value.push(newTag.value.split(" ").join(""));
 				newTag.value = '';
                 checkChanges();
 			}

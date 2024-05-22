@@ -62,6 +62,10 @@ class ArticleNewModel extends BaseModel
         {
             if(count($tags) > 0)
             {
+                foreach ($tags as $key => $value) 
+                {
+                    $tags[$key] = trim($tags[$key]);
+                }
                 if(count($tags) == count(array_unique($tags)))
                 {
                     $tagsString = '{'.implode(',', $tags).'}';
@@ -135,6 +139,10 @@ class ArticleNewModel extends BaseModel
         {
             if(count($tags) > 0)
             {
+                foreach ($tags as $key => $value) 
+                {
+                    $tags[$key] = trim($tags[$key]);
+                }
                 if(count($tags) == count(array_unique($tags)))
                 {
                     $tagsString = '{'.implode(',', $tags).'}';
