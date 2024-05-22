@@ -32,6 +32,7 @@ class Routes
 
                 if(file_exists($file)) 
                 {
+                    $response = $response->withHeader('Content-Type', 'text/html');
                     return $response->withFile($file);
                 } 
                 else
@@ -46,6 +47,7 @@ class Routes
 
                 if(file_exists($file)) 
                 {
+                    $response = $response->withHeader('Content-Type', 'text/html');
                     return $response->withFile($file);
                 } 
                 else 
