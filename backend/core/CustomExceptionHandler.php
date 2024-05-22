@@ -31,6 +31,7 @@ class CustomExceptionHandler extends ErrorHandler
 
     public function __invoke(ServerRequestInterface $request, Throwable $exception, bool $displayErrorDetails, bool $logErrors, bool $logErrorDetails): ResponseInterface
     {
+        echo("Test");
         $this->exception = $exception;
         $this->exceptionType = get_class($exception);
         
