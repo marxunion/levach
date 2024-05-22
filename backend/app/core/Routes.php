@@ -42,7 +42,7 @@ class Routes
 
             $app->get('/', function (Request $request, Response $response) 
             {
-                $file = __DIR__ . '/../../../frontend/index.html';
+                $file = __DIR__ . '/../../../frontend/dist/index.html';
 
                 if(file_exists($file)) 
                 {
