@@ -906,19 +906,19 @@
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['premoderationStatusText'] }}</p>
 							<div>
-								<img v-if="fetchedArticleData.statistics.premoderation_status == 0" src="../assets/img/article/statuses/0.svg" alt="premoderationStatus">
-								<img v-if="fetchedArticleData.statistics.premoderation_status == 1" src="../assets/img/article/statuses/1.svg" alt="premoderationStatus">
-								<img v-if="fetchedArticleData.statistics.premoderation_status == 2" src="../assets/img/article/statuses/2.svg" alt="premoderationStatus">
+								<img v-if="fetchedArticleData.statistics.premoderation_status == 0" src="../../assets/img/article/statuses/0.svg" alt="premoderationStatus">
+								<img v-if="fetchedArticleData.statistics.premoderation_status == 1" src="../../assets/img/article/statuses/1.svg" alt="premoderationStatus">
+								<img v-if="fetchedArticleData.statistics.premoderation_status == 2" src="../../assets/img/article/statuses/2.svg" alt="premoderationStatus">
 								<p>{{ ((langData['statuses'] as JsonData)['premoderationStatus'] as JsonData)[fetchedArticleData.statistics.premoderation_status.toString()] }}</p>
 							</div>
 						</div>
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['approvedEditoriallyStatusText'] }}</p>
 							<div>
-								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 0" src="../assets/img/article/statuses/0.svg" alt="approvedEditoriallyStatus">
-								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 1" src="../assets/img/article/statuses/1.svg" alt="approvedEditoriallyStatus">
-								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 2" src="../assets/img/article/statuses/2.svg" alt="approvedEditoriallyStatus">
-								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 3" src="../assets/img/article/statuses/1.svg" alt="approvedEditoriallyStatus">
+								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 0" src="../../assets/img/article/statuses/0.svg" alt="approvedEditoriallyStatus">
+								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 1" src="../../assets/img/article/statuses/1.svg" alt="approvedEditoriallyStatus">
+								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 2" src="../../assets/img/article/statuses/2.svg" alt="approvedEditoriallyStatus">
+								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 3" src="../../assets/img/article/statuses/1.svg" alt="approvedEditoriallyStatus">
 								<p>{{ ((langData['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[fetchedArticleData.statistics.approvededitorially_status.toString()] }}</p>
 							</div>
 						</div>
