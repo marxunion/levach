@@ -906,14 +906,14 @@
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['premoderationStatusText'] }}</p>
 							<div>
-								<img :src="`/src/assets/img/article/statuses/${fetchedArticleData.statistics.premoderation_status}.svg`" alt="premoderationStatus">
+								<img :src="`../assets/img/article/statuses/${fetchedArticleData.statistics.premoderation_status}.svg`" alt="premoderationStatus">
 								<p>{{ ((langData['statuses'] as JsonData)['premoderationStatus'] as JsonData)[fetchedArticleData.statistics.premoderation_status.toString()] }}</p>
 							</div>
 						</div>
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['approvedEditoriallyStatusText'] }}</p>
 							<div>
-								<img :src="`/src/assets/img/article/statuses/${fetchedArticleData.statistics.approvededitorially_status}.svg`" alt="approvedEditoriallyStatus">
+								<img :src="`../assets/img/article/statuses/${fetchedArticleData.statistics.approvededitorially_status}.svg`" alt="approvedEditoriallyStatus">
 								<p>{{ ((langData['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[fetchedArticleData.statistics.approvededitorially_status.toString()] }}</p>
 							</div>
 						</div>
