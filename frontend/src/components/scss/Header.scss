@@ -366,7 +366,17 @@
                 }
                 &__select
                 {
+                    height: 30px !important;
                     justify-self: end;
+                    & .customSelect__selected
+                    {
+                        height: 30px !important;
+                        line-height: 30px;
+                    }
+                    & .customSelect__selected__img
+                    {
+                        top: 12px;
+                    }
                 }
             }
         }
