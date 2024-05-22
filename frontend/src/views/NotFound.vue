@@ -11,7 +11,7 @@
 
 <template>
 	<main class="main">
-		<h1>{{ langData['title'] }}</h1>
+		<h1 class="main__title">{{ langData['title'] }}</h1>
 	</main>
 </template>
 

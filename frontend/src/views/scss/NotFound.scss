@@ -5,4 +5,57 @@
 {
     margin-top: 0;
     padding-bottom: 0;
+    &__title
+    {
+        margin-top: 18%;
+        font-size: 46px;
+    }
+}
+
+@media(max-width: 1050px)
+{
+    .main
+    {
+        &__title
+        {
+            margin-top: 25%;
+            font-size: 42px;
+        }
+    }
+}
+
+@media(max-width: 780px)
+{
+    .main
+    {
+        &__title
+        {
+            margin-top: 28%;
+            font-size: 36px;
+        }
+    }
+}
+
+@media(max-width: 540px)
+{
+    .main
+    {
+        &__title
+        {
+            margin-top: 35%;
+            font-size: 32px;
+        }
+    }
+}
+
+@media(max-width: 380px)
+{
+    .main
+    {
+        &__title
+        {
+            margin-top: 40%;
+            font-size: 26px;
+        }
+    }
 }
