@@ -419,14 +419,6 @@
         overflow: hidden;
     }
 }
-.main__article__select
-{
-    overflow: visible;
-    & *
-    {
-        overflow: hidden;
-    }
-}
 @media(max-width: 1050px)
 {
     .main

@@ -90,17 +90,6 @@
             font-size: 20px;
             color: $ArticleViewTagsText;
         }
-
-        &__block
-        {
-            overflow: hidden;
-            border-radius: 15px;
-            * 
-            {
-                overflow: hidden;
-            }
-        }
-
         &__preview
         {
             max-height: 600px;
