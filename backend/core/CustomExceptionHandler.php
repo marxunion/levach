@@ -46,7 +46,7 @@ class CustomExceptionHandler extends ErrorHandler
     {
         $this->exceptionDetails['code'] = $this->exception->getCode();
         
-        if(!Settings::getSetting("DEBUG_MODE"))
+        if(Settings::getSetting("DEBUG_MODE"))
         {
             $this->exceptionDetails['message'] = $this->exception->getExtendedMessage();
             $this->exceptionDetails['file'] = $this->exception->getFile();
