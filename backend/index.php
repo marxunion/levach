@@ -35,7 +35,7 @@ $app = AppFactory::create();
 
 $exceptionHandler = new CustomExceptionHandler($app->getCallableResolver(), $app->getResponseFactory(), $logger);
 
-$errorMiddleware = $app->addErrorMiddleware(1, 1, 1);
+$errorMiddleware = $app->addErrorMiddleware(true, true, true);
 $errorMiddleware->setDefaultErrorHandler($exceptionHandler);
 
 ApiRoutes::Init($app);
