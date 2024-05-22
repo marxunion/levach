@@ -79,8 +79,8 @@ class AdminLoginHandler extends BaseHandlerRoute
     }
     public function Process()
     {
-        $nickname = $this->parsedBody['nickname'];
-        $password = $this->parsedBody['password'];
+        $nickname = trim($this->parsedBody['nickname']);
+        $password = trim($this->parsedBody['password']);
         
         if($this->model->login($nickname, $password))
         {
