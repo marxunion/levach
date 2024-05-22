@@ -290,6 +290,17 @@
     }
 }
 
+@media(max-width: 1350px)
+{
+    &__article
+    {
+        &__title
+        {
+            font-size: 36px;
+        }
+    }
+}
+
 @media(max-width: 1050px)
 {
     .main
@@ -297,6 +308,10 @@
         &__article
         {
             width: 90%;
+            &__title
+            {
+                font-size: 32px;
+            }
             &__previewContainer
             {
                 &__titleTime
@@ -323,6 +338,10 @@
     {
         &__article
         {
+            &__title
+            {
+                font-size: 28px;
+            }
             &__previewContainer
             {
                 &__titleTime
