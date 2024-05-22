@@ -45,7 +45,7 @@ class CustomExceptionHandler extends ErrorHandler
 
     private function handleCustomException() : ResponseInterface
     {
-        echo("Test");
+        echo("Test\n");
         $this->exceptionDetails['code'] = $this->exception->getCode();
         
         if(Settings::getSetting("DEBUG_MODE"))
@@ -87,7 +87,7 @@ class CustomExceptionHandler extends ErrorHandler
         }
         else
         {
-            echo("Test 2");
+            echo("Test 2\n");
             $this->exceptionDetails['params'] = $this->exception->getParams();
             
             $message = $this->exception->getMessage();
@@ -118,12 +118,15 @@ class CustomExceptionHandler extends ErrorHandler
             $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
         }
 
+        echo("Test 3\n");
         $message = $this->exception->getExtendedMessage();
-        if($message == "")
+        if(empty($message))
         {
+            echo("Test 4\n");
             $message = $this->exception->getMessage();
-            if($message == "")
+            if(empty($message))
             {
+                echo("Test 5\n");
                 switch($this->exceptionType) 
                 {
                     case Error::class:
@@ -142,8 +145,9 @@ class CustomExceptionHandler extends ErrorHandler
             }
         }
         $logMessage = 'Code: '.$this->exceptionDetails['code'].' | Message: '.$message.' | File: '.$this->exception->getFile().' | Line: '.$this->exception->getLine().' | Trace: '.$this->exception->getTraceAsString();
-        
+        echo("Test 6\n");
         $response = $this->responseFactory->createResponse($this->exceptionDetails['code']);
+        echo($response);
         switch($this->exceptionType) 
         {
             case Error::class:
@@ -163,6 +167,7 @@ class CustomExceptionHandler extends ErrorHandler
                 $this->logger->error($logMessage);
                 break;
         }
+        echo("Test 7\n");
         $response->getBody()->write($responsePayload);
         return $response->withHeader('Content-Type', 'application/json');
     }
