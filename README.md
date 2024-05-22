@@ -73,4 +73,5 @@ sudo chmod 777 backend/logs
 sudo chmod 777 backend/logs/errors
 sudo chmod 777 backend/logs/errors/critical
 sudo chmod 777 media
+sudo chmod 777 media/img
 ```
