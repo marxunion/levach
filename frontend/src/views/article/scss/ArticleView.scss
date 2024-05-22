@@ -292,11 +292,14 @@
 
 @media(max-width: 1350px)
 {
-    &__article
+    .main
     {
-        &__title
+        &__article
         {
-            font-size: 36px;
+            &__title
+            {
+                font-size: 36px;
+            }
         }
     }
 }
