@@ -94,6 +94,7 @@ class CustomExceptionHandler extends ErrorHandler
             
             if($message != "")
             {
+                echo("Test 21\n");
                 $this->exceptionDetails['message'] = $message;
             }
             else
