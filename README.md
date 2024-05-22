@@ -69,6 +69,8 @@ docker exec POSTGRES sh /var/www/levach/scripts/admin.create.account.sh
 
 ### Set permissions for edit
 ```bash
-sudo chmod 777 logs/*
+sudo chmod 777 backend/logs/*
+sudo chmod 777 backend/logs/errors/*
+sudo chmod 777 backend/logs/errors/critical/*
 sudo chmod 777 media/*
 ```
