@@ -153,8 +153,11 @@ class CustomExceptionHandler extends ErrorHandler
         switch($this->exceptionType) 
         {
             case Error::class:
+                echo("Test 61\n");
                 $responsePayload = json_encode(['Error' => $this->exceptionDetails]);
+                echo("Test 62\n");
                 $this->logger->error($logMessage);
+                echo("Test 63\n");
                 break;
             case Warning::class:
                 $responsePayload = json_encode(['Warning' => $this->exceptionDetails]);
