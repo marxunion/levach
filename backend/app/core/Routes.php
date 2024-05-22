@@ -26,7 +26,7 @@ class Routes
         }
         else
         {
-            self::$app->get('/assets/{file:.*}', function (Request $request, Response $response, array $args) 
+            /*self::$app->get('/assets/{file:.*}', function (Request $request, Response $response, array $args) 
             {
                 $file = __DIR__ . '/../../../frontend/dist/assets/' . $args['file'];
 
@@ -39,7 +39,7 @@ class Routes
                 {
                     throw new Error(404, "File not found", "File not found");
                 }
-            });
+            });*/
 
             $app->get('/', function (Request $request, Response $response) 
             {
