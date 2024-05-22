@@ -120,6 +120,7 @@ class CustomExceptionHandler extends ErrorHandler
 
         echo("Test 3\n");
         $message = $this->exception->getExtendedMessage();
+        echo($message);
         if(empty($message))
         {
             echo("Test 4\n");
