@@ -18,7 +18,6 @@ class Routes
         
         if(Settings::getSetting("IS_DEBUG_SERVER"))
         {
-            echo(2323);
             self::$app->get('/', function (Request $request, Response $response) 
             {
                 header('Location: http://localhost:8000');
