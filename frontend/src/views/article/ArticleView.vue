@@ -892,10 +892,10 @@
 				
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
 					<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
-					<div ref="scrollTarget" style="height: 10px;"></div>
 					<div v-if="commentsReloading" class="main__article__comments__commentsList__reloader">
 						<Loader/>
 					</div>
+					<div ref="scrollTarget" style="height: 10px;"></div>
 				</div>
 				<div v-else class="main__article__comments__commentsList load">
 					<Loader/>
