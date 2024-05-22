@@ -24,38 +24,6 @@ class Routes
                 exit;
             });
         }
-        else
-        {
-            /*self::$app->get('/assets/{file:.*}', function (Request $request, Response $response, array $args) 
-            {
-                $file = __DIR__ . '/../../../frontend/dist/assets/' . $args['file'];
-
-                if(file_exists($file)) 
-                {
-                    $response = $response->withHeader('Content-Type', 'text/html');
-                    return $response->withFile($file);
-                } 
-                else
-                {
-                    throw new Error(404, "File not found", "File not found");
-                }
-            });*/
-
-            $app->get('/', function (Request $request, Response $response) 
-            {
-                $file = __DIR__ . '/../../../frontend/dist/index.html';
-
-                if(file_exists($file)) 
-                {
-                    $response = $response->withHeader('Content-Type', 'text/html');
-                    return $response->withFile($file);
-                } 
-                else 
-                {
-                    throw new Error(404, "File not found", "File not found");
-                }
-            });
-        }
         self::$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function (Request $request, Response $response) 
         {
             return $response->withRedirect('/#'.$request->getUri()->getPath(), 301);
