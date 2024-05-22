@@ -28,7 +28,7 @@ class Routes
         {
             self::$app->get('/assets/{file:.*}', function (Request $request, Response $response, array $args) 
             {
-                $file = __DIR__ . '/../../../frontend/dist/' . $args['file'];
+                $file = __DIR__ . '/../../../frontend/dist/assets/' . $args['file'];
 
                 if(file_exists($file)) 
                 {
