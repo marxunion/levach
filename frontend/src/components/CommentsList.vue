@@ -16,6 +16,7 @@
 	import { timestampToLocaleFormatedTime } from '../ts/helpers/DateTimeHelper';
 
 	import Loader from './Loader.vue';
+	import ShareWith from './modals/ShareWith.vue';
 
 	import InfoModal from './modals/InfoModal.vue';
 	import { closeModal, openModal } from 'jenesius-vue-modal';
@@ -25,6 +26,9 @@
 	import { csrfTokenInput, getNewCsrfToken } from '../ts/handlers/CSRFTokenHandler';
 
 	import { lastLoadedComment } from '../ts/handlers/CommentsHandler';
+
+
+	import settings from '../configs/main.json';
 
 
 	const props = defineProps(['articleViewCode', 'comment', 'level']);
@@ -507,6 +511,10 @@
     {
         openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
     }
+	const onShare = () => 
+	{
+		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/article/" + props.articleViewCode + "/" + props.comment.id})
+	}
 </script>
 
 <template>
@@ -525,6 +533,7 @@
 				<div class="comment__bar__reactions">
 					<img src="../assets/img/article/rating.png" alt="Rating: " class="comment__bar__reactions__icon ratingIcon">
 					<p class="comment__bar__reactions__title">{{ abbreviateNumber(comment.rating) }}</p>
+					<img @click="onShare" src="../assets/img/article/share.svg" alt="Share..." class="comment__bar__reactions__icon shareIcon">
 					<p v-if="comment.rating_influence > 0" class="comment__bar__reactions__title ratingInfluenceUp"> {{ comment.rating_influence }}</p>
 					<p v-else-if="comment.rating_influence < 0" class="comment__bar__reactions__title ratingInfluenceDown"> {{ comment.rating_influence }}</p>
 				</div>

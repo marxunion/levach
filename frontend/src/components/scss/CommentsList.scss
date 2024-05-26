@@ -75,6 +75,10 @@
 
             &__icon
             {
+                &.shareIcon
+                {
+                    cursor: pointer;
+                }
                 margin-left: 16px;
             }
             &__title
