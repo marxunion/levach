@@ -31,7 +31,7 @@
 	import settings from '../configs/main.json';
 
 
-	const props = defineProps(['articleViewCode', 'comment', 'level']);
+	const props = defineProps(['articleViewCode', 'scrollToCommentId', 'comment', 'level']);
 
 	const emits = defineEmits(["onDeletedSubcomment", "onCreatedNewSubcomment"]);
 
@@ -45,6 +45,8 @@
 	const loading : Ref<boolean> = ref(false);
 
 	const answerStatus : Ref<number> = ref(0);
+
+	const targetComment = ref<HTMLElement | null>(null);
 
 	// Preview
 
@@ -488,6 +490,13 @@
 	onMounted(() => 
 	{
 		adminStatusReCheck();
+		if(props.scrollToCommentId === props.comment.id)
+		{
+			if (targetComment.value) 
+			{
+				targetComment.value.scrollIntoView({ behavior: 'smooth' });
+			}
+		}
 	});
 
 	const onCreatedNewSubcomment =  async () => 
@@ -519,7 +528,7 @@
 
 <template>
 	<div v-if="comment.id != null">
-		<div class="comment" :style="{ marginLeft: `${5 * level}%` }">
+		<div ref="targetComment" class="comment" :style="{ marginLeft: `${5 * level}%` }">
 			<div class="comment__header">
 				<p class="comment__header__title id">#{{ padNumberWithZeroes(comment.id) }}</p>
 				<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
@@ -555,7 +564,7 @@
 	</div>
 	
 	
-	<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-if="!loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" />
+	<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-if="!loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" :scrollToCommentId="scrollToCommentId"/>
 	<Loader v-else />
 </template>
 

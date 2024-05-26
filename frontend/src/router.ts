@@ -43,6 +43,8 @@ const routes: RouteRecordRaw[] =
             { path: 'new', component: ArticleNew, name: "ArticleNew" },
             { path: 'edit/:articleEditCode', component: ArticleEdit, name: "ArticleEdit" },
             { path: ':articleViewCode', component: ArticleView, name: "ArticleView" },
+            { path: ':articleViewCode/:commentId', component: ArticleView, name: "ArticleViewWithComment" },
+            
         ], 
     },
     {

@@ -63,9 +63,15 @@
 
 	const route : RouteLocationNormalizedLoaded = useRoute();
 	const router : Router = useRouter();
+
+	const commentId : Ref<number | null> = ref(null);
 	const articleViewCode : Ref<string | null> = ref(null);
  
 	articleViewCode.value = route.params.articleViewCode as string;
+	if(route.params.commentId)
+	{
+		commentId.value = Number(route.params.commentId as string);
+	}
 
 	async function fetchArticleData()
 	{
@@ -127,6 +133,52 @@
 		currentCommentsSortType.value = sortType;
 
 		await fetchNewComments();
+	}
+
+	const fetchCommentsBeforeId = async () =>
+	{
+		let params = {
+			sortType: (langData.value['sortTypes'] as JsonData)[currentCommentsSortType.value]
+		}
+		await axios.get('api/article/comments/get/'+articleViewCode.value+'/'+commentId.value, 
+		{
+			params: params
+		})
+		.then(response => 
+		{
+			if(response.data !== null)
+			{
+			 	if(Array.isArray(response.data))
+				{
+					response.data.forEach(comment => 
+					{
+						comments.value.push(comment);
+						lastLoadedComment.value++;
+					});
+				}
+			}
+		})
+		.catch(error => 
+		{
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+		});
+		commentsReloading.value = false;
+		commentsLoading.value = false;
 	}
 
 	const fetchNewComments = async (count : number = 8) =>
@@ -495,7 +547,14 @@
 			lastLoadedComment.value = 0;
 			currentCommentReaction.value = 0;
 
-			await fetchNewComments();
+			if(commentId.value != null)
+			{
+				await fetchCommentsBeforeId();
+			}
+			else
+			{
+				await fetchNewComments();
+			}
 
 			intervalId = setInterval(async () => 
 			{
@@ -891,7 +950,7 @@
 				</div>
 				
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
-					<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
+					<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode" :scrollToCommentId="commentId"/>
 					<div v-if="commentsReloading" class="main__article__comments__commentsList__reloader">
 						<Loader/>
 					</div>

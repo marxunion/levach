@@ -102,11 +102,7 @@ class Routes
                             return self::$handler->Handle();
                         });
 
-                        $adminArticleCommentsGroup->post('/get/{viewCode}/{commentId}', function (Request $request, Response $response, array $args) 
-                        {
-                            self::$handler = new ArticleCommentsGetBeforeIdHandler($request, $response, $args);
-                            return self::$handler->Handle();
-                        });
+                        
 
                         $adminArticleCommentsGroup->post('/delete/{viewCode}', function (Request $request, Response $response, array $args) 
                         {
@@ -259,6 +255,11 @@ class Routes
                         return self::$handler->Handle();
                     });
                     
+                    $articleCommentsGroup->get('/get/{viewCode}/{commentId}', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new ArticleCommentsGetBeforeIdHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
                 
                     $articleCommentsGroup->post('/delete', function (Request $request, Response $response) 
                     {
