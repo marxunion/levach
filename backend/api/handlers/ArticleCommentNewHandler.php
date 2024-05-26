@@ -44,7 +44,7 @@ class ArticleCommentNewHandler extends BaseHandlerRouteWithArgs
                                 }
                                 else
                                 {
-                                    throw new Error(400, "Invalid comment text", "Invalid article text");
+                                    throw new Error(400, "Invalid comment text", "Invalid comment text");
                                 }
                             }
                             else

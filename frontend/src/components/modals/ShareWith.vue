@@ -29,7 +29,7 @@
             </div>
             
         </a>
-        <a :href="'https://t.me/share/url?url='+link" target="_blank" class="form__block__subblock">
+        <a :href="'https://t.me/share/url?url='+encodeURIComponent(link)" target="_blank" class="form__block__subblock">
             <div class="form__block__subblock__img">
                 <img src="./../../assets/img/modals/share/telegramLogo.png" alt="">
             </div>
@@ -37,7 +37,7 @@
                 <p class="form__block__subblock__title__text">{{ langData['telegramTitle'] }}</p>
             </div>
         </a>
-        <a :href="'https://www.facebook.com/sharer/sharer.php?u='+link" target="_blank" class="form__block__subblock">
+        <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link)" target="_blank" class="form__block__subblock">
             <div class="form__block__subblock__img">
                 <img src="./../../assets/img/modals/share/facebookLogo.png" alt="">
             </div>
