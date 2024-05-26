@@ -359,7 +359,7 @@
 
     const onShare = (articleViewCode : string) => 
 	{
-		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + articleViewCode})
+		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/article/" + articleViewCode})
 	}
 </script>
 
@@ -392,10 +392,10 @@
                         <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.statistics.rating) }}</p>
                         <img @click="onShare(article.view_code)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                     </div>
-                    <div class="main__article__reactions__comments">
+                    <a :href="'#/article/'+article.view_code" class="main__article__reactions__comments">
                         <img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
                         <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article.statistics.comments) }}</p>
-                    </div>
+                    </a>
                 </div>
                 <DropDownVersion
                     :max-version="(article as Article).versions.length"

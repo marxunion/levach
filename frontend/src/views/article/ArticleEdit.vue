@@ -140,7 +140,7 @@
 
 					articleText.value = fetchedArticleData.value.statistics.current_text;
 					
-					viewLink.value = "https://" + settings['domainName'] + "/#/article/" + fetchedArticleData.value.view_code;
+					viewLink.value = "https://" + settings['domainName'] + "/article/" + fetchedArticleData.value.view_code;
 				}
 			}
 			else
@@ -231,7 +231,7 @@
 					});
 					
 					
-					viewLink.value = "https://" + settings['domainName'] + "/#/article/" + fetchedArticleData.value.view_code;
+					viewLink.value = "https://" + settings['domainName'] + "/article/" + fetchedArticleData.value.view_code;
 					if(fetchedArticleData.value.statistics.approvededitorially_status > 0 && fetchedArticleData.value.statistics.editorially_status == 0 && !adminStatus.value)
 					{
 						Object.assign(tags.value, fetchedArticleData.value.statistics.current_tags);

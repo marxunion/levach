@@ -800,7 +800,7 @@
 
 	const onShare = () => 
 	{
-		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + articleViewCode.value})
+		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/article/" + articleViewCode.value})
 	}
 
 	watch(langData, () =>
