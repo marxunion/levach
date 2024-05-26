@@ -23,6 +23,7 @@ use Api\Handlers\AdminArticleDeleteHandler;
 use Api\Handlers\AdminArticleApprovePreloadHandler;
 
 use Api\Handlers\AdminArticleCommentsGetHandler;
+use Api\Handlers\ArticleCommentsGetBeforeIdHandler;
 use Api\Handlers\AdminArticleCommentsDeleteHandler;
 use Api\Handlers\AdminArticlesCommentsGetHandler;
 use Api\Handlers\AdminArticlesCommentsDeleteHandler;
@@ -98,6 +99,12 @@ class Routes
                         $adminArticleCommentsGroup->post('/get/{viewCode}', function (Request $request, Response $response, array $args) 
                         {
                             self::$handler = new AdminArticleCommentsGetHandler($request, $response, $args);
+                            return self::$handler->Handle();
+                        });
+
+                        $adminArticleCommentsGroup->post('/get/{viewCode}/{commentId}', function (Request $request, Response $response, array $args) 
+                        {
+                            self::$handler = new ArticleCommentsGetBeforeIdHandler($request, $response, $args);
                             return self::$handler->Handle();
                         });
 
