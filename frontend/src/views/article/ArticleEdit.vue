@@ -463,7 +463,7 @@
 					if(contentParts.length >= 2) 
 					{
 						const content = contentParts.slice(1).join('\n');
-						if(content.length >= 25 && content.length <= 10000) 
+						if(content.length >= 25) 
 						{
 							captchaVerifyCallback = onSendButtonRequest;
 
