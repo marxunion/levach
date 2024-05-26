@@ -93,7 +93,7 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                             if(count($contentParts) >= 2) 
                             {
                                 $content = implode("\n", array_slice($contentParts, 1));
-                                if(strlen($content) >= 25 && strlen($content) <= 10000) 
+                                if(strlen($content) >= 25) 
                                 {
                                     $this->model->acceptApproveWithChanges($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
                                     $this->response = $this->response->withJson(['success' => true]);

@@ -80,7 +80,7 @@ class ArticleNewHandler extends BaseHandlerRoute
                     if(count($contentParts) >= 2) 
                     {
                         $content = implode("\n", array_slice($contentParts, 1));
-                        if(strlen($content) >= 25 && strlen($content) <= 10000) 
+                        if(strlen($content) >= 25) 
                         {
                             if(AdminStatusHandler::isAdmin($this->cookiesBody))
                             {
