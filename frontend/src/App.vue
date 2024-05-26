@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, Ref } from 'vue';
+import { ref, watch, Ref, onMounted, onUnmounted } from 'vue';
 import { RouteLocationNormalizedLoaded } from 'vue-router';
 
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
@@ -11,6 +11,8 @@ import { container } from "jenesius-vue-modal";
 import { csrfTokenInput, getNewCsrfToken } from './ts/handlers/CSRFTokenHandler';
 
 const isBurgerActive : Ref<boolean> = ref(false);
+
+const windowWidth = ref(window.innerWidth);
 
 const toggleBurger = () => 
 {
@@ -32,19 +34,39 @@ watch(() => route.path, () =>
 	}, 400);
 });
 
+const onResize = () => 
+{
+    windowWidth.value = window.innerWidth;  
+}
+
+onMounted(() => 
+{
+    window.addEventListener('resize', onResize);
+});
+
+onUnmounted(() =>
+{
+    window.removeEventListener('resize', onResize);
+});
+
 getNewCsrfToken();
 </script>
 
 <template>
     <input type="hidden" id="csrfTokenInput" ref="csrfTokenInput">
     <Header @toggleBurger="toggleBurger" />
-    <perfect-scrollbar ref="scroll">
+    <perfect-scrollbar v-if="windowWidth > 1050" ref="scroll">
         <router-view v-slot="{ Component }">
             <transition name="pageOpacity" mode="out-in">
                 <component :is="Component" />
             </transition>
         </router-view>
     </perfect-scrollbar>
+    <router-view v-else v-slot="{ Component }">
+        <transition name="pageOpacity" mode="out-in">
+            <component :is="Component" />
+        </transition>
+    </router-view>
     <container />
     <SideBar :isBurgerActive="isBurgerActive" @toggleBurger="toggleBurger"/>
 </template>
