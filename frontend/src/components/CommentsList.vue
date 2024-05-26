@@ -513,7 +513,7 @@
     }
 	const onShare = () => 
 	{
-		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/article/" + props.articleViewCode + "/" + props.comment.id})
+		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + props.articleViewCode + "/" + props.comment.id})
 	}
 </script>
 

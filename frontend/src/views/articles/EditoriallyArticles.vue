@@ -359,7 +359,7 @@
 
     const onShare = (articleViewCode : string) => 
 	{
-		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/article/" + articleViewCode})
+		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + articleViewCode})
 	}
 </script>
 
