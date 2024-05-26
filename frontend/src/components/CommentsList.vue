@@ -171,7 +171,7 @@
 					{
 						headers: 
 						{
-								'Content-Type': 'multipart/form-data'
+							'Content-Type': 'multipart/form-data'
 						}
 					})
 					.then((response) => 
@@ -492,10 +492,15 @@
 		adminStatusReCheck();
 		if(props.scrollToCommentId === props.comment.id)
 		{
-			if (targetComment.value) 
+			setTimeout(() => 
 			{
-				targetComment.value.scrollIntoView({ behavior: 'smooth' });
-			}
+				if (targetComment.value) 
+				{
+					console.log(targetComment.value);
+					
+					targetComment.value.scrollIntoView();
+				}
+			}, 300);
 		}
 	});
 

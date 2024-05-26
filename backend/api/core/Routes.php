@@ -249,15 +249,15 @@ class Routes
 
                 $articleGroup->group('/comments', function (RouteCollectorProxy $articleCommentsGroup)
                 {
-                    $articleCommentsGroup->get('/get/{viewCode}', function (Request $request, Response $response, array $args) 
-                    {
-                        self::$handler = new ArticleCommentsGetHandler($request, $response, $args);
-                        return self::$handler->Handle();
-                    });
-                    
                     $articleCommentsGroup->get('/get/{viewCode}/{commentId}', function (Request $request, Response $response, array $args) 
                     {
                         self::$handler = new ArticleCommentsGetBeforeIdHandler($request, $response, $args);
+                        return self::$handler->Handle();
+                    });
+
+                    $articleCommentsGroup->get('/get/{viewCode}', function (Request $request, Response $response, array $args) 
+                    {
+                        self::$handler = new ArticleCommentsGetHandler($request, $response, $args);
                         return self::$handler->Handle();
                     });
                 

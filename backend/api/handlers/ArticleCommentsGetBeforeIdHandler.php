@@ -7,17 +7,21 @@ use Base\BaseHandlerRouteWithArgs;
 
 use Api\Handlers\AdminStatusHandler;
 
-use Api\Models\AdminArticleCommentsGetBeforeIdModel;
+use Api\Models\ArticleCommentsGetBeforeIdModel;
 
-class AdminArticleCommentsGetBeforeIdHandler extends BaseHandlerRouteWithArgs
+class ArticleCommentsGetBeforeIdHandler extends BaseHandlerRouteWithArgs
 {
     public function Init()
     {
         if(!empty($this->args['viewCode']))
         {
-            if(empty($this->args['commentId']))
+            if(!empty($this->args['commentId']))
             {
-                if(!is_numeric($this->args['commentId']))
+                if(is_numeric($this->args['commentId']))
+                {
+                    $this->model = new ArticleCommentsGetBeforeIdModel();
+                }
+                else
                 {
                     throw new Error(400, "Invalid article commentId", "Invalid article commentId");
                 }
@@ -38,7 +42,7 @@ class AdminArticleCommentsGetBeforeIdHandler extends BaseHandlerRouteWithArgs
         $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
         if(isset($articleId))
         {
-            $this->model->getComments($articleId, $this->args['commentId']);
+            $this->response = $this->response->withJson($this->model->getComments($articleId, $this->args['commentId']));
         }
         else
         {

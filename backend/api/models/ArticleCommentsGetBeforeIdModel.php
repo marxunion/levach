@@ -3,7 +3,7 @@ namespace Api\Models;
 
 use Base\BaseModel;
 
-class AdminArticleCommentsGetBeforeIdModel extends BaseModel
+class ArticleCommentsGetBeforeIdModel extends BaseModel
 {
     public function getArticleByViewCode($viewCode)
     {
@@ -56,7 +56,7 @@ class AdminArticleCommentsGetBeforeIdModel extends BaseModel
             ], 
             [
                 "ORDER" => [
-                    "created_date" => "DESC",
+                    "rating" => "DESC",
                 ],
                 'article_id' => $articleId,
                 'id[<=]' => $commentId,

@@ -151,12 +151,9 @@
                         font-size: 20px;
                         font-family: Roboto-Regular;
                     }
-                    &__icon
-                    {
-                        cursor: pointer;
-                    }
                     & .shareIcon
                     {
+                        cursor: pointer;
                         margin-left: 3px;
                     }
                 }
@@ -164,10 +161,6 @@
                 {
                     display: flex;
                     align-items: center;
-                    &__icon
-                    {
-                        cursor: pointer;
-                    }
                     &__title
                     {
                         margin-left: 8px;
