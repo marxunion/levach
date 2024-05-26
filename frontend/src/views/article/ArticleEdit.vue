@@ -112,8 +112,6 @@
 				fetchedArticleData.value = response.data;
 				if(fetchedArticleData.value)
 				{
-					console.log("Test 2");
-					console.log(statistics.value);
 					statistics = computed(() => 
 					{
 						const statisticsTemp : Statistics = {}
@@ -133,8 +131,6 @@
 						});
 						return statisticsTemp;
 					});
-					console.log("Test 3");
-					console.log(statistics.value);
 
 					if(fetchedArticleData.value.statistics.current_tags == null)
 					{
@@ -186,13 +182,9 @@
 				fetchedArticleData.value = null;
 			}
 		});
-		console.log("Test 4");
-
-		console.log(loading.value);
 		
 		loading.value = false;
 
-		console.log(loading.value);
 		reloading.value = false;
 	}
 
@@ -361,7 +353,7 @@
 					{
 						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent'] });
 					} 
-					else if (response.data.Warning.message == "Article content must contain between 25 and 10000 characters") 
+					else if (response.data.Warning.message == "The content of the article must be more than 25 characters") 
 					{
 						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols'] });
 					} 
@@ -419,7 +411,7 @@
 				{
 					openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent'] })
 				} 
-				else if (error.response.data.Warning.message == "Article content must contain between 25 and 10000 characters") 
+				else if (error.response.data.Warning.message == "The content of the article must be more than 25 characters") 
 				{
 					openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols'] })
 				} 

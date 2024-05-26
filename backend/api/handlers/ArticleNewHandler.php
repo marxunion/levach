@@ -117,7 +117,7 @@ class ArticleNewHandler extends BaseHandlerRoute
                         } 
                         else 
                         {
-                            throw new Warning(400, "Article content must contain between 25 and 10000 characters", "Article content must contain between 25 and 10000 characters");
+                            throw new Warning(400, "The content of the article must be more than 25 characters", "The content of the article must be more than 25 characters");
                         }
                     } 
                     else 

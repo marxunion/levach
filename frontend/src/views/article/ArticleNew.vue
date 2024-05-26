@@ -127,7 +127,7 @@
 					{
 						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent'] });
 					} 
-					else if (response.data.Warning.message == "Article content must contain between 25 and 10000 characters") 
+					else if (response.data.Warning.message == "The content of the article must be more than 25 characters") 
 					{
 						openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols'] });
 					} 
@@ -177,7 +177,7 @@
 				{
 					openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleNeedContent'] });
 				} 
-				else if (error.response.data.Warning.message == "Article content must contain between 25 and 10000 characters") 
+				else if (error.response.data.Warning.message == "The content of the article must be more than 25 characters") 
 				{
 					openModal(InfoModal, { status: false, text: (langData.value['warnings'] as JsonData)['articleContentSymbols'] });
 				} 
