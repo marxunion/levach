@@ -28,7 +28,7 @@
             "articleNeedTitle": "Пожалуйста добавьте заголовок для статьи",
             "articleTitleSymbols": "Содержание заголовка статьи не может быть менее 5 символов и более 120 символов",
             "articleNeedContent": "Пожалуйста добавьте содержание для статьи",
-            "articleContentSymbols": "Содержание статьи не может быть менее 25 символов и более 10000 символов",
+            "articleContentSymbols": "Содержание статьи не может быть менее 25 символов",
             
             "imageMaxSize": "Размер загружаемого изображения должен быть не больше {size}МБ",
             "imageUnallowedType": "Расширение загружаемого изображения не поддерживается",
@@ -244,7 +244,7 @@
             "articleNeedTitle": "Please add a title for the article",
             "articleTitleSymbols": "Article title cannot be less than 5 characters and exceed 120 characters",
             "articleNeedContent": "Please add content for the article",
-            "articleContentSymbols": "Article content cannot be less than 25 characters and exceed 10000 characters",
+            "articleContentSymbols": "Article content cannot be less than 25 characters",
             
             "imageMaxSize": "The size of the uploaded image must be no larger than {size}MB",
             "imageUnallowedType": "The extension of the uploaded image is not supported",
