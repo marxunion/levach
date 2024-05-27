@@ -496,8 +496,6 @@
 			{
 				if (targetComment.value) 
 				{
-					console.log(targetComment.value);
-					
 					targetComment.value.scrollIntoView();
 				}
 			}, 300);
