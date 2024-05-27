@@ -255,7 +255,7 @@
             app.addEventListener('scroll', handleScroll)
         }
 
-        let ps = document.querySelector('#app');
+        let ps = document.querySelector('.ps');
         if(ps != null)
         {
             ps.addEventListener('scroll', handleScroll)
@@ -275,7 +275,7 @@
             app.removeEventListener('scroll', handleScroll)
         }
 
-        let ps = document.querySelector('#app');
+        let ps = document.querySelector('.ps');
         if(ps != null)
         {
             ps.removeEventListener('scroll', handleScroll)
