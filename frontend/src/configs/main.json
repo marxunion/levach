@@ -1,6 +1,6 @@
 {
     "langs": ["RU", "EN"],
-    "domainName": "levach.com",
+    "domainName": "levach.ddns.net",
     "settings":
     {
         "article_edit_timeout_minutes": 1,
