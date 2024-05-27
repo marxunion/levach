@@ -99,7 +99,7 @@ function addAdminRoutes()
             { path: 'articles/waitingPremoderate/', component: ArticlesWaitingPremoderate, props: {currentRoute: "articlesWaitingPremoderate"}, name: "articlesWaitingPremoderate" },
             { path: 'articles/edit/', component: AdminEditComments, name: "adminEditComments" },
         ],
-    })
+    });
 }
 
 function removeAdminRoutes() 

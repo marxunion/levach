@@ -31,28 +31,27 @@
     adminStatusReCheck();
 
     const links = computed(() => 
+    {
+        if(adminStatus.value)
         {
-            if(adminStatus.value)
-            {
-                return [
-                    { routeUri: '/articles/editorially', routeName: 'editoriallyArticles', text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
-                    { routeUri: '/articles/approvedEditorially', routeName: 'editoriallyApprovedArticles', text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
-                    { routeUri: '/articles/abyss', routeName: 'abyssArticles', text: (langData.value['links'] as JsonData)['abyssArticles'] },
-                    { routeUri: '/admin/articles/waitingApproval', routeName: 'articlesWaitingApproval', text: (langData.value['links'] as JsonData)['articlesWaitingApproval'] },
-                    { routeUri: '/admin/articles/waitingPremoderate', routeName: 'articlesWaitingPremoderate', text: (langData.value['links'] as JsonData)['articlesWaitingPremoderate'] },
-                    { routeUri: '/admin/articles/edit', routeName: 'adminEditComments', text: (langData.value['links'] as JsonData)['adminEditComments'] }
-                ]
-            }
-            else
-            {
-                return [
-                    { routeUri: '/articles/editorially', routeName: 'editoriallyArticles', text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
-                    { routeUri: '/articles/approvedEditorially', routeName: 'editoriallyApprovedArticles', text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
-                    { routeUri: '/articles/abyss', routeName: 'abyssArticles', text: (langData.value['links'] as JsonData)['abyssArticles'] }
-                ]
-            }
+            return [
+                { routeUri: '/articles/editorially', routeName: 'editoriallyArticles', text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
+                { routeUri: '/articles/approvedEditorially', routeName: 'editoriallyApprovedArticles', text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
+                { routeUri: '/articles/abyss', routeName: 'abyssArticles', text: (langData.value['links'] as JsonData)['abyssArticles'] },
+                { routeUri: '/admin/articles/waitingApproval', routeName: 'articlesWaitingApproval', text: (langData.value['links'] as JsonData)['articlesWaitingApproval'] },
+                { routeUri: '/admin/articles/waitingPremoderate', routeName: 'articlesWaitingPremoderate', text: (langData.value['links'] as JsonData)['articlesWaitingPremoderate'] },
+                { routeUri: '/admin/articles/edit', routeName: 'adminEditComments', text: (langData.value['links'] as JsonData)['adminEditComments'] }
+            ]
         }
-    );
+        else
+        {
+            return [
+                { routeUri: '/articles/editorially', routeName: 'editoriallyArticles', text: (langData.value['links'] as JsonData)['editoriallyArticles'] },
+                { routeUri: '/articles/approvedEditorially', routeName: 'editoriallyApprovedArticles', text: (langData.value['links'] as JsonData)['editoriallyApprovedArticles'], },
+                { routeUri: '/articles/abyss', routeName: 'abyssArticles', text: (langData.value['links'] as JsonData)['abyssArticles'] }
+            ]
+        }
+    });
 
     const linksfooter = computed(() => 
     [
