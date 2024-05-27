@@ -31,7 +31,7 @@
 	import settings from '../configs/main.json';
 
 
-	const props = defineProps(['articleViewCode', 'scrollToCommentId', 'comment', 'level']);
+	const props = defineProps(['articleViewCode', 'articleTitle', 'scrollToCommentId', 'comment', 'level']);
 
 	const emits = defineEmits(["onDeletedSubcomment", "onCreatedNewSubcomment"]);
 
@@ -525,7 +525,7 @@
     }
 	const onShare = () => 
 	{
-		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + props.articleViewCode + "/" + props.comment.id})
+		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + props.articleViewCode + "/" + props.comment.id, text: props.articleTitle })
 	}
 </script>
 
@@ -566,8 +566,7 @@
 		</div>
 	</div>
 	
-	
-	<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-if="!loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" :scrollToCommentId="scrollToCommentId"/>
+	<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-if="!loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" :articleTitle="articleTitle" :scrollToCommentId="scrollToCommentId"/>
 	<Loader v-else />
 </template>
 

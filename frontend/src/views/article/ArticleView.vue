@@ -857,11 +857,6 @@
         });
 	}
 
-	const onShare = () => 
-	{
-		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + articleViewCode.value})
-	}
-
 	watch(langData, () =>
 	{
 		previewState.language = LangDataHandler.currentLanguage.value;
@@ -887,6 +882,11 @@
     {
         openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
     }
+
+	const onShare = (articleTitle : string) => 
+	{
+		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + articleViewCode.value, text: articleTitle })
+	}
 </script>
 
 <template>
@@ -913,7 +913,7 @@
 					<div class="main__article__previewContainer__reactions__statistics">
 						<img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__previewContainer__reactions__statistics__icon ratingIcon">
 						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(fetchedArticleData.statistics.rating) }}</p>
-						<img @click="onShare" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
+						<img @click="onShare(fetchedArticleData.versions[currentVersion-1].title)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
 					</div>
 					<div class="main__article__previewContainer__reactions__comments">
 						<img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__previewContainer__reactions__comments__icon commentIcon">
@@ -950,7 +950,7 @@
 				</div>
 				
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
-					<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode" :scrollToCommentId="commentId"/>
+					<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode" :articleTitle="fetchedArticleData.versions[currentVersion-1].title" :scrollToCommentId="commentId"/>
 					<div v-if="commentsReloading" class="main__article__comments__commentsList__reloader">
 						<Loader/>
 					</div>

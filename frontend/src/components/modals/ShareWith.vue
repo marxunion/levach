@@ -1,18 +1,25 @@
 <script setup lang="ts">
-    import { ComputedRef } from "vue";
+    import { ref, ComputedRef } from "vue";
 
     import { JsonData } from "../../ts/interfaces/JsonData";
 
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/ShareWith.json";
     
-    const props = defineProps(["link"]);
+    const props = defineProps(["link", "text"]);
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ShareWith", langsData).langData;
 
     const copyLinkButton = () =>
     {
         navigator.clipboard.writeText(props.link);
+    }
+
+    const telegramLink = ref('https://t.me/share/url?url='+encodeURIComponent(props.link));
+
+    if(props.text)
+    {
+        telegramLink.value = 'https://t.me/share/url?url='+encodeURIComponent(props.link)+'&text='+encodeURIComponent(props.text);
     }
 </script>
 
@@ -29,7 +36,7 @@
             </div>
             
         </a>
-        <a :href="'https://t.me/share/url?url='+encodeURIComponent(link)" target="_blank" class="form__block__subblock">
+        <a :href="telegramLink" target="_blank" class="form__block__subblock">
             <div class="form__block__subblock__img">
                 <img src="./../../assets/img/modals/share/telegramLogo.png" alt="">
             </div>

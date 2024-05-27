@@ -446,9 +446,9 @@
         }
     }
 
-    const onShare = (articleViewCode : string) => 
+    const onShare = (articleTitle : string, articleViewCode : string) => 
 	{
-		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + articleViewCode})
+		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + articleViewCode, text: articleTitle })
 	}
 
 </script>
@@ -478,7 +478,7 @@
                     <div class="main__article__reactions__statistics">
                         <img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
                         <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.statistics.rating) }}</p>
-                        <img @click="onShare(article.view_code)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
+                        <img @click="onShare(article.versions[article.currentSelectedVersion-1].title, article.view_code)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                     </div>
                     <a :href="'#/article/'+article.view_code" class="main__article__reactions__comments">
                         <img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
