@@ -156,6 +156,7 @@ main
 	width: 100%;
 	min-height: 70%;
 	display: flex;
+	overflow-x: hidden;
 }
 
 @media(max-width: 1050px)
@@ -255,6 +256,7 @@ h1
 {
 	width: 100vw;
 	height: 100vh;
+	overflow-x: hidden;
 }
 
 
