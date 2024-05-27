@@ -7,6 +7,7 @@
     
     height: 100%;
     width: 20%;
+    top: 0;
     left: 0;
     display: flex;
     flex-direction: column;
@@ -112,9 +113,6 @@
         }
     }
 }
-
-
-
 
 @media(min-width: 2020px)
 {
