@@ -538,7 +538,14 @@
 			currentVersion.value = fetchedArticleData.value.versions.length;
 
 			comments.value = [];
-			let ps = document.querySelector('.main');
+
+			let app = document.querySelector('#app');
+			if(app != null)
+			{
+				app.addEventListener('scroll', handleCommentsScroll)
+			}
+
+			let ps = document.querySelector('.ps');
 			if(ps != null)
 			{
 				ps.addEventListener('scroll', handleCommentsScroll)
@@ -573,7 +580,13 @@
 			clearInterval(intervalId);
 		}
 
-        let ps = document.querySelector('.main');
+		let app = document.querySelector('#app');
+        if(app != null)
+        {
+            app.removeEventListener('scroll', handleCommentsScroll)
+        }
+
+        let ps = document.querySelector('.ps');
         if(ps != null)
         {
             ps.removeEventListener('scroll', handleCommentsScroll)

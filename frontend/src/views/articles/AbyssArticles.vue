@@ -243,7 +243,13 @@
     onMounted(async () => 
     {
         articles.value = [];
-        let ps = document.querySelector('.main');
+        let app = document.querySelector('#app');
+        if(app != null)
+        {
+            app.addEventListener('scroll', handleScroll)
+        }
+
+        let ps = document.querySelector('.ps');
         if(ps != null)
         {
             ps.addEventListener('scroll', handleScroll)
@@ -256,7 +262,13 @@
 
     onBeforeUnmount(() => 
     {
-        let ps = document.querySelector('.main');
+        let app = document.querySelector('#app');
+        if(app != null)
+        {
+            app.removeEventListener('scroll', handleScroll)
+        }
+
+        let ps = document.querySelector('.ps');
         if(ps != null)
         {
             ps.removeEventListener('scroll', handleScroll)
