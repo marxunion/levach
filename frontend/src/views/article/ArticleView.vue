@@ -231,8 +231,6 @@
 
 	const handleCommentsScroll = async () => 
     {
-		console.log('SCROLL');
-		
         const scrollElement = scrollTarget.value;
         if (scrollElement !== null && !loading.value && !commentsReloading.value) 
         {
@@ -558,6 +556,7 @@
 
 			if(commentId.value != null)
 			{
+				currentCommentsSortType.value = 1;
 				await fetchCommentsBeforeId();
 			}
 			else

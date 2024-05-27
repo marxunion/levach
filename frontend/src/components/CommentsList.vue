@@ -524,6 +524,8 @@
     {
         openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
     }
+
+	
 	const onShare = () => 
 	{
 		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + props.articleViewCode + "/" + props.comment.id, text: props.articleTitle })

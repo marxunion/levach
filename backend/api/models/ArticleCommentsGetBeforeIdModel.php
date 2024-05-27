@@ -5,11 +5,75 @@ use Base\BaseModel;
 
 class ArticleCommentsGetBeforeIdModel extends BaseModel
 {
+    private $articleId;
+
     public function getArticleByViewCode($viewCode)
     {
         return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
     }
-    public function getSubcomments($articleId, $parentCommentId)
+
+    public function getRootComment($comment)
+    {
+        if($comment['parent_comment_id'] != null)
+        {
+            $parentComment = $this->database->get(
+                'comments', 
+                [
+                    'id',
+                    'text',
+                    'rating',
+                    'created_date',
+                    'rating_influence',
+                    'parent_comment_id'
+                ],
+                [
+                    'article_id' => $this->articleId,
+                    'id' => $comment['parent_comment_id']
+                ]
+            );
+            if($parentComment)
+            {
+                return $this->getRootComment($parentComment);
+            }
+            else
+            {
+                return $comment;
+            }
+        }
+        else
+        {
+            return $comment;
+        }
+    }
+
+    public function getRootCommentId($commentId)
+    {
+        $comment = $this->database->get(
+            'comments', 
+            [
+                'id',
+                'text',
+                'rating',
+                'created_date',
+                'rating_influence',
+                'parent_comment_id'
+            ],
+            [
+                'article_id' => $this->articleId,
+                'id' => $commentId
+            ]
+        );
+        if($comment)
+        {
+            return $this->getRootComment($comment)['id'];
+        }
+        else
+        {
+            return $comment['id'];
+        }
+    }
+
+    public function getSubcomments($parentCommentId)
     {
         $comments = $this->database->select(
             'comments', 
@@ -25,14 +89,14 @@ class ArticleCommentsGetBeforeIdModel extends BaseModel
                 "ORDER" => [
                     "created_date" => "DESC",
                 ],
-                'article_id' => $articleId, 
+                'article_id' => $this->articleId, 
                 'parent_comment_id' => $parentCommentId
             ]
         );
 
         foreach($comments as &$comment) 
         {
-            $subcomments = $this->getSubcomments($articleId, $comment['id']);
+            $subcomments = $this->getSubcomments($comment['id']);
             if(!empty($subcomments)) 
             {
                 $comment['subcomments'] = $subcomments;
@@ -44,6 +108,7 @@ class ArticleCommentsGetBeforeIdModel extends BaseModel
 
     public function getComments($articleId, $commentId)
     {
+        $this->articleId = $articleId;
         $comments = $this->database->select(
             'comments', 
             [
@@ -56,17 +121,17 @@ class ArticleCommentsGetBeforeIdModel extends BaseModel
             ], 
             [
                 "ORDER" => [
-                    "rating" => "DESC",
+                    "created_date" => "DESC",
                 ],
-                'article_id' => $articleId,
-                'id[<=]' => $commentId,
+                'article_id' => $this->articleId,
+                'id[>=]' => $this->getRootCommentId($commentId),
                 'parent_comment_id' => null
             ]
         );
 
         foreach($comments as &$comment) 
         {
-            $subcomments = $this->getSubcomments($articleId, $comment['id']);
+            $subcomments = $this->getSubcomments($comment['id']);
             if(!empty($subcomments)) 
             {
                 $comment['subcomments'] = $subcomments;
