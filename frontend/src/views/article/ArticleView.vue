@@ -231,6 +231,8 @@
 
 	const handleCommentsScroll = async () => 
     {
+		console.log('SCROLL');
+		
         const scrollElement = scrollTarget.value;
         if (scrollElement !== null && !loading.value && !commentsReloading.value) 
         {
@@ -536,7 +538,7 @@
 			currentVersion.value = fetchedArticleData.value.versions.length;
 
 			comments.value = [];
-			let ps = document.querySelector('.ps');
+			let ps = document.querySelector('.main');
 			if(ps != null)
 			{
 				ps.addEventListener('scroll', handleCommentsScroll)
@@ -571,7 +573,7 @@
 			clearInterval(intervalId);
 		}
 
-        let ps = document.querySelector('.ps');
+        let ps = document.querySelector('.main');
         if(ps != null)
         {
             ps.removeEventListener('scroll', handleCommentsScroll)

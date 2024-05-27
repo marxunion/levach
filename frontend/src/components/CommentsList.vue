@@ -335,6 +335,7 @@
 				openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
 					
 				answerStatus.value = 0;
+				currentSubcommentReaction.value = 0;
 				newSubcommentEditorState.text = '';
 				loading.value = true;
 				emits('onCreatedNewSubcomment');
@@ -496,7 +497,7 @@
 			{
 				if (targetComment.value) 
 				{
-					targetComment.value.scrollIntoView();
+					targetComment.value.scrollIntoView({ block: "center" });
 				}
 			}, 300);
 		}

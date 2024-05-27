@@ -243,7 +243,7 @@
     onMounted(async () => 
     {
         articles.value = [];
-        let ps = document.querySelector('.ps');
+        let ps = document.querySelector('.main');
         if(ps != null)
         {
             ps.addEventListener('scroll', handleScroll)
@@ -256,7 +256,7 @@
 
     onBeforeUnmount(() => 
     {
-        let ps = document.querySelector('.ps');
+        let ps = document.querySelector('.main');
         if(ps != null)
         {
             ps.removeEventListener('scroll', handleScroll)
