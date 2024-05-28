@@ -505,7 +505,7 @@
         </article>
         <h1 v-if="articles.length == 0 && !loading" class="main__article__title">{{ (langData['warnings'] as JsonData)["articlesNotFound"] }}</h1>
         
-        <div ref="scrollTarget" style="height: 100px;"></div>
+        <div ref="scrollTarget" style="height: 10px;"></div>
         <Loader v-if="loading || reloading" />
     </main>
 </template>
