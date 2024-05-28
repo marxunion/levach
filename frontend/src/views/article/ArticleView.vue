@@ -911,12 +911,12 @@
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedArticleData.versions[currentVersion-1].tags) }}</p>
 				
-				<div v-if="adminStatus && fetchedArticleData.statistics.approvededitorially_status == 1" class="main__article__previewContainer__buttons">
+				<div v-if="adminStatus && fetchedArticleData.approvededitorially_status == 1" class="main__article__previewContainer__buttons">
 					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 					<a @click="onRejectApproveArticle()" class="main__article__previewContainer__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
 					<a :href="'#/admin/article/approve/'+articleViewCode" class="main__article__previewContainer__buttons__button acceptApproveArticleButton">{{ langData['acceptApproveArticleButton'] }}</a>
 				</div>
-				<div v-else-if="adminStatus && fetchedArticleData.statistics.premoderation_status == 1" class="main__article__previewContainer__buttons">
+				<div v-else-if="adminStatus && fetchedArticleData.premoderation_status == 1" class="main__article__previewContainer__buttons">
 					<a @click="onRejectPremoderateArticle()" class="main__article__previewContainer__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
 					<a @click="onAcceptPremoderateArticle()" class="main__article__previewContainer__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
 				</div>
@@ -926,12 +926,12 @@
 				<div class="main__article__previewContainer__reactions">
 					<div class="main__article__previewContainer__reactions__statistics">
 						<img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__previewContainer__reactions__statistics__icon ratingIcon">
-						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(fetchedArticleData.statistics.rating) }}</p>
+						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(fetchedArticleData.rating) }}</p>
 						<img @click="onShare(fetchedArticleData.versions[currentVersion-1].title)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
 					</div>
 					<div class="main__article__previewContainer__reactions__comments">
 						<img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__previewContainer__reactions__comments__icon commentIcon">
-						<p class="main__article__previewContainer__reactions__comments__title commentsCounter">{{ abbreviateNumber(fetchedArticleData.statistics.comments) }}</p>
+						<p class="main__article__previewContainer__reactions__comments__title commentsCounter">{{ abbreviateNumber(fetchedArticleData.comments_count) }}</p>
 					</div>
 				</div>
 				

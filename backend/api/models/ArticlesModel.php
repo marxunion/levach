@@ -14,8 +14,14 @@ class ArticlesModel extends BaseModel
     public function loadArticlesSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -30,7 +36,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
@@ -46,7 +52,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
@@ -66,8 +72,14 @@ class ArticlesModel extends BaseModel
     public function loadArticlesSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -82,7 +94,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
@@ -98,7 +110,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE premoderation_status = :premoderation_status AND approvededitorially_status != :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
@@ -120,8 +132,14 @@ class ArticlesModel extends BaseModel
     public function loadEditoriallyArticlesIdsByRate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -135,8 +153,14 @@ class ArticlesModel extends BaseModel
     public function loadEditoriallyArticlesSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -150,7 +174,7 @@ class ArticlesModel extends BaseModel
 
     public function loadEditoriallyArticlesSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE editorially_status = :editorially_status AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE editorially_status = :editorially_status AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':editorially_status' => 1,
@@ -164,7 +188,7 @@ class ArticlesModel extends BaseModel
 
     public function loadEditoriallyArticlesSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE editorially_status = :editorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE editorially_status = :editorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':editorially_status' => 1,
@@ -182,8 +206,14 @@ class ArticlesModel extends BaseModel
     public function loadEditoriallyArticlesIdsByCreatedDate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -197,8 +227,14 @@ class ArticlesModel extends BaseModel
     public function loadEditoriallyArticlesSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -212,7 +248,7 @@ class ArticlesModel extends BaseModel
 
     public function loadEditoriallyArticlesSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE editorially_status = :editorially_status AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE editorially_status = :editorially_status AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':editorially_status' => 1,
@@ -226,7 +262,7 @@ class ArticlesModel extends BaseModel
 
     public function loadEditoriallyArticlesSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE editorially_status = :editorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE editorially_status = :editorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':editorially_status' => 1,
@@ -248,8 +284,14 @@ class ArticlesModel extends BaseModel
     public function loadEditoriallyApprovedArticlesIdsByRate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -264,8 +306,14 @@ class ArticlesModel extends BaseModel
     public function loadEditoriallyApprovedArticlesSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -280,7 +328,7 @@ class ArticlesModel extends BaseModel
 
     public function loadEditoriallyApprovedArticlesSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE approvededitorially_status = :approvededitorially_status AND editorially_status != :editorially_status AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE approvededitorially_status = :approvededitorially_status AND editorially_status != :editorially_status AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':approvededitorially_status' => 2,
@@ -296,7 +344,7 @@ class ArticlesModel extends BaseModel
 
     public function loadEditoriallyApprovedArticlesSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE approvededitorially_status = :approvededitorially_status AND editorially_status != :editorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE approvededitorially_status = :approvededitorially_status AND editorially_status != :editorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rating DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':approvededitorially_status' => 2,
@@ -316,8 +364,14 @@ class ArticlesModel extends BaseModel
     public function loadEditoriallyApprovedArticlesIdsByCreatedDate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -332,8 +386,14 @@ class ArticlesModel extends BaseModel
     public function loadEditoriallyApprovedArticlesSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -348,7 +408,7 @@ class ArticlesModel extends BaseModel
 
     public function loadEditoriallyApprovedArticlesSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE approvededitorially_status = :approvededitorially_status AND editorially_status != :editorially_status AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE approvededitorially_status = :approvededitorially_status AND editorially_status != :editorially_status AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':approvededitorially_status' => 2,
@@ -364,7 +424,7 @@ class ArticlesModel extends BaseModel
     
     public function loadEditoriallyApprovedArticlesSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE approvededitorially_status = :approvededitorially_status AND editorially_status != :editorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE approvededitorially_status = :approvededitorially_status AND editorially_status != :editorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':approvededitorially_status' => 2,
@@ -386,8 +446,14 @@ class ArticlesModel extends BaseModel
     public function loadAbyssArticlesIdsByRate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -404,8 +470,14 @@ class ArticlesModel extends BaseModel
     public function loadAbyssArticlesSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -422,7 +494,7 @@ class ArticlesModel extends BaseModel
 
     public function loadAbyssArticlesSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
@@ -440,7 +512,7 @@ class ArticlesModel extends BaseModel
 
     public function loadAbyssArticlesSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_title LIKE :title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_title LIKE :title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
@@ -462,8 +534,14 @@ class ArticlesModel extends BaseModel
     public function loadAbyssArticlesIdsByCreatedDate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -480,8 +558,14 @@ class ArticlesModel extends BaseModel
     public function loadAbyssArticlesSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -498,7 +582,7 @@ class ArticlesModel extends BaseModel
 
     public function loadAbyssArticlesSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
@@ -516,7 +600,7 @@ class ArticlesModel extends BaseModel
 
     public function loadAbyssArticlesSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE premoderation_status = :premoderation_status AND editorially_status != :editorially_status AND approvededitorially_status != :approvededitorially_status AND approvededitorially_status != :approvededitorially_status_two AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 2,
@@ -540,8 +624,14 @@ class ArticlesModel extends BaseModel
     public function loadArticlesWaitingApproveIdsByRate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -555,8 +645,14 @@ class ArticlesModel extends BaseModel
     public function loadArticlesWaitingApproveSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -570,7 +666,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingApproveSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND approvededitorially_status = :approvededitorially_status AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE AND approvededitorially_status = :approvededitorially_status AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':approvededitorially_status' => 1,
@@ -585,7 +681,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingApproveSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND approvededitorially_status = :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE AND approvededitorially_status = :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':approvededitorially_status' => 1,
@@ -604,8 +700,14 @@ class ArticlesModel extends BaseModel
     public function loadArticlesWaitingApproveIdsByCreatedDate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -619,8 +721,14 @@ class ArticlesModel extends BaseModel
     public function loadArticlesWaitingApproveSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -634,7 +742,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingApproveSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND approvededitorially_status = :approvededitorially_status AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE AND approvededitorially_status = :approvededitorially_status AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':approvededitorially_status' => 1,
@@ -649,7 +757,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingApproveSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND approvededitorially_status = :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE AND approvededitorially_status = :approvededitorially_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':approvededitorially_status' => 1,
@@ -670,8 +778,14 @@ class ArticlesModel extends BaseModel
     public function loadArticlesWaitingPremoderateIdsByRate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -685,8 +799,14 @@ class ArticlesModel extends BaseModel
     public function loadArticlesWaitingPremoderateSearchTitleIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -700,7 +820,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingPremoderateSearchTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND premoderation_status = :premoderation_status AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE AND premoderation_status = :premoderation_status AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 1,
@@ -715,7 +835,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingPremoderateSearchTitleTagsIdsByRate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND premoderation_status = :premoderation_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE AND premoderation_status = :premoderation_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY rate DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 1,
@@ -734,8 +854,14 @@ class ArticlesModel extends BaseModel
     public function loadArticlesWaitingPremoderateIdsByCreatedDate($count = 4, $lastLoaded = 0)
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -749,8 +875,14 @@ class ArticlesModel extends BaseModel
     public function loadArticlesWaitingPremoderateSearchTitleIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '')
     {
         return $this->database->select(
-            'statistics',
-            'article_id',
+            'articles',
+            [
+                'id',
+                'created_date',
+                'rating',
+                'comments_count',
+                'view_code'
+            ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
                 "ORDER" => [
@@ -764,7 +896,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingPremoderateSearchTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND premoderation_status = :premoderation_status AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE AND premoderation_status = :premoderation_status AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 1,
@@ -779,7 +911,7 @@ class ArticlesModel extends BaseModel
 
     public function loadArticlesWaitingPremoderateSearchTitleTagsIdsByCreatedDate($count = 4, $lastLoaded = 0, $searchTitle = '', $searchTags = '')
     {
-        $sql = "SELECT article_id FROM statistics WHERE AND premoderation_status = :premoderation_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
+        $sql = "SELECT id, created_date, rating, comments_count, view_code FROM articles WHERE AND premoderation_status = :premoderation_status AND current_title LIKE :title AND current_tags @> :tags ORDER BY created_date DESC LIMIT :count OFFSET :lastLoaded";
 
         $bindings = [
             ':premoderation_status' => 1,
@@ -797,19 +929,18 @@ class ArticlesModel extends BaseModel
 
     // Articles search 
 
-    public function loadArticlesSearch($articleIds)
+    public function loadArticlesSearch($articles)
     {
-        if($articleIds)
+        if($articles)
         {
-            if(is_array($articleIds))
+            if(is_array($articles))
             {
-                if(count($articleIds) > 0)
+                if(count($articles) > 0)
                 {
-                    $articles = [];
-                    foreach($articleIds as &$articleId) 
+                    foreach($articles as $key => $article) 
                     {
                         $articleVersions = $this->database->select(
-                            'articles', 
+                            'articles_versions', 
                             [
                                 'version_id', 
                                 'title', 
@@ -821,7 +952,7 @@ class ArticlesModel extends BaseModel
                                 'approvededitorially_status'
                             ],
                             [
-                                'id' => $articleId, 
+                                'article_id' => $article['id'], 
                                 'premoderation_status' => 2,
                                 'approvededitorially_status[!]' => 2,
                                 'approvededitorially_status[!]' => 3
@@ -837,13 +968,7 @@ class ArticlesModel extends BaseModel
                             }
                         }
                         
-                        $article = [
-                            'id' => $articleId,
-                            'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
-                            'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
-                        ];
-                        array_push($articles, $article);
+                        $articles[$key]['versions'] = $articleVersions;
                     }
                     return $articles;
                 }
@@ -865,19 +990,18 @@ class ArticlesModel extends BaseModel
 
     // EditoriallyArticles
 
-    public function loadEditoriallyArticles($articleIds)
+    public function loadEditoriallyArticles($articles)
     {
-        if($articleIds)
+        if($articles)
         {
-            if(is_array($articleIds))
+            if(is_array($articles))
             {
-                if(count($articleIds) > 0)
+                if(count($articles) > 0)
                 {
-                    $articles = [];
-                    foreach($articleIds as &$articleId) 
+                    foreach($articles as $key => $article) 
                     {
                         $articleVersions = $this->database->select(
-                            'articles', 
+                            'articles_versions', 
                             [
                                 'version_id', 
                                 'title', 
@@ -889,7 +1013,7 @@ class ArticlesModel extends BaseModel
                                 'approvededitorially_status'
                             ], 
                             [
-                                'id' => $articleId, 
+                                'article_id' => $article['id'], 
                                 'editorially_status' => 1
                             ]
                         );
@@ -903,13 +1027,7 @@ class ArticlesModel extends BaseModel
                             }
                         }
                         
-                        $article = [
-                            'id' => $articleId,
-                            'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
-                            'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
-                        ];
-                        array_push($articles, $article);
+                        $articles[$key]['versions'] = $articleVersions;
                     }
                     return $articles;
                 }
@@ -931,19 +1049,18 @@ class ArticlesModel extends BaseModel
 
     // EditoriallyApprovedArticles
 
-    public function loadEditoriallyApprovedArticles($articleIds)
+    public function loadEditoriallyApprovedArticles($articles)
     {
-        if($articleIds)
+        if($articles)
         {
-            if(is_array($articleIds))
+            if(is_array($articles))
             {
-                if(count($articleIds) > 0)
+                if(count($articles) > 0)
                 {
-                    $articles = [];
-                    foreach($articleIds as &$articleId) 
+                    foreach($articles as $key => $article) 
                     {
                         $articleVersions = $this->database->select(
-                            'articles', 
+                            'articles_versions', 
                             [
                                 'version_id', 
                                 'title', 
@@ -955,7 +1072,7 @@ class ArticlesModel extends BaseModel
                                 'approvededitorially_status'
                             ],
                             [
-                                'id' => $articleId,
+                                'article_id' => $article['id'],
                                 'approvededitorially_status' => 2,
                                 'editorially_status[!]' => 1,
                             ]
@@ -970,13 +1087,7 @@ class ArticlesModel extends BaseModel
                             }
                         }
                         
-                        $article = [
-                            'id' => $articleId,
-                            'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
-                            'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
-                        ];
-                        array_push($articles, $article);
+                        $articles[$key]['versions'] = $articleVersions;
                     }
                     return $articles;
                 }
@@ -998,19 +1109,18 @@ class ArticlesModel extends BaseModel
 
     // AbyssArticles
 
-    public function loadAbyssArticles($articleIds)
+    public function loadAbyssArticles($articles)
     {
-        if($articleIds)
+        if($articles)
         {
-            if(is_array($articleIds))
+            if(is_array($articles))
             {
-                if(count($articleIds) > 0)
+                if(count($articles) > 0)
                 {
-                    $articles = [];
-                    foreach($articleIds as &$articleId) 
+                    foreach($articles as $key => $article) 
                     {
                         $articleVersions = $this->database->select(
-                            'articles', 
+                            'articles_versions', 
                             [
                                 'version_id', 
                                 'title', 
@@ -1022,7 +1132,7 @@ class ArticlesModel extends BaseModel
                                 'approvededitorially_status'
                             ],
                             [
-                                'id' => $articleId, 
+                                'article_id' => $article['id'], 
                                 'premoderation_status' => 2,
                                 'editorially_status[!]' => 1,
                                 'approvededitorially_status[!]' => 2,
@@ -1039,13 +1149,7 @@ class ArticlesModel extends BaseModel
                             }
                         }
                         
-                        $article = [
-                            'id' => $articleId,
-                            'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
-                            'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
-                        ];
-                        array_push($articles, $article);
+                        $articles[$key]['versions'] = $articleVersions;
                     }
                     return $articles;
                 }
@@ -1067,19 +1171,18 @@ class ArticlesModel extends BaseModel
 
     // ArticlesWaitingApprove
 
-    public function loadArticlesWaitingApprove($articleIds)
+    public function loadArticlesWaitingApprove($articles)
     {
-        if($articleIds)
+        if($articles)
         {
-            if(is_array($articleIds))
+            if(is_array($articles))
             {
-                if(count($articleIds) > 0)
+                if(count($articles) > 0)
                 {
-                    $articles = [];
-                    foreach($articleIds as &$articleId) 
+                    foreach($articles as $key => $article) 
                     {
                         $articleVersions =  $this->database->select(
-                            'articles', 
+                            'articles_versions', 
                             [
                                 'version_id', 
                                 'title',
@@ -1091,7 +1194,7 @@ class ArticlesModel extends BaseModel
                                 'approvededitorially_status'
                             ], 
                             [
-                                'id' => $articleId, 
+                                'article_id' => $article['id'], 
                                 'premoderation_status' => 2, 
                                 'approvededitorially_status' => 1
                             ]
@@ -1106,13 +1209,7 @@ class ArticlesModel extends BaseModel
                             }
                         }
 
-                        $article = [
-                            'id' => $articleId,
-                            'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
-                            'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
-                        ];
-                        array_push($articles, $article);
+                        $articles[$key]['versions'] = $articleVersions;
                     }
                     return $articles;
                 }
@@ -1134,19 +1231,18 @@ class ArticlesModel extends BaseModel
 
     // ArticlesWaitingPremoderate
 
-    public function loadArticlesWaitingPremoderate($articleIds)
+    public function loadArticlesWaitingPremoderate($articles)
     {
-        if($articleIds)
+        if($articles)
         {
-            if(is_array($articleIds))
+            if(is_array($articles))
             {
-                if(count($articleIds) > 0)
+                if(count($articles) > 0)
                 {
-                    $articles = [];
-                    foreach($articleIds as &$articleId) 
+                    foreach($articles as $key => $article) 
                     {
                         $articleVersions = $this->database->select(
-                            'articles', 
+                            'articles_versions', 
                             [
                                 'version_id', 
                                 'title',
@@ -1158,7 +1254,7 @@ class ArticlesModel extends BaseModel
                                 'approvededitorially_status'
                             ], 
                             [
-                                'id' => $articleId, 
+                                'article_id' => $article['id'], 
                                 'premoderation_status' => 1
                             ]
                         );
@@ -1172,13 +1268,7 @@ class ArticlesModel extends BaseModel
                             }
                         }
                         
-                        $article = [
-                            'id' => $articleId,
-                            'versions' => $articleVersions,
-                            'statistics' => $this->database->get('statistics', ['created_date','rating', 'comments'], ['article_id' => $articleId]),
-                            'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $articleId])
-                        ];
-                        array_push($articles, $article);
+                        $articles[$key]['versions'] = $articleVersions;
                     }
                     return $articles;
                 }

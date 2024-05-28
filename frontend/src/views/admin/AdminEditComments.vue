@@ -203,8 +203,8 @@
             <p v-if="articles.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
             <p v-else class="main__comments__title">{{ langData['commentsNotFoundTitle'] }}</p>
             <article v-if="articles.length > 0" class="main__comments__articles" v-for="article in articles">
-                <p class="main__comments__articles__title time"> {{ timestampToLocaleFormatedTime(article.statistics.created_date) }}</p>
-                <a :href="'#/article/'+article.view_code" target="_blank" class="main__comments__articles__title text">{{ article.statistics.current_title }}</a>
+                <p class="main__comments__articles__title time"> {{ timestampToLocaleFormatedTime(article.created_date) }}</p>
+                <a :href="'#/article/'+article.view_code" target="_blank" class="main__comments__articles__title text">{{ article.current_title }}</a>
 
                 <div class="main__comments__articles__articleComments">
                     <CommentsList v-for="comment in article.comments" :key="comment.id" :comment="comment" :articleViewCode="article.view_code" :level="0"/>

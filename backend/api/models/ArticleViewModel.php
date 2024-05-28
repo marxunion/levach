@@ -7,13 +7,13 @@ class ArticleViewModel extends BaseModel
 {
     public function getArticleByViewCode($viewCode)
     {
-        return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
+        return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
 
     public function viewArticle($articleId)
     {
         $articleVersions = $this->database->select(
-            'articles', 
+            'articles_versions', 
             [
                 'title', 
                 'text', 
@@ -27,14 +27,14 @@ class ArticleViewModel extends BaseModel
                 "ORDER" => [
                     "version_id" => "ASC",
                 ],
-                'id' => $articleId, 
+                'article_id' => $articleId, 
                 'premoderation_status' => 2
             ]
         );
         if(isset($articleVersions))
         {
-            $articleStatistics = $this->database->get('statistics', ['rating', 'comments', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['article_id' => $articleId, 'premoderation_status' => 2]);
-            if(isset($articleStatistics))
+            $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId, 'premoderation_status' => 2]);
+            if(isset($article))
             {
                 foreach($articleVersions as $versionNum => $versionInfo) 
                 {
@@ -45,18 +45,13 @@ class ArticleViewModel extends BaseModel
                     }
                 }
 
-                $article = [
-                    'versions' => $articleVersions,
-                    'statistics' => [
-                        'rating' => $articleStatistics['rating'],
-                        'comments' => $articleStatistics['comments']
-                    ],
-                    'editorially_status' => $articleStatistics['editorially_status'],
-                    'approvededitorially_status' => $articleStatistics['approvededitorially_status'],
-                    'premoderation_status' => $articleStatistics['premoderation_status']
-                ];
+                $article['versions'] = $articleVersions;
                 
                 return $article;
+            }
+            else
+            {
+                return null;
             }
         }
         else
@@ -68,7 +63,7 @@ class ArticleViewModel extends BaseModel
     public function viewArticleAdmin($articleId)
     {
         $articleVersions = $this->database->select(
-            'articles', 
+            'articles_versions', 
             [
                 'title', 
                 'text', 
@@ -82,33 +77,31 @@ class ArticleViewModel extends BaseModel
                 "ORDER" => [
                     "version_id" => "ASC",
                 ],
-                'id' => $articleId
+                'article_id' => $articleId
             ]
         );
         if(isset($articleVersions))
         {
-            $articleStatistics = $this->database->get('statistics', ['rating', 'comments', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['article_id' => $articleId]);
+            $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId]);
 
-            foreach($articleVersions as $versionNum => $versionInfo) 
+            if(isset($article))
             {
-                if($versionInfo['tags'] != null) 
+                foreach($articleVersions as $versionNum => $versionInfo) 
                 {
-                    $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
-                    $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
+                    if($versionInfo['tags'] != null) 
+                    {
+                        $tagsString = substr(substr($versionInfo["tags"], 1), 0, -1);
+                        $articleVersions[$versionNum]['tags'] = explode(',', $tagsString);
+                    }
                 }
+        
+                $article['versions'] = $articleVersions;
+                return $article;
             }
-    
-            $article = [
-                'versions' => $articleVersions,
-                'statistics' => [
-                    'rating' => $articleStatistics['rating'],
-                    'comments' => $articleStatistics['comments']
-                ],
-                'editorially_status' => $articleStatistics['editorially_status'],
-                'approvededitorially_status' => $articleStatistics['approvededitorially_status'],
-                'premoderation_status' => $articleStatistics['premoderation_status']
-            ];
-            return $article;
+            else
+            {
+                return null;
+            }
         }
         else
         {

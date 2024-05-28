@@ -7,17 +7,17 @@ class ArticleApproveWithChangesModel extends BaseModel
 {
     public function getArticleIdByEditCode($editCode)
     {
-        return $this->database->get('codes', 'article_id', ['edit_code' => $editCode]);
+        return $this->database->get('articles', 'id', ['edit_code' => $editCode]);
     }
 
     public function rejectApproveWithChanges($articleId)
     {
-        $statisticsData = $this->database->get('statistics', ['current_version', 'approvededitorially_status'], ['article_id' => $articleId]);
-        if($statisticsData['approvededitorially_status'] == 3)
+        $articlesData = $this->database->get('articles', ['current_version', 'approvededitorially_status'], ['id' => $articleId]);
+        if($articlesData['approvededitorially_status'] == 3)
         {
-            $this->database->delete('articles', ['id' => $articleId, 'version_id' => $statisticsData['current_version']]);
+            $this->database->delete('articles_versions', ['article_id' => $articleId, 'version_id' => $articlesData['current_version']]);
+            $this->database->update('articles_versions', ['approvededitorially_status' => 0], ['article_id' => $articleId]);
             $this->database->update('articles', ['approvededitorially_status' => 0], ['id' => $articleId]);
-            $this->database->update('statistics', ['approvededitorially_status' => 0], ['article_id' => $articleId]);
         }
         else
         {
@@ -27,12 +27,12 @@ class ArticleApproveWithChangesModel extends BaseModel
 
     public function acceptApproveWithChanges($articleId)
     {
-        $statisticsData = $this->database->get('statistics', ['current_version', 'approvededitorially_status'], ['article_id' => $articleId]);
-        if($statisticsData['approvededitorially_status'] == 3)
+        $articlesData = $this->database->get('articles', ['current_version', 'approvededitorially_status'], ['id' => $articleId]);
+        if($articlesData['approvededitorially_status'] == 3)
         {
-            $this->database->delete('articles', ['id' => $articleId, 'version_id[!]' => $statisticsData['current_version']]);
-            $this->database->update('articles', ['approvededitorially_status' => 2, 'version_id' => 1], ['id' => $articleId]);
-            $this->database->update('statistics', ['approvededitorially_status' => 2, 'current_version' => 1], ['article_id' => $articleId]);
+            $this->database->delete('articles_versions', ['article_id' => $articleId, 'version_id[!]' => $articlesData['current_version']]);
+            $this->database->update('articles_versions', ['approvededitorially_status' => 2, 'version_id' => 1], ['article_id' => $articleId]);
+            $this->database->update('articles', ['approvededitorially_status' => 2, 'current_version' => 1], ['id' => $articleId]);
         }
         else
         {

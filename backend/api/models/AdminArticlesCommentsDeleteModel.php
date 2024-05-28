@@ -7,7 +7,7 @@ class AdminArticlesCommentsDeleteModel extends BaseModel
 {
     public function getArticleByViewCode($viewCode)
     {
-        return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
+        return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
 
     public function deleteComments($articlesCount, $commentsCount, $articleDateBefore, $articleDateAfter, $commentDateBefore, $commentDateAfter, $articleRegexPattern, $commentRegexPattern)
@@ -15,7 +15,7 @@ class AdminArticlesCommentsDeleteModel extends BaseModel
         $sql = "DELETE FROM comments 
         WHERE article_id IN (
             SELECT article_id 
-            FROM statistics 
+            FROM articles 
             WHERE created_date BETWEEN :article_date_before AND :article_date_after 
             AND current_text ~ :article_regex_pattern 
             ORDER BY created_date DESC 

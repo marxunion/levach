@@ -9,18 +9,18 @@ interface End
 
 export interface StringWithEnds
 {
-	title: string;
+	str: string;
 	ends: End[]; 
 }
 
 
 export class StringWithEnds implements StringWithEnds 
 {
-	title: string;
+	str: string;
 	ends: End[]; 
 	constructor(data: JsonData) 
 	{
-		this.title = data['title'] as string;
+		this.str = data['str'] as string;
 		this.ends = (data['ends'] as JsonData[]).map((dataEnds) => {
 			return {
 				end: dataEnds['end'] as string,
@@ -40,7 +40,7 @@ export class StringWithEnds implements StringWithEnds
 	
 			if (e.endOffsetStart <= num && endOffsetEndValue >= num) 
 			{
-				return this.title + e.end;
+				return this.str + e.end;
 			}
 		}
 		return "";

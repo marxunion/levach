@@ -71,13 +71,13 @@
 
                 if(fetchedArticleData.value)
                 {
-                    if(fetchedArticleData.value.statistics.current_tags == null)
+                    if(fetchedArticleData.value.current_tags == null)
                     {
-                        fetchedArticleData.value.statistics.current_tags = [];
+                        fetchedArticleData.value.current_tags = [];
                     }
-                    Object.assign(tags.value, fetchedArticleData.value.statistics.current_tags);
+                    Object.assign(tags.value, fetchedArticleData.value.current_tags);
 
-                    articleText.value = fetchedArticleData.value.statistics.current_text;
+                    articleText.value = fetchedArticleData.value.current_text;
                 }
 			}
 			else
@@ -130,7 +130,7 @@
         }, 1500);
         if(fetchedArticleData.value)
         {
-            if(articleText.value != fetchedArticleData.value.statistics.current_text || !arraysAreEqual(tags.value, fetchedArticleData.value.statistics.current_tags))
+            if(articleText.value != fetchedArticleData.value.current_text || !arraysAreEqual(tags.value, fetchedArticleData.value.current_tags))
             {
                 currentChangesStatus.value = 1;
                 return true;

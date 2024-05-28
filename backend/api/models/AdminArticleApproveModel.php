@@ -10,25 +10,25 @@ class AdminArticleApproveModel extends BaseModel
 {
     public function getArticleByViewCode($viewCode)
     {
-        return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
+        return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
 
     public function rejectApprove($articleId)
     {
-        $this->database->update('statistics', ['approvededitorially_status' => 0], ['article_id' => $articleId]);
         $this->database->update('articles', ['approvededitorially_status' => 0], ['id' => $articleId]);
+        $this->database->update('articles_versions', ['approvededitorially_status' => 0], ['article_id' => $articleId]);
     }
 
     public function acceptApprove($articleId)
     {
-        $this->database->update('statistics', ['approvededitorially_status' => 2], ['article_id' => $articleId]);
         $this->database->update('articles', ['approvededitorially_status' => 2], ['id' => $articleId]);
+        $this->database->update('articles_versions', ['approvededitorially_status' => 2], ['article_id' => $articleId]);
     }
 
     public function acceptApproveWithChanges($articleId, $newTitle, $newText, $newTags)
     {
-        $this->database->update('articles', ['approvededitorially_status' => 3], ['id' => $articleId]);
-        $articleData = $this->database->get('statistics', ['current_version', 'current_title', 'current_text', 'current_tags'], ['article_id' => $articleId]);
+        $this->database->update('articles_versions', ['approvededitorially_status' => 3], ['articles_id' => $articleId]);
+        $articleData = $this->database->get('articles', ['current_version', 'current_title', 'current_text', 'current_tags'], ['id' => $articleId]);
         if(isset($articleData))
         {
             if($articleData['current_title'] == $newTitle && $articleData['current_text'] == $newText && $articleData['current_tags'] == $newTags)
@@ -74,19 +74,19 @@ class AdminArticleApproveModel extends BaseModel
             }
 
             $this->database->update(
-                'articles', 
+                'articles_versions', 
                 [
                     'approvededitorially_status' => 3
                 ],
                 [
-                    'id' => $articleId
+                    'articles_id' => $articleId
                 ]
             );
 
             $this->database->insert(
-                'articles',
+                'articles_versions',
                 [
-                    'id' => $articleId,
+                    'articles_id' => $articleId,
                     'version_id' => $newVersionId,
                     'created_date' => $newArticleCreatedDate,
 
@@ -101,7 +101,7 @@ class AdminArticleApproveModel extends BaseModel
             );
             
             $this->database->update(
-                'statistics', 
+                'articles', 
                 [
                     'current_version' => $newVersionId, 
                     'created_date' => $newArticleCreatedDate,
@@ -117,7 +117,7 @@ class AdminArticleApproveModel extends BaseModel
                     'edit_timeout_to_date' => $newArticleCreatedDate
                 ], 
                 [
-                    'article_id' => $articleId
+                    'id' => $articleId
                 ]
             );
         }

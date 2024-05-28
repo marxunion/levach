@@ -7,14 +7,13 @@ class AdminArticleDeleteModel extends BaseModel
 {
     public function getArticleByViewCode($viewCode)
     {
-        return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
+        return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
 
     public function deleteArticle($articleId)
     {
-        $this->database->delete('codes', ['article_id' => $articleId]);
         $this->database->delete('comments', ['article_id' => $articleId]);
-        $this->database->delete('statistics', ['article_id' => $articleId]);
         $this->database->delete('articles', ['id' => $articleId]);
+        $this->database->delete('articles_versions', ['article_id' => $articleId]);
     }
 }

@@ -73,59 +73,45 @@
         },
 
         "statistics": 
-        [
-            {
-                "statisticName": "rating",
-                "data": 
-                {
-                    "titleWithEnds": 
+        {
+            "rating": {
+                "str": "рейтинг",
+                "ends": 
+                [
                     {
-                        "title": "рейтинг",
-                        "ends": 
-                        [
-                            {
-                                "end": "",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": -1
-                            }
-                        ]
+                        "end": "",
+                        "endOffsetStart": 0,
+                        "endOffsetEnd": -1
                     }
-                }
+                ]
             },
-            {
-                "statisticName": "comments",
-                "data": 
-                {
-                    "titleWithEnds": 
+            "comments_count": {
+                "str": "комментар",
+                "ends": 
+                [
                     {
-                        "title": "комментар",
-                        "ends": 
-                        [
-                            {
-                                "end": "иев",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": 0
-                            },
-                            {
-                                "end": "ий",
-                                "endOffsetStart": 1,
-                                "endOffsetEnd": 1
-                            },
-                            {
-                                "end": "ия",
-                                "endOffsetStart": 2,
-                                "endOffsetEnd": 3
-                            },
-                            {
-                                "end": "иев",
-                                "endOffsetStart": 4,
-                                "endOffsetEnd": -1
-                            }
-                        ]
+                        "end": "иев",
+                        "endOffsetStart": 0,
+                        "endOffsetEnd": 0
+                    },
+                    {
+                        "end": "ий",
+                        "endOffsetStart": 1,
+                        "endOffsetEnd": 1
+                    },
+                    {
+                        "end": "ия",
+                        "endOffsetStart": 2,
+                        "endOffsetEnd": 3
+                    },
+                    {
+                        "end": "иев",
+                        "endOffsetStart": 4,
+                        "endOffsetEnd": -1
                     }
-                }
+                ]
             }
-        ],
+        },
         "toolbarTips": 
         {
             "bold": "Жирный",
@@ -289,54 +275,42 @@
         },
 
         "statistics": 
-        [
+        {
+            "rating": 
             {
-                "statisticName": "rating",
-                "data": 
-                {
-                    "titleWithEnds": 
+                "str": "rating",
+                "ends": 
+                [
                     {
-                        "title": "rating",
-                        "ends": 
-                        [
-                            {
-                                "end": "",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": -1
-                            }
-                        ]
+                        "end": "",
+                        "endOffsetStart": 0,
+                        "endOffsetEnd": -1
                     }
-                }
+                ]
             },
+            "comments_count": 
             {
-                "statisticName": "comments",
-                "data": 
-                {
-                    "titleWithEnds": 
+                "str": "comment",
+                "ends": 
+                [
                     {
-                        "title": "comment",
-                        "ends": 
-                        [
-                            {
-                                "end": "s",
-                                "endOffsetStart": 0,
-                                "endOffsetEnd": 0
-                            },
-                            {
-                                "end": "",
-                                "endOffsetStart": 1,
-                                "endOffsetEnd": 1
-                            },
-                            {
-                                "end": "s",
-                                "endOffsetStart": 2,
-                                "endOffsetEnd": -1
-                            }
-                        ]
+                        "end": "s",
+                        "endOffsetStart": 0,
+                        "endOffsetEnd": 0
+                    },
+                    {
+                        "end": "",
+                        "endOffsetStart": 1,
+                        "endOffsetEnd": 1
+                    },
+                    {
+                        "end": "s",
+                        "endOffsetStart": 2,
+                        "endOffsetEnd": -1
                     }
-                }
+                ]
             }
-        ],
+        },
         "toolbarTips": 
         {
             "bold": "bold",

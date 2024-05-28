@@ -14,12 +14,12 @@ class ArticleEditModel extends BaseModel
 {
     public function getArticleIdByEditCode($editCode)
     {
-        return $this->database->get('codes', 'article_id', ['edit_code' => $editCode]);
+        return $this->database->get('articles', 'id', ['edit_code' => $editCode]);
     }
     
     public function editArticle($articleId, $newTitle, $newText, $newTags)
     {
-        $articleData = $this->database->get('statistics', ['current_version','current_title', 'current_text', 'current_tags', 'edit_timeout_to_date', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['article_id' => $articleId]);
+        $articleData = $this->database->get('articles', ['current_version','current_title', 'current_text', 'current_tags', 'edit_timeout_to_date', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId]);
         
         if(isset($articleData))
         {
@@ -64,9 +64,9 @@ class ArticleEditModel extends BaseModel
                         }
                         
                         $this->database->insert(
-                            'articles', 
+                            'articles_versions', 
                             [
-                                'id' => $articleId,
+                                'article_id' => $articleId,
                                 'version_id' => $newVersionId,
                                 'created_date' => $newArticleCreatedDate,
 
@@ -84,7 +84,7 @@ class ArticleEditModel extends BaseModel
                         if(isset($articleEditTimeoutMinutes))
                         {
                             $this->database->update(
-                                'statistics', 
+                                'articles', 
                                 [
                                     'current_version' => $newVersionId, 
                                     'current_title' => $newTitle, 
@@ -99,7 +99,7 @@ class ArticleEditModel extends BaseModel
                                     'edit_timeout_to_date' => $newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)
                                 ], 
                                 [
-                                    'article_id' => $articleId
+                                    'id' => $articleId
                                 ]
                             );
                         }
@@ -131,7 +131,7 @@ class ArticleEditModel extends BaseModel
 
     public function editArticleAdmin($articleId, $newTitle, $newText, $newTags)
     {
-        $articleData = $this->database->get('statistics', ['current_version', 'current_title', 'current_text', 'current_tags', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['article_id' => $articleId]);
+        $articleData = $this->database->get('articles', ['current_version', 'current_title', 'current_text', 'current_tags', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId]);
         
         if(isset($articleData))
         {
@@ -178,9 +178,9 @@ class ArticleEditModel extends BaseModel
             }
             
             $this->database->insert(
-                'articles',
+                'articles_versions',
                 [
-                    'id' => $articleId,
+                    'article_id' => $articleId,
                     'version_id' => $newVersionId,
                     'created_date' => $newArticleCreatedDate,
 
@@ -195,7 +195,7 @@ class ArticleEditModel extends BaseModel
             );
             
             $this->database->update(
-                'statistics', 
+                'articles', 
                 [
                     'current_version' => $newVersionId, 
                     'created_date' => $newArticleCreatedDate,
@@ -211,7 +211,7 @@ class ArticleEditModel extends BaseModel
                     'edit_timeout_to_date' => $newArticleCreatedDate
                 ], 
                 [
-                    'article_id' => $articleId
+                    'id' => $articleId
                 ]
             );
         }

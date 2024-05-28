@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, computed, watch, Ref, ComputedRef, onMounted, onBeforeUnmount } from 'vue';
+	import { ref, watch, Ref, ComputedRef, onMounted, onBeforeUnmount } from 'vue';
 	import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
@@ -40,17 +40,6 @@
 	import { Article } from '../../ts/interfaces/Article';
 	
 	import settings from '../../configs/main.json';
-	
-	interface Statistic 
-	{
-		count: number;
-		title: StringWithEnds;
-	}
-
-	interface Statistics
-	{
-		[statisticName: string]: Statistic;
-	}
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleEdit", langsData).langData;
 
@@ -71,18 +60,6 @@
 	let loading : Ref<boolean> = ref(true);
 
 	let reloading : Ref<boolean> = ref(false);
-	
-	let statistics : ComputedRef<Statistics> = computed(() => 
-	({
-		rating: {
-			count: 0,
-			title: 'rating'
-		},
-		comments: {
-			count: 0,
-			title: 'comments'
-		}
-	}) as unknown as Statistics);
 
 	let articleText : Ref<string> = ref('');
 
@@ -112,33 +89,13 @@
 				fetchedArticleData.value = response.data;
 				if(fetchedArticleData.value)
 				{
-					statistics = computed(() => 
+					if(fetchedArticleData.value.current_tags == null)
 					{
-						const statisticsTemp : Statistics = {}
-						let statisticName : string;
-						(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
-						{
-							statisticName = statistic['statisticName'] as string;
-							if(fetchedArticleData.value)
-							{
-								statisticsTemp[statisticName] = 
-								{
-									count: fetchedArticleData.value.statistics[statisticName],
-									title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
-								}
-							}
-							
-						});
-						return statisticsTemp;
-					});
-
-					if(fetchedArticleData.value.statistics.current_tags == null)
-					{
-						fetchedArticleData.value.statistics.current_tags = [];
+						fetchedArticleData.value.current_tags = [];
 					}
-					Object.assign(tags.value, fetchedArticleData.value.statistics.current_tags);
+					Object.assign(tags.value, fetchedArticleData.value.current_tags);
 
-					articleText.value = fetchedArticleData.value.statistics.current_text;
+					articleText.value = fetchedArticleData.value.current_text;
 					
 					viewLink.value = "https://" + settings['domainName'] + "/#/article/" + fetchedArticleData.value.view_code;
 				}
@@ -211,32 +168,12 @@
 				fetchedArticleData.value = response.data;
 				if(fetchedArticleData.value)
 				{
-					statistics = computed(() => 
-					{
-						const statisticsTemp : Statistics = {}
-						let statisticName;
-						(langData.value['statistics'] as JsonData[]).forEach((statistic: JsonData) => 
-						{
-							if(fetchedArticleData.value)
-							{
-								statisticName = statistic['statisticName'] as string;
-								statisticsTemp[statisticName] = 
-								{
-									count: fetchedArticleData.value.statistics[statisticName],
-									title: new StringWithEnds(((statistic['data'] as JsonData)["titleWithEnds"]) as JsonData)
-								}
-							}
-						});
-						return statisticsTemp;
-					});
-					
-					
 					viewLink.value = "https://" + settings['domainName'] + "/#/article/" + fetchedArticleData.value.view_code;
-					if(fetchedArticleData.value.statistics.approvededitorially_status > 0 && fetchedArticleData.value.statistics.editorially_status == 0 && !adminStatus.value)
+					if(fetchedArticleData.value.approvededitorially_status > 0 && fetchedArticleData.value.editorially_status == 0 && !adminStatus.value)
 					{
-						Object.assign(tags.value, fetchedArticleData.value.statistics.current_tags);
+						Object.assign(tags.value, fetchedArticleData.value.current_tags);
 
-						articleText.value = fetchedArticleData.value.statistics.current_text;
+						articleText.value = fetchedArticleData.value.current_text;
 					}
 				}
 			}
@@ -254,7 +191,7 @@
 
 		if(fetchedArticleData.value)
 		{
-			if(articleText.value != fetchedArticleData.value.statistics.current_text || !arraysAreEqual(tags.value, fetchedArticleData.value.statistics.current_tags))
+			if(articleText.value != fetchedArticleData.value.current_text || !arraysAreEqual(tags.value, fetchedArticleData.value.current_tags))
 			{
 				currentChangesStatus.value = 1;
 				return true;
@@ -326,8 +263,8 @@
 			{
 				if(fetchedArticleData.value)
 				{
-					fetchedArticleData.value.statistics.current_text = articleText.value;
-					Object.assign(fetchedArticleData.value.statistics.current_tags, tags.value);
+					fetchedArticleData.value.current_text = articleText.value;
+					Object.assign(fetchedArticleData.value.current_tags, tags.value);
 					checkChanges();
 
 					openModal(InfoModalWithLink, { status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning'] });
@@ -668,8 +605,8 @@
             {
 				if(fetchedArticleData.value != null)
 				{
-					fetchedArticleData.value.statistics['canRequestApprove'] = false;
-					fetchedArticleData.value.statistics['approvededitorially_status'] = 1;
+					fetchedArticleData.value['canRequestApprove'] = false;
+					fetchedArticleData.value['approvededitorially_status'] = 1;
                 	openModal(InfoModal, {status: true, text: langData.value['articleRequestApproveSuccessfully']});
 				}
 				
@@ -888,9 +825,14 @@
 		<article v-if="fetchedArticleData" class="main__article">
 			<div class="main__article__info">
 				<div class="main__article__info__statistics">
-					<div class="main__article__info__statistics__statistic" v-for="(status, index) in statistics" :key="index">
-						<h1 class="main__article__info__statistics__statistic__counter">{{ abbreviateNumber(status.count) }}</h1>
-						<p class="main__article__info__statistics__statistic__title">{{ status.title.getStringWithEnd(status.count) }}</p>
+					<div class="main__article__info__statistics__statistic">
+						<h1 class="main__article__info__statistics__statistic__counter">{{ abbreviateNumber(fetchedArticleData['rating']) }}</h1>
+						<p class="main__article__info__statistics__statistic__title">{{ new StringWithEnds(((langData['statistics'] as JsonData)['rating']) as JsonData).getStringWithEnd(fetchedArticleData['rating']) }}</p>
+					</div>
+
+					<div class="main__article__info__statistics__statistic">
+						<h1 class="main__article__info__statistics__statistic__counter">{{ abbreviateNumber(fetchedArticleData['comments_count']) }}</h1>
+						<p class="main__article__info__statistics__statistic__title">{{ new StringWithEnds(((langData['statistics'] as JsonData)['comments_count']) as JsonData).getStringWithEnd(fetchedArticleData['comments_count']) }}</p>
 					</div>
 				</div>
 				<div class="main__article__info__statusesContainer">
@@ -898,26 +840,26 @@
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['premoderationStatusText'] }}</p>
 							<div>
-								<img v-if="fetchedArticleData.statistics.premoderation_status == 0" src="../../assets/img/article/statuses/0.svg" alt="premoderationStatus">
-								<img v-if="fetchedArticleData.statistics.premoderation_status == 1" src="../../assets/img/article/statuses/1.svg" alt="premoderationStatus">
-								<img v-if="fetchedArticleData.statistics.premoderation_status == 2" src="../../assets/img/article/statuses/2.svg" alt="premoderationStatus">
-								<p>{{ ((langData['statuses'] as JsonData)['premoderationStatus'] as JsonData)[fetchedArticleData.statistics.premoderation_status.toString()] }}</p>
+								<img v-if="fetchedArticleData.premoderation_status == 0" src="../../assets/img/article/statuses/0.svg" alt="premoderationStatus">
+								<img v-if="fetchedArticleData.premoderation_status == 1" src="../../assets/img/article/statuses/1.svg" alt="premoderationStatus">
+								<img v-if="fetchedArticleData.premoderation_status == 2" src="../../assets/img/article/statuses/2.svg" alt="premoderationStatus">
+								<p>{{ ((langData['statuses'] as JsonData)['premoderationStatus'] as JsonData)[fetchedArticleData.premoderation_status.toString()] }}</p>
 							</div>
 						</div>
 						<div class="main__article__info__statusesContainer__status">
 							<p>{{ (langData['statuses'] as JsonData)['approvedEditoriallyStatusText'] }}</p>
 							<div>
-								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 0" src="../../assets/img/article/statuses/0.svg" alt="approvedEditoriallyStatus">
-								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 1" src="../../assets/img/article/statuses/1.svg" alt="approvedEditoriallyStatus">
-								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 2" src="../../assets/img/article/statuses/2.svg" alt="approvedEditoriallyStatus">
-								<img v-if="fetchedArticleData.statistics.approvededitorially_status == 3" src="../../assets/img/article/statuses/1.svg" alt="approvedEditoriallyStatus">
-								<p>{{ ((langData['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[fetchedArticleData.statistics.approvededitorially_status.toString()] }}</p>
+								<img v-if="fetchedArticleData.approvededitorially_status == 0" src="../../assets/img/article/statuses/0.svg" alt="approvedEditoriallyStatus">
+								<img v-if="fetchedArticleData.approvededitorially_status == 1" src="../../assets/img/article/statuses/1.svg" alt="approvedEditoriallyStatus">
+								<img v-if="fetchedArticleData.approvededitorially_status == 2" src="../../assets/img/article/statuses/2.svg" alt="approvedEditoriallyStatus">
+								<img v-if="fetchedArticleData.approvededitorially_status == 3" src="../../assets/img/article/statuses/1.svg" alt="approvedEditoriallyStatus">
+								<p>{{ ((langData['statuses'] as JsonData)['approvedEditoriallyStatus'] as JsonData)[fetchedArticleData.approvededitorially_status.toString()] }}</p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div v-if="viewLink != '' && (adminStatus || fetchedArticleData.statistics.premoderation_status == 2)" class="main__article__block">
+			<div v-if="viewLink != '' && (adminStatus || fetchedArticleData.premoderation_status == 2)" class="main__article__block">
 				<p class="main__article__block__title linkForViewArticle">{{ langData['linkForViewArticle'] }}</p>
 				<div class="main__article__block__link">
 					<input v-model="viewLink" ref="viewLinkTextInput" type="text" class="main__article__block__link__input"></input>
@@ -930,24 +872,24 @@
 				<p class="main__article__block__title">{{ langData['requestApproveTitle'] }}</p>
 				<button @click="onRequestApproveArticle" class="main__article__block__button requestApproveArticleButton">{{ langData['requestApproveButtonTitle'] }}</button>
 			</div>
-			<div v-if="fetchedArticleData.statistics.approvededitorially_status == 3">
+			<div v-if="fetchedArticleData.approvededitorially_status == 3">
 				<p class="main__article__block__title">{{ langData['articleApprovedWithChangesTitle'] }}</p>
 				<div class="main__article__block__subblock">
 					<button @click="onAcceptApproveWithChanges" class="main__article__block__button acceptArticleApprovedWithChangesButton">{{ langData['acceptArticleApprovedWithChangesButtonTitle'] }}</button>
 					<button @click="onRejectApproveWithChanges" class="main__article__block__button rejectArticleApprovedWithChangesButton">{{ langData['rejectArticleApprovedWithChangesButtonTitle'] }}</button>
 				</div>
 			</div>
-			<div v-if="fetchedArticleData.statistics.approvededitorially_status > 0 && fetchedArticleData.statistics.editorially_status != 1 && !adminStatus" class="main__article__previewContainer">
+			<div v-if="fetchedArticleData.approvededitorially_status > 0 && fetchedArticleData.editorially_status != 1 && !adminStatus" class="main__article__previewContainer">
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="articleText" :language="LangDataHandler.currentLanguage.value"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(tags) }}</p>
 			</div>
 			
-			<div v-if="fetchedArticleData.statistics.approvededitorially_status == 0 || fetchedArticleData.statistics.editorially_status == 1 || adminStatus" class="main__article__editorContainer">
+			<div v-if="fetchedArticleData.approvededitorially_status == 0 || fetchedArticleData.editorially_status == 1 || adminStatus" class="main__article__editorContainer">
 				<MdEditor class="main__article__editorContainer__editor" v-model="articleText" @onUploadImg="onUploadImgValidate" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
 				<button v-if="currentChangesStatus" class="main__article__editorContainer__sendButton" @click="onSendButtonValidate">{{ langData['sendButton'] }}</button>	
 			</div>
 
-			<div v-if="fetchedArticleData.statistics.approvededitorially_status == 0 || fetchedArticleData.statistics.editorially_status == 1 || adminStatus" class="main__article__editTags">
+			<div v-if="fetchedArticleData.approvededitorially_status == 0 || fetchedArticleData.editorially_status == 1 || adminStatus" class="main__article__editTags">
 				<div class="main__article__editTags__tags__tag" v-for="(tag, index) in tags" :key="index">
 					<p class="main__article__editTags__tags__tag__title">{{ tag }}</p>
 					<button class="main__article__editTags__tags__tag__button" @click="removeTag(index)"><p>+</p></button>

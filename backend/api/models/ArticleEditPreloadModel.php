@@ -9,28 +9,26 @@ class ArticleEditPreloadModel extends BaseModel
 {
     public function getArticleIdByEditCode($editCode)
     {
-        return $this->database->get('codes', 'article_id', ['edit_code' => $editCode]);
+        return $this->database->get('articles', 'id', ['edit_code' => $editCode]);
     }
     
     public function viewArticle($articleId)
     {
-        $article = [];
-        $article['statistics'] = $this->database->get('statistics', ['current_tags', 'current_title', 'current_text', 'created_date', 'premoderation_status', 'approvededitorially_status', 'editorially_status', 'rating', 'comments'], ['article_id' => $articleId]);
-        $article['view_code'] = $this->database->get('codes', 'view_code', ['article_id' => $articleId]);
+        $article = $this->database->get('articles', ['current_tags', 'current_title', 'current_text', 'created_date', 'premoderation_status', 'approvededitorially_status', 'editorially_status', 'rating', 'comments_count', 'view_code'], ['id' => $articleId]);
 
-        if($article['statistics']['current_tags'] != null)
+        if($article['current_tags'] != null)
         {
-            $tagsString = substr(substr($article['statistics']["current_tags"], 1), 0, -1);
+            $tagsString = substr(substr($article["current_tags"], 1), 0, -1);
 
-            $article['statistics']['current_tags'] = explode(',', $tagsString);
+            $article['current_tags'] = explode(',', $tagsString);
         }
 
-        if($article['statistics']['approvededitorially_status'] == 0)
+        if($article['approvededitorially_status'] == 0)
         {
             $ratingToRequestApprove = AdminSettingsGetHandler::getSetting("article_need_rating_to_approve_editorially");
             if(isset($ratingToRequestApprove))
             {
-                if($article['statistics']['rating'] >= $ratingToRequestApprove)
+                if($article['rating'] >= $ratingToRequestApprove)
                 {
                     $article['canRequestApprove'] = true;
                 }

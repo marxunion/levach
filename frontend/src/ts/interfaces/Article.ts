@@ -11,28 +11,25 @@ export interface ArticleVersion
     approvededitorially_status: number,
     created_date: number
 }
-export interface Statistics
-{
-    [statisticName: string]: any;
-    current_title: string,
-    current_text: string,
-    current_tags: string[],
-    created_date: number,
-    rating: number,
-    comments: number,
-    editorially_status: number,
-    premoderation_status: number,
-    approvededitorially_status: number,
-    currentVersion: number
-} 
 
 export interface Article
 {
     id: number,
     versions: ArticleVersion[],
-    statistics: Statistics,
+    current_title: string,
+    current_text: string,
+    current_tags: string[],
+    created_date: number,
+    rating: number,
+    comments_count: number,
+    editorially_status: number,
+    premoderation_status: number,
+    approvededitorially_status: number,
+    currentVersion: number
+    edit_code: string,
     view_code: string,
-    comments: Comment[]
+
+    comments: Comment[],
     currentSelectedVersion: number,
     canRequestApprove: boolean
 }

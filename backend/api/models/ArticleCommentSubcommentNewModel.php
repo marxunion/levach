@@ -7,7 +7,7 @@ class ArticleCommentSubcommentNewModel extends BaseModel
 {
     public function getArticleByViewCode($viewCode)
     {
-        return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
+        return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
 
     public function newSubcomment($articleId, $parentCommentId, $text = '', $ratingInfluence = 0)

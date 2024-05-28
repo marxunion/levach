@@ -12,7 +12,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
     
     public function getArticleByViewCode($viewCode)
     {
-        return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
+        return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
 
     public function checkParents($comment)
@@ -97,7 +97,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
         $this->commentDateAfter = $commentDateAfter;
         $this->commentRegexPattern = $commentRegexPattern;
 
-        $sql = "SELECT article_id, current_title, created_date FROM statistics WHERE created_date BETWEEN :date_before AND :date_after AND current_text ~ :regex_pattern AND comments > 0 ORDER BY created_date DESC LIMIT :count";  
+        $sql = "SELECT article_id, current_title, created_date, view_code FROM articles WHERE created_date BETWEEN :date_before AND :date_after AND current_text ~ :regex_pattern AND comments > 0 ORDER BY created_date DESC LIMIT :count";  
         $bindings = [
             ':date_before' => $articleDateBefore,
             ':date_after' => $articleDateAfter,
@@ -140,15 +140,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
 
             if(!empty($commentsReturn)) 
             {
-                $articleToReturn = [
-                    "statistics" => [
-                        "current_title" => $article['current_title'],
-                        "created_date" => $article['created_date']
-                    ],
-                    "comments" => $commentsReturn,
-                    
-                    'view_code' => $this->database->get('codes', 'view_code', ['article_id' => $this->articleId])
-                ];
+                $article["comments"] = $commentsReturn;
                 array_push($articlesReturn, $articleToReturn);
             }
         }

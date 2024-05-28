@@ -17,8 +17,8 @@ class ArticleNewModel extends BaseModel
             $newArticleId = $lastArticleId + 1;
         }
 
-        $articleData = [
-            'id' => $newArticleId,
+        $articleVersionData = [
+            'article_id' => $newArticleId,
             'version_id' => 1,
             'title' => $title,
             'text' => $text,
@@ -31,11 +31,11 @@ class ArticleNewModel extends BaseModel
             'created_date' => time()
         ];
 
-        $statisticsData = 
+        $articleData = 
         [
-            'article_id' => $newArticleId,
+            'id' => $newArticleId,
             'rating' => 0,
-            'comments' => 0,
+            'comments_count' => 0,
             'created_date' => time(),
             
             'edit_timeout_to_date' => time(),
@@ -45,16 +45,12 @@ class ArticleNewModel extends BaseModel
             'current_text' => $text,
             'current_tags' => null,
 
+            'view_code' => $viewCode,
+            'edit_code' => $editCode,
+
             'editorially_status' => 0,
             'premoderation_status' => 1,
             'approvededitorially_status' => 0
-        ];
-
-        $codesData = 
-        [
-            'article_id' => $newArticleId,
-            'view_code' => $viewCode,
-            'edit_code' => $editCode
         ];
         
         $tagsString = '';
@@ -69,8 +65,8 @@ class ArticleNewModel extends BaseModel
                 if(count($tags) == count(array_unique($tags)))
                 {
                     $tagsString = '{'.implode(',', $tags).'}';
-                    $articleData['tags'] = $tagsString;
-                    $statisticsData['current_tags'] = $tagsString;
+                    $articleVersionData['tags'] = $tagsString;
+                    $articleData['current_tags'] = $tagsString;
                 }
                 else
                 {
@@ -79,9 +75,8 @@ class ArticleNewModel extends BaseModel
             }
         }
 
+        $this->database->insert('articles_versions', $articleVersionData);
         $this->database->insert('articles', $articleData);
-        $this->database->insert('statistics', $statisticsData);
-        $this->database->insert('codes', $codesData);
     }
 
     public function newArticleAdmin($title, $text, $tags, $viewCode, $editCode)
@@ -94,8 +89,8 @@ class ArticleNewModel extends BaseModel
             $newArticleId = $lastArticleId + 1;
         }
 
-        $articleData = [
-            'id' => $newArticleId,
+        $articleVersionData = [
+            'article_id' => $newArticleId,
             'version_id' => 1,
             'title' => $title,
             'text' => $text,
@@ -109,11 +104,11 @@ class ArticleNewModel extends BaseModel
             'created_date' => time()
         ];
 
-        $statisticsData = 
+        $articleData = 
         [
-            'article_id' => $newArticleId,
+            'id' => $newArticleId,
             'rating' => 0,
-            'comments' => 0,
+            'comments_count' => 0,
             'created_date' => time(),
             
             'edit_timeout_to_date' => time(),
@@ -123,16 +118,12 @@ class ArticleNewModel extends BaseModel
             'current_text' => $text,
             'current_tags' => null,
 
+            'view_code' => $viewCode,
+            'edit_code' => $editCode,
+
             'editorially_status' => 1,
             'premoderation_status' => 2,
             'approvededitorially_status' => 2
-        ];
-
-        $codesData = 
-        [
-            'article_id' => $newArticleId,
-            'view_code' => $viewCode,
-            'edit_code' => $editCode
         ];
 
         if(is_array($tags))
@@ -146,8 +137,8 @@ class ArticleNewModel extends BaseModel
                 if(count($tags) == count(array_unique($tags)))
                 {
                     $tagsString = '{'.implode(',', $tags).'}';
-                    $articleData['tags'] = $tagsString;
-                    $statisticsData['current_tags'] = $tagsString;
+                    $articleVersionData['tags'] = $tagsString;
+                    $articleData['current_tags'] = $tagsString;
                 }
                 else
                 {
@@ -156,8 +147,7 @@ class ArticleNewModel extends BaseModel
             }
         }
 
+        $this->database->insert('articles_versions', $articleVersionData);
         $this->database->insert('articles', $articleData);
-        $this->database->insert('statistics', $statisticsData);
-        $this->database->insert('codes', $codesData);
     }
 }

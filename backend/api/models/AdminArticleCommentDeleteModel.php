@@ -7,7 +7,7 @@ class AdminArticleCommentDeleteModel extends BaseModel
 {
     public function getArticleByViewCode($viewCode)
     {
-        return $this->database->get('codes', 'article_id', ['view_code' => $viewCode]);
+        return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
 
     public function deleteComment($articleId, $commentId)

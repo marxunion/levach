@@ -394,12 +394,12 @@
                 <div class="main__article__reactions">
                     <div class="main__article__reactions__statistics">
                         <img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
-                        <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.statistics.rating) }}</p>
+                        <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.rating) }}</p>
                         <img @click="onShare(article.versions[article.currentSelectedVersion-1].title, article.view_code)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                     </div>
                     <a :href="'#/article/'+article.view_code" class="main__article__reactions__comments">
                         <img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
-                        <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article.statistics.comments) }}</p>
+                        <p class="main__article__reactions__comments__title commentsCounter">{{ abbreviateNumber(article.comments_count) }}</p>
                     </a>
                 </div>
                 <DropDownVersion

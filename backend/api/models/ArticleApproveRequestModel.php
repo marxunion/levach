@@ -11,7 +11,7 @@ class ArticleApproveRequestModel extends BaseModel
 {
     public function getArticleIdByEditCode($editCode)
     {
-        return $this->database->get('codes', 'article_id', ['edit_code' => $editCode]);
+        return $this->database->get('articles', 'id', ['edit_code' => $editCode]);
     }
 
     public function requestApprove($articleId)
@@ -20,10 +20,10 @@ class ArticleApproveRequestModel extends BaseModel
         
         if(isset($ratingToRequestApprove))
         {
-            if($this->database->get('statistics', 'rating', ['article_id' => $articleId]) >= $ratingToRequestApprove)
+            if($this->database->get('articles', 'rating', ['id' => $articleId]) >= $ratingToRequestApprove)
             {
+                $this->database->update('articles_versions', ['approvededitorially_status' => 1], ['article_id' => $articleId]);
                 $this->database->update('articles', ['approvededitorially_status' => 1], ['id' => $articleId]);
-                $this->database->update('statistics', ['approvededitorially_status' => 1], ['article_id' => $articleId]);
             }
             else
             {
