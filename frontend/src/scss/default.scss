@@ -149,9 +149,9 @@
     z-index: 20;
 }
 
-main
+.main
 {
-	margin-top: 120px;
+	margin-top: 120px !important;
 	margin-bottom: 60px;
 	width: 100%;
 	min-height: 70%;
@@ -161,9 +161,9 @@ main
 
 @media(max-width: 1050px)
 {
-	main
+	.main
 	{	
-		margin-top: 90px;
+		margin-top: 90px !important;
 	}
 }
 
