@@ -9,6 +9,14 @@
     justify-content: space-between;
     margin-top: 15px;
     margin-bottom: 30px;
+
+    &.scrollToComment
+    {
+        padding: 10px;
+        border: 2px solid $commentsListCommentBorder;
+        border-radius: 15px;
+    }
+
     &__header
     {
         display: flex;
