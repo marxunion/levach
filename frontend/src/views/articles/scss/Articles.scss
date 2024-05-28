@@ -35,6 +35,17 @@
             }
         }
     }
+    &__reloader
+    {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 28%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     &__article
     {
         position: relative;
