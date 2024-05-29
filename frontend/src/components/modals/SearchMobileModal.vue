@@ -16,7 +16,7 @@
 
     const onSearchButton = () =>
     {
-        if(isCurrentRouteName('editoriallyArticles') ||  isCurrentRouteName('editoriallyArticles') || isCurrentRouteName('editoriallyApprovedArticles') || isCurrentRouteName('abyssArticles') || isCurrentRouteName('articlesWaitingApproval') || isCurrentRouteName('articlesWaitingApproval'))
+        if(isCurrentRouteName('editoriallyArticles') || isCurrentRouteName('editoriallyApprovedArticles') || isCurrentRouteName('abyssArticles') || isCurrentRouteName('articlesWaitingPremoderate') || isCurrentRouteName('articlesWaitingApproval'))
         {
             searchQuery.value = true;
         }
