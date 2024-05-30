@@ -235,13 +235,13 @@
     {
         if(searchQuery.value)
         {
+            searchQuery.value = false;
             if(!loading.value)
             {
                 loading.value = true;
                 articles.value = [];
                 lastLoaded.value = 0;
-                searchQuery.value = false;
-
+                
                 parseSearchData(searchText.value);
                 await fetchNewArticles();
             }
