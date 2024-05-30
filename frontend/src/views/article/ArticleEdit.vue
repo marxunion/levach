@@ -93,7 +93,6 @@
 						
 					if(fetchedArticleData.value.current_tags == null)
 					{
-						
 						fetchedArticleData.value.current_tags = [];
 						console.log(fetchedArticleData.value.current_tags);
 					}
