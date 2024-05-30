@@ -89,9 +89,13 @@
 				fetchedArticleData.value = response.data;
 				if(fetchedArticleData.value)
 				{
+					console.log(fetchedArticleData.value.current_tags);
+						
 					if(fetchedArticleData.value.current_tags == null)
 					{
+						
 						fetchedArticleData.value.current_tags = [];
+						console.log(fetchedArticleData.value.current_tags);
 					}
 					Object.assign(tags.value, fetchedArticleData.value.current_tags);
 
@@ -168,6 +172,10 @@
 				fetchedArticleData.value = response.data;
 				if(fetchedArticleData.value)
 				{
+					if(fetchedArticleData.value.current_tags == null)
+					{
+						fetchedArticleData.value.current_tags = [];
+					}
 					viewLink.value = "https://" + settings['domainName'] + "/#/article/" + fetchedArticleData.value.view_code;
 					if(fetchedArticleData.value.approvededitorially_status > 0 && fetchedArticleData.value.editorially_status == 0 && !adminStatus.value)
 					{
@@ -258,18 +266,19 @@
 
 		await axios.post('/api/article/edit/' + articleEditCode.value, data)
 		.then(response => 
-		{
+		{	
 			if (response.data.success) 
 			{
 				if(fetchedArticleData.value)
 				{
 					fetchedArticleData.value.current_text = articleText.value;
+					
 					Object.assign(fetchedArticleData.value.current_tags, tags.value);
+					
 					checkChanges();
 
 					openModal(InfoModalWithLink, { status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning'] });
 				}
-				
 			} 
 			else 
 			{
@@ -384,7 +393,7 @@
 			{
 				openModal(InfoModal, { status: false, text: (langData.value['errors'] as JsonData)['unknown'] });
 			}
-		});	
+		});
 	}
 	const onSendButtonValidate = async () =>
 	{
