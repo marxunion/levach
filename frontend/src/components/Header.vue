@@ -27,10 +27,7 @@
     {
         if(isCurrentRouteName('editoriallyArticles') || isCurrentRouteName('editoriallyApprovedArticles') || isCurrentRouteName('abyssArticles') || isCurrentRouteName('articlesWaitingPremoderate') || isCurrentRouteName('articlesWaitingApproval'))
         {
-            if(!searchQuery.value)
-            {
-                searchQuery.value = true;
-            }
+            searchQuery.value = true;
         }
         else
         {
