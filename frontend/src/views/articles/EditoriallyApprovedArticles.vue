@@ -231,13 +231,16 @@
     {
         if(searchQuery.value)
         {
-            loading.value = true;
-            articles.value = [];
-            lastLoaded.value = 0;
             searchQuery.value = false;
+            if(!loading.value)
+            {
+                loading.value = true;
+                articles.value = [];
+                lastLoaded.value = 0;
 
-            parseSearchData(searchText.value);
-            await fetchNewArticles();
+                parseSearchData(searchText.value);
+                await fetchNewArticles();
+            }
         }
     });
     
