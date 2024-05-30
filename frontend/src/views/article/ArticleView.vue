@@ -135,52 +135,6 @@
 		await fetchNewComments();
 	}
 
-	const fetchCommentsBeforeId = async () =>
-	{
-		let params = {
-			sortType: (langData.value['sortTypes'] as JsonData)[currentCommentsSortType.value]
-		}
-		await axios.get('api/article/comments/get/'+articleViewCode.value+'/'+commentId.value, 
-		{
-			params: params
-		})
-		.then(response => 
-		{
-			if(response.data !== null)
-			{
-			 	if(Array.isArray(response.data))
-				{
-					response.data.forEach(comment => 
-					{
-						comments.value.push(comment);
-						lastLoadedComment.value++;
-					});
-				}
-			}
-		})
-		.catch(error => 
-		{
-			if(error.response.data.Warning)
-            {
-                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-            }
-            else if(error.response.data.Error)
-            {
-				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-			else if(error.response.data.Critical)
-			{
-				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-			else
-			{
-                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-			}
-		});
-		commentsReloading.value = false;
-		commentsLoading.value = false;
-	}
-
 	const fetchNewComments = async (count : number = 8) =>
 	{
 		let params = {
@@ -228,6 +182,69 @@
 		commentsReloading.value = false;
 		commentsLoading.value = false;
 	}
+
+	const fetchCommentsBeforeId = async () =>
+	{
+		let params = {
+			sortType: (langData.value['sortTypes'] as JsonData)[currentCommentsSortType.value]
+		}
+		await axios.get('api/article/comments/get/'+articleViewCode.value+'/'+commentId.value, 
+		{
+			params: params
+		})
+		.then(async response => 
+		{
+			if(response.data !== null)
+			{
+			 	if(Array.isArray(response.data))
+				{
+					if(response.data.length > 0)
+					{
+						response.data.forEach(comment => 
+						{
+							comments.value.push(comment);
+							lastLoadedComment.value++;
+						});
+					}
+					else
+					{
+						await fetchNewComments();
+					}
+				}
+				else
+				{
+					await fetchNewComments();
+				}
+			}
+			else
+			{
+				await fetchNewComments();
+			}
+		})
+		.catch(error => 
+		{
+			if(error.response.data.Warning)
+            {
+                openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
+            }
+            else if(error.response.data.Error)
+            {
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else if(error.response.data.Critical)
+			{
+				openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+			else
+			{
+                openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
+			}
+		});
+		commentsReloading.value = false;
+		commentsLoading.value = false;
+	}
+
+	
 
 	const handleCommentsScroll = async () => 
     {
