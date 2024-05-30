@@ -16,8 +16,8 @@ class ArticleApproveWithChangesModel extends BaseModel
         if($articleData['approvededitorially_status'] == 3)
         {
             $this->database->delete('articles_versions', ['article_id' => $articleId, 'version_id' => $articleData['current_version']]);
+            $articleVersionData = $this->database->get('articles_versions', ['created_date', 'title', 'text', 'tags', 'approvededitorially_status'], ['article_id' => $articleId, 'version_id' => $articleData['current_version'] - 1]);
             $this->database->update('articles_versions', ['approvededitorially_status' => 0], ['article_id' => $articleId]);
-            $articleVersionData = $this->database->get('articles_versions', ['created_date', 'title', 'text', 'tags', 'approvededitorially_status'], ['id' => $articleId, 'version_id' => $articleData['current_version']]);
             $this->database->update('articles', ['created_date' => $articleVersionData['created_date'], 'current_title' => $articleVersionData['title'], 'current_text' => $articleVersionData['text'], 'current_tags' => $articleVersionData['tags'], 'approvededitorially_status' => 0], ['id' => $articleId]);
         }
         else
@@ -28,10 +28,10 @@ class ArticleApproveWithChangesModel extends BaseModel
 
     public function acceptApproveWithChanges($articleId)
     {
-        $articlesData = $this->database->get('articles', ['current_version', 'approvededitorially_status'], ['id' => $articleId]);
-        if($articlesData['approvededitorially_status'] == 3)
+        $articleData = $this->database->get('articles', ['current_version', 'approvededitorially_status'], ['id' => $articleId]);
+        if($articleData['approvededitorially_status'] == 3)
         {
-            $this->database->delete('articles_versions', ['article_id' => $articleId, 'version_id[!]' => $articlesData['current_version']]);
+            $this->database->delete('articles_versions', ['article_id' => $articleId, 'version_id[!]' => $articleData['current_version']]);
             $this->database->update('articles_versions', ['approvededitorially_status' => 2, 'version_id' => 1], ['article_id' => $articleId]);
             $this->database->update('articles', ['approvededitorially_status' => 2, 'current_version' => 1], ['id' => $articleId]);
         }

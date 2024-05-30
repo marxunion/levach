@@ -461,8 +461,7 @@ class ArticlesModel extends BaseModel
                 ],
                 'premoderation_status' => 2,
                 'editorially_status[!]' => 1,
-                'approvededitorially_status[!]' => 2,
-                'approvededitorially_status[!]' => 3,
+                'approvededitorially_status[!]' => [2, 3],
             ]
         );
     }
@@ -485,8 +484,7 @@ class ArticlesModel extends BaseModel
                 ],
                 'premoderation_status' => 2,
                 'editorially_status[!]' => 1,
-                'approvededitorially_status[!]' => 2,
-                'approvededitorially_status[!]' => 3,
+                'approvededitorially_status[!]' => [2, 3],
                 'current_title[~]' => $searchTitle,
             ]
         );
@@ -549,8 +547,7 @@ class ArticlesModel extends BaseModel
                 ],
                 'premoderation_status' => 2,
                 'editorially_status[!]' => 1,
-                'approvededitorially_status[!]' => 2,
-                'approvededitorially_status[!]' => 3,
+                'approvededitorially_status[!]' => [2, 3],
             ]
         );
     }
@@ -573,8 +570,7 @@ class ArticlesModel extends BaseModel
                 ],
                 'premoderation_status' => 2,
                 'editorially_status[!]' => 1,
-                'approvededitorially_status[!]' => 2,
-                'approvededitorially_status[!]' => 3,
+                'approvededitorially_status[!]' => [2, 3],
                 'current_title[~]' => $searchTitle,
             ]
         );
