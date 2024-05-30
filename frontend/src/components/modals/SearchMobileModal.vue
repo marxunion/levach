@@ -25,7 +25,7 @@
             if(searchText.value.length > 0)
             {
                 searchQuery.value = true;
-                router.push('/articles/search/'+encodeURIComponent(searchText.value));
+                router.push('/articles/search/'+ (searchText.value));
             }
         }
     }

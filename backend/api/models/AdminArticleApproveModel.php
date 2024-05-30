@@ -27,7 +27,7 @@ class AdminArticleApproveModel extends BaseModel
 
     public function acceptApproveWithChanges($articleId, $newTitle, $newText, $newTags)
     {
-        $this->database->update('articles_versions', ['approvededitorially_status' => 3], ['articles_id' => $articleId]);
+        $this->database->update('articles_versions', ['approvededitorially_status' => 3], ['article_id' => $articleId]);
         $articleData = $this->database->get('articles', ['current_version', 'current_title', 'current_text', 'current_tags'], ['id' => $articleId]);
         if(isset($articleData))
         {
@@ -79,14 +79,14 @@ class AdminArticleApproveModel extends BaseModel
                     'approvededitorially_status' => 3
                 ],
                 [
-                    'articles_id' => $articleId
+                    'article_id' => $articleId
                 ]
             );
 
             $this->database->insert(
                 'articles_versions',
                 [
-                    'articles_id' => $articleId,
+                    'article_id' => $articleId,
                     'version_id' => $newVersionId,
                     'created_date' => $newArticleCreatedDate,
 
