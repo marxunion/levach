@@ -17,10 +17,42 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: delete_subcommments(); Type: FUNCTION; Schema: public; Owner: root
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
 --
 
-CREATE FUNCTION public.delete_subcommments() RETURNS trigger
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
+--
+-- Name: article_delete_comments(); Type: FUNCTION; Schema: public; Owner: root
+--
+
+CREATE FUNCTION public.article_delete_comments() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$BEGIN
+    IF TG_OP = 'DELETE' THEN
+        DELETE FROM comments
+        WHERE article_id = OLD.id;
+    END IF;
+
+    RETURN NULL;
+END;$$;
+
+
+ALTER FUNCTION public.article_delete_comments() OWNER TO root;
+
+--
+-- Name: comment_delete_subcommments(); Type: FUNCTION; Schema: public; Owner: root
+--
+
+CREATE FUNCTION public.comment_delete_subcommments() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 BEGIN
@@ -34,24 +66,24 @@ END;
 $$;
 
 
-ALTER FUNCTION public.delete_subcommments() OWNER TO root;
+ALTER FUNCTION public.comment_delete_subcommments() OWNER TO root;
 
 --
--- Name: update_article_comments(); Type: FUNCTION; Schema: public; Owner: root
+-- Name: comment_update_article_comments_count(); Type: FUNCTION; Schema: public; Owner: root
 --
 
-CREATE FUNCTION public.update_article_comments() RETURNS trigger
+CREATE FUNCTION public.comment_update_article_comments_count() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 BEGIN
     IF TG_OP = 'DELETE' THEN
-        UPDATE statistics
-        SET comments = comments - 1
-        WHERE article_id = OLD.article_id;
+        UPDATE articles
+        SET comments_count = comments_count - 1
+        WHERE id = OLD.article_id;
     ELSE
-        UPDATE statistics
-        SET comments = comments + 1
-        WHERE article_id = NEW.article_id;
+        UPDATE articles
+        SET comments_count = comments_count + 1
+        WHERE id = NEW.article_id;
     END IF;
 
     RETURN NULL;
@@ -59,24 +91,24 @@ END;
 $$;
 
 
-ALTER FUNCTION public.update_article_comments() OWNER TO root;
+ALTER FUNCTION public.comment_update_article_comments_count() OWNER TO root;
 
 --
--- Name: update_article_rating(); Type: FUNCTION; Schema: public; Owner: root
+-- Name: comment_update_article_rating(); Type: FUNCTION; Schema: public; Owner: root
 --
 
-CREATE FUNCTION public.update_article_rating() RETURNS trigger
+CREATE FUNCTION public.comment_update_article_rating() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 BEGIN
     IF TG_OP = 'DELETE' THEN
-        UPDATE statistics
+        UPDATE articles
         SET rating = rating - OLD.rating_influence
-        WHERE article_id = OLD.article_id AND OLD.parent_comment_id IS null;
+        WHERE id = OLD.article_id AND OLD.parent_comment_id IS null;
     ELSE
-        UPDATE statistics
+        UPDATE articles
         SET rating = rating + NEW.rating_influence
-        WHERE article_id = NEW.article_id AND NEW.parent_comment_id IS null;
+        WHERE id = NEW.article_id AND NEW.parent_comment_id IS null;
     END IF;
 
     RETURN NULL;
@@ -84,13 +116,13 @@ END;
 $$;
 
 
-ALTER FUNCTION public.update_article_rating() OWNER TO root;
+ALTER FUNCTION public.comment_update_article_rating() OWNER TO root;
 
 --
--- Name: update_comment_rating(); Type: FUNCTION; Schema: public; Owner: root
+-- Name: comment_update_comment_rating(); Type: FUNCTION; Schema: public; Owner: root
 --
 
-CREATE FUNCTION public.update_comment_rating() RETURNS trigger
+CREATE FUNCTION public.comment_update_comment_rating() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 BEGIN
@@ -111,7 +143,7 @@ END;
 $$;
 
 
-ALTER FUNCTION public.update_comment_rating() OWNER TO root;
+ALTER FUNCTION public.comment_update_comment_rating() OWNER TO root;
 
 SET default_tablespace = '';
 
@@ -148,6 +180,30 @@ ALTER TABLE public.admins_tokens OWNER TO root;
 
 CREATE TABLE public.articles (
     id integer NOT NULL,
+    rating bigint,
+    comments_count bigint,
+    created_date integer,
+    edit_timeout_to_date integer,
+    current_version integer,
+    current_title character varying(250),
+    current_text text,
+    current_tags text[],
+    editorially_status smallint,
+    approvededitorially_status smallint,
+    premoderation_status smallint,
+    view_code text,
+    edit_code text
+);
+
+
+ALTER TABLE public.articles OWNER TO root;
+
+--
+-- Name: articles_versions; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.articles_versions (
+    article_id integer NOT NULL,
     version_id integer,
     title character varying(250),
     text text,
@@ -159,20 +215,7 @@ CREATE TABLE public.articles (
 );
 
 
-ALTER TABLE public.articles OWNER TO root;
-
---
--- Name: codes; Type: TABLE; Schema: public; Owner: root
---
-
-CREATE TABLE public.codes (
-    article_id integer NOT NULL,
-    view_code text,
-    edit_code text
-);
-
-
-ALTER TABLE public.codes OWNER TO root;
+ALTER TABLE public.articles_versions OWNER TO root;
 
 --
 -- Name: comments; Type: TABLE; Schema: public; Owner: root
@@ -226,28 +269,6 @@ CREATE TABLE public.settings (
 ALTER TABLE public.settings OWNER TO root;
 
 --
--- Name: statistics; Type: TABLE; Schema: public; Owner: root
---
-
-CREATE TABLE public.statistics (
-    article_id integer NOT NULL,
-    rating bigint,
-    comments bigint,
-    created_date integer,
-    edit_timeout_to_date integer,
-    current_version integer,
-    current_title character varying(250),
-    current_text text,
-    current_tags text[],
-    editorially_status smallint,
-    approvededitorially_status smallint,
-    premoderation_status smallint
-);
-
-
-ALTER TABLE public.statistics OWNER TO root;
-
---
 -- Name: comments id; Type: DEFAULT; Schema: public; Owner: root
 --
 
@@ -255,31 +276,199 @@ ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.com
 
 
 --
+-- Name: idx_articles_approvededitorially_status; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_approvededitorially_status ON public.articles USING btree (approvededitorially_status);
+
+
+--
+-- Name: idx_articles_article_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_article_id ON public.articles USING btree (id);
+
+
+--
+-- Name: idx_articles_created_date; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_created_date ON public.articles USING btree (created_date);
+
+
+--
+-- Name: idx_articles_created_date_sort; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_created_date_sort ON public.articles USING btree (created_date DESC);
+
+
+--
+-- Name: idx_articles_current_tags_gin; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_current_tags_gin ON public.articles USING gin (current_tags);
+
+
+--
+-- Name: idx_articles_edit_code; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_edit_code ON public.articles USING btree (edit_code);
+
+
+--
+-- Name: idx_articles_editorially_status; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_editorially_status ON public.articles USING btree (editorially_status);
+
+
+--
+-- Name: idx_articles_premoderation_status; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_premoderation_status ON public.articles USING btree (premoderation_status);
+
+
+--
+-- Name: idx_articles_rating; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_rating ON public.articles USING btree (rating DESC);
+
+
+--
+-- Name: idx_articles_versions_approvededitorially_status; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_versions_approvededitorially_status ON public.articles_versions USING btree (approvededitorially_status);
+
+
+--
+-- Name: idx_articles_versions_articles_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_versions_articles_id ON public.articles_versions USING btree (article_id);
+
+
+--
+-- Name: idx_articles_versions_created_date; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_versions_created_date ON public.articles_versions USING btree (created_date);
+
+
+--
+-- Name: idx_articles_versions_editorially_status; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_versions_editorially_status ON public.articles_versions USING btree (editorially_status);
+
+
+--
+-- Name: idx_articles_versions_premoderation_status; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_versions_premoderation_status ON public.articles_versions USING btree (premoderation_status);
+
+
+--
+-- Name: idx_articles_versions_version_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_versions_version_id ON public.articles_versions USING btree (version_id);
+
+
+--
+-- Name: idx_articles_view_code; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_view_code ON public.articles USING btree (view_code);
+
+
+--
+-- Name: idx_atricles_current_title_trgm; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_atricles_current_title_trgm ON public.articles USING gin (current_title public.gin_trgm_ops);
+
+
+--
+-- Name: idx_comments_article_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_comments_article_id ON public.comments USING btree (article_id);
+
+
+--
+-- Name: idx_comments_created_date; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_comments_created_date ON public.comments USING btree (created_date DESC);
+
+
+--
+-- Name: idx_comments_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_comments_id ON public.comments USING btree (id);
+
+
+--
+-- Name: idx_comments_parent_comment_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_comments_parent_comment_id ON public.comments USING btree (parent_comment_id);
+
+
+--
+-- Name: idx_comments_rating; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_comments_rating ON public.comments USING btree (rating DESC);
+
+
+--
+-- Name: idx_comments_text_trgm; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_comments_text_trgm ON public.comments USING gin (text public.gin_trgm_ops);
+
+
+--
+-- Name: articles delete_comments_trigger; Type: TRIGGER; Schema: public; Owner: root
+--
+
+CREATE TRIGGER delete_comments_trigger AFTER DELETE ON public.articles FOR EACH ROW EXECUTE FUNCTION public.article_delete_comments();
+
+
+--
 -- Name: comments delete_subcommments_trigger; Type: TRIGGER; Schema: public; Owner: root
 --
 
-CREATE TRIGGER delete_subcommments_trigger AFTER DELETE ON public.comments FOR EACH ROW EXECUTE FUNCTION public.delete_subcommments();
+CREATE TRIGGER delete_subcommments_trigger AFTER DELETE ON public.comments FOR EACH ROW EXECUTE FUNCTION public.comment_delete_subcommments();
 
 
 --
--- Name: comments update_article_comments_trigger; Type: TRIGGER; Schema: public; Owner: root
+-- Name: comments update_article_comments_count_trigger; Type: TRIGGER; Schema: public; Owner: root
 --
 
-CREATE TRIGGER update_article_comments_trigger AFTER INSERT OR DELETE ON public.comments FOR EACH ROW EXECUTE FUNCTION public.update_article_comments();
+CREATE TRIGGER update_article_comments_count_trigger AFTER INSERT OR DELETE ON public.comments FOR EACH ROW EXECUTE FUNCTION public.comment_update_article_comments_count();
 
 
 --
 -- Name: comments update_article_rating_trigger; Type: TRIGGER; Schema: public; Owner: root
 --
 
-CREATE TRIGGER update_article_rating_trigger AFTER INSERT OR DELETE ON public.comments FOR EACH ROW EXECUTE FUNCTION public.update_article_rating();
+CREATE TRIGGER update_article_rating_trigger AFTER INSERT OR DELETE ON public.comments FOR EACH ROW EXECUTE FUNCTION public.comment_update_article_rating();
 
 
 --
 -- Name: comments update_comment_rating_trigger; Type: TRIGGER; Schema: public; Owner: root
 --
 
-CREATE TRIGGER update_comment_rating_trigger AFTER INSERT OR DELETE ON public.comments FOR EACH ROW EXECUTE FUNCTION public.update_comment_rating();
+CREATE TRIGGER update_comment_rating_trigger AFTER INSERT OR DELETE ON public.comments FOR EACH ROW EXECUTE FUNCTION public.comment_update_comment_rating();
 
 
 --
