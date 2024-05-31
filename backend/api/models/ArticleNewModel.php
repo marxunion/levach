@@ -12,7 +12,7 @@ class ArticleNewModel extends BaseModel
         $newArticleId = 1;
         $lastArticleId = $this->database->max('articles', 'id');
 
-        if($lastArticleId != null) 
+        if(isset($lastArticleId)) 
         {
             $newArticleId = $lastArticleId + 1;
         }
@@ -30,7 +30,7 @@ class ArticleNewModel extends BaseModel
             
             'created_date' => time()
         ];
-
+        
         $articleData = 
         [
             'id' => $newArticleId,
