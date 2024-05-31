@@ -12,6 +12,23 @@ class ArticleNewModel extends BaseModel
         return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
 
+    public function getArticleByViewId($viewId)
+    {
+        $articleId = $this->database->get('articles', 'id', ['view_id' => $view_id]);
+
+        if(!isset($articleId))
+        {
+            $comment = $this->database->get('comments', ['id', 'article_id'], ['view_id' => $view_id]);
+
+            if(isset($comment))
+            {
+                $articleId = $comment['article_id'];
+            }
+        }
+
+        return $articleId;
+    }
+
     public function newArticle($title, $text, $tags, $viewCode, $editCode)
     {
         $articleVersionData = [

@@ -75,7 +75,7 @@
 
 	async function fetchArticleData()
 	{
-		await axios.get('/api/article/view/'+articleViewCode.value)
+		await axios.get('api/article/view/'+articleViewCode.value)
 		.then(async response =>
 		{
 			if(response.data.versions)
@@ -83,6 +83,13 @@
 				fetchedArticleData.value = response.data;
 				if(fetchedArticleData.value != null) 
 				{
+					if(fetchedArticleData.value.scrollToCommentId)
+					{
+						if(commentId.value == null)
+						{
+							commentId.value = fetchedArticleData.value.scrollToCommentId;
+						}
+					}
 					if(currentVersion.value != fetchedArticleData.value.versions.length)
 					{
 						dropDownReloading.value = true;
@@ -547,45 +554,51 @@
 	let intervalId : NodeJS.Timeout | null = null;
 	onMounted(async () => 
 	{
-		await fetchArticleData();
-		if (fetchedArticleData.value != null) 
+		if(articleViewCode.value)
 		{
-			currentVersion.value = fetchedArticleData.value.versions.length;
+			articleViewCode.value = encodeURIComponent(articleViewCode.value.replace('>','#'));
 
-			comments.value = [];
-
-			let app = document.querySelector('#app');
-			if(app != null)
+			await fetchArticleData();
+			if (fetchedArticleData.value != null) 
 			{
-				app.addEventListener('scroll', handleCommentsScroll)
+				currentVersion.value = fetchedArticleData.value.versions.length;
+
+				comments.value = [];
+
+				let app = document.querySelector('#app');
+				if(app != null)
+				{
+					app.addEventListener('scroll', handleCommentsScroll)
+				}
+
+				let ps = document.querySelector('.ps');
+				if(ps != null)
+				{
+					ps.addEventListener('scroll', handleCommentsScroll)
+				}
+
+				commentsReloading.value = true;
+				commentsLoading.value = true;
+				lastLoadedComment.value = 0;
+				currentCommentReaction.value = 0;
+
+				if(commentId.value != null)
+				{
+					currentCommentsSortType.value = 1;
+					await fetchCommentsBeforeId();
+				}
+				else
+				{
+					await fetchNewComments();
+				}
+
+				intervalId = setInterval(async () => 
+				{
+					await fetchArticleData();
+				}, 10000);
 			}
-
-			let ps = document.querySelector('.ps');
-			if(ps != null)
-			{
-				ps.addEventListener('scroll', handleCommentsScroll)
-			}
-
-			commentsReloading.value = true;
-			commentsLoading.value = true;
-			lastLoadedComment.value = 0;
-			currentCommentReaction.value = 0;
-
-			if(commentId.value != null)
-			{
-				currentCommentsSortType.value = 1;
-				await fetchCommentsBeforeId();
-			}
-			else
-			{
-				await fetchNewComments();
-			}
-
-			intervalId = setInterval(async () => 
-			{
-				await fetchArticleData();
-			}, 10000);
 		}
+		
 		loading.value = false;
 	});
 
@@ -924,7 +937,7 @@
 	<main v-if="!loading" class="main">
 		<article v-if="fetchedArticleData" class="main__article">
 			<div class="main__article__previewContainer">
-				<p class="main__article__previewContainer__titleId">#{{ padNumberWithZeroes(fetchedArticleData.visible_id) }}</p>
+				<p class="main__article__previewContainer__titleId">#{{ padNumberWithZeroes(fetchedArticleData.view_id) }}</p>
 				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedArticleData.versions[currentVersion-1].created_date) }}</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedArticleData.versions[currentVersion-1].tags) }}</p>

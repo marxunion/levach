@@ -9,6 +9,23 @@ class ArticleCommentsGetModel extends BaseModel
     {
         return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
+
+    public function getArticleByViewId($viewId)
+    {
+        $articleId = $this->database->get('articles', 'id', ['view_id' => $view_id]);
+
+        if(!isset($articleId))
+        {
+            $comment = $this->database->get('comments', ['id', 'article_id'], ['view_id' => $view_id]);
+
+            if(isset($comment))
+            {
+                $articleId = $comment['article_id'];
+            }
+        }
+
+        return $articleId;
+    }
     public function getSubcomments($articleId, $parentCommentId)
     {
         $comments = $this->database->select(
@@ -20,7 +37,7 @@ class ArticleCommentsGetModel extends BaseModel
                 'created_date',
                 'rating_influence',
                 'parent_comment_id',
-                'visible_id'
+                'view_id'
             ], 
             [
                 "ORDER" => [
@@ -54,7 +71,7 @@ class ArticleCommentsGetModel extends BaseModel
                 'created_date',
                 'rating_influence',
                 'parent_comment_id',
-                'visible_id'
+                'view_id'
             ], 
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
@@ -88,7 +105,7 @@ class ArticleCommentsGetModel extends BaseModel
                 'created_date',
                 'rating_influence',
                 'parent_comment_id',
-                'visible_id'
+                'view_id'
             ], 
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],

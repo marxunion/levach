@@ -10,11 +10,6 @@ class AdminArticlesCommentsGetModel extends BaseModel
     private $commentDateAfter;
     private $commentRegexPattern;
     
-    public function getArticleByViewCode($viewCode)
-    {
-        return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
-    }
-
     public function checkParents($comment)
     {
         if($comment['parent_comment_id'] != null)
@@ -27,7 +22,8 @@ class AdminArticlesCommentsGetModel extends BaseModel
                     'rating',
                     'created_date',
                     'rating_influence',
-                    'parent_comment_id'
+                    'parent_comment_id',
+                    'view_id'
                 ],
                 [
                     'article_id' => $this->articleId,
@@ -67,7 +63,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
                 'created_date',
                 'rating_influence',
                 'parent_comment_id',
-                'visible_id'
+                'view_id'
             ], 
             [
                 "ORDER" => [
@@ -114,7 +110,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
         {
             $this->articleId = $article['id'];
             
-            $sql = "SELECT id, text, rating, created_date, rating_influence, parent_comment_id, visible_id FROM comments WHERE article_id = :article_id AND created_date BETWEEN :date_before AND :date_after AND text ~ :regex_pattern ORDER BY created_date DESC LIMIT :count";  
+            $sql = "SELECT id, text, rating, created_date, rating_influence, parent_comment_id, view_id FROM comments WHERE article_id = :article_id AND created_date BETWEEN :date_before AND :date_after AND text ~ :regex_pattern ORDER BY created_date DESC LIMIT :count";  
             $bindings = [
                 ':article_id' => $this->articleId,
                 ':date_before' => $this->commentDateBefore,

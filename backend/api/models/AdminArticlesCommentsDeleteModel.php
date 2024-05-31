@@ -5,11 +5,6 @@ use Base\BaseModel;
 
 class AdminArticlesCommentsDeleteModel extends BaseModel
 {
-    public function getArticleByViewCode($viewCode)
-    {
-        return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
-    }
-
     public function deleteComments($articlesCount, $commentsCount, $articleDateBefore, $articleDateAfter, $commentDateBefore, $commentDateAfter, $articleRegexPattern, $commentRegexPattern)
     {
         $sql = "DELETE FROM comments 

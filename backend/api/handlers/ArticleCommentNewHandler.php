@@ -80,7 +80,15 @@ class ArticleCommentNewHandler extends BaseHandlerRouteWithArgs
 
     public function Process()
     {
-        $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
+        if(strpos($this->args['viewCode'], '#') === 0)
+        {
+            $articleId = $this->model->getArticleByViewId((int)substr($this->args['viewCode'], 1));
+        }
+        else
+        {
+            $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
+        }
+
         if(isset($articleId))
         {
             $this->model->newComment($articleId, $this->parsedBody['text'], $this->parsedBody['ratingInfluence']);

@@ -12,6 +12,23 @@ class ArticleCommentsGetBeforeIdModel extends BaseModel
         return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
 
+    public function getArticleByViewId($viewId)
+    {
+        $articleId = $this->database->get('articles', 'id', ['view_id' => $view_id]);
+
+        if(!isset($articleId))
+        {
+            $comment = $this->database->get('comments', ['id', 'article_id'], ['view_id' => $view_id]);
+
+            if(isset($comment))
+            {
+                $articleId = $comment['article_id'];
+            }
+        }
+
+        return $articleId;
+    }
+
     public function getRootComment($comment)
     {
         if($comment['parent_comment_id'] != null)
@@ -25,7 +42,7 @@ class ArticleCommentsGetBeforeIdModel extends BaseModel
                     'created_date',
                     'rating_influence',
                     'parent_comment_id',
-                    'visible_id'
+                    'view_id'
                 ],
                 [
                     'article_id' => $this->articleId,
@@ -58,7 +75,7 @@ class ArticleCommentsGetBeforeIdModel extends BaseModel
                 'created_date',
                 'rating_influence',
                 'parent_comment_id',
-                'visible_id'
+                'view_id'
             ],
             [
                 'article_id' => $this->articleId,
@@ -86,7 +103,7 @@ class ArticleCommentsGetBeforeIdModel extends BaseModel
                 'created_date',
                 'rating_influence',
                 'parent_comment_id',
-                'visible_id'
+                'view_id'
             ], 
             [
                 "ORDER" => [
@@ -121,7 +138,7 @@ class ArticleCommentsGetBeforeIdModel extends BaseModel
                 'created_date',
                 'rating_influence',
                 'parent_comment_id',
-                'visible_id'
+                'view_id'
             ], 
             [
                 "ORDER" => [

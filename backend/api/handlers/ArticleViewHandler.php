@@ -27,22 +27,35 @@ class ArticleViewHandler extends BaseHandlerRouteWithArgs
     }
     public function Process()
     {
-        $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
-
-        if($articleId)
+        if(strpos($this->args['viewCode'], '#') === 0)
         {
             if(AdminStatusHandler::isAdmin($this->cookiesBody))
             {
-                $this->response = $this->response->withJson($this->model->viewArticleAdmin($articleId));
+                $this->response = $this->response->withJson($this->model->getArticleByViewIdAdmin((int)substr($this->args['viewCode'], 1)));
             }
             else
             {
-                $this->response = $this->response->withJson($this->model->viewArticle($articleId));
+                $this->response = $this->response->withJson($this->model->getArticleByViewId((int)substr($this->args['viewCode'], 1)));
             }
         }
         else
         {
-            throw new Error(404, "Article not found", "Article not found");
+            $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
+            if($articleId)
+            {
+                if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                {
+                    $this->response = $this->response->withJson($this->model->viewArticleAdmin($articleId));
+                }
+                else
+                {
+                    $this->response = $this->response->withJson($this->model->viewArticle($articleId));
+                }
+            }
+            else
+            {
+                throw new Error(404, "Article not found", "Article not found");
+            }
         }
     }
 }

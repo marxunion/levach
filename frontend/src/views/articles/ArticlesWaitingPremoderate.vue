@@ -478,7 +478,7 @@
 		</div>
 		<article class="main__article" v-if="articles.length > 0 && !loading" v-for="(article, index) in articles" :key="article.id">
             <div class="main__article__block" v-if="article.versions[article.currentSelectedVersion-1]">
-                <p class="main__article__titleId">#{{ padNumberWithZeroes(article.visible_id) }}</p>
+                <p class="main__article__titleId">#{{ padNumberWithZeroes(article.view_id) }}</p>
                 <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion-1].created_date) }}</p>
                 <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
                 <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>

@@ -15,7 +15,7 @@ export interface ArticleVersion
 export interface Article
 {
     id: number,
-    visible_id: number,
+    view_id: number,
     versions: ArticleVersion[],
     current_title: string,
     current_text: string,
@@ -30,7 +30,9 @@ export interface Article
     edit_code: string,
     view_code: string,
 
+    scrollToCommentId: number,
     comments: Comment[],
+
     currentSelectedVersion: number,
     canRequestApprove: boolean
 }

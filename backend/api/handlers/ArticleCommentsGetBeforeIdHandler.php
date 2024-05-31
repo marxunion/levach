@@ -39,7 +39,15 @@ class ArticleCommentsGetBeforeIdHandler extends BaseHandlerRouteWithArgs
     
     public function Process()
     {
-        $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
+        if(strpos($this->args['viewCode'], '#') === 0)
+        {
+            $articleId = $this->model->getArticleByViewId((int)substr($this->args['viewCode'], 1));
+        }
+        else
+        {
+            $articleId = $this->model->getArticleByViewCode($this->args['viewCode']);
+        }
+
         if(isset($articleId))
         {
             $this->response = $this->response->withJson($this->model->getComments($articleId, $this->args['commentId']));

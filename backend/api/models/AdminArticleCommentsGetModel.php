@@ -15,6 +15,23 @@ class AdminArticleCommentsGetModel extends BaseModel
         return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
 
+    public function getArticleByViewId($viewId)
+    {
+        $articleId = $this->database->get('articles', 'id', ['view_id' => $view_id]);
+
+        if(!isset($articleId))
+        {
+            $comment = $this->database->get('comments', ['id', 'article_id'], ['view_id' => $view_id]);
+
+            if(isset($comment))
+            {
+                $articleId = $comment['article_id'];
+            }
+        }
+
+        return $articleId;
+    }
+
     public function checkParents($comment)
     {
         if($comment['parent_comment_id'] != null)
@@ -27,7 +44,8 @@ class AdminArticleCommentsGetModel extends BaseModel
                     'rating',
                     'created_date',
                     'rating_influence',
-                    'parent_comment_id'
+                    'parent_comment_id',
+                    'view_id'
                 ],
                 [
                     'article_id' => $this->articleId,
@@ -66,7 +84,8 @@ class AdminArticleCommentsGetModel extends BaseModel
                 'rating',
                 'created_date',
                 'rating_influence',
-                'parent_comment_id'
+                'parent_comment_id',
+                'vies_id'
             ], 
             [
                 "ORDER" => [
