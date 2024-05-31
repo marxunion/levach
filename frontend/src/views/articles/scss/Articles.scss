@@ -80,10 +80,24 @@
             width: 100%;
         }
 
+        &__titleId
+        {
+            position: absolute;
+            top: 10px;
+            left: 17px;
+
+            z-index: 2;
+
+            font-size: 17px;
+            font-family: Roboto-Regular;
+
+            color: $ArticlesArticleTitleId;
+        }
+
         &__titleTime
         {
             position: absolute;
-            top: 17px;
+            top: 32px;
             left: 17px;
             
             z-index: 2;
@@ -92,9 +106,16 @@
             font-family: Roboto-Regular;
 
             color: $ArticlesArticleTitleTime;
-
         }
-
+        &__select
+        {
+            position: absolute !important;
+            top: 8px !important;
+            right: 10px !important;
+           
+            width: 240px !important;
+        }
+        
         &__tags
         {
             width: 95%;
@@ -226,14 +247,7 @@
             }
         }
 
-        &__select
-        {
-            position: absolute !important;
-            top: 10px !important;
-            right: 10px !important;
-           
-            width: 240px !important;
-        }
+        
     }
 }
 

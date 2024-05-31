@@ -2,7 +2,7 @@ export function padNumberWithZeroes(number: number) : string
 {
     let numberStr : string = number.toString();
     
-    let zeroesToAdd : number = 8 - numberStr.length;
+    let zeroesToAdd : number = 12 - numberStr.length;
     
     for (let i = 0; i < zeroesToAdd; i++) 
     {

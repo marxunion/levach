@@ -15,6 +15,7 @@ export interface ArticleVersion
 export interface Article
 {
     id: number,
+    visible_id: number,
     versions: ArticleVersion[],
     current_title: string,
     current_text: string,

@@ -19,7 +19,8 @@ class ArticleCommentsGetModel extends BaseModel
                 'rating',
                 'created_date',
                 'rating_influence',
-                'parent_comment_id'
+                'parent_comment_id',
+                'visible_id'
             ], 
             [
                 "ORDER" => [
@@ -52,7 +53,8 @@ class ArticleCommentsGetModel extends BaseModel
                 'rating',
                 'created_date',
                 'rating_influence',
-                'parent_comment_id'
+                'parent_comment_id',
+                'visible_id'
             ], 
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
@@ -85,7 +87,8 @@ class ArticleCommentsGetModel extends BaseModel
                 'rating',
                 'created_date',
                 'rating_influence',
-                'parent_comment_id'
+                'parent_comment_id',
+                'visible_id'
             ], 
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],

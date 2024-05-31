@@ -20,7 +20,8 @@ class ArticleCommentGetModel extends BaseModel
                 'rating',
                 'created_date',
                 'rating_influence',
-                'parent_comment_id'
+                'parent_comment_id',
+                'visible_id'
             ],
             [
                 "ORDER" => [
@@ -53,7 +54,8 @@ class ArticleCommentGetModel extends BaseModel
                 'rating',
                 'created_date',
                 'rating_influence',
-                'parent_comment_id'
+                'parent_comment_id',
+                'visible_id'
             ], 
             [
                 'article_id' => $articleId, 

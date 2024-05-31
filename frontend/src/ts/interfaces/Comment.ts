@@ -1,6 +1,7 @@
 export interface Comment
 {
     id: number,
+    visible_id: number,
     parent_comment_id: number,
 
     text: string,

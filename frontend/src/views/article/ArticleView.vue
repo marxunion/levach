@@ -25,7 +25,7 @@
 
     import { adminStatus, adminStatusReCheck } from '../../ts/handlers/AdminHandler'
 
-	import { abbreviateNumber } from '../../ts/helpers/NumberHelper';
+	import { abbreviateNumber, padNumberWithZeroes } from '../../ts/helpers/NumberHelper';
 
 	import langsData from "./locales/ArticleView.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
@@ -924,6 +924,7 @@
 	<main v-if="!loading" class="main">
 		<article v-if="fetchedArticleData" class="main__article">
 			<div class="main__article__previewContainer">
+				<p class="main__article__previewContainer__titleId">#{{ padNumberWithZeroes(fetchedArticleData.visible_id) }}</p>
 				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedArticleData.versions[currentVersion-1].created_date) }}</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedArticleData.versions[currentVersion-1].tags) }}</p>

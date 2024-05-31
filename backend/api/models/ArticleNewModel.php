@@ -7,18 +7,14 @@ use Base\BaseModel;
 
 class ArticleNewModel extends BaseModel
 {
+    public function getArticleByViewCode($viewCode)
+    {
+        return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
+    }
+
     public function newArticle($title, $text, $tags, $viewCode, $editCode)
     {
-        $newArticleId = 1;
-        $lastArticleId = $this->database->max('articles', 'id');
-
-        if(isset($lastArticleId)) 
-        {
-            $newArticleId = $lastArticleId + 1;
-        }
-
         $articleVersionData = [
-            'article_id' => $newArticleId,
             'version_id' => 1,
             'title' => $title,
             'text' => $text,
@@ -30,20 +26,19 @@ class ArticleNewModel extends BaseModel
             
             'created_date' => time()
         ];
-        
+
         $articleData = 
         [
-            'id' => $newArticleId,
+            'current_version' => 1,
+            'current_title' => $title,
+            'current_text' => $text,
+            'current_tags' => null,
+
             'rating' => 0,
             'comments_count' => 0,
             'created_date' => time(),
             
             'edit_timeout_to_date' => time(),
-
-            'current_version' => 1,
-            'current_title' => $title,
-            'current_text' => $text,
-            'current_tags' => null,
 
             'view_code' => $viewCode,
             'edit_code' => $editCode,
@@ -75,22 +70,15 @@ class ArticleNewModel extends BaseModel
             }
         }
 
-        $this->database->insert('articles_versions', $articleVersionData);
         $this->database->insert('articles', $articleData);
+        $articleVersionData['article_id'] = $this->getArticleByViewCode($viewCode);
+        $this->database->insert('articles_versions', $articleVersionData);
     }
 
     public function newArticleAdmin($title, $text, $tags, $viewCode, $editCode)
     {
-        $lastArticleId = $this->database->max('articles', 'id');
-        $newArticleId = 1;
-
-        if($lastArticleId !== '') 
-        {
-            $newArticleId = $lastArticleId + 1;
-        }
-
-        $articleVersionData = [
-            'article_id' => $newArticleId,
+        $articleVersionData = 
+        [
             'version_id' => 1,
             'title' => $title,
             'text' => $text,
@@ -106,17 +94,16 @@ class ArticleNewModel extends BaseModel
 
         $articleData = 
         [
-            'id' => $newArticleId,
+            'current_version' => 1,
+            'current_title' => $title,
+            'current_text' => $text,
+            'current_tags' => null,
+
             'rating' => 0,
             'comments_count' => 0,
             'created_date' => time(),
             
             'edit_timeout_to_date' => time(),
-
-            'current_version' => 1,
-            'current_title' => $title,
-            'current_text' => $text,
-            'current_tags' => null,
 
             'view_code' => $viewCode,
             'edit_code' => $editCode,
@@ -145,9 +132,10 @@ class ArticleNewModel extends BaseModel
                     throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
                 }
             }
-        }
+        }        
 
-        $this->database->insert('articles_versions', $articleVersionData);
         $this->database->insert('articles', $articleData);
+        $articleVersionData['article_id'] = $this->getArticleByViewCode($viewCode);
+        $this->database->insert('articles_versions', $articleVersionData);
     }
 }

@@ -37,17 +37,38 @@
 
             position: relative;
 
+            &__titleId
+            {
+                position: absolute;
+
+                top: 10px;
+                left: 17px;
+                
+                z-index: 2;
+
+                width: 220px;
+            
+                font-size: 19px;
+                font-family: Roboto-Regular;
+
+                color: $ArticleViewArticleTitleId;
+            }
+
             &__titleTime
             {
                 position: absolute;
+
+                top: 32px;
+                left: 17px;
+            
+                z-index: 2;
+
                 width: 220px;
-                line-height: 40px;
-                left: 25px;
-                top: 13px;
+                
                 font-size: 22px;
                 font-family: Roboto-Regular;
+
                 color: $ArticleViewArticleTitleTime;
-                z-index: 2;
             }
 
             &__preview
