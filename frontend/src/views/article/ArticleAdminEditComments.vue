@@ -127,6 +127,8 @@
 
 	onMounted(async () => 
 	{
+		articleViewCode.value = encodeURIComponent(articleViewCode.value.replace('>','#'));
+		
 		commentsLoading.value = true;
 		await fetchArticleData();
 		if(fetchedArticleData.value != null)

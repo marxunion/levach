@@ -937,7 +937,7 @@
 	<main v-if="!loading" class="main">
 		<article v-if="fetchedArticleData" class="main__article">
 			<div class="main__article__previewContainer">
-				<p class="main__article__previewContainer__titleId">#{{ padNumberWithZeroes(fetchedArticleData.view_id) }}</p>
+				<a :href="'#/article/>'+fetchedArticleData.view_id" target="_blank"  class="main__article__previewContainer__titleId">#{{ padNumberWithZeroes(fetchedArticleData.view_id) }}</a>
 				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedArticleData.versions[currentVersion-1].created_date) }}</p>
 				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion-1].text" :language="previewState.language"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedArticleData.versions[currentVersion-1].tags) }}</p>

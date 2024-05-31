@@ -13,12 +13,15 @@
 	import Loader from '../../components/Loader.vue';
 	import CommentsList from "./../../components/CommentsList.vue";
 
+    import { padNumberWithZeroes } from '../../ts/helpers/NumberHelper';
+
 	import langsData from "./locales/AdminEditComments.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import { articles } from '../../ts/handlers/ArticlesHandler';
     import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
     
     import { dateFormat, timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
+
 
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AdminEditComments", langsData).langData;
@@ -203,6 +206,7 @@
             <p v-if="articles.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
             <p v-else class="main__comments__title">{{ langData['commentsNotFoundTitle'] }}</p>
             <article v-if="articles.length > 0" class="main__comments__articles" v-for="article in articles">
+                <a :href="'#/article/>'+article.view_id" target="_blank" class="main__comments__articles__title id">#{{ padNumberWithZeroes(article.view_id) }}</a>
                 <p class="main__comments__articles__title time"> {{ timestampToLocaleFormatedTime(article.created_date) }}</p>
                 <a :href="'#/article/'+article.view_code" target="_blank" class="main__comments__articles__title text">{{ article.current_title }}</a>
 

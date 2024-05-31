@@ -740,7 +740,8 @@ class ArticlesModel extends BaseModel
                 'created_date',
                 'rating',
                 'comments_count',
-                'view_code'
+                'view_code',
+                'view_id'
             ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
@@ -797,7 +798,8 @@ class ArticlesModel extends BaseModel
                 'created_date',
                 'rating',
                 'comments_count',
-                'view_code'
+                'view_code',
+                'view_id'
             ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
@@ -818,7 +820,8 @@ class ArticlesModel extends BaseModel
                 'created_date',
                 'rating',
                 'comments_count',
-                'view_code'
+                'view_code',
+                'view_id'
             ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
@@ -873,7 +876,8 @@ class ArticlesModel extends BaseModel
                 'created_date',
                 'rating',
                 'comments_count',
-                'view_code'
+                'view_code',
+                'view_id'
             ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],
@@ -894,7 +898,8 @@ class ArticlesModel extends BaseModel
                 'created_date',
                 'rating',
                 'comments_count',
-                'view_code'
+                'view_code',
+                'view_id'
             ],
             [
                 'LIMIT' => [$lastLoaded, $lastLoaded + $count],

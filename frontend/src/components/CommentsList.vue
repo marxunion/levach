@@ -537,7 +537,7 @@
 	<div v-if="comment.id != null">
 		<div ref="targetComment" class="comment" :style="{ marginLeft: `${5 * level}%` }">
 			<div class="comment__header">
-				<p class="comment__header__title id">#{{ padNumberWithZeroes(comment.view_id) }}</p>
+				<a :href="'#/article/>'+comment.view_id" target="_blank" class="comment__header__title id">#{{ padNumberWithZeroes(comment.view_id) }}</a>
 				<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
 			</div>
 			<MdPreview class="comment__text" :modelValue="comment.text" :language="previewState.language"/>

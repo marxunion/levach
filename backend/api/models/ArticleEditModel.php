@@ -40,6 +40,7 @@ class ArticleEditModel extends BaseModel
                         $newVersionId = $articleData['current_version'] + 1;
                         $newArticleCreatedDate = time();
             
+                        $newTagsString = '{}';
                         if(isset($newTags))
                         {
                             if(is_array($newTags))
@@ -60,10 +61,6 @@ class ArticleEditModel extends BaseModel
                                     }
                                 }
                             }
-                        }
-                        else
-                        {
-                            $newTagsString = null;
                         }
                         
                         $this->database->insert(
@@ -146,7 +143,8 @@ class ArticleEditModel extends BaseModel
             
             $newVersionId = $articleData['current_version'] + 1;
             $newArticleCreatedDate = time();
-                      
+
+            $newTagsString = '{}';
             if(isset($newTags))
             {
                 if(is_array($newTags))
@@ -166,19 +164,7 @@ class ArticleEditModel extends BaseModel
                             throw new Warning(400, 'Article has duplicated tags', 'Article has duplicated tags');
                         }
                     }
-                    else
-                    {
-                        $newTagsString = null;
-                    }
                 }
-                else
-                {
-                    $newTagsString = null;
-                }
-            }
-            else
-            {
-                $newTagsString = null;
             }
             
             $this->database->insert(

@@ -205,17 +205,25 @@
             &__title
             {
                 font-family: Roboto-Regular;
+
+                &.id 
+                {
+                    font-size: 18px;
+                    color: $AdminEditCommentsArticleTitleId;
+                }
+
+                &.time 
+                {
+                    font-size: 18px;
+                    color: $AdminEditCommentsArticleTitleTime;
+                }
+
                 &.text 
                 {
                     margin-top: 0.3%;
                     display: block;
                     font-size: 22px;
                     color: $AdminEditCommentsArticleTitle;
-                }
-                &.time 
-                {
-                    font-size: 18px;
-                    color: $AdminEditCommentsArticleTitleTime;
                 }
             }
             &__articleComments

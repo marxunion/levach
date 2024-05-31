@@ -1,6 +1,8 @@
 <?php
 namespace Api\Models;
 
+use Helpers\StringFormatter;
+
 use Base\BaseModel;
 
 class ArticleCommentSubcommentNewModel extends BaseModel

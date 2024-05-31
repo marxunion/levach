@@ -68,7 +68,7 @@ class ArticleNewModel extends BaseModel
             'approvededitorially_status' => 0
         ];
         
-        $tagsString = '';
+        $tagsString = '{}';
         if(is_array($tags))
         {
             if(count($tags) > 0)
@@ -134,6 +134,7 @@ class ArticleNewModel extends BaseModel
             'approvededitorially_status' => 2
         ];
 
+        $tagsString = '{}';
         if(is_array($tags))
         {
             if(count($tags) > 0)
