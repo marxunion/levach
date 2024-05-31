@@ -10,13 +10,13 @@ class ArticleViewModel extends BaseModel
         return $this->database->get('articles', 'id', ['view_code' => $viewCode]);
     }
 
-    public function getArticleByViewId($view_id)
+    public function getArticleByViewId($viewId)
     {
-        $articleId = $this->database->get('articles', 'id', ['view_id' => $view_id]);
+        $articleId = $this->database->get('articles', 'id', ['view_id' => $viewId]);
 
         if(!isset($articleId))
         {
-            $comment = $this->database->get('comments', ['id', 'article_id'], ['view_id' => $view_id]);
+            $comment = $this->database->get('comments', ['id', 'article_id'], ['view_id' => $viewId]);
 
             if(isset($comment))
             {
@@ -43,8 +43,8 @@ class ArticleViewModel extends BaseModel
                 );
                 if(isset($articleVersions))
                 {
-                    $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId, 'premoderation_status' => 2]);
-                    $article['view_id'] = $view_id;
+                    $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status', 'view_id'], ['id' => $articleId, 'premoderation_status' => 2]);
+
                     $article['scrollToCommentId'] = $comment['id'];
                     if(isset($article))
                     {
@@ -100,7 +100,7 @@ class ArticleViewModel extends BaseModel
             if(isset($articleVersions))
             {
                 $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId, 'premoderation_status' => 2]);
-                $article['view_id'] = $view_id;
+                $article['view_id'] = $viewId;
                 if(isset($article))
                 {
                     foreach($articleVersions as $versionNum => $versionInfo) 
@@ -128,13 +128,13 @@ class ArticleViewModel extends BaseModel
         }
     }
     
-    public function getArticleByViewIdAdmin($view_id)
+    public function getArticleByViewIdAdmin($viewId)
     {
-        $articleId = $this->database->get('articles', 'id', ['view_id' => $view_id]);
+        $articleId = $this->database->get('articles', 'id', ['view_id' => $viewId]);
 
         if(!isset($articleId))
         {
-            $comment = $this->database->get('comments', ['id', 'article_id'], ['view_id' => $view_id]);
+            $comment = $this->database->get('comments', ['id', 'article_id'], ['view_id' => $viewId]);
 
             if(isset($comment))
             {
@@ -160,8 +160,7 @@ class ArticleViewModel extends BaseModel
                 );
                 if(isset($articleVersions))
                 {
-                    $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId, 'premoderation_status' => 2]);
-                    $article['view_id'] = $view_id;
+                    $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status', 'view_id'], ['id' => $articleId, 'premoderation_status' => 2]);
                     $article['scrollToCommentId'] = $comment['id'];
                     if(isset($article))
                     {
@@ -216,7 +215,7 @@ class ArticleViewModel extends BaseModel
             if(isset($articleVersions))
             {
                 $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId, 'premoderation_status' => 2]);
-                $article['view_id'] = $view_id;
+                $article['view_id'] = $viewId;
                 if(isset($article))
                 {
                     foreach($articleVersions as $versionNum => $versionInfo) 
