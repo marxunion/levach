@@ -14,11 +14,11 @@ class ArticleCommentsGetBeforeIdModel extends BaseModel
 
     public function getArticleByViewId($viewId)
     {
-        $articleId = $this->database->get('articles', 'id', ['view_id' => $view_id]);
+        $articleId = $this->database->get('articles', 'id', ['view_id' => $viewId]);
 
         if(!isset($articleId))
         {
-            $comment = $this->database->get('comments', ['id', 'article_id'], ['view_id' => $view_id]);
+            $comment = $this->database->get('comments', ['id', 'article_id'], ['view_id' => $viewId]);
 
             if(isset($comment))
             {
