@@ -15,6 +15,8 @@ class Settings
             'default_changeable_max_upload_filesize_mb' => $_ENV['default_changeable_max_upload_filesize_mb'],
             'default_changeable_article_need_rating_to_approve_editorially' => $_ENV['default_changeable_article_need_rating_to_approve_editorially'],
             
+            'HOSTNAME' => $_ENV['HOSTNAME'],
+
             'DB_TYPE' => $_ENV['DB_TYPE'],
             'DB_NAME' => $_ENV['DB_NAME'],
             'DB_HOST' => $_ENV['DB_HOST'],

@@ -4,6 +4,8 @@ namespace Api\Models;
 use Core\Warning;
 use Core\Error;
 
+use Helpers\StringFormatter;
+
 use Base\BaseModel;
 
 class AdminArticleApproveModel extends BaseModel
@@ -44,6 +46,7 @@ class AdminArticleApproveModel extends BaseModel
 
     public function acceptApproveWithChanges($articleId, $newTitle, $newText, $newTags)
     {
+        $newText = StringFormatter::replaceViewIdsLinksToViewIds($newText);
         $this->database->update('articles_versions', ['approvededitorially_status' => 3], ['article_id' => $articleId]);
         $articleData = $this->database->get('articles', ['current_version', 'current_title', 'current_text', 'current_tags'], ['id' => $articleId]);
         if(isset($articleData))

@@ -89,12 +89,9 @@
 				fetchedArticleData.value = response.data;
 				if(fetchedArticleData.value)
 				{
-					console.log(fetchedArticleData.value.current_tags);
-						
 					if(fetchedArticleData.value.current_tags == null)
 					{
 						fetchedArticleData.value.current_tags = [];
-						console.log(fetchedArticleData.value.current_tags);
 					}
 					Object.assign(tags.value, fetchedArticleData.value.current_tags);
 

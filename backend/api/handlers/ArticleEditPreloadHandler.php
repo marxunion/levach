@@ -7,9 +7,10 @@ use Base\BaseHandlerRouteWithArgs;
 
 use Api\Models\ArticleEditPreloadModel;
 
+use Api\Handlers\AdminStatusHandler;
+
 class ArticleEditPreloadHandler extends BaseHandlerRouteWithArgs
 {
-   
     public function Init()
     {
         $parsedBody = $this->request->getParsedBody();
@@ -23,6 +24,8 @@ class ArticleEditPreloadHandler extends BaseHandlerRouteWithArgs
                 {
                     if(!empty($this->args['editCode']))
                     {
+                        $this->cookiesBody = $this->request->getCookieParams();
+
                         $this->model = new ArticleEditPreloadModel();
                     }
                     else
@@ -52,7 +55,14 @@ class ArticleEditPreloadHandler extends BaseHandlerRouteWithArgs
 
         if($articleId)
         {
-            $this->response = $this->response->withJson($this->model->viewArticle($articleId));
+            if(AdminStatusHandler::isAdmin($this->cookiesBody))
+            {
+                $this->response = $this->response->withJson($this->model->viewArticleAdmin($articleId));
+            }
+            else
+            {
+                $this->response = $this->response->withJson($this->model->viewArticle($articleId));
+            }
         }
         else
         {

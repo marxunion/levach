@@ -3,17 +3,61 @@ namespace Helpers;
 
 class StringFormatter 
 {
+    public static function replaceViewIdsToViewIdsLinks($input) 
+    {
+        $pattern = '/#(\d+)/';
+        
+        $replacementFunction = function($matches) {
+            $number = $matches[1];
+            return "[#{$number}](#/article/>{$number})";
+        };
+        
+        $output = preg_replace_callback($pattern, $replacementFunction, $input);
+        
+        return $output;
+    }
+    
+    public static function replaceViewIdsLinksToViewIds($input) 
+    {
+        $pattern = '/\[#(\d+)\]\(#\/article\/>(\d+)\)/';
+        
+        $replacementFunction = function($matches) {
+            $number = $matches[1];
+            return "#{$number}";
+        };
+        
+        $output = preg_replace_callback($pattern, $replacementFunction, $input);
+        
+        return $output;
+    }
+
     public static function formatSizeEnding($bytes, $binaryPrefix = true)
     {
         if($binaryPrefix) 
         {
-            $unit=array('B','KiB','MiB','GiB','TiB','PiB');
+            $unit = [
+                'B',
+                'KiB',
+                'MiB',
+                'GiB',
+                'TiB',
+                'PiB'
+            ];
+
             if($bytes == 0) return '0 ' . $unit[0];
             return @round($bytes/pow(1024,($i=floor(log($bytes,1024)))),2) .' '. (isset($unit[$i]) ? $unit[$i] : 'B');
         } 
         else 
         {
-            $unit=array('B','KB','MB','GB','TB','PB');
+            $unit = [
+                'B',
+                'KB',
+                'MB',
+                'GB',
+                'TB',
+                'PB'
+            ];
+
             if($bytes == 0) return '0 ' . $unit[0];
             return @round($bytes/pow(1000,($i=floor(log($bytes,1000)))),2) .' '. (isset($unit[$i]) ? $unit[$i] : 'B');
         }

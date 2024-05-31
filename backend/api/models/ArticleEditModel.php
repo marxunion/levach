@@ -5,6 +5,8 @@ use Core\Error;
 use Core\Critical;
 use Core\Warning;
 
+use Helpers\StringFormatter;
+
 use Base\BaseModel;
 
 use Api\Handlers\AdminStatusHandler;
@@ -19,6 +21,7 @@ class ArticleEditModel extends BaseModel
     
     public function editArticle($articleId, $newTitle, $newText, $newTags)
     {
+        $newText = StringFormatter::replaceViewIdsToViewIdsLinks($newText);
         $articleData = $this->database->get('articles', ['current_version','current_title', 'current_text', 'current_tags', 'edit_timeout_to_date', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId]);
         
         if(isset($articleData))

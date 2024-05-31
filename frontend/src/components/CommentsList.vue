@@ -497,8 +497,6 @@
 			{
 				if (targetComment.value) 
 				{
-					console.log(targetComment.value);
-					
 					targetComment.value.classList.add('scrollToComment');
 					targetComment.value.scrollIntoView({ block: "center" });
 				}

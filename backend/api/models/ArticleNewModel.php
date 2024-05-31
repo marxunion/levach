@@ -3,6 +3,8 @@ namespace Api\Models;
 
 use Core\Warning;
 
+use Helpers\StringFormatter;
+
 use Base\BaseModel;
 
 class ArticleNewModel extends BaseModel
@@ -94,6 +96,7 @@ class ArticleNewModel extends BaseModel
 
     public function newArticleAdmin($title, $text, $tags, $viewCode, $editCode)
     {
+        $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
         $articleVersionData = 
         [
             'version_id' => 1,

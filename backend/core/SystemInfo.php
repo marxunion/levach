@@ -1,7 +1,6 @@
 <?php
 namespace Core;
 
-
 class SystemInfo
 {
     public static function getServerMemoryUsage($getPercentage = true)
