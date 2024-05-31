@@ -134,6 +134,7 @@ class ArticleEditModel extends BaseModel
 
     public function editArticleAdmin($articleId, $newTitle, $newText, $newTags)
     {
+        $newText = StringFormatter::replaceViewIdsToViewIdsLinks($newText);
         $articleData = $this->database->get('articles', ['current_version', 'current_title', 'current_text', 'current_tags', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId]);
         
         if(isset($articleData))

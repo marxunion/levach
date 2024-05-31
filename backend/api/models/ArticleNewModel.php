@@ -33,6 +33,7 @@ class ArticleNewModel extends BaseModel
 
     public function newArticle($title, $text, $tags, $viewCode, $editCode)
     {
+        $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
         $articleVersionData = [
             'version_id' => 1,
             'title' => $title,
