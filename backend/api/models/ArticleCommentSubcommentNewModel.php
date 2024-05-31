@@ -29,6 +29,7 @@ class ArticleCommentSubcommentNewModel extends BaseModel
 
     public function newSubcomment($articleId, $parentCommentId, $text = '', $ratingInfluence = 0)
     {
+        $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
         $newCommentId = 1;
         $lastCommentId = $this->database->max('comments', 'id', ['article_id' => $articleId]);
 

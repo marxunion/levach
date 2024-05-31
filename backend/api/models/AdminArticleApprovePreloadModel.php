@@ -33,7 +33,7 @@ class AdminArticleApprovePreloadModel extends BaseModel
     {
         $article = $this->database->get('articles', ['current_title', 'current_text' ,'current_tags','created_date', 'rating', 'comments_count', 'premoderation_status', 'approvededitorially_status', 'editorially_status'], ['id' => $articleId]);
 
-        $article['current_text'] = StringFormatter::replaceViewIdsToViewIdsLinks($article['current_text']);
+        $article['current_text'] = StringFormatter::replaceViewIdsLinksToViewIds($article['current_text']);
 
         if($article['current_tags'] != null)
         {
