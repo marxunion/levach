@@ -24,18 +24,17 @@ class AdminQuitModel extends BaseModel
         }
         
         $adminInfo = $this->database->get('admins_tokens', ['nickname_encrypted', 'expiration_time_encrypted'], ['token' => $token]);
-        if(!$adminInfo)
+        if($adminInfo)
         {
-            throw new Error(403, "Invalid admin token", "Invalid admin token");
+            if(!password_verify($nickname, $adminInfo['nickname_encrypted']))
+            {
+                throw new Error(400, "Invalid nickname for token", "Invalid nickname for token");
+            }
+            if(!password_verify($expirationTime, $adminInfo['expiration_time_encrypted']))
+            {
+                throw new Error(400, "Invalid expiration_time for token", "Invalid expiration_time for token");
+            }
+            $this->database->delete('admins_tokens', ['token' => $token]);
         }
-        if(!password_verify($nickname, $adminInfo['nickname_encrypted']))
-        {
-            throw new Error(400, "Invalid nickname for token", "Invalid nickname for token");
-        }
-        if(!password_verify($expirationTime, $adminInfo['expiration_time_encrypted']))
-        {
-            throw new Error(400, "Invalid expiration_time for token", "Invalid expiration_time for token");
-        }
-        $this->database->delete('admins_tokens', ['token' => $token]);
     }   
 }
