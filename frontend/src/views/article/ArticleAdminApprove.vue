@@ -3,6 +3,8 @@
 	import { useRoute, useRouter, Router, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
+    import LinkAttr from 'markdown-it-link-attributes';
+
 	import { MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
@@ -542,6 +544,20 @@
 
 	config(
 	{
+        markdownItPlugins(plugins) {
+			return [
+			...plugins,
+			{
+				type: 'linkAttr',
+				plugin: LinkAttr,
+				options: {
+				attrs: {
+					target: '_blank'
+				}
+				}
+			},
+			];
+		},
 		editorConfig: 
 		{
 			languageUserDefined: 

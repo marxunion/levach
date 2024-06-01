@@ -18,6 +18,8 @@
 	import { MdPreview, MdEditor, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
+	import LinkAttr from 'markdown-it-link-attributes';
+	
 	import { openModal, closeModal } from "jenesius-vue-modal";
 	import LoaderModal from "./../../components/modals/LoaderModal.vue";
     import InfoModal from "./../../components/modals/InfoModal.vue";
@@ -109,6 +111,20 @@
 	// Preview
 	config(
 	{
+		markdownItPlugins(plugins) {
+			return [
+			...plugins,
+			{
+				type: 'linkAttr',
+				plugin: LinkAttr,
+				options: {
+				attrs: {
+					target: '_blank'
+				}
+				}
+			},
+			];
+		},
 		editorConfig: 
 		{
 			languageUserDefined: 

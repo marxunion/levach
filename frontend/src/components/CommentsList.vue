@@ -13,6 +13,8 @@
 	import langsData from "./locales/CommentsList.json";
 	import Captcha from './Captcha.vue';
 
+	import LinkAttr from 'markdown-it-link-attributes';
+
 	import { timestampToLocaleFormatedTime } from '../ts/helpers/DateTimeHelper';
 
 	import Loader from './Loader.vue';
@@ -52,6 +54,20 @@
 
 	config(
 	{
+		markdownItPlugins(plugins) {
+			return [
+			...plugins,
+			{
+				type: 'linkAttr',
+				plugin: LinkAttr,
+				options: {
+				attrs: {
+					target: '_blank'
+				}
+				}
+			},
+			];
+		},
 		editorConfig: 
 		{
 			languageUserDefined: 
