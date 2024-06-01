@@ -379,6 +379,13 @@ CREATE INDEX idx_articles_view_code ON public.articles USING btree (view_code);
 
 
 --
+-- Name: idx_articles_view_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_view_id ON public.articles USING btree (view_id);
+
+
+--
 -- Name: idx_atricles_current_title_trgm; Type: INDEX; Schema: public; Owner: root
 --
 
@@ -425,6 +432,13 @@ CREATE INDEX idx_comments_rating ON public.comments USING btree (rating DESC);
 --
 
 CREATE INDEX idx_comments_text_trgm ON public.comments USING gin (text public.gin_trgm_ops);
+
+
+--
+-- Name: idx_comments_view_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_comments_view_id ON public.comments USING btree (view_id);
 
 
 --
