@@ -31,24 +31,6 @@ COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching
 
 
 --
--- Name: article_delete_comments(); Type: FUNCTION; Schema: public; Owner: root
---
-
-CREATE FUNCTION public.article_delete_comments() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$BEGIN
-    IF TG_OP = 'DELETE' THEN
-        DELETE FROM comments
-        WHERE article_id = OLD.id;
-    END IF;
-
-    RETURN NULL;
-END;$$;
-
-
-ALTER FUNCTION public.article_delete_comments() OWNER TO root;
-
---
 -- Name: comment_delete_subcommments(); Type: FUNCTION; Schema: public; Owner: root
 --
 
@@ -175,11 +157,39 @@ CREATE TABLE public.admins_tokens (
 ALTER TABLE public.admins_tokens OWNER TO root;
 
 --
+-- Name: article_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.article_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.article_id_seq OWNER TO root;
+
+--
+-- Name: view_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.view_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.view_id_seq OWNER TO root;
+
+--
 -- Name: articles; Type: TABLE; Schema: public; Owner: root
 --
 
 CREATE TABLE public.articles (
-    id integer NOT NULL,
+    id integer DEFAULT nextval('public.article_id_seq'::regclass) NOT NULL,
     rating bigint,
     comments_count bigint,
     created_date integer,
@@ -192,7 +202,8 @@ CREATE TABLE public.articles (
     approvededitorially_status smallint,
     premoderation_status smallint,
     view_code text,
-    edit_code text
+    edit_code text,
+    view_id integer DEFAULT nextval('public.view_id_seq'::regclass) NOT NULL
 );
 
 
@@ -228,33 +239,12 @@ CREATE TABLE public.comments (
     text text,
     rating integer,
     rating_influence integer DEFAULT 0,
-    created_date integer
+    created_date integer,
+    view_id integer DEFAULT nextval('public.view_id_seq'::regclass) NOT NULL
 );
 
 
 ALTER TABLE public.comments OWNER TO root;
-
---
--- Name: comments_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: root
---
-
-CREATE SEQUENCE public.comments_comment_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.comments_comment_id_seq OWNER TO root;
-
---
--- Name: comments_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
---
-
-ALTER SEQUENCE public.comments_comment_id_seq OWNED BY public.comments.id;
-
 
 --
 -- Name: settings; Type: TABLE; Schema: public; Owner: root
@@ -269,10 +259,11 @@ CREATE TABLE public.settings (
 ALTER TABLE public.settings OWNER TO root;
 
 --
--- Name: comments id; Type: DEFAULT; Schema: public; Owner: root
+-- Name: articles articles_pkey; Type: CONSTRAINT; Schema: public; Owner: root
 --
 
-ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.comments_comment_id_seq'::regclass);
+ALTER TABLE ONLY public.articles
+    ADD CONSTRAINT articles_pkey PRIMARY KEY (id);
 
 
 --
@@ -280,13 +271,6 @@ ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.com
 --
 
 CREATE INDEX idx_articles_approvededitorially_status ON public.articles USING btree (approvededitorially_status);
-
-
---
--- Name: idx_articles_article_id; Type: INDEX; Schema: public; Owner: root
---
-
-CREATE INDEX idx_articles_article_id ON public.articles USING btree (id);
 
 
 --
@@ -322,6 +306,13 @@ CREATE INDEX idx_articles_edit_code ON public.articles USING btree (edit_code);
 --
 
 CREATE INDEX idx_articles_editorially_status ON public.articles USING btree (editorially_status);
+
+
+--
+-- Name: idx_articles_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_articles_id ON public.articles USING btree (id);
 
 
 --
@@ -437,13 +428,6 @@ CREATE INDEX idx_comments_text_trgm ON public.comments USING gin (text public.gi
 
 
 --
--- Name: articles delete_comments_trigger; Type: TRIGGER; Schema: public; Owner: root
---
-
-CREATE TRIGGER delete_comments_trigger AFTER DELETE ON public.articles FOR EACH ROW EXECUTE FUNCTION public.article_delete_comments();
-
-
---
 -- Name: comments delete_subcommments_trigger; Type: TRIGGER; Schema: public; Owner: root
 --
 
@@ -469,6 +453,22 @@ CREATE TRIGGER update_article_rating_trigger AFTER INSERT OR DELETE ON public.co
 --
 
 CREATE TRIGGER update_comment_rating_trigger AFTER INSERT OR DELETE ON public.comments FOR EACH ROW EXECUTE FUNCTION public.comment_update_comment_rating();
+
+
+--
+-- Name: comments fk_article; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.comments
+    ADD CONSTRAINT fk_article FOREIGN KEY (article_id) REFERENCES public.articles(id) ON DELETE CASCADE;
+
+
+--
+-- Name: articles_versions fk_article; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.articles_versions
+    ADD CONSTRAINT fk_article FOREIGN KEY (article_id) REFERENCES public.articles(id) ON DELETE CASCADE;
 
 
 --
