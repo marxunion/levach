@@ -526,7 +526,6 @@
         openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
     }
 
-	
 	const onShare = () => 
 	{
 		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + props.articleViewCode + "/" + props.comment.id, text: props.articleTitle })
@@ -537,7 +536,7 @@
 	<div v-if="comment.id != null">
 		<div ref="targetComment" class="comment" :style="{ marginLeft: `${5 * level}%` }">
 			<div class="comment__header">
-				<a :href="'#/article/>'+comment.view_id" target="_blank" class="comment__header__title id">#{{ padNumberWithZeroes(comment.view_id) }}</a>
+				<p class="comment__header__title id">#{{ padNumberWithZeroes(comment.view_id) }}</p>
 				<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
 			</div>
 			<MdPreview class="comment__text" :modelValue="comment.text" :language="previewState.language"/>
