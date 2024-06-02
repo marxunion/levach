@@ -14,7 +14,7 @@
 
     const emits = defineEmits(["onVerify", "onExpired", "onError"]);
 
-    const recaptchaSitekey = ref(settings['recaptchaSiteKey']);
+    //const recaptchaSitekey = ref(settings['recaptchaSiteKey']);
     const recaptcha : Ref<VueRecaptcha | null> = ref(null);
 
     const onVerify = (response : string) => 
@@ -78,7 +78,7 @@
                 @verify="onVerify"
                 @expired="onExpired"
                 @error="onError"
-                :sitekey="recaptchaSitekey"
+                :sitekey="settings['recaptchaSiteKey']"
                 size="invisible">
             </vue-recaptcha>
         </div>
