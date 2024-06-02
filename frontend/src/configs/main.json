@@ -1,6 +1,7 @@
 {
     "langs": ["RU", "EN"],
     "domainName": "levach.ddns.net",
+    "recaptchaSiteKey": "6LfaS9spAAAAAFo0_FElcn_sYvxjb3wlt8czk2E2",
     "settings":
     {
         "article_edit_timeout_minutes": 1,

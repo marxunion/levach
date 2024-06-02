@@ -16,6 +16,9 @@ Rename php-example to php and ether your information
 ### Configure .env
 Rename .env-example to .env and ether your auth information
 
+### Configure frontend config
+Open frontend/configs/main.json and ether your domain name and recaptcha site key 
+
 ### Run server in DevMode
 ```bash
 docker-compose -f docker-compose.server.dev.yml up --build

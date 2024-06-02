@@ -10,9 +10,11 @@
     
     //const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("Captcha", langsData).langData;
 
+    import settings from '../configs/main.json';
+
     const emits = defineEmits(["onVerify", "onExpired", "onError"]);
 
-    const recaptchaSitekey = ref('6LfaS9spAAAAAFo0_FElcn_sYvxjb3wlt8czk2E2');
+    const recaptchaSitekey = ref(settings['recaptchaSiteKey']);
     const recaptcha : Ref<VueRecaptcha | null> = ref(null);
 
     const onVerify = (response : string) => 
