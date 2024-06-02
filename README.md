@@ -54,6 +54,7 @@ OR
 ```bash
 docker-compose -f docker-compose.server.prod.yml up -d
 ```
+After starting the server, the port for access to http nginx 8086(you can change this port in nginx/prod.conf if it is already used), for deployment to the Internet, you can use nginx + letsencrypt, the example of the config is shown with letsencrypt in nginx-example.conf. 
 
 ### Database Migration Import
 ```bash
