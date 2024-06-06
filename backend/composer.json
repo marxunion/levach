@@ -10,7 +10,8 @@
         "catfan/medoo": "^2.1",
         "vlucas/phpdotenv": "^5.6",
         "monolog/monolog": "^3.5",
-        "guzzlehttp/guzzle": "^7.8"
+        "guzzlehttp/guzzle": "^7.8",
+        "aws/aws-sdk-php": "^3.311"
     },
     "autoload": 
     {

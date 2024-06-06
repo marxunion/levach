@@ -1,8 +1,11 @@
 <?php
 namespace Api\Handlers;
 
+use Core\S3Client;
+
 use Core\Warning;
-use Core\Database;
+
+use Api\Models\MediaLoadImageModel;
 
 use Base\BaseHandlerRouteWithArgs;
 
@@ -15,9 +18,7 @@ class MediaLoadImageHandler extends BaseHandlerRouteWithArgs
     {
         if(!empty($this->args['file']))
         {
-            $this->file = $this->args['file'];
-            
-            $this->filePath = __DIR__.'/../../../media/img/'.$this->args['file'];
+            $this->model = new MediaUploadImageModel;
         }
         else
         {
@@ -26,13 +27,6 @@ class MediaLoadImageHandler extends BaseHandlerRouteWithArgs
     }
     public function Process()
     {
-        if(file_exists($this->filePath))
-        {
-            $this->response = $this->response->withFile($this->filePath);
-        }
-        else
-        {
-            throw new Warning(404, "LoadImage File not found", "LoadImage File not found, filePath=".$this->filePath);
-        }
+        $this->response = $this->model->getImageByCode($this->args['file']);
     }
 }

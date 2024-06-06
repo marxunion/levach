@@ -14,7 +14,16 @@ services:
       default_changeable_max_upload_filesize_mb: ${default_changeable_max_upload_filesize_mb}
       default_changeable_article_need_rating_to_approve_editorially: ${default_changeable_article_need_rating_to_approve_editorially}
 
+      MINIO_ROOT_USER: ${MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+
       HOSTNAME: ${HOSTNAME}
+
+      S3_HOST: ${S3_HOST}
+      S3_REGION: ${S3_REGION}
+      S3_PATH_STYLE_ENDPOINT: ${S3_PATH_STYLE_ENDPOINT}
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
 
       DB_TYPE: ${DB_TYPE}
       DB_HOST: ${DB_HOST}
@@ -23,13 +32,26 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
 
       RECAPTCHA_SECRETKEY: ${RECAPTCHA_SECRETKEY}
+
     volumes:
       - ./:/var/www/levach/:rw
       - ./php/php.ini-dev:/usr/local/etc/php/php.ini:rw
     depends_on:
-      - node
+      - minio
     networks:
       - app-network
+
+  minio:
+    container_name: MINIO
+    image: 'bitnami/minio:latest'
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      MINIO_ROOT_USER: ${MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+    depends_on:
+      - node
 
   nginx:
     container_name: NGINX

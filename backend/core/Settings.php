@@ -17,6 +17,11 @@ class Settings
             
             'HOSTNAME' => $_ENV['HOSTNAME'],
 
+            'S3_HOST' => $_ENV['DB_TYPE'],
+            'S3_REGION' => $_ENV['S3_REGION'],
+            'S3_ACCESS_KEY' => $_ENV['S3_ACCESS_KEY'],
+            'S3_SECRET_KEY' => $_ENV['S3_SECRET_KEY'],
+
             'DB_TYPE' => $_ENV['DB_TYPE'],
             'DB_NAME' => $_ENV['DB_NAME'],
             'DB_HOST' => $_ENV['DB_HOST'],
@@ -25,6 +30,15 @@ class Settings
 
             'RECAPTCHA_SECRETKEY' => $_ENV['RECAPTCHA_SECRETKEY']
         ];
+
+        if($_ENV['S3_PATH_STYLE_ENDPOINT'] == "true")
+        {
+            self::$settings['S3_PATH_STYLE_ENDPOINT'] = true;
+        }
+        else
+        {
+            self::$settings['S3_PATH_STYLE_ENDPOINT'] = false;
+        }
 
         if($_ENV['DEBUG_MODE'] == "true")
         {

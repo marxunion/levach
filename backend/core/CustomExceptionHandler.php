@@ -170,21 +170,79 @@ class CustomExceptionHandler extends ErrorHandler
     {
         if(Settings::getSetting("DEBUG_MODE"))
         {
-            $this->exceptionDetails['code'] = $this->exception->getCode();
-            $this->exceptionDetails['message'] = $this->exception->getMessage();
-            $this->exceptionDetails['file'] = $this->exception->getFile();
-            $this->exceptionDetails['line'] = $this->exception->getLine();
-            $this->exceptionDetails['trace'] = $this->exception->getTrace();
+            if(!empty($this->exception->getCode()))
+            {
+                $this->exceptionDetails['code'] = $this->exception->getCode();
+            }
+            else
+            {
+                $this->exceptionDetails['code'] = 500;
+            }
+            if(!empty($this->exception->getMessage()))
+            {
+                $this->exceptionDetails['message'] = $this->exception->getMessage();
+            }
+            else
+            {
+                $this->exceptionDetails['message'] = "Unknown Error";
+            }
+            if(!empty($this->exception->getFile()))
+            {
+                $this->exceptionDetails['file'] = $this->exception->getFile();
+            }
+            else
+            {
+                $this->exceptionDetails['file'] = "Unknown File";
+            }
+            if(!empty($this->exception->getLine()))
+            {
+                $this->exceptionDetails['line'] = $this->exception->getLine();
+            }
+            else
+            {
+                $this->exceptionDetails['line'] = 0;
+            }
+            if(!empty($this->exception->getTrace()))
+            {
+                $this->exceptionDetails['trace'] = $this->exception->getTrace();
+            }
+            else
+            {
+                $this->exceptionDetails['trace'] = 'Unknown Trace';
+            }
+
             $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
+
+            $this->logger->critical('Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exceptionDetails['file'].' | Line: '.$this->exceptionDetails['line'].' | Trace: '.$this->exception->getTraceAsString());
         }
         else
         {
             $this->exceptionDetails['code'] = 500;
             $this->exceptionDetails['message'] = "Unknown Error";
             $this->exceptionDetails['date'] = date('Y-m-d H:i:s');
+
+            if(!empty($this->exception->getFile()))
+            {
+                $file = $this->exception->getFile();
+            }
+            else
+            {
+                $file = 'Unknown file';
+            }
+
+            if(!empty($this->exception->getLine()))
+            {
+                $line = $this->exception->getLine();
+            }
+            else
+            {
+                $line = 0;
+            }
+
+            $this->logger->critical('Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exception->getFile().' | Line: '.$this->exception->getLine().' | Trace: '.$this->exception->getTraceAsString());
         }
 
-        $this->logger->critical('Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exceptionDetails['file'].' | Line: '.$this->exceptionDetails['line'].' | Trace: '.$this->exception->getTraceAsString());
+        $this->logger->critical('Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exception->getFile().' | Line: '.$this->exception->getLine().' | Trace: '.$this->exception->getTraceAsString());
 
         $responsePayload = json_encode(['Critical' => $this->exceptionDetails]);
 

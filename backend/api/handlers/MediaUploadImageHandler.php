@@ -2,13 +2,14 @@
 namespace Api\Handlers;
 
 use Core\Settings;
-use Core\Database;
 
 use Core\Warning;
 use Core\Error;
 use Core\Critical;
 
 use Base\BaseHandlerRoute;
+
+use Api\Models\MediaUploadImageModel;
 
 use Api\Handlers\CaptchaTokenHandler;
 use Api\Handlers\AdminSettingsGetHandler;
@@ -29,6 +30,7 @@ class MediaUploadImageHandler extends BaseHandlerRoute
                     if(count($this->request->getUploadedFiles()) > 0)
                     {
                         $this->cookiesBody = $this->request->getCookieParams();
+                        $this->model = new MediaUploadImageModel;
                     }
                     else
                     {
@@ -79,11 +81,10 @@ class MediaUploadImageHandler extends BaseHandlerRoute
                     
                 if(in_array($uploadedFile->getClientMediaType(), $allowedTypes))
                 {
-                    $uploadPath = __DIR__.'/../../../media/img/';
-                        
                     $newFileName = hash('sha3-256', uniqid().bin2hex(random_bytes(32)).$uploadedFile->getClientFilename()).'.'.pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
                     
-                    $uploadedFile->moveTo($uploadPath . DIRECTORY_SEPARATOR . $newFileName);
+
+                    $this->model->uploadImage($newFileName, $_FILES['file']['tmp_name']);
                     $this->response = $this->response->withHeader('Content-type', 'application/json')->withJson(
                     [
                         'fileName' => $newFileName
