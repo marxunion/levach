@@ -202,9 +202,33 @@ class CustomExceptionHandler extends ErrorHandler
             {
                 $this->exceptionDetails['line'] = 0;
             }
+
             if(!empty($this->exception->getTrace()))
             {
-                $this->exceptionDetails['trace'] = $this->exception->getTrace();
+                $trace = $this->exception->getTrace();
+
+                if(is_array($trace))
+                {
+                    if(count($trace) < 50)
+                    {
+                        if(!is_array($trace[0]))
+                        {
+                            $this->exceptionDetails['trace'] = $trace;
+                        }
+                        else
+                        {
+                            $this->exceptionDetails['trace'] = 'Too many big trace';
+                        }
+                    }
+                    else
+                    {
+                        $this->exceptionDetails['trace'] = 'Too many big trace';
+                    }
+                }
+                else
+                {
+                    $this->exceptionDetails['trace'] = 'Error Trace';
+                }
             }
             else
             {
@@ -239,7 +263,7 @@ class CustomExceptionHandler extends ErrorHandler
                 $line = 0;
             }
 
-            $this->logger->critical('Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exception->getFile().' | Line: '.$this->exception->getLine().' | Trace: '.$this->exception->getTraceAsString());
+            $this->logger->critical('Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$file.' | Line: '.$line.' | Trace: '.$this->exception->getTraceAsString());
         }
 
         $this->logger->critical('Code: '.$this->exceptionDetails['code'].' | Message: '.$this->exceptionDetails['message'].' | File: '.$this->exception->getFile().' | Line: '.$this->exception->getLine().' | Trace: '.$this->exception->getTraceAsString());
