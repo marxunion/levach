@@ -14,7 +14,7 @@ class S3Client
     {
         self::$connection = new AwsS3Client([
             'version' => 'latest',
-            'endpoint' => Settings::getSetting("S3_HOST"),
+            'endpoint' => 'http://'.Settings::getSetting("S3_HOST"),
             'region'  => Settings::getSetting("S3_REGION"),
             'use_path_style_endpoint'  => Settings::getSetting("S3_PATH_STYLE_ENDPOINT"),
             'credentials' => [

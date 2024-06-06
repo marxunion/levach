@@ -81,7 +81,7 @@ class MediaUploadImageHandler extends BaseHandlerRoute
                     
                 if(in_array($uploadedFile->getClientMediaType(), $allowedTypes))
                 {
-                    $newFileName = hash('sha3-256', uniqid().bin2hex(random_bytes(32)).$uploadedFile->getClientFilename()).'.'.pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+                    $newFileName = uniqid().bin2hex(random_bytes(10)).'.'.pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
                     
 
                     $this->model->uploadImage($newFileName, $_FILES['file']['tmp_name']);
