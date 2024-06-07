@@ -127,7 +127,7 @@ class AdminArticleCommentsGetModel extends BaseModel
         ];
 
         $comments = $this->database->query($sql, $bindings)->fetchAll();
-        $commentsReturn = [];
+        $commentsToReturn = [];
 
         foreach($comments as &$comment) 
         {
@@ -138,10 +138,10 @@ class AdminArticleCommentsGetModel extends BaseModel
                 {
                     $comment['subcomments'] = $subcomments;
                 }
-                array_push($commentsReturn, $comment);
+                array_push($commentsToReturn, $comment);
             }
         }
 
-        return $commentsReturn;
+        return $commentsToReturn;
     }
 }

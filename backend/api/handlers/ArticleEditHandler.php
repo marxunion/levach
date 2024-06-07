@@ -93,16 +93,23 @@ class ArticleEditHandler extends BaseHandlerRouteWithArgs
                             $content = implode("\n", array_slice($contentParts, 1));
                             if(strlen($content) >= 25) 
                             {
-                                if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                                if(strlen($content) < 1000000) 
                                 {
-                                    $this->model->editArticleAdmin($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
-                                }
-                                else
+                                    if(AdminStatusHandler::isAdmin($this->cookiesBody))
+                                    {
+                                        $this->model->editArticleAdmin($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
+                                    }
+                                    else
+                                    {
+                                        $this->model->editArticle($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
+                                    }
+                            
+                                    $this->response = $this->response->withJson(['success' => true]);
+                                } 
+                                else 
                                 {
-                                    $this->model->editArticle($articleId, $title, $this->parsedBody['text'], $this->parsedBody['tags']);
+                                    throw new Warning(400, "The content of the article should be no more than 1000000 characters", "The content of the article should be no more than 1000000 characters");
                                 }
-                        
-                                $this->response = $this->response->withJson(['success' => true]);
                             } 
                             else 
                             {

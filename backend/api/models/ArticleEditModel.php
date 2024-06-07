@@ -75,7 +75,7 @@ class ArticleEditModel extends BaseModel
                                 'tags' => $newTagsString,
                                 
                                 'editorially_status' => $articleData['editorially_status'],
-                                'premoderation_status' => $articleData['premoderation_status'],
+                                'premoderation_status' => 0,
                                 'approvededitorially_status' => $articleData['approvededitorially_status']
                             ]
                         );

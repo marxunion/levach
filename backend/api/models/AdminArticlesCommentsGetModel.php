@@ -104,7 +104,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
 
         $articles = $this->database->query($sql, $bindings)->fetchAll();
 
-        $articlesReturn = [];
+        $articlesToReturn = [];
 
         foreach($articles as &$article) 
         {
@@ -120,7 +120,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
             ];
 
             $comments = $this->database->query($sql, $bindings)->fetchAll();
-            $commentsReturn = [];
+            $commentsToReturn = [];
 
             foreach($comments as &$comment) 
             {
@@ -131,16 +131,16 @@ class AdminArticlesCommentsGetModel extends BaseModel
                     {
                         $comment['subcomments'] = $subcomments;
                     }
-                    array_push($commentsReturn, $comment);
+                    array_push($commentsToReturn, $comment);
                 }
             }
 
-            if(!empty($commentsReturn)) 
+            if(!empty($commentsToReturn)) 
             {
-                $article["comments"] = $commentsReturn;
-                array_push($articlesReturn, $article);
+                $article["comments"] = $commentsToReturn;
+                array_push($articlesToReturn, $article);
             }
         }
-        return $articlesReturn;
+        return $articlesToReturn;
     }
 }
