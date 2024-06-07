@@ -27,20 +27,27 @@ class ArticleCommentNewHandler extends BaseHandlerRouteWithArgs
                             {
                                 if(!empty($this->parsedBody['text']))
                                 {
-                                    $this->parsedBody['ratingInfluence'] = 0;
-                                    if(isset($this->parsedBody['rating_influence']))
+                                    if($this->parsedBody['text'] < 1000000)
                                     {
-                                        if($this->parsedBody['rating_influence'] == 1)
+                                        $this->parsedBody['ratingInfluence'] = 0;
+                                        if(isset($this->parsedBody['rating_influence']))
                                         {
-                                            $this->parsedBody['ratingInfluence'] = 1;
+                                            if($this->parsedBody['rating_influence'] == 1)
+                                            {
+                                                $this->parsedBody['ratingInfluence'] = 1;
+                                            }
+                                            else if($this->parsedBody['rating_influence'] == 2)
+                                            {
+                                                $this->parsedBody['ratingInfluence'] = -1;
+                                            }
                                         }
-                                        else if($this->parsedBody['rating_influence'] == 2)
-                                        {
-                                            $this->parsedBody['ratingInfluence'] = -1;
-                                        }
+                                            
+                                        $this->model = new ArticleCommentNewModel();
                                     }
-                                        
-                                    $this->model = new ArticleCommentNewModel();
+                                    else
+                                    {
+                                        throw new Error(400, "The content of the comment should be no more than 1000000 characters", "The content of the comment should be no more than 1000000 characters");
+                                    }
                                 }
                                 else
                                 {
