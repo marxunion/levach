@@ -209,14 +209,7 @@ class CustomExceptionHandler extends ErrorHandler
 
                 if(is_array($trace))
                 {
-                    if(count($trace) < 20)
-                    {
-                        $this->exceptionDetails['trace'] = 'Too many big trace';
-                    }
-                    else
-                    {
-                        $this->exceptionDetails['trace'] = 'Too many big trace';
-                    }
+                    $this->exceptionDetails['trace'] = $trace;
                 }
                 else
                 {

@@ -27,7 +27,7 @@ class MediaUploadImageModel extends BaseModel
             $result = $this->s3Client->putObject([
                 'Bucket' => Settings::getSetting("S3_IMAGES_BUCKET_NAME"),
                 'Key' => $newFileName,
-                'Body' => Settings::getSetting("S3_ACCESS_KEY")
+                'Body' => fopen($image, 'r')
             ]);
         } 
         catch (AwsException $e) 
