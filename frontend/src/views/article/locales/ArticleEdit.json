@@ -60,7 +60,8 @@
             {
                 "0": "Не пройдена",
                 "1": "В процессе премодерации",
-                "2": "Пройдена"
+                "2": "Пройдена",
+                "3": "В процессе премодерации"
             },
             "approvedEditoriallyStatusText": "Статус одобрения редакции:",
             "approvedEditoriallyStatus": 
@@ -262,7 +263,8 @@
             {
                 "0": "Not passed",
                 "1": "In process premoderated",
-                "2": "Passed"
+                "2": "Passed",
+                "3": "In process premoderated"
             },
             "approvedEditoriallyStatusText": "Editorial approval status: ",
             "approvedEditoriallyStatus": 

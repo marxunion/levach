@@ -35,6 +35,16 @@ class AdminArticlePremoderateModel extends BaseModel
 
     public function rejectPremoderate($articleId)
     {
-        $this->database->delete('articles', ['id' => $articleId]);
+        $premoderationStatus = $this->database->get('articles', 'premoderation_status', ['id' => $articleId]);
+        if($premoderationStatus == 3)
+        {
+            $this->database->update('articles', ['premoderation_status' => 2], ['premoderation_status' => 3, 'id' => $articleId]);
+            $this->database->delete('articles_versions', ['premoderation_status' => 1, 'article_id' => $articleId]);
+        }
+        else
+        {
+            $this->database->delete('articles', ['id' => $articleId]);
+        }
+        
     }
 }

@@ -59,6 +59,35 @@ class AdminArticleApproveModel extends BaseModel
             $newVersionId = $articleData['current_version'] + 1;
             $newArticleCreatedDate = time();
 
+            $newTagsString = '';
+
+            $articleData = [
+                'current_version' => $newVersionId, 
+                'created_date' => $newArticleCreatedDate,
+
+                'current_title' => $newTitle, 
+                'current_text' => $newText,
+                
+                'editorially_status' => 0,
+                'premoderation_status' => 2,
+                'approvededitorially_status' => 3,
+
+                'edit_timeout_to_date' => $newArticleCreatedDate
+            ];
+
+            $articleVersionData = [
+                'article_id' => $articleId,
+                'version_id' => $newVersionId,
+                'created_date' => $newArticleCreatedDate,
+
+                'title' => $newTitle,
+                'text' => $newText,
+
+                'editorially_status' => 0,
+                'premoderation_status' => 2,
+                'approvededitorially_status' => 3
+            ];
+
             if(isset($newTags))
             {
                 if(is_array($newTags))
@@ -72,6 +101,8 @@ class AdminArticleApproveModel extends BaseModel
                         if(count($newTags) == count(array_unique($newTags)))
                         {
                             $newTagsString = '{'.implode(',', $newTags).'}';
+                            $articleData['current_tags'] = $newTagsString;
+                            $articleVersionData['tags'] = $newTagsString;
                         }
                         else
                         {
@@ -103,42 +134,17 @@ class AdminArticleApproveModel extends BaseModel
                 ]
             );
 
-            $this->database->insert(
-                'articles_versions',
-                [
-                    'article_id' => $articleId,
-                    'version_id' => $newVersionId,
-                    'created_date' => $newArticleCreatedDate,
-
-                    'title' => $newTitle,
-                    'text' => $newText,
-                    'tags' => $newTagsString,
-
-                    'editorially_status' => 0,
-                    'premoderation_status' => 2,
-                    'approvededitorially_status' => 3
-                ]
-            );
-            
             $this->database->update(
                 'articles', 
-                [
-                    'current_version' => $newVersionId, 
-                    'created_date' => $newArticleCreatedDate,
-
-                    'current_title' => $newTitle, 
-                    'current_text' => $newText, 
-                    'current_tags' => $newTagsString, 
-                    
-                    'editorially_status' => 0,
-                    'premoderation_status' => 2,
-                    'approvededitorially_status' => 3,
-
-                    'edit_timeout_to_date' => $newArticleCreatedDate
-                ], 
+                $articleData, 
                 [
                     'id' => $articleId
                 ]
+            );
+
+            $this->database->insert(
+                'articles_versions',
+                $articleVersionData
             );
         }
         else 

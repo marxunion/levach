@@ -99,7 +99,7 @@ class ArticleViewModel extends BaseModel
             );
             if(isset($articleVersions))
             {
-                $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId, 'premoderation_status' => 2]);
+                $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId, 'premoderation_status' => [2,3]]);
                 $article['view_id'] = $viewId;
                 if(isset($article))
                 {
@@ -266,7 +266,7 @@ class ArticleViewModel extends BaseModel
         );
         if(isset($articleVersions))
         {
-            $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status', 'view_id'], ['id' => $articleId, 'premoderation_status' => 2]);
+            $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status', 'view_id'], ['id' => $articleId, 'premoderation_status' => [2,3]]);
             if(isset($article))
             {
                 foreach($articleVersions as $versionNum => $versionInfo) 

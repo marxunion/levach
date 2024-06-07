@@ -39,8 +39,59 @@ class ArticleEditModel extends BaseModel
             
                         $newVersionId = $articleData['current_version'] + 1;
                         $newArticleCreatedDate = time();
+
+                        $articleVersionData = [
+                            'article_id' => $articleId,
+                            'version_id' => $newVersionId,
+                            'created_date' => $newArticleCreatedDate,
+
+                            'title' => $newTitle,
+                            'text' => $newText,
+
+                            'editorially_status' => $articleData['editorially_status'],
+                            'premoderation_status' => 1,
+                            'approvededitorially_status' => $articleData['approvededitorially_status']
+                        ];
+
+                        
+
+                        if($articleData['premoderation_status'] == 1)
+                        {
+                            $articleData = 
+                            [
+                                'current_version' => $newVersionId, 
+                                'created_date' => $newArticleCreatedDate,
+    
+                                'current_title' => $newTitle, 
+                                'current_text' => $newText,
+    
+                                'edit_timeout_to_date' => $newArticleCreatedDate
+                            ];
+                        }
+                        else
+                        {
+                            $articleData = 
+                            [
+                                'current_version' => $newVersionId, 
+                                'created_date' => $newArticleCreatedDate,
+    
+                                'current_title' => $newTitle, 
+                                'current_text' => $newText,
+    
+                                'premoderation_status' => 3,
+    
+                                'edit_timeout_to_date' => $newArticleCreatedDate
+                            ];
+                        }
+                        
+
+                        $articleEditTimeoutMinutes = AdminSettingsGetHandler::getSetting('article_edit_timeout_minutes');
+                        if(isset($articleEditTimeoutMinutes))
+                        {
+                            $articleData['edit_timeout_to_date'] = $newArticleCreatedDate + ($articleEditTimeoutMinutes * 60);
+                        }
             
-                        $newTagsString = '{}';
+                        $newTagsString = '';
                         if(isset($newTags))
                         {
                             if(is_array($newTags))
@@ -54,6 +105,8 @@ class ArticleEditModel extends BaseModel
                                     if(count($newTags) == count(array_unique($newTags)))
                                     {
                                         $newTagsString = '{'.implode(',', $newTags).'}';
+                                        $articleData['current_tags'] = $newTagsString;
+                                        $articleVersionData['tags'] = $newTagsString;
                                     }
                                     else
                                     {
@@ -63,50 +116,18 @@ class ArticleEditModel extends BaseModel
                             }
                         }
                         
-                        $this->database->insert(
-                            'articles_versions', 
+                        $this->database->update(
+                            'articles', 
+                            $articleData, 
                             [
-                                'article_id' => $articleId,
-                                'version_id' => $newVersionId,
-                                'created_date' => $newArticleCreatedDate,
-
-                                'title' => $newTitle,
-                                'text' => $newText,
-                                'tags' => $newTagsString,
-                                
-                                'editorially_status' => $articleData['editorially_status'],
-                                'premoderation_status' => 0,
-                                'approvededitorially_status' => $articleData['approvededitorially_status']
+                                'id' => $articleId
                             ]
                         );
             
-                        $articleEditTimeoutMinutes = AdminSettingsGetHandler::getSetting('article_edit_timeout_minutes');
-                        if(isset($articleEditTimeoutMinutes))
-                        {
-                            $this->database->update(
-                                'articles', 
-                                [
-                                    'current_version' => $newVersionId, 
-                                    'current_title' => $newTitle, 
-                                    'current_text' => $newText, 
-                                    'current_tags' => $newTagsString,
-                                    'created_date' => $newArticleCreatedDate,
-
-                                    'editorially_status' => $articleData['editorially_status'],
-                                    'premoderation_status' => $articleData['premoderation_status'],
-                                    'approvededitorially_status' => $articleData['approvededitorially_status'],
-
-                                    'edit_timeout_to_date' => $newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)
-                                ], 
-                                [
-                                    'id' => $articleId
-                                ]
-                            );
-                        }
-                        else
-                        {
-                            throw new Critical(500, 'Unknown error', "Article edit timeout minutes not found in settings");
-                        }
+                        $this->database->insert(
+                            'articles_versions',
+                            $articleVersionData
+                        );
                     } 
                     else 
                     {
@@ -144,7 +165,30 @@ class ArticleEditModel extends BaseModel
             $newVersionId = $articleData['current_version'] + 1;
             $newArticleCreatedDate = time();
 
-            $newTagsString = '{}';
+            $articleVersionData = [
+                'article_id' => $articleId,
+                'version_id' => $newVersionId,
+                'created_date' => $newArticleCreatedDate,
+
+                'title' => $newTitle,
+                'text' => $newText,
+
+                'editorially_status' => $articleData['editorially_status'],
+                'premoderation_status' => $articleData['premoderation_status'],
+                'approvededitorially_status' => $articleData['approvededitorially_status']
+            ];
+
+            $articleData = 
+            [
+                'current_version' => $newVersionId, 
+                'created_date' => $newArticleCreatedDate,
+
+                'current_title' => $newTitle, 
+                'current_text' => $newText, 
+                'edit_timeout_to_date' => $newArticleCreatedDate
+            ];
+
+            $newTagsString = '';
             if(isset($newTags))
             {
                 if(is_array($newTags))
@@ -158,6 +202,8 @@ class ArticleEditModel extends BaseModel
                         if(count($newTags) == count(array_unique($newTags)))
                         {
                             $newTagsString = "{".implode(',', $newTags).'}';
+                            $articleData['current_tags'] = $newTagsString;
+                            $articleVersionData['tags'] = $newTagsString;
                         }
                         else
                         {
@@ -167,42 +213,17 @@ class ArticleEditModel extends BaseModel
                 }
             }
             
-            $this->database->insert(
-                'articles_versions',
-                [
-                    'article_id' => $articleId,
-                    'version_id' => $newVersionId,
-                    'created_date' => $newArticleCreatedDate,
-
-                    'title' => $newTitle,
-                    'text' => $newText,
-                    'tags' => $newTagsString,
-
-                    'editorially_status' => $articleData['editorially_status'],
-                    'premoderation_status' => $articleData['premoderation_status'],
-                    'approvededitorially_status' => $articleData['approvededitorially_status']
-                ]
-            );
-            
             $this->database->update(
                 'articles', 
-                [
-                    'current_version' => $newVersionId, 
-                    'created_date' => $newArticleCreatedDate,
-
-                    'current_title' => $newTitle, 
-                    'current_text' => $newText, 
-                    'current_tags' => $newTagsString, 
-                    
-                    'editorially_status' => $articleData['editorially_status'],
-                    'premoderation_status' => $articleData['premoderation_status'],
-                    'approvededitorially_status' => $articleData['approvededitorially_status'],
-
-                    'edit_timeout_to_date' => $newArticleCreatedDate
-                ], 
+                $articleData, 
                 [
                     'id' => $articleId
                 ]
+            );
+
+            $this->database->insert(
+                'articles_versions',
+                $articleVersionData
             );
         }
         else

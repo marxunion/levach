@@ -864,6 +864,7 @@
 								<img v-if="fetchedArticleData.premoderation_status == 0" src="../../assets/img/article/statuses/0.svg" alt="premoderationStatus">
 								<img v-if="fetchedArticleData.premoderation_status == 1" src="../../assets/img/article/statuses/1.svg" alt="premoderationStatus">
 								<img v-if="fetchedArticleData.premoderation_status == 2" src="../../assets/img/article/statuses/2.svg" alt="premoderationStatus">
+								<img v-if="fetchedArticleData.premoderation_status == 3" src="../../assets/img/article/statuses/1.svg" alt="premoderationStatus">
 								<p>{{ ((langData['statuses'] as JsonData)['premoderationStatus'] as JsonData)[fetchedArticleData.premoderation_status.toString()] }}</p>
 							</div>
 						</div>
@@ -880,7 +881,7 @@
 					</div>
 				</div>
 			</div>
-			<div v-if="viewLink != '' && (adminStatus || fetchedArticleData.premoderation_status == 2)" class="main__article__block">
+			<div v-if="viewLink != '' && (adminStatus || fetchedArticleData.premoderation_status == 2 || fetchedArticleData.premoderation_status == 3)" class="main__article__block">
 				<p class="main__article__block__title linkForViewArticle">{{ langData['linkForViewArticle'] }}</p>
 				<div class="main__article__block__link">
 					<input v-model="viewLink" ref="viewLinkTextInput" type="text" class="main__article__block__link__input"></input>

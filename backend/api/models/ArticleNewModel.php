@@ -68,7 +68,7 @@ class ArticleNewModel extends BaseModel
             'approvededitorially_status' => 0
         ];
         
-        $tagsString = '{}';
+        $tagsString = '';
         if(is_array($tags))
         {
             if(count($tags) > 0)
@@ -98,21 +98,7 @@ class ArticleNewModel extends BaseModel
     public function newArticleAdmin($title, $text, $tags, $viewCode, $editCode)
     {
         $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
-        $articleVersionData = 
-        [
-            'version_id' => 1,
-            'title' => $title,
-            'text' => $text,
-            'tags' => null,
-            
-            'editorially_status' => 1,
-            
-            'premoderation_status' => 2,
-            'approvededitorially_status' => 2,
-            
-            'created_date' => time()
-        ];
-
+        
         $articleData = 
         [
             'current_version' => 1,
@@ -133,8 +119,22 @@ class ArticleNewModel extends BaseModel
             'premoderation_status' => 2,
             'approvededitorially_status' => 2
         ];
+        $articleVersionData = 
+        [
+            'version_id' => 1,
+            'title' => $title,
+            'text' => $text,
+            'tags' => null,
+            
+            'editorially_status' => 1,
+            
+            'premoderation_status' => 2,
+            'approvededitorially_status' => 2,
+            
+            'created_date' => time()
+        ];
 
-        $tagsString = '{}';
+        $tagsString = '';
         if(is_array($tags))
         {
             if(count($tags) > 0)
@@ -146,8 +146,8 @@ class ArticleNewModel extends BaseModel
                 if(count($tags) == count(array_unique($tags)))
                 {
                     $tagsString = '{'.implode(',', $tags).'}';
-                    $articleVersionData['tags'] = $tagsString;
                     $articleData['current_tags'] = $tagsString;
+                    $articleVersionData['tags'] = $tagsString;
                 }
                 else
                 {
