@@ -22,6 +22,12 @@ class S3Client
                 'secret' => Settings::getSetting("S3_SECRET_KEY"),
             ],
         ]);
+
+        $bucketName = Settings::getSetting("S3_IMAGES_BUCKET_NAME");
+        if(!self::$connection->doesBucketExist($bucketName)) 
+        {
+            self::$connection->createBucket(['Bucket' => $bucketName]);
+        }
         
     }
 

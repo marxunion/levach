@@ -3,6 +3,7 @@ namespace Api\Models;
 
 use Core\S3Client;
 use Core\Critical;
+use Core\Settings;
 
 use Aws\Exception\AwsException;
 
@@ -24,9 +25,9 @@ class MediaUploadImageModel extends BaseModel
         try 
         {
             $result = $this->s3Client->putObject([
-                'Bucket' => 'images',
+                'Bucket' => Settings::getSetting("S3_IMAGES_BUCKET_NAME"),
                 'Key' => $newFileName,
-                'SourceFile' => $image,
+                'Body' => Settings::getSetting("S3_ACCESS_KEY")
             ]);
         } 
         catch (AwsException $e) 

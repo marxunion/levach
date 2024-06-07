@@ -3,6 +3,7 @@ namespace Api\Models;
 
 use Core\S3Client;
 use Core\Critical;
+use Core\Settings;
 
 use Aws\Exception\AwsException;
 
@@ -22,7 +23,7 @@ class MediaLoadImageModel extends BaseModel
         try 
         {
             $result = $this->s3Client->getObject([
-                'Bucket' => 'images',
+                'Bucket' => Settings::getSetting("S3_IMAGES_BUCKET_NAME"),
                 'Key'    => $fileName,
             ]);
             return $result;

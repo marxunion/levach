@@ -18,6 +18,7 @@ class Settings
             'HOSTNAME' => $_ENV['HOSTNAME'],
 
             'S3_HOST' => $_ENV['S3_HOST'],
+            'S3_IMAGES_BUCKET_NAME' => $_ENV['S3_IMAGES_BUCKET_NAME'],
             'S3_REGION' => $_ENV['S3_REGION'],
             'S3_ACCESS_KEY' => $_ENV['S3_ACCESS_KEY'],
             'S3_SECRET_KEY' => $_ENV['S3_SECRET_KEY'],
