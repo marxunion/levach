@@ -11,11 +11,11 @@ use Base\BaseModel;
 
 class MediaLoadImageModel extends BaseModel
 {
-    private $s3client;
+    private $s3Client;
 
     public function __construct()
     {
-        $this->s3client = S3Client::getConnection();
+        $this->s3Client = S3Client::getConnection();
     }
 
     public function getImageByCode($fileName)

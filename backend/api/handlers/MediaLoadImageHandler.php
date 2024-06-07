@@ -18,7 +18,7 @@ class MediaLoadImageHandler extends BaseHandlerRouteWithArgs
     {
         if(!empty($this->args['file']))
         {
-            $this->model = new MediaUploadImageModel;
+            $this->model = new MediaLoadImageModel;
         }
         else
         {
