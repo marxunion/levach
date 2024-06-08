@@ -23,14 +23,21 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
                         if(isset($this->parsedBody['status']))
-                        { 
-                            if(!empty($this->args['viewCode']))
+                        {
+                            if(isset($this->parsedBody['version_id']))
                             {
-                                $this->model = new AdminArticlePremoderateModel();
+                                if(!empty($this->args['viewCode']))
+                                {
+                                    $this->model = new AdminArticlePremoderateModel();
+                                }
+                                else
+                                {
+                                    throw new Error(400, "Article not found", "Article not found");
+                                }
                             }
                             else
                             {
-                                throw new Error(400, "Article not found", "Article not found");
+                                throw new Error(400, "Premoderation version not found", "Premoderation version not found");
                             }
                         }
                         else 
@@ -74,14 +81,25 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
         {
             if($this->parsedBody['status'] == 0)
             {
-                
-                $this->model->rejectPremoderate($articleId);
-                $this->response = $this->response->withJson(['success' => true]);
+                if($this->model->rejectPremoderate($articleId, $this->parsedBody['version_id']))
+                {
+                    $this->response = $this->response->withJson(['success' => true, 'deletedAllVersions' => true]);
+                }
+                else
+                {
+                    $this->response = $this->response->withJson(['success' => true, 'deletedAllVersions' => false]);
+                }
             }
             else if($this->parsedBody['status'] == 1)
             {
-                $this->model->acceptPremoderate($articleId);
-                $this->response = $this->response->withJson(['success' => true]);
+                if($this->model->acceptPremoderate($articleId, $this->parsedBody['version_id']))
+                {
+                    $this->response = $this->response->withJson(['success' => true, 'acceptedAllVersions' => true]);
+                }
+                else
+                {
+                    $this->response = $this->response->withJson(['success' => true, 'acceptedAllVersions' => true]);
+                }
             }
             else
             {

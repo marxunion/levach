@@ -27,24 +27,60 @@ class AdminArticlePremoderateModel extends BaseModel
         return $articleId;
     }
 
-    public function acceptPremoderate($articleId)
+    public function acceptPremoderate($articleId, $versionId)
     {
-        $this->database->update('articles', ['premoderation_status' => 2], ['id' => $articleId]);
-        $this->database->update('articles_versions', ['premoderation_status' => 2], ['article_id' => $articleId]);
-    }
-
-    public function rejectPremoderate($articleId)
-    {
+        $acceptedAllVersionsStatus = false;
         $premoderationStatus = $this->database->get('articles', 'premoderation_status', ['id' => $articleId]);
         if($premoderationStatus == 3)
         {
-            $this->database->update('articles', ['premoderation_status' => 2], ['premoderation_status' => 3, 'id' => $articleId]);
-            $this->database->delete('articles_versions', ['premoderation_status' => 1, 'article_id' => $articleId]);
+            $maxVersionId = $this->database->max('articles_versions', 'version_id', ['article_id' => $articleId]);
+            if($maxVersionId == $versionId)
+            {
+                $acceptedAllVersionsStatus = true;
+                $this->database->update('articles', ['premoderation_status' => 2], ['id' => $articleId]);
+            }
         }
         else
         {
-            $this->database->delete('articles', ['id' => $articleId]);
+            $maxVersionId = $this->database->max('articles_versions', 'version_id', ['article_id' => $articleId]);
+            if($maxVersionId == $versionId)
+            {
+                $acceptedAllVersionsStatus = true;
+                $this->database->update('articles', ['premoderation_status' => 2], ['id' => $articleId]);
+            }
+            else
+            {
+                $this->database->update('articles', ['premoderation_status' => 3], ['id' => $articleId]);
+            }
         }
-        
+        $this->database->update('articles_versions', ['premoderation_status' => 2], ['version_id[<=]' => $versionId, 'article_id' => $articleId]);
+        return $acceptedAllVersionsStatus;
+    }
+
+    public function rejectPremoderate($articleId, $versionId)
+    {
+        $deletedAllVersionsStatus = false;
+        $premoderationStatus = $this->database->get('articles', 'premoderation_status', ['id' => $articleId]);
+        if($premoderationStatus == 3)
+        {
+            $maxVersionId = $this->database->max('articles_versions', 'version_id', ['article_id' => $articleId]);
+            if($maxVersionId == $versionId)
+            {
+                $deletedAllVersionsStatus = true;
+                $this->database->update('articles', ['premoderation_status' => 2], ['id' => $articleId]);
+            }
+            $this->database->delete('articles_versions', ['premoderation_status' => 1, 'version_id[<=]' => $versionId, 'article_id' => $articleId]);
+        }
+        else
+        {
+            $maxVersionId = $this->database->max('articles_versions', 'version_id', ['article_id' => $articleId]);
+            if($maxVersionId == $versionId)
+            {
+                $deletedAllVersionsStatus = true;
+                $this->database->delete('articles', ['id' => $articleId]);
+            }
+            $this->database->delete('articles_versions', ['version_id[<=]' => $versionId, 'article_id' => $articleId]);
+        }
+        return $deletedAllVersionsStatus;
     }
 }

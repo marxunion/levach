@@ -295,6 +295,20 @@
         articles.value = [];
     });
 
+
+    const refetchArticleData = async (articleViewCode : string) =>
+    {
+        await axios.get('api/article/view/'+articleViewCode)
+		.then(async response =>
+		{
+			if(response.data.versions)
+			{
+				articles.value[currentSelectedArticleIndex.value] = response.data;
+			}
+		})
+        
+    }
+
     const onAcceptPremoderateArticle = async (articleViewCode : string, version_id : number) => 
     {
         if(adminStatus.value)
@@ -310,6 +324,7 @@
             const data = 
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+                version_id: version_id,
                 status: 1,
             }
 
@@ -320,14 +335,21 @@
                 {
                     openModal(InfoModal, {status: true, text: langData.value['articleAcceptPremoderateSuccessfully']});
 
-                    articles.value = reactive(articles.value.slice(0, currentSelectedArticleIndex.value).concat(articles.value.slice(currentSelectedArticleIndex.value + 1)));
-                    if(articles.value.length == 0)
+                    if(response.data.acceptedAllVersions)
                     {
-                        loading.value = true;
+                        articles.value = reactive(articles.value.slice(0, currentSelectedArticleIndex.value).concat(articles.value.slice(currentSelectedArticleIndex.value + 1)));
+                        if(articles.value.length == 0)
+                        {
+                            loading.value = true;
+                        }
+                        else
+                        {
+                            reloading.value = true;
+                        }
                     }
                     else
                     {
-                        reloading.value = true;
+                        await refetchArticleData(articleViewCode);
                     }
                         
                     await fetchNewArticles();
@@ -393,6 +415,7 @@
             const data = 
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+                version_id: version_id,
                 status: 0,
             }
 
@@ -403,14 +426,21 @@
                 {
                     await openModal(InfoModal, {status: true, text: langData.value['articleRejectPremoderateSuccessfully']});
                     
-                    articles.value = reactive(articles.value.slice(0, currentSelectedArticleIndex.value).concat(articles.value.slice(currentSelectedArticleIndex.value + 1)));
-                    if(articles.value.length == 0)
+                    if(response.data.deletedAllVersions)
                     {
-                        loading.value = true;
+                        articles.value = reactive(articles.value.slice(0, currentSelectedArticleIndex.value).concat(articles.value.slice(currentSelectedArticleIndex.value + 1)));
+                        if(articles.value.length == 0)
+                        {
+                            loading.value = true;
+                        }
+                        else
+                        {
+                            reloading.value = true;
+                        }
                     }
                     else
                     {
-                        reloading.value = true;
+                        await refetchArticleData(articleViewCode);
                     }
                         
                     await fetchNewArticles();
