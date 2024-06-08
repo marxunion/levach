@@ -1,8 +1,22 @@
 <?php
 namespace Helpers;
 
+use HTMLPurifier;
+use HTMLPurifier_Config;
+
 class StringFormatter 
 {
+    public static function filterHtmlTags($input)
+    {
+        $config = HTMLPurifier_Config::createDefault();
+        $config->set('HTML.Allowed', 'img[src|alt|width]');
+        $config->set('Attr.AllowedFrameTargets', ['_blank']);
+        $config->set('Attr.EnableID', true);
+        $purifier = new HTMLPurifier($config);
+
+        return $purifier->purify($input);
+    }
+
     public static function replaceViewIdsToViewIdsLinks($input) 
     {
         $pattern = '/#(\d+)/';

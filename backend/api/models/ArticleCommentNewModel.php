@@ -32,6 +32,8 @@ class ArticleCommentNewModel extends BaseModel
     public function newComment($articleId, $text = '', $ratingInfluence = 0)
     {
         $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
+        $text = StringFormatter::filterHtmlTags($text);
+
         $newCommentId = 1;
         $lastCommentId = $this->database->max('comments', 'id', ['article_id' => $articleId]);
 

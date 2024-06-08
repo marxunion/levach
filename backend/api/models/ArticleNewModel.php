@@ -34,6 +34,8 @@ class ArticleNewModel extends BaseModel
     public function newArticle($title, $text, $tags, $viewCode, $editCode)
     {
         $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
+        $text = StringFormatter::filterHtmlTags($text);
+
         $articleVersionData = [
             'version_id' => 1,
             'title' => $title,
@@ -98,7 +100,8 @@ class ArticleNewModel extends BaseModel
     public function newArticleAdmin($title, $text, $tags, $viewCode, $editCode)
     {
         $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
-        
+        $text = StringFormatter::filterHtmlTags($text);
+
         $articleData = 
         [
             'current_version' => 1,
