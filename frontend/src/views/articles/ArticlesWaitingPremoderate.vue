@@ -8,7 +8,7 @@
     import { tagsArrayToString } from '../../ts/helpers/TagsHelper';
 
     import { JsonData } from '../../ts/interfaces/JsonData';
-    import { Article } from '../../ts/interfaces/Article'; 
+    import { Article, ArticleVersion } from '../../ts/interfaces/Article'; 
 
     import { articleReloading, articles } from '../../ts/handlers/ArticlesHandler';
 
@@ -295,21 +295,7 @@
         articles.value = [];
     });
 
-
-    const refetchArticleData = async (articleViewCode : string) =>
-    {
-        await axios.get('api/article/view/'+articleViewCode)
-		.then(async response =>
-		{
-			if(response.data.versions)
-			{
-				articles.value[currentSelectedArticleIndex.value] = response.data;
-			}
-		})
-        
-    }
-
-    const onAcceptPremoderateArticle = async (articleViewCode : string, version_id : number) => 
+    const onAcceptPremoderateArticle = async (articleViewCode : string, versionId : number, versionIndex : number) => 
     {
         if(adminStatus.value)
         {
@@ -324,7 +310,7 @@
             const data = 
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-                version_id: version_id,
+                version_id: versionId,
                 status: 1,
             }
 
@@ -349,7 +335,14 @@
                     }
                     else
                     {
-                        await refetchArticleData(articleViewCode);
+
+                        articles.value[currentSelectedArticleIndex.value].versions = articles.value[currentSelectedArticleIndex.value].versions.filter(version => 
+                        {
+                            return version.version_id > versionId;
+                        });
+                        articles.value[currentSelectedArticleIndex.value].currentSelectedVersion = versionIndex-1;
+                        console.log(articles.value);
+                        
                     }
                         
                     await fetchNewArticles();
@@ -400,7 +393,7 @@
         }
     }
 
-    const onRejectPremoderateArticle = async (articleViewCode : string, version_id : number) => 
+    const onRejectPremoderateArticle = async (articleViewCode : string, versionId : number, versionIndex : number) => 
     {
         if(adminStatus.value)
         {
@@ -415,7 +408,7 @@
             const data = 
             {
                 csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-                version_id: version_id,
+                version_id: versionId,
                 status: 0,
             }
 
@@ -440,7 +433,12 @@
                     }
                     else
                     {
-                        await refetchArticleData(articleViewCode);
+                        reloading.value = true;
+                        articles.value[currentSelectedArticleIndex.value].versions = articles.value[currentSelectedArticleIndex.value].versions.filter(version => 
+                        {
+                            return version.version_id < versionId;
+                        });
+                        articles.value[currentSelectedArticleIndex.value].currentSelectedVersion = versionIndex+1;
                     }
                         
                     await fetchNewArticles();
@@ -514,8 +512,8 @@
                 <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 
                 <div class="main__article__buttons">
-                    <a @click="currentSelectedArticleIndex = index;onAcceptPremoderateArticle(article.view_code, article.versions[article.currentSelectedVersion-1].version_id)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
-                    <a @click="currentSelectedArticleIndex = index;onRejectPremoderateArticle(article.view_code, article.versions[article.currentSelectedVersion-1].version_id)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+                    <a @click="currentSelectedArticleIndex = index;onAcceptPremoderateArticle(article.view_code, article.versions[article.currentSelectedVersion-1].version_id, article.currentSelectedVersion-1)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
+                    <a @click="currentSelectedArticleIndex = index;onRejectPremoderateArticle(article.view_code, article.versions[article.currentSelectedVersion-1].version_id, article.currentSelectedVersion-1)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
                     <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
                 </div>
 
@@ -531,7 +529,7 @@
                     </a>
                 </div>
                 <DropDownVersion
-                    :max-version="(article as Article).versions.length"
+                    :versions="(article as Article).versions"
                     class="main__article__select" 
                     @input="(version : number) => (article as Article).currentSelectedVersion = version" />
             </div>

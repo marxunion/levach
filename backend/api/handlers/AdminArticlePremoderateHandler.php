@@ -98,7 +98,7 @@ class AdminArticlePremoderateHandler extends BaseHandlerRouteWithArgs
                 }
                 else
                 {
-                    $this->response = $this->response->withJson(['success' => true, 'acceptedAllVersions' => true]);
+                    $this->response = $this->response->withJson(['success' => true, 'acceptedAllVersions' => false]);
                 }
             }
             else

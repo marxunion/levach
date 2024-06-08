@@ -466,8 +466,15 @@
 		{
 			uploadedFiles = files;
 			uploadedCallback = callback;
-			captchaVerifyCallback = onNewCommentUploadImgRequest;
-			captcha.value?.execute();
+			if(settings.captchaEnabled)
+			{
+				captchaVerifyCallback = onNewCommentUploadImgRequest;
+				captcha.value?.execute();
+			}
+			else
+			{
+				onNewCommentUploadImgRequest('token');
+			}
 		}
 	}
 
@@ -562,8 +569,15 @@
 	{
 		if(newCommentEditorState.text.length > 0)
 		{
-			captchaVerifyCallback = onCreateNewCommentRequest;
-			captcha.value?.execute();
+			if(settings.captchaEnabled)
+			{
+				captchaVerifyCallback = onCreateNewCommentRequest;
+				captcha.value?.execute();
+			}
+			else
+			{
+				onCreateNewCommentRequest('token');
+			}
 		}
 	}
 
@@ -714,7 +728,7 @@
 		});
 	}
 
-	const onRejectPremoderateArticle = async (version_id : number) =>
+	const onRejectPremoderateArticle = async (versionId : number) =>
 	{
 		await getNewCsrfToken();
 
@@ -727,7 +741,7 @@
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			version_id: version_id,
+			version_id: versionId,
 			status: 0
 		}
 
@@ -783,7 +797,7 @@
 		});
 	}
 
-	const onAcceptPremoderateArticle = async (version_id : number) =>
+	const onAcceptPremoderateArticle = async (versionId : number) =>
 	{
 		await getNewCsrfToken();
 
@@ -796,7 +810,7 @@
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
-			version_id: version_id,
+			version_id: versionId,
 			status: 1
 		}
 
@@ -986,7 +1000,7 @@
 				
 				<DropDownVersion
 				v-if="!dropDownReloading"
-				:max-version="fetchedArticleData.versions.length"
+				:versions="fetchedArticleData.versions"
 				class="main__article__previewContainer__selectVersion" 
 				@input="(version : number) => currentVersion = version" />
 			</div>

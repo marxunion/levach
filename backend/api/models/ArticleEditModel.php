@@ -24,7 +24,22 @@ class ArticleEditModel extends BaseModel
         $newText = StringFormatter::replaceViewIdsToViewIdsLinks($newText);
         $newText = StringFormatter::filterHtmlTags($newText);
 
-        $articleData = $this->database->get('articles', ['current_version','current_title', 'current_text', 'current_tags', 'edit_timeout_to_date', 'editorially_status', 'premoderation_status', 'approvededitorially_status'], ['id' => $articleId]);
+        $articleData = $this->database->get(
+            'articles', 
+            [
+                'current_version',
+                'current_title',
+                'current_text',
+                'current_tags',
+                'edit_timeout_to_date',
+                'editorially_status',
+                'premoderation_status',
+                'approvededitorially_status'
+            ], 
+            [
+                'id' => $articleId
+            ]
+        );
         
         if(isset($articleData))
         {
@@ -55,12 +70,9 @@ class ArticleEditModel extends BaseModel
                             'approvededitorially_status' => $articleData['approvededitorially_status']
                         ];
 
-                        
-
                         if($articleData['premoderation_status'] == 1)
                         {
-                            $articleData = 
-                            [
+                            $articleData = [
                                 'current_version' => $newVersionId, 
                                 'created_date' => $newArticleCreatedDate,
     
@@ -85,12 +97,11 @@ class ArticleEditModel extends BaseModel
                                 'edit_timeout_to_date' => $newArticleCreatedDate
                             ];
                         }
-                        
 
                         $articleEditTimeoutMinutes = AdminSettingsGetHandler::getSetting('article_edit_timeout_minutes');
                         if(isset($articleEditTimeoutMinutes))
                         {
-                            $articleData['edit_timeout_to_date'] = $newArticleCreatedDate + ($articleEditTimeoutMinutes * 60);
+                            $articleData['edit_timeout_to_date'] = ceil(($newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)) / 60) * 60;
                         }
             
                         $newTagsString = '';
@@ -183,6 +194,19 @@ class ArticleEditModel extends BaseModel
             $newVersionId = $articleData['current_version'] + 1;
             $newArticleCreatedDate = time();
 
+            $articleVersionData = $articleData = $this->database->get(
+                'articles', 
+                [
+                    'editorially_status', 
+                    'premoderation_status', 
+                    'approvededitorially_status'
+                ], 
+                [
+                    'id' => $articleId,
+                    'version_id' => $articleData['current_version']
+                ]
+            );
+
             $articleVersionData = [
                 'article_id' => $articleId,
                 'version_id' => $newVersionId,
@@ -190,10 +214,6 @@ class ArticleEditModel extends BaseModel
 
                 'title' => $newTitle,
                 'text' => $newText,
-
-                'editorially_status' => $articleData['editorially_status'],
-                'premoderation_status' => $articleData['premoderation_status'],
-                'approvededitorially_status' => $articleData['approvededitorially_status']
             ];
 
             $articleData = 

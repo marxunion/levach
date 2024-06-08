@@ -168,9 +168,15 @@
         {
             if (password.value.length > 0) 
             {
-                captchaVerifyCallback = onLoginButtonRequest;
-
-				captcha.value?.execute();
+                if(settings.value.captchaEnabled)
+			    {
+                    captchaVerifyCallback = onLoginButtonRequest;
+                    captcha.value?.execute();
+                }
+                else
+                {
+                    onLoginButtonRequest('token');
+                }
             }
             else
             {
@@ -568,7 +574,7 @@
         <div class="form__fields">
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleTimeoutMinutesTitle'] }}</p>
-                <VueNumberInput :value="settings.article_edit_timeout_minutes" v-model="settings.article_edit_timeout_minutes" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+                <VueNumberInput :value="settings.article_edit_timeout_minutes" v-model="settings.article_edit_timeout_minutes" :min="0" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleMaxUploadFileSizeTitle'] }}</p>

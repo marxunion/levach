@@ -41,6 +41,15 @@ class Settings
             self::$settings['S3_PATH_STYLE_ENDPOINT'] = false;
         }
 
+        if($_ENV['CAPTCHA_ENABLED'] == "true")
+        {
+            self::$settings['CAPTCHA_ENABLED'] = true;
+        }
+        else
+        {
+            self::$settings['CAPTCHA_ENABLED'] = false;
+        }
+
         if($_ENV['DEBUG_MODE'] == "true")
         {
             self::$settings['DEBUG_MODE'] = true;

@@ -419,7 +419,7 @@
                     </a>
                 </div>
                 <DropDownVersion
-                    :max-version="(article as Article).versions.length"
+                    :versions="(article as Article).versions"
                     class="main__article__select" 
                     @input="(version : number) => (article as Article).currentSelectedVersion = version" />
             </div>

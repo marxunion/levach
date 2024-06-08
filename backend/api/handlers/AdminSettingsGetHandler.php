@@ -18,14 +18,14 @@ class AdminSettingsGetHandler extends BaseHandlerRoute
         if(!empty($settingName))
         {
             $responseData = AdminSettingsGetModel::_getSetting($settingName);
-            if(!empty($responseData))
+            if(isset($responseData))
             {
                 return $responseData;
             }
             else
             {
                 $responseData = Settings::getSetting('default_changeable_'.$settingName);
-                if(!empty($responseData))
+                if(isset($responseData))
                 {
                     return $responseData;
                 }
@@ -97,14 +97,14 @@ class AdminSettingsGetHandler extends BaseHandlerRoute
         foreach($this->parsedBody['settings'] as &$settingName) 
         {
             $responseData = $this->model->getSetting($settingName);
-            if(!empty($responseData))
+            if(isset($responseData))
             {
                 $settingsToReturn[$settingName] = $responseData;
             }
             else
             {
                 $responseData = Settings::getSetting('default_changeable_'.$settingName);
-                if(!empty($responseData))
+                if(isset($responseData))
                 {
                     $settingsToReturn[$settingName] = $responseData;
                 }

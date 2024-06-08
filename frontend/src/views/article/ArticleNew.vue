@@ -24,6 +24,8 @@
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
+	import settings from '../../configs/main.json';
+
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleNew", langsData).langData;
 
 	const captcha : Ref<{ execute: () => void } | null> = ref(null);
@@ -240,9 +242,15 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25) 
 						{
-							captchaVerifyCallback = onSendButtonRequest;
-
-							captcha.value?.execute();
+							if(settings.captchaEnabled)
+			    			{
+								captchaVerifyCallback = onSendButtonRequest;
+								captcha.value?.execute();
+							}
+							else
+							{
+								onSendButtonRequest('token');
+							}
 						}
 						else
 						{
@@ -413,8 +421,15 @@
 		{
 			uploadedFiles = files;
 			uploadedCallback = callback;
-			captchaVerifyCallback = onUploadImgRequest;
-			captcha.value?.execute();
+			if(settings.captchaEnabled)
+			{
+				captchaVerifyCallback = onUploadImgRequest;
+				captcha.value?.execute();
+			}
+			else
+			{
+				onUploadImgRequest('token');
+			}
 		}
 	}
 

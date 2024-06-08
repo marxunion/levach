@@ -29,13 +29,14 @@ class ArticleViewModel extends BaseModel
                         'text', 
                         'tags', 
                         'created_date',
+                        'version_id',
                         'editorially_status', 
                         'approvededitorially_status', 
                         'premoderation_status'
                     ],
                     [
                         "ORDER" => [
-                            "version_id" => "ASC",
+                            "version_id" => "DESC",
                         ],
                         'article_id' => $articleId, 
                         'premoderation_status' => 2
@@ -43,7 +44,21 @@ class ArticleViewModel extends BaseModel
                 );
                 if(isset($articleVersions))
                 {
-                    $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status', 'view_id'], ['id' => $articleId, 'premoderation_status' => 2]);
+                    $article = $this->database->get(
+                        'articles', 
+                        [
+                            'rating',
+                            'comments_count', 
+                            'editorially_status', 
+                            'approvededitorially_status', 
+                            'premoderation_status', 
+                            'view_id'
+                        ], 
+                        [
+                            'id' => $articleId, 
+                            'premoderation_status' => 2
+                        ]
+                    );
 
                     $article['scrollToCommentId'] = $comment['id'];
                     if(isset($article))
@@ -85,13 +100,14 @@ class ArticleViewModel extends BaseModel
                     'text', 
                     'tags', 
                     'created_date',
+                    'version_id',
                     'editorially_status', 
                     'approvededitorially_status', 
                     'premoderation_status'
                 ],
                 [
                     "ORDER" => [
-                        "version_id" => "ASC",
+                        "version_id" => "DESC",
                     ],
                     'article_id' => $articleId, 
                     'premoderation_status' => 2
@@ -99,7 +115,20 @@ class ArticleViewModel extends BaseModel
             );
             if(isset($articleVersions))
             {
-                $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId, 'premoderation_status' => [2,3]]);
+                $article = $this->database->get(
+                    'articles', 
+                    [
+                        'rating', 
+                        'comments_count',
+                        'editorially_status',
+                        'approvededitorially_status', 
+                        'premoderation_status'
+                    ], 
+                    [
+                        'id' => $articleId, 
+                        'premoderation_status' => [2, 3]
+                    ]
+                );
                 $article['view_id'] = $viewId;
                 if(isset($article))
                 {
@@ -130,11 +159,26 @@ class ArticleViewModel extends BaseModel
     
     public function getArticleByViewIdAdmin($viewId)
     {
-        $articleId = $this->database->get('articles', 'id', ['view_id' => $viewId]);
+        $articleId = $this->database->get(
+            'articles', 
+            'id', 
+            [
+                'view_id' => $viewId
+            ]
+        );
 
         if(!isset($articleId))
         {
-            $comment = $this->database->get('comments', ['id', 'article_id'], ['view_id' => $viewId]);
+            $comment = $this->database->get(
+                'comments', 
+                [
+                    'id', 
+                    'article_id'
+                ],
+                [
+                    'view_id' => $viewId
+                ]
+            );
 
             if(isset($comment))
             {
@@ -147,20 +191,35 @@ class ArticleViewModel extends BaseModel
                         'text', 
                         'tags', 
                         'created_date',
+                        'version_id',
                         'editorially_status', 
                         'approvededitorially_status', 
                         'premoderation_status'
                     ],
                     [
                         "ORDER" => [
-                            "version_id" => "ASC",
+                            "version_id" => "DESC",
                         ],
                         'article_id' => $articleId
                     ]
                 );
                 if(isset($articleVersions))
                 {
-                    $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status', 'view_id'], ['id' => $articleId]);
+                    $article = $this->database->get(
+                        'articles', 
+                        [
+                            'rating', 
+                            'comments_count', 
+                            'editorially_status',
+                            'approvededitorially_status',
+                            'premoderation_status',
+                            'view_id'
+                        ], 
+                        [
+                            'id' => $articleId
+                        ]
+                    );
+
                     $article['scrollToCommentId'] = $comment['id'];
                     if(isset($article))
                     {
@@ -201,20 +260,33 @@ class ArticleViewModel extends BaseModel
                     'text', 
                     'tags', 
                     'created_date',
+                    'version_id',
                     'editorially_status', 
                     'approvededitorially_status', 
                     'premoderation_status'
                 ],
                 [
                     "ORDER" => [
-                        "version_id" => "ASC",
+                        "version_id" => "DESC",
                     ],
                     'article_id' => $articleId
                 ]
             );
             if(isset($articleVersions))
             {
-                $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status'], ['id' => $articleId]);
+                $article = $this->database->get(
+                    'articles', 
+                    [
+                        'rating', 
+                        'comments_count', 
+                        'editorially_status', 
+                        'approvededitorially_status', 
+                        'premoderation_status'
+                    ], 
+                    [
+                        'id' => $articleId
+                    ]
+                );
                 $article['view_id'] = $viewId;
                 if(isset($article))
                 {
@@ -252,13 +324,14 @@ class ArticleViewModel extends BaseModel
                 'text', 
                 'tags', 
                 'created_date',
+                'version_id',
                 'editorially_status', 
                 'approvededitorially_status', 
                 'premoderation_status'
             ],
             [
                 "ORDER" => [
-                    "version_id" => "ASC",
+                    "version_id" => "DESC",
                 ],
                 'article_id' => $articleId, 
                 'premoderation_status' => 2
@@ -266,7 +339,21 @@ class ArticleViewModel extends BaseModel
         );
         if(isset($articleVersions))
         {
-            $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status', 'view_id'], ['id' => $articleId, 'premoderation_status' => [2,3]]);
+            $article = $this->database->get(
+                'articles', 
+                [
+                    'rating', 
+                    'comments_count', 
+                    'editorially_status', 
+                    'approvededitorially_status', 
+                    'premoderation_status', 
+                    'view_id'
+                ], 
+                [
+                    'id' => $articleId, 
+                    'premoderation_status' => [2, 3]
+                ]
+            );
             if(isset($article))
             {
                 foreach($articleVersions as $versionNum => $versionInfo) 
@@ -301,21 +388,35 @@ class ArticleViewModel extends BaseModel
                 'title', 
                 'text', 
                 'tags', 
-                'created_date', 
+                'created_date',
+                'version_id',
                 'editorially_status', 
                 'approvededitorially_status', 
                 'premoderation_status'
             ], 
             [
                 "ORDER" => [
-                    "version_id" => "ASC",
+                    "version_id" => "DESC",
                 ],
                 'article_id' => $articleId
             ]
         );
         if(isset($articleVersions))
         {
-            $article = $this->database->get('articles', ['rating', 'comments_count', 'editorially_status', 'approvededitorially_status', 'premoderation_status', 'view_id'], ['id' => $articleId]);
+            $article = $this->database->get(
+                'articles', 
+                [
+                    'rating', 
+                    'comments_count', 
+                    'editorially_status', 
+                    'approvededitorially_status', 
+                    'premoderation_status', 
+                    'view_id'
+                ], 
+                [
+                    'id' => $articleId
+                ]
+            );
 
             if(isset($article))
             {

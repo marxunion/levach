@@ -409,9 +409,15 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25) 
 						{
-							captchaVerifyCallback = onSendButtonRequest;
-
-							captcha.value?.execute();
+							if(settings.captchaEnabled)
+			    			{
+								captchaVerifyCallback = onSendButtonRequest;
+								captcha.value?.execute();
+							}
+							else
+							{
+								onSendButtonRequest('token');
+							}
 						}
 						else
 						{
@@ -581,8 +587,15 @@
 		{
 			uploadedFiles = files;
 			uploadedCallback = callback;
-			captchaVerifyCallback = onUploadImgRequest;
-			captcha.value?.execute();
+			if(settings.captchaEnabled)
+			{
+				captchaVerifyCallback = onUploadImgRequest;
+				captcha.value?.execute();
+			}
+			else
+			{
+				onUploadImgRequest('token');
+			}
 		}
 	}
 

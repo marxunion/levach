@@ -968,18 +968,18 @@ class ArticlesModel extends BaseModel
                         $articleVersions = $this->database->select(
                             'articles_versions', 
                             [
-                                'version_id', 
                                 'title', 
                                 'text', 
                                 'tags', 
-                                'created_date', 
+                                'created_date',
+                                'version_id', 
                                 'editorially_status', 
                                 'premoderation_status', 
                                 'approvededitorially_status'
                             ],
                             [
                                 "ORDER" => [
-                                    "version_id" => "ASC",
+                                    "version_id" => "DESC",
                                 ],
                                 'article_id' => $article['id'], 
                                 'premoderation_status' => 2,
@@ -1032,18 +1032,18 @@ class ArticlesModel extends BaseModel
                         $articleVersions = $this->database->select(
                             'articles_versions', 
                             [
-                                'version_id', 
                                 'title', 
                                 'text',
                                 'tags',
                                 'created_date',
+                                'version_id', 
                                 'editorially_status',
                                 'premoderation_status',
                                 'approvededitorially_status'
                             ], 
                             [
                                 "ORDER" => [
-                                    "version_id" => "ASC",
+                                    "version_id" => "DESC",
                                 ],
                                 'article_id' => $article['id'], 
                                 'editorially_status' => 1
@@ -1094,18 +1094,18 @@ class ArticlesModel extends BaseModel
                         $articleVersions = $this->database->select(
                             'articles_versions', 
                             [
-                                'version_id', 
                                 'title', 
                                 'text', 
                                 'tags',
                                 'created_date',
+                                'version_id', 
                                 'editorially_status',
                                 'premoderation_status',
                                 'approvededitorially_status'
                             ],
                             [
                                 "ORDER" => [
-                                    "version_id" => "ASC",
+                                    "version_id" => "DESC",
                                 ],
                                 'article_id' => $article['id'],
                                 'approvededitorially_status' => 2,
@@ -1157,18 +1157,18 @@ class ArticlesModel extends BaseModel
                         $articleVersions = $this->database->select(
                             'articles_versions', 
                             [
-                                'version_id', 
                                 'title', 
                                 'text', 
                                 'tags', 
-                                'created_date', 
+                                'created_date',
+                                'version_id',
                                 'editorially_status', 
                                 'premoderation_status', 
                                 'approvededitorially_status'
                             ],
                             [
                                 "ORDER" => [
-                                    "version_id" => "ASC",
+                                    "version_id" => "DESC",
                                 ],
                                 'article_id' => $article['id'], 
                                 'premoderation_status' => 2,
@@ -1222,18 +1222,18 @@ class ArticlesModel extends BaseModel
                         $articleVersions =  $this->database->select(
                             'articles_versions', 
                             [
-                                'version_id', 
                                 'title',
                                 'text', 
                                 'tags', 
                                 'created_date', 
+                                'version_id', 
                                 'editorially_status', 
                                 'premoderation_status', 
                                 'approvededitorially_status'
                             ], 
                             [
                                 "ORDER" => [
-                                    "version_id" => "ASC",
+                                    "version_id" => "DESC",
                                 ],
                                 'article_id' => $article['id'], 
                                 'premoderation_status' => 2, 
@@ -1296,7 +1296,7 @@ class ArticlesModel extends BaseModel
                             ], 
                             [
                                 "ORDER" => [
-                                    "version_id" => "ASC",
+                                    "version_id" => "DESC",
                                 ],
                                 'article_id' => $article['id'], 
                                 'premoderation_status' => 1

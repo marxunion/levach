@@ -1,6 +1,7 @@
 {
     "langs": ["RU", "EN"],
     "domainName": "levach.ddns.net",
+    "captchaEnabled": false,
     "recaptchaSiteKey": "6LfaS9spAAAAAFo0_FElcn_sYvxjb3wlt8czk2E2",
     "settings":
     {

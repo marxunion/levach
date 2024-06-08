@@ -313,8 +313,15 @@
 		{
 			uploadedFiles = files;
 			uploadedCallback = callback;
-			captchaVerifyCallback = onNewCommentUploadImgRequest;
-			captcha.value?.execute();
+			if(settings.captchaEnabled)
+			{
+				captchaVerifyCallback = onNewCommentUploadImgRequest;
+				captcha.value?.execute();
+			}
+			else
+			{
+				onNewCommentUploadImgRequest('token');
+			}
 		}
 	}
 
@@ -416,8 +423,15 @@
 	{
 		if(newSubcommentEditorState.text.length > 0)
 		{
-			captchaVerifyCallback = onCreateNewSubcommentRequest;
-			captcha.value?.execute();
+			if(settings.captchaEnabled)
+			{
+				captchaVerifyCallback = onCreateNewSubcommentRequest;
+				captcha.value?.execute();
+			}
+			else
+			{
+				onCreateNewSubcommentRequest('token');
+			}
 		}
 	}
 
