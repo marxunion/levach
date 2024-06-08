@@ -295,7 +295,7 @@
         articles.value = [];
     });
 
-    const onAcceptPremoderateArticle = async (articleViewCode : string) => 
+    const onAcceptPremoderateArticle = async (articleViewCode : string, version_id : number) => 
     {
         if(adminStatus.value)
         {
@@ -378,7 +378,7 @@
         }
     }
 
-    const onRejectPremoderateArticle = async (articleViewCode : string) => 
+    const onRejectPremoderateArticle = async (articleViewCode : string, version_id : number) => 
     {
         if(adminStatus.value)
         {
@@ -484,8 +484,8 @@
                 <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
 
                 <div class="main__article__buttons">
-                    <a @click="currentSelectedArticleIndex = index;onAcceptPremoderateArticle(article.view_code)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
-                    <a @click="currentSelectedArticleIndex = index;onRejectPremoderateArticle(article.view_code)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+                    <a @click="currentSelectedArticleIndex = index;onAcceptPremoderateArticle(article.view_code, article.versions[article.currentSelectedVersion-1].version_id)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
+                    <a @click="currentSelectedArticleIndex = index;onRejectPremoderateArticle(article.view_code, article.versions[article.currentSelectedVersion-1].version_id)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
                     <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
                 </div>
 

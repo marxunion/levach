@@ -714,7 +714,7 @@
 		});
 	}
 
-	const onRejectPremoderateArticle = async () =>
+	const onRejectPremoderateArticle = async (version_id : number) =>
 	{
 		await getNewCsrfToken();
 
@@ -727,6 +727,7 @@
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			version_id: version_id,
 			status: 0
 		}
 
@@ -782,7 +783,7 @@
 		});
 	}
 
-	const onAcceptPremoderateArticle = async () =>
+	const onAcceptPremoderateArticle = async (version_id : number) =>
 	{
 		await getNewCsrfToken();
 
@@ -795,6 +796,7 @@
 		const data = 
 		{
 			csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
+			version_id: version_id,
 			status: 1
 		}
 
@@ -963,9 +965,9 @@
 					<a @click="onRejectApproveArticle()" class="main__article__previewContainer__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
 					<a :href="'#/admin/article/approve/'+articleViewCode" class="main__article__previewContainer__buttons__button acceptApproveArticleButton">{{ langData['acceptApproveArticleButton'] }}</a>
 				</div>
-				<div v-else-if="adminStatus && fetchedArticleData.premoderation_status == 1" class="main__article__previewContainer__buttons">
-					<a @click="onRejectPremoderateArticle()" class="main__article__previewContainer__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
-					<a @click="onAcceptPremoderateArticle()" class="main__article__previewContainer__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
+				<div v-else-if="adminStatus && (fetchedArticleData.versions[currentVersion-1].premoderation_status == 1)" class="main__article__previewContainer__buttons">
+					<a @click="onRejectPremoderateArticle(fetchedArticleData.versions[currentVersion-1].version_id)" class="main__article__previewContainer__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+					<a @click="onAcceptPremoderateArticle(fetchedArticleData.versions[currentVersion-1].version_id)" class="main__article__previewContainer__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
 				</div>
 				<div v-else-if="adminStatus" class="main__article__previewContainer__buttons oneButton">
 					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
@@ -1009,7 +1011,7 @@
 					</div>
 					<Captcha @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 				</div>
-				
+			
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
 					<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode" :articleTitle="fetchedArticleData.versions[currentVersion-1].title" :scrollToCommentId="commentId"/>
 					<div v-if="commentsReloading" class="main__article__comments__commentsList__reloader">
