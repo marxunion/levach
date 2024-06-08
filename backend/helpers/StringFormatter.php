@@ -59,7 +59,7 @@ class StringFormatter
             ];
 
             if($bytes == 0) return '0 ' . $unit[0];
-            return @round($bytes/pow(1024,($i=floor(log($bytes,1024)))),2) .' '. (isset($unit[$i]) ? $unit[$i] : 'B');
+            return @round($bytes/pow(1024, ($i=floor(log($bytes,1024)))),2) .' '. (isset($unit[$i]) ? $unit[$i] : 'B');
         } 
         else 
         {
@@ -73,7 +73,7 @@ class StringFormatter
             ];
 
             if($bytes == 0) return '0 ' . $unit[0];
-            return @round($bytes/pow(1000,($i=floor(log($bytes,1000)))),2) .' '. (isset($unit[$i]) ? $unit[$i] : 'B');
+            return @round($bytes/pow(1000, ($i=floor(log($bytes,1000)))),2) .' '. (isset($unit[$i]) ? $unit[$i] : 'B');
         }
     }
 }

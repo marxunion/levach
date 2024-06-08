@@ -76,6 +76,7 @@ docker exec POSTGRES sh /var/www/levach/scripts/admin.create.account.sh
 sudo chmod 777 backend/logs
 sudo chmod 777 backend/logs/errors
 sudo chmod 777 backend/logs/errors/critical
+sudo chmod 777 backend/vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer
 sudo chmod 777 media
 sudo chmod 777 media/img
 ```
