@@ -92,11 +92,11 @@
 							commentId.value = fetchedArticleData.value.scrollToCommentId;
 						}
 					}
-					if(currentVersion.value != fetchedArticleData.value.versions.length)
+					if(currentVersion.value != 0)
 					{
 						dropDownReloading.value = true;
 						await setTimeout(() => {}, 1000);
-						currentVersion.value = fetchedArticleData.value.versions.length;
+						currentVersion.value = 0;
 						dropDownReloading.value = false;
 					}
 				}
@@ -591,7 +591,7 @@
 			await fetchArticleData();
 			if (fetchedArticleData.value != null) 
 			{
-				currentVersion.value = fetchedArticleData.value.versions.length;
+				currentVersion.value = 0;
 
 				comments.value = [];
 

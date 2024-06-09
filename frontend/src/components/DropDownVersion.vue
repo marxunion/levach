@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import "./scss/DropDown.scss";
-import { ref, ComputedRef, defineProps, defineEmits } from "vue";
+	import "./scss/DropDown.scss";
+	import { ref, ComputedRef, defineProps, defineEmits } from "vue";
 
-import { JsonData } from "../ts/interfaces/JsonData";
+	import { JsonData } from "../ts/interfaces/JsonData";
 
-import { LangDataHandler } from "../ts/handlers/LangDataHandler";
-import langsData from "./locales/DropDownVersion.json";
+	import { LangDataHandler } from "../ts/handlers/LangDataHandler";
+	import langsData from "./locales/DropDownVersion.json";
 
-const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("DropDownVersion", langsData).langData;
+	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("DropDownVersion", langsData).langData;
 
-const props = defineProps(["versions"]);
-const emits = defineEmits(["input"]);
+	const props = defineProps(["versions"]);
+	const emits = defineEmits(["input"]);
 
-const selected = ref(props.versions[0]);
+	const selected = ref(props.versions[0]);
 
-const open = ref(false);
+	const open = ref(false);
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const open = ref(false);
 					selected = version;
 					open = false;
 					
-					$emit('input', index + 1);">
+					$emit('input', index);">
 				{{ langData['version'] + version.version_id }}
 			</div>
         </div>

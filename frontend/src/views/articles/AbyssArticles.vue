@@ -168,7 +168,7 @@
                 {
                     response.data.forEach((article : Article) => 
                     {
-                        article.currentSelectedVersion = article.versions.length;
+                        article.currentSelectedVersion = 0;
                         articles.value.push(article);
                         lastLoaded.value++;
                     });
@@ -382,11 +382,11 @@
 			</div>
 		</div>
 		<article class="main__article" v-if="articles.length > 0 && !loading" v-for="(article, index) in articles" :key="article.id">
-            <div class="main__article__block" v-if="article.versions[article.currentSelectedVersion-1]">
+            <div class="main__article__block" v-if="article.versions[article.currentSelectedVersion]">
                 <a :href="'#/article/>'+article.view_id" target="_blank" class="main__article__titleId">#{{ padNumberWithZeroes(article.view_id) }}</a>
-                <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion-1].created_date) }}</p>
-                <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
-                <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
+                <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion].created_date) }}</p>
+                <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion].text" :language="previewState.language"/>
+                <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion].tags) }}</p>
 
                 <div v-if="adminStatus" class="main__article__buttons">
                     <a @click="currentSelectedArticleIndex = index;deleteArticle(article.view_code)" class="main__article__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
@@ -399,7 +399,7 @@
                     <div class="main__article__reactions__statistics">
                         <img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
                         <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.rating) }}</p>
-                        <img @click="onShare(article.versions[article.currentSelectedVersion-1].title, article.view_code)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
+                        <img @click="onShare(article.versions[article.currentSelectedVersion].title, article.view_code)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                     </div>
                     <a :href="'#/article/'+article.view_code" class="main__article__reactions__comments">
                         <img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">

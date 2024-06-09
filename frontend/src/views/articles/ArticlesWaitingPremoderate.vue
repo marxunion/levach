@@ -8,7 +8,7 @@
     import { tagsArrayToString } from '../../ts/helpers/TagsHelper';
 
     import { JsonData } from '../../ts/interfaces/JsonData';
-    import { Article, ArticleVersion } from '../../ts/interfaces/Article'; 
+    import { Article } from '../../ts/interfaces/Article'; 
 
     import { articleReloading, articles } from '../../ts/handlers/ArticlesHandler';
 
@@ -38,7 +38,7 @@
     import settings from '../../configs/main.json';
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticlesWaitingPremoderate", langsData).langData;
-	
+
     adminStatusReCheck();
 
     const lastLoaded : Ref<number> = ref(0);
@@ -47,6 +47,8 @@
     
     const loading : Ref<boolean> = ref(true);
     const reloading : Ref<boolean> = ref(false);
+    
+    const dropDownReloading : Ref<boolean> = ref(false);
 
     const scrollTarget : Ref<HTMLElement | null> = ref(null);
 
@@ -168,7 +170,7 @@
                 {
                     response.data.forEach((article : Article) => 
                     {
-                        article.currentSelectedVersion = article.versions.length;
+                        article.currentSelectedVersion = 0;
                         articles.value.push(article);
                         lastLoaded.value++;
                     });
@@ -273,6 +275,7 @@
         loading.value = true;
         parseSearchData(searchText.value);
         await fetchNewArticles();
+        
     });
 
     onBeforeUnmount(() => 
@@ -295,7 +298,7 @@
         articles.value = [];
     });
 
-    const onAcceptPremoderateArticle = async (articleViewCode : string, versionId : number, versionIndex : number) => 
+    const onAcceptPremoderateArticle = async (articleViewCode : string, versionId : number) => 
     {
         if(adminStatus.value)
         {
@@ -340,9 +343,10 @@
                         {
                             return version.version_id > versionId;
                         });
-                        articles.value[currentSelectedArticleIndex.value].currentSelectedVersion = versionIndex-1;
-                        console.log(articles.value);
-                        
+                        articles.value[currentSelectedArticleIndex.value].currentSelectedVersion = 0;
+                        dropDownReloading.value = true;
+                        await setTimeout(() => {}, 1000);
+                        dropDownReloading.value = false;
                     }
                         
                     await fetchNewArticles();
@@ -393,7 +397,7 @@
         }
     }
 
-    const onRejectPremoderateArticle = async (articleViewCode : string, versionId : number, versionIndex : number) => 
+    const onRejectPremoderateArticle = async (articleViewCode : string, versionId : number) => 
     {
         if(adminStatus.value)
         {
@@ -434,11 +438,17 @@
                     else
                     {
                         reloading.value = true;
+                        console.log(articles.value);
+                        
                         articles.value[currentSelectedArticleIndex.value].versions = articles.value[currentSelectedArticleIndex.value].versions.filter(version => 
                         {
                             return version.version_id < versionId;
                         });
-                        articles.value[currentSelectedArticleIndex.value].currentSelectedVersion = versionIndex+1;
+                        articles.value[currentSelectedArticleIndex.value].currentSelectedVersion = 0;
+
+                        dropDownReloading.value = true;
+                        await setTimeout(() => {}, 1000);
+                        dropDownReloading.value = false;
                     }
                         
                     await fetchNewArticles();
@@ -463,25 +473,6 @@
                     }
                 }
             })
-            .catch(error => 
-            {
-                if(error.response.data.Warning)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
-                }
-                else if(error.response.data.Error)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else if(error.response.data.Critical)
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-                else
-                {
-                    openModal(InfoModal, {status: false, text: (langData.value['errors'] as JsonData)['unknown']});
-                }
-            });
         }
         else
         {
@@ -505,15 +496,15 @@
 			</div>
 		</div>
 		<article class="main__article" v-if="articles.length > 0 && !loading" v-for="(article, index) in articles" :key="article.id">
-            <div class="main__article__block" v-if="article.versions[article.currentSelectedVersion-1]">
+            <div class="main__article__block" v-if="article.versions[article.currentSelectedVersion]">
                 <a :href="'#/article/>'+article.view_id" target="_blank" class="main__article__titleId">#{{ padNumberWithZeroes(article.view_id) }}</a>
-                <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion-1].created_date) }}</p>
-                <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion-1].text" :language="previewState.language"/>
-                <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion-1].tags) }}</p>
+                <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion].created_date) }}</p>
+                <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion].text" :language="previewState.language"/>
+                <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion].tags) }}</p>
 
                 <div class="main__article__buttons">
-                    <a @click="currentSelectedArticleIndex = index;onAcceptPremoderateArticle(article.view_code, article.versions[article.currentSelectedVersion-1].version_id, article.currentSelectedVersion-1)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
-                    <a @click="currentSelectedArticleIndex = index;onRejectPremoderateArticle(article.view_code, article.versions[article.currentSelectedVersion-1].version_id, article.currentSelectedVersion-1)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+                    <a @click="currentSelectedArticleIndex = index;onAcceptPremoderateArticle(article.view_code, article.versions[article.currentSelectedVersion].version_id)" class="main__article__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
+                    <a @click="currentSelectedArticleIndex = index;onRejectPremoderateArticle(article.view_code, article.versions[article.currentSelectedVersion].version_id)" class="main__article__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
                     <a :href="'#/article/'+article.view_code" class="main__article__buttons__button readAllButton">{{ langData['readAllButton'] }}</a>
                 </div>
 
@@ -521,7 +512,7 @@
                     <div class="main__article__reactions__statistics">
                         <img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__reactions__statistics__icon ratingIcon">
                         <p class="main__article__reactions__statistics__title ratingCounter">{{ abbreviateNumber(article.rating) }}</p>
-                        <img @click="onShare(article.versions[article.currentSelectedVersion-1].title, article.view_code)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
+                        <img @click="onShare(article.versions[article.currentSelectedVersion].title, article.view_code)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__reactions__statistics__icon shareIcon">
                     </div>
                     <a :href="'#/article/'+article.view_code" class="main__article__reactions__comments">
                         <img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__reactions__comments__icon commentIcon">
@@ -529,6 +520,7 @@
                     </a>
                 </div>
                 <DropDownVersion
+                    v-if="!dropDownReloading"
                     :versions="(article as Article).versions"
                     class="main__article__select" 
                     @input="(version : number) => (article as Article).currentSelectedVersion = version" />

@@ -99,7 +99,7 @@ class ArticleEditModel extends BaseModel
                         }
 
                         $articleEditTimeoutMinutes = AdminSettingsGetHandler::getSetting('article_edit_timeout_minutes');
-                        if(isset($articleEditTimeoutMinutes))
+                        if(!empty($articleEditTimeoutMinutes))
                         {
                             $articleData['edit_timeout_to_date'] = ceil(($newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)) / 60) * 60;
                         }
