@@ -195,14 +195,14 @@ class ArticleEditModel extends BaseModel
             $newArticleCreatedDate = time();
 
             $articleVersionData = $articleData = $this->database->get(
-                'articles', 
+                'articles_versions', 
                 [
                     'editorially_status', 
                     'premoderation_status', 
                     'approvededitorially_status'
                 ], 
                 [
-                    'id' => $articleId,
+                    'article_id' => $articleId,
                     'version_id' => $articleData['current_version']
                 ]
             );

@@ -59,7 +59,7 @@
 	const commentsLoading : Ref<boolean> = ref(true);
 	const commentsReloading : Ref<boolean> = ref(true);
 
-	let currentVersion : Ref<number> = ref(1);
+	let currentVersion : Ref<number> = ref(0);
 
 	let scrollTarget : Ref<HTMLElement | null> = ref(null);
 
@@ -970,18 +970,18 @@
 		<article v-if="fetchedArticleData" class="main__article">
 			<div class="main__article__previewContainer">
 				<p class="main__article__previewContainer__titleId">#{{ padNumberWithZeroes(fetchedArticleData.view_id) }}</p>
-				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedArticleData.versions[currentVersion-1].created_date) }}</p>
-				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion-1].text" :language="previewState.language"/>
-				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedArticleData.versions[currentVersion-1].tags) }}</p>
+				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedArticleData.versions[currentVersion].created_date) }}</p>
+				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion].text" :language="previewState.language"/>
+				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedArticleData.versions[currentVersion].tags) }}</p>
 				
 				<div v-if="adminStatus && fetchedArticleData.approvededitorially_status == 1" class="main__article__previewContainer__buttons">
 					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
 					<a @click="onRejectApproveArticle()" class="main__article__previewContainer__buttons__button rejectApproveArticleButton">{{ langData['rejectApproveArticleButton'] }}</a>
 					<a :href="'#/admin/article/approve/'+articleViewCode" class="main__article__previewContainer__buttons__button acceptApproveArticleButton">{{ langData['acceptApproveArticleButton'] }}</a>
 				</div>
-				<div v-else-if="adminStatus && (fetchedArticleData.versions[currentVersion-1].premoderation_status == 1)" class="main__article__previewContainer__buttons">
-					<a @click="onRejectPremoderateArticle(fetchedArticleData.versions[currentVersion-1].version_id)" class="main__article__previewContainer__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
-					<a @click="onAcceptPremoderateArticle(fetchedArticleData.versions[currentVersion-1].version_id)" class="main__article__previewContainer__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
+				<div v-else-if="adminStatus && (fetchedArticleData.versions[currentVersion].premoderation_status == 1)" class="main__article__previewContainer__buttons">
+					<a @click="onRejectPremoderateArticle(fetchedArticleData.versions[currentVersion].version_id)" class="main__article__previewContainer__buttons__button rejectPremoderateArticleButton">{{ langData['rejectPremoderateArticleButton'] }}</a>
+					<a @click="onAcceptPremoderateArticle(fetchedArticleData.versions[currentVersion].version_id)" class="main__article__previewContainer__buttons__button acceptPremoderateArticleButton">{{ langData['acceptPremoderateArticleButton'] }}</a>
 				</div>
 				<div v-else-if="adminStatus" class="main__article__previewContainer__buttons oneButton">
 					<a @click="onDeleteArticle()" class="main__article__previewContainer__buttons__button deleteArticleButton">{{ langData['deleteArticleButton'] }}</a>
@@ -990,7 +990,7 @@
 					<div class="main__article__previewContainer__reactions__statistics">
 						<img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__previewContainer__reactions__statistics__icon ratingIcon">
 						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(fetchedArticleData.rating) }}</p>
-						<img @click="onShare(fetchedArticleData.versions[currentVersion-1].title)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
+						<img @click="onShare(fetchedArticleData.versions[currentVersion].title)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
 					</div>
 					<div class="main__article__previewContainer__reactions__comments">
 						<img src="../../assets/img/article/comment.svg" alt="Comments: " class="main__article__previewContainer__reactions__comments__icon commentIcon">
@@ -1027,7 +1027,7 @@
 				</div>
 			
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
-					<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode" :articleTitle="fetchedArticleData.versions[currentVersion-1].title" :scrollToCommentId="commentId"/>
+					<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode" :articleTitle="fetchedArticleData.versions[currentVersion].title" :scrollToCommentId="commentId"/>
 					<div v-if="commentsReloading" class="main__article__comments__commentsList__reloader">
 						<Loader/>
 					</div>
