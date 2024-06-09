@@ -46,6 +46,8 @@
 
 	const loading : Ref<boolean> = ref(false);
 
+	const collapsed : Ref<boolean> = ref(true);
+
 	const answerStatus : Ref<number> = ref(0);
 
 	const targetComment = ref<HTMLElement | null>(null);
@@ -569,7 +571,9 @@
 				<p class="comment__header__title id">#{{ padNumberWithZeroes(comment.view_id) }}</p>
 				<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
 			</div>
-			<MdPreview class="comment__text" :modelValue="comment.text" :language="previewState.language"/>
+			<MdPreview :class='"comment__text " + (collapsed ? "collapsed" : "")' :modelValue="comment.text" :language="previewState.language"/>
+			<p v-if="collapsed" class="comment__collapse" @click="collapsed = false">{{ langData['readMore'] }}</p>
+			<p v-else class="comment__collapse" @click="collapsed = true">{{ langData['collapse'] }}</p>
 			<div class="comment__bar">
 				<div class="comment__bar__actions">
 					<p @click="onCreateAnswer()" class="comment__bar__actions__action">{{ langData['titleAnswer'] }}</p>
@@ -582,7 +586,6 @@
 					<p v-if="comment.rating_influence > 0" class="comment__bar__reactions__title ratingInfluenceUp"> {{ comment.rating_influence }}</p>
 					<p v-else-if="comment.rating_influence < 0" class="comment__bar__reactions__title ratingInfluenceDown"> {{ comment.rating_influence }}</p>
 				</div>
-				
 			</div>
 		</div>
 		<div v-if="answerStatus" class="comment__newSubcomment">

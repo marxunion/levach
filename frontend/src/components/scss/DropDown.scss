@@ -57,7 +57,9 @@
         
         background-color: $dropDownBG;
 
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: visible;
+        max-height: 160px;
         position: absolute;
         
         z-index: 1;
@@ -108,6 +110,7 @@
         }
         &__items 
         {
+            max-height: 140px;
             & div
             {
                 height: 35px;
@@ -136,6 +139,7 @@
         }
         &__items 
         {
+            max-height: 120px;
             & div
             {
                 height: 30px;

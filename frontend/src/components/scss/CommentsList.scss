@@ -40,8 +40,20 @@
         
     }
     
+    &__collapse
+    {
+        cursor: pointer;
+        font-family: Roboto-Regular;
+        font-size: 18px;
+        color: $commentsListCommentCollapse;
+    }
+
     &__text
     {
+        &.collapsed
+        {
+            max-height: 250px;
+        }
         font-size: 17px;
         font-family: Roboto-Regular;
     }

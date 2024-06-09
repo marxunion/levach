@@ -27,7 +27,7 @@ class ArticleCommentNewHandler extends BaseHandlerRouteWithArgs
                             {
                                 if(!empty($this->parsedBody['text']))
                                 {
-                                    if($this->parsedBody['text'] < 1000000)
+                                    if(strlen($this->parsedBody['text']) < 1000000)
                                     {
                                         $this->parsedBody['ratingInfluence'] = 0;
                                         if(isset($this->parsedBody['rating_influence']))
