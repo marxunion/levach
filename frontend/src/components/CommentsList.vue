@@ -43,6 +43,9 @@
 
 	let captchaVerifyCallback : (token: string) => void;
 
+	const targetComment : Ref<HTMLElement | null> = ref(null);
+	const commentText : Ref<HTMLElement | null> = ref(null);
+	const commentTextHeight : Ref<number> = ref(0);
 
 	const loading : Ref<boolean> = ref(false);
 
@@ -50,7 +53,7 @@
 
 	const answerStatus : Ref<number> = ref(0);
 
-	const targetComment = ref<HTMLElement | null>(null);
+	
 
 	// Preview
 
@@ -519,21 +522,30 @@
 			answerStatus.value = 1;
 		}
 	}
-
 	onMounted(() => 
 	{
 		adminStatusReCheck();
-		if(props.scrollToCommentId === props.comment.id)
+
+		let height : number | undefined = targetComment.value?.querySelector('.comment__text')?.clientHeight;
+		if(height)
 		{
-			setTimeout(() => 
+			console.log(height);
+			
+			commentTextHeight.value = height;
+		}
+		setTimeout(() => 
+		{
+			if(props.scrollToCommentId === props.comment.id)
 			{
+				
 				if (targetComment.value) 
 				{
 					targetComment.value.classList.add('scrollToComment');
 					targetComment.value.scrollIntoView({ block: "center" });
 				}
-			}, 300);
-		}
+				
+			}
+		}, 300);
 	});
 
 	const onCreatedNewSubcomment =  async () => 
@@ -571,9 +583,9 @@
 				<p class="comment__header__title id">#{{ padNumberWithZeroes(comment.view_id) }}</p>
 				<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
 			</div>
-			<MdPreview :class='"comment__text " + (collapsed ? "collapsed" : "")' :modelValue="comment.text" :language="previewState.language"/>
-			<p v-if="collapsed" class="comment__collapse" @click="collapsed = false">{{ langData['readMore'] }}</p>
-			<p v-else class="comment__collapse" @click="collapsed = true">{{ langData['collapse'] }}</p>
+			<MdPreview ref="commentText" :class='"comment__text " + (collapsed ? "collapsed" : "")' :modelValue="comment.text" :language="previewState.language"/>
+			<p v-if="commentTextHeight > 250 && collapsed" class="comment__collapse" @click="collapsed = false">{{ langData['readMore'] }}</p>
+			<p v-else-if="commentTextHeight > 250" class="comment__collapse" @click="collapsed = true">{{ langData['collapse'] }}</p>
 			<div class="comment__bar">
 				<div class="comment__bar__actions">
 					<p @click="onCreateAnswer()" class="comment__bar__actions__action">{{ langData['titleAnswer'] }}</p>
@@ -607,6 +619,10 @@
 </template>
 
 <style lang="css">
+	.comment__text *
+	{
+		overflow-y: hidden;
+	}
 	.comment__newSubcomment__editor .md-editor-footer
     {
 		display: none;
