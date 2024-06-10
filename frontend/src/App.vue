@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch, Ref, onMounted, onUnmounted } from 'vue';
-import { RouteLocationNormalizedLoaded } from 'vue-router';
+import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
 
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar';
 import Header from './components/Header.vue';
 import SideBar from './components/SideBar.vue';
-import { useRoute } from 'vue-router';
+
 import { container } from "jenesius-vue-modal";
 
 import { csrfTokenInput, getNewCsrfToken } from './ts/handlers/CSRFTokenHandler';
