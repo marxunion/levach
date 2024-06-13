@@ -45,8 +45,6 @@
     {
         return routeName == route.name ? true : false;
     }
-
-    
 </script>
 
 <template>
