@@ -18,6 +18,8 @@
     
     import { defineEmits } from 'vue';
 
+    const emits = defineEmits(['toggleBurger']);
+
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("Header", langsData).langData;
 
     const route : RouteLocationNormalizedLoaded = useRoute();
@@ -44,7 +46,7 @@
         return routeName == route.name ? true : false;
     }
 
-    const emit = defineEmits();
+    
 </script>
 
 <template>
@@ -69,7 +71,7 @@
                 
             </div>
         </div>
-        <div class="header__burger header-burger" @click="emit('toggleBurger')">
+        <div class="header__burger header-burger" @click="$emit('toggleBurger')">
             <div class="header__burger__lines header-burger"></div>
         </div>
     </header>
