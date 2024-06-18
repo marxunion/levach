@@ -529,8 +529,6 @@
 		let height : number | undefined = targetComment.value?.querySelector('.comment__text')?.clientHeight;
 		if(height)
 		{
-			console.log(height);
-			
 			commentTextHeight.value = height;
 		}
 		setTimeout(() => 

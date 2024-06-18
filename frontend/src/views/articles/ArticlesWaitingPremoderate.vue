@@ -438,7 +438,6 @@
                     else
                     {
                         reloading.value = true;
-                        console.log(articles.value);
                         
                         articles.value[currentSelectedArticleIndex.value].versions = articles.value[currentSelectedArticleIndex.value].versions.filter(version => 
                         {
