@@ -52,12 +52,7 @@
                 "title": "Кто управляет сайтом?",
                 "description": "Заботящаяся о вас администрация сайта делится на две большие группы: редакционная коллегия и модерационный состав. Редакционная коллегия, прежде всего, отвечает за наполнение Одобренных статей и сама публикует статьи. Модерационный состав предназначен блюсти ваше комфортное пребывание на сайте в виде его свободы от мусорных материалов, нарушающих Правила."
             }
-        ],
-        "captchaText": "This site is protected by reCAPTCHA and the Google",
-        "captchaText1": " and",
-        "captchaText2": " apply.",
-        "captchaTextLinkPrivacyPolicy": "Privacy Policy",
-        "captchaTextLinkPrivacyTermsOfService": "Terms of Service"
+        ]
     },
     "EN": 
     {
@@ -112,12 +107,7 @@
                 "title": "Who manages the site?",
                 "description": "The caring administration of the site is divided into two large groups: the editorial board and the moderation staff. The editorial board is primarily responsible for filling Approved articles and publishes articles itself. The moderation staff is intended to ensure your comfortable stay on the site in the form of its freedom from garbage materials violating the Rules."
             }
-        ],
-        "captchaText": "This site is protected by reCAPTCHA and the Google",
-        "captchaText1": " and",
-        "captchaText2": " apply.",
-        "captchaTextLinkPrivacyPolicy": "Privacy Policy",
-        "captchaTextLinkPrivacyTermsOfService": "Terms of Service"
+        ]
     }
     
 }

@@ -30,6 +30,22 @@
             line-height: 1.5;
             font-size: 18px;
         }
+        
+    }
+    &__captcha
+    {
+        margin-top: 4%;
+        &__text
+        {
+            font-family: Roboto-Regular;
+            width: 96%;
+            text-align: center;
+            &__link
+            {
+                font-family: Roboto-Regular;
+                color: $RulesCaptchaTextLink !important;
+            }
+        }
     }
 }
 
@@ -54,6 +70,7 @@
                 font-size: 20px;
             }
         }
+        
     }
 }
 

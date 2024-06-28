@@ -46,7 +46,12 @@
                 "title": "4. В случае нарушения любого из пунктов правил Администрация вправе удалить Сообщение, содержащее нарушение.",
                 "description": [""]
             }
-        ]
+        ],
+        "captchaText": "This site is protected by reCAPTCHA and the Google",
+        "captchaText1": " and",
+        "captchaText2": " apply.",
+        "captchaTextLinkPrivacyPolicy": "Privacy Policy",
+        "captchaTextLinkPrivacyTermsOfService": "Terms of Service"
     },
     "EN":
     {
@@ -95,6 +100,11 @@
                 "title": "4. In case of violation of any of the rules, the Administration has the right to delete the Message containing the violation.",
                 "description": [""]
             }
-        ]
+        ],
+        "captchaText": "This site is protected by reCAPTCHA and the Google",
+        "captchaText1": " and",
+        "captchaText2": " apply.",
+        "captchaTextLinkPrivacyPolicy": "Privacy Policy",
+        "captchaTextLinkPrivacyTermsOfService": "Terms of Service"
     }
 }

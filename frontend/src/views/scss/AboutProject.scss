@@ -38,21 +38,6 @@
             }
         }
     }
-    &__captcha
-    {
-        margin-top: 4%;
-        &__text
-        {
-            font-family: Roboto-Regular;
-            width: 96%;
-            text-align: center;
-            &__link
-            {
-                font-family: Roboto-Regular;
-                color: $CaptchaTextLink !important;
-            }
-        }
-    }
 }
 
 @media(min-width: 2000px)
