@@ -14,7 +14,7 @@ class StatusHandler extends BaseHandlerRoute
 {
     public function Init()
     {
-        if(Settings::getSetting('DEBUG_MODE') || AdminStatusHandler::isAdmin())
+        if(Settings::getSetting('DEBUG_MODE') || AdminStatusHandler::isAdmin($this->request->getCookieParams()))
         {
             $memUsage = SystemInfo::getServerMemoryUsage(false);
             $cpuLoad = SystemInfo::getServerLoad();

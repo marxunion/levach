@@ -25,13 +25,20 @@
 .md-editor-preview
 {
 	word-break: break-word !important;
+	& *
+	{
+		word-break: break-word !important;
+	}
 }
 
 .md-editor-footer-right
 {
 	display: none;
 }
-.grecaptcha-badge { visibility: hidden; }
+.grecaptcha-badge 
+{
+	visibility: hidden; 
+}
 
 @media(min-height: 1120px)
 {
