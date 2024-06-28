@@ -9,7 +9,7 @@
 
     &__title
     {
-        color: $h1Blue;
+        color: $AboutProjectTitle;
         font-family: Roboto-Medium;
 
         &.titleFAQ
@@ -32,6 +32,10 @@
         {
             line-height: 1.5;
             font-size: 18px;
+            &.link
+            {
+                color: $AboutProjectDescriptionLink;
+            }
         }
     }
     &__captcha

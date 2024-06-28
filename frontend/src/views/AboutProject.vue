@@ -12,6 +12,7 @@
 	{
 		title: string;
 		description: string;
+		link: string;
 	}
 
 	const sectionData : ComputedRef<Section[]> = computed(() => 
@@ -21,7 +22,13 @@
 		{
 			const title : string = section['title'] as string;
 			const description : string = section['description'] as string;
-			return { title, description }
+			let link : string = "";
+			if(section['link'])
+			{
+				link = section['link'] as string;
+			}
+			
+			return { title, description, link }
 		});
 	});
 </script>
@@ -35,7 +42,8 @@
 	  	<h1 class="main__title titleFAQ">{{ langData['titleFAQ'] }}</h1>
 		<div v-for="(section, index) in sectionData" :key="index" class="main__block">
 		  	<p class="main__block__title" :key="section.title">{{ section.title }}</p>
-			<p class="main__block__description" :key="section.description">{{ section.description }}</p>
+			<a v-if="section.link" class="main__block__description link" target="_blank" :href="section.link" >{{ section.description }}</a>
+			<p v-else class="main__block__description">{{ section.description }}</p>
 		</div>
 		<div class="main__captcha">
 			<p class="main__captcha__text">
