@@ -19,7 +19,7 @@
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
-        "commentCreatedSuccessfully": "Комментарий умпешно создан",
+        "commentCreatedSuccessfully": "Комментарий успешно создан",
         "commentDeletedSuccessfully": "Комментарий успешно удалён",
 
         "titleAnswer": "Ответить",
