@@ -431,6 +431,13 @@
 </template>
 
 <style lang="scss">
+.main__header__sort__select
+{
+    & .customSelect__items
+    {
+        z-index: 5;
+    }
+}
 .main__article__block
 {
     border-radius: 15px;

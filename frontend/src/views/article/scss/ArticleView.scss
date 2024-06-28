@@ -330,6 +330,10 @@
             }
             &__previewContainer
             {
+                &__titleId
+                {
+                    font-size: 19px;
+                }
                 &__titleTime
                 {
                     font-size: 18px !important;
@@ -360,10 +364,13 @@
             }
             &__previewContainer
             {
+                &__titleId
+                {
+                    font-size: 16px;
+                }
                 &__titleTime
                 {
-                    top: 5px !important;
-                    left: 10px !important;
+                    font-size: 15px;
                 }
                 &__reactions
                 {
