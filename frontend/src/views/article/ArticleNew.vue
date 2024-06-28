@@ -461,7 +461,7 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
-			<Captcha @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
+			<Captcha v-if="settings.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</article>
 	</main>
 </template>

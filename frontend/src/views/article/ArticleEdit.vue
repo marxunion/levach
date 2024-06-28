@@ -934,7 +934,7 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
-			<Captcha @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
+			<Captcha v-if="settings.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</article>
 		<article v-else class="main__article">
 			<h1 class="main__article__title">{{ (langData['errors'] as JsonData)['articleForEditNotFound'] }}</h1>

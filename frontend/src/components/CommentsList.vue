@@ -608,7 +608,7 @@
 				<img v-if="currentSubcommentReaction === 2" @click="onDislikeReaction()" src="./../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="comment__newSubcomment__reactions__reaction">
 				<img v-else @click="onDislikeReaction()" src="./../assets/img/article/comments/dislike.svg" alt="Dislike" class="comment__newSubcomment__reactions__reaction">
 			</div>
-			<Captcha @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
+			<Captcha v-if="settings.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</div>
 	</div>
 	
