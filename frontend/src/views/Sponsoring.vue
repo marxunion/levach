@@ -19,7 +19,7 @@
 		<div class="main__blockgrid">
 			<div class="main__blockgrid__block" @click="openModal(SponsoringCryptoModal, { crypto: 'monero'})">
 				<div class="main__blockgrid__block__img">
-					<img src="../assets/img/sponsoring/crypto/XMR.png" alt="XMR">
+					<img src="../assets/img/sponsoring/crypto/XMR.svg" alt="XMR">
 				</div>
 				<p class="main__blockgrid__block__title">Monero</p>
 			</div>
