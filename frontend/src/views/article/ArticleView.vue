@@ -988,7 +988,7 @@
 				</div>
 				<div class="main__article__previewContainer__reactions">
 					<div class="main__article__previewContainer__reactions__statistics">
-						<img src="../../assets/img/article/rating.png" alt="Rating: " class="main__article__previewContainer__reactions__statistics__icon ratingIcon">
+						<img src="../../assets/img/article/rating.svg" alt="Rating: " class="main__article__previewContainer__reactions__statistics__icon ratingIcon">
 						<p class="main__article__previewContainer__reactions__statistics__title likeCounter">{{ abbreviateNumber(fetchedArticleData.rating) }}</p>
 						<img @click="onShare(fetchedArticleData.versions[currentVersion].title)" src="../../assets/img/article/share.svg" alt="Share..." class="main__article__previewContainer__reactions__statistics__icon shareIcon">
 					</div>

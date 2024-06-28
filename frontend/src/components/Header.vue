@@ -50,7 +50,7 @@
 <template>
     <header class="header lock_padding">
         <a class="header__logo" href="#/">
-            <img src="../assets/img/logo/logo.png" alt="LOGO" class="header__logo__icon">
+            <img src="../assets/img/logo/logo.svg" alt="LOGO" class="header__logo__icon">
         </a>
         <div class="header__bar">
             <div class="header__bar__search">

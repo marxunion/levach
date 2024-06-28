@@ -95,9 +95,14 @@
 
             &__icon
             {
+                & .ratingIcon
+                {
+                    width: 27px;
+                }
                 &.shareIcon
                 {
                     cursor: pointer;
+                    width: 23px;
                 }
                 margin-left: 16px;
             }

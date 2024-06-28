@@ -171,9 +171,14 @@
                         font-size: 20px;
                         font-family: Roboto-Regular;
                     }
+                    & .ratingIcon
+                    {
+                        width: 27px;
+                    }
                     & .shareIcon
                     {
                         cursor: pointer;
+                        width: 23px;
                         margin-left: 3px;
                     }
                 }

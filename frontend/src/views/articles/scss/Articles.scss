@@ -225,8 +225,13 @@
                 {
                     cursor: pointer;
                 }
+                & .ratingIcon
+                {
+                    width: 27px;
+                }
                 & .shareIcon
                 {
+                    width: 23px;
                     margin-left: 3px;
                 }
             }

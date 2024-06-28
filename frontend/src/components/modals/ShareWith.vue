@@ -29,7 +29,7 @@
        <div class="form__block">
         <a @click="copyLinkButton()" class="form__block__subblock">
             <div class="form__block__subblock__img">
-                <img src="./../../assets/img/modals/share/copyLink.png" alt="copyLink">
+                <img src="./../../assets/img/modals/share/copyLink.svg" alt="copyLink">
             </div>
             <div class="form__block__subblock__title">
                 <p class="form__block__subblock__title__text">{{ langData['copyLinkTitle'] }}</p>
@@ -38,7 +38,7 @@
         </a>
         <a :href="telegramLink" target="_blank" class="form__block__subblock">
             <div class="form__block__subblock__img">
-                <img src="./../../assets/img/modals/share/telegramLogo.png" alt="">
+                <img src="./../../assets/img/modals/share/telegramLogo.svg" alt="">
             </div>
             <div class="form__block__subblock__title">
                 <p class="form__block__subblock__title__text">{{ langData['telegramTitle'] }}</p>
@@ -46,7 +46,7 @@
         </a>
         <a :href="'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link)" target="_blank" class="form__block__subblock">
             <div class="form__block__subblock__img">
-                <img src="./../../assets/img/modals/share/facebookLogo.png" alt="">
+                <img src="./../../assets/img/modals/share/facebookLogo.svg" alt="">
             </div>
             <div class="form__block__subblock__title">
                 <p class="form__block__subblock__title__text">{{ langData['facebookTitle'] }}</p>

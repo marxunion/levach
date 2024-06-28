@@ -590,7 +590,7 @@
 					<p @click="onCommentDelete()" v-if="adminStatus" class="comment__bar__actions__action">{{ langData['titleDelete'] }}</p>
 				</div>
 				<div class="comment__bar__reactions">
-					<img src="../assets/img/article/rating.png" alt="Rating: " class="comment__bar__reactions__icon ratingIcon">
+					<img src="../assets/img/article/rating.svg" alt="Rating: " class="comment__bar__reactions__icon ratingIcon">
 					<p class="comment__bar__reactions__title">{{ abbreviateNumber(comment.rating) }}</p>
 					<img @click="onShare" src="../assets/img/article/share.svg" alt="Share..." class="comment__bar__reactions__icon shareIcon">
 					<p v-if="comment.rating_influence > 0" class="comment__bar__reactions__title ratingInfluenceUp"> {{ comment.rating_influence }}</p>
