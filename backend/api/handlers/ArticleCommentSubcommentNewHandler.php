@@ -20,50 +20,43 @@ class ArticleCommentSubcommentNewHandler extends BaseHandlerRouteWithArgs
             {
                 if(CSRFTokenHandler::checkCsrfToken($this->parsedBody['csrfToken']))
                 {
-                    if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
+                    if(!empty($this->args['viewCode']))
                     {
-                        if(!empty($this->args['viewCode']))
+                        if(isset($this->parsedBody['parent_comment_id']))
                         {
-                            if(isset($this->parsedBody['parent_comment_id']))
+                            if(is_numeric($this->parsedBody['parent_comment_id']))
                             {
-                                if(is_numeric($this->parsedBody['parent_comment_id']))
+                                if($this->parsedBody['parent_comment_id'] > 2147483646)
                                 {
-                                    if($this->parsedBody['parent_comment_id'] > 2147483646)
+                                    $this->parsedBody['parent_comment_id'] = 2147483647;
+                                }
+                                
+                                if(!empty($this->parsedBody['text']))
+                                {
+                                    if(strlen($this->parsedBody['text']) < 1000000)
                                     {
-                                        $this->parsedBody['parent_comment_id'] = 2147483647;
-                                    }
-
-                                    if(!empty($this->parsedBody['text']))
-                                    {
-                                        if(strlen($this->parsedBody['text']) < 1000000)
+                                        $this->parsedBody['ratingInfluence'] = 0;
+                                        if(isset($this->parsedBody['rating_influence']))
                                         {
-                                            $this->parsedBody['ratingInfluence'] = 0;
-                                            if(isset($this->parsedBody['rating_influence']))
+                                            if($this->parsedBody['rating_influence'] == 1)
                                             {
-                                                if($this->parsedBody['rating_influence'] == 1)
-                                                {
-                                                    $this->parsedBody['ratingInfluence'] = 1;
-                                                }
-                                                else if($this->parsedBody['rating_influence'] == 2)
-                                                {
-                                                    $this->parsedBody['ratingInfluence'] = -1;
-                                                }
+                                                $this->parsedBody['ratingInfluence'] = 1;
                                             }
-                                            $this->model = new ArticleCommentSubcommentNewModel();
+                                            else if($this->parsedBody['rating_influence'] == 2)
+                                            {
+                                                $this->parsedBody['ratingInfluence'] = -1;
+                                            }
                                         }
-                                        else
-                                        {
-                                            throw new Error(400, "The content of the comment should be no more than 1000000 characters", "The content of the comment should be no more than 1000000 characters");
-                                        }
+                                        $this->model = new ArticleCommentSubcommentNewModel();
                                     }
                                     else
                                     {
-                                        throw new Error(400, "Invalid comment text", "Invalid comment text");
+                                        throw new Error(400, "The content of the comment should be no more than 1000000 characters", "The content of the comment should be no more than 1000000 characters");
                                     }
                                 }
                                 else
                                 {
-                                    throw new Error(400, "Invalid parent comment id", "Invalid parent comment id");
+                                    throw new Error(400, "Invalid comment text", "Invalid comment text");
                                 }
                             }
                             else
@@ -73,13 +66,14 @@ class ArticleCommentSubcommentNewHandler extends BaseHandlerRouteWithArgs
                         }
                         else
                         {
-                            throw new Error(400, "Invalid article viewcode", "Invalid article viewcode");
+                            throw new Error(400, "Invalid parent comment id", "Invalid parent comment id");
                         }
                     }
                     else
                     {
-                        throw new Error(403, "Invalid admin token", "Invalid admin token");
+                        throw new Error(400, "Invalid article viewcode", "Invalid article viewcode");
                     }
+
                 }
                 else
                 {
