@@ -6,6 +6,8 @@
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/InfoModalWithLink.json";
     
+    import { closeModal } from "jenesius-vue-modal"
+
     const props = defineProps(["status", "text", "link", "text2"]);
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("InfoModalWithLink", langsData).langData;
@@ -20,6 +22,7 @@
         {
             textInput.value.select();
         }
+        closeModal();
     }
 
     onMounted(() => 
