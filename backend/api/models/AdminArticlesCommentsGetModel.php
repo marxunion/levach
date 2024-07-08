@@ -94,7 +94,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
         $this->commentDateAfter = $commentDateAfter;
         $this->commentRegexPattern = $commentRegexPattern;
 
-        $sql = "SELECT id, current_title, created_date, view_code, view_id FROM articles WHERE created_date BETWEEN :date_before AND :date_after AND current_text ~ :regex_pattern AND comments_count > 0 ORDER BY created_date DESC LIMIT :count";  
+        $sql = "SELECT id, current_title, created_date, view_code, view_id FROM articles WHERE created_date BETWEEN :date_before AND :date_after AND current_text ~* :regex_pattern AND comments_count > 0 ORDER BY created_date DESC LIMIT :count";  
         $bindings = [
             ':date_before' => $articleDateBefore,
             ':date_after' => $articleDateAfter,
@@ -110,7 +110,7 @@ class AdminArticlesCommentsGetModel extends BaseModel
         {
             $this->articleId = $article['id'];
             
-            $sql = "SELECT id, text, rating, created_date, rating_influence, parent_comment_id, view_id FROM comments WHERE article_id = :article_id AND created_date BETWEEN :date_before AND :date_after AND text ~ :regex_pattern ORDER BY created_date DESC LIMIT :count";  
+            $sql = "SELECT id, text, rating, created_date, rating_influence, parent_comment_id, view_id FROM comments WHERE article_id = :article_id AND created_date BETWEEN :date_before AND :date_after AND text ~* :regex_pattern ORDER BY created_date DESC LIMIT :count";  
             $bindings = [
                 ':article_id' => $this->articleId,
                 ':date_before' => $this->commentDateBefore,

@@ -117,7 +117,7 @@ class AdminArticleCommentsGetModel extends BaseModel
         $this->dateAfter = $dateAfter;
         $this->regexPattern = $regexPattern;
 
-        $sql = "SELECT id, text, rating, created_date, rating_influence, parent_comment_id, view_id FROM comments WHERE article_id = :article_id AND created_date BETWEEN :date_before AND :date_after AND text ~ :regex_pattern ORDER BY created_date DESC LIMIT :count";  
+        $sql = "SELECT id, text, rating, created_date, rating_influence, parent_comment_id, view_id FROM comments WHERE article_id = :article_id AND created_date BETWEEN :date_before AND :date_after AND text ~* :regex_pattern ORDER BY created_date DESC LIMIT :count";  
         $bindings = [
             ':article_id' => $this->articleId,
             ':date_before' => $this->dateBefore,
