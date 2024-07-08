@@ -509,7 +509,7 @@
 				comments.value = [];
 				await fetchNewComments();
 			}
-			else
+			else 
 			{
 				if(response.data.Warning)
 				{

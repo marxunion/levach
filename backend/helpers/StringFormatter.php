@@ -21,7 +21,8 @@ class StringFormatter
     {
         $pattern = '/#(\d+)/';
         
-        $replacementFunction = function($matches) {
+        $replacementFunction = function($matches) 
+        {
             $number = $matches[1];
             return "[#{$number}](#/article/>{$number})";
         };
@@ -35,7 +36,8 @@ class StringFormatter
     {
         $pattern = '/\[#(\d+)\]\(#\/article\/>(\d+)\)/';
         
-        $replacementFunction = function($matches) {
+        $replacementFunction = function($matches) 
+        {
             $number = $matches[1];
             return "#{$number}";
         };

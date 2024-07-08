@@ -101,9 +101,6 @@ class Routes
                             self::$handler = new AdminArticleCommentsGetHandler($request, $response, $args);
                             return self::$handler->Handle();
                         });
-
-                        
-
                         $adminArticleCommentsGroup->post('/delete/{viewCode}', function (Request $request, Response $response, array $args) 
                         {
                             self::$handler = new AdminArticleCommentsDeleteHandler($request, $response, $args);
