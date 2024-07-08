@@ -502,7 +502,6 @@
 			if(response.data.success)
 			{
 				newCommentEditorState.text = '';
-				openModal(InfoModal, {status: true, text: langData.value['commentCreatedSuccessfully']});
 				await fetchArticleData();
 				commentsLoading.value = true;
 				lastLoadedComment.value = 0;
