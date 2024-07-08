@@ -9,12 +9,12 @@ class StringFormatter
     public static function filterHtmlTags($input)
     {
         $config = HTMLPurifier_Config::createDefault();
-        $config->set('HTML.Allowed', 'img[src|alt|width],figure,math,semantics,mrow,annotation,h1,h2,h3,h4,h5,h6,br,u,blockquote,a,sub,sup,b,p,ul,ol,li,pre,code,div,table,th,td,span');
+        $config->set('HTML.Allowed', 'img[src|alt|width],figure,math,semantics,mrow,annotation,div,h1,h2,h3,h4,h5,h6,br,u,blockquote,a,sub,sup,b,p,ul,ol,li,pre,code,div,table,th,td,span');
         $config->set('Attr.AllowedFrameTargets', ['_blank']);
         $config->set('Attr.EnableID', true);
         $purifier = new HTMLPurifier($config);
 
-        return $purifier->purify($input);
+        return str_replace("&gt;",">", $purifier->purify($input));
     }
 
     public static function replaceViewIdsToViewIdsLinks($input) 
