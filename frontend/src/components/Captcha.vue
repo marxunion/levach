@@ -3,20 +3,13 @@
 
     import { VueRecaptcha } from 'vue-recaptcha';
 
-    //import { JsonData } from "../ts/interfaces/JsonData";
-
-    //import { LangDataHandler } from "../ts/handlers/LangDataHandler";
-    //import langsData from "./locales/Captcha.json";
-    
-    //const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("Captcha", langsData).langData;
-
     import settings from '../configs/main.json';
 
     const emits = defineEmits(["onVerify", "onExpired", "onError"]);
 
-    //const recaptchaSitekey = ref(settings['recaptchaSiteKey']);
     const recaptcha : Ref<VueRecaptcha | null> = ref(null);
 
+    
     const onVerify = (response : string) => 
     {
         emits('onVerify', response);
