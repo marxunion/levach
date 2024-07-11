@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, Ref, /*ComputedRef,*/ defineEmits, onUnmounted } from "vue";
+    import { ref, Ref, defineEmits, onUnmounted } from "vue";
 
     import { VueRecaptcha } from 'vue-recaptcha';
 
@@ -9,7 +9,6 @@
 
     const recaptcha : Ref<VueRecaptcha | null> = ref(null);
 
-    
     const onVerify = (response : string) => 
     {
         emits('onVerify', response);

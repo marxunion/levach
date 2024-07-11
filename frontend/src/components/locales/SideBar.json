@@ -10,12 +10,11 @@
             "articlesWaitingPremoderate": "Статьи, ожидающие премодерации",
             "adminEditComments": "Комментарии на форуме"
         },
+
         "articleCommentsButton": "Комментарии статьи",
         "backToArticleButton": "Вернутся к статье",
-
         "rejectAllApproveButton": "Отклонить всё",
         "rejectAllPremoderateButton": "Отклонить всё",
-        
         "successfullyRejectAllApprove": "Отклонены все статьи запросившие одобрения",
         "successfullyRejectAllPremoderate": "Отклонены все статьи ожидающие премодерации",
 
@@ -48,7 +47,6 @@
         "backToArticleButton": "Back to article",
         "rejectAllApproveButton": "Reject all",
         "rejectAllPremoderateButton": "Reject all",
-
         "successfullyRejectAllApprove": "All articles requesting approval were rejected",
         "successfullyRejectAllPremoderate": "All articles awaiting premoderation have been rejected",
 
@@ -59,7 +57,7 @@
             "sponsoring": "Sponsoring",
             "admin": "Admin"
         },
-
+        
         "warnings": 
         {
             "unknown": "An unknown error occurred. Try again"

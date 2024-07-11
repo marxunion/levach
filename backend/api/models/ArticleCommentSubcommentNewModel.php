@@ -29,8 +29,15 @@ class ArticleCommentSubcommentNewModel extends BaseModel
         return $articleId;
     }
 
+    public function getCommentViewIdById($articleId)
+    {
+        $viewId = $this->database->get('comments', 'view_id', ['id' => $articleId]);
+        return $viewId;
+    }
+
     public function newSubcomment($articleId, $parentCommentId, $text = '', $ratingInfluence = 0)
     {
+        $text = '>#'.$this->getCommentViewIdById($parentCommentId)."\n\n".$text;
         $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
         $text = StringFormatter::filterHtmlTags($text);
 

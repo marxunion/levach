@@ -4,6 +4,7 @@
         "captchaText": "This site is protected by reCAPTCHA and the Google",
         "captchaText1": " and",
         "captchaText2": " apply.",
+        
         "captchaTextLinkPrivacyPolicy": "Privacy Policy",
         "captchaTextLinkPrivacyTermsOfService": "Terms of Service"
     },
@@ -12,6 +13,7 @@
         "captchaText": "This site is protected by reCAPTCHA and the Google",
         "captchaText1": " and",
         "captchaText2": " apply.",
+
         "captchaTextLinkPrivacyPolicy": "Privacy Policy",
         "captchaTextLinkPrivacyTermsOfService": "Terms of Service"
     }

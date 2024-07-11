@@ -8,7 +8,6 @@ import ArticleEdit from './views/article/ArticleEdit.vue';
 import ArticleNew from './views/article/ArticleNew.vue';
 
 // Articles
-
 import EditoriallyArticles from './views/articles/EditoriallyArticles.vue';
 import EditoriallyApprovedArticles from './views/articles/EditoriallyApprovedArticles.vue';
 import AbyssArticles from './views/articles/AbyssArticles.vue';
@@ -16,7 +15,6 @@ import ArticlesSearch from './views/articles/ArticlesSearch.vue';
 
 import ArticlesWaitingApprove from './views/articles/ArticlesWaitingApprove.vue';
 import ArticlesWaitingPremoderate from './views/articles/ArticlesWaitingPremoderate.vue';
-
 
 // Admin
 import ArticleAdminApprove from './views/article/ArticleAdminApprove.vue';
@@ -28,7 +26,9 @@ import AboutProject from './views/AboutProject.vue';
 import Rules from './views/Rules.vue';
 import Sponsoring from './views/Sponsoring.vue';
 
+// Not found route
 import NotFound from './views/NotFound.vue';
+
 import { watch } from 'vue';
 
 const routes: RouteRecordRaw[] = 
@@ -39,17 +39,18 @@ const routes: RouteRecordRaw[] =
     },
     {
         path: '/article',
-        children: [
+        children: 
+        [
             { path: 'new', component: ArticleNew, name: "ArticleNew" },
             { path: 'edit/:articleEditCode', component: ArticleEdit, name: "ArticleEdit" },
             { path: ':articleViewCode', component: ArticleView, name: "ArticleView" },
             { path: ':articleViewCode/:commentId', component: ArticleView, name: "ArticleViewWithComment" },
-            
         ], 
     },
     {
         path: '/articles',
-        children: [
+        children: 
+        [
             { path: 'editorially', component: EditoriallyArticles, props: {currentRoute: "editoriallyArticles"}, name: "editoriallyArticles"},
             { path: 'approvedEditorially', component: EditoriallyApprovedArticles, props: {currentRoute: "editoriallyApprovedArticles"}, name: "editoriallyApprovedArticles"},
             { path: 'abyss', component: AbyssArticles, props: {currentRoute: "abyssArticles"}, name: "abyssArticles"},
@@ -89,9 +90,11 @@ const router = createRouter(
 
 function addAdminRoutes() 
 {
-    router.addRoute({
+    router.addRoute(
+    {
         path: '/admin',
-        children: [
+        children: 
+        [
             { path: '/edit/comments', component: AdminEditComments, name: "AdminEditComments" },
             { path: 'article/editComments/:articleViewCode', component: ArticleAdminEditComments, name: "ArticleAdminEditComments" },
             { path: 'article/approve/:articleViewCode', component: ArticleAdminApprove, name: "ArticleAdminApprove"},
@@ -118,7 +121,7 @@ if(adminStatus)
 
 watch(adminStatus, (newVal) => 
 {
-    if (newVal) 
+    if(newVal) 
     {
         addAdminRoutes();
     } 

@@ -2,8 +2,7 @@
     "RU":
     {
         "warnings": 
-        {
-            
+        {     
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку",
 
             "imageMaxSize": "Размер загружаемого изображения должен быть не больше {size}МБ",
@@ -59,6 +58,7 @@
             "catalog": "Каталог",
             "github": "Исходный код"
         },
+
         "titleItem": 
         {
             "h1": "Заголовок 1-го ур.",
@@ -68,12 +68,14 @@
             "h5": "Заголовок 5-го ур.",
             "h6": "Заголовок 6-го ур."
         },
+
         "imgTitleItem": 
         {
             "link": "Добавить ссылку на изображение",
             "upload": "Загрузить изображение",
             "clip2upload": "Из буфера обмена"
         },
+
         "linkModalTips": 
         {
             "linkTitle": "Добавить ссылку",
@@ -84,17 +86,20 @@
             "urlLabelPlaceHolder": "Введите ссылку...",
             "buttonOK": "ОК"
         },
+
         "clipModalTips": 
         {
             "title": "Обрезать изображение",
             "buttonUpload": "Загрузить"
         },
+
         "copyCode": 
         {
             "text": "Скопировать",
             "successTips": "Скопировано!",
             "failTips": "Не удалось скопировать!"
         },
+
         "mermaid": 
         {
             "flow": "Цепная",
@@ -106,11 +111,13 @@
             "relationship": "Реляционная",
             "journey": "Путевая"
         },
+
         "katex": 
         {
             "inline": "Встроенная",
             "block": "Блочная"
         },
+        
         "footer": 
         {
             "markdownTotal": "Кол-во слов",
@@ -176,6 +183,7 @@
             "catalog": "catalog",
             "github": "source code"
         },
+
         "titleItem": 
         {
             "h1": "Lv1 Heading",
@@ -185,12 +193,14 @@
             "h5": "Lv5 Heading",
             "h6": "Lv6 Heading"
         },
+
         "imgTitleItem": 
         {
             "link": "Add Img Link",
             "upload": "Upload Img",
             "clip2upload": "Clip Upload"
         },
+
         "linkModalTips": 
         {
             "linkTitle": "Add Link",
@@ -201,17 +211,20 @@
             "urlLabelPlaceHolder": "Enter a link...",
             "buttonOK": "OK"
         },
+
         "clipModalTips": 
         {
             "title": "Crop Image",
             "buttonUpload": "Upload"
         },
+
         "copyCode": 
         {
             "text": "Copy",
             "successTips": "Copied!",
             "failTips": "Copy failed!"
         },
+
         "mermaid": 
         {
             "flow": "flow",
@@ -223,11 +236,13 @@
             "relationship": "relationship",
             "journey": "journey"
         },
+
         "katex": 
         {
             "inline": "inline",
             "block": "block"
         },
+
         "footer": 
         {
             "markdownTotal": "Character Count",

@@ -16,12 +16,10 @@
         border: 2px solid $commentsListCommentBorder;
         border-radius: 15px;
     }
-
     &__header
     {
         display: flex;
         align-items: center;
-
         &__title
         {
             font-size: 18px;
@@ -37,7 +35,6 @@
                 color: $commentsListCommentTitleTime;
             }
         }
-        
     }
     
     &__collapse
@@ -47,7 +44,6 @@
         font-size: 18px;
         color: $commentsListCommentCollapse;
     }
-
     &__text
     {
         &.collapsed
@@ -61,7 +57,6 @@
     {
         display: flex;
         align-items: center;
-        
         &__actions
         {
             display: flex;
@@ -92,7 +87,6 @@
             display: flex;
             align-items: center;
             margin-left: 16px;
-
             &__icon
             {
                 & .ratingIcon

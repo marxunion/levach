@@ -1,8 +1,10 @@
 import { ref, Ref } from "vue";
+
 import axios from "axios";
 
 import { getIntCookie, checkCookie } from "../helpers/CookiesHelper";
 import { csrfTokenInput, getNewCsrfToken } from "./CSRFTokenHandler";
+
 
 export const adminStatus : Ref<boolean> = ref(false);
 

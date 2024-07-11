@@ -13,7 +13,7 @@
 
 <template>
     <div class="form">
-        <p class="form__title">{{ status ? langData['success'] : langData['failure']}}</p>
+        <p class="form__title">{{ status ? langData['success'] : langData['failure'] }}</p>
         <p class="form__text">{{ text }}</p>
     </div>
 </template>

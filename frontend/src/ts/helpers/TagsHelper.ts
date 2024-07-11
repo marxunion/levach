@@ -1,4 +1,4 @@
-export function tagsArrayToString(tagsArray : Array<string>|null) 
+export function tagsArrayToString(tagsArray : Array<string> | null) 
 {    
     if(Array.isArray(tagsArray))
     {

@@ -10,6 +10,7 @@ import { container } from "jenesius-vue-modal";
 
 import { csrfTokenInput, getNewCsrfToken } from './ts/handlers/CSRFTokenHandler';
 
+
 const isBurgerActive : Ref<boolean> = ref(false);
 
 const windowWidth = ref(window.innerWidth);
@@ -67,6 +68,7 @@ getNewCsrfToken();
             <component :is="Component" />
         </transition>
     </router-view>
-    <container />
+
+    <container/>
     <SideBar :isBurgerActive="isBurgerActive" @toggleBurger="toggleBurger"/>
 </template>
