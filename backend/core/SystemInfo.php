@@ -3,7 +3,7 @@ namespace Core;
 
 class SystemInfo
 {
-    public static function getServerMemoryUsage($getPercentage = true)
+    public static function getServerMemoryUsage(bool $getPercentage = true)
     {
         $memoryTotal = null;
         $memoryFree = null;
@@ -123,7 +123,7 @@ class SystemInfo
         }
         return null;
     }
-    public static function getDiskInfo($path = '/')
+    public static function getDiskInfo(string $path = '/') : 
     {
         $result = [];
         $result['size'] = 0;

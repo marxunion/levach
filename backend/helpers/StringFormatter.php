@@ -6,7 +6,21 @@ use HTMLPurifier_Config;
 
 class StringFormatter 
 {
-    public static function filterHtmlTags($input)
+    public static function padNumberWithZeroes(int $number) : string 
+    {
+        $numberStr = (string)$number;
+        
+        $zeroesToAdd = 12 - strlen($numberStr);
+        
+        for ($i = 0; $i < $zeroesToAdd; $i++) 
+        {
+            $numberStr = '0' . $numberStr;
+        }
+        
+        return $numberStr;
+    }
+
+    public static function filterHtmlTags(string $input) : string
     {
         $config = HTMLPurifier_Config::createDefault();
         $config->set('HTML.Allowed', 'img[src|alt|width],figure,math,semantics,mrow,annotation,div,h1,h2,h3,h4,h5,h6,br,u,blockquote,a,sub,sup,b,p,ul,ol,li,pre,code,div,table,th,td,span');
@@ -17,7 +31,7 @@ class StringFormatter
         return str_replace("&gt;",">", $purifier->purify($input));
     }
 
-    public static function replaceViewIdsToViewIdsLinks($input) 
+    public static function replaceViewIdsToViewIdsLinks(string $input) : string
     {
         $pattern = '/#(\d+)/';
         
@@ -32,7 +46,7 @@ class StringFormatter
         return $output;
     }
     
-    public static function replaceViewIdsLinksToViewIds($input) 
+    public static function replaceViewIdsLinksToViewIds(string $input) : string
     {
         $pattern = '/\[#(\d+)\]\(#\/article\/>(\d+)\)/';
         
@@ -47,7 +61,7 @@ class StringFormatter
         return $output;
     }
 
-    public static function formatSizeEnding($bytes, $binaryPrefix = true)
+    public static function formatSizeEnding(int $bytes, bool $binaryPrefix = true) : string
     {
         if($binaryPrefix) 
         {

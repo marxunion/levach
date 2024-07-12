@@ -8,6 +8,7 @@ export class LangDataHandler
     private langsData : JsonData;
 
     public static readonly langs = mainconfig['langs'];
+    
     public static readonly currentLanguage : Ref<string> = ref(localStorage.getItem('language') || 'RU');
     
     private constructor(data: JsonData)

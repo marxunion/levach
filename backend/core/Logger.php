@@ -18,7 +18,7 @@ class Logger extends MonologLogger
         parent::__construct($name);
     }
 
-    public static function initInstance($name) : self
+    public static function initInstance(string $name) : self
     {
         if(!isset(self::$instance)) 
         {

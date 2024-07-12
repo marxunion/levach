@@ -8,7 +8,7 @@ use Core\Settings;
 
 class Database 
 {
-    private static $initStatus = false;
+    private static bool $initStatus = false;
     private static $connection;
 
     private static function establishConnection() 

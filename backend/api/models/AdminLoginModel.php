@@ -32,7 +32,7 @@ class AdminLoginModel extends BaseModel
         
         return true;
     } 
-    public function safeToken($token, $nickname, $expirationTime)
+    public function safeToken(string $token, string $nickname, int $expirationTime)
     {
         $data = 
         [
@@ -40,6 +40,7 @@ class AdminLoginModel extends BaseModel
             'nickname_encrypted' => password_hash($nickname, PASSWORD_DEFAULT),
             'expiration_time_encrypted' => password_hash($expirationTime, PASSWORD_DEFAULT)
         ];
+        
         if($this->database->insert('admins_tokens', $data))
         {
             return true;

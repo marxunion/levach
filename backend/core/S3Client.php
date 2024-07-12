@@ -28,7 +28,6 @@ class S3Client
         {
             self::$connection->createBucket(['Bucket' => $bucketName]);
         }
-        
     }
 
     public static function getConnection() 

@@ -37,7 +37,7 @@ class ArticleCommentSubcommentNewModel extends BaseModel
 
     public function newSubcomment($articleId, $parentCommentId, $text = '', $ratingInfluence = 0)
     {
-        $text = '>#'.$this->getCommentViewIdById($parentCommentId)."\n\n".$text;
+        $text = '>#'.StringFormatter::padNumberWithZeroes($this->getCommentViewIdById($parentCommentId))."\n\n".$text;
         $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
         $text = StringFormatter::filterHtmlTags($text);
 
