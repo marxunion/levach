@@ -12,23 +12,23 @@
             "articlesWaitingApproval": "Статьи ожидающие одобрения",
             "articlesWaitingPremoderate": "Статьи ожидающие премодерации"
         },
-        
 
         "sortTitle": "Сортировать по:",
         "sortTypesNames": 
         [
-            "популярности",
-            "дате размещения"
+            "дате размещения",
+            "популярности"
         ],
         "sortTypes": 
         [
-            "rate",
-            "created_date"
+            "created_date",
+            "popularity"
         ],
 
         "warnings": 
         {
             "articlesNotFound": "К сожалению по вашему запросу статьи не найдены :(",
+
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
@@ -154,18 +154,19 @@
         "sortTitle": "Sort by:",
         "sortTypesNames": 
         [
-            "popularity",
-            "posting date"
+            "posting date",
+            "popularity"
         ],
         "sortTypes": 
         [
-            "rate",
-            "created_date"
+            "created_date",
+            "popularity"
         ],
 
         "warnings": 
         {
             "articlesNotFound": "Unfortunately no articles were found for your query :(",
+
             "unknown": "An unknown error occurred. Try again"
         },
 

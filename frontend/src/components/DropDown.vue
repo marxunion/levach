@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import "./scss/DropDown.scss";
-import { ref, watch, Ref, onMounted, defineProps, defineEmits } from "vue";
+	import "./scss/DropDown.scss";
+	import { ref, watch, Ref, onMounted, defineProps, defineEmits } from "vue";
 
-const props = defineProps(["options", "default", "tabindex"]);
-const emits = defineEmits(["inputOnMounted","input","inputIndex"]);
+	const props = defineProps(["options", "default", "tabindex"]);
+	const emits = defineEmits(["inputOnMounted","input","inputIndex"]);
 
-const selectedIndex : Ref<number> = ref(0);
-const selected = ref(props.default || (props.options.length > 0 ? props.options[0] : null));
+	const selectedIndex : Ref<number> = ref(0);
+	const selected = ref(props.default || (props.options.length > 0 ? props.options[0] : null));
 
-watch(props, () => 
-{
-	selected.value = props.options[selectedIndex.value];
-});
+	watch(props, () => 
+	{
+		selected.value = props.options[selectedIndex.value];
+	});
 
-const open : Ref<boolean> = ref(false);
+	const open : Ref<boolean> = ref(false);
 
-onMounted(() => 
-{
-  	emits("inputOnMounted", selected.value);
-});
+	onMounted(() => 
+	{
+		emits("inputOnMounted", selected.value);
+	});
 </script>
 
 <template>

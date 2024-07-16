@@ -48,16 +48,17 @@
         "warnings": 
         {
             "needLogin": "Your authorisation session is probably out of date. Try again or login again",
-
             "needNickname": "Please ether your nickname",
             "needPassword": "Please ether your password",
+
             "unknown": "An unknown error occurred. Try again"
         },
 
         "errors": 
         {
-            "captcha": "Captcha solving error",
             "incorrectNicknameOrPassword": "Nickname or password is incorrect",
+            "captcha": "Captcha solving error",
+            
             "unknown": "An unknown error occurred. Try again"
         },
 

@@ -225,7 +225,7 @@
         parseSearchData(searchText.value);
         await fetchNewArticles();
     });
-
+    
     watch(searchText, async () => 
     {
         if(searchText.value.length == 0)

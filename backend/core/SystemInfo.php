@@ -18,7 +18,8 @@ class SystemInfo
     
             if($outputTotalPhysicalMemory && $outputFreePhysicalMemory) 
             {
-                foreach($outputTotalPhysicalMemory as $line) {
+                foreach($outputTotalPhysicalMemory as $line) 
+                {
                     if($line && preg_match("/^[0-9]+\$/", $line)) 
                     {
                         $memoryTotal = $line;
@@ -123,7 +124,7 @@ class SystemInfo
         }
         return null;
     }
-    public static function getDiskInfo(string $path = '/') : 
+    public static function getDiskInfo(string $path = '/')
     {
         $result = [];
         $result['size'] = 0;
@@ -207,5 +208,4 @@ class SystemInfo
         }
         return $load;
     }
-
 }

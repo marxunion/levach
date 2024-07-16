@@ -9,8 +9,7 @@ class Settings
 
     public static function Init()
     {
-        self::$settings = 
-        [
+        self::$settings = [
             'default_changeable_article_edit_timeout_minutes' => $_ENV['default_changeable_article_edit_timeout_minutes'],
             'default_changeable_max_upload_filesize_mb' => $_ENV['default_changeable_max_upload_filesize_mb'],
             'default_changeable_article_need_rating_to_approve_editorially' => $_ENV['default_changeable_article_need_rating_to_approve_editorially'],
