@@ -34,6 +34,7 @@
         "formPanelEditSettingsArticleTimeoutMinutesTitle": "Таймаут для редактирования статьи(в минутах):",
         "formPanelEditSettingsArticleMaxUploadFileSizeTitle": "Максимальный размер прикрепляемого к статье файла (в МБ)",
         "formPanelEditSettingsArticleNeedRatingApproveEditorially" : "Требуемое количество рейтинга для запроса одобрения статьи",
+        "formPanelEditSettingsArticleSortPopularityFormula": "Формула сортировки статей по популярности",
         
         "formPanelTitle": "Админ панель",
         "formPanelButtonSaveSettings": "Сохранить настройки",
@@ -75,6 +76,7 @@
         "formPanelEditSettingsArticleTimeoutMinutesTitle": "Timeout for edit article(in minutes):",
         "formPanelEditSettingsArticleMaxUploadFileSizeTitle": "Max size of file to be attached to article (in MB)",
         "formPanelEditSettingsArticleNeedRatingApproveEditorially" : "Required number of ratings to request approval of an article",
+        "formPanelEditSettingsArticleSortPopularityFormula": "Article sorting formula",
 
         "formPanelTitle": "Admin Panel",
         "formPanelButtonSaveSettings": "Save settings",

@@ -584,6 +584,10 @@
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleNeedRatingApproveEditorially'] }}</p>
                 <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.article_need_rating_to_approve_editorially" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
+            <div class="form__fields__field">
+                <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleSortPopularityFormula'] }}</p>
+                <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.article_need_rating_to_approve_editorially" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+            </div>
         </div>
 
         <button @click="onSaveSettingsButton" class="form__button saveSettings">{{ langData["formPanelButtonSaveSettings"] }}</button>
