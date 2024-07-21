@@ -2,7 +2,6 @@
 namespace Api\Models;
 
 use Core\Database;
-
 use Core\Critical;
 
 use Base\BaseModel;

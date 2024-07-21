@@ -1,8 +1,8 @@
 <?php
 namespace Api\Models;
 
-use Core\Error;
 use Core\Critical;
+use Core\Error;
 use Core\Warning;
 
 use Helpers\StringFormatter;

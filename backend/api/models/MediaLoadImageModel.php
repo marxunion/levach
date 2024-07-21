@@ -2,8 +2,8 @@
 namespace Api\Models;
 
 use Core\S3Client;
-use Core\Critical;
 use Core\Settings;
+use Core\Critical;
 
 use Aws\Exception\AwsException;
 
