@@ -585,8 +585,8 @@
                 <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.article_need_rating_to_approve_editorially" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
             <div class="form__fields__field">
-                <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleSortPopularityFormula'] }}</p>
-                <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.article_need_rating_to_approve_editorially" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+                <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticlesSortPopularityFormula'] }}</p>
+                <input class="form__fields__field__input text" type="text" v-model="settings.articles_popularity_sort_formula"></input>
             </div>
         </div>
 
