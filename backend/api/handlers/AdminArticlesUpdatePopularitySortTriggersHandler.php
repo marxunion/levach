@@ -8,7 +8,7 @@ use Base\BaseHandlerRoute;
 
 use Api\Models\AdminSettingsSetModel;
 
-class AdminSettingsSetArticlesPopularitySortFormulaHandler extends BaseHandlerRoute
+class AdminArticlesUpdatePopularitySortTriggersHandler extends BaseHandlerRoute
 {
     public function Init()
     {
@@ -48,6 +48,7 @@ class AdminSettingsSetArticlesPopularitySortFormulaHandler extends BaseHandlerRo
 
     public function Process()
     {
-
+        $this->model->updatePopularitySortTriggers();
+        $this->response = $this->response->withJson(['success' => true]);
     }
 }

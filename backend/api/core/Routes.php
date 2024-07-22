@@ -37,6 +37,7 @@ use Api\Handlers\ArticleCommentSubcommentNewHandler;
 use Api\Handlers\CSRFTokenHandler;
 
 use Api\Handlers\AdminSettingsGetHandler;
+use Api\Handlers\AdminSettingsSetArticlesPopularitySortFormulaHandler;
 use Api\Handlers\AdminSettingsSetHandler;
 
 use Api\Handlers\AdminStatusHandler;
@@ -83,6 +84,12 @@ class Routes
                     $adminSettingsGroup->post('/set', function (Request $request, Response $response) 
                     {
                         self::$handler = new AdminSettingsSetHandler($request, $response);
+                        return self::$handler->Handle();
+                    });
+
+                    $adminSettingsGroup->post('/setArticlesPopularitySortFormula', function (Request $request, Response $response) 
+                    {
+                        self::$handler = new AdminSettingsSetArticlesPopularitySortFormulaHandler($request, $response);
                         return self::$handler->Handle();
                     });
                 });
