@@ -32,5 +32,8 @@ class AdminArticlesUpdatePopularitySortTriggersModel extends BaseHandlerRoute
             END;
             $$ LANGUAGE plpgsql;
         ");
+
+        $updateQuery = "UPDATE articles SET popularity_sort_value = $formula;";
+        $this->database->query($updateQuery);
     }
 }
