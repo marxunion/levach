@@ -5,8 +5,8 @@
     "recaptchaSiteKey": "6LfaS9spAAAAAFo0_FElcn_sYvxjb3wlt8czk2E2",
     "settings":
     {
-        "article_edit_timeout_minutes": 0,
         "max_upload_filesize_mb": 1,
+        "article_edit_timeout_minutes": 0,
         "article_need_rating_to_approve_editorially": 1,
         "articles_popularity_sort_formula": ""
     }

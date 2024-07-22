@@ -77,7 +77,7 @@
         "formPanelEditSettingsArticleTimeoutMinutesTitle": "Timeout for edit article(in minutes):",
         "formPanelEditSettingsArticleMaxUploadFileSizeTitle": "Max size of file to be attached to article (in MB)",
         "formPanelEditSettingsArticleNeedRatingApproveEditorially" : "Required number of ratings to request approval of an article",
-        "formPanelEditSettingsArticlesSortPopularityFormula": "Article sorting formula",
+        "formPanelEditSettingsArticlesSortPopularityFormula": "Articles popularity sorting formula",
 
         "formPanelTitle": "Admin Panel",
         "formPanelButtonSaveSettings": "Save settings",

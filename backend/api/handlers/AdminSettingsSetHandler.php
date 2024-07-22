@@ -45,6 +45,10 @@ class AdminSettingsSetHandler extends BaseHandlerRoute
                 {
                     if(AdminSettingsSetModel::_setSetting($settingName, $settingValue))
                     {
+                        if($settingName == "articles_popularity_sort_formula")
+                        {
+                            AdminSettingsSetModel::_updatePopularitySortTriggers($settingValue);
+                        }
                         return true;
                     }
                     else
@@ -113,6 +117,10 @@ class AdminSettingsSetHandler extends BaseHandlerRoute
                 foreach($this->parsedBody['settings'] as $settingName => $settingValue) 
                 {
                     $this->model->setSetting($settingName, $settingValue);
+                    if($settingName == "articles_popularity_sort_formula")
+                    {
+                        $this->model->updatePopularitySortTriggers($settingValue);
+                    }
                 }
                 $this->response = $this->response->withJson(['success' => true]);
             }
@@ -127,6 +135,10 @@ class AdminSettingsSetHandler extends BaseHandlerRoute
             if(isset($this->parsedBody['settingValue']))
             {
                 $this->model->setSetting($this->parsedBody['settingName'], $this->parsedBody['settingValue']);
+                if($settingName == "articles_popularity_sort_formula")
+                {
+                    $this->model->updatePopularitySortTriggers($settingValue);
+                }
                 $this->response = $this->response->withJson(['success' => true]);
             }
             else

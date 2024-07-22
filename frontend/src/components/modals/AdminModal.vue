@@ -45,7 +45,7 @@
 
     interface Settings
 	{
-		[settingName: string]: number;
+		[settingName: string]: number|string;
 	}
 
     const settings : Ref<Settings> = ref(mainconfig['settings']);
@@ -574,19 +574,19 @@
         <div class="form__fields">
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleTimeoutMinutesTitle'] }}</p>
-                <VueNumberInput :value="settings.article_edit_timeout_minutes" v-model="settings.article_edit_timeout_minutes" :min="0" class="form__fields__field__input number" controls></VueNumberInput>
+                <VueNumberInput :value="settings.article_edit_timeout_minutes" v-model="settings.article_edit_timeout_minutes as number" :min="0" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleMaxUploadFileSizeTitle'] }}</p>
-                <VueNumberInput :value="settings.max_upload_filesize_mb" v-model="settings.max_upload_filesize_mb" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+                <VueNumberInput :value="settings.max_upload_filesize_mb" v-model="settings.max_upload_filesize_mb as number" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticleNeedRatingApproveEditorially'] }}</p>
-                <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.article_need_rating_to_approve_editorially" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
+                <VueNumberInput :value="settings.article_need_rating_to_approve_editorially" v-model="settings.article_need_rating_to_approve_editorially as number" :min="1" class="form__fields__field__input number" controls></VueNumberInput>
             </div>
             <div class="form__fields__field">
                 <p class="form__fields__field__title small">{{ langData['formPanelEditSettingsArticlesSortPopularityFormula'] }}</p>
-                <input class="form__fields__field__input text" type="text" v-model="settings.articles_popularity_sort_formula"></input>
+                <input class="form__fields__field__input text" type="text" v-model="settings.articles_popularity_sort_formula as string"></input>
             </div>
         </div>
 
