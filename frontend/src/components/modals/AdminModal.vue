@@ -48,6 +48,7 @@
 		[settingName: string]: number|string;
 	}
 
+    const settingsSaved : Ref<Settings> = ref(mainconfig['settings']);
     const settings : Ref<Settings> = ref(mainconfig['settings']);
 
     const onLoginButtonRequest = async (captchaToken : string) => 
@@ -208,6 +209,11 @@
         {
             csrfToken: (csrfTokenInput.value as HTMLInputElement).value,
             settings: settings.value
+        }
+
+        if(settings.value)
+        {
+
         }
 
         await axios.post('/api/admin/settings/set', data)
@@ -446,6 +452,7 @@
                         if(response.data[settingName])
                         {
                             settings.value[settingName] = response.data[settingName];
+
                         }
                     });
                 }

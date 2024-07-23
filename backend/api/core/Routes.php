@@ -86,12 +86,6 @@ class Routes
                         self::$handler = new AdminSettingsSetHandler($request, $response);
                         return self::$handler->Handle();
                     });
-
-                    $adminSettingsGroup->post('/setArticlesPopularitySortFormula', function (Request $request, Response $response) 
-                    {
-                        self::$handler = new AdminSettingsSetArticlesPopularitySortFormulaHandler($request, $response);
-                        return self::$handler->Handle();
-                    });
                 });
                 $adminGroup->group('/article', function (RouteCollectorProxy $adminArticleGroup) 
                 {
@@ -172,6 +166,12 @@ class Routes
                     $adminArticlesGroup->post('/rejectAllPremoderate', function (Request $request, Response $response) 
                     {
                         self::$handler = new AdminRejectAllPremoderateHandler($request, $response);
+                        return self::$handler->Handle();
+                    });
+
+                    $adminArticlesGroup->post('/updatePopularitySortTriggers', function (Request $request, Response $response) 
+                    {
+                        self::$handler = new AdminArticlesUpdatePopularitySortTriggersHandler($request, $response);
                         return self::$handler->Handle();
                     });
                 });
