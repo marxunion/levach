@@ -48,8 +48,8 @@
 		[settingName: string]: number|string;
 	}
 
-    const settingsSaved : Ref<Settings> = ref(mainconfig['settings']);
     const settings : Ref<Settings> = ref(mainconfig['settings']);
+    const settingsSaved : Ref<Settings> = JSON.parse(JSON.stringify(ref(mainconfig['settings'])));
 
     const onLoginButtonRequest = async (captchaToken : string) => 
     {
@@ -452,7 +452,7 @@
                         if(response.data[settingName])
                         {
                             settings.value[settingName] = response.data[settingName];
-
+                            settingsSaved.value[settingName] = response.data[settingName];
                         }
                     });
                 }
