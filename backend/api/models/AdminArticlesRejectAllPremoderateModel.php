@@ -3,7 +3,7 @@ namespace Api\Models;
 
 use Base\BaseModel;
 
-class AdminRejectAllPremoderateModel extends BaseModel
+class AdminArticlesRejectAllPremoderateModel extends BaseModel
 {
     public function rejectAllPremoderateModel()
     {

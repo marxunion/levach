@@ -5,9 +5,9 @@ use Core\Error;
 
 use Base\BaseHandlerRoute;
 
-use Api\Models\AdminRejectAllApproveModel;
+use Api\Models\AdminArticlesRejectAllPremoderateModel;
 
-class AdminRejectAllApproveHandler extends BaseHandlerRoute
+class AdminArticlesRejectAllPremoderateHandler extends BaseHandlerRoute
 {
     public function Init()
     {
@@ -22,7 +22,7 @@ class AdminRejectAllApproveHandler extends BaseHandlerRoute
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        $this->model = new AdminRejectAllApproveModel();
+                        $this->model = new AdminArticlesRejectAllPremoderateModel();
                     }
                     else
                     {
@@ -47,7 +47,7 @@ class AdminRejectAllApproveHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        $this->model->rejectAllApproveModel();
+        $this->model->rejectAllPremoderateModel();
         $this->response = $this->response->withJson(['success' => true]);
     }
 }

@@ -11,8 +11,8 @@ use Base\BaseHandlerRoute;
 
 use Api\Handlers\ArticleApproveWithChangesHandler;
 
-use Api\Handlers\AdminRejectAllApproveHandler;
-use Api\Handlers\AdminRejectAllPremoderateHandler;
+use Api\Handlers\AdminArticlesRejectAllApproveHandler;
+use Api\Handlers\AdminArticlesRejectAllPremoderateHandler;
 
 use Api\Handlers\AdminArticlePremoderateHandler;
 
@@ -159,13 +159,13 @@ class Routes
 
                     $adminArticlesGroup->post('/rejectAllApprove', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminRejectAllApproveHandler($request, $response);
+                        self::$handler = new AdminArticlesRejectAllApproveHandler($request, $response);
                         return self::$handler->Handle();
                     });
 
                     $adminArticlesGroup->post('/rejectAllPremoderate', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminRejectAllPremoderateHandler($request, $response);
+                        self::$handler = new AdminArticlesRejectAllPremoderateHandler($request, $response);
                         return self::$handler->Handle();
                     });
 

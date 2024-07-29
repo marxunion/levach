@@ -3,7 +3,7 @@ namespace Api\Models;
 
 use Base\BaseModel;
 
-class AdminRejectAllApproveModel extends BaseModel
+class AdminArticlesRejectAllApproveModel extends BaseModel
 {
     public function rejectAllApproveModel()
     {
