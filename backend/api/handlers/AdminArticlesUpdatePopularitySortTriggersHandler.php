@@ -48,7 +48,7 @@ class AdminArticlesUpdatePopularitySortTriggersHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        $this->model->updatePopularitySortTriggers();
+        $this->model->updateTriggers();
         $this->response = $this->response->withJson(['success' => true]);
     }
 }

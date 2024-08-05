@@ -11,9 +11,9 @@ use Api\Models\AdminSettingsSetModel;
 
 class AdminArticlesUpdatePopularitySortTriggersModel extends BaseHandlerRoute
 {
-    public function updatePopularitySortTriggers()
+    public function updateTriggers()
     {
-        $formula = $this->database->get('settings', 'value', ['settings' => 'articles_popularity_sort_formula']);
+        $formula = $this->database->get('settings', 'value', ['name' => 'articles_popularity_sort_formula']);
         
         $this->database->query("
             CREATE OR REPLACE FUNCTION calculate_popularity_sort_value() RETURNS TRIGGER AS $$
