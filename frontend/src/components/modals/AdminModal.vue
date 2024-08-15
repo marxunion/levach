@@ -544,6 +544,12 @@
                         if(response.data[settingName])
                         {
                             settings.value[settingName] = response.data[settingName];
+                        }
+                    });
+                    Object.keys(settings.value).forEach(settingName => 
+                    {
+                        if(response.data[settingName])
+                        {
                             settingsSaved.value[settingName] = response.data[settingName];
                         }
                     });
