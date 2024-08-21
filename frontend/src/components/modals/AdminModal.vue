@@ -49,7 +49,7 @@
 	}
 
     const settings : Ref<Settings> = ref(mainconfig['settings']);
-    const settingsSaved : Ref<Settings> = JSON.parse(JSON.stringify(ref(mainconfig['settings'])));
+    const settingsSaved : Ref<Settings> = ref(JSON.parse(JSON.stringify(mainconfig['settings'])));
 
     const onLoginButtonRequest = async (captchaToken : string) => 
     {
@@ -217,6 +217,8 @@
         {
             if(response.data.success)
             {
+                console.log(settingsSaved.value);
+                
                 if(settings.value['articles_popularity_sort_formula'] != settingsSaved.value['articles_popularity_sort_formula'])
                 {
                     await axios.post('/api/admin/articles/updatePopularitySortTriggers', data)

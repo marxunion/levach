@@ -6,7 +6,7 @@ use Core\Error;
 
 use Base\BaseHandlerRoute;
 
-use Api\Models\AdminSettingsSetModel;
+use Api\Models\AdminArticlesUpdatePopularitySortTriggersModel;
 
 class AdminArticlesUpdatePopularitySortTriggersHandler extends BaseHandlerRoute
 {
@@ -23,7 +23,7 @@ class AdminArticlesUpdatePopularitySortTriggersHandler extends BaseHandlerRoute
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        $this->model = new AdminSettingsSetArticlesPopularitySortFormulaModel();
+                        $this->model = new AdminArticlesUpdatePopularitySortTriggersModel();
                     }
                     else
                     {

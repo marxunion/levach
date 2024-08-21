@@ -13,6 +13,7 @@ use Api\Handlers\ArticleApproveWithChangesHandler;
 
 use Api\Handlers\AdminArticlesRejectAllApproveHandler;
 use Api\Handlers\AdminArticlesRejectAllPremoderateHandler;
+use Api\Handlers\AdminArticlesUpdatePopularitySortTriggersHandler;
 
 use Api\Handlers\AdminArticlePremoderateHandler;
 
@@ -37,7 +38,7 @@ use Api\Handlers\ArticleCommentSubcommentNewHandler;
 use Api\Handlers\CSRFTokenHandler;
 
 use Api\Handlers\AdminSettingsGetHandler;
-use Api\Handlers\AdminSettingsSetArticlesPopularitySortFormulaHandler;
+
 use Api\Handlers\AdminSettingsSetHandler;
 
 use Api\Handlers\AdminStatusHandler;
