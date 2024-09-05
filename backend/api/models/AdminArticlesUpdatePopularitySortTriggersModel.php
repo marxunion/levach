@@ -35,6 +35,7 @@ class AdminArticlesUpdatePopularitySortTriggersModel extends BaseModel
 
         $updateQuery = "UPDATE articles SET popularity_sort_value = $formula;";
         $updateQuery = str_replace("NEW.", "", $updateQuery);
+        
         echo $updateQuery;
         $this->database->query($updateQuery);
     }
