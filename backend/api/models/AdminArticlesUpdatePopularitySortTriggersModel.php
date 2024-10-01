@@ -37,18 +37,17 @@ class AdminArticlesUpdatePopularitySortTriggersModel extends BaseModel
         $updateQuery = preg_replace(
             [
                 '/EXTRACT\(EPOCH FROM\s*\((.*?)\)\s*\)/iu', 
-                '/\.(NEW|OLD)/i', 
+                '/(NEW|OLD)\./i', 
                 '/(\s*;)/i'
             ], 
             [
                 '($1)', 
                 '', 
                 ';'
-            ], 
+            ],
             $updateQuery
         );
-        
-        echo $updateQuery;
+
         $this->database->query($updateQuery);
     }
 }
