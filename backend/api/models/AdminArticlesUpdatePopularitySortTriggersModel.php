@@ -32,9 +32,21 @@ class AdminArticlesUpdatePopularitySortTriggersModel extends BaseModel
             END;
             $$ LANGUAGE plpgsql;
         ");
-
+        
         $updateQuery = "UPDATE articles SET popularity_sort_value = $formula;";
-        $updateQuery = str_replace("NEW.", "", $updateQuery);
+        $updateQuery = preg_replace(
+            [
+                '/EXTRACT\(EPOCH FROM\s*\((.*?)\)\s*\)/iu', 
+                '/\.(NEW|OLD)/i', 
+                '/(\s*;)/i'
+            ], 
+            [
+                '($1)', 
+                '', 
+                ';'
+            ], 
+            $updateQuery
+        );
         
         echo $updateQuery;
         $this->database->query($updateQuery);

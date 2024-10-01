@@ -40,7 +40,6 @@ class AdminStatusHandler extends BaseHandlerRoute
 
     public function Init()
     {
-        
         $cookiesBody = $this->request->getCookieParams();
 
         if(is_array($cookiesBody))
