@@ -33,17 +33,22 @@ class AdminArticlesUpdatePopularitySortTriggersModel extends BaseModel
             $$ LANGUAGE plpgsql;
         ");
         
+        $current_timestamp = time();
+
         $updateQuery = "UPDATE articles SET popularity_sort_value = $formula;";
+
         $updateQuery = preg_replace(
             [
                 '/EXTRACT\(EPOCH FROM\s*\((.*?)\)\s*\)/iu', 
                 '/(NEW|OLD)\./i', 
-                '/(\s*;)/i'
-            ], 
+                '/(\s*;)/i',
+                '/(current_timestamp|timestamp)/i'
+            ],
             [
                 '($1)', 
                 '', 
-                ';'
+                ';',
+                "$current_timestamp"
             ],
             $updateQuery
         );
