@@ -1,12 +1,20 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <script>
+        (function() 
+        {
+            const theme = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.body.setAttribute('data-theme', theme);
+        })();
+        </script>
+        
         <meta charset="UTF-8" />
         <link rel="icon" type="image/png" href="src/assets/img/logo/favicon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Levach</title>
     </head>
-    <body>
+    <body data-theme="light">
         <div id="app">
             <router-view></router-view>
         </div>
