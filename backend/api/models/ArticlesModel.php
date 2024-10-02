@@ -9,7 +9,7 @@ class ArticlesModel extends BaseModel
 {
     // Article search
 
-    // Rate
+    // Popularity
 
     public function loadArticlesSearchTitleIdsByPopularity(int $count = 4, int $lastLoaded = 0, string $searchTitle = '')
     {
@@ -129,7 +129,7 @@ class ArticlesModel extends BaseModel
 
     // EditoriallyArticles
 
-    // Rate
+    // Popularity
 
     public function loadEditoriallyArticlesIdsByPopularity(int $count = 4, int $lastLoaded = 0)
     {
@@ -285,7 +285,7 @@ class ArticlesModel extends BaseModel
 
     // EditoriallyApprovedArticles
 
-    // Rate
+    // Popularity
 
     public function loadEditoriallyApprovedArticlesIdsByPopularity(int $count = 4, int $lastLoaded = 0)
     {
@@ -451,7 +451,7 @@ class ArticlesModel extends BaseModel
 
     // AbyssArticles
 
-    // Rate
+    // Popularity
 
     public function loadAbyssArticlesIdsByPopularity(int $count = 4, int $lastLoaded = 0)
     {
@@ -633,7 +633,7 @@ class ArticlesModel extends BaseModel
 
     // ArticlesWaitingApprove
 
-    // Rate
+    // Popularity
 
     public function loadArticlesWaitingApproveIdsByPopularity(int $count = 4, int $lastLoaded = 0)
     {
@@ -791,7 +791,7 @@ class ArticlesModel extends BaseModel
 
     // ArticlesWaitingPremoderate
 
-    // Rate
+    // Popularity
 
     public function loadArticlesWaitingPremoderateIdsByPopularity(int $count = 4, int $lastLoaded = 0)
     {

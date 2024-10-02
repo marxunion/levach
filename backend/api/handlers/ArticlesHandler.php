@@ -41,7 +41,7 @@ class ArticlesHandler extends BaseHandlerRoute
             
             if(!isset($this->parsedBody['sortType']))
             {
-                $this->parsedBody['sortType'] = 'rate';
+                $this->parsedBody['sortType'] = 'popularity';
             }
 
             $this->cookiesBody = $this->request->getCookieParams();
@@ -703,7 +703,7 @@ class ArticlesHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        if($this->parsedBody['sortType'] == 'rate')
+        if($this->parsedBody['sortType'] == 'popularity')
         {
             if(AdminStatusHandler::isAdmin($this->cookiesBody))
             {
