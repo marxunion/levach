@@ -1,8 +1,23 @@
+import { getSavedTheme, setSavedTheme, getSystemTheme, onSystemThemeChange } from '../helpers/ThemeHelper';
+
 class ThemeHandler 
 {
     static #instance: ThemeHandler;
+    private themeName : string;
 
-    private constructor() { }
+    private constructor() 
+    {
+        this.themeName = getSavedTheme() || getSystemTheme();
+        this.applyTheme(this.themeName);
+
+        onSystemThemeChange((newTheme) => 
+        {
+            if(!getSavedTheme()) 
+            {
+                this.changeTheme(newTheme);
+            }
+        });
+    }
 
     public static get instance(): ThemeHandler 
     {
@@ -21,7 +36,16 @@ class ThemeHandler
 
     public changeTheme(themeName : string) 
     {
-        localStorage.setItem('theme', themeName);
-        this.applyTheme(themeName);
+        if (this.themeName !== themeName) 
+        {
+            this.themeName = themeName;
+            setSavedTheme(themeName);
+            this.applyTheme(themeName);
+        }
+    }
+
+    public getCurrentTheme()
+    {
+        return this.themeName;
     }
 }
