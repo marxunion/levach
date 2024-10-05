@@ -8,8 +8,11 @@ import SideBar from './components/SideBar.vue';
 
 import { container } from "jenesius-vue-modal";
 
+import { ThemeHandler } from "./ts/handlers/ThemeHandler";
 import { csrfTokenInput, getNewCsrfToken } from './ts/handlers/CSRFTokenHandler';
 
+import './scss/themes/light.scss';
+import './scss/themes/dark.scss';
 
 const isBurgerActive : Ref<boolean> = ref(false);
 
@@ -19,6 +22,8 @@ const toggleBurger = () =>
 {
     isBurgerActive.value = !isBurgerActive.value;
 }
+
+ThemeHandler.instance;
 
 const route : RouteLocationNormalizedLoaded = useRoute();
 

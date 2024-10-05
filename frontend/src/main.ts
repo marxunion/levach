@@ -12,7 +12,6 @@ import './scss/fonts.scss'
 import '@vuepic/vue-datepicker/dist/main.css'
 import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 
-
 const app = createApp(App)
 
 app.component('VueDatePicker', VueDatePicker);

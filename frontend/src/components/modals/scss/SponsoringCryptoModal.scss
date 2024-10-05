@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: $InfoModalBG;
+    background-color: --InfoModalBG;
     border-radius: 20px;
     position: absolute;
     top: 120px;
@@ -18,14 +18,14 @@
         font-size: 54px;
         font-family: Roboto-Regular;
         text-align: center;
-        color: $InfoModalTitle;
+        color: --InfoModalTitle;
     }
 
     &__text
     {
         width: 96%;
         font-size: 24px;
-        color: $InfoModalText;
+        color: --InfoModalText;
         font-family: Roboto-Regular;
         text-align: center;
         margin-top: 26px;
@@ -34,7 +34,7 @@
             margin-top: 52px;
             margin-bottom: 20px;
             font-size: 18px;
-            color: $infoModalWithLinkTextFooter;
+            color: --InfoModalWithLinkTextFooter;
         }
     }
 
@@ -52,8 +52,8 @@
             padding-left: 12px;
             font-size: 23px;
 
-            background-color: $InfoModalWithLinkInputBG;
-            color: $InfoModalWithLinkInputText;
+            background-color: --InfoModalWithLinkInputBG;
+            color: --InfoModalWithLinkInputText;
             font-family: Roboto-Regular;
 
             border-radius: 15px;
@@ -75,7 +75,7 @@
             width: 56px;
             height: 56px;
 
-            background-color: $InfoModalWithLinkInputCopyButtonBG;
+            background-color: --InfoModalWithLinkInputCopyButtonBG;
             &__icon
             {
                 width: 60%;

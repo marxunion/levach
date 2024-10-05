@@ -18,8 +18,8 @@
         border-radius: 15px;
         padding-left: 12px;
 
-        color: $dropDownItemTextSelected;
-        background-color: $dropDownItemBGSelected;
+        color: --dropDownItemTextSelected;
+        background-color: --dropDownItemBGSelected;
         font-size: 22px;
 
         user-select: none;
@@ -55,7 +55,7 @@
 
         font-size: 22px;
         
-        background-color: $dropDownBG;
+        background-color: --dropDownBG;
 
         overflow-x: hidden;
         overflow-y: visible;
@@ -70,12 +70,12 @@
             height: 40px;
             line-height: 40px;
 
-            color: $dropDownItemText;
+            color: --dropDownItemText;
 
             padding-left: 12px;
             user-select: none;
             &:hover {
-                background-color: $dropDownHoverItemBG;
+                background-color: --dropDownHoverItemBG;
             }
         }
     }

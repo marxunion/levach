@@ -29,7 +29,7 @@
             flex-direction: column;
             align-items: center;
 
-            background-color: $ArticleViewArticleBG;
+            background-color: --ArticleViewArticleBG;
 
             box-sizing: border-box;
             border-radius: 15px;
@@ -50,7 +50,7 @@
                 font-size: 19px;
                 font-family: Roboto-Regular;
 
-                color: $ArticleViewArticleTitleId;
+                color: --ArticleViewArticleTitleId;
             }
 
             &__titleTime
@@ -67,7 +67,7 @@
                 font-size: 22px;
                 font-family: Roboto-Regular;
 
-                color: $ArticleViewArticleTitleTime;
+                color: --ArticleViewArticleTitleTime;
             }
 
             &__preview
@@ -82,7 +82,7 @@
             {
                 width: 95%;
                 font-size: 20px;
-                color: $ArticleViewTagsText;
+                color: --ArticleViewTagsText;
             }
             &__buttons
             {
@@ -110,38 +110,38 @@
                     text-align: center;
                     line-height: 45px;
                     
-                    color: $ArticlesReadAllButtonText;
-                    border: 2px solid $ArticlesReadAllButtonBorder;
+                    color: --ArticlesReadAllButtonText;
+                    border: 2px solid --ArticlesReadAllButtonBorder;
     
 
                     &.deleteArticleButton
                     {
-                        color: $ArticleViewDeleteArticleButtonText;
-                        border: 2px solid $ArticleViewDeleteArticleButtonBorder;
+                        color: --ArticleViewDeleteArticleButtonText;
+                        border: 2px solid --ArticleViewDeleteArticleButtonBorder;
                     }
 
                     &.acceptPremoderateArticleButton
                     {
-                        color: $ArticleViewAcceptPremoderateArticleButtonText;
-                        border: 2px solid $ArticleViewAcceptPremoderateArticleButtonBorder;
+                        color: --ArticleViewAcceptPremoderateArticleButtonText;
+                        border: 2px solid --ArticleViewAcceptPremoderateArticleButtonBorder;
                     }
 
                     &.rejectPremoderateArticleButton
                     {
-                        color: $ArticleViewRejectPremoderateArticleButtonText;
-                        border: 2px solid $ArticleViewRejectPremoderateArticleButtonBorder;
+                        color: --ArticleViewRejectPremoderateArticleButtonText;
+                        border: 2px solid --ArticleViewRejectPremoderateArticleButtonBorder;
                     }
 
                     &.acceptApproveArticleButton
                     {
-                        color: $ArticleViewAcceptApproveArticleButtonText;
-                        border: 2px solid $ArticleViewAcceptApproveArticleButtonBorder;
+                        color: --ArticleViewAcceptApproveArticleButtonText;
+                        border: 2px solid --ArticleViewAcceptApproveArticleButtonBorder;
                     }
 
                     &.rejectApproveArticleButton
                     {
-                        color: $ArticleViewRejectApproveArticleButtonText;
-                        border: 2px solid $ArticleViewRejectApproveArticleButtonBorder;
+                        color: --ArticleViewRejectApproveArticleButtonText;
+                        border: 2px solid --ArticleViewRejectApproveArticleButtonBorder;
                     }
         
                     transition: .4s;
@@ -207,7 +207,7 @@
         &__comments
         {
             width: 100%;
-            background-color: $ArticleViewCommentsBG;
+            background-color: --ArticleViewCommentsBG;
             border-radius: 15px;
             margin-top: 20px;
             display: flex;
@@ -235,7 +235,7 @@
 
                         margin-right: 8px;
 
-                        color: $ArticleViewCommentsText;
+                        color: --ArticleViewCommentsText;
                     }
                     display: flex;
                     align-items: center;

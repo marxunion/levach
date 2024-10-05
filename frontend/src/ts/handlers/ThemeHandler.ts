@@ -1,6 +1,6 @@
 import { getSavedTheme, setSavedTheme, getSystemTheme, onSystemThemeChange } from '../helpers/ThemeHelper';
 
-class ThemeHandler 
+export class ThemeHandler 
 {
     static #instance: ThemeHandler;
     private themeName : string;

@@ -34,8 +34,8 @@
                 width: 180px;
                 height: 45px;
                 border-radius: 20px;
-                background-color: $ArticleNewSendButtonBG;
-                color: $ArticleNewSendButtonText;
+                background-color: --ArticleNewSendButtonBG;
+                color: --ArticleNewSendButtonText;
                 font-size: 18px;
                 font-family: Roboto-Regular;
                 transition: .5s;
@@ -45,7 +45,7 @@
                 {
                     cursor: pointer;
                     transform: scale(1.04);
-                    background-color: $ArticleNewSendButtonHoverBG;
+                    background-color: --ArticleNewSendButtonHoverBG;
                 }
             }
         }
@@ -54,7 +54,7 @@
             margin-top: 14px;
             width: 100%;
             border-radius: 15px;
-            background-color: $ArticleNewEditTagsBG;
+            background-color: --ArticleNewEditTagsBG;
             padding: 0px 12px 12px 12px;
             box-sizing: border-box;
             display: flex;
@@ -73,7 +73,7 @@
                     align-items: center;
                     position: relative;
                     box-sizing: border-box;
-                    background-color: $ArticleNewEditTagsTagBG;
+                    background-color: --ArticleNewEditTagsTagBG;
                     border-radius: 17px;
                     margin-right: 10px;
                     margin-top: 12px;
@@ -89,7 +89,7 @@
                             transform: rotate(45deg);
                             font-weight: 400;
                             font-family: Arial, Helvetica, sans-serif;
-                            color: $ArticleNewEditTagsRemoveTagButtonText;
+                            color: --ArticleNewEditTagsRemoveTagButtonText;
                         }
                         margin-left: 8px;
                         width: 40px;
@@ -97,14 +97,14 @@
 
                         border-radius: 17px;
 
-                        background-color: $ArticleNewEditTagsRemoveTagButtonBG;
+                        background-color: --ArticleNewEditTagsRemoveTagButtonBG;
                         text-align: center;
                         transition: .5s;
                         
                         &:hover
                         {
                             cursor: pointer;
-                            background-color: $ArticleNewEditTagsRemoveTagButtonHoverBG;
+                            background-color: --ArticleNewEditTagsRemoveTagButtonHoverBG;
                         }
                     }
                 }
@@ -121,11 +121,11 @@
                 {
                     width: 100%;
                     height: 100%;
-                    background-color: $ArticleNewEditTagsAddTagInputBG;
+                    background-color: --ArticleNewEditTagsAddTagInputBG;
                     border-radius: 20px;
                     padding-left: 14px;
                     
-                    color: $ArticleNewEditTagsAddTagInputText;
+                    color: --ArticleNewEditTagsAddTagInputText;
                     font-size: 20px;
                     font-family: Roboto-Regular;
 
@@ -133,7 +133,7 @@
 
                     &::placeholder
                     {
-                        color: $ArticleNewEditTagsAddTagInputPlaceholderText;
+                        color: --ArticleNewEditTagsAddTagInputPlaceholderText;
                     }
                 }
                 &__button
@@ -144,8 +144,8 @@
                     width: 45px;
                     height: 45px;
                     border-radius: 20px;
-                    background-color: $ArticleNewEditTagsAddTagButtonBG;
-                    color: $ArticleNewEditTagsAddTagButtonText;
+                    background-color: --ArticleNewEditTagsAddTagButtonBG;
+                    color: --ArticleNewEditTagsAddTagButtonText;
                     line-height: 0;
                     text-align: center;
                     font-size: 44px;
@@ -155,7 +155,7 @@
                     &:hover
                     {
                         cursor: pointer;
-                        background-color: $ArticleNewEditTagsAddTagButtonHoverBG;
+                        background-color: --ArticleNewEditTagsAddTagButtonHoverBG;
                     }
                 }
             }

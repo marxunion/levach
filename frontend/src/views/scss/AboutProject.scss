@@ -9,7 +9,7 @@
 
     &__title
     {
-        color: $AboutProjectTitle;
+        color: --AboutProjectTitle;
         font-family: Roboto-Medium;
 
         &.titleFAQ
@@ -34,7 +34,7 @@
             font-size: 18px;
             &.link
             {
-                color: $AboutProjectDescriptionLink;
+                color: --AboutProjectDescriptionLink;
             }
         }
     }

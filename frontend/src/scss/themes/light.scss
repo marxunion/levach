@@ -1,0 +1,282 @@
+@charset "UTF-8";
+
+.light-theme
+{
+    // Default
+    --BG: #f1f4ff;
+    --selectionBG: #bbbbbb;
+    --title: #000;
+    --text: #000;
+
+    // Header
+    --headerBG: #54A9F8;
+
+    --headerSearchBarBG: #fff;
+    --headerSearchBarInputText: #000;
+    --headerSearchBarInputPlaceholderText: #3d3d3d;
+
+    --headerNewArticleBG: #f8f8f8;
+    --headerNewArticleBGHover: #f8f8f8;
+    --headerNewArticleText: #131313;
+
+    --headerDropDownItemTextSelected: #fff;
+
+    --headerBurgerMenuButton: #fff;
+
+    --headerButtonMobileBG: #fff;
+
+    // Loader
+    --loaderSpinnerColor: #54A9F8;
+
+    // SideBar
+    --sideBarBG: #F1F1F1;
+    --sideBarBorderLeft: #C9C9C9;
+
+    --sideBarLink: #000;
+    --sideBarLinkHover: #424242;
+    --sideBarLinkActive: #575757;
+
+    --sidebarArticleCommentsButtonText: #54A9F8;
+    --sidebarArticleCommentsButtonBorder: #54A9F8;
+
+    --sidebarBackToArticleButtonText: #54A9F8;
+    --sidebarBackToArticleButtonBorder: #54A9F8;
+
+    --sidebarRejectAllApproveButtonText: #950C0C;
+    --sidebarRejectAllApproveButtonBorder: #950C0C;
+
+    --sidebarRejectAllPremoderateButtonText: #950C0C;
+    --sidebarRejectAllPremoderateButtonBorder: #950C0C;
+
+    --sideBarLinkFooter: #4193f1;
+    --sideBarLinkFooterHover: #5ca8ff;
+
+    // DropDown
+    --dropDownBG: #ddd;
+    --dropDownHoverItemBG: #ccc;
+
+    --dropDownItemBGSelected: #ddd;
+    --dropDownItemText: #000;
+    --dropDownItemTextSelected: #000;
+
+    // Captcha
+    --RulesCaptchaTextLink: #4193f1;
+
+    // CommentsList
+    --commentsListCommentBorder: #565656;
+    --commentsListCommentTitleId: #4193f1;
+    --commentsListCommentTitleTime: #797979;
+    --commentsListCommentText: #000;
+
+    --commentsListCommentCollapse: #4193f1;
+
+    --commentsListCommentActionText: #747474;
+    --commentsListCommentActionTextHover: #575757;
+
+    --commentsListCommentRatingInfluenceUp: #319a17;
+    --commentsListCommentRatingInfluenceDown: #950C0C;
+
+    // Article
+
+    // ArticleNew
+    --ArticleNewSendButtonBG: #54A9F8;
+    --ArticleNewSendButtonHoverBG: #73bafc;
+    --ArticleNewSendButtonText: #fff;
+
+    --ArticleNewEditTagsBG: #fff;
+
+    --ArticleNewEditTagsTagBG: #d9d9d9;
+    --ArticleNewEditTagsTagText: #2c2c2c;
+    --ArticleNewEditTagsRemoveTagButtonBG: #b9b9b9;
+    --ArticleNewEditTagsRemoveTagButtonHoverBG: #afafaf;
+    --ArticleNewEditTagsRemoveTagButtonText: #565656;
+
+    --ArticleNewEditTagsAddTagInputBG: #d9d9d9;
+    --ArticleNewEditTagsAddTagInputText: #2c2c2c;
+    --ArticleNewEditTagsAddTagInputPlaceholderText: #565656;
+    --ArticleNewEditTagsAddTagButtonBG: #b9b9b9;
+    --ArticleNewEditTagsAddTagButtonHoverBG: #afafaf;
+    --ArticleNewEditTagsAddTagButtonText: #565656;
+
+    // ArticleEdit
+    --ArticleEditSendButtonBG: #54A9F8;
+    --ArticleEditSendButtonHoverBG: #73bafc;
+    --ArticleEditSendButtonText: #fff;
+
+    --ArticleEditInfoBG: #fff;
+    --ArticleEditInfoText: #fff;
+
+    --ArticleEditBlockBG: #fff;
+    --ArticleEditBlockTitle: #000;
+
+    --ArticleEditRequestApproveArticleButton: #38B819;
+    --ArticleEditRequestApproveArticleButtonBorder: #38B819;
+
+    --ArticleEditAcceptArticleApprovedWithChangesButton: #38B819;
+    --ArticleEditAcceptArticleApprovedWithChangesButtonBorder: #38B819;
+
+    --ArticleEditRejectArticleApprovedWithChangesButton: #950C0C;
+    --ArticleEditRejectArticleApprovedWithChangesButtonBorder: #950C0C;
+
+    --ArticleEditTagsText: #2F88F0;
+
+    --ArticleEditEditTagsBG: #fff;
+
+    --ArticleEditEditTagsTagBG: #d9d9d9;
+    --ArticleEditEditTagsTagText: #2c2c2c;
+    --ArticleEditEditTagsRemoveTagButtonBG: #b9b9b9;
+    --ArticleEditEditTagsRemoveTagButtonHoverBG: #afafaf;
+    --ArticleEditEditTagsRemoveTagButtonText: #565656;
+
+    --ArticleEditEditTagsAddTagInputBG: #d9d9d9;
+    --ArticleEditEditTagsAddTagInputText: #2c2c2c;
+    --ArticleEditEditTagsAddTagInputPlaceholderText: #565656;
+    --ArticleEditEditTagsAddTagButtonBG: #b9b9b9;
+    --ArticleEditEditTagsAddTagButtonHoverBG: #afafaf;
+    --ArticleEditEditTagsAddTagButtonText: #565656;
+
+    // ArticleView
+    --ArticleViewArticleBG: #fff;
+    --ArticleViewArticleTitleId: #4193f1;
+    --ArticleViewArticleTitleTime: #797979;
+
+    --ArticleViewTagsText: #2F88F0;
+
+    --ArticleViewDeleteArticleButtonText: #950C0C;
+    --ArticleViewDeleteArticleButtonBorder: #950C0C;
+
+    --ArticleViewCommentsText: #313131;
+    --ArticleViewCommentsBG: #fff;
+
+    --ArticleViewAcceptPremoderateArticleButtonText: #38B819;
+    --ArticleViewAcceptPremoderateArticleButtonBorder: #38B819;
+
+    --ArticleViewRejectPremoderateArticleButtonText: #950C0C;
+    --ArticleViewRejectPremoderateArticleButtonBorder: #950C0C;
+
+    --ArticleViewAcceptApproveArticleButtonText: #38B819;
+    --ArticleViewAcceptApproveArticleButtonBorder: #38B819;
+
+    --ArticleViewRejectApproveArticleButtonText: #950C0C;
+    --ArticleViewRejectApproveArticleButtonBorder: #950C0C;
+
+    // AdminEditComments
+    --AdminEditCommentsBG: #fff;
+
+    --AdminEditCommentsFiltersInputBG: #d9d9d9;
+    --AdminEditCommentsFiltersInputBorder: #d9d9d9;
+    --AdminEditCommentsFiltersInputBorderHover: #aaaeb7;
+    --AdminEditCommentsFiltersInputBorderFocus: #aaaeb7;
+    --AdminEditCommentsFiltersInputText: #2c2c2c;
+    --AdminEditCommentsFiltersInputPlaceholderText: #565656;
+
+    --AdminEditCommentsFiltersInputNumberButtonBG: #f5f5f5;
+
+    --AdminEditCommentsArticleTitle: #000;
+    --AdminEditCommentsArticleTitleId: #4193f1;
+    --AdminEditCommentsArticleTitleTime: #797979;
+
+    --AdminEditCommentsButtonsApplyFiltersButtonText: #54A9F8;
+    --AdminEditCommentsButtonsApplyFiltersButtonBorder: #54A9F8;
+    --AdminEditCommentsButtonsDeleteSelectedButtonText: #950C0C;
+    --AdminEditCommentsButtonsDeleteSelectedButtonBorder: #950C0C;
+
+    // ArticleAdminEditComments
+    --ArticleAdminEditCommentsBG: #fff;
+
+    --ArticleAdminEditCommentsFiltersInputBG: #d9d9d9;
+    --ArticleAdminEditCommentsFiltersInputBorder: #d9d9d9;
+    --ArticleAdminEditCommentsFiltersInputBorderHover: #aaaeb7;
+    --ArticleAdminEditCommentsFiltersInputBorderFocus: #aaaeb7;
+    --ArticleAdminEditCommentsFiltersInputText: #2c2c2c;
+    --ArticleAdminEditCommentsFiltersInputPlaceholderText: #565656;
+
+    --ArticleAdminEditCommentsFiltersInputNumberButtonBG: #f5f5f5;
+
+    --ArticleAdminEditCommentsButtonsApplyFiltersButtonText: #54A9F8;
+    --ArticleAdminEditCommentsButtonsApplyFiltersButtonBorder: #54A9F8;
+    --ArticleAdminEditCommentsButtonsDeleteSelectedButtonText: #950C0C;
+    --ArticleAdminEditCommentsButtonsDeleteSelectedButtonBorder: #950C0C;
+
+    // Articles
+    --ArticlesArticleBG: #fff;
+    --ArticlesArticleTitleId: #4193f1;
+    --ArticlesArticleTitleTime: #797979;
+
+    --ArticlesArticleTagsText: #2F88F0;
+
+    --ArticlesReadAllButtonText: #54A9F8;
+    --ArticlesReadAllButtonBorder: #54A9F8;
+
+    --ArticleAcceptPremoderateArticleButtonText: #38B819;
+    --ArticleAcceptPremoderateArticleButtonBorder: #38B819;
+
+    --ArticleRejectPremoderateArticleButtonText: #950C0C;
+    --ArticleRejectPremoderateArticleButtonBorder: #950C0C;
+
+    --ArticleAcceptApproveArticleButtonText: #38B819;
+    --ArticleAcceptApproveArticleButtonBorder: #38B819;
+
+    --ArticleRejectApproveArticleButtonText: #950C0C;
+    --ArticleRejectApproveArticleButtonBorder: #950C0C;
+
+
+    // AboutProject
+    --AboutProjectTitle: #2F88F0;
+    --AboutProjectDescriptionLink: #2F88F0;
+
+    // Rules
+    --RulesTitle: #2F88F0;
+
+    // Sponsoring
+    --SponsoringTitle: #2F88F0;
+    --sponsoringBlockBG: #ececec;
+
+    // Modals
+
+    // AdminModal
+    --AdminModalBG: #eee;
+    --AdminModalText: #000;
+
+    --AdminModalInputTextBG: #d9d9d9;
+    --AdminModalInputTextText: #000;
+
+    --AdminModalInputNumberBG: #d9d9d9;
+    --AdminModalInputNumberBorder: #d9d9d9;
+    --AdminModalInputNumberBorderHover: #aaaeb7;
+    --AdminModalInputNumberBorderFocus: #aaaeb7;
+    --AdminModalInputNumberText: #2c2c2c;
+    --AdminModalInputNumberButtonBG: #f5f5f5;
+
+    --AdminModalButtonText: #38B819;
+    --AdminModalButtonBorder: #38B819;
+
+    --AdminModalButtonTextQuit: #950C0C;
+    --AdminModalButtonBorderQuit: #950C0C;
+
+    --AdminModalButtonTextSaveSettings: #54A9F8;
+    --AdminModalButtonBorderSaveSettings: #54A9F8;
+
+    // InfoModal
+    --InfoModalBG: #fff;
+
+    --InfoModalTitle: #000;
+    --InfoModalText: #000;
+
+    // InfoModalWithLink
+    --InfoModalWithLinkBG: #fff;
+
+    --InfoModalWithLinkTitle: #000;
+    --InfoModalWithLinkText: #000;
+    --infoModalWithLinkTextFooter: #707070;
+    --InfoModalWithLinkInputBG: #d9d9d9;
+    --InfoModalWithLinkInputText: #5c5c5c;
+    --InfoModalWithLinkInputCopyButtonBG: #54A9F8;
+
+    // SearchMobileModal
+    --SearchMobileModalBG: #fff;
+
+    --SearchMobileModalInputBG: #d9d9d9;
+    --SearchMobileModalInputText: #000;
+    --SearchMobileModalInputPlaceholderText: #3d3d3d;
+}

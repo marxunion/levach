@@ -27,16 +27,16 @@
             font-size: 17px;
             line-height: 1.7;
             width: 83%;
-            color: $sideBarLink;
+            color: --sideBarLink;
             font-family: Roboto-Medium;
             transition: .2s;
             &:hover
             {
-                color: $sideBarLinkHover;
+                color: --sideBarLinkHover;
             }
             &.active
             {
-                color: $sideBarLinkActive;
+                color: --sideBarLinkActive;
             }
         }
         &__button
@@ -52,8 +52,8 @@
             text-align: center;
             line-height: 40px;
                     
-            color: $ArticlesReadAllButtonText;
-            border: 2px solid $ArticlesReadAllButtonBorder;
+            color: --ArticlesReadAllButtonText;
+            border: 2px solid --ArticlesReadAllButtonBorder;
 
             margin-top: 10px;
 
@@ -61,23 +61,23 @@
 
             &.articleCommentsButton
             {
-                color: $sidebarArticleCommentsButtonText;
-                border: 2px solid $sidebarArticleCommentsButtonBorder;
+                color: --sidebarArticleCommentsButtonText;
+                border: 2px solid --sidebarArticleCommentsButtonBorder;
             }
             &.backToArticleButton
             {
-                color: $sidebarBackToArticleButtonText;
-                border: 2px solid $sidebarBackToArticleButtonBorder;
+                color: --sidebarBackToArticleButtonText;
+                border: 2px solid --sidebarBackToArticleButtonBorder;
             }
             &.rejectAllApproveButton
             {
-                color: $sidebarRejectAllApproveButtonText;
-                border: 2px solid $sidebarRejectAllApproveButtonBorder;
+                color: --sidebarRejectAllApproveButtonText;
+                border: 2px solid --sidebarRejectAllApproveButtonBorder;
             }
             &.rejectAllPremoderateButton
             {
-                color: $sidebarRejectAllPremoderateButtonText;
-                border: 2px solid $sidebarRejectAllPremoderateButtonBorder;
+                color: --sidebarRejectAllPremoderateButtonText;
+                border: 2px solid --sidebarRejectAllPremoderateButtonBorder;
             }
             transition: .4s;
             transform: scale(1.00);
@@ -103,12 +103,12 @@
             font-size: 16px;
             line-height: 2.1;
             width: 83%;
-            color: $sideBarLinkFooter;
+            color: --sideBarLinkFooter;
             font-family: Roboto-Regular;
             transition: .2s;
             &:hover
             {
-                color: $sideBarLinkFooterHover;
+                color: --sideBarLinkFooterHover;
             }
         }
     }
@@ -371,8 +371,8 @@
         right: 0;
         left: inherit;
 
-        background-color: $sideBarBG;
-        border-left: 1px solid $sideBarBorderLeft;
+        background-color: --sideBarBG;
+        border-left: 1px solid --sideBarBorderLeft;
         
         transform: translateX(100%);
         visibility: hidden;
