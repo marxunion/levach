@@ -33,7 +33,7 @@ export class ThemeHandler
 
     public applyTheme(themeName : string) 
     {
-        document.body.setAttribute('data-theme', `${themeName}`);
+        document.documentElement.setAttribute('data-theme', `${themeName}`);
     }
 
     public changeTheme(themeName : string) 

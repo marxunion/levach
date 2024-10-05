@@ -28,7 +28,7 @@
     &__bar 
     {
         display: grid;
-        grid-template-columns: 78.5% 20%;
+        grid-template-columns: 75% 24%;
         align-items: center;
         width: 100%;
         height: 100%;
@@ -72,6 +72,71 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            
+            &__switch 
+			{
+				position: relative;
+				display: inline-block;
+				min-width: 54px;
+				min-height: 32px;
+				transform: scale(1);
+				transition: .5s;
+                margin-right: 10px;
+				&:hover
+				{
+					transform: scale(1.08);
+				}
+				&__checkbox 
+				{
+					display: none;
+					&:focus + .header__bar__subbar__switch__round 
+					{
+						box-shadow: 0 0 1px #6a6a6a;
+					}
+					&:checked + .header__bar__subbar__switch__round
+					{
+						background-color: #6a6a6a;
+					}
+					&:focus + .header__bar__subbar__switch__round:before 
+					{
+						box-shadow: 0 0 1px #909090;
+					}
+					&:checked + .header__bar__subbar__switch__round:before 
+					{
+						background-color: #909090;
+						-webkit-transform: translateX(22px);
+						-ms-transform: translateX(22px);
+						transform: translateX(22px);
+					}
+				}
+				&__round
+				{
+					position: absolute;
+					cursor: pointer;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					background-color: #d0d0d0;
+					border-radius: 34px;
+					-webkit-transition: .4s;
+					transition: .4s;
+					&::before
+					{
+						position: absolute;
+						content: "";
+						height: 26px;
+						width: 26px;
+						left: 3px;
+						bottom: 3px;
+						background-color: white;
+						border-radius: 50%;
+						-webkit-transition: .4s;
+						transition: .4s;
+					}
+				}
+			}
+
             &__createarticle
             {
                 font-family: Roboto-Regular;
@@ -91,10 +156,11 @@
                     background-color: var(--headerNewArticleBGHover);
                 }
             }
+
             &__select 
             {
-                width: 60px;
-                height: 45px;
+                min-width: 60px;
+                min-height: 45px;
 
                 & .customSelect__selected
                 {
