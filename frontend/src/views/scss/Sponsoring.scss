@@ -9,7 +9,7 @@
     &__title
     {
         font-size: 48px;
-        color: --SponsoringTitle;
+        color: var(--SponsoringTitle);
         font-family: Roboto-Medium;
     }
     &__titleBlock
@@ -20,7 +20,7 @@
         }
         margin-top: 40px;
         font-size: 40px;
-        color: --SponsoringTitle;
+        color: var(--SponsoringTitle);
         font-family: Roboto-Medium;
     }
     
@@ -64,7 +64,7 @@
         &__block
         {
             cursor: pointer;
-            background-color: --SponsoringBlockBG;
+            background-color: var(--SponsoringBlockBG);
             border-radius: 20px;
             display: flex;
             justify-content: center;

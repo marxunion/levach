@@ -14,7 +14,7 @@
         flex-direction: column;
         align-items: center;
         border-radius: 15px;
-        background-color: --ArticleAdminEditCommentsBG;
+        background-color: var(--ArticleAdminEditCommentsBG);
         &__title
         {
             margin-top: 12px;
@@ -62,22 +62,22 @@
                         
                         &.text
                         {
-                            color: --ArticleAdminEditCommentsFiltersInputText;
-                            background-color: --ArticleAdminEditCommentsFiltersInputBG;
+                            color: var(--ArticleAdminEditCommentsFiltersInputText);
+                            background-color: var(--ArticleAdminEditCommentsFiltersInputBG);
                             font-size: 16px;
                             padding-left: 10px;
                             transition: .4s;
                             box-sizing: border-box;
-                            border: 1px solid --ArticleAdminEditCommentsFiltersInputBorder;
+                            border: 1px solid var(--ArticleAdminEditCommentsFiltersInputBorder);
                             &:hover
                             {
-                                border: 1px solid --ArticleAdminEditCommentsFiltersInputBorderHover;
+                                border: 1px solid var(--ArticleAdminEditCommentsFiltersInputBorderHover);
                             }
                         }
                         &.number
                         {
-                            color: --ArticleAdminEditCommentsFiltersInputText;
-                            background-color: --ArticleAdminEditCommentsFiltersInputBG;
+                            color: var(-ArticleAdminEditCommentsFiltersInputText);
+                            background-color: var(--ArticleAdminEditCommentsFiltersInputBG);
                             width: 120px;
                             height: 35px;
 
@@ -87,7 +87,7 @@
                                 cursor: pointer;
                                 border-radius: 12px;
                                 margin: 3px;
-                                background-color: --ArticleAdminEditCommentsFiltersInputNumberButtonBG;
+                                background-color: var(--ArticleAdminEditCommentsFiltersInputNumberButtonBG);
 
                                 &:disabled
                                 {
@@ -109,20 +109,20 @@
                                 border-radius: 15px;
                                 height: 35px;
                                 padding: 0 !important;
-                                border: 1px solid --ArticleAdminEditCommentsFiltersInputBorder;
-                                color: --ArticleAdminEditCommentsFiltersInputText;
-                                background-color: --ArticleAdminEditCommentsFiltersInputBG;
+                                border: 1px solid var(--ArticleAdminEditCommentsFiltersInputBorder);
+                                color: var(--ArticleAdminEditCommentsFiltersInputText);
+                                background-color: var(--ArticleAdminEditCommentsFiltersInputBG);
                                 font-size: 16px;
                                 text-align: center;
                                 transition: .4s;
                                 box-sizing: border-box;
                                 &:hover
                                 {
-                                    border: 1px solid --ArticleAdminEditCommentsFiltersInputBorderHover;
+                                    border: 1px solid var(--ArticleAdminEditCommentsFiltersInputBorderHover);
                                 }
                                 &:focus
                                 {
-                                    border: 1px solid --ArticleAdminEditCommentsFiltersInputBorderFocus;
+                                    border: 1px solid var(--ArticleAdminEditCommentsFiltersInputBorderFocus);
                                 }
                             }
                         }
@@ -135,17 +135,17 @@
                                 height: 35px;
                                 padding: 0 !important;
                                 padding-left: 35px !important;
-                                color: --ArticleAdminEditCommentsFiltersInputText;
-                                background-color: --ArticleAdminEditCommentsFiltersInputBG;
+                                color: var(--ArticleAdminEditCommentsFiltersInputText);
+                                background-color: var(--ArticleAdminEditCommentsFiltersInputBG);
                                 font-size: 16px;
-                                border: 1px solid --ArticleAdminEditCommentsFiltersInputBorder;
+                                border: 1px solid var(--ArticleAdminEditCommentsFiltersInputBorder);
                                 &:hover
                                 {
-                                    border: 1px solid --ArticleAdminEditCommentsFiltersInputBorderHover;
+                                    border: 1px solid var(--ArticleAdminEditCommentsFiltersInputBorderHover);
                                 }
                                 &:focus
                                 {
-                                    border: 1px solid --ArticleAdminEditCommentsFiltersInputBorderFocus;
+                                    border: 1px solid var(--ArticleAdminEditCommentsFiltersInputBorderFocus);
                                 }
                             }
                         }
@@ -176,13 +176,13 @@
                 text-align: center;
                 line-height: 45px;
                 
-                color: --ArticleAdminEditCommentsButtonsApplyFiltersButtonText;
-                border: 2px solid --ArticleAdminEditCommentsButtonsApplyFiltersButtonBorder;
+                color: var(--ArticleAdminEditCommentsButtonsApplyFiltersButtonText);
+                border: 2px solid var(--ArticleAdminEditCommentsButtonsApplyFiltersButtonBorder);
 
                 &.delete
                 {
-                    color: --ArticleAdminEditCommentsButtonsDeleteSelectedButtonText;
-                    border: 2px solid --ArticleAdminEditCommentsButtonsDeleteSelectedButtonBorder;
+                    color: var(--ArticleAdminEditCommentsButtonsDeleteSelectedButtonText);
+                    border: 2px solid var(--ArticleAdminEditCommentsButtonsDeleteSelectedButtonBorder);
                 }
 
 
@@ -203,7 +203,7 @@
         flex-direction: column;
         align-items: center;
         border-radius: 15px;
-        background-color: --ArticleAdminEditCommentsBG;
+        background-color: var(--ArticleAdminEditCommentsBG);
         &__title
         {
             margin-top: 12px;

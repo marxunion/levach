@@ -10,7 +10,7 @@
     &__title
     {
         font-size: 48px;
-        color: --RulesTitle;
+        color: var(--RulesTitle);
         font-family: Roboto-Medium;
     }
     
@@ -43,7 +43,7 @@
             &__link
             {
                 font-family: Roboto-Regular;
-                color: --RulesCaptchaTextLink !important;
+                color: var(--RulesCaptchaTextLink) !important;
             }
         }
     }

@@ -1,14 +1,16 @@
+import { ref, computed, Ref, ComputedRef } from 'vue';
+
 import { getSavedTheme, setSavedTheme, getSystemTheme, onSystemThemeChange } from '../helpers/ThemeHelper';
 
 export class ThemeHandler 
 {
     static #instance: ThemeHandler;
-    private themeName : string;
+    private currentTheme : Ref<string>;
 
     private constructor() 
     {
-        this.themeName = getSavedTheme() || getSystemTheme();
-        this.applyTheme(this.themeName);
+        this.currentTheme = ref(getSavedTheme() || getSystemTheme());
+        this.applyTheme(this.currentTheme.value);
 
         onSystemThemeChange((newTheme) => 
         {
@@ -36,16 +38,16 @@ export class ThemeHandler
 
     public changeTheme(themeName : string) 
     {
-        if (this.themeName !== themeName) 
+        if (this.currentTheme.value !== themeName) 
         {
-            this.themeName = themeName;
+            this.currentTheme.value = themeName;
             setSavedTheme(themeName);
             this.applyTheme(themeName);
         }
     }
 
-    public getCurrentTheme()
+    get getCurrentTheme(): ComputedRef<string>
     {
-        return this.themeName;
+        return computed(() => this.currentTheme.value);
     }
 }

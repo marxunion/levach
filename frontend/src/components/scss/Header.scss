@@ -10,7 +10,7 @@
     position: fixed;
     display: grid;
     grid-template-columns: 10% 90%;
-    background-color: --headerBG;
+    background-color: var(--headerBG);
     justify-items: center;
     &__logo
     {
@@ -45,13 +45,13 @@
                 border-radius: 30px;
                 font-size: 24px;
                 padding-left: 20px;
-                background-color: --headerSearchBarBG;
+                background-color: var(--headerSearchBarBG);
                 box-sizing: border-box;
 
-                color: --headerSearchBarInputText;
+                color: var(--headerSearchBarInputText);
                 &::placeholder
                 {
-                    color: --headerSearchBarInputPlaceholderText;
+                    color: var(--headerSearchBarInputPlaceholderText);
                 }
             }
             &__button 
@@ -75,12 +75,12 @@
             &__createarticle
             {
                 font-family: Roboto-Regular;
-                background-color: --headerNewArticleBG;
+                background-color: var(--headerNewArticleBG);
                 border-radius: 15px;
                 width: 80%;
                 height: 45px;
                 font-size: 18px;
-                color: --headerNewArticleText;
+                color: var(--headerNewArticleText);
                 transition: .5s ease;
 
                 text-align: center;
@@ -88,7 +88,7 @@
                 &:hover
                 {
                     transform: scale(1.03);
-                    background-color: --headerNewArticleBGHover;
+                    background-color: var(--headerNewArticleBGHover);
                 }
             }
             &__select 
@@ -103,7 +103,7 @@
                     height: 40px !important;
                     font-size: 25px !important;
                     background-color: transparent !important;
-                    color: --headerDropDownItemTextSelected !important;
+                    color: var(--headerDropDownItemTextSelected) !important;
                     &__img
                     {
                         width: 16px !important;
@@ -156,24 +156,28 @@
         height: 70px;
         display: none;
     
-        &__lines,&__lines::after,&__lines::before {
+        &__lines,&__lines::after,&__lines::before 
+        {
           position: absolute;
           width: 45px;
           height: 5px;
-          background: --headerBurgerMenuButton;
+          background: var(--headerBurgerMenuButton);
         
         }
-        &__lines {
+        &__lines 
+        {
           left: 50%;
           top: 50%;
           transform: translate(-50%,-50%);
         }
     
-        &__lines::after {
+        &__lines::after 
+        {
           content: '';
           top: 12px;
         }
-        &__lines::before {
+        &__lines::before 
+        {
           content: '';
           top: -12px;
         }
@@ -349,7 +353,7 @@
 
                     margin-left: 12px;
 
-                    background-color: --headerButtonMobileBG;
+                    background-color: var(--headerButtonMobileBG);
                 }
                 &__createarticlemobile
                 {
@@ -362,7 +366,7 @@
 
                     margin-left: 8px;
 
-                    background-color: --headerButtonMobileBG;
+                    background-color: var(--headerButtonMobileBG);
                 }
                 &__select
                 {

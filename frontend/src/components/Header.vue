@@ -2,6 +2,8 @@
     import { ComputedRef } from 'vue';
     import { useRoute, useRouter, RouteLocationNormalizedLoaded, Router } from 'vue-router';
 
+    import { ThemeHandler } from '../ts/handlers/ThemeHandler';
+
     import DropDown from "./DropDown.vue";
 
     import { JsonData } from '../ts/interfaces/JsonData';
@@ -45,6 +47,11 @@
     {
         return routeName == route.name ? true : false;
     }
+
+    const onThemeSwitchClick = () => 
+    {
+        ThemeHandler.instance.changeTheme(ThemeHandler.instance.getCurrentTheme.value == 'light' ? "dark" : "light");
+    }
 </script>
 
 <template>
@@ -57,6 +64,10 @@
                 <input @keyup.enter="onSearchButton" v-model="searchText" :placeholder="(langData['search'] as string)" type="text" class="header__bar__search__input">
                 <a @click="onSearchButton" class="header__bar__search__button"></a>
             </div>
+            <label class="header__bar__switch">
+                <input type="checkbox" @change="onThemeSwitchClick" :checked="ThemeHandler.instance.getCurrentTheme.value == 'light' ? false : true" id="theme__switcher" class="header__bar__switch__checkbox">
+                <span class="header__bar__switch__round"></span>
+            </label>
             <div class="header__bar__subbar">
                 <a href="#/article/new" class="header__bar__subbar__createarticle">{{ langData['createArticle'] }}</a>
                 <DropDown :options="LangDataHandler.langs" :default="LangDataHandler.currentLanguage.value" class="header__bar__subbar__select" @input="LangDataHandler.changeLanguage" @input-on-mounted="LangDataHandler.changeLanguage"/>

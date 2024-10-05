@@ -13,7 +13,7 @@
     &.scrollToComment
     {
         padding: 10px;
-        border: 2px solid --commentsListCommentBorder;
+        border: 2px solid var(--commentsListCommentBorder);
         border-radius: 15px;
     }
     &__header
@@ -27,12 +27,12 @@
             &.id
             {
                 font-size: 17px;
-                color: --commentsListCommentTitleId;
+                color: var(--commentsListCommentTitleId);
             }
             &.time
             {
                 padding-left: 2%;
-                color: --commentsListCommentTitleTime;
+                color: var(--commentsListCommentTitleTime);
             }
         }
     }
@@ -42,7 +42,7 @@
         cursor: pointer;
         font-family: Roboto-Regular;
         font-size: 18px;
-        color: --commentsListCommentCollapse;
+        color: var(--commentsListCommentCollapse);
     }
     &__text
     {
@@ -66,7 +66,7 @@
                 cursor: pointer;
                 font-family: Roboto-Regular;
                 font-size: 18px;
-                color: --commentsListCommentActionText;
+                color: var(--commentsListCommentActionText);
                 
                 &:nth-child(2)
                 {
@@ -78,7 +78,7 @@
                 &:hover
                 {
                     transform: scale(1.03);
-                    color: --commentsListCommentActionTextHover;
+                    color: var(--commentsListCommentActionTextHover);
                 }
             }
         }
@@ -110,7 +110,7 @@
 
                 &.ratingInfluenceUp
                 {
-                    color: --commentsListCommentRatingInfluenceUp;
+                    color: var(--commentsListCommentRatingInfluenceUp);
                     font-size: 22px;
                     margin-left: 30px;
                     &::before
@@ -124,7 +124,7 @@
                 }
                 &.ratingInfluenceDown
                 {
-                    color: --commentsListCommentRatingInfluenceDown;
+                    color: var(--commentsListCommentRatingInfluenceDown);
                     font-size: 22px;
                     margin-left: 30px;
                     &::before

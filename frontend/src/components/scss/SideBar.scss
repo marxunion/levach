@@ -27,16 +27,16 @@
             font-size: 17px;
             line-height: 1.7;
             width: 83%;
-            color: --sideBarLink;
+            color: var(--sideBarLink);
             font-family: Roboto-Medium;
             transition: .2s;
             &:hover
             {
-                color: --sideBarLinkHover;
+                color: var(--sideBarLinkHover);
             }
             &.active
             {
-                color: --sideBarLinkActive;
+                color: var(--sideBarLinkActive);
             }
         }
         &__button
@@ -52,8 +52,8 @@
             text-align: center;
             line-height: 40px;
                     
-            color: --ArticlesReadAllButtonText;
-            border: 2px solid --ArticlesReadAllButtonBorder;
+            color: var(--ArticlesReadAllButtonText);
+            border: 2px solid var(--ArticlesReadAllButtonBorder);
 
             margin-top: 10px;
 
@@ -61,23 +61,23 @@
 
             &.articleCommentsButton
             {
-                color: --sidebarArticleCommentsButtonText;
-                border: 2px solid --sidebarArticleCommentsButtonBorder;
+                color: var(--sidebarArticleCommentsButtonText);
+                border: 2px solid var(--sidebarArticleCommentsButtonBorder);
             }
             &.backToArticleButton
             {
-                color: --sidebarBackToArticleButtonText;
-                border: 2px solid --sidebarBackToArticleButtonBorder;
+                color: var(--sidebarBackToArticleButtonText);
+                border: 2px solid var(--sidebarBackToArticleButtonBorder);
             }
             &.rejectAllApproveButton
             {
-                color: --sidebarRejectAllApproveButtonText;
-                border: 2px solid --sidebarRejectAllApproveButtonBorder;
+                color: var(--sidebarRejectAllApproveButtonText);
+                border: 2px solid var(--sidebarRejectAllApproveButtonBorder);
             }
             &.rejectAllPremoderateButton
             {
-                color: --sidebarRejectAllPremoderateButtonText;
-                border: 2px solid --sidebarRejectAllPremoderateButtonBorder;
+                color: var(--sidebarRejectAllPremoderateButtonText);
+                border: 2px solid var(--sidebarRejectAllPremoderateButtonBorder);
             }
             transition: .4s;
             transform: scale(1.00);
@@ -103,12 +103,12 @@
             font-size: 16px;
             line-height: 2.1;
             width: 83%;
-            color: --sideBarLinkFooter;
+            color: var(--sideBarLinkFooter);
             font-family: Roboto-Regular;
             transition: .2s;
             &:hover
             {
-                color: --sideBarLinkFooterHover;
+                color: var(--sideBarLinkFooterHover);
             }
         }
     }
@@ -371,8 +371,8 @@
         right: 0;
         left: inherit;
 
-        background-color: --sideBarBG;
-        border-left: 1px solid --sideBarBorderLeft;
+        background-color: var(--sideBarBG);
+        border-left: 1px solid var(--sideBarBorderLeft);
         
         transform: translateX(100%);
         visibility: hidden;

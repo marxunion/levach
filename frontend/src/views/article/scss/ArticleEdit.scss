@@ -23,7 +23,7 @@
         {
             height: 210px;
             width: 100%;
-            background-color: --ArticleEditInfoBG;
+            background-color: var(--ArticleEditInfoBG);
             border-radius: 15px;
 
             display: flex;
@@ -98,7 +98,7 @@
             margin-top: 14px;
             width: 100%;
             border-radius: 15px;
-            background-color: --ArticleEditBlockBG;
+            background-color: var(--ArticleEditBlockBG);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -114,7 +114,7 @@
             {
                 margin-top: 14px;
                 width: 96%;
-                color: --ArticleEditBlockTitle;
+                color: var(--ArticleEditBlockTitle);
                 font-size: 21px;
                 &.linkForViewArticle
                 {
@@ -142,21 +142,21 @@
                 &.requestApproveArticleButton
                 {
                     width: 100px;
-                    color: --ArticleEditRequestApproveArticleButton;
-                    border: 3px solid --ArticleEditRequestApproveArticleButtonBorder;
+                    color: var(--ArticleEditRequestApproveArticleButton);
+                    border: 3px solid var(--ArticleEditRequestApproveArticleButtonBorder);
                 }
 
                 &.acceptArticleApprovedWithChangesButton
                 {
                     width: 180px;
-                    color: --ArticleEditAcceptArticleApprovedWithChangesButton;
-                    border: 3px solid --ArticleEditAcceptArticleApprovedWithChangesButtonBorder;
+                    color: var(--ArticleEditAcceptArticleApprovedWithChangesButton);
+                    border: 3px solid var(--ArticleEditAcceptArticleApprovedWithChangesButtonBorder);
                 }
                 &.rejectArticleApprovedWithChangesButton
                 {
                     width: 180px;
-                    color: --ArticleEditRejectArticleApprovedWithChangesButton;
-                    border: 3px solid --ArticleEditRejectArticleApprovedWithChangesButtonBorder;
+                    color: var(--ArticleEditRejectArticleApprovedWithChangesButton);
+                    border: 3px solid var(--ArticleEditRejectArticleApprovedWithChangesButtonBorder);
                 }
             }
             &__link
@@ -174,8 +174,8 @@
                     padding-left: 12px;
                     font-size: 23px;
 
-                    background-color: --InfoModalWithLinkInputBG;
-                    color: --InfoModalWithLinkInputText;
+                    background-color: var(--InfoModalWithLinkInputBG);
+                    color: var(--InfoModalWithLinkInputText);
                     font-family: Roboto-Regular;
 
                     border-radius: 15px;
@@ -197,7 +197,7 @@
                     width: 56px;
                     height: 56px;
 
-                    background-color: --InfoModalWithLinkInputCopyButtonBG;
+                    background-color: var(--InfoModalWithLinkInputCopyButtonBG);
                     &__icon
                     {
                         width: 60%;
@@ -214,7 +214,7 @@
             align-items: center;
             margin-top: 14px;
 
-            background-color: --ArticleViewArticleBG;
+            background-color: var(--ArticleViewArticleBG);
 
             box-sizing: border-box;
             border-radius: 15px;
@@ -225,7 +225,7 @@
             {
                 width: 95%;
                 font-size: 20px;
-                color: --ArticleEditTagsText;
+                color: var(--ArticleEditTagsText);
                 margin-bottom: 1%;
             }
 
@@ -260,8 +260,8 @@
                 width: 260px;
                 height: 45px;
                 border-radius: 20px;
-                background-color: --ArticleEditSendButtonBG;
-                color: --ArticleEditSendButtonText;
+                background-color: var(--ArticleEditSendButtonBG);
+                color: var(--ArticleEditSendButtonText);
                 font-size: 18px;
                 font-family: Roboto-Regular;
                 transition: .5s;
@@ -271,7 +271,7 @@
                 {
                     cursor: pointer;
                     transform: scale(1.04);
-                    background-color: --ArticleEditSendButtonHoverBG;
+                    background-color: var(--ArticleEditSendButtonHoverBG);
                 }
             }
         }
@@ -281,7 +281,7 @@
             margin-top: 14px;
             width: 100%;
             border-radius: 15px;
-            background-color: --ArticleEditEditTagsBG;
+            background-color: var(--ArticleEditEditTagsBG);
             padding: 0px 12px 12px 12px;
             box-sizing: border-box;
             display: flex;
@@ -300,7 +300,7 @@
                     align-items: center;
                     position: relative;
                     box-sizing: border-box;
-                    background-color: --ArticleEditEditTagsTagBG;
+                    background-color: var(--ArticleEditEditTagsTagBG);
                     border-radius: 17px;
                     margin-right: 10px;
                     margin-top: 12px;
@@ -315,7 +315,7 @@
                             transform: rotate(45deg);
                             font-weight: 400;
                             font-family: Arial, Helvetica, sans-serif;
-                            color: --ArticleEditEditTagsRemoveTagButtonText;
+                            color: var(--ArticleEditEditTagsRemoveTagButtonText);
                         }
                         margin-left: 6px;
                         width: 40px;
@@ -323,14 +323,14 @@
 
                         border-radius: 17px;
 
-                        background-color: --ArticleEditEditTagsRemoveTagButtonBG;
+                        background-color: var(--ArticleEditEditTagsRemoveTagButtonBG);
                         text-align: center;
                         transition: .5s;
                         
                         &:hover
                         {
                             cursor: pointer;
-                            background-color: --ArticleEditEditTagsRemoveTagButtonHoverBG;
+                            background-color: var(--ArticleEditEditTagsRemoveTagButtonHoverBG);
                         }
                     }
                 }
@@ -347,11 +347,11 @@
                 {
                     width: 100%;
                     height: 100%;
-                    background-color: --ArticleEditEditTagsAddTagInputBG;
+                    background-color: var(--ArticleEditEditTagsAddTagInputBG);
                     border-radius: 20px;
                     padding-left: 14px;
                     
-                    color: --ArticleEditEditTagsAddTagInputText;
+                    color: var(--ArticleEditEditTagsAddTagInputText);
                     font-size: 20px;
                     font-family: Roboto-Regular;
 
@@ -359,7 +359,7 @@
 
                     &::placeholder
                     {
-                        color: --ArticleEditEditTagsAddTagInputPlaceholderText;
+                        color: var(--ArticleEditEditTagsAddTagInputPlaceholderText);
                     }
                 }
                 &__button
@@ -370,8 +370,8 @@
                     width: 45px;
                     height: 45px;
                     border-radius: 20px;
-                    background-color: --ArticleEditEditTagsAddTagButtonBG;
-                    color: --ArticleEditEditTagsAddTagButtonText;
+                    background-color: var(--ArticleEditEditTagsAddTagButtonBG);
+                    color: var(--ArticleEditEditTagsAddTagButtonTex);
                     line-height: 0;
                     text-align: center;
                     font-size: 44px;
@@ -381,7 +381,7 @@
                     &:hover
                     {
                         cursor: pointer;
-                        background-color: --ArticleEditEditTagsAddTagButtonHoverBG;
+                        background-color: var(--ArticleEditEditTagsAddTagButtonHoverBG);
                     }
                 }
             }
