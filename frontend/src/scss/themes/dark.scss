@@ -3,13 +3,13 @@
 :root[data-theme="dark"]
 {
     // Default
-    --BG: #f1f4ff;
-    --selectionBG: #bbbbbb;
-    --title: #000;
-    --text: #000;
+    --BG: #282A36;
+    --selectionBG: #3d3d3d;
+    --title: #F1F1F1;
+    --text: #F1F1F1;
 
     // Header
-    --headerBG: #54A9F8;
+    --headerBG: #232530;
 
     --headerSearchBarBG: #fff;
     --headerSearchBarInputText: #000;
@@ -32,9 +32,9 @@
     --sideBarBG: #F1F1F1;
     --sideBarBorderLeft: #C9C9C9;
 
-    --sideBarLink: #000;
-    --sideBarLinkHover: #424242;
-    --sideBarLinkActive: #575757;
+    --sideBarLink: #dbdbdb;
+    --sideBarLinkHover: #ffffff;
+    --sideBarLinkActive: #ffffff;
 
     --sidebarArticleCommentsButtonText: #54A9F8;
     --sidebarArticleCommentsButtonBorder: #54A9F8;
@@ -222,8 +222,8 @@
 
 
     // AboutProject
-    --AboutProjectTitle: #2F88F0;
-    --AboutProjectDescriptionLink: #2F88F0;
+    --AboutProjectTitle: #939393;
+    --AboutProjectDescriptionLink: #939393;
 
     // Rules
     --RulesTitle: #2F88F0;

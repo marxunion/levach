@@ -77,8 +77,8 @@
 			{
 				position: relative;
 				display: inline-block;
-				min-width: 54px;
-				min-height: 32px;
+				min-width: 57px;
+				min-height: 34px;
 				transform: scale(1);
 				transition: .5s;
                 margin-right: 10px;
@@ -97,16 +97,16 @@
 					{
 						background-color: #6a6a6a;
 					}
-					&:focus + .header__bar__subbar__switch__round:before 
+					&:focus + .header__bar__subbar__switch__round
 					{
 						box-shadow: 0 0 1px #909090;
 					}
-					&:checked + .header__bar__subbar__switch__round:before 
+					&:checked + .header__bar__subbar__switch__round::before
 					{
-						background-color: #909090;
-						-webkit-transform: translateX(22px);
-						-ms-transform: translateX(22px);
-						transform: translateX(22px);
+                        background-color: #909090;
+                        -webkit-transform: translateX(22px);
+                        -ms-transform: translateX(22px);
+                        transform: translateX(22px);
 					}
 				}
 				&__round
@@ -124,9 +124,9 @@
 					&::before
 					{
 						position: absolute;
-						content: "";
-						height: 26px;
-						width: 26px;
+                        content: "";
+						height: 28px;
+						width: 28px;
 						left: 3px;
 						bottom: 3px;
 						background-color: white;
@@ -333,7 +333,7 @@
         grid-template-columns: 10% 90%;
         &__bar 
         {
-            grid-template-columns: 76.5% 22%;
+            grid-template-columns: 74.5% 25%;
         }
     }
 }
@@ -346,7 +346,7 @@
         grid-template-columns: 10% 90%;
         &__bar 
         {
-            grid-template-columns: 74.5% 24%;
+            grid-template-columns: 72.5% 27%;
         }
     }
 }
@@ -358,7 +358,7 @@
         grid-template-columns: 12% 88%;
         &__bar 
         {
-            grid-template-columns: 71.5% 27%;
+            grid-template-columns: 70.5% 29%;
         }
     }
 }
@@ -370,7 +370,7 @@
         grid-template-columns: 15% 85%;
         &__bar 
         {
-            grid-template-columns: 64.5% 33.5%;
+            grid-template-columns: 63.5% 34%;
         }
     }
 }
