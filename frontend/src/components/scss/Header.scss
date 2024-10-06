@@ -12,6 +12,7 @@
     grid-template-columns: 10% 90%;
     background-color: var(--headerBG);
     justify-items: center;
+    transition: .3s;
     &__logo
     {
         margin-left: 20%;
@@ -95,7 +96,7 @@
 					}
 					&:checked + .header__bar__subbar__switch__round
 					{
-						background-color: #6a6a6a;
+						background-color: #3f3f44;
 					}
 					&:focus + .header__bar__subbar__switch__round
 					{
@@ -103,7 +104,7 @@
 					}
 					&:checked + .header__bar__subbar__switch__round::before
 					{
-                        background-color: #909090;
+                        background-color: #545457;
                         -webkit-transform: translateX(22px);
                         -ms-transform: translateX(22px);
                         transform: translateX(22px);
