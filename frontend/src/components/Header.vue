@@ -62,7 +62,10 @@
         <div class="header__bar">
             <div class="header__bar__search">
                 <input @keyup.enter="onSearchButton" v-model="searchText" :placeholder="(langData['search'] as string)" type="text" class="header__bar__search__input">
-                <a @click="onSearchButton" class="header__bar__search__button"></a>
+                <svg @click="onSearchButton" class="header__bar__search__button" viewBox="0 0 31 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="13" cy="13" r="11.5" stroke-width="3"/>
+                    <line x1="20.5617" y1="22.7506" x2="28.5617" y2="32.7506" stroke-width="4"/>
+                </svg>
             </div>
             
             <div class="header__bar__subbar">

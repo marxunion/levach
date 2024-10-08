@@ -4,27 +4,29 @@
 {
     color-scheme: dark;
     // Default
-    --BG: #1a1a1e;
+    --BG: #1e1e23;
     --selectionBG: #3d3d3d;
     --title: #F1F1F1;
-    --text: #d1d1d1;
+    --text: #e4e4e4;
 
     // Header
-    --headerBG: #17171c;
+    --headerBG: #1e1e24;
 
-    --headerSearchBarBG: #d1d1d1;
-    --headerSearchBarInputText: #000;
-    --headerSearchBarInputPlaceholderText: #3d3d3d;
+    --headerSearchBarBG: #232326;
+    --headerSearchBarInputText: #e4e4e4;
+    --headerSearchBarInputPlaceholderText: #b0b0b0;
+    --headerSearchButton: #e4e4e4;
 
-    --headerNewArticleBG: #f8f8f8;
-    --headerNewArticleBGHover: #f8f8f8;
-    --headerNewArticleText: #131313;
+    --headerNewArticleBG: #b6b6b600;
+    --headerNewArticleBGHover: #f8f8f800;
+    --headerNewArticleText: #d8d8d8;
+    --headerNewArticleBorder: #d8d8d8;
 
-    --headerDropDownItemTextSelected: #fff;
+    --headerDropDownItemTextSelected: #d8d8d8;
 
-    --headerBurgerMenuButton: #fff;
+    --headerBurgerMenuButton: #d8d8d8;
 
-    --headerButtonMobileBG: #fff;
+    --headerButtonMobileBG: #d8d8d8;
 
     // Loader
     --loaderSpinnerColor: #54A9F8;
@@ -33,9 +35,9 @@
     --sideBarBG: #F1F1F1;
     --sideBarBorderLeft: #C9C9C9;
 
-    --sideBarLink: #d1d1d1;
-    --sideBarLinkHover: #dbdbdb;
-    --sideBarLinkActive: #dbdbdb;
+    --sideBarLink: #e4e4e4;
+    --sideBarLinkHover: #ededed;
+    --sideBarLinkActive: #ededed;
 
     --sidebarArticleCommentsButtonText: #54A9F8;
     --sidebarArticleCommentsButtonBorder: #54A9F8;
@@ -49,8 +51,8 @@
     --sidebarRejectAllPremoderateButtonText: #950C0C;
     --sidebarRejectAllPremoderateButtonBorder: #950C0C;
 
-    --sideBarLinkFooter: #4193f1;
-    --sideBarLinkFooterHover: #5ca8ff;
+    --sideBarLinkFooter: #377ecf;
+    --sideBarLinkFooterHover: #3c86da;
 
     // DropDown
     --dropDownBG: #ddd;
@@ -61,7 +63,7 @@
     --dropDownItemTextSelected: #000;
 
     // Captcha
-    --RulesCaptchaTextLink: #4193f1;
+    --RulesCaptchaTextLink: #3379ca;
 
     // CommentsList
     --commentsListCommentBorder: #565656;
@@ -223,11 +225,11 @@
 
 
     // AboutProject
-    --AboutProjectTitle: #939393;
-    --AboutProjectDescriptionLink: #939393;
+    --AboutProjectTitle: #d1d1d1;
+    --AboutProjectDescriptionLink: #d1d1d1;
 
     // Rules
-    --RulesTitle: #2F88F0;
+    --RulesTitle: #d7d7d7;
 
     // Sponsoring
     --SponsoringTitle: #2F88F0;
