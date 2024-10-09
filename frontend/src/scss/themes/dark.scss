@@ -4,13 +4,13 @@
 {
     color-scheme: dark;
     // Default
-    --BG: #1e1e23;
+    --BG: #242429;
     --selectionBG: #3d3d3d;
     --title: #F1F1F1;
     --text: #e4e4e4;
 
     // Header
-    --headerBG: #1e1e24;
+    --headerBG: #1e1e23;
 
     --headerSearchBarBG: #232326;
     --headerSearchBarInputText: #e4e4e4;
@@ -86,20 +86,20 @@
     --ArticleNewSendButtonHoverBG: #73bafc;
     --ArticleNewSendButtonText: #fff;
 
-    --ArticleNewEditTagsBG: #28282c;
+    --ArticleNewEditTagsBG: #303037;
 
-    --ArticleNewEditTagsTagBG: #1e1e23;
+    --ArticleNewEditTagsTagBG: #28282c;
     --ArticleNewEditTagsTagText: #2c2c2c;
-    --ArticleNewEditTagsRemoveTagButtonBG: #b9b9b9;
-    --ArticleNewEditTagsRemoveTagButtonHoverBG: #afafaf;
-    --ArticleNewEditTagsRemoveTagButtonText: #565656;
+    --ArticleNewEditTagsRemoveTagButtonBG: #3a3a41;
+    --ArticleNewEditTagsRemoveTagButtonHoverBG: #4d4d52;
+    --ArticleNewEditTagsRemoveTagButtonText: #b0b0b0;
 
-    --ArticleNewEditTagsAddTagInputBG: #d9d9d9;
-    --ArticleNewEditTagsAddTagInputText: #2c2c2c;
-    --ArticleNewEditTagsAddTagInputPlaceholderText: #565656;
-    --ArticleNewEditTagsAddTagButtonBG: #b9b9b9;
-    --ArticleNewEditTagsAddTagButtonHoverBG: #afafaf;
-    --ArticleNewEditTagsAddTagButtonText: #565656;
+    --ArticleNewEditTagsAddTagInputBG: #28282c;
+    --ArticleNewEditTagsAddTagInputText: #e4e4e4;
+    --ArticleNewEditTagsAddTagInputPlaceholderText: #b0b0b0;
+    --ArticleNewEditTagsAddTagButtonBG: #3a3a41;
+    --ArticleNewEditTagsAddTagButtonHoverBG: #4d4d52;
+    --ArticleNewEditTagsAddTagButtonText: #b0b0b0;
 
     // ArticleEdit
     --ArticleEditSendButtonBG: #54A9F8;
