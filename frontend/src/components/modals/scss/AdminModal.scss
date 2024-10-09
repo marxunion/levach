@@ -67,6 +67,14 @@
                     color: var(--AdminModalInputTextText);
                     padding-left: 12px;
                     box-sizing: border-box;
+                    -webkit-box-shadow: 0 0 0 1000px var(--AdminModalInputTextBG) inset !important;
+                    outline: none;
+                    &:active, &:focus, &:hover
+                    {
+                        color: var(--AdminModalInputTextText);
+                        -webkit-box-shadow: 0 0 0 1000px var(--AdminModalInputTextBG) inset !important;
+                        outline: none ;
+                    }
                 }
 
                 &.number
@@ -155,7 +163,7 @@
             left: 0;
             height: 28px;
             width: 28px;
-            background-color: #ccc;
+            background-color: var(--AdminModalCheckmark);
             transition: .3s;
             border-radius: 5px;
             &:after 
@@ -168,13 +176,13 @@
 
         &:hover input ~ &__checkmark 
         {
-            background-color: #b9b9b9;
+            background-color: var(--AdminModalCheckmarkHover);
         }
         
 
         & input:checked ~ &__checkmark 
         {
-            background-color: #2196F3;
+            background-color: var(--AdminModalCheckmarkChecked);
         }
         & input:checked ~ &__checkmark:after 
         {
@@ -187,7 +195,7 @@
             top: 5px;
             width: 6px;
             height: 12px;
-            border: solid white;
+            border: solid var(--AdminModalCheckmarkCheckedIcon);
             border-width: 0 3px 3px 0;
             -webkit-transform: rotate(45deg);
             -ms-transform: rotate(45deg);

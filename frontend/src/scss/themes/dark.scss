@@ -51,8 +51,8 @@
     --sidebarRejectAllPremoderateButtonText: #950C0C;
     --sidebarRejectAllPremoderateButtonBorder: #950C0C;
 
-    --sideBarLinkFooter: #377ecf;
-    --sideBarLinkFooterHover: #3c86da;
+    --sideBarLinkFooter: #4188da;
+    --sideBarLinkFooterHover: #4c92e2;
 
     // DropDown
     --dropDownBG: #232326;
@@ -63,7 +63,7 @@
     --dropDownItemTextSelected: #e4e4e4;
 
     // Captcha
-    --RulesCaptchaTextLink: #3379ca;
+    --RulesCaptchaTextLink: #4188da;
 
     // CommentsList
     --commentsListCommentBorder: #565656;
@@ -125,13 +125,13 @@
 
     --ArticleEditEditTagsBG: #fff;
 
-    --ArticleEditEditTagsTagBG: #d9d9d9;
+    --ArticleEditEditTagsTagBG: #d8d8d8;
     --ArticleEditEditTagsTagText: #2c2c2c;
     --ArticleEditEditTagsRemoveTagButtonBG: #b9b9b9;
     --ArticleEditEditTagsRemoveTagButtonHoverBG: #afafaf;
     --ArticleEditEditTagsRemoveTagButtonText: #565656;
 
-    --ArticleEditEditTagsAddTagInputBG: #d9d9d9;
+    --ArticleEditEditTagsAddTagInputBG: #d8d8d8;
     --ArticleEditEditTagsAddTagInputText: #2c2c2c;
     --ArticleEditEditTagsAddTagInputPlaceholderText: #565656;
     --ArticleEditEditTagsAddTagButtonBG: #b9b9b9;
@@ -166,8 +166,8 @@
     // AdminEditComments
     --AdminEditCommentsBG: #fff;
 
-    --AdminEditCommentsFiltersInputBG: #d9d9d9;
-    --AdminEditCommentsFiltersInputBorder: #d9d9d9;
+    --AdminEditCommentsFiltersInputBG: #d8d8d8;
+    --AdminEditCommentsFiltersInputBorder: #d8d8d8;
     --AdminEditCommentsFiltersInputBorderHover: #aaaeb7;
     --AdminEditCommentsFiltersInputBorderFocus: #aaaeb7;
     --AdminEditCommentsFiltersInputText: #2c2c2c;
@@ -187,8 +187,8 @@
     // ArticleAdminEditComments
     --ArticleAdminEditCommentsBG: #fff;
 
-    --ArticleAdminEditCommentsFiltersInputBG: #d9d9d9;
-    --ArticleAdminEditCommentsFiltersInputBorder: #d9d9d9;
+    --ArticleAdminEditCommentsFiltersInputBG: #d8d8d8;
+    --ArticleAdminEditCommentsFiltersInputBorder: #d8d8d8;
     --ArticleAdminEditCommentsFiltersInputBorderHover: #aaaeb7;
     --ArticleAdminEditCommentsFiltersInputBorderFocus: #aaaeb7;
     --ArticleAdminEditCommentsFiltersInputText: #2c2c2c;
@@ -225,34 +225,39 @@
 
 
     // AboutProject
-    --AboutProjectTitle: #d1d1d1;
-    --AboutProjectDescriptionLink: #d1d1d1;
+    --AboutProjectTitle: #d8d8d8;
+    --AboutProjectDescriptionLink: #d8d8d8;
 
     // Rules
-    --RulesTitle: #d7d7d7;
+    --RulesTitle: #d8d8d8;
 
     // Sponsoring
     --SponsoringTitle: #d1d1d1;
-    --SponsoringBlockBG: #232326;
+    --SponsoringBlockBG: #303033;
 
     // Modals
 
     // AdminModal
-    --AdminModalBG: #eee;
-    --AdminModalText: #000;
+    --AdminModalBG: #1e1e23;
+    --AdminModalText: #e4e4e4;
 
-    --AdminModalInputTextBG: #d9d9d9;
-    --AdminModalInputTextText: #000;
+    --AdminModalInputTextBG: #2e2e31;
+    --AdminModalInputTextText: #cacaca;
 
-    --AdminModalInputNumberBG: #d9d9d9;
-    --AdminModalInputNumberBorder: #d9d9d9;
+    --AdminModalInputNumberBG: #e0e0e0;
+    --AdminModalInputNumberBorder: #d8d8d8;
     --AdminModalInputNumberBorderHover: #aaaeb7;
     --AdminModalInputNumberBorderFocus: #aaaeb7;
     --AdminModalInputNumberText: #2c2c2c;
     --AdminModalInputNumberButtonBG: #f5f5f5;
 
-    --AdminModalButtonText: #38B819;
-    --AdminModalButtonBorder: #38B819;
+    --AdminModalCheckmark: #2c2c2c;
+    --AdminModalCheckmarkHover: #383838;
+    --AdminModalCheckmarkChecked: #383838;
+    --AdminModalCheckmarkCheckedIcon: #d8d8d8;
+
+    --AdminModalButtonText: #68bc53;
+    --AdminModalButtonBorder: #68bc53;
 
     --AdminModalButtonTextQuit: #950C0C;
     --AdminModalButtonBorderQuit: #950C0C;
@@ -272,14 +277,14 @@
     --InfoModalWithLinkTitle: #000;
     --InfoModalWithLinkText: #000;
     --infoModalWithLinkTextFooter: #707070;
-    --InfoModalWithLinkInputBG: #d9d9d9;
+    --InfoModalWithLinkInputBG: #d8d8d8;
     --InfoModalWithLinkInputText: #5c5c5c;
     --InfoModalWithLinkInputCopyButtonBG: #54A9F8;
 
     // SearchMobileModal
     --SearchMobileModalBG: #fff;
 
-    --SearchMobileModalInputBG: #d9d9d9;
+    --SearchMobileModalInputBG: #d8d8d8;
     --SearchMobileModalInputText: #000;
     --SearchMobileModalInputPlaceholderText: #3d3d3d;
 }
