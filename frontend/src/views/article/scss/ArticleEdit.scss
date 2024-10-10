@@ -261,6 +261,7 @@
                 height: 45px;
                 border-radius: 20px;
                 background-color: var(--ArticleEditSendButtonBG);
+                border: 2px solid var(--ArticleNewSendButtonBorder);
                 color: var(--ArticleEditSendButtonText);
                 font-size: 18px;
                 font-family: Roboto-Regular;
@@ -271,6 +272,8 @@
                 {
                     cursor: pointer;
                     transform: scale(1.04);
+                    color: var(--ArticleEditSendButtonHoverText);
+                    border: 2px solid var(--ArticleNewSendButtonHoverBorder);
                     background-color: var(--ArticleEditSendButtonHoverBG);
                 }
             }

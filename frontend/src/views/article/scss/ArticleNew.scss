@@ -29,12 +29,13 @@
             &__sendButton
             {
                 position: absolute;
-                right: 12px;
-                bottom: 12px;
+                right: 20px;
+                bottom: 15px;
                 width: 180px;
                 height: 45px;
                 border-radius: 20px;
                 background-color: var(--ArticleNewSendButtonBG);
+                border: 2px solid var(--ArticleNewSendButtonBorder);
                 color: var(--ArticleNewSendButtonText);
                 font-size: 18px;
                 font-family: Roboto-Regular;
@@ -46,6 +47,8 @@
                     cursor: pointer;
                     transform: scale(1.04);
                     background-color: var(--ArticleNewSendButtonHoverBG);
+                    color: var(--ArticleNewSendButtonHoverText);
+                    border: 2px solid var(--ArticleNewSendButtonHoverBorder);
                 }
             }
         }
