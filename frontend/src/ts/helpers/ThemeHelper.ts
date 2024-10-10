@@ -10,11 +10,11 @@ export function getSavedTheme()
 
 export function convertThemeToGrayscale(themeName : string) : ThemeGrayscale
 {
-    if(themeName in mainConfig["themesGrayscale"]["light"])
+    if(mainConfig["themesGrayscale"]["light"].includes(themeName))
     {
         return "light";
     }
-    else if(themeName in mainConfig["themesGrayscale"]["dark"])
+    else if(mainConfig["themesGrayscale"]["dark"].includes(themeName))
     {
         return "dark";
     }

@@ -451,7 +451,7 @@
 	<main class="main">
 		<article class="main__article">
 			<div class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImgValidate" :language="editorState.language" :preview="false" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value || undefined" noIconfont/>
+				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImgValidate" :language="editorState.language" :preview="false" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButtonValidate()">{{ langData['sendButton'] }}</button>	
 			</div>	
 			<div class="main__article__editTags">
