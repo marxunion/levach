@@ -41,7 +41,7 @@
 
 	import { Article } from '../../ts/interfaces/Article';
 
-	import settings from '../../configs/main.json';
+	import mainConfig from '../../configs/main.json';
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
@@ -466,7 +466,7 @@
 		{
 			uploadedFiles = files;
 			uploadedCallback = callback;
-			if(settings.captchaEnabled)
+			if(mainConfig.captchaEnabled)
 			{
 				captchaVerifyCallback = onNewCommentUploadImgRequest;
 				captcha.value?.execute();
@@ -568,7 +568,7 @@
 	{
 		if(newCommentEditorState.text.length > 0)
 		{
-			if(settings.captchaEnabled)
+			if(mainConfig.captchaEnabled)
 			{
 				captchaVerifyCallback = onCreateNewCommentRequest;
 				captcha.value?.execute();
@@ -960,7 +960,7 @@
 
 	const onShare = (articleTitle : string) => 
 	{
-		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + articleViewCode.value, text: articleTitle })
+		openModal(ShareWith, { link: "https://" + mainConfig['domainName'] + "/#/article/" + articleViewCode.value, text: articleTitle })
 	}
 </script>
 
@@ -1022,7 +1022,7 @@
 						<img v-if="currentCommentReaction === 2" @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="main__article__comments__newComment__reactions__reaction">
 						<img v-else @click="onDislikeReaction()" src="./../../assets/img/article/comments/dislike.svg" alt="Dislike" class="main__article__comments__newComment__reactions__reaction">
 					</div>
-					<Captcha v-if="settings.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
+					<Captcha v-if="mainConfig.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 				</div>
 			
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">

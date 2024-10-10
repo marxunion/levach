@@ -30,7 +30,7 @@
 	import { lastLoadedComment } from '../ts/handlers/CommentsHandler';
 
 
-	import settings from '../configs/main.json';
+	import mainConfig from '../configs/main.json';
 
 
 	const props = defineProps(['articleViewCode', 'articleTitle', 'scrollToCommentId', 'comment', 'level']);
@@ -318,7 +318,7 @@
 		{
 			uploadedFiles = files;
 			uploadedCallback = callback;
-			if(settings.captchaEnabled)
+			if(mainConfig.captchaEnabled)
 			{
 				captchaVerifyCallback = onNewCommentUploadImgRequest;
 				captcha.value?.execute();
@@ -426,7 +426,7 @@
 	{
 		if(newSubcommentEditorState.text.length > 0)
 		{
-			if(settings.captchaEnabled)
+			if(mainConfig.captchaEnabled)
 			{
 				captchaVerifyCallback = onCreateNewSubcommentRequest;
 				captcha.value?.execute();
@@ -567,7 +567,7 @@
 
 	const onShare = () => 
 	{
-		openModal(ShareWith, { link: "https://" + settings['domainName'] + "/#/article/" + props.articleViewCode + "/" + props.comment.id, text: props.articleTitle })
+		openModal(ShareWith, { link: "https://" + mainConfig['domainName'] + "/#/article/" + props.articleViewCode + "/" + props.comment.id, text: props.articleTitle })
 	}
 </script>
 
@@ -605,7 +605,7 @@
 				<img v-if="currentSubcommentReaction === 2" @click="onDislikeReaction()" src="./../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="comment__newSubcomment__reactions__reaction">
 				<img v-else @click="onDislikeReaction()" src="./../assets/img/article/comments/dislike.svg" alt="Dislike" class="comment__newSubcomment__reactions__reaction">
 			</div>
-			<Captcha v-if="settings.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
+			<Captcha v-if="mainConfig.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</div>
 	</div>
 	

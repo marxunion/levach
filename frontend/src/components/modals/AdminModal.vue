@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { onMounted, Ref, ComputedRef, ref } from "vue";
 
-    import mainconfig from '../../configs/main.json';
+    import mainConfig from '../../configs/main.json';
 
     import Captcha from "../Captcha.vue";
 
@@ -48,8 +48,8 @@
 		[settingName: string]: number|string;
 	}
 
-    const settings : Ref<Settings> = ref(mainconfig['settings']);
-    const settingsSaved : Ref<Settings> = ref(JSON.parse(JSON.stringify(mainconfig['settings'])));
+    const settings : Ref<Settings> = ref(mainConfig['settings']);
+    const settingsSaved : Ref<Settings> = ref(JSON.parse(JSON.stringify(mainConfig['settings'])));
 
     const onLoginButtonRequest = async (captchaToken : string) => 
     {

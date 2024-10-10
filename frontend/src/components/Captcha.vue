@@ -3,7 +3,7 @@
 
     import { VueRecaptcha } from 'vue-recaptcha';
 
-    import settings from '../configs/main.json';
+    import mainConfig from '../configs/main.json';
 
     const emits = defineEmits(["onVerify", "onExpired", "onError"]);
 
@@ -70,7 +70,7 @@
                 @verify="onVerify"
                 @expired="onExpired"
                 @error="onError"
-                :sitekey="settings['recaptchaSiteKey']"
+                :sitekey="mainConfig['recaptchaSiteKey']"
                 size="invisible">
             </vue-recaptcha>
         </div>

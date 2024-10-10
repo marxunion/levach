@@ -3,6 +3,8 @@
 	import { useRouter, Router } from 'vue-router';
 	import axios from 'axios';
 
+	import { ThemeHandler } from '../../ts/handlers/ThemeHandler';
+
 	import { JsonData } from '../../ts/interfaces/JsonData';
 
 	import LinkAttr from 'markdown-it-link-attributes';
@@ -24,7 +26,8 @@
 
 	import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
-	import settings from '../../configs/main.json';
+	import mainConfig from '../../configs/main.json';
+
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleNew", langsData).langData;
 
@@ -242,7 +245,7 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25) 
 						{
-							if(settings.captchaEnabled)
+							if(mainConfig.captchaEnabled)
 			    			{
 								captchaVerifyCallback = onSendButtonRequest;
 								captcha.value?.execute();
@@ -421,7 +424,7 @@
 		{
 			uploadedFiles = files;
 			uploadedCallback = callback;
-			if(settings.captchaEnabled)
+			if(mainConfig.captchaEnabled)
 			{
 				captchaVerifyCallback = onUploadImgRequest;
 				captcha.value?.execute();
@@ -448,7 +451,7 @@
 	<main class="main">
 		<article class="main__article">
 			<div class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImgValidate" :language="editorState.language" :preview="false" noIconfont/>
+				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImgValidate" :language="editorState.language" :preview="false" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value || undefined" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButtonValidate()">{{ langData['sendButton'] }}</button>	
 			</div>	
 			<div class="main__article__editTags">
@@ -461,7 +464,7 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
-			<Captcha v-if="settings.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
+			<Captcha v-if="mainConfig.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</article>
 	</main>
 </template>

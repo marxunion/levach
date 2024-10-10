@@ -86,7 +86,8 @@
     --ArticleNewSendButtonHoverBG: #73bafc;
     --ArticleNewSendButtonText: #fff;
 
-    --ArticleNewEditTagsBG: #fff;
+    --ArticleNewEditTagsBG: #eceef1;
+    --ArticleNewEditTagsBorder: #e6e6e6;
 
     --ArticleNewEditTagsTagBG: #d9d9d9;
     --ArticleNewEditTagsTagText: #2c2c2c;
@@ -123,7 +124,7 @@
 
     --ArticleEditTagsText: #2F88F0;
 
-    --ArticleEditEditTagsBG: #fff;
+    --ArticleEditEditTagsBG: #ECEEF1;
 
     --ArticleEditEditTagsTagBG: #d9d9d9;
     --ArticleEditEditTagsTagText: #2c2c2c;
@@ -288,15 +289,15 @@
     --SearchMobileModalInputText: #000;
     --SearchMobileModalInputPlaceholderText: #3d3d3d;
 
+    //MdEditor
     .md-editor
     {
-        // MdEditor
-        --md-color: #3f4a54 !important;
-        --md-hover-color: #3f4a54 !important;
-        --md-bk-color: transparent !important;
-        --md-bk-color-outstand: #f6f6f6 !important;
+        --md-color: #3f4a54;
+        --md-hover-color: #3f4a54;
+        --md-bk-color: #eceef1;
+        --md-bk-color-outstand: #f6f6f6;
         --md-bk-hover-color: #f5f7fa !important;
-        --md-border-color: #e6e6e6 !important;
+        --md-border-color: transparent !important;
         --md-border-hover-color: #b9b9b9 !important;
         --md-border-active-color: #999 !important;
         --md-modal-mask: #00000073;

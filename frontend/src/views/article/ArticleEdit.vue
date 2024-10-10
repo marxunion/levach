@@ -41,7 +41,7 @@
 	
 	import { Article } from '../../ts/interfaces/Article';
 	
-	import settings from '../../configs/main.json';
+	import mainConfig from '../../configs/main.json';
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleEdit", langsData).langData;
 
@@ -99,7 +99,7 @@
 
 					articleText.value = fetchedArticleData.value.current_text;
 					
-					viewLink.value = "https://" + settings['domainName'] + "/#/article/" + fetchedArticleData.value.view_code;
+					viewLink.value = "https://" + mainConfig['domainName'] + "/#/article/" + fetchedArticleData.value.view_code;
 				}
 			}
 			else
@@ -174,7 +174,7 @@
 					{
 						fetchedArticleData.value.current_tags = [];
 					}
-					viewLink.value = "https://" + settings['domainName'] + "/#/article/" + fetchedArticleData.value.view_code;
+					viewLink.value = "https://" + mainConfig['domainName'] + "/#/article/" + fetchedArticleData.value.view_code;
 					if(fetchedArticleData.value.approvededitorially_status > 0 && fetchedArticleData.value.editorially_status == 0 && !adminStatus.value)
 					{
 						Object.assign(tags.value, fetchedArticleData.value.current_tags);
@@ -409,7 +409,7 @@
 						const content = contentParts.slice(1).join('\n');
 						if(content.length >= 25) 
 						{
-							if(settings.captchaEnabled)
+							if(mainConfig.captchaEnabled)
 			    			{
 								captchaVerifyCallback = onSendButtonRequest;
 								captcha.value?.execute();
@@ -587,7 +587,7 @@
 		{
 			uploadedFiles = files;
 			uploadedCallback = callback;
-			if(settings.captchaEnabled)
+			if(mainConfig.captchaEnabled)
 			{
 				captchaVerifyCallback = onUploadImgRequest;
 				captcha.value?.execute();
@@ -934,7 +934,7 @@
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>
-			<Captcha v-if="settings.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
+			<Captcha v-if="mainConfig.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</article>
 		<article v-else class="main__article">
 			<h1 class="main__article__title">{{ (langData['errors'] as JsonData)['articleForEditNotFound'] }}</h1>
