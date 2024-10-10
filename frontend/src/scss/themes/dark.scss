@@ -51,8 +51,8 @@
     --sidebarRejectAllPremoderateButtonText: #950C0C;
     --sidebarRejectAllPremoderateButtonBorder: #950C0C;
 
-    --sideBarLinkFooter: #4188da;
-    --sideBarLinkFooterHover: #4c92e2;
+    --sideBarLinkFooter: #3c84d7;
+    --sideBarLinkFooterHover: #5399e9;
 
     // DropDown
     --dropDownBG: #2a2a2e;
@@ -202,7 +202,7 @@
     --ArticleAdminEditCommentsButtonsDeleteSelectedButtonBorder: #950C0C;
 
     // Articles
-    --ArticlesArticleBG: #fff;
+    --ArticlesArticleBG: transparent;
     --ArticlesArticleTitleId: #4193f1;
     --ArticlesArticleTitleTime: #797979;
 
@@ -287,4 +287,22 @@
     --SearchMobileModalInputBG: #d8d8d8;
     --SearchMobileModalInputText: #000;
     --SearchMobileModalInputPlaceholderText: #3d3d3d;
+}
+
+.md-editor
+{
+    // MdEditor
+    --md-color: #3f4a54;
+    --md-hover-color: #000;
+    --md-bk-color: transparent !important;
+    --md-bk-color-outstand: #f6f6f6;
+    --md-bk-hover-color: #f5f7fa;
+    --md-border-color: #e6e6e6;
+    --md-border-hover-color: #b9b9b9;
+    --md-border-active-color: #999;
+    --md-modal-mask: #00000073;
+    --md-scrollbar-bg-color: #e2e2e2;
+    --md-scrollbar-thumb-color: #0000004d;
+    --md-scrollbar-thumb-hover-color: #00000059;
+    --md-scrollbar-thumb-active-color: #00000061;
 }
