@@ -15,12 +15,14 @@
 	transition: .6s;
 }
 
-#md-editor-v3
+.md-editor
 {
 	* 
 	{
 		overflow: hidden;
+		transition: .6s;
 	}
+	transition: .6s;
 }
 
 .md-editor-preview

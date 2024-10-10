@@ -55,10 +55,10 @@
     --sideBarLinkFooterHover: #5399e9;
 
     // DropDown
-    --dropDownBG: #2a2a2e;
-    --dropDownHoverItemBG: #2f2f34;
+    --dropDownBG: #3a3a40;
+    --dropDownHoverItemBG: #424247;
+    --dropDownItemBGSelected: #3a3a40;
 
-    --dropDownItemBGSelected: #2a2a2e;
     --dropDownItemText: #e4e4e4;
     --dropDownItemTextSelected: #e4e4e4;
 
@@ -287,22 +287,23 @@
     --SearchMobileModalInputBG: #d8d8d8;
     --SearchMobileModalInputText: #000;
     --SearchMobileModalInputPlaceholderText: #3d3d3d;
-}
 
-.md-editor
-{
-    // MdEditor
-    --md-color: #3f4a54;
-    --md-hover-color: #000;
-    --md-bk-color: transparent !important;
-    --md-bk-color-outstand: #f6f6f6;
-    --md-bk-hover-color: #f5f7fa;
-    --md-border-color: #e6e6e6;
-    --md-border-hover-color: #b9b9b9;
-    --md-border-active-color: #999;
-    --md-modal-mask: #00000073;
-    --md-scrollbar-bg-color: #e2e2e2;
-    --md-scrollbar-thumb-color: #0000004d;
-    --md-scrollbar-thumb-hover-color: #00000059;
-    --md-scrollbar-thumb-active-color: #00000061;
+    .md-editor
+    {
+        // MdEditor
+        --md-color: #e4e4e4 !important;
+        --md-hover-color: #e4e4e4 !important;
+        --md-bk-color: #303037 !important;
+        --md-bk-color-outstand: #f6f6f6 !important;
+        --md-bk-hover-color: #f5f7fa !important;
+        --md-border-color: #3e3e44 !important;
+        --md-border-hover-color: #b9b9b9 !important;
+        --md-border-active-color: #999 !important;
+        --md-modal-mask: #00000073;
+        --md-scrollbar-bg-color: #e2e2e2;
+        --md-scrollbar-thumb-color: #0000004d;
+        --md-scrollbar-thumb-hover-color: #00000059;
+        --md-scrollbar-thumb-active-color: #00000061;
+        transition: .6s !important;
+    }
 }
