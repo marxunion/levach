@@ -229,6 +229,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            transition: .6s;
             &__header
             {
                 display: flex;
@@ -271,6 +272,7 @@
                     height: auto !important;
                     min-height: 260px;
                     border-radius: 15px;
+                    background-color: var(--ArticleViewNewCommentBG);
                 }
                 &__reactions
                 {

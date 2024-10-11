@@ -1051,5 +1051,11 @@
     {
 		display: none;
 	}
+	
+	.main__article__comments__newComment__editor .md-editor-content
+    {
+		display: none;
+		background-color: var(--ArticleViewNewCommentBG);
+	}
 </style>
 <style lang="scss" scoped src="./scss/ArticleView.scss"></style>

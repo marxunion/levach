@@ -56,14 +56,14 @@
     --sideBarLinkFooterHover: #5399e9;
 
     // DropDown
-    --dropDownBG: #3a3a40;
-    --dropDownHoverItemBG: #424247;
-    --dropDownItemBGSelected: #3a3a40;
+    --DropDownBG: #3a3a40;
+    --DropDownHoverItemBG: #424247;
+    --DropDownItemBGSelected: #3a3a40;
 
-    --dropDownItemText: #d4d4d4;
-    --dropDownItemTextSelected: #d4d4d4;
+    --DropDownItemText: #d4d4d4;
+    --DropDownItemTextSelected: #d4d4d4;
 
-    --dropDownItemIconFilter: 88%;
+    --DropDownItemIconFilter: 88%;
 
     // Captcha
     --RulesCaptchaTextLink: #4188da;
@@ -164,6 +164,8 @@
 
     --ArticleViewCommentsText: #d4d4d4;
     --ArticleViewCommentsBG: #303037;
+
+    --ArticleViewNewCommentBG: #3a3a40;
 
     --ArticleViewAcceptPremoderateArticleButtonText: #68bc53;
     --ArticleViewAcceptPremoderateArticleButtonBorder: #68bc53;
@@ -323,6 +325,5 @@
         --md-scrollbar-thumb-color: #0000004d;
         --md-scrollbar-thumb-hover-color: #00000059;
         --md-scrollbar-thumb-active-color: #00000061;
-        transition: .6s !important;
     }
 }
