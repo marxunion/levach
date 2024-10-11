@@ -10,6 +10,8 @@
     box-sizing: border-box;
 
     height: 40px;
+
+    transition: .6s;
     &__selected
     {
         cursor: pointer;
@@ -24,6 +26,8 @@
 
         user-select: none;
         position: relative;
+
+        transition: .6s;
 
         line-height: 40px;
         &.open 
@@ -42,7 +46,7 @@
             height: 10px;
             background: url("./../../assets/img/dropdown/arrowdown/black.svg") no-repeat;
             position: absolute;
-            transition: .8s;
+            transition: .6s;
         }
     }
     &__items {
@@ -61,6 +65,8 @@
         overflow-y: visible;
         max-height: 160px;
         position: absolute;
+
+        transition: .6s;
         
         z-index: 1;
         & div {

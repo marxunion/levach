@@ -15,7 +15,7 @@
     --headerSearchBarBG: #2a2a2e;
     --headerSearchBarInputText: #d4d4d4;
     --headerSearchBarInputPlaceholderText: #b0b0b0;
-    --headerSearchButton: #d4d4d4;
+    --headerSearchBarInputButtonInvert: 100%;
 
     --headerNewArticleBG: #b6b6b600;
     --headerNewArticleBGHover: #f8f8f800;
@@ -45,11 +45,11 @@
     --sidebarBackToArticleButtonText: #458fe4;
     --sidebarBackToArticleButtonBorder: #458fe4;
 
-    --sidebarRejectAllApproveButtonText: #ab2121;
-    --sidebarRejectAllApproveButtonBorder: #ab2121;
+    --sidebarRejectAllApproveButtonText: #b92828;
+    --sidebarRejectAllApproveButtonBorder: #b92828;
 
-    --sidebarRejectAllPremoderateButtonText: #ab2121;
-    --sidebarRejectAllPremoderateButtonBorder: #ab2121;
+    --sidebarRejectAllPremoderateButtonText: #b92828;
+    --sidebarRejectAllPremoderateButtonBorder: #b92828;
 
     --sideBarLinkFooter: #458fe4;
     --sideBarLinkFooterHover: #5399e9;
@@ -77,7 +77,7 @@
     --commentsListCommentActionTextHover: #575757;
 
     --commentsListCommentRatingInfluenceUp: #319a17;
-    --commentsListCommentRatingInfluenceDown: #ab2121;
+    --commentsListCommentRatingInfluenceDown: #b92828;
 
     // Article
 
@@ -124,8 +124,8 @@
     --ArticleEditAcceptArticleApprovedWithChangesButton: #68bc53;
     --ArticleEditAcceptArticleApprovedWithChangesButtonBorder: #68bc53;
 
-    --ArticleEditRejectArticleApprovedWithChangesButton: #ab2121;
-    --ArticleEditRejectArticleApprovedWithChangesButtonBorder: #ab2121;
+    --ArticleEditRejectArticleApprovedWithChangesButton: #b92828;
+    --ArticleEditRejectArticleApprovedWithChangesButtonBorder: #b92828;
 
     --ArticleEditTagsText: #2F88F0;
 
@@ -152,8 +152,8 @@
 
     --ArticleViewTagsText: #2F88F0;
 
-    --ArticleViewDeleteArticleButtonText: #ab2121;
-    --ArticleViewDeleteArticleButtonBorder: #ab2121;
+    --ArticleViewDeleteArticleButtonText: #b92828;
+    --ArticleViewDeleteArticleButtonBorder: #b92828;
 
     --ArticleViewCommentsText: #313131;
     --ArticleViewCommentsBG: #fff;
@@ -161,14 +161,14 @@
     --ArticleViewAcceptPremoderateArticleButtonText: #68bc53;
     --ArticleViewAcceptPremoderateArticleButtonBorder: #68bc53;
 
-    --ArticleViewRejectPremoderateArticleButtonText: #ab2121;
-    --ArticleViewRejectPremoderateArticleButtonBorder: #ab2121;
+    --ArticleViewRejectPremoderateArticleButtonText: #b92828;
+    --ArticleViewRejectPremoderateArticleButtonBorder: #b92828;
 
     --ArticleViewAcceptApproveArticleButtonText: #68bc53;
     --ArticleViewAcceptApproveArticleButtonBorder: #68bc53;
 
-    --ArticleViewRejectApproveArticleButtonText: #ab2121;
-    --ArticleViewRejectApproveArticleButtonBorder: #ab2121;
+    --ArticleViewRejectApproveArticleButtonText: #b92828;
+    --ArticleViewRejectApproveArticleButtonBorder: #b92828;
 
     // AdminEditComments
     --AdminEditCommentsBG: #fff;
@@ -188,8 +188,8 @@
 
     --AdminEditCommentsButtonsApplyFiltersButtonText: #458fe4;
     --AdminEditCommentsButtonsApplyFiltersButtonBorder: #458fe4;
-    --AdminEditCommentsButtonsDeleteSelectedButtonText: #ab2121;
-    --AdminEditCommentsButtonsDeleteSelectedButtonBorder: #ab2121;
+    --AdminEditCommentsButtonsDeleteSelectedButtonText: #b92828;
+    --AdminEditCommentsButtonsDeleteSelectedButtonBorder: #b92828;
 
     // ArticleAdminEditComments
     --ArticleAdminEditCommentsBG: #fff;
@@ -205,12 +205,12 @@
 
     --ArticleAdminEditCommentsButtonsApplyFiltersButtonText: #458fe4;
     --ArticleAdminEditCommentsButtonsApplyFiltersButtonBorder: #458fe4;
-    --ArticleAdminEditCommentsButtonsDeleteSelectedButtonText: #ab2121;
-    --ArticleAdminEditCommentsButtonsDeleteSelectedButtonBorder: #ab2121;
+    --ArticleAdminEditCommentsButtonsDeleteSelectedButtonText: #b92828;
+    --ArticleAdminEditCommentsButtonsDeleteSelectedButtonBorder: #b92828;
 
     // Articles
     --ArticlesArticleBG: #303037;
-    --ArticlesArticleTitleId: #4193f1;
+    --ArticlesArticleTitleId: #458fe4;
     --ArticlesArticleTitleTime: #797979;
 
     --ArticlesArticleTagsText: #2F88F0;
@@ -221,14 +221,14 @@
     --ArticleAcceptPremoderateArticleButtonText: #68bc53;
     --ArticleAcceptPremoderateArticleButtonBorder: #68bc53;
 
-    --ArticleRejectPremoderateArticleButtonText: #ab2121;
-    --ArticleRejectPremoderateArticleButtonBorder: #ab2121;
+    --ArticleRejectPremoderateArticleButtonText: #b92828;
+    --ArticleRejectPremoderateArticleButtonBorder: #b92828;
 
     --ArticleAcceptApproveArticleButtonText: #68bc53;
     --ArticleAcceptApproveArticleButtonBorder: #68bc53;
 
-    --ArticleRejectApproveArticleButtonText: #ab2121;
-    --ArticleRejectApproveArticleButtonBorder: #ab2121;
+    --ArticleRejectApproveArticleButtonText: #b92828;
+    --ArticleRejectApproveArticleButtonBorder: #b92828;
 
 
     // AboutProject
@@ -266,8 +266,8 @@
     --AdminModalButtonText: #68bc53;
     --AdminModalButtonBorder: #68bc53;
 
-    --AdminModalButtonTextQuit: #ab2121;
-    --AdminModalButtonBorderQuit: #ab2121;
+    --AdminModalButtonTextQuit: #b92828;
+    --AdminModalButtonBorderQuit: #b92828;
 
     --AdminModalButtonTextSaveSettings: #458fe4;
     --AdminModalButtonBorderSaveSettings: #458fe4;
@@ -294,6 +294,7 @@
     --SearchMobileModalInputBG: #2a2a2e;
     --SearchMobileModalInputText: #d4d4d4;
     --SearchMobileModalInputPlaceholderText: #b0b0b0;
+    --SearchMobileModalInputButtonInvert: 100%;
 
     //MdEditor
     .md-editor

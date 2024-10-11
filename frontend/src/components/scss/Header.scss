@@ -39,11 +39,7 @@
             width: 98.8%;
             height: 45px;
             position: relative;
-            
-            & *
-            {
-                transition: .4s;
-            }
+            transition: .6s;
 
             &__input
             {
@@ -60,6 +56,7 @@
                 {
                     color: var(--headerSearchBarInputPlaceholderText);
                 }
+                transition: .6s;
             }
             &__button 
             {
@@ -69,10 +66,8 @@
                 height: 34px;
                 top: 6px;
                 right: 14px;
-                & *
-                {
-                    stroke: var(--headerSearchButton) !important;
-                }
+                transition: .6s;
+                filter: invert(var(--headerSearchBarInputButtonInvert));
             }
         }
         &__subbar
