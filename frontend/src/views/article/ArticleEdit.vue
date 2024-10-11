@@ -3,6 +3,8 @@
 	import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
+	import { ThemeHandler } from '../../ts/handlers/ThemeHandler';
+
 	import { tagsArrayToString } from '../../ts/helpers/TagsHelper';
 
 	import LinkAttr from 'markdown-it-link-attributes';
@@ -920,7 +922,7 @@
 			</div>
 			
 			<div v-if="fetchedArticleData.approvededitorially_status == 0 || fetchedArticleData.editorially_status == 1 || adminStatus" class="main__article__editorContainer">
-				<MdEditor class="main__article__editorContainer__editor" v-model="articleText" @onUploadImg="onUploadImgValidate" :language="LangDataHandler.currentLanguage.value" :preview="false" noIconfont/>
+				<MdEditor class="main__article__editorContainer__editor" v-model="articleText" @onUploadImg="onUploadImgValidate" :language="LangDataHandler.currentLanguage.value" :preview="false" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value" noIconfont/>
 				<button v-if="currentChangesStatus" class="main__article__editorContainer__sendButton" @click="onSendButtonValidate">{{ langData['sendButton'] }}</button>	
 			</div>
 
