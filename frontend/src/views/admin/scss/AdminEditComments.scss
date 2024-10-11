@@ -68,11 +68,7 @@
                             padding-left: 10px;
                             transition: .4s;
                             box-sizing: border-box;
-                            border: 1px solid var(--AdminEditCommentsFiltersInputBorder);
-                            &:hover
-                            {
-                                border: 1px solid var(--AdminEditCommentsFiltersInputBorderHover);
-                            }
+                            border: none;
                         }
                         &.number
                         {
@@ -80,6 +76,11 @@
                             background-color: var(--AdminEditCommentsFiltersInputBG);
                             width: 120px;
                             height: 35px;
+                            & *
+                            {
+                                border-left: none !important;
+                                border-right: none !important;
+                            }
 
                             & button
                             {
@@ -99,21 +100,13 @@
                                 border-radius: 15px;
                                 height: 35px;
                                 padding: 0 !important;
-                                border: 1px solid var(--AdminEditCommentsFiltersInputBorder);
+                                border: none;
                                 color: var(--AdminEditCommentsFiltersInputText);
                                 background-color: var(--AdminEditCommentsFiltersInputBG);
                                 font-size: 16px;
                                 text-align: center;
                                 transition: .4s;
                                 box-sizing: border-box;
-                                &:hover
-                                {
-                                    border: 1px solid var(--AdminEditCommentsFiltersInputBorderHover);
-                                }
-                                &:focus
-                                {
-                                    border: 1px solid var(--AdminEditCommentsFiltersInputBorderFocus);
-                                }
                             }
                         }
                         &.date
@@ -128,15 +121,7 @@
                                 color: var(--AdminEditCommentsFiltersInputText);
                                 background-color: var(--AdminEditCommentsFiltersInputBG);
                                 font-size: 16px;
-                                border: 1px solid var(--AdminEditCommentsFiltersInputBorder);
-                                &:hover
-                                {
-                                    border: 1px solid var(--AdminEditCommentsFiltersInputBorderHover);
-                                }
-                                &:focus
-                                {
-                                    border: 1px solid var(--AdminEditCommentsFiltersInputBorderFocus);
-                                }
+                                border: none;
                             }
                         }
                     }
