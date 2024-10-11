@@ -29,7 +29,7 @@
        <div class="form__block">
         <a @click="copyLinkButton()" class="form__block__subblock">
             <div class="form__block__subblock__img">
-                <img src="./../../assets/img/modals/share/copyLink.svg" alt="copyLink">
+                <img src="./../../assets/img/modals/share/copyLink.svg" class="form__block__subblock__img__copyLinkIcon" alt="copyLink">
             </div>
             <div class="form__block__subblock__title">
                 <p class="form__block__subblock__title__text">{{ langData['copyLinkTitle'] }}</p>
