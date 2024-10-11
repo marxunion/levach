@@ -90,24 +90,23 @@
     --ArticleNewSendButtonHoverBorder: #5399e9;
 
     --ArticleNewEditTagsBG: #303037;
-    --ArticleNewEditTagsBorder: #3e3e44;
 
-    --ArticleNewEditTagsTagBG: #28282c;
-    --ArticleNewEditTagsTagText: #2c2c2c;
-    --ArticleNewEditTagsRemoveTagButtonBG: #3a3a41;
-    --ArticleNewEditTagsRemoveTagButtonHoverBG: #4d4d52;
+    --ArticleNewEditTagsTagBG: #3f3f45;
+    --ArticleNewEditTagsTagText: #d4d4d4;
+    --ArticleNewEditTagsRemoveTagButtonBG: #4b4b50;
+    --ArticleNewEditTagsRemoveTagButtonHoverBG: #59595f;
     --ArticleNewEditTagsRemoveTagButtonText: #b0b0b0;
 
-    --ArticleNewEditTagsAddTagInputBG: #28282c;
+    --ArticleNewEditTagsAddTagInputBG: #3d3d45;
     --ArticleNewEditTagsAddTagInputText: #d4d4d4;
     --ArticleNewEditTagsAddTagInputPlaceholderText: #b0b0b0;
-    --ArticleNewEditTagsAddTagButtonBG: #3a3a41;
-    --ArticleNewEditTagsAddTagButtonHoverBG: #4d4d52;
+    --ArticleNewEditTagsAddTagButtonBG: #4b4b50;
+    --ArticleNewEditTagsAddTagButtonHoverBG: #59595f;
     --ArticleNewEditTagsAddTagButtonText: #b0b0b0;
 
     // ArticleEdit
-    --ArticleEditSendButtonBG: #transparent;
-    --ArticleEditSendButtonHoverBG: #transparent;
+    --ArticleEditSendButtonBG: transparent;
+    --ArticleEditSendButtonHoverBG: transparent;
     --ArticleEditSendButtonText: #4a9be7;
     --ArticleEditSendButtonHoverText: #54A9F8;
     --ArticleEditSendButtonBorder: #4a9be7;
@@ -119,31 +118,32 @@
     --ArticleEditBlockBG: #1e1e23;
     --ArticleEditBlockTitle: #000;
 
-    --ArticleEditRequestApproveArticleButton: #38B819;
-    --ArticleEditRequestApproveArticleButtonBorder: #38B819;
+    --ArticleEditRequestApproveArticleButton: #68bc53;
+    --ArticleEditRequestApproveArticleButtonBorder: #68bc53;
 
-    --ArticleEditAcceptArticleApprovedWithChangesButton: #38B819;
-    --ArticleEditAcceptArticleApprovedWithChangesButtonBorder: #38B819;
+    --ArticleEditAcceptArticleApprovedWithChangesButton: #68bc53;
+    --ArticleEditAcceptArticleApprovedWithChangesButtonBorder: #68bc53;
 
     --ArticleEditRejectArticleApprovedWithChangesButton: #950C0C;
     --ArticleEditRejectArticleApprovedWithChangesButtonBorder: #950C0C;
 
     --ArticleEditTagsText: #2F88F0;
 
-    --ArticleEditEditTagsBG: #fff;
+    --ArticleEditEditTagsBG: #303037;
 
-    --ArticleEditEditTagsTagBG: #d4d4d4;
+    --ArticleEditEditTagsTagBG: #28282c;
     --ArticleEditEditTagsTagText: #2c2c2c;
-    --ArticleEditEditTagsRemoveTagButtonBG: #b9b9b9;
-    --ArticleEditEditTagsRemoveTagButtonHoverBG: #afafaf;
-    --ArticleEditEditTagsRemoveTagButtonText: #565656;
+    --ArticleEditEditTagsRemoveTagButtonBG: #3a3a41;
+    --ArticleEditEditTagsRemoveTagButtonHoverBG: #4d4d52;
+    --ArticleEditEditTagsRemoveTagButtonText: #b0b0b0;
 
-    --ArticleEditEditTagsAddTagInputBG: #d4d4d4;
-    --ArticleEditEditTagsAddTagInputText: #2c2c2c;
-    --ArticleEditEditTagsAddTagInputPlaceholderText: #565656;
-    --ArticleEditEditTagsAddTagButtonBG: #b9b9b9;
-    --ArticleEditEditTagsAddTagButtonHoverBG: #afafaf;
-    --ArticleEditEditTagsAddTagButtonText: #565656;
+    --ArticleEditEditTagsAddTagInputBG: #28282c;
+    --ArticleEditEditTagsAddTagInputText: #d4d4d4;
+    --ArticleEditEditTagsAddTagInputPlaceholderText: #b0b0b0;
+    --ArticleEditEditTagsAddTagButtonBG: #3a3a41;
+    --ArticleEditEditTagsAddTagButtonHoverBG: #4d4d52;
+    --ArticleEditEditTagsAddTagButtonText: #b0b0b0;
+
 
     // ArticleView
     --ArticleViewArticleBG: #1e1e23;
@@ -158,14 +158,14 @@
     --ArticleViewCommentsText: #313131;
     --ArticleViewCommentsBG: #fff;
 
-    --ArticleViewAcceptPremoderateArticleButtonText: #38B819;
-    --ArticleViewAcceptPremoderateArticleButtonBorder: #38B819;
+    --ArticleViewAcceptPremoderateArticleButtonText: #68bc53;
+    --ArticleViewAcceptPremoderateArticleButtonBorder: #68bc53;
 
     --ArticleViewRejectPremoderateArticleButtonText: #950C0C;
     --ArticleViewRejectPremoderateArticleButtonBorder: #950C0C;
 
-    --ArticleViewAcceptApproveArticleButtonText: #38B819;
-    --ArticleViewAcceptApproveArticleButtonBorder: #38B819;
+    --ArticleViewAcceptApproveArticleButtonText: #68bc53;
+    --ArticleViewAcceptApproveArticleButtonBorder: #68bc53;
 
     --ArticleViewRejectApproveArticleButtonText: #950C0C;
     --ArticleViewRejectApproveArticleButtonBorder: #950C0C;
@@ -218,14 +218,14 @@
     --ArticlesReadAllButtonText: #54A9F8;
     --ArticlesReadAllButtonBorder: #54A9F8;
 
-    --ArticleAcceptPremoderateArticleButtonText: #38B819;
-    --ArticleAcceptPremoderateArticleButtonBorder: #38B819;
+    --ArticleAcceptPremoderateArticleButtonText: #68bc53;
+    --ArticleAcceptPremoderateArticleButtonBorder: #68bc53;
 
     --ArticleRejectPremoderateArticleButtonText: #950C0C;
     --ArticleRejectPremoderateArticleButtonBorder: #950C0C;
 
-    --ArticleAcceptApproveArticleButtonText: #38B819;
-    --ArticleAcceptApproveArticleButtonBorder: #38B819;
+    --ArticleAcceptApproveArticleButtonText: #68bc53;
+    --ArticleAcceptApproveArticleButtonBorder: #68bc53;
 
     --ArticleRejectApproveArticleButtonText: #950C0C;
     --ArticleRejectApproveArticleButtonBorder: #950C0C;
