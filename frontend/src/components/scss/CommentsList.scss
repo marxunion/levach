@@ -13,7 +13,7 @@
     &.scrollToComment
     {
         padding: 10px;
-        border: 2px solid var(--commentsListCommentBorder);
+        border: 2px solid var(--CommentsListCommentBorder);
         border-radius: 15px;
     }
     &__header
@@ -27,12 +27,12 @@
             &.id
             {
                 font-size: 17px;
-                color: var(--commentsListCommentTitleId);
+                color: var(--CommentsListCommentTitleId);
             }
             &.time
             {
                 padding-left: 2%;
-                color: var(--commentsListCommentTitleTime);
+                color: var(--CommentsListCommentTitleTime);
             }
         }
     }
@@ -42,7 +42,7 @@
         cursor: pointer;
         font-family: Roboto-Regular;
         font-size: 18px;
-        color: var(--commentsListCommentCollapse);
+        color: var(--CommentsListCommentCollapse);
     }
     &__text
     {
@@ -66,7 +66,7 @@
                 cursor: pointer;
                 font-family: Roboto-Regular;
                 font-size: 18px;
-                color: var(--commentsListCommentActionText);
+                color: var(--CommentsListCommentActionText);
                 
                 &:nth-child(2)
                 {
@@ -78,7 +78,7 @@
                 &:hover
                 {
                     transform: scale(1.03);
-                    color: var(--commentsListCommentActionTextHover);
+                    color: var(--CommentsListCommentActionTextHover);
                 }
             }
         }
@@ -89,6 +89,7 @@
             margin-left: 16px;
             &__icon
             {
+                filter: invert(var(--CommentsListReactionsIconFilter));
                 & .ratingIcon
                 {
                     width: 28px;
@@ -110,7 +111,7 @@
 
                 &.ratingInfluenceUp
                 {
-                    color: var(--commentsListCommentRatingInfluenceUp);
+                    color: var(--CommentsListCommentRatingInfluenceUp);
                     font-size: 22px;
                     margin-left: 30px;
                     &::before
@@ -124,7 +125,7 @@
                 }
                 &.ratingInfluenceDown
                 {
-                    color: var(--commentsListCommentRatingInfluenceDown);
+                    color: var(--CommentsListCommentRatingInfluenceDown);
                     font-size: 22px;
                     margin-left: 30px;
                     &::before
