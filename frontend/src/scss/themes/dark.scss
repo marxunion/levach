@@ -70,16 +70,16 @@
 
     // CommentsList
     --CommentsListCommentBorder: #565656;
-    --CommentsListCommentTitleId: #4193f1;
+    --CommentsListCommentTitleId: #4188da;
     --CommentsListCommentTitleTime: #797979;
     --CommentsListCommentText: #000;
 
     --CommentsListReactionsIconFilter: 88%;
     
-    --CommentsListCommentCollapse: #4193f1;
+    --CommentsListCommentCollapse: #4188da;
 
-    --CommentsListCommentActionText: #747474;
-    --CommentsListCommentActionTextHover: #575757;
+    --CommentsListCommentActionText: #d4d4d4;
+    --CommentsListCommentActionTextHover: #ededed;
 
     --CommentsListCommentRatingInfluenceUp: #319a17;
     --CommentsListCommentRatingInfluenceDown: #b92828;
@@ -152,7 +152,7 @@
 
     // ArticleView
     --ArticleViewArticleBG: #303037;
-    --ArticleViewArticleTitleId: #4193f1;
+    --ArticleViewArticleTitleId: #4188da;
     --ArticleViewArticleTitleTime: #797979;
 
     --ArticleViewReactionsIconFilter: 88%;
@@ -162,7 +162,7 @@
     --ArticleViewDeleteArticleButtonText: #b92828;
     --ArticleViewDeleteArticleButtonBorder: #b92828;
 
-    --ArticleViewCommentsText: #313131;
+    --ArticleViewCommentsText: #d4d4d4;
     --ArticleViewCommentsBG: #303037;
 
     --ArticleViewAcceptPremoderateArticleButtonText: #68bc53;
@@ -224,6 +224,7 @@
 
     --ArticlesReadAllButtonText: #458fe4;
     --ArticlesReadAllButtonBorder: #458fe4;
+
     --ArticlesReactionsIconFilter: 88%;
 
     --ArticleAcceptPremoderateArticleButtonText: #68bc53;

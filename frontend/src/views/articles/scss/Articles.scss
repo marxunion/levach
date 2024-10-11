@@ -226,7 +226,6 @@
                 }
                 &__icon
                 {
-                    cursor: pointer;
                     filter: invert(var(--ArticlesReactionsIconFilter));
                 }
                 & .ratingIcon
@@ -235,6 +234,7 @@
                 }
                 & .shareIcon
                 {
+                    cursor: pointer;
                     width: 27px;
                     margin-left: 3px;
                 }
