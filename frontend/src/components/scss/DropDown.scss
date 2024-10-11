@@ -44,12 +44,14 @@
             right: 12px;
             width: 16px;
             height: 10px;
-            background: url("./../../assets/img/dropdown/arrowdown/black.svg") no-repeat;
+            background: url("./../../assets/img/dropdown/arrowdown.svg") no-repeat;
             position: absolute;
+            filter: invert(var(--dropDownItemIconFilter));
             transition: .6s;
         }
     }
-    &__items {
+    &__items 
+    {
         width: 100%;
         top: 50px;
         left: 0;

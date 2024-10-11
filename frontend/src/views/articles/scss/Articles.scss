@@ -227,6 +227,7 @@
                 &__icon
                 {
                     cursor: pointer;
+                    filter: invert(var(--ArticlesReactionsIconFilter));
                 }
                 & .ratingIcon
                 {
@@ -245,6 +246,7 @@
                 &__icon
                 {
                     cursor: pointer;
+                    filter: invert(var(--ArticlesReactionsIconFilter));
                 }
                 &__title
                 {

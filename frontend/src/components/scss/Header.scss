@@ -180,11 +180,11 @@
                     color: var(--headerDropDownItemTextSelected) !important;
                     &__img
                     {
+                        right: 0 !important;
                         width: 16px !important;
                         height: 10px !important;
                         content: "";
-                        background: url("./../../assets/img/dropdown/arrowdown/white.svg") no-repeat !important;
-                        right: 0 !important;
+                        filter: invert(100%) !important;
                     }
                 }
 

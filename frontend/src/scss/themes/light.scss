@@ -3,6 +3,7 @@
 :root[data-theme="light"]
 {
     color-scheme: light;
+
     // Default
     --BG: #f1f4ff;
     --selectionBG: #bbbbbb;
@@ -61,6 +62,8 @@
     --dropDownItemBGSelected: #ddd;
     --dropDownItemText: #000;
     --dropDownItemTextSelected: #000;
+
+    --dropDownItemIconFilter: 0%;
 
     // Captcha
     --RulesCaptchaTextLink: #4193f1;
@@ -216,6 +219,7 @@
 
     --ArticlesReadAllButtonText: #54A9F8;
     --ArticlesReadAllButtonBorder: #54A9F8;
+    --ArticlesReactionsIconFilter: 0%;
 
     --ArticleAcceptPremoderateArticleButtonText: #38B819;
     --ArticleAcceptPremoderateArticleButtonBorder: #38B819;
