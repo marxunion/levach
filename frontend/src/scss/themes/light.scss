@@ -164,7 +164,7 @@
     --ArticleViewCommentsText: #313131;
     --ArticleViewCommentsBG: #fff;
 
-    --ArticleViewNewCommentBG: #eaeaea;
+    --ArticleViewNewCommentBG: #f1f1f1;
 
     --ArticleViewAcceptPremoderateArticleButtonText: #38B819;
     --ArticleViewAcceptPremoderateArticleButtonBorder: #38B819;
@@ -314,6 +314,10 @@
         --md-scrollbar-thumb-color: #0000004d;
         --md-scrollbar-thumb-hover-color: #00000059;
         --md-scrollbar-thumb-active-color: #00000061;
+    }
+    .md-editor-modal-container
+    {
+
     }
 }
 

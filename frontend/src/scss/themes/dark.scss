@@ -117,11 +117,11 @@
     --ArticleEditSendButtonBorder: #4a9be7;
     --ArticleEditSendButtonHoverBorder: #458fe4;
 
-    --ArticleEditInfoBG: #1e1e23;
+    --ArticleEditInfoBG: #303037;
     --ArticleEditInfoText: #fff;
 
-    --ArticleEditBlockBG: #1e1e23;
-    --ArticleEditBlockTitle: #000;
+    --ArticleEditBlockBG: #303037;
+    --ArticleEditBlockTitle: #d4d4d4;
 
     --ArticleEditRequestApproveArticleButton: #68bc53;
     --ArticleEditRequestApproveArticleButtonBorder: #68bc53;
@@ -165,7 +165,7 @@
     --ArticleViewCommentsText: #d4d4d4;
     --ArticleViewCommentsBG: #303037;
 
-    --ArticleViewNewCommentBG: #303037;
+    --ArticleViewNewCommentBG: #3A3A40;
 
     --ArticleViewAcceptPremoderateArticleButtonText: #68bc53;
     --ArticleViewAcceptPremoderateArticleButtonBorder: #68bc53;
@@ -306,8 +306,8 @@
         --md-color: #d4d4d4;
         --md-hover-color: #d4d4d4;
         --md-bk-color: #303037;
-        --md-bk-color-outstand: #f6f6f6 !important;
-        --md-bk-hover-color: #f5f7fa !important;
+        --md-bk-color-outstand: #323239 !important;
+        --md-bk-hover-color: #323239 !important;
         --md-border-color: transparent !important;
         --md-border-hover-color: #b9b9b9 !important;
         --md-border-active-color: #999 !important;
@@ -316,5 +316,12 @@
         --md-scrollbar-thumb-color: #0000004d;
         --md-scrollbar-thumb-hover-color: #00000059;
         --md-scrollbar-thumb-active-color: #00000061;
+    }
+    .md-editor-modal-container
+    {
+        --md-color: #d4d4d4;
+        --md-hover-color: #f2f2f2;
+        --md-bk-color: #303037;
+        --md-border-color: #303037;
     }
 }
