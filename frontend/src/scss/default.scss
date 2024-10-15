@@ -26,6 +26,15 @@
 	transition: .6s;
 }
 
+.md-editor-menu, .md-editor-table-shape, .md-editor-dropdown
+{
+	border-radius: 10px;
+	&-overlay
+	{
+		border-radius: 10px;
+	}
+}
+
 .md-editor-preview
 {
 	word-break: break-word !important;
