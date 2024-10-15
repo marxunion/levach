@@ -3,6 +3,8 @@
 	import { useRoute, useRouter, RouteLocationNormalizedLoaded, Router } from 'vue-router';
 	import axios from 'axios';
 
+	import { ThemeHandler } from '../../ts/handlers/ThemeHandler';
+
 	import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
 	import { tagsArrayToString } from '../../ts/helpers/TagsHelper'
 	import { JsonData } from '../../ts/interfaces/JsonData';
@@ -1013,7 +1015,7 @@
 				</div>
 
 				<div class="main__article__comments__newComment">
-					<MdEditor class="main__article__comments__newComment__editor" v-model="(newCommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImgValidate" :language="newCommentEditorState.language" noIconfont :preview="false"/>
+					<MdEditor class="main__article__comments__newComment__editor" v-model="(newCommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImgValidate" :language="newCommentEditorState.language" noIconfont :preview="false" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value"/>
 					<img @click="onCreateNewCommentValidate()" src="./../../assets/img/article/sendCommentButton.svg" alt="Send" class="main__article__comments__newComment__sendButton">
 					<div class="main__article__comments__newComment__reactions">
 						<img v-if="currentCommentReaction === 1" @click="onLikeReaction()" src="./../../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="main__article__comments__newComment__reactions__reaction">
@@ -1054,7 +1056,6 @@
 	
 	.main__article__comments__newComment__editor .md-editor-content
     {
-		display: none;
 		background-color: var(--ArticleViewNewCommentBG);
 	}
 </style>

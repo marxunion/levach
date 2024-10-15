@@ -94,7 +94,7 @@
     --ArticleNewSendButtonBorder: transparent;
     --ArticleNewSendButtonHoverBorder: transparent;
 
-    --ArticleNewEditTagsBG: #eceef1;
+    --ArticleNewEditTagsBG: #fff;
 
     --ArticleNewEditTagsTagBG: #d9d9d9;
     --ArticleNewEditTagsTagText: #2c2c2c;
@@ -150,7 +150,7 @@
     --ArticleEditEditTagsAddTagButtonText: #565656;
 
     // ArticleView
-    --ArticleViewArticleBG: #eceef1;
+    --ArticleViewArticleBG: #fff;
     --ArticleViewArticleTitleId: #4193f1;
     --ArticleViewArticleTitleTime: #797979;
 
@@ -162,9 +162,9 @@
     --ArticleViewDeleteArticleButtonBorder: #950C0C;
 
     --ArticleViewCommentsText: #313131;
-    --ArticleViewCommentsBG: #eceef1;
+    --ArticleViewCommentsBG: #fff;
 
-    --ArticleViewNewCommentBG: #ddd;
+    --ArticleViewNewCommentBG: #eaeaea;
 
     --ArticleViewAcceptPremoderateArticleButtonText: #38B819;
     --ArticleViewAcceptPremoderateArticleButtonBorder: #38B819;
@@ -179,9 +179,9 @@
     --ArticleViewRejectApproveArticleButtonBorder: #950C0C;
 
     // AdminEditComments
-    --AdminEditCommentsBG: #eceef1;
+    --AdminEditCommentsBG: #fff;
 
-    --AdminEditCommentsFiltersInputBG: #d9d9d9;
+    --AdminEditCommentsFiltersInputBG: #e0e0e0;
     --AdminEditCommentsFiltersInputText: #2c2c2c;
     --AdminEditCommentsFiltersInputPlaceholderText: #565656;
 
@@ -211,7 +211,7 @@
     --ArticleAdminEditCommentsButtonsDeleteSelectedButtonBorder: #950C0C;
 
     // Articles
-    --ArticlesArticleBG: #eceef1;
+    --ArticlesArticleBG: #fff;
     --ArticlesArticleTitleId: #4193f1;
     --ArticlesArticleTitleTime: #797979;
 
@@ -303,7 +303,7 @@
     {
         --md-color: #3f4a54;
         --md-hover-color: #3f4a54;
-        --md-bk-color: #eceef1;
+        --md-bk-color: #fff;
         --md-bk-color-outstand: #f6f6f6;
         --md-bk-hover-color: #f5f7fa !important;
         --md-border-color: transparent !important;

@@ -37,15 +37,21 @@ class AdminArticlesUpdatePopularitySortTriggersModel extends BaseModel
 
         $updateQuery = "UPDATE articles SET popularity_sort_value = $formula;";
 
+        //NEW.rating * NEW.comments_count / GREATEST(EXTRACT(EPOCH FROM (current_timestamp - to_timestamp(NEW.created_date))) / 600000 * GREATEST(EXTRACT(EPOCH FROM (current_timestamp - to_timestamp(NEW.created_date))) / 600000, 1), 1)
+
         $updateQuery = preg_replace(
             [
-                '/EXTRACT\(EPOCH FROM\s*\((.*?)\)\s*\)/iu', 
+                '/EXTRACT\(EPOCH FROM\s*\((.*?)\)\s*\)/iu',
+                '/to_timestamp\s*\((.*?)\)/iu', 
                 '/(NEW|OLD)\./i', 
+                '/\:\:timestamp/iu',
                 '/(\s*;)/i',
-                '/(current_timestamp|timestamp)/i'
+                '/(current_timestamp)/i'
             ],
             [
-                '($1)', 
+                '($1)',
+                '($1)',
+                '', 
                 '', 
                 ';',
                 "$current_timestamp"
