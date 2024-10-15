@@ -111,20 +111,22 @@
                         border-radius: 15px;
                         height: 35px;
                         padding: 0 !important;
-                        border: 1px solid var(--AdminModalInputNumberBorder);
+                        border: transparent;
                         color: var(--AdminModalInputNumberText);
                         background-color: var(--AdminModalInputNumberBG);
                         font-size: 16px;
                         text-align: center;
                         transition: .4s;
                         box-sizing: border-box;
-                        &:hover
+                        
+                    }
+                    & button
+                    {
+                        border-left: none !important;
+                        border-right: none !important;
+                        &::before, &::after 
                         {
-                            border: 1px solid var(--AdminModalInputNumberBorderHover);
-                        }
-                        &:focus
-                        {
-                            border: 1px solid var(--AdminModalInputNumberBorderFocus);
+                            background-color: var(--AdminModalInputNumberText) !important;
                         }
                     }
                 }

@@ -76,10 +76,14 @@
                             background-color: var(--AdminEditCommentsFiltersInputBG);
                             width: 120px;
                             height: 35px;
-                            & *
+                            & button
                             {
                                 border-left: none !important;
                                 border-right: none !important;
+                                &::before, &::after 
+                                {
+                                    background-color: var(--AdminModalInputNumberText) !important;
+                                }
                             }
 
                             & button
