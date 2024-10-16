@@ -1,9 +1,10 @@
 <script setup lang="ts">
 	import { ref, reactive, watch, Ref, onMounted, defineProps, defineEmits } from 'vue';
 	import axios from 'axios';
-
 	import { MdEditor, MdPreview, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
+
+	import { ThemeHandler } from '../ts/handlers/ThemeHandler';
 
 	import { adminStatus, adminStatusReCheck } from '../ts/handlers/AdminHandler';
 
@@ -596,7 +597,7 @@
 			</div>
 		</div>
 		<div v-if="answerStatus" class="comment__newSubcomment">
-			<MdEditor class="comment__newSubcomment__editor" v-model="(newSubcommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImgValidate" :language="newSubcommentEditorState.language" noIconfont :preview="false"/>
+			<MdEditor class="comment__newSubcomment__editor" v-model="(newSubcommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImgValidate" :language="newSubcommentEditorState.language" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value" noIconfont :preview="false"/>
 			<img @click="onCreateNewSubcommentValidate()" src="./../assets/img/article/sendCommentButton.svg" alt="Send" class="comment__newSubcomment__sendButton">
 			<div class="comment__newSubcomment__reactions">
 				<img v-if="currentSubcommentReaction === 1" @click="onLikeReaction()" src="./../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="comment__newSubcomment__reactions__reaction">
@@ -612,6 +613,23 @@
 	<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-if="!loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" :articleTitle="articleTitle" :scrollToCommentId="scrollToCommentId"/>
 	<Loader v-else />
 </template>
+
+<style scoped lang="scss">
+:root[data-theme="light"]
+{
+	.comment__newSubcomment__editor
+    {
+        --md-bk-color: #f1f1f1;
+    }
+}
+:root[data-theme="dark"]
+{
+	.comment__newSubcomment__editor
+    {
+        --md-bk-color: #3A3A40;
+    }
+}
+</style>
 
 <style lang="css">
 	.comment__text *

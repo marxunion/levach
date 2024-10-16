@@ -153,6 +153,7 @@
             height: auto !important;
             min-height: 260px;
             border-radius: 15px;
+            background-color: var(--ArticleViewNewCommentBG);
         }
         &__reactions
         {
@@ -166,6 +167,8 @@
                 margin-left: 8px;
                 width: 30px;
                 transition: .5s;
+
+                filter: invert(var(--CommentsListReactionsIconFilter));
             }
         }
         &__sendButton
