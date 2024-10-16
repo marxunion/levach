@@ -1062,10 +1062,6 @@
     {
         --md-bk-color: #3A3A40;
     }
-	.main__article__comments__header__sort__selectSortType
-	{
-		
-	}
 }
 </style>
 
