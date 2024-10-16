@@ -615,20 +615,20 @@
 </template>
 
 <style scoped lang="scss">
-:root[data-theme="light"]
-{
-	.comment__newSubcomment__editor
-    {
-        --md-bk-color: #f1f1f1;
-    }
-}
-:root[data-theme="dark"]
-{
-	.comment__newSubcomment__editor
-    {
-        --md-bk-color: #3A3A40;
-    }
-}
+	:root[data-theme="light"]
+	{
+		.comment__newSubcomment__editor
+		{
+			--md-bk-color: #f1f1f1;
+		}
+	}
+	:root[data-theme="dark"]
+	{
+		.comment__newSubcomment__editor
+		{
+			--md-bk-color: #3A3A40;
+		}
+	}
 </style>
 
 <style lang="css">

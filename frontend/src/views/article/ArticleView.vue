@@ -1049,20 +1049,20 @@
 </template>
 
 <style scoped lang="scss">
-:root[data-theme="light"]
-{
-	.main__article__comments__newComment__editor
-    {
-        --md-bk-color: #f1f1f1;
-    }
-}
-:root[data-theme="dark"]
-{
-	.main__article__comments__newComment__editor
-    {
-        --md-bk-color: #3A3A40;
-    }
-}
+	:root[data-theme="light"]
+	{
+		.main__article__comments__newComment__editor
+		{
+			--md-bk-color: #f1f1f1;
+		}
+	}
+	:root[data-theme="dark"]
+	{
+		.main__article__comments__newComment__editor
+		{
+			--md-bk-color: #3A3A40;
+		}
+	}
 </style>
 
 <style lang="css">
