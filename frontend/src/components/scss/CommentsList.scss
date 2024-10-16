@@ -171,6 +171,10 @@
                 transition: .5s;
 
                 filter: invert(var(--CommentsListReactionsIconFilter));
+                &.selected
+                {
+                    filter: invert(0%);
+                }
             }
         }
         &__sendButton
