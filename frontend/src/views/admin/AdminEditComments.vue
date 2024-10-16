@@ -2,6 +2,8 @@
 	import { ref, Ref, ComputedRef, onMounted, onUnmounted } from 'vue';
 	import axios from 'axios';
 
+    import { ThemeHandler } from '../../ts/handlers/ThemeHandler';
+
     import { JsonData } from '../../ts/interfaces/JsonData';
     import { Article } from '../../ts/interfaces/Article';
 
@@ -156,9 +158,9 @@
                     <p class="main__filters__blocks__block__title">{{ langData['dateArticlePublishTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle1'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="articleDateBefore" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="articleDateBefore" teleport-center :dark="ThemeHandler.instance.getCurrentTheme.value == 'dark'"></VueDatePicker>
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle2'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="articleDateAfter" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="articleDateAfter" teleport-center :dark="ThemeHandler.instance.getCurrentTheme.value == 'dark'"></VueDatePicker>
                     </div>
                 </div>
                 <div class="main__filters__blocks__block">
@@ -184,9 +186,9 @@
                     <p class="main__filters__blocks__block__title">{{ langData['dateCommentSendTitle'] }}</p>
                     <div class="main__filters__blocks__block__content">
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle1'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="commentDateBefore" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText'] as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="commentDateBefore" teleport-center :dark="ThemeHandler.instance.getCurrentTheme.value == 'dark'" ></VueDatePicker>
                         <p class="main__filters__blocks__block__content__text">{{ langData['dateTitle2'] }}</p>
-                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="commentDateAfter" teleport-center ></VueDatePicker>
+                        <VueDatePicker :preview-format="dateFormat" :format="dateFormat" :select-text="(langData['dateSelectText']as string)" :cancel-text="(langData['dateCancelText'] as string)" :locale="LangDataHandler.currentLanguage.value.toLowerCase()" class="main__filters__blocks__block__content__input date" v-model="commentDateAfter" teleport-center :dark="ThemeHandler.instance.getCurrentTheme.value == 'dark'"></VueDatePicker>
                     </div>
                 </div>
                 <div class="main__filters__blocks__block">

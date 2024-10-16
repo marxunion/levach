@@ -15,7 +15,7 @@ export class ThemeHandler
     {
         this.currentTheme = ref(getSavedTheme() || getSystemTheme());
         this.currentThemeGrayscale = ref(convertThemeToGrayscale(this.currentTheme.value));
-        console.log(this.currentThemeGrayscale.value);
+
         this.applyTheme(this.currentTheme.value);
 
         onSystemThemeChange((newTheme) => 
