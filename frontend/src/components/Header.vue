@@ -62,7 +62,7 @@
         <div class="header__bar">
             <div class="header__bar__search">
                 <input @keyup.enter="onSearchButton" v-model="searchText" :placeholder="(langData['search'] as string)" type="text" class="header__bar__search__input">
-                <img src="../assets/img/header/searchicon.svg" class="header__bar__search__button" alt="">
+                <img src="../assets/img/header/searchicon.svg" class="header__bar__search__button" @click="onSearchButton" alt="">
             </div>
             
             <div class="header__bar__subbar">
