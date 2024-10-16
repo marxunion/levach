@@ -182,10 +182,6 @@
                     {
                         width: 28px;
                     }
-                    & .ratingIcon
-                    {
-                        width: 28px;
-                    }
                     & .shareIcon
                     {
                         cursor: pointer;
@@ -287,6 +283,10 @@
                         width: 30px;
                         transition: .5s;
                         filter: invert(var(--ArticleViewReactionsIconFilter));
+                        &.selected
+                        {
+                            filter: invert(0%);
+                        }
                     }
                 }
                 &__sendButton
