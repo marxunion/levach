@@ -972,7 +972,7 @@
 			<div class="main__article__previewContainer">
 				<p class="main__article__previewContainer__titleId">#{{ padNumberWithZeroes(fetchedArticleData.view_id) }}</p>
 				<p class="main__article__previewContainer__titleTime">{{ timestampToLocaleFormatedTime(fetchedArticleData.versions[currentVersion].created_date) }}</p>
-				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion].text" :language="previewState.language"/>
+				<MdPreview class="main__article__previewContainer__preview" :modelValue="fetchedArticleData.versions[currentVersion].text" :language="previewState.language" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(fetchedArticleData.versions[currentVersion].tags) }}</p>
 				
 				<div v-if="adminStatus && fetchedArticleData.approvededitorially_status == 1" class="main__article__previewContainer__buttons">

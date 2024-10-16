@@ -579,7 +579,7 @@
 				<p class="comment__header__title id">#{{ padNumberWithZeroes(comment.view_id) }}</p>
 				<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
 			</div>
-			<MdPreview ref="commentText" :class='"comment__text " + (collapsed ? "collapsed" : "")' :modelValue="comment.text" :language="previewState.language"/>
+			<MdPreview ref="commentText" :class='"comment__text " + (collapsed ? "collapsed" : "")' :modelValue="comment.text" :language="previewState.language" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value"/>
 			<p v-if="commentTextHeight > 250 && collapsed" class="comment__collapse" @click="collapsed = false">{{ langData['readMore'] }}</p>
 			<p v-else-if="commentTextHeight > 250" class="comment__collapse" @click="collapsed = true">{{ langData['collapse'] }}</p>
 			<div class="comment__bar">

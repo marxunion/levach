@@ -917,7 +917,7 @@
 				</div>
 			</div>
 			<div v-if="fetchedArticleData.approvededitorially_status > 0 && fetchedArticleData.editorially_status != 1 && !adminStatus" class="main__article__previewContainer">
-				<MdPreview class="main__article__previewContainer__preview" :modelValue="articleText" :language="LangDataHandler.currentLanguage.value"/>
+				<MdPreview class="main__article__previewContainer__preview" :modelValue="articleText" :language="LangDataHandler.currentLanguage.value" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value"/>
 				<p class="main__article__previewContainer__tags">{{ tagsArrayToString(tags) }}</p>
 			</div>
 			

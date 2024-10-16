@@ -2,6 +2,8 @@
     import { ref, Ref, computed, ComputedRef, reactive, watch, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
     import axios from 'axios';
 
+    import { ThemeHandler } from '../../ts/handlers/ThemeHandler';
+
     import Loader from "./../../components/Loader.vue";
 
     import { timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
@@ -498,7 +500,7 @@
             <div class="main__article__block" v-if="article.versions[article.currentSelectedVersion]">
                 <a :href="'#/article/>'+article.view_id" target="_blank" class="main__article__titleId">#{{ padNumberWithZeroes(article.view_id) }}</a>
                 <p class="main__article__titleTime">{{ timestampToLocaleFormatedTime(article.versions[article.currentSelectedVersion].created_date) }}</p>
-                <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion].text" :language="previewState.language"/>
+                <MdPreview class="main__article__preview" :modelValue="article.versions[article.currentSelectedVersion].text" :language="previewState.language" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value"/>
                 <p class="main__article__tags">{{ tagsArrayToString(article.versions[article.currentSelectedVersion].tags) }}</p>
 
                 <div class="main__article__buttons">
