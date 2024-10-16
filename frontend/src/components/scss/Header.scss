@@ -416,7 +416,7 @@
                 {
                     display: none;
                 }
-                &__searchmobile
+                &__searchmobile, &__createarticlemobile
                 {
                     width: 30px;
                     height: 30px;
@@ -425,22 +425,20 @@
                     align-items: center;
                     border-radius: 5px;
 
-                    margin-left: 12px;
-
                     background-color: var(--headerButtonMobileBG);
+                    border: 1px solid var(--headerButtonMobileBorder);
+                    &__icon
+                    {
+                        filter: invert(var(--headerButtonMobileIconFilter));
+                    }
+                }
+                &__searchmobile
+                {
+                    margin-left: 12px;
                 }
                 &__createarticlemobile
                 {
-                    width: 30px;
-                    height: 30px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    border-radius: 5px;
-
                     margin-left: 8px;
-
-                    background-color: var(--headerButtonMobileBG);
                 }
                 &__select
                 {
