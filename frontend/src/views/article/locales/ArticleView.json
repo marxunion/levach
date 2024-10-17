@@ -38,7 +38,7 @@
         
         "sortTypesNames": 
         [
-            "популярности",
+            "рейтингу",
             "дате размещения"
         ],
 
@@ -176,7 +176,7 @@
 
         "sortTypesNames": 
         [
-            "popularity",
+            "rating",
             "posting date"
         ],
 
