@@ -23,8 +23,6 @@
         "articleRejectPremoderateSuccessfully": "Статья была успешно отклонена",
         "articleAcceptPremoderateSuccessfully": "Статья была успешно премодерирована",
 
-        "commentCreatedSuccessfully": "Комментарий успешно создан",
-
         "acceptApproveArticleButton": "Одобрить",
         "rejectApproveArticleButton": "Не одобрять",
         "acceptPremoderateArticleButton": "Принять",
@@ -162,8 +160,6 @@
         "articleRejectApproveSuccessfully": "Article successfully rejected",
         "articleRejectPremoderateSuccessfully": "Article successfully rejected",
         "articleAcceptPremoderateSuccessfully": "Article successfully premoderated",
-
-        "commentCreatedSuccessfully": "Comment successfully created",
 
         "acceptApproveArticleButton": "Approve",
         "rejectApproveArticleButton": "Reject Approve",

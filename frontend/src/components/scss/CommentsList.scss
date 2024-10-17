@@ -155,7 +155,7 @@
             height: auto !important;
             min-height: 260px;
             border-radius: 15px;
-            background-color: var(--ArticleViewNewCommentBG);
+            background-color: var(--CommentsListNewSubcommentBG);
         }
         &__reactions
         {
@@ -163,17 +163,53 @@
             display: flex;
             bottom: 15px;
             left: 15px;
-            &__reaction
+            &__like
             {
                 cursor: pointer;
-                margin-left: 8px;
-                width: 30px;
-                transition: .5s;
-
-                filter: invert(var(--CommentsListReactionsIconFilter));
+                font-size: 17px;
+                transition: .6s;
+                color: var(--CommentsListReactionsLikeText);
+                &:hover
+                {
+                    transition: .4s;
+                    color: var(--CommentsListReactionsLikeHoverText);
+                }
                 &.selected
                 {
-                    filter: invert(0%);
+                    transition: .2s;
+                    color: var(--CommentsListReactionsLikeSelectedText);
+                    &:hover
+                    {
+                        color: var(--CommentsListReactionsLikeSelectedText);
+                    }
+                }
+            }
+            &__delimiter
+            {
+                margin-left: 12px;
+                font-size: 17px;
+                color: var(--CommentsListReactionsDelimiterText);
+            }
+            &__dislike
+            {
+                cursor: pointer;
+                margin-left: 12px;
+                font-size: 17px;
+                transition: .6s;
+                color: var(--CommentsListReactionsLikeText);
+                &:hover
+                {
+                    transition: .4s;
+                    color: var(--CommentsListReactionsDislikeHoverText);
+                }
+                &.selected
+                {
+                    transition: .2s;
+                    color: var(--CommentsListReactionsDislikeSelectedText);
+                    &:hover
+                    {
+                        color: var(--CommentsListReactionsDislikeSelectedText);
+                    }
                 }
             }
         }

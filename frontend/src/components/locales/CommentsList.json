@@ -18,8 +18,10 @@
             "unknown": "Произошла неизвестная ошибка. Попробуйте повторить попытку"
         },
 
-        "commentCreatedSuccessfully": "Комментарий успешно создан",
         "commentDeletedSuccessfully": "Комментарий успешно удалён",
+
+        "reactionLikeTitle": "Поддерживаю",
+        "reactionDislikeTitle": "Не поддерживаю",
 
         "titleAnswer": "Ответить",
         "titleDelete": "Удалить",
@@ -143,8 +145,10 @@
             "unknown": "An unknown error occurred. Try again"
         },
 
-        "commentCreatedSuccessfully": "Comment successfully created",
         "commentDeletedSuccessfully": "Comment successfully deleted",
+
+        "reactionLikeTitle": "I Support",
+        "reactionDislikeTitle": "I don't Support",
 
         "titleAnswer": "Answer",
         "titleDelete": "Delete",
