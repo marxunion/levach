@@ -98,6 +98,8 @@
 		language: LangDataHandler.currentLanguage.value
 	});
 
+
+
 	// Subcomments 
 	const refetchComment = async () =>
 	{
@@ -106,6 +108,7 @@
 		let params = {
 			commentId: props.comment.id
 		}
+		
 		await axios.get('api/article/comment/get/'+props.articleViewCode, 
 		{
 			params: params

@@ -5,7 +5,7 @@
     import { ThemeHandler } from '../../ts/handlers/ThemeHandler';
 
     import { JsonData } from '../../ts/interfaces/JsonData';
-    import { Article } from '../../ts/interfaces/Article';
+    import { Comment } from '../../ts/interfaces/Comment';
 
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css'
@@ -15,14 +15,12 @@
 	import Loader from '../../components/Loader.vue';
 	import CommentsList from "./../../components/CommentsList.vue";
 
-    import { padNumberWithZeroes } from '../../ts/helpers/NumberHelper';
-
 	import langsData from "./locales/AdminEditComments.json";
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
-    import { articles } from '../../ts/handlers/ArticlesHandler';
+    import { comments } from '../../ts/handlers/CommentsHandler';
     import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
     
-    import { dateFormat, timestampToLocaleFormatedTime } from '../../ts/helpers/DateTimeHelper';
+    import { dateFormat } from '../../ts/helpers/DateTimeHelper';
 
 
 
@@ -67,11 +65,11 @@
 		{
 			if(response.data)
 			{
-                if(Array.isArray(articles.value))
+                if(Array.isArray(comments.value))
                 {
-                    response.data.forEach((article : Article) => 
+                    response.data.forEach((comment : Comment) => 
                     {
-                        articles.value.push(article);
+                        comments.value.push(comment);
                     });
                 }
 			}
@@ -106,7 +104,7 @@
 		await axios.post('/api/admin/articles/comments/delete', data)
 		.then(() => 
 		{
-			articles.value = [];
+			comments.value = [];
 		})
 		.catch(() =>
 		{
@@ -118,19 +116,19 @@
     onMounted(async () => 
     {
         loading.value = true;
-        articles.value = [];
+        comments.value = [];
         await fetchArticleComments();
     });
 
     onUnmounted(() => 
     {
-        articles.value = [];
+        comments.value = [];
     });
 
     const onApplyFilters = async () => 
 	{
 		loading.value = true;
-		articles.value = [];
+		comments.value = [];
 		await fetchArticleComments();
 	}
 
@@ -204,22 +202,14 @@
 				<a @click="onDeleteSelected()" class="main__filters__buttons__button delete">{{ langData['deleteSelectedButton'] }}</a>
 			</div>
 		</div>
-		<div v-if="!loading" class="main__comments">
-            <p v-if="articles.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
-            <p v-else class="main__comments__title">{{ langData['commentsNotFoundTitle'] }}</p>
-            <article v-if="articles.length > 0" class="main__comments__articles" v-for="article in articles">
-                <a :href="'#/article/>'+article.view_id" target="_blank" class="main__comments__articles__title id">#{{ padNumberWithZeroes(article.view_id) }}</a>
-                <p class="main__comments__articles__title time"> {{ timestampToLocaleFormatedTime(article.created_date) }}</p>
-                <a :href="'#/article/'+article.view_code" target="_blank" class="main__comments__articles__title text">{{ article.current_title }}</a>
-
-                <div class="main__comments__articles__articleComments">
-                    <CommentsList v-for="comment in article.comments" :key="comment.id" :comment="comment" :articleViewCode="article.view_code" :level="0"/>
-                </div>
-            </article>
+        <div v-if="!loading" class="main__comments">
+            <p v-if="comments.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
+			<p v-else class="main__comments__title">{{ langData['commentsNotFoundTitle'] }}</p>
+			<div v-if="comments.length > 0" class="main__comments__commentsList">
+				<CommentsList v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="encodeURIComponent(`#${comment.id.toString()}`)"/>
+			</div>
 		</div>
-        <div v-else class="main__comments">
-            <Loader />
-        </div>
+        <Loader v-else/>
 	</main>
     
 </template>

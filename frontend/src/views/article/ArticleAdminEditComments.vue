@@ -60,7 +60,7 @@
     const dateBefore : Ref<number> = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
 	const dateAfter : Ref<number> = ref(Date.now());
 	
-	const articleCommentRegexPattern : Ref <string> = ref('');
+	const articleCommentRegexPattern : Ref<string> = ref('');
 
 	const fetchComments = async () => 
 	{
