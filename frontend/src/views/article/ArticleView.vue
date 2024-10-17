@@ -1064,7 +1064,6 @@
 		}
 	}
 </style>
-
 <style lang="css">
 	.main__article__comments__newComment__editor .md-editor-footer
     {
