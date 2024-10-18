@@ -11,10 +11,16 @@ use Api\Models\AdminSettingsSetModel;
 
 class AdminArticlesUpdatePopularitySortTriggersModel extends BaseModel
 {
+    private $formula;
+
+    public function __construct() 
+    {
+        parent::__construct();
+        $this->formula = $this->database->get('settings', 'value', ['name' => 'articles_popularity_sort_formula']);
+    }
+
     public function updateTriggers()
     {
-        $formula = $this->database->get('settings', 'value', ['name' => 'articles_popularity_sort_formula']);
-        
         $this->database->query("
             CREATE OR REPLACE FUNCTION calculate_popularity_sort_value() RETURNS TRIGGER AS $$
             BEGIN
@@ -32,7 +38,10 @@ class AdminArticlesUpdatePopularitySortTriggersModel extends BaseModel
             END;
             $$ LANGUAGE plpgsql;
         ");
-        
+    }
+
+    public function updatePopularityValues()
+    {
         $current_timestamp = time();
 
         $updateQuery = "UPDATE articles SET popularity_sort_value = $formula;";
