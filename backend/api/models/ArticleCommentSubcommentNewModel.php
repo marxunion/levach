@@ -29,15 +29,15 @@ class ArticleCommentSubcommentNewModel extends BaseModel
         return $articleId;
     }
 
-    public function getCommentViewIdById($articleId)
+    public function getCommentViewIdById($id, $articleId)
     {
-        $viewId = $this->database->get('comments', 'view_id', ['id' => $articleId]);
+        $viewId = $this->database->get('comments', 'view_id', ['id' => $id, 'article_id' => $articleId]);
         return $viewId;
     }
 
     public function newSubcomment($articleId, $parentCommentId, $text = '', $ratingInfluence = 0)
     {
-        $text = '>#'.StringFormatter::padNumberWithZeroes($this->getCommentViewIdById($parentCommentId))."\n\n".$text;
+        $text = '>#'.StringFormatter::padNumberWithZeroes($this->getCommentViewIdById($parentCommentId, $articleId))."\n\n".$text;
         $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
         $text = StringFormatter::filterHtmlTags($text);
 
