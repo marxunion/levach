@@ -274,58 +274,18 @@
                 {
                     position: absolute;
                     display: flex;
-                    bottom: 10px;
-                    left: 10px;
-                    
-                    &__like
+                    bottom: 15px;
+                    left: 15px;
+                    &__reaction
                     {
                         cursor: pointer;
-                        font-size: 17px;
-                        transition: .6s;
-                        color: var(--ArticleViewReactionsLikeText);
-                        &:hover
-                        {
-                            transition: .4s;
-                            color: var(--ArticleViewReactionsLikeHoverText);
-                        }
+                        margin-left: 8px;
+                        width: 30px;
+                        transition: .5s;
+                        filter: invert(var(--ArticleViewReactionsIconFilter));
                         &.selected
                         {
-                            transition: .2s;
-                            color: var(--ArticleViewReactionsLikeSelectedText);
-                            &:hover
-                            {
-                                color: var(--ArticleViewReactionsLikeSelectedText);
-                            }
-                        }
-                    }
-
-                    &__delimiter
-                    {
-                        margin-left: 12px;
-                        font-size: 17px;
-                        color: var(--ArticleViewReactionsDelimiterText);
-                    }
-
-                    &__dislike
-                    {
-                        cursor: pointer;
-                        margin-left: 12px;
-                        font-size: 17px;
-                        transition: .6s;
-                        color: var(--ArticleViewReactionsLikeText);
-                        &:hover
-                        {
-                            transition: .4s;
-                            color: var(--ArticleViewReactionsDislikeHoverText);
-                        }
-                        &.selected
-                        {
-                            transition: .2s;
-                            color: var(--ArticleViewReactionsDislikeSelectedText);
-                            &:hover
-                            {
-                                color: var(--ArticleViewReactionsDislikeSelectedText);
-                            }
+                            filter: invert(0%);
                         }
                     }
                 }
@@ -410,30 +370,7 @@
                     width: 200px !important;
                 }
             }
-            &__comments
-            {
-                &__newComment
-                {
-                    &__reactions
-                    {
-                        &__like
-                        {
-                            font-size: 16px;
-                        }
-
-                        &__delimiter
-                        {
-                            margin-left: 10px;
-                            font-size: 16px;
-                        }
-                        &__dislike
-                        {
-                            margin-left: 10px;
-                            font-size: 16px;
-                        }
-                    }
-                }
-            }
+            
         }
     }
 }
@@ -496,46 +433,22 @@
                     width: 140px !important;
                 }
             }
-            &__comments
+            &__comments__header
             {
-                &__header
+                justify-content: end;
+                &__title
                 {
-                    justify-content: end;
+                    display: none;
+                }
+                &__sort
+                {
                     &__title
                     {
-                        display: none;
+                        font-size: 18px !important;
                     }
-                    &__sort
+                    &__selectSortType
                     {
-                        &__title
-                        {
-                            font-size: 18px !important;
-                        }
-                        &__selectSortType
-                        {
-                            width: 170px !important;
-                        }
-                    }
-                }
-                &__newComment
-                {
-                    &__reactions
-                    {
-                        &__like
-                        {
-                            font-size: 15px;
-                        }
-
-                        &__delimiter
-                        {
-                            margin-left: 4px;
-                            font-size: 15px;
-                        }
-                        &__dislike
-                        {
-                            margin-left: 4px;
-                            font-size: 15px;
-                        }
+                        width: 170px !important;
                     }
                 }
             }

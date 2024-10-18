@@ -42,9 +42,11 @@
 	{
 		word-break: break-word !important;
 	}
-	blockquote
+	blockquote, rect, g
 	{
 		border-radius: 10px;
+		rx: 10px;
+		transition: .6s;
 	}
 }
 

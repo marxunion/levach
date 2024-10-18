@@ -31,10 +31,7 @@
 
         "versionText": "Версия ",
         "commentsTitle": "Комментарии",
-        "sortTitle": "Сортировать по:",
-
-        "reactionLikeTitle": "Поддерживаю",
-        "reactionDislikeTitle": "Не поддерживаю",
+        "sortTitle": "Сортировать по:",    
         
         "sortTypesNames": 
         [
@@ -170,9 +167,6 @@
         "versionText": "Version ",
         "commentsTitle": "Comments",
         "sortTitle": "Sort by:",
-
-        "reactionLikeTitle": "I Support",
-        "reactionDislikeTitle": "I don't Support",
 
         "sortTypesNames": 
         [

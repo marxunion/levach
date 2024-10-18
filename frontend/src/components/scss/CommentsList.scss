@@ -114,30 +114,14 @@
                 &.ratingInfluenceUp
                 {
                     color: var(--CommentsListCommentRatingInfluenceUp);
-                    font-size: 22px;
-                    margin-left: 30px;
-                    &::before
-                    {
-                        content: "↑";
-                        top: -6px;
-                        left: -20px;
-                        position: absolute;
-                        font-size: 33px;
-                    }
+                    font-size: 18px;
+                    margin-left: 14px;
                 }
                 &.ratingInfluenceDown
                 {
                     color: var(--CommentsListCommentRatingInfluenceDown);
-                    font-size: 22px;
-                    margin-left: 30px;
-                    &::before
-                    {
-                        content: "↓";
-                        top: -6px;
-                        left: -20px;
-                        position: absolute;
-                        font-size: 33px;
-                    }
+                    font-size: 18px;
+                    margin-left: 14px;
                 }
             }
         }
@@ -163,53 +147,17 @@
             display: flex;
             bottom: 15px;
             left: 15px;
-            &__like
+            &__reaction
             {
                 cursor: pointer;
-                font-size: 17px;
-                transition: .6s;
-                color: var(--CommentsListReactionsLikeText);
-                &:hover
-                {
-                    transition: .4s;
-                    color: var(--CommentsListReactionsLikeHoverText);
-                }
+                margin-left: 8px;
+                width: 30px;
+                transition: .5s;
+
+                filter: invert(var(--CommentsListReactionsIconFilter));
                 &.selected
                 {
-                    transition: .2s;
-                    color: var(--CommentsListReactionsLikeSelectedText);
-                    &:hover
-                    {
-                        color: var(--CommentsListReactionsLikeSelectedText);
-                    }
-                }
-            }
-            &__delimiter
-            {
-                margin-left: 12px;
-                font-size: 17px;
-                color: var(--CommentsListReactionsDelimiterText);
-            }
-            &__dislike
-            {
-                cursor: pointer;
-                margin-left: 12px;
-                font-size: 17px;
-                transition: .6s;
-                color: var(--CommentsListReactionsLikeText);
-                &:hover
-                {
-                    transition: .4s;
-                    color: var(--CommentsListReactionsDislikeHoverText);
-                }
-                &.selected
-                {
-                    transition: .2s;
-                    color: var(--CommentsListReactionsDislikeSelectedText);
-                    &:hover
-                    {
-                        color: var(--CommentsListReactionsDislikeSelectedText);
-                    }
+                    filter: invert(0%);
                 }
             }
         }

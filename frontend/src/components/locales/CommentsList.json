@@ -20,8 +20,8 @@
 
         "commentDeletedSuccessfully": "Комментарий успешно удалён",
 
-        "reactionLikeTitle": "Поддерживаю",
-        "reactionDislikeTitle": "Не поддерживаю",
+        "commentLike": "Поддержал",
+        "commentDislike": "Не поддержал",
 
         "titleAnswer": "Ответить",
         "titleDelete": "Удалить",
@@ -147,8 +147,8 @@
 
         "commentDeletedSuccessfully": "Comment successfully deleted",
 
-        "reactionLikeTitle": "I Support",
-        "reactionDislikeTitle": "I don't Support",
+        "commentLike": "Supported",
+        "commentDislike": "Unsupported",
 
         "titleAnswer": "Answer",
         "titleDelete": "Delete",

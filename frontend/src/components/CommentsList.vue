@@ -594,8 +594,8 @@
 					<img src="../assets/img/article/rating.svg" alt="Rating: " class="comment__bar__reactions__icon ratingIcon">
 					<p class="comment__bar__reactions__title">{{ abbreviateNumber(comment.rating) }}</p>
 					<img @click="onShare" src="../assets/img/article/share.svg" alt="Share..." class="comment__bar__reactions__icon shareIcon">
-					<p v-if="comment.rating_influence > 0" class="comment__bar__reactions__title ratingInfluenceUp"> {{ comment.rating_influence }}</p>
-					<p v-else-if="comment.rating_influence < 0" class="comment__bar__reactions__title ratingInfluenceDown"> {{ comment.rating_influence }}</p>
+					<p v-if="comment.rating_influence > 0" class="comment__bar__reactions__title ratingInfluenceUp"> {{ langData['commentLike'] }}</p>
+					<p v-else-if="comment.rating_influence < 0" class="comment__bar__reactions__title ratingInfluenceDown"> {{ langData['commentDislike'] }}</p>
 				</div>
 			</div>
 		</div>
@@ -603,9 +603,11 @@
 			<MdEditor class="comment__newSubcomment__editor" v-model="(newSubcommentEditorState.text as string)" @onUploadImg="onNewCommentUploadImgValidate" :language="newSubcommentEditorState.language" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value" noIconfont :preview="false"/>
 			<img @click="onCreateNewSubcommentValidate()" src="./../assets/img/article/sendCommentButton.svg" alt="Send" class="comment__newSubcomment__sendButton">
 			<div class="comment__newSubcomment__reactions">
-				<p @click="onLikeReaction()" class="comment__newSubcomment__reactions__like" :class="currentSubcommentReaction == 1 ? 'selected' : ''">{{ langData['reactionLikeTitle'] }}</p>
-				<p class="comment__newSubcomment__reactions__delimiter">/</p> 
-				<p @click="onDislikeReaction()" class="comment__newSubcomment__reactions__dislike" :class="currentSubcommentReaction == 2 ? 'selected' : ''">{{ langData['reactionDislikeTitle'] }}</p>
+				<img v-if="currentSubcommentReaction === 1" @click="onLikeReaction()" src="./../assets/img/article/comments/likeSelected.svg" alt="Like Selected" class="comment__newSubcomment__reactions__reaction selected">
+				<img v-else @click="onLikeReaction()" src="./../assets/img/article/comments/like.svg" alt="Like" class="comment__newSubcomment__reactions__reaction">
+							
+				<img v-if="currentSubcommentReaction === 2" @click="onDislikeReaction()" src="./../assets/img/article/comments/dislikeSelected.svg" alt="Dislike Selected" class="comment__newSubcomment__reactions__reaction selected">
+				<img v-else @click="onDislikeReaction()" src="./../assets/img/article/comments/dislike.svg" alt="Dislike" class="comment__newSubcomment__reactions__reaction">
 			</div>
 			<Captcha v-if="mainConfig.captchaEnabled" @on-verify="onCaptchaVerify" @on-error="onCaptchaError" ref="captcha" class="main__article__captcha"/>
 		</div>
