@@ -13,7 +13,7 @@ use Api\Handlers\ArticleApproveWithChangesHandler;
 
 use Api\Handlers\AdminArticlesRejectAllApproveHandler;
 use Api\Handlers\AdminArticlesRejectAllPremoderateHandler;
-use Api\Handlers\AdminArticlesUpdatePopularitySortTriggersHandler;
+use Api\Handlers\AdminArticlesUpdatePopularitySortHandler;
 
 use Api\Handlers\AdminArticlePremoderateHandler;
 
@@ -170,9 +170,9 @@ class Routes
                         return self::$handler->Handle();
                     });
 
-                    $adminArticlesGroup->post('/updatePopularitySortTriggers', function (Request $request, Response $response) 
+                    $adminArticlesGroup->post('/updatePopularitySort', function (Request $request, Response $response) 
                     {
-                        self::$handler = new AdminArticlesUpdatePopularitySortTriggersHandler($request, $response);
+                        self::$handler = new AdminArticlesUpdatePopularitySortHandler($request, $response);
                         return self::$handler->Handle();
                     });
                 });

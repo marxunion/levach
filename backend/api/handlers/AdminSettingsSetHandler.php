@@ -45,10 +45,6 @@ class AdminSettingsSetHandler extends BaseHandlerRoute
                 {
                     if(AdminSettingsSetModel::_setSetting($settingName, $settingValue))
                     {
-                        if($settingName == "articles_popularity_sort_formula")
-                        {
-                            AdminSettingsSetModel::_updatePopularitySortTriggers($settingValue);
-                        }
                         return true;
                     }
                     else

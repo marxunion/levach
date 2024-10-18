@@ -8,11 +8,11 @@ RUN apt-get install -y \
 
 RUN docker-php-ext-install pdo pdo_pgsql 
 
-COPY cron/systemInfoLog /etc/cron.d/systemInfoLog
+COPY cron/tasks /etc/cron.d/tasks
 
-RUN chmod 0644 /etc/cron.d/systemInfoLog
+RUN chmod 0644 /etc/cron.d/tasks
 
-RUN crontab /etc/cron.d/systemInfoLog
+RUN crontab /etc/cron.d/tasks
 
 RUN touch /var/log/cron.log
 

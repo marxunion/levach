@@ -1,8 +1,6 @@
 <?php
 namespace App;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Monolog\Handler\StreamHandler;
 use Monolog\Level;
 use Slim\Routing\RouteCollectorProxy;

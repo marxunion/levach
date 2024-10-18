@@ -1,15 +1,18 @@
 <?php
 namespace Api\Handlers;
 
-use Core\Warning;
 use Core\Error;
 
 use Base\BaseHandlerRoute;
 
-use Api\Models\AdminArticlesUpdatePopularitySortTriggersModel;
+use Api\Models\AdminArticlesUpdatePopularitySortModel;
 
-class AdminArticlesUpdatePopularitySortTriggersHandler extends BaseHandlerRoute
+class AdminArticlesUpdatePopularitySortHandler extends BaseHandlerRoute
 {
+    public static function _updatePopularityValues()
+    {
+        AdminArticlesUpdatePopularitySortModel::_updatePopularityValues();
+    }
     public function Init()
     {
         $parsedBody = $this->request->getParsedBody();
@@ -23,7 +26,7 @@ class AdminArticlesUpdatePopularitySortTriggersHandler extends BaseHandlerRoute
                 {
                     if(AdminStatusHandler::isAdmin($this->request->getCookieParams()))
                     {
-                        $this->model = new AdminArticlesUpdatePopularitySortTriggersModel();
+                        $this->model = new AdminArticlesUpdatePopularitySortModel();
                     }
                     else
                     {
