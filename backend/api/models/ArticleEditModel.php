@@ -194,7 +194,7 @@ class ArticleEditModel extends BaseModel
             $newVersionId = $articleData['current_version'] + 1;
             $newArticleDate = time();
 
-            $articleVersionData = $articleData = $this->database->get(
+            $articleVersionData = $this->database->get(
                 'articles_versions', 
                 [
                     'editorially_status', 
@@ -214,6 +214,10 @@ class ArticleEditModel extends BaseModel
 
                 'title' => $newTitle,
                 'text' => $newText,
+
+                'editorially_status' => $articleVersionData['editorially_status'], 
+                'premoderation_status' => $articleVersionData['premoderation_status'], 
+                'approvededitorially_status' => $articleVersionData['approvededitorially_status']
             ];
 
             $articleData = 
