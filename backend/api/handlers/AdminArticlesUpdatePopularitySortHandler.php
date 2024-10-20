@@ -2,6 +2,7 @@
 namespace Api\Handlers;
 
 use Core\Error;
+use Core\Logger;
 
 use Base\BaseHandlerRoute;
 
@@ -51,6 +52,7 @@ class AdminArticlesUpdatePopularitySortHandler extends BaseHandlerRoute
 
     public function Process()
     {
+        Logger::getInstance()->info("Popularity updated");
         $this->model->updateTriggers();
         $this->model->updatePopularityValues();
         $this->response = $this->response->withJson(['success' => true]);

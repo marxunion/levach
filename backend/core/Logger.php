@@ -1,55 +1,88 @@
 <?php
 namespace Core;
 
-use Psr\Log\LoggerInterface;
 use Monolog\Level;
 use Monolog\Logger as MonologLogger;
-use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
-
 use Stringable;
 
 class Logger extends MonologLogger
 {
-    private static Logger $instance;
+    private static ?Logger $instance = null;
+    private string $currentDate;
+    private bool $exceptionHandlersInitialized = false;
 
-    public function __construct(string $name)
+    private function __construct(string $name)
     {
         parent::__construct($name);
+        $this->currentDate = date('Y-m-d');
+        $this->initHandlers();
     }
 
     public static function initInstance(string $name) : self
     {
-        if(!isset(self::$instance)) 
+        if (self::$instance === null) 
         {
             self::$instance = new self($name);
         }
         return self::$instance;
     }
 
-    public static function getInstance() : self|null
+    public static function getInstance() : ?self
     {
-        if(isset(self::$instance)) 
+        return self::$instance;
+    }
+
+    private function initHandlers()
+    {
+        $this->pushHandler(new StreamHandler(__DIR__.'/../logs/main.log', Level::Debug));
+    }
+
+    public function initExceptionHandlers()
+    {
+        $this->pushHandler(new StreamHandler(__DIR__.'/../logs/warnings.log', Level::Warning));
+        $this->pushHandler(new StreamHandler(__DIR__.'/../logs/errors.log', Level::Error));
+
+        $errorLogFile = __DIR__ . '/../logs/errors/' . $this->currentDate . '.log';
+        $this->pushHandler(new StreamHandler($errorLogFile, Level::Error));
+
+        $criticalLogFile = __DIR__ . '/../logs/errors/critical/' . $this->currentDate . '.log';
+        $this->pushHandler(new StreamHandler($criticalLogFile, Level::Critical));
+
+        $this->exceptionHandlersInitialized = true;
+    }
+
+    private function checkForNewDay()
+    {
+        $newDate = date('Y-m-d');
+        if ($newDate !== $this->currentDate) 
         {
-            return self::$instance;
+            $this->currentDate = $newDate;
+
+            $this->resetHandlers();
+            $this->initHandlers(); 
+
+            if ($this->exceptionHandlersInitialized) 
+            {
+                $this->initExceptionHandlers(); 
+            }
         }
-        else
-        {
-            return null;
-        }
+    }
+
+    private function resetHandlers()
+    {
+        $this->handlers = [];
     }
 
     public function error(Stringable|string $message, array $context = []) : void
     {
-        $currentDate = date('Y-m-d H:i:s');
-        parent::pushHandler(new StreamHandler(__DIR__.'/../logs/errors/'.$currentDate.'.log', Level::Debug));
-        parent::error($message);
+        $this->checkForNewDay();
+        parent::error($message, $context);
     }
 
     public function critical(Stringable|string $message, array $context = []) : void
     {
-        $currentDate = date('Y-m-d H:i:s');
-        parent::pushHandler(new StreamHandler(__DIR__.'/../logs/errors/critical/'.$currentDate.'.log', Level::Debug));
-        parent::critical($message);
+        $this->checkForNewDay();
+        parent::critical($message, $context);
     }
 }

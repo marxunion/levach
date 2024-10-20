@@ -19,7 +19,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 Settings::Init();
 $logger = Logger::initInstance('main');
-$logger->pushHandler(new StreamHandler(__DIR__.'/../logs/main.log', Level::Debug));
 
 $memUsage = SystemInfo::getServerMemoryUsage(false);
 $cpuLoad = SystemInfo::getServerLoad();
