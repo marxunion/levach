@@ -21,6 +21,7 @@ export interface Article
     current_text: string,
     current_tags: string[],
     created_date: number,
+    last_edit_date: number,
     rating: number,
     comments_count: number,
     editorially_status: number,

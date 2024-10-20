@@ -59,13 +59,13 @@ class AdminArticleApproveModel extends BaseModel
             }
 
             $newVersionId = $articleData['current_version'] + 1;
-            $newArticleCreatedDate = time();
+            $newArticleDate = time();
 
             $newTagsString = '';
 
             $articleData = [
                 'current_version' => $newVersionId, 
-                'created_date' => $newArticleCreatedDate,
+                'last_edit_date' => $newArticleDate,
 
                 'current_title' => $newTitle, 
                 'current_text' => $newText,
@@ -74,13 +74,13 @@ class AdminArticleApproveModel extends BaseModel
                 'premoderation_status' => 2,
                 'approvededitorially_status' => 3,
 
-                'edit_timeout_to_date' => $newArticleCreatedDate
+                'edit_timeout_to_date' => $newArticleDate
             ];
 
             $articleVersionData = [
                 'article_id' => $articleId,
                 'version_id' => $newVersionId,
-                'created_date' => $newArticleCreatedDate,
+                'created_date' => $newArticleDate,
 
                 'title' => $newTitle,
                 'text' => $newText,

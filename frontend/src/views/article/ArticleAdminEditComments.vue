@@ -135,7 +135,7 @@
 		await fetchArticleData();
 		if(fetchedArticleData.value != null)
 		{
-			dateBefore.value = fetchedArticleData.value.versions[fetchedArticleData.value.versions.length-1].created_date * 1000;
+			dateBefore.value = fetchedArticleData.value.last_edit_date * 1000;
 			comments.value = [];
 			commentsLoading.value = true;
 			await fetchComments()

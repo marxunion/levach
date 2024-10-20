@@ -11,9 +11,9 @@ class AdminArticlesCommentsDeleteModel extends BaseModel
         WHERE article_id IN (
             SELECT article_id 
             FROM articles 
-            WHERE created_date BETWEEN :article_date_before AND :article_date_after 
+            WHERE last_edit_date BETWEEN :article_date_before AND :article_date_after 
             AND current_text ~ :article_regex_pattern 
-            ORDER BY created_date DESC 
+            ORDER BY last_edit_date DESC 
             LIMIT :articles_count
         ) 
         AND id IN (

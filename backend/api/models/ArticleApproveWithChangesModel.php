@@ -18,7 +18,7 @@ class ArticleApproveWithChangesModel extends BaseModel
             $this->database->delete('articles_versions', ['article_id' => $articleId, 'version_id' => $articleData['current_version']]);
             $articleVersionData = $this->database->get('articles_versions', ['created_date', 'title', 'text', 'tags', 'approvededitorially_status'], ['article_id' => $articleId, 'version_id' => $articleData['current_version'] - 1]);
             $this->database->update('articles_versions', ['approvededitorially_status' => 0], ['article_id' => $articleId]);
-            $this->database->update('articles', ['created_date' => $articleVersionData['created_date'], 'current_title' => $articleVersionData['title'], 'current_text' => $articleVersionData['text'], 'current_tags' => $articleVersionData['tags'], 'approvededitorially_status' => 0], ['id' => $articleId]);
+            $this->database->update('articles', ['last_edit_date' => $articleVersionData['created_date'], 'current_title' => $articleVersionData['title'], 'current_text' => $articleVersionData['text'], 'current_tags' => $articleVersionData['tags'], 'approvededitorially_status' => 0], ['id' => $articleId]);
         }
         else
         {

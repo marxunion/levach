@@ -16,7 +16,7 @@ class ArticleEditPreloadModel extends BaseModel
     
     public function viewArticle($articleId)
     {
-        $article = $this->database->get('articles', ['current_tags', 'current_title', 'current_text', 'created_date', 'premoderation_status', 'approvededitorially_status', 'editorially_status', 'rating', 'comments_count', 'view_code'], ['id' => $articleId]);
+        $article = $this->database->get('articles', ['current_tags', 'current_title', 'current_text', 'created_date', 'last_edit_date', 'premoderation_status', 'approvededitorially_status', 'editorially_status', 'rating', 'comments_count', 'view_code'], ['id' => $articleId]);
 
         if($article['approvededitorially_status'] == 0 && $article['editorially_status'] != 0)
         {
@@ -59,7 +59,7 @@ class ArticleEditPreloadModel extends BaseModel
 
     public function viewArticleAdmin($articleId)
     {
-        $article = $this->database->get('articles', ['current_tags', 'current_title', 'current_text', 'created_date', 'premoderation_status', 'approvededitorially_status', 'editorially_status', 'rating', 'comments_count', 'view_code'], ['id' => $articleId]);
+        $article = $this->database->get('articles', ['current_tags', 'current_title', 'current_text', 'created_date', 'last_edit_date', 'premoderation_status', 'approvededitorially_status', 'editorially_status', 'rating', 'comments_count', 'view_code'], ['id' => $articleId]);
 
         $article['current_text'] = StringFormatter::replaceViewIdsLinksToViewIds($article['current_text']);
 

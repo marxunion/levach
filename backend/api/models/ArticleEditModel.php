@@ -55,12 +55,12 @@ class ArticleEditModel extends BaseModel
                         }
             
                         $newVersionId = $articleData['current_version'] + 1;
-                        $newArticleCreatedDate = time();
+                        $newArticleDate = time();
 
                         $articleVersionData = [
                             'article_id' => $articleId,
                             'version_id' => $newVersionId,
-                            'created_date' => $newArticleCreatedDate,
+                            'created_date' => $newArticleDate,
 
                             'title' => $newTitle,
                             'text' => $newText,
@@ -74,12 +74,12 @@ class ArticleEditModel extends BaseModel
                         {
                             $articleData = [
                                 'current_version' => $newVersionId, 
-                                'created_date' => $newArticleCreatedDate,
+                                'last_edit_date' => $newArticleDate,
     
                                 'current_title' => $newTitle, 
                                 'current_text' => $newText,
     
-                                'edit_timeout_to_date' => $newArticleCreatedDate
+                                'edit_timeout_to_date' => $newArticleDate
                             ];
                         }
                         else
@@ -87,21 +87,21 @@ class ArticleEditModel extends BaseModel
                             $articleData = 
                             [
                                 'current_version' => $newVersionId, 
-                                'created_date' => $newArticleCreatedDate,
+                                'last_edit_date' => $newArticleDate,
     
                                 'current_title' => $newTitle, 
                                 'current_text' => $newText,
     
                                 'premoderation_status' => 3,
     
-                                'edit_timeout_to_date' => $newArticleCreatedDate
+                                'edit_timeout_to_date' => $newArticleDate
                             ];
                         }
 
                         $articleEditTimeoutMinutes = AdminSettingsGetHandler::getSetting('article_edit_timeout_minutes');
                         if(!empty($articleEditTimeoutMinutes))
                         {
-                            $articleData['edit_timeout_to_date'] = ceil(($newArticleCreatedDate + ($articleEditTimeoutMinutes * 60)) / 60) * 60;
+                            $articleData['edit_timeout_to_date'] = ceil(($newArticleDate + ($articleEditTimeoutMinutes * 60)) / 60) * 60;
                         }
             
                         $newTagsString = '';
@@ -192,7 +192,7 @@ class ArticleEditModel extends BaseModel
             }
             
             $newVersionId = $articleData['current_version'] + 1;
-            $newArticleCreatedDate = time();
+            $newArticleDate = time();
 
             $articleVersionData = $articleData = $this->database->get(
                 'articles_versions', 
@@ -210,7 +210,7 @@ class ArticleEditModel extends BaseModel
             $articleVersionData = [
                 'article_id' => $articleId,
                 'version_id' => $newVersionId,
-                'created_date' => $newArticleCreatedDate,
+                'created_date' => $newArticleDate,
 
                 'title' => $newTitle,
                 'text' => $newText,
@@ -219,11 +219,11 @@ class ArticleEditModel extends BaseModel
             $articleData = 
             [
                 'current_version' => $newVersionId, 
-                'created_date' => $newArticleCreatedDate,
+                'last_edit_date' => $newArticleDate,
 
                 'current_title' => $newTitle, 
                 'current_text' => $newText, 
-                'edit_timeout_to_date' => $newArticleCreatedDate
+                'edit_timeout_to_date' => $newArticleDate
             ];
 
             $newTagsString = '';

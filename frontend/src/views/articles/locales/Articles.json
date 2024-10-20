@@ -21,7 +21,7 @@
         ],
         "sortTypes": 
         [
-            "created_date",
+            "last_edit_date",
             "popularity"
         ],
 
@@ -159,7 +159,7 @@
         ],
         "sortTypes": 
         [
-            "created_date",
+            "last_edit_date",
             "popularity"
         ],
 

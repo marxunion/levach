@@ -36,6 +36,8 @@ class ArticleNewModel extends BaseModel
         $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
         $text = StringFormatter::filterHtmlTags($text);
 
+        $timestamp = time();
+
         $articleVersionData = [
             'version_id' => 1,
             'title' => $title,
@@ -46,7 +48,7 @@ class ArticleNewModel extends BaseModel
             'premoderation_status' => 1,
             'approvededitorially_status' => 0,
             
-            'created_date' => time()
+            'created_date' => $timestamp
         ];
 
         $articleData = 
@@ -58,9 +60,10 @@ class ArticleNewModel extends BaseModel
 
             'rating' => 0,
             'comments_count' => 0,
-            'created_date' => time(),
+            'created_date' => $timestamp,
+            'last_edit_date' => $timestamp,
             
-            'edit_timeout_to_date' => time(),
+            'edit_timeout_to_date' => $timestamp,
 
             'view_code' => $viewCode,
             'edit_code' => $editCode,
@@ -102,6 +105,8 @@ class ArticleNewModel extends BaseModel
         $text = StringFormatter::replaceViewIdsToViewIdsLinks($text);
         $text = StringFormatter::filterHtmlTags($text);
 
+        $timestamp = time();
+
         $articleData = 
         [
             'current_version' => 1,
@@ -111,9 +116,10 @@ class ArticleNewModel extends BaseModel
 
             'rating' => 0,
             'comments_count' => 0,
-            'created_date' => time(),
+            'created_date' => $timestamp,
+            'last_edit_date' => $timestamp,
             
-            'edit_timeout_to_date' => time(),
+            'edit_timeout_to_date' => $timestamp,
 
             'view_code' => $viewCode,
             'edit_code' => $editCode,
@@ -134,7 +140,7 @@ class ArticleNewModel extends BaseModel
             'premoderation_status' => 2,
             'approvededitorially_status' => 2,
             
-            'created_date' => time()
+            'created_date' => $timestamp
         ];
 
         $tagsString = '';

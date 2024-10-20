@@ -96,10 +96,10 @@ class AdminArticlesCommentsGetModel extends BaseModel
 
         $sql = "SELECT id 
                 FROM articles 
-                WHERE created_date BETWEEN :article_date_before AND :article_date_after 
+                WHERE last_edit_date BETWEEN :article_date_before AND :article_date_after 
                 AND current_text ~* :article_regex_pattern 
                 AND comments_count > 0
-                ORDER BY created_date DESC
+                ORDER BY last_edit_date DESC
                 LIMIT :count";
 
         $bindings = [
