@@ -1,8 +1,10 @@
 <?php
 namespace Helpers;
 
+use PDOException;
 use HTMLPurifier;
 use HTMLPurifier_Config;
+use Aws\Exception\AwsException;
 
 class StringFormatter 
 {
@@ -44,6 +46,28 @@ class StringFormatter
         $output = preg_replace_callback($pattern, $replacementFunction, $input);
         
         return $output;
+    }
+
+    public static function pdoExceptionToString(PDOException $e) : string 
+    {
+        return sprintf(
+            "PDOException: \nCode: %s\nMessage: %s\nFile: %s\nLine: %d",
+            $e->getCode(),
+            $e->getMessage(),
+            $e->getFile(),
+            $e->getLine()
+        );
+    }
+
+    public static function awsExceptionToString(AwsException $e): string
+    {
+        return sprintf(
+            "AWSException: \nCode: %s\nMessage: %s\nRequest ID: %s\nHTTP Status Code: %d",
+            $e->getAwsErrorCode(),
+            $e->getAwsErrorMessage(),
+            $e->getAwsRequestId(),
+            $e->getStatusCode()
+        );
     }
     
     public static function replaceViewIdsLinksToViewIds(string $input) : string

@@ -1,32 +1,61 @@
 <?php
 namespace Core;
 
+use Aws\Exception\AwsException;
 use Aws\S3\S3Client as AwsS3Client;
 
 use Core\Settings;
 
-class S3Client 
+use Helpers\StringFormatter;
+
+class S3Client
 {
-    private static $initStatus = false;
     private static $connection;
 
     private static function establishConnection() 
     {
-        self::$connection = new AwsS3Client([
-            'version' => 'latest',
-            'endpoint' => 'http://'.Settings::getSetting("S3_HOST"),
-            'region'  => Settings::getSetting("S3_REGION"),
-            'use_path_style_endpoint'  => Settings::getSetting("S3_PATH_STYLE_ENDPOINT"),
-            'credentials' => [
-                'key' => Settings::getSetting("S3_ACCESS_KEY"),
-                'secret' => Settings::getSetting("S3_SECRET_KEY"),
-            ],
-        ]);
+        try
+        {
+            self::$connection = new AwsS3Client([
+                'version' => 'latest',
+                'endpoint' => 'http://'.Settings::getSetting("S3_HOST"),
+                'region'  => Settings::getSetting("S3_REGION"),
+                'use_path_style_endpoint'  => Settings::getSetting("S3_PATH_STYLE_ENDPOINT"),
+                'credentials' => [
+                    'key' => Settings::getSetting("S3_ACCESS_KEY"),
+                    'secret' => Settings::getSetting("S3_SECRET_KEY"),
+                ],
+            ]);
+            Logger::getInstance()->info("S3 connection successfully established");
+        }
+        catch(AwsException $e)
+        {
+            Logger::getInstance()->critical(StringFormatter::awsExceptionToString($e));
+            throw new Critical(500, "Failed to establish s3 connenction", "Failed to establish s3 connenction");
+        }
+    }
 
+    public static function createBucket($bucketName)
+    {
+        try 
+        {
+            self::$connection->createBucket([
+                'Bucket' => $bucketName,
+            ]);
+        } 
+        catch(AwsException $e) 
+        {
+            Logger::getInstance()->critical(StringFormatter::awsExceptionToString($e));
+            throw new Critical(500, "Failed to create bucket $bucketName", "Failed to create bucket $bucketName");
+        }
+    }
+
+    public static function ensureBucketExists() 
+    {
         $bucketName = Settings::getSetting("S3_IMAGES_BUCKET_NAME");
         if(!self::$connection->doesBucketExist($bucketName)) 
         {
-            self::$connection->createBucket(['Bucket' => $bucketName]);
+            self::createBucket($bucketName);
         }
     }
 
@@ -35,6 +64,7 @@ class S3Client
         if(!isset(self::$connection)) 
         {
             self::establishConnection();
+            self::ensureBucketExists();
         }
         return self::$connection;
     }
@@ -46,12 +76,7 @@ class S3Client
 
     public static function Init()
     {
-        $initStatus = true;
         self::establishConnection();
-    }
-
-    public static function isInited()
-    {
-        return $initStatus;
+        self::ensureBucketExists();
     }
 }

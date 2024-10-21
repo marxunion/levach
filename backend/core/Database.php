@@ -2,30 +2,42 @@
 namespace Core;
 
 use PDO;
+use PDOException;
+
 use Medoo\Medoo;
 
+use Helpers\StringFormatter;
+use Core\Logger;
 use Core\Settings;
 
 class Database 
 {
-    private static bool $initStatus = false;
     private static $connection;
 
     private static function establishConnection() 
     {
-        self::$connection = new Medoo([
-            'database_type' => Settings::getSetting("DB_TYPE"),
-            'database_name' => Settings::getSetting("DB_NAME"),
-            'server' => Settings::getSetting("DB_HOST"),
-            'username' => Settings::getSetting("DB_USER"),
-            'password' => Settings::getSetting("DB_PASSWORD"),
-            'option' => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]
-        ]);
+        try 
+        {
+            self::$connection = new Medoo([
+                'database_type' => Settings::getSetting("DB_TYPE"),
+                'database_name' => Settings::getSetting("DB_NAME"),
+                'server' => Settings::getSetting("DB_HOST"),
+                'username' => Settings::getSetting("DB_USER"),
+                'password' => Settings::getSetting("DB_PASSWORD"),
+                'option' => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]
+            ]);
+            Logger::getInstance()->info("Database connection successfully established");
+        } 
+        catch (PDOException $e) 
+        {
+            Logger::getInstance()->critical(StringFormatter::pdoExceptionToString($e));
+            throw new Critical(500, "Failed to establish database connenction", "Failed to establish database connenction");
+        }
     }
 
     public static function getConnection() 
     {
-        if(!isset(self::$connection)) 
+        if (!isset(self::$connection)) 
         {
             self::establishConnection();
         }
@@ -39,12 +51,6 @@ class Database
 
     public static function Init()
     {
-        $initStatus = true;
-        self::establishConnection();
-    }
-
-    public static function isInited()
-    {
-        return $initStatus;
+        self::getConnection();
     }
 }
