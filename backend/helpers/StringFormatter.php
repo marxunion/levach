@@ -61,13 +61,7 @@ class StringFormatter
 
     public static function awsExceptionToString(AwsException $e): string
     {
-        return sprintf(
-            "AWSException: \nCode: %s\nMessage: %s\nRequest ID: %s\nHTTP Status Code: %d",
-            $e->getAwsErrorCode(),
-            $e->getAwsErrorMessage(),
-            $e->getAwsRequestId(),
-            $e->getStatusCode()
-        );
+        return "AWSException: \nCode: ".$e->getAwsErrorCode()."\nMessage: ".$e->getAwsErrorMessage()."\nRequest ID: ".$e->getAwsRequestId()."\nHTTP Status Code: ".strval($e->getStatusCode());
     }
     
     public static function replaceViewIdsLinksToViewIds(string $input) : string
