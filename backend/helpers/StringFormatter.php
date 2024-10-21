@@ -50,13 +50,7 @@ class StringFormatter
 
     public static function pdoExceptionToString(PDOException $e) : string 
     {
-        return sprintf(
-            "PDOException: \nCode: %s\nMessage: %s\nFile: %s\nLine: %d",
-            $e->getCode(),
-            $e->getMessage(),
-            $e->getFile(),
-            $e->getLine()
-        );
+        return "PDOException: \nCode: ".strval($e->getCode())."\nMessage: ".$e->getMessage()."\nFile: ".$e->getFile()."\nLine: ".$e->getLine();
     }
 
     public static function awsExceptionToString(AwsException $e): string
