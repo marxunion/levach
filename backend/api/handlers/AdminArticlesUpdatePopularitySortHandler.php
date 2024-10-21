@@ -12,6 +12,7 @@ class AdminArticlesUpdatePopularitySortHandler extends BaseHandlerRoute
 {
     public static function _updatePopularityValues()
     {
+        Logger::getInstance()->info("Popularity updated Static");
         AdminArticlesUpdatePopularitySortModel::_updatePopularityValues();
     }
     public function Init()

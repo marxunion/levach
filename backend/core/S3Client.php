@@ -26,7 +26,11 @@ class S3Client
                     'secret' => Settings::getSetting("S3_SECRET_KEY"),
                 ],
             ]);
-            Logger::getInstance()->info("S3 connection successfully established");
+            
+            if(Settings::getSetting("DEBUG_MODE"))
+            {
+                Logger::getInstance()->info("S3 connection successfully established");
+            }
         }
         catch(AwsException $e)
         {

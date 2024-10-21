@@ -26,7 +26,11 @@ class Database
                 'password' => Settings::getSetting("DB_PASSWORD"),
                 'option' => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]
             ]);
-            Logger::getInstance()->info("Database connection successfully established");
+            
+            if(Settings::getSetting("DEBUG_MODE"))
+            {
+                Logger::getInstance()->info("Database connection successfully established");
+            }
         } 
         catch (PDOException $e) 
         {
