@@ -12,7 +12,6 @@ class AdminArticlesUpdatePopularitySortHandler extends BaseHandlerRoute
 {
     public static function _updatePopularityValues()
     {
-        Logger::getInstance()->info("Popularity updated Static");
         AdminArticlesUpdatePopularitySortModel::_updatePopularityValues();
     }
     public function Init()
@@ -53,7 +52,6 @@ class AdminArticlesUpdatePopularitySortHandler extends BaseHandlerRoute
 
     public function Process()
     {
-        Logger::getInstance()->info("Popularity updated");
         $this->model->updateTriggers();
         $this->model->updatePopularityValues();
         $this->response = $this->response->withJson(['success' => true]);

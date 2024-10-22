@@ -28,7 +28,7 @@ class AdminArticlesUpdatePopularitySortModel extends BaseModel
 
         $updateQuery = "UPDATE articles SET popularity_sort_value = ".$formula.";";
 
-        //NEW.rating * NEW.comments_count / GREATEST(EXTRACT(EPOCH FROM (current_timestamp - to_timestamp(NEW.created_date))) / 600000 * GREATEST(EXTRACT(EPOCH FROM (current_timestamp - to_timestamp(NEW.created_date))) / 600000, 1), 1)
+        //(GREATEST(EXTRACT(EPOCH FROM (current_timestamp - to_timestamp(NEW.created_date))) / 600000, 1))
 
         $updateQuery = preg_replace(
             [
@@ -80,7 +80,7 @@ class AdminArticlesUpdatePopularitySortModel extends BaseModel
 
         $updateQuery = "UPDATE articles SET popularity_sort_value = ".$this->formula.";";
 
-        //NEW.rating * NEW.comments_count / GREATEST(EXTRACT(EPOCH FROM (current_timestamp - to_timestamp(NEW.created_date))) / 600000 * GREATEST(EXTRACT(EPOCH FROM (current_timestamp - to_timestamp(NEW.created_date))) / 600000, 1), 1)
+        //(NEW.rating + NEW.comments_count / 5) / GREATEST(EXTRACT(EPOCH FROM (current_timestamp - to_timestamp(NEW.created_date))) / 600000, 1)
 
         $updateQuery = preg_replace(
             [

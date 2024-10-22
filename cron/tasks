@@ -1,2 +1,2 @@
 */5 * * * * /usr/local/bin/php /var/www/levach/backend/cron/systemInfoLog.php
-*/1 * * * * /usr/local/bin/php /var/www/levach/backend/cron/updatePopularityValues.php
+* 3 * * * /usr/local/bin/php /var/www/levach/backend/cron/updatePopularityValues.php

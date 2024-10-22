@@ -219,7 +219,7 @@
             {
                 if(settings.value['articles_popularity_sort_formula'] != settingsSaved.value['articles_popularity_sort_formula'])
                 {
-                    await axios.post('/api/admin/articles/updatePopularitySortTriggers', data)
+                    await axios.post('/api/admin/articles/updatePopularitySort', data)
                     .then(response => 
                     {
                         if(response.data.success)

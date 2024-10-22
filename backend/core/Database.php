@@ -6,9 +6,12 @@ use PDOException;
 
 use Medoo\Medoo;
 
-use Helpers\StringFormatter;
+use Core\Critical;
 use Core\Logger;
 use Core\Settings;
+
+use Helpers\StringFormatter;
+
 
 class Database 
 {
@@ -26,7 +29,7 @@ class Database
                 'password' => Settings::getSetting("DB_PASSWORD"),
                 'option' => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]
             ]);
-            
+
             if(Settings::getSetting("DEBUG_MODE"))
             {
                 Logger::getInstance()->info("Database connection successfully established");
