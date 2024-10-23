@@ -313,12 +313,19 @@
         --md-bk-color-outstand: #f6f6f6;
         --md-bk-hover-color: #f5f7fa !important;
         --md-border-color: transparent !important;
-        --md-border-hover-color: #b9b9b9 !important;
-        --md-border-active-color: #999 !important;
+        --md-border-hover-color: transparent !important;
+        --md-border-active-color: transparent !important;
         --md-modal-mask: #00000073;
         --md-scrollbar-bg-color: #e2e2e2;
         --md-scrollbar-thumb-color: #0000004d;
         --md-scrollbar-thumb-hover-color: #00000059;
         --md-scrollbar-thumb-active-color: #00000061;
+    }
+
+    .md-editor-dropdown
+    {
+        --md-border-color: #d5d5d5;
+        --md-border-hover-color: #b9b9b9 !important;
+        --md-border-active-color: #999 !important;
     }
 }
