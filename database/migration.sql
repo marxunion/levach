@@ -31,6 +31,22 @@ COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching
 
 
 --
+-- Name: calculate_popularity_sort_value(); Type: FUNCTION; Schema: public; Owner: root
+--
+
+CREATE FUNCTION public.calculate_popularity_sort_value() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+            BEGIN
+                NEW.popularity_sort_value := (NEW.rating + NEW.comments_count / 5) / GREATEST(EXTRACT(EPOCH FROM (current_timestamp - to_timestamp(NEW.created_date))) / 600000, 1);
+                RETURN NEW;
+            END;
+            $$;
+
+
+ALTER FUNCTION public.calculate_popularity_sort_value() OWNER TO root;
+
+--
 -- Name: comment_delete_subcommments(); Type: FUNCTION; Schema: public; Owner: root
 --
 
@@ -127,6 +143,22 @@ $$;
 
 ALTER FUNCTION public.comment_update_comment_rating() OWNER TO root;
 
+--
+-- Name: update_popularity_sort_value(); Type: FUNCTION; Schema: public; Owner: root
+--
+
+CREATE FUNCTION public.update_popularity_sort_value() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+            BEGIN
+                NEW.popularity_sort_value := (NEW.rating + NEW.comments_count / 5) / GREATEST(EXTRACT(EPOCH FROM (current_timestamp - to_timestamp(NEW.created_date))) / 600000, 1);
+                RETURN NEW;
+            END;
+            $$;
+
+
+ALTER FUNCTION public.update_popularity_sort_value() OWNER TO root;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -203,7 +235,9 @@ CREATE TABLE public.articles (
     premoderation_status smallint,
     view_code text,
     edit_code text,
-    view_id integer DEFAULT nextval('public.view_id_seq'::regclass) NOT NULL
+    view_id integer DEFAULT nextval('public.view_id_seq'::regclass) NOT NULL,
+    popularity_sort_value double precision,
+    last_edit_date integer
 );
 
 
@@ -252,7 +286,7 @@ ALTER TABLE public.comments OWNER TO root;
 
 CREATE TABLE public.settings (
     name character varying(250),
-    value integer
+    value text
 );
 
 
@@ -446,6 +480,20 @@ CREATE INDEX idx_comments_view_id ON public.comments USING btree (view_id);
 --
 
 CREATE TRIGGER delete_subcommments_trigger AFTER DELETE ON public.comments FOR EACH ROW EXECUTE FUNCTION public.comment_delete_subcommments();
+
+
+--
+-- Name: articles trigger_insert_popularity_sort_value; Type: TRIGGER; Schema: public; Owner: root
+--
+
+CREATE TRIGGER trigger_insert_popularity_sort_value BEFORE INSERT ON public.articles FOR EACH ROW EXECUTE FUNCTION public.calculate_popularity_sort_value();
+
+
+--
+-- Name: articles trigger_update_popularity_sort_value; Type: TRIGGER; Schema: public; Owner: root
+--
+
+CREATE TRIGGER trigger_update_popularity_sort_value BEFORE UPDATE ON public.articles FOR EACH ROW WHEN (((old.rating IS DISTINCT FROM new.rating) OR (old.comments_count IS DISTINCT FROM new.comments_count) OR (old.created_date IS DISTINCT FROM new.created_date))) EXECUTE FUNCTION public.update_popularity_sort_value();
 
 
 --
