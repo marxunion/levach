@@ -28,10 +28,10 @@
 
 .md-editor-menu, .md-editor-table-shape, .md-editor-dropdown
 {
-	border-radius: 10px;
+	border-radius: 10px !important;
 	&-overlay
 	{
-		border-radius: 10px;
+		border-radius: 10px !important;
 	}
 }
 
@@ -44,14 +44,14 @@
 	}
 	blockquote, rect, g
 	{
-		border-radius: 10px;
-		rx: 10px;
-		transition: .6s;
+		border-radius: 10px !important;
+		rx: 10px !important;
+		transition: .6s !important;
 	}
 	img
 	{
-		border-radius: 15px;
-		border: 0;
+		border-radius: 15px !important;
+		border: 0 !important;
 	}
 }
 
