@@ -70,7 +70,6 @@ ALTER FUNCTION public.comment_delete_subcommments() OWNER TO root;
 -- Name: comment_update_article_comments_count(); Type: FUNCTION; Schema: public; Owner: root
 --
 
-
 CREATE FUNCTION public.comment_update_article_comments_count() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
