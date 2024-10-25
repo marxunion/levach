@@ -286,7 +286,6 @@
     onUnmounted(() => 
     {
         articles.value = [];
-        langData.value = null;
     });
 
     const deleteArticle = async (articleViewCode : string) => 
