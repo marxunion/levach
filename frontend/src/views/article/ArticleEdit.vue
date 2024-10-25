@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, watch, Ref, ComputedRef, onMounted, onBeforeUnmount } from 'vue';
+	import { ref, watch, Ref, ComputedRef, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
 	import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
@@ -838,6 +838,11 @@
 		{
 			clearInterval(intervalId);
 		}
+	});
+
+	onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('ArticleEdit');
 	});
 
 	watch(() => articleText.value, () => 

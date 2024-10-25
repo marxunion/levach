@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, reactive, watch, Ref, onMounted, defineProps, defineEmits } from 'vue';
+	import { ref, reactive, watch, Ref, onMounted, defineProps, defineEmits, onUnmounted } from 'vue';
 	import axios from 'axios';
 	import { MdEditor, MdPreview, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
@@ -545,6 +545,11 @@
 				}
 			}
 		}, 300);
+	});
+
+	onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('CommentsList');
 	});
 
 	const onCreatedNewSubcomment =  async () => 

@@ -285,6 +285,7 @@
     onUnmounted(() => 
     {
         articles.value = [];
+        LangDataHandler.destroyLangDataHandler('EditoriallyApprovedArticles');
     });
     
     const deleteArticle = async (articleViewCode : string) => 

@@ -286,6 +286,7 @@
     onUnmounted(() => 
     {
         articles.value = [];
+        LangDataHandler.destroyLangDataHandler('AbyssArticles');
     });
 
     const deleteArticle = async (articleViewCode : string) => 

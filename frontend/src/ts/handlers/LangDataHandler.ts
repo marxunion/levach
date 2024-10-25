@@ -27,6 +27,14 @@ export class LangDataHandler
         return componentLangDataHandlers[componentName];
     }
 
+    public static destroyLangDataHandler(componentName: string)
+    {
+        if(componentLangDataHandlers[componentName]) 
+        {
+            delete componentLangDataHandlers[componentName];
+        }
+    }
+
     public static getLangDataHandler(componentName: string)
     {
         return componentLangDataHandlers[componentName];

@@ -298,6 +298,7 @@
     onUnmounted(() => 
     {
         articles.value = [];
+        LangDataHandler.destroyLangDataHandler('ArticlesWaitingPremoderate');
     });
 
     const onAcceptPremoderateArticle = async (articleViewCode : string, versionId : number) => 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import "./scss/DropDown.scss";
-	import { ref, ComputedRef, defineProps, defineEmits } from "vue";
+	import { ref, ComputedRef, defineProps, defineEmits, onUnmounted } from "vue";
 
 	import { JsonData } from "../ts/interfaces/JsonData";
 
@@ -15,6 +15,11 @@
 	const selected = ref(props.versions[0]);
 
 	const open = ref(false);
+
+	onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('DropDownVersion');
+	});
 </script>
 
 <template>

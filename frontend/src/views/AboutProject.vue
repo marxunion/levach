@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ComputedRef } from 'vue';
+	import { computed, ComputedRef, onUnmounted } from 'vue';
 	
 	import { JsonData } from '../ts/interfaces/JsonData';
 
@@ -30,6 +30,11 @@
 			
 			return { title, description, link }
 		});
+	});
+
+	onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('AboutProject');
 	});
 </script>
 

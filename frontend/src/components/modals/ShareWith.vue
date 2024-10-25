@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, ComputedRef } from "vue";
+    import { ref, ComputedRef, onUnmounted } from "vue";
 
     import { JsonData } from "../../ts/interfaces/JsonData";
 
@@ -21,6 +21,11 @@
     {
         telegramLink.value = 'https://t.me/share/url?url='+encodeURIComponent(props.link)+'&text='+encodeURIComponent(props.text);
     }
+
+    onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('ShareWith');
+	});
 </script>
 
 <template>

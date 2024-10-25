@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, watch, Ref, ComputedRef, onMounted } from 'vue';
+	import { ref, watch, Ref, ComputedRef, onMounted, onUnmounted } from 'vue';
 	import { useRoute, useRouter, Router, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
@@ -577,6 +577,11 @@
 	{
         loading.value = true;
 		await fetchData();
+	});
+
+    onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('ArticleAdminApprove');
 	});
 </script>
 

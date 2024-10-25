@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ComputedRef } from 'vue';
+	import { ComputedRef, onUnmounted } from 'vue';
 
 	import { LangDataHandler } from "../ts/handlers/LangDataHandler";
 	import langsData from "./locales/Sponsoring.json";
@@ -10,6 +10,11 @@
 	import SponsoringCryptoModal from "./../components/modals/SponsoringCryptoModal.vue";
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("Sponsoring", langsData).langData;
+
+	onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('Sponsoring');
+	});
 </script>
 
 <template>

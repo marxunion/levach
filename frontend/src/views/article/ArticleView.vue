@@ -660,6 +660,8 @@
 		lastLoadedComment.value = 0;
 		currentCommentReaction.value = 0;
 		comments.value = [];
+
+		LangDataHandler.destroyLangDataHandler('ArticleView');
 	});
 
 	const onRejectApproveArticle = async () =>

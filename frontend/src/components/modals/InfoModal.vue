@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ComputedRef } from "vue";
+    import { ComputedRef, onUnmounted } from "vue";
 
     import { JsonData } from "../../ts/interfaces/JsonData";
 
@@ -9,6 +9,11 @@
     defineProps(["status", "text"]);
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("InfoModal", langsData).langData;
+
+    onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('InfoModal');
+	});
 </script>
 
 <template>

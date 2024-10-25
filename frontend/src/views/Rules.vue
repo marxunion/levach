@@ -1,9 +1,9 @@
 <script setup lang="ts">
-	import { computed, ComputedRef } from 'vue';
+	import { computed, ComputedRef, onUnmounted } from 'vue';
 
 	import { JsonData } from '../ts/interfaces/JsonData';
 
-	import { LangDataHandler, } from '../ts/handlers/LangDataHandler';
+	import { LangDataHandler } from '../ts/handlers/LangDataHandler';
 	import langsData from './locales/Rules.json';
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler('Rules', langsData).langData;
@@ -23,6 +23,11 @@
 			const description : string[] = section['description'] as string[];
 			return { title, description }
 		});
+	});
+
+	onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('Rules');
 	});
 </script>
 

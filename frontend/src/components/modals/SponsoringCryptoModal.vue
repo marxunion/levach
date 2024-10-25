@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, Ref, ComputedRef, onMounted } from "vue";
+    import { ref, Ref, ComputedRef, onMounted, onUnmounted } from "vue";
 
     import axios from 'axios';
 
@@ -45,6 +45,11 @@
             inputWallet.value.select();
         }
     });
+
+    onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('SponsoringCryptoModal');
+	});
 </script>
 
 <template>

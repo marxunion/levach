@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ComputedRef } from "vue";
+    import { ComputedRef, onUnmounted } from "vue";
     import { useRoute, useRouter, RouteLocationNormalizedLoaded, Router } from 'vue-router';
 
     import { JsonData } from "../../ts/interfaces/JsonData";
@@ -34,6 +34,11 @@
     {
         return routeName == route.name ? true : false;
     }
+
+    onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('SearchMobileModal');
+	});
 </script>
 
 <template>

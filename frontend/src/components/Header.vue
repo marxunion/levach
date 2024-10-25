@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ComputedRef } from 'vue';
+    import { ComputedRef, onUnmounted } from 'vue';
     import { useRoute, useRouter, RouteLocationNormalizedLoaded, Router } from 'vue-router';
 
     import { ThemeHandler } from '../ts/handlers/ThemeHandler';
@@ -52,6 +52,11 @@
     {
         ThemeHandler.instance.changeTheme(ThemeHandler.instance.getCurrentTheme.value == 'light' ? "dark" : "light");
     }
+
+    onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('Header');
+	});
 </script>
 
 <template>

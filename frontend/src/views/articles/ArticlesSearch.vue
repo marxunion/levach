@@ -273,6 +273,7 @@
     onUnmounted(() => 
     {
         articles.value = [];
+        LangDataHandler.destroyLangDataHandler('ArticlesSearch');
     });
 
     const deleteArticle = async (articleViewCode : string) => 

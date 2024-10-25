@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, Ref, ComputedRef, onMounted } from 'vue';
+	import { ref, Ref, ComputedRef, onMounted, onUnmounted } from 'vue';
 	import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
 	import axios from 'axios';
 
@@ -140,6 +140,11 @@
 			commentsLoading.value = true;
 			await fetchComments()
 		}
+	});
+
+	onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('ArticleAdminEditComments');
 	});
 
 	const onApplyFilters = async () => 

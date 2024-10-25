@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, reactive, watch, Ref, ComputedRef} from 'vue';
+	import { ref, reactive, watch, Ref, ComputedRef, onUnmounted} from 'vue';
 	import { useRouter, Router } from 'vue-router';
 	import axios from 'axios';
 
@@ -445,6 +445,12 @@
     {
         openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
     }
+
+	onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('ArticleNew');
+	});
+
 </script>
 
 <template>

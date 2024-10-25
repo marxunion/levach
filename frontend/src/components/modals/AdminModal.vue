@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { onMounted, Ref, ComputedRef, ref } from "vue";
+    import { onMounted, Ref, ComputedRef, ref, onUnmounted } from "vue";
 
     import mainConfig from '../../configs/main.json';
 
@@ -649,6 +649,11 @@
     {
         openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['captcha']});
     }
+
+    onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('AdminModal');
+	});
 </script>
 
 <template>

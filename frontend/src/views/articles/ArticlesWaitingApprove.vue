@@ -296,6 +296,7 @@
     onUnmounted(() => 
     {
         articles.value = [];
+        LangDataHandler.destroyLangDataHandler('ArticlesWaitingApprove');
     });
 
     const rejectApproveArticle = async (articleViewCode : string) => 

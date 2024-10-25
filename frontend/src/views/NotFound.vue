@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ComputedRef } from "vue";
+	import { ComputedRef, onUnmounted } from "vue";
 
 	import { JsonData } from "../ts/interfaces/JsonData";
 
@@ -7,6 +7,11 @@
 	import langsData from "./locales/NotFound.json";
 
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("NotFound", langsData).langData;
+
+	onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('NotFound');
+	});
 </script>
 
 <template>

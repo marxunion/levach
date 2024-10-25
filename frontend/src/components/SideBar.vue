@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { computed, ComputedRef } from 'vue';
+    import { computed, ComputedRef, onUnmounted } from 'vue';
     import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
     import axios from 'axios';
 
@@ -138,6 +138,11 @@
             openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
         });
     }
+
+    onUnmounted(() =>
+	{
+		LangDataHandler.destroyLangDataHandler('SideBar');
+	});
 </script>
 
 <template>

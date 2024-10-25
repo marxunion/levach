@@ -123,6 +123,7 @@
     onUnmounted(() => 
     {
         comments.value = [];
+        LangDataHandler.destroyLangDataHandler('AdminEditComments');
     });
 
     const onApplyFilters = async () => 
