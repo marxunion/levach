@@ -57,6 +57,9 @@
     // Sort
 	const currentSortType : Ref<number> = ref(0);
     
+    console.log(langData.value['sortTypesNames']);
+    
+
     const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
 
     const onChangeSortType = async (newSortType : number) => 
@@ -283,6 +286,7 @@
     onUnmounted(() => 
     {
         articles.value = [];
+        langData.value = null;
     });
 
     const deleteArticle = async (articleViewCode : string) => 
