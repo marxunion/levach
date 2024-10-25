@@ -58,6 +58,7 @@
     // Sort
 	const currentSortType : Ref<number> = ref(0);
 
+    console.log(langData.value);
     console.log(langData.value['sortTypes']);
     
     const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
