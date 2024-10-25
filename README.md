@@ -14,7 +14,10 @@ A hybrid media project focused on designing a better future through scientific d
 Rename php-example to php and ether your information
 
 ### Configure .env
-Rename .env-example to .env and ether your auth information
+Rename .env-example to .env and ether your information
+
+### Configure frontend
+Rename main-example.json to main.json and ether your information
 
 ### Configure frontend config
 Open frontend/configs/main.json and ether your domain name and recaptcha site key 

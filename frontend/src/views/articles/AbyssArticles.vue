@@ -438,7 +438,6 @@
 }
 .main__article__preview
 {
-    max-height: 600px;
     overflow: hidden;
     
     border-radius: 15px;
