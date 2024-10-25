@@ -30,8 +30,6 @@ export class LangDataHandler
 
     public static initLangDataHandler(componentName: string, data: JsonData)
     {
-        
-        
         if(!componentLangDataHandlers[componentName])
         {
             componentLangDataHandlers[componentName] = new LangDataHandler(data);
