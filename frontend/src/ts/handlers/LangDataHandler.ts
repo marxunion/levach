@@ -23,6 +23,11 @@ export class LangDataHandler
         return computed(() => this.langsData[LangDataHandler.currentLanguage.value] as JsonData);
     }
 
+    public clearLangData()
+    {
+        this.langsData = {} as JsonData;
+    }
+
     public static initLangDataHandler(componentName: string, data: JsonData)
     {
         if(!componentLangDataHandlers[componentName])
@@ -39,6 +44,7 @@ export class LangDataHandler
         console.log(`${componentName} LangDataHandler Destroy Started`);
         if(componentLangDataHandlers[componentName]) 
         {
+            componentLangDataHandlers[componentName].clearLangData();
             delete componentLangDataHandlers[componentName];
             console.log(`${componentName} LangDataHandler Destroyed`);
         }
