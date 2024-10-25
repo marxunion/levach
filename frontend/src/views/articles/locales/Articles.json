@@ -14,17 +14,11 @@
         },
 
         "sortTitle": "Сортировать по:",
-        "sortTypesNames": 
+        "articlesSortTypesNames": 
         [
             "дате размещения",
             "популярности"
         ],
-        "sortTypes": 
-        [
-            "last_edit_date",
-            "popularity"
-        ],
-
         "warnings": 
         {
             "articlesNotFound": "К сожалению по вашему запросу статьи не найдены :(",
@@ -152,14 +146,9 @@
         },
 
         "sortTitle": "Sort by:",
-        "sortTypesNames": 
+        "articlesSortTypesNames": 
         [
             "posting date",
-            "popularity"
-        ],
-        "sortTypes": 
-        [
-            "last_edit_date",
             "popularity"
         ],
 

@@ -152,7 +152,7 @@
 	// Comments sort
 	const currentCommentsSortType : Ref<number> = ref(0);
 
-	const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
+	const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['commentsSortTypesNames'] as string[]);
 
 	const onChangeSortType = async (sortType : number) => 
 	{
@@ -169,7 +169,7 @@
 		let params = {
 			count: count,
 			lastLoaded: lastLoadedComment.value,
-			sortType: (langData.value['sortTypes'] as JsonData)[currentCommentsSortType.value]
+			sortType: mainConfig['commentsSortTypes'][currentCommentsSortType.value]
 		}
 		await axios.get('api/article/comments/get/'+articleViewCode.value, 
 		{
@@ -215,7 +215,7 @@
 	const fetchCommentsBeforeId = async () =>
 	{
 		let params = {
-			sortType: (langData.value['sortTypes'] as JsonData)[currentCommentsSortType.value]
+			sortType: mainConfig['commentsSortTypes'][currentCommentsSortType.value]
 		}
 		await axios.get('api/article/comments/get/'+articleViewCode.value+'/'+commentId.value, 
 		{

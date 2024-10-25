@@ -15,20 +15,5 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('locales')) {
-            return 'locales';
-          }
-        },
-      },
-    },
-  },
-  json: {
-    namedExports: false,
-    stringify: false,
   }
 });

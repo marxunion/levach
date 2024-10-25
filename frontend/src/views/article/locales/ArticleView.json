@@ -33,16 +33,10 @@
         "commentsTitle": "Комментарии",
         "sortTitle": "Сортировать по:",    
         
-        "sortTypesNames": 
+        "commentsSortTypesNames": 
         [
             "рейтингу",
             "дате размещения"
-        ],
-
-        "sortTypes": 
-        [
-            "rate",
-            "created_date"
         ],
 
         "toolbarTips": 
@@ -168,16 +162,10 @@
         "commentsTitle": "Comments",
         "sortTitle": "Sort by:",
 
-        "sortTypesNames": 
+        "commentsSortTypesNames": 
         [
             "rating",
             "posting date"
-        ],
-
-        "sortTypes": 
-        [
-            "rate",
-            "created_date"
         ],
 
         "toolbarTips": 

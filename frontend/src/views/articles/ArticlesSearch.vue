@@ -71,7 +71,7 @@
     // Sort
 	const currentSortType : Ref<number> = ref(0);
     
-    const sortTypesNames  : ComputedRef<string[]> = computed(() => langData.value['sortTypesNames'] as string[]);
+    const sortTypesNames  : ComputedRef<string[]> = computed(() => langData.value['articlesSortTypesNames'] as string[]);
 
     const onChangeSortType = async (newSortType : number) => 
     {
@@ -130,7 +130,7 @@
         if(searchTitle.length > 0 && searchTags.length > 0)
         {
             params = {
-                sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
+                sortType: mainConfig['articlesSortTypes'][currentSortType.value],
                 category: 'ArticlesSearch',
                 count: count,
                 lastLoaded: lastLoaded.value,
@@ -143,7 +143,7 @@
             if(searchTitle.length > 0)
             {
                 params = {
-                    sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
+                    sortType: mainConfig['articlesSortTypes'][currentSortType.value],
                     category: 'ArticlesSearch',
                     count: count,
                     lastLoaded: lastLoaded.value,
@@ -153,7 +153,7 @@
             else
             {
                 params = {
-                    sortType: (langData.value['sortTypes'] as JsonData)[currentSortType.value],
+                    sortType: mainConfig['articlesSortTypes'][currentSortType.value],
                     category: 'ArticlesSearch',
                     count: count,
                     lastLoaded: lastLoaded.value,
