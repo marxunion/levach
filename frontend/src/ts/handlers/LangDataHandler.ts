@@ -18,6 +18,8 @@ export class LangDataHandler
 
     public get langData()
     {
+        console.log(this.langsData);
+        
         return computed(() => this.langsData[LangDataHandler.currentLanguage.value] as JsonData);
     }
 
