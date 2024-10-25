@@ -38,7 +38,11 @@
     import { csrfTokenInput, getNewCsrfToken } from '../../ts/handlers/CSRFTokenHandler';
 
     import mainConfig from '../../configs/main.json';
-    
+
+    console.log("ARTICLES LANGS DATA FROM JSON");
+
+	console.log(langsData);
+
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("EditoriallyArticles", langsData).langData;
 
     adminStatusReCheck();
