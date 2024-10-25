@@ -16,4 +16,7 @@ export default defineConfig({
       usePolling: true,
     },
   },
+  json: {
+    stringify: false,
+  }
 });
