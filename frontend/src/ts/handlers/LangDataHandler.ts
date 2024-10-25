@@ -23,15 +23,22 @@ export class LangDataHandler
 
     public static initLangDataHandler(componentName: string, data: JsonData)
     {
-        componentLangDataHandlers[componentName] = new LangDataHandler(data);
+        if(!componentLangDataHandlers[componentName])
+        {
+            componentLangDataHandlers[componentName] = new LangDataHandler(data);
+            console.log(`${componentName} LangDataHandler Inited`);
+        }
+        
         return componentLangDataHandlers[componentName];
     }
 
     public static destroyLangDataHandler(componentName: string)
     {
+        console.log(`${componentName} LangDataHandler Destroy Started`);
         if(componentLangDataHandlers[componentName]) 
         {
             delete componentLangDataHandlers[componentName];
+            console.log(`${componentName} LangDataHandler Destroyed`);
         }
     }
 
