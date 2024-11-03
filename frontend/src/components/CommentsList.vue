@@ -582,7 +582,7 @@
 
 <template>
 	<div v-if="comment.id != null">
-		<div ref="targetComment" class="comment" :style="{ marginLeft: `${5 * level}%` }">
+		<div ref="targetComment" class="comment" :style="{ marginLeft: `${level ? 5 : 0}%` }">
 			<div class="comment__header">
 				<p class="comment__header__title id">#{{ padNumberWithZeroes(comment.view_id) }}</p>
 				<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
