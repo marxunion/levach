@@ -180,7 +180,6 @@
 {
     .comment
     {
-        height: 145px;
         &__header
         {
             & .id
@@ -221,7 +220,6 @@
 {
     .comment
     {
-        height: 135px;
         &__header
         {
             & .id
@@ -262,7 +260,7 @@
 {
     .comment
     {
-        height: 115px;
+        min-height: 100px;
         margin-top: 12px;
         margin-bottom: 24px;
         &__header
@@ -316,7 +314,6 @@
 {
     .comment
     {
-        height: 100px;
         margin-top: 10px;
         margin-bottom: 22px;
         &__header
@@ -369,7 +366,6 @@
 {
     .comment
     {
-        height: 90px;
         margin-top: 10px;
         margin-bottom: 22px;
         &__header
