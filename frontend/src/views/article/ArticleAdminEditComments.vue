@@ -99,6 +99,13 @@
 		commentsLoading.value = false;
 	}
 
+	const refetchComments = async () =>
+	{
+		comments.value = [];
+		commentsLoading.value = true;
+		await fetchComments()
+	}
+
 	const deleteComments = async () => 
 	{
 		await getNewCsrfToken();
@@ -136,9 +143,7 @@
 		if(fetchedArticleData.value != null)
 		{
 			dateBefore.value = fetchedArticleData.value.last_edit_date * 1000;
-			comments.value = [];
-			commentsLoading.value = true;
-			await fetchComments()
+			await refetchComments()
 		}
 	});
 
@@ -147,11 +152,19 @@
 		LangDataHandler.destroyLangDataHandler('ArticleAdminEditComments');
 	});
 
+	const onCreatedNewSubcomment =  async () => 
+	{
+		await refetchComments();
+	}
+
+	const onDeletedSubcomment =  async () => 
+	{
+		await refetchComments();
+	}
+
 	const onApplyFilters = async () => 
 	{
-		commentsLoading.value = true;
-		comments.value = [];
-		await fetchComments();
+		await refetchComments();
 	}
 
 	const onDeleteSelected = async () => 
@@ -201,7 +214,7 @@
             <p v-if="comments.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
 			<p v-else class="main__comments__title">{{ langData['commentsNotFoundTitle'] }}</p>
 			<div v-if="comments.length > 0" class="main__comments__commentsList">
-				<CommentsList v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
+				<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
 			</div>
 		</div>
 		<Loader v-else/>

@@ -23,7 +23,6 @@
     import { dateFormat } from '../../ts/helpers/DateTimeHelper';
 
 
-
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("AdminEditComments", langsData).langData;
 
     const loading : Ref<boolean> = ref(true);
@@ -41,7 +40,9 @@
     const articleRegexPattern : Ref <string> = ref('');
     const commentRegexPattern : Ref <string> = ref('');
 
-    const fetchArticleComments = async () => 
+
+
+    const fetchArticlesComments = async () => 
 	{
 		await getNewCsrfToken();
         if(csrfTokenInput.value == null)
@@ -73,15 +74,18 @@
                     });
                 }
 			}
-		})
-		.catch(() =>
-		{
-
 		});
 		loading.value = false;
 	}
 
-	const deleteArticleComments = async () => 
+    const refetchArticlesComments = async () =>
+    {
+        loading.value = true;
+		comments.value = [];
+		await fetchArticlesComments();
+    }
+
+	const deleteArticlesComments = async () => 
 	{
 		await getNewCsrfToken();
 
@@ -115,9 +119,7 @@
 
     onMounted(async () => 
     {
-        loading.value = true;
-        comments.value = [];
-        await fetchArticleComments();
+        await refetchArticlesComments();
     });
 
     onUnmounted(() => 
@@ -126,17 +128,25 @@
         LangDataHandler.destroyLangDataHandler('AdminEditComments');
     });
 
+    const onCreatedNewSubcomment = async () => 
+	{
+		await refetchArticlesComments();
+	}
+
+	const onDeletedSubcomment = async () => 
+	{
+		await refetchArticlesComments();
+	}
+
     const onApplyFilters = async () => 
 	{
-		loading.value = true;
-		comments.value = [];
-		await fetchArticleComments();
+		await refetchArticlesComments();
 	}
 
     const onDeleteSelected = async () => 
 	{
 		loading.value = true;
-		await deleteArticleComments();
+		await deleteArticlesComments();
 	}
 </script>
 
@@ -207,7 +217,7 @@
             <p v-if="comments.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
 			<p v-else class="main__comments__title">{{ langData['commentsNotFoundTitle'] }}</p>
 			<div v-if="comments.length > 0" class="main__comments__commentsList">
-				<CommentsList v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="encodeURIComponent(`#${comment.id.toString()}`)"/>
+				<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="encodeURIComponent(`#${comment.id.toString()}`)"/>
 			</div>
 		</div>
         <Loader v-else/>

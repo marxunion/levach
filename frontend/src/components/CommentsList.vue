@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { ref, reactive, watch, Ref, onMounted, defineProps, defineEmits, onUnmounted } from 'vue';
 	import axios from 'axios';
-	import { MdEditor, MdPreview, config } from 'md-editor-v3';
+	import { MdEditor, MdPreview, MdPreviewProps, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
 	import { ThemeHandler } from '../ts/handlers/ThemeHandler';
@@ -45,7 +45,7 @@
 	let captchaVerifyCallback : (token: string) => void;
 
 	const targetComment : Ref<HTMLElement | null> = ref(null);
-	const commentText : Ref<HTMLElement | null> = ref(null);
+	const commentText = ref();
 	const commentTextHeight : Ref<number> = ref(0);
 
 	const loading : Ref<boolean> = ref(false);
@@ -54,9 +54,12 @@
 
 	const answerStatus : Ref<number> = ref(0);
 
-	
-
 	// Preview
+
+	const onCommentLinkClick = () =>
+	{
+		console.log('CLICKED');
+	}
 
 	config(
 	{
@@ -71,7 +74,7 @@
 					{
 						attrs: 
 						{
-							target: '_blank'
+							target: ''
 						}
 					}
 				},
@@ -546,11 +549,27 @@
 			}
 		}, 300);
 	});
-
+	
 	onUnmounted(() =>
 	{
 		LangDataHandler.destroyLangDataHandler('CommentsList');
 	});
+
+	const OnMdEditorMounted = () => 
+	{
+		if (commentText.value && commentText.value.$el instanceof HTMLElement) 
+		{
+			const commentLinks = commentText.value.$el.querySelectorAll('a');
+			commentLinks.forEach((commentLink : HTMLElement) => 
+			{
+				commentLink.addEventListener("click", onCommentLinkClick);
+			});
+		} 
+		else 
+		{
+			console.error("commentText.$el is not an HTMLElement or is uninitialized:", commentText.value);
+		}
+	};
 
 	const onCreatedNewSubcomment =  async () => 
 	{
@@ -578,16 +597,18 @@
 	{
 		openModal(ShareWith, { link: "https://" + mainConfig['domainName'] + "/#/article/" + props.articleViewCode + "/" + props.comment.id, text: props.articleTitle })
 	}
+
+	
 </script>
 
 <template>
 	<div v-if="comment.id != null">
-		<div ref="targetComment" class="comment" :style="{ marginLeft: `${level ? 5 : 0}%` }">
+		<div ref="targetComment" class="comment" :style="{ marginLeft: `${level ? 4 : 0}%` }">
 			<div class="comment__header">
 				<p class="comment__header__title id">#{{ padNumberWithZeroes(comment.view_id) }}</p>
 				<p class="comment__header__title time">{{ timestampToLocaleFormatedTime(comment.created_date) }}</p>
 			</div>
-			<MdPreview ref="commentText" :class='"comment__text " + (collapsed ? "collapsed" : "")' :modelValue="comment.text" :language="previewState.language" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value"/>
+			<MdPreview ref="commentText" :class='"comment__text " + (collapsed ? "collapsed" : "")' :modelValue="comment.text" :language="previewState.language" :onHtmlChanged="OnMdEditorMounted" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value"/>
 			<p v-if="commentTextHeight > 250 && collapsed" class="comment__collapse" @click="collapsed = false">{{ langData['readMore'] }}</p>
 			<p v-else-if="commentTextHeight > 250" class="comment__collapse" @click="collapsed = true">{{ langData['collapse'] }}</p>
 			<div class="comment__bar">

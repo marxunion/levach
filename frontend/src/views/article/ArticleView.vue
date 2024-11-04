@@ -945,6 +945,10 @@
 		previewState.language = LangDataHandler.currentLanguage.value;
 		newCommentEditorState.language = LangDataHandler.currentLanguage.value;
 	});
+	const onCommentLinkClicked = () =>
+	{
+		
+	}
 
 	const onCreatedNewSubcomment =  async () => 
 	{
