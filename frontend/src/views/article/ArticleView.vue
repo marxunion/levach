@@ -950,12 +950,12 @@
 		
 	}
 
-	const onCreatedNewSubcomment =  async () => 
+	const onCreatedNewSubcomment = async () => 
 	{
 		await fetchArticleData();
 	}
 
-	const onDeletedSubcomment =  async () => 
+	const onDeletedSubcomment = async () => 
 	{
 		await fetchArticleData();
 	}

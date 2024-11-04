@@ -571,12 +571,12 @@
 		}
 	};
 
-	const onCreatedNewSubcomment =  async () => 
+	const onCreatedNewSubcomment = async () => 
 	{
 		emits('onCreatedNewSubcomment');
 	}
 
-	const onDeletedSubcomment =  async () => 
+	const onDeletedSubcomment = async () => 
 	{
 		loading.value = true;
 		await refetchComment();
@@ -597,8 +597,6 @@
 	{
 		openModal(ShareWith, { link: "https://" + mainConfig['domainName'] + "/#/article/" + props.articleViewCode + "/" + props.comment.id, text: props.articleTitle })
 	}
-
-	
 </script>
 
 <template>

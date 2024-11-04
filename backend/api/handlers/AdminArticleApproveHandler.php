@@ -96,7 +96,7 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                     if(strpos($title, '# ') === 0) 
                     {
                         $title = substr($title, 2);
-                        if(strlen($title) >= 5 && strlen($title) <= 120) 
+                        if(strlen($title) >= 4 && strlen($title) <= 120) 
                         {
                             if(count($contentParts) >= 2) 
                             {
@@ -118,7 +118,7 @@ class AdminArticleApproveHandler extends BaseHandlerRouteWithArgs
                         } 
                         else 
                         {
-                            throw new Warning(400, "Title must contain between 5 and 120 characters", "Title must contain between 5 and 120 characters");
+                            throw new Warning(400, "Title must contain between 4 and 120 characters", "Title must contain between 4 and 120 characters");
                         }
                     } 
                     else 

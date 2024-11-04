@@ -182,7 +182,7 @@
                 const title = contentParts[0];
                 if(title.substring(0, 2) == '# ') 
                 {
-                    if(title.length >= 5 && title.length <= 120) 
+                    if(title.length >= 6 && title.length <= 120) 
                     {
                         if(contentParts.length >= 2) 
                         {
@@ -229,7 +229,7 @@
                                             {
                                                 openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleDuplicatedTags']});
                                             }
-                                            else if(response.data.Warning.message == "Title must contain between 5 and 120 characters")
+                                            else if(response.data.Warning.message == "Title must contain between 4 and 120 characters")
                                             {
                                                 openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']});
                                             }
@@ -284,7 +284,7 @@
                                         {
                                             openModal(InfoModal, {status: false, text: ((langData.value['warnings'] as JsonData)['editTimeoutToDate'] as string).replace('{date}', timestampToLocaleFormatedTime(error.response.data.Warning.params['edit_timeout_to_date']))})
                                         }
-                                        else if(error.response.data.Warning.message == "Title must contain between 5 and 120 characters")
+                                        else if(error.response.data.Warning.message == "Title must contain between 4 and 120 characters")
                                         {
                                             openModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['articleTitleSymbols']})
                                         }
