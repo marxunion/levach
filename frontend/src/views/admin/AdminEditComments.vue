@@ -109,10 +109,6 @@
 		.then(() => 
 		{
 			comments.value = [];
-		})
-		.catch(() =>
-		{
-
 		});
 		loading.value = false;
 	}
