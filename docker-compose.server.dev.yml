@@ -139,7 +139,7 @@ services:
     volumes:
       - ./backend:/var/www/levach/backend:rw
     working_dir: /var/www/levach/backend
-    command: install
+    command: update
 
 networks:
   app-network:

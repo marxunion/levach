@@ -27,6 +27,7 @@
 
     const loading : Ref<boolean> = ref(true);
 
+
     // Filters
     const articlesCountToFetch : Ref<number> = ref(10);
     const commentsCountToFetch : Ref<number> = ref(20);
@@ -39,7 +40,6 @@
 
     const articleRegexPattern : Ref <string> = ref('');
     const commentRegexPattern : Ref <string> = ref('');
-
 
 
     const fetchArticlesComments = async () => 

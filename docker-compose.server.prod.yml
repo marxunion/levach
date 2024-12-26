@@ -97,7 +97,7 @@ services:
     volumes:
       - ./backend:/var/www/levach/backend
     working_dir: /var/www/levach/backend
-    command: install
+    command: update
 
 networks:
   app-network:
