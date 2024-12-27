@@ -39,10 +39,6 @@
 
     import mainConfig from '../../configs/main.json';
 
-    console.log("ARTICLES LANGS DATA FROM JSON");
-
-	console.log(langsData);
-
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("EditoriallyArticles", langsData).langData;
 
     adminStatusReCheck();
@@ -61,8 +57,6 @@
 
     // Sort
 	const currentSortType : Ref<number> = ref(0);
-
-    console.log(langData.value);
     
     const sortTypesNames : ComputedRef<string[]> = computed(() => langData.value['articlesSortTypesNames'] as string[]);
 

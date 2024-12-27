@@ -55,7 +55,9 @@
     {
         await getNewCsrfToken();
 
-        if(csrfTokenInput.value == null)
+        console.log((csrfTokenInput.value as HTMLInputElement).value);
+
+        if((csrfTokenInput.value as HTMLInputElement).value)
         {
             pushModal(InfoModal, {status: false, text: (langData.value['warnings'] as JsonData)['unknown']});
             return;

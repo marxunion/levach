@@ -1,8 +1,9 @@
-version: '3'
+version: '3.8'
 
 services:
   php:
     container_name: PHP
+    image: php:8.2.27-fpm
     build:
       context: .
       dockerfile: Dockerfile

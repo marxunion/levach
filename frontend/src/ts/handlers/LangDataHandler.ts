@@ -18,8 +18,6 @@ export class LangDataHandler
 
     public get langData()
     {
-        console.log(this.langsData);
-        
         return computed(() => this.langsData[LangDataHandler.currentLanguage.value] as JsonData);
     }
 
@@ -33,22 +31,17 @@ export class LangDataHandler
         if(!componentLangDataHandlers[componentName])
         {
             componentLangDataHandlers[componentName] = new LangDataHandler(data);
-            console.log(`${componentName} LangDataHandler Inited`);
         }
-
-        console.log(componentLangDataHandlers);
         
         return componentLangDataHandlers[componentName];
     }
 
     public static destroyLangDataHandler(componentName: string)
     {
-        console.log(`${componentName} LangDataHandler Destroy Started`);
         if(componentLangDataHandlers[componentName]) 
         {
             componentLangDataHandlers[componentName].clearLangData();
             delete componentLangDataHandlers[componentName];
-            console.log(`${componentName} LangDataHandler Destroyed`);
         }
     }
 

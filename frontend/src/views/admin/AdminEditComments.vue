@@ -38,8 +38,8 @@
     const commentDateBefore : Ref<number> = ref(Date.now() - (1000 * 60 * 60 * 24 * 30));
     const commentDateAfter : Ref<number> = ref(Date.now());
 
-    const articleRegexPattern : Ref <string> = ref('');
-    const commentRegexPattern : Ref <string> = ref('');
+    const articleRegexPattern : Ref<string> = ref('');
+    const commentRegexPattern : Ref<string> = ref('');
 
 
     const fetchArticlesComments = async () => 

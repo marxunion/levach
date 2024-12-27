@@ -1,4 +1,4 @@
-FROM php:fpm
+FROM php:8.2.27-fpm
 
 RUN apt-get update 
 

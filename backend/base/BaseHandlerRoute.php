@@ -16,7 +16,7 @@ class BaseHandlerRoute extends BaseHandler
     protected $request;
     protected $response;
 
-    public function __construct(Request $request = null, Response $response = null)
+    public function __construct(?Request $request = null, ?Response $response = null)
     {
         $this->request = $request;
         $this->response = $response;

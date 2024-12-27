@@ -45,10 +45,6 @@
 
 	import mainConfig from '../../configs/main.json';
 
-	console.log("ARTICLE VIEW LANGS DATA FROM JSON");
-
-	console.log(langsData);
-
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ArticleView", langsData).langData;
 
 	const captcha : Ref<{ execute: () => void } | null> = ref(null);
