@@ -28,13 +28,14 @@
             font-family: Roboto-Medium;
             margin-bottom: 20px;
         }
-        &__description
+        &__text
         {
             line-height: 1.5;
             font-size: 18px;
+            color: var(--AboutProjectText);
             &.link
             {
-                color: var(--AboutProjectDescriptionLink);
+                color: var(--AboutProjectTextLink);
             }
         }
     }

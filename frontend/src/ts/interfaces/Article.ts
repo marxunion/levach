@@ -1,4 +1,4 @@
-import { Comment } from './Comment'; 
+import { ArticleComment } from './ArticleComment'; 
 
 export interface ArticleVersion
 {
@@ -32,7 +32,7 @@ export interface Article
     view_code: string,
 
     scrollToCommentId: number,
-    comments: Comment[],
+    comments: ArticleComment[],
 
     currentSelectedVersion: number,
     canRequestApprove: boolean

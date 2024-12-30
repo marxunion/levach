@@ -43,6 +43,7 @@
         }
     }
 
+
     const isCurrentRouteName = (routeName: string) : boolean => 
     {
         return routeName == route.name ? true : false;
@@ -76,7 +77,7 @@
                     <span class="header__bar__subbar__switch__round"></span>
                 </label>
                 <a href="#/article/new" class="header__bar__subbar__createarticle">{{ langData['createArticle'] }}</a>
-                <DropDown :options="LangDataHandler.langs" :default="LangDataHandler.currentLanguage.value" class="header__bar__subbar__select" @input="LangDataHandler.changeLanguage" @input-on-mounted="LangDataHandler.changeLanguage"/>
+                <DropDown :options="LangDataHandler.langs" :default="LangDataHandler.currentLanguage.value" class="header__bar__subbar__select" @input="LangDataHandler.changeLanguage" @inputOnMounted="LangDataHandler.changeLanguage"/>
                 <p class="header__bar__subbar__searchmobile" @click="openModal(SearchMobileModal)">
                     <img src="../assets/img/header/searchiconsmall.svg" alt="Search" class="header__bar__subbar__searchmobile__icon">
                 </p>

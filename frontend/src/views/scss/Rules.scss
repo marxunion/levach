@@ -25,9 +25,10 @@
             font-family: Roboto-Medium;
             margin-bottom: 20px;
         }
-        &__description
+        &__text
         {
             line-height: 1.5;
+            color: var(--RulesText);
             font-size: 18px;
         }
         

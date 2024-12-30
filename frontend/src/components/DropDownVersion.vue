@@ -7,10 +7,22 @@
 	import { LangDataHandler } from "../ts/handlers/LangDataHandler";
 	import langsData from "./locales/DropDownVersion.json";
 
+	import { ArticleVersion } from "../ts/interfaces/Article";
+
 	const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("DropDownVersion", langsData).langData;
 
-	const props = defineProps(["versions"]);
-	const emits = defineEmits(["input"]);
+	const props = defineProps(
+    {
+        versions: 
+        {
+            type: Array<ArticleVersion>,
+            default: [],
+        }
+    });
+
+	const emits = defineEmits<{
+		(e: 'update:value', payload: number): void;
+	}>();
 
 	const selected = ref(props.versions[0]);
 
@@ -25,7 +37,7 @@
 <template>
     <div class="customSelect" @blur="open = false">
         <div class="customSelect__selected" :class="{ open: open }" @click="open = !open">
-            {{ langData['version'] + selected.version_id }}
+            {{ langData['version'] as string + selected.version_id }}
 			<span class="customSelect__selected__img"></span>
         </div>
         <div class="customSelect__items" :class="{ selectHide: !open }">
@@ -35,8 +47,8 @@
 					selected = version;
 					open = false;
 					
-					$emit('input', index);">
-				{{ langData['version'] + version.version_id }}
+					emits('update:value', index);">
+				{{ langData['version'] as string + version.version_id }}
 			</div>
         </div>
     </div>

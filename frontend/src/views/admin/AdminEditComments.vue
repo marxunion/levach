@@ -5,7 +5,7 @@
     import { ThemeHandler } from '../../ts/handlers/ThemeHandler';
 
     import { JsonData } from '../../ts/interfaces/JsonData';
-    import { Comment } from '../../ts/interfaces/Comment';
+    import { ArticleComment } from '../../ts/interfaces/ArticleComment';
 
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css'
@@ -68,7 +68,7 @@
 			{
                 if(Array.isArray(comments.value))
                 {
-                    response.data.forEach((comment : Comment) => 
+                    response.data.forEach((comment : ArticleComment) => 
                     {
                         comments.value.push(comment);
                     });

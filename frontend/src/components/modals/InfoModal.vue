@@ -5,8 +5,21 @@
 
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/InfoModal.json";
-    
-    defineProps(["status", "text"]);
+
+
+    const props = defineProps(
+    {
+        status: 
+        {
+            type: Boolean,
+            default: true,
+        },
+        text:
+        {
+            type: String,
+            default: '',
+        }
+    });
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("InfoModal", langsData).langData;
 
@@ -18,8 +31,8 @@
 
 <template>
     <div class="form">
-        <p class="form__title">{{ status ? langData['success'] : langData['failure'] }}</p>
-        <p class="form__text">{{ text }}</p>
+        <p class="form__title">{{ props.status ? langData['success'] : langData['failure'] }}</p>
+        <p class="form__text">{{ props.text }}</p>
     </div>
 </template>
 

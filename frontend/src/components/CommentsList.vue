@@ -4,6 +4,8 @@
 	import { MdEditor, MdPreview, MdPreviewProps, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
+	//import { ArticleComment } from '../ts/interfaces/ArticleComment';
+	
 	import { ThemeHandler } from '../ts/handlers/ThemeHandler';
 
 	import { adminStatus, adminStatusReCheck } from '../ts/handlers/AdminHandler';
@@ -30,11 +32,37 @@
 
 	import { lastLoadedComment } from '../ts/handlers/CommentsHandler';
 
-
 	import mainConfig from '../configs/main.json';
 
 
-	const props = defineProps(['articleViewCode', 'articleTitle', 'scrollToCommentId', 'comment', 'level']);
+	const props = defineProps(
+    {
+		articleTitle:
+        {
+            type: String,
+            default: '',
+        },
+        articleViewCode: 
+        {
+            type: String,
+            default: '',
+        },
+		scrollToCommentId:
+		{
+            type: Number,
+            default: 0,
+        },
+		comment:
+		{
+			type: ArticleComment,
+			default: {}
+		},
+		level:
+		{
+			type: Number,
+			default: 0
+		}
+    });
 
 	const emits = defineEmits(["onDeletedSubcomment", "onCreatedNewSubcomment"]);
 

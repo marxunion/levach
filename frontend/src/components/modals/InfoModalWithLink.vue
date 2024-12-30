@@ -8,7 +8,30 @@
     
     import { closeModal } from "jenesius-vue-modal"
 
-    const props = defineProps(["status", "text", "link", "text2"]);
+    const props = defineProps(
+    {
+        status: 
+        {
+            type: Boolean,
+            default: true,
+        },
+        text:
+        {
+            type: String,
+            default: '',
+        },
+        textFooter: 
+        {
+            type: String,
+            default: '',
+        },
+        link: 
+        {
+            type: String,
+            default: '',
+        }
+    });
+
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("InfoModalWithLink", langsData).langData;
 
@@ -50,7 +73,7 @@
             </button>
         </div>
         
-        <p class="form__text footer">{{ text2 }}</p>
+        <p class="form__text footer">{{ textFooter }}</p>
     </div>
 </template>
 

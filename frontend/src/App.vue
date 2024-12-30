@@ -15,7 +15,7 @@ const isBurgerActive : Ref<boolean> = ref(false);
 
 const windowWidth = ref(window.innerWidth);
 
-const toggleBurger = () => 
+const onBurgerToogled = () => 
 {
     isBurgerActive.value = !isBurgerActive.value;
 }
@@ -57,7 +57,7 @@ getNewCsrfToken();
 
 <template>
     <input type="hidden" id="csrfTokenInput" ref="csrfTokenInput">
-    <Header @toggleBurger="toggleBurger" />
+    <Header @onBurgerToogled="onBurgerToogled" />
     <perfect-scrollbar v-if="windowWidth > 1050" ref="scroll">
         <router-view v-slot="{ Component }">
             <transition name="pageOpacity" mode="out-in">
@@ -72,5 +72,5 @@ getNewCsrfToken();
     </router-view>
 
     <container/>
-    <SideBar :isBurgerActive="isBurgerActive" @toggleBurger="toggleBurger"/>
+    <SideBar :isBurgerActive="isBurgerActive" @onBurgerToogled="onBurgerToogled"/>
 </template>

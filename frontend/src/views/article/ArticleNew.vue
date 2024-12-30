@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, reactive, watch, Ref, ComputedRef, onUnmounted} from 'vue';
+	import { ref, reactive, watch, Ref, ComputedRef, onUnmounted } from 'vue';
 	import { useRouter, Router } from 'vue-router';
 	import axios from 'axios';
 
@@ -17,6 +17,7 @@
     import InfoModal from "./../../components/modals/InfoModal.vue";
 	import InfoModalWithLink from "./../../components/modals/InfoModalWithLink.vue";
 	
+	import AutoexpandTextarea from '../../components/AutoexpandTextarea.vue';
 	import Captcha from '../../components/Captcha.vue';
 
 	import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
@@ -40,16 +41,19 @@
 	//Editor
 	config(
 	{
-		markdownItPlugins(plugins) {
+		markdownItPlugins(plugins) 
+		{
 			return [
 			...plugins,
 			{
 				type: 'linkAttr',
 				plugin: LinkAttr,
-				options: {
-				attrs: {
-					target: '_blank'
-				}
+				options: 
+				{
+					attrs: 
+					{
+						target: '_blank'
+					}
 				}
 			},
 			];
@@ -64,9 +68,10 @@
 		}
 	});
 
+	let articleTitle : string = langData.value['editorDefaultTitle'] as string;
 	let editorState = reactive(
 	{
-		text: langData.value['editorDefaultText'],
+		text: '',
 		language: LangDataHandler.currentLanguage.value
 	});
 
@@ -125,7 +130,7 @@
 		{
 			if (response.data.editCode) 
 			{
-				const modal = await openModal(InfoModalWithLink, { status: true, text: langData.value['articleCreatedSuccessfully'], link: "https://" + window.location.hostname + "/#/article/edit/" + response.data.editCode, text2: (langData.value['warnings'] as JsonData)['articleEditCodeCopy'] })
+				const modal = await openModal(InfoModalWithLink, { status: true, text: langData.value['articleCreatedSuccessfully'], link: "https://" + window.location.hostname + "/#/article/edit/" + response.data.editCode, textFooter: (langData.value['warnings'] as JsonData)['articleEditCodeCopy'] })
 
 				modal.onclose = function () 
 				{
@@ -436,6 +441,11 @@
 		}
 	}
 
+	const onTextareaUpdated = (value: string) =>
+    {
+        articleTitle = value;
+    }
+
 	const onCaptchaVerify = (token: string) => 
     {
 		captchaVerifyCallback(token);
@@ -450,13 +460,14 @@
 	{
 		LangDataHandler.destroyLangDataHandler('ArticleNew');
 	});
-
 </script>
+
 
 <template>
 	<main class="main">
 		<article class="main__article">
 			<div class="main__article__editorContainer">
+				<AutoexpandTextarea class="main__article__editorContainer__title" @update="onTextareaUpdated" :value="articleTitle" :maxlength="120" :autofocus="true"></AutoexpandTextarea>
 				<MdEditor class="main__article__editorContainer__editor" v-model="(editorState.text as string)" @onUploadImg="onUploadImgValidate" :language="editorState.language" :preview="false" :theme="ThemeHandler.instance.getCurrentThemeGrayscale.value" noIconfont/>
 				<button class="main__article__editorContainer__sendButton" @click="onSendButtonValidate()">{{ langData['sendButton'] }}</button>	
 			</div>	
@@ -466,7 +477,7 @@
 					<button class="main__article__editTags__tags__tag__button" @click="removeTag(index)"><p>+</p></button>
 				</div>
 				<div class="main__article__editTags__addTag">
-					<input v-model="newTag" class="main__article__editTags__addTag__input" type="text" :placeholder="(langData['addTagPlaceholder'] as string)">
+					<input class="main__article__editTags__addTag__input" type="text" v-model="newTag" :placeholder="(langData['addTagPlaceholder'] as string)">
 					<button @click="addTag" class="main__article__editTags__addTag__button">+</button>
 				</div>
 			</div>

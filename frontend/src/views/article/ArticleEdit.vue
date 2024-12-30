@@ -277,7 +277,7 @@
 					
 					checkChanges();
 
-					openModal(InfoModalWithLink, { status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, text2: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning'] });
+					openModal(InfoModalWithLink, { status: true, text: langData.value['articleEditedSuccessfully'], link: window.location.hostname + "/article/edit/" + articleEditCode.value, textFooter: (langData.value['warnings'] as JsonData)['articleEditLinkCopyWarning'] });
 				}
 			} 
 			else 

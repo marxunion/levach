@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+@import "reset.scss";
 @import "vars.scss";
 @import "mixins.scss";
 
@@ -65,6 +66,7 @@
 {
 	display: none;
 }
+
 .grecaptcha-badge 
 {
 	visibility: hidden; 
@@ -224,32 +226,6 @@
   	}
 }
 
-h1, p, a
-{
-	padding: 0;
-	margin: 0;
-	color: var(--text);
-}
-
-a
-{
-  	text-decoration: none;
-}
-
-li
-{
-	list-style: none;
-}
-
-input, button
-{
-	outline: none;
-	border: none;
-	padding: 0;
-	border: 0;
-	margin: 0;
-}
-
 img::selection 
 {
     background: transparent;
@@ -259,7 +235,6 @@ img::selection
 {
 	background-color: var(--selectionBG);
 }
-
 
 .component
 {
