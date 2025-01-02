@@ -25,8 +25,18 @@
 
     const route : RouteLocationNormalizedLoaded = useRoute();
 
-    const { isBurgerActive } = defineProps(['isBurgerActive']);
-    const emit = defineEmits();
+    const props = defineProps(
+    {
+		isBurgerActive:
+        {
+            type: Boolean,
+            default: false,
+        }
+    });
+
+    const emits = defineEmits<{
+		(e: 'onBurgerToogled'): void;
+	}>();
 
     adminStatusReCheck();
 
@@ -139,6 +149,13 @@
         });
     }
 
+    const onSidebarLinksLinkClicked = () => 
+    {
+        searchText.value = '';
+        forceReload();
+        emits('onBurgerToogled');
+    }
+
     onUnmounted(() =>
 	{
 		LangDataHandler.destroyLangDataHandler('SideBar');
@@ -146,12 +163,12 @@
 </script>
 
 <template>
-    <aside class="sidebar" :class="{ 'active': isBurgerActive }">
+    <aside class="sidebar" :class="{ 'active': props.isBurgerActive }">
         <div class="sidebar__links">
             <a class="sidebar__links__link"
                 v-for="link in links"
                     :href="`#${link.routeUri}`"
-                    @click="searchText='';forceReload();emit('toggleBurger')"
+                    @click="onSidebarLinksLinkClicked()"
                     :class="{ active: isCurrentRouteName(link.routeName) }">
                 {{ link.text }}
             </a>
@@ -167,7 +184,7 @@
                 class="sidebar__linksfooter__link"
                 v-for="link in linksfooter"
                 :href="`#${link.routeUri}`"
-                @click="emit('toggleBurger')"
+                @click="emits('onBurgerToogled')"
             >
             {{ link.text }}
             </a>

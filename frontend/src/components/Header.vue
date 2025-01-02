@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ComputedRef, onUnmounted } from 'vue';
+    import { ComputedRef, onUnmounted, defineEmits } from 'vue';
     import { useRoute, useRouter, RouteLocationNormalizedLoaded, Router } from 'vue-router';
 
     import { ThemeHandler } from '../ts/handlers/ThemeHandler';
@@ -17,10 +17,10 @@
     import langsData from "./locales/Header.json";
 
     import { searchText, searchQuery } from "../ts/handlers/SearchHandler";
-    
-    import { defineEmits } from 'vue';
 
-    const emits = defineEmits(['toggleBurger']);
+    const emits = defineEmits<{
+		(e: 'onBurgerToogled'): void;
+	}>();
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("Header", langsData).langData;
 
@@ -86,7 +86,7 @@
                 </a>
             </div>
         </div>
-        <div class="header__burger header-burger" @click="$emit('toggleBurger')">
+        <div class="header__burger header-burger" @click="$emit('onBurgerToogled')">
             <div class="header__burger__lines header-burger"></div>
         </div>
     </header>

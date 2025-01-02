@@ -9,8 +9,15 @@
     import langsData from "./locales/SponsoringCryptoModal.json";
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("SponsoringCryptoModal", langsData).langData;
-
-    const props = defineProps(["crypto"]); 
+    
+    const props = defineProps(
+    {
+        crypto: 
+        {
+            type: String,
+            default: '',
+        },
+    });
 
     const walletLink : Ref<string> = ref('');
     const inputWallet : Ref<HTMLInputElement | null> = ref(null);

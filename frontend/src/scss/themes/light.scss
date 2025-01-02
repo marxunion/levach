@@ -89,6 +89,9 @@
     // Article
 
     // ArticleNew
+
+    --ArticleNewTitleTextareaBG: #fff;
+
     --ArticleNewSendButtonBG: #54A9F8;
     --ArticleNewSendButtonHoverBG: #73bafc;
     --ArticleNewSendButtonText: #fff;
@@ -257,12 +260,17 @@
     --AdminModalBG: #eee;
     --AdminModalText: #000;
 
-    --AdminModalInputTextBG: #d9d9d9;
-    --AdminModalInputTextText: #000;
+    --AdminModalTitle: #2c2c2c;
+    --AdminModalFieldTitle: #2c2c2c;
 
+    --AdminModalInputTextBG: #d9d9d9;
+
+    --AdminModalInputTextText: #282828;
     --AdminModalInputNumberBG: #d9d9d9;
     --AdminModalInputNumberText: #2c2c2c;
     --AdminModalInputNumberButtonBG: #f5f5f5;
+
+    --AdminModalCheckbox: #2c2c2c;
 
     --AdminModalCheckmark: #ccc;
     --AdminModalCheckmarkHover: #d2d2d2;

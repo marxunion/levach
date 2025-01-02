@@ -9,6 +9,7 @@
         "rate",
         "created_date"
     ],
+    "mobileVersionWidth": 1050,
     "domainName": "",
     "captchaEnabled": false,
     "recaptchaSiteKey": "",

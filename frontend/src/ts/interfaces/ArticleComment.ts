@@ -1,4 +1,4 @@
-export interface Comment
+export interface ArticleComment
 {
     id: number,
     view_id: number,
@@ -9,5 +9,5 @@ export interface Comment
     rating_influence: number,
     created_date: number,
 
-    subcomments: Comment[] | null
+    subcomments: ArticleComment[] | null
 }

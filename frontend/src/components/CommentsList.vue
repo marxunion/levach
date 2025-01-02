@@ -1,10 +1,10 @@
 <script setup lang="ts">
-	import { ref, reactive, watch, Ref, onMounted, defineProps, defineEmits, onUnmounted } from 'vue';
+	import { ref, reactive, watch, Ref, onMounted, defineProps, defineEmits, onUnmounted, PropType } from 'vue';
 	import axios from 'axios';
-	import { MdEditor, MdPreview, MdPreviewProps, config } from 'md-editor-v3';
+	import { MdEditor, MdPreview, config } from 'md-editor-v3';
 	import 'md-editor-v3/lib/style.css';
 
-	//import { ArticleComment } from '../ts/interfaces/ArticleComment';
+	import { ArticleComment } from '../ts/interfaces/ArticleComment';
 	
 	import { ThemeHandler } from '../ts/handlers/ThemeHandler';
 
@@ -34,7 +34,6 @@
 
 	import mainConfig from '../configs/main.json';
 
-
 	const props = defineProps(
     {
 		articleTitle:
@@ -54,7 +53,7 @@
         },
 		comment:
 		{
-			type: ArticleComment,
+			type: Object as PropType<ArticleComment>,
 			default: {}
 		},
 		level:
@@ -64,7 +63,10 @@
 		}
     });
 
-	const emits = defineEmits(["onDeletedSubcomment", "onCreatedNewSubcomment"]);
+	const emits = defineEmits<{
+		(e: 'onSubcommentDeleted'): void;
+		(e: 'onNewSubcommentCreated'): void;
+	}>();
 
 	const langData = LangDataHandler.initLangDataHandler("CommentsList", langsData).langData;
 
@@ -73,7 +75,7 @@
 	let captchaVerifyCallback : (token: string) => void;
 
 	const targetComment : Ref<HTMLElement | null> = ref(null);
-	const commentText = ref();
+	const commentText : Ref<any> = ref();
 	const commentTextHeight : Ref<number> = ref(0);
 
 	const loading : Ref<boolean> = ref(false);
@@ -155,9 +157,9 @@
 			}
 			else
 			{
-				props.comment.id = null;
-				props.comment.created_date = null;
-				props.comment.rating = null;
+				props.comment.id = 0;
+				props.comment.created_date = 0;
+				props.comment.rating = 0;
 				props.comment.subcomments = null;
 			}
 		})
@@ -399,7 +401,7 @@
 				currentSubcommentReaction.value = 0;
 				newSubcommentEditorState.text = '';
 				loading.value = true;
-				emits('onCreatedNewSubcomment');
+				emits('onNewSubcommentCreated');
 				await refetchComment();
 			}
 			else
@@ -500,7 +502,7 @@
 				}
 
 				openModal(InfoModal, {status: true, text: langData.value['commentDeletedSuccessfully']});
-				emits('onDeletedSubcomment');
+				emits('onSubcommentDeleted');
 				await refetchComment();
 			}
 			else
@@ -599,16 +601,16 @@
 		}
 	};
 
-	const onCreatedNewSubcomment = async () => 
+	const onNewSubcommentCreated = async () => 
 	{
-		emits('onCreatedNewSubcomment');
+		emits('onNewSubcommentCreated');
 	}
 
-	const onDeletedSubcomment = async () => 
+	const onSubcommentDeleted = async () => 
 	{
 		loading.value = true;
 		await refetchComment();
-		emits('onDeletedSubcomment');
+		emits('onSubcommentDeleted');
 	}
 
 	const onCaptchaVerify = (token: string) => 
@@ -665,7 +667,7 @@
 		</div>
 	</div>
 	
-	<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-if="!loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" :articleTitle="articleTitle" :scrollToCommentId="scrollToCommentId"/>
+	<CommentsList @onNewSubcommentCreated="onNewSubcommentCreated()" @onSubcommentDeleted="onSubcommentDeleted()" v-if="!loading" v-for="subcomment in comment.subcomments" :key="subcomment.id" :comment="subcomment" :level="level + 1" :articleViewCode="articleViewCode" :articleTitle="articleTitle" :scrollToCommentId="scrollToCommentId"/>
 	<Loader v-else />
 </template>
 

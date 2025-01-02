@@ -20,10 +20,21 @@
             type: Number,
             default: 1,
         },
-        maxlength: Number,
-        autofocus: Boolean,
+        maxlength: 
+        {
+            type: Number,
+            default: Infinity
+        },
+        autofocus: 
+        {
+            type: Boolean,
+            default: false
+        }
     });
-    const emits = defineEmits(["update:value"]);
+
+    const emits = defineEmits<{
+		(e: 'update', payload: string): void;
+	}>();
   
     const textarea : Ref<HTMLTextAreaElement | null> = ref(null);
     const textareaText : Ref<string> = ref('');
@@ -31,17 +42,19 @@
     const autoResize = () =>  
     {
         const textareaValue = textarea.value;
+        
         if (textareaValue) 
         {
+            textareaValue.value = removeLineBreakFromString(textareaText.value);
             textareaValue.style.height = 'auto';
             textareaValue.style.height = `${textareaValue.scrollHeight}px`;
         }
     }
 
-    watch(textareaText, (newValue) => 
+    watch(textareaText, () => 
     {
-        textareaText.value = removeLineBreakFromString(newValue);
-        emits("update:value", textareaText.value);
+        textareaText.value = removeLineBreakFromString(textareaText.value);
+        emits("update", textareaText.value);
         autoResize();
     });
 
@@ -57,10 +70,10 @@
         v-model="textareaText"
         ref="textarea"
         class="autoexpandTextarea"
-        :rows="props.rows"
         :placeholder="props.placeholder"
         :maxlength="props.maxlength"
         :autofocus="props.autofocus"
+        :rows="props.rows"
     ></textarea>
 </template>
 

@@ -3,11 +3,6 @@ import mainConfig from "../../configs/main.json";
 import { ThemeGrayscale } from "../types/ThemeGrayscale";
 
 
-export function getSavedTheme() 
-{
-    return localStorage.getItem('theme');
-}
-
 export function convertThemeToGrayscale(themeName : string) : ThemeGrayscale
 {
     if(mainConfig["themesGrayscale"]["light"].includes(themeName))
@@ -22,6 +17,11 @@ export function convertThemeToGrayscale(themeName : string) : ThemeGrayscale
     {
         return "light";
     }
+}
+
+export function getSavedTheme() 
+{
+    return localStorage.getItem('theme');
 }
 
 export function setSavedTheme(themeName : string) 

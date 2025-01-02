@@ -11,9 +11,11 @@ import { container } from "jenesius-vue-modal";
 import { ThemeHandler } from "./ts/handlers/ThemeHandler";
 import { csrfTokenInput, getNewCsrfToken } from './ts/handlers/CSRFTokenHandler';
 
+import mainConfig from './configs/main.json';
+
 const isBurgerActive : Ref<boolean> = ref(false);
 
-const windowWidth = ref(window.innerWidth);
+const windowWidth : Ref<number> = ref(window.innerWidth);
 
 const onBurgerToogled = () => 
 {
@@ -58,7 +60,7 @@ getNewCsrfToken();
 <template>
     <input type="hidden" id="csrfTokenInput" ref="csrfTokenInput">
     <Header @onBurgerToogled="onBurgerToogled" />
-    <perfect-scrollbar v-if="windowWidth > 1050" ref="scroll">
+    <perfect-scrollbar v-if="windowWidth > mainConfig.mobileVersionWidth" ref="scroll">
         <router-view v-slot="{ Component }">
             <transition name="pageOpacity" mode="out-in">
                 <component :is="Component" />

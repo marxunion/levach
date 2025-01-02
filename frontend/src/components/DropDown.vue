@@ -23,8 +23,8 @@
 	};
 
 	const emits = defineEmits<{
-		(e: 'start:value', payload: String): void;
-		(e: 'update:value', payload: UpdateValuePayload): void;
+		(e: 'start', payload: String): void;
+		(e: 'update', payload: UpdateValuePayload): void;
 	}>();
 
 	const selectedIndex : Ref<number> = ref(0);
@@ -43,7 +43,7 @@
 	{
 		if(selected.value)
 		{
-			emits("start:value", selected.value);
+			emits("start", selected.value);
 		}
 	});
 </script>
@@ -62,7 +62,7 @@
 					selected = option;
 					selectedIndex = i;
 					open = false;
-					$emit('update:value', {option: option as string, index: i as number});">
+					$emit('update', {option: option as string, index: i as number});">
 				{{ option }}
 			</div>      
         </div>

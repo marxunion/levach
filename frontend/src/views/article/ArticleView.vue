@@ -946,12 +946,12 @@
 		
 	}
 
-	const onCreatedNewSubcomment = async () => 
+	const onNewSubcommentCreated = async () => 
 	{
 		await fetchArticleData();
 	}
 
-	const onDeletedSubcomment = async () => 
+	const onSubcommentDeleted = async () => 
 	{
 		await fetchArticleData();
 	}
@@ -1034,7 +1034,7 @@
 				</div>
 			
 				<div v-if="!commentsLoading" class="main__article__comments__commentsList">
-					<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode" :articleTitle="fetchedArticleData.versions[currentVersion].title" :scrollToCommentId="commentId"/>
+					<CommentsList @onNewSubcommentCreated="onNewSubcommentCreated()" @onSubcommentDeleted="onSubcommentDeleted()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode" :articleTitle="fetchedArticleData.versions[currentVersion].title" :scrollToCommentId="commentId"/>
 					<div v-if="commentsReloading" class="main__article__comments__commentsList__reloader">
 						<Loader/>
 					</div>

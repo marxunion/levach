@@ -32,7 +32,6 @@
         }
     });
 
-
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("InfoModalWithLink", langsData).langData;
 
     const inputText : Ref<string> = ref(props.link as string);

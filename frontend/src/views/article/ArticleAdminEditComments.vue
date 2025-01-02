@@ -152,12 +152,12 @@
 		LangDataHandler.destroyLangDataHandler('ArticleAdminEditComments');
 	});
 
-	const onCreatedNewSubcomment =  async () => 
+	const onNewSubcommentCreated =  async () => 
 	{
 		await refetchComments();
 	}
 
-	const onDeletedSubcomment =  async () => 
+	const onSubcommentDeleted =  async () => 
 	{
 		await refetchComments();
 	}
@@ -214,7 +214,7 @@
             <p v-if="comments.length > 0" class="main__comments__title">{{ langData['commentsTitle'] }}</p>
 			<p v-else class="main__comments__title">{{ langData['commentsNotFoundTitle'] }}</p>
 			<div v-if="comments.length > 0" class="main__comments__commentsList">
-				<CommentsList @onCreatedNewSubcomment="onCreatedNewSubcomment()" @onDeletedSubcomment="onDeletedSubcomment()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
+				<CommentsList @onNewSubcommentCreated="onNewSubcommentCreated()" @onSubcommentDeleted="onSubcommentDeleted()" v-for="comment in comments" :key="comment.id" :comment="comment" :level="0" :articleViewCode="articleViewCode"/>
 			</div>
 		</div>
 		<Loader v-else/>

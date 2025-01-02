@@ -5,7 +5,11 @@
 
     import mainConfig from '../configs/main.json';
 
-    const emits = defineEmits(["onVerify", "onExpired", "onError"]);
+    const emits = defineEmits<{
+		(e: 'onVerify', payload: string): void;
+        (e: 'onExpired'): void;
+        (e: 'onError'): void;
+	}>();
 
     const recaptcha : Ref<VueRecaptcha | null> = ref(null);
 
@@ -35,6 +39,7 @@
     {
         recaptcha.value?.execute();
     }
+    
     
     defineExpose({
         execute

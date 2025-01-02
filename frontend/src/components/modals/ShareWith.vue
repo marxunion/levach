@@ -6,7 +6,19 @@
     import { LangDataHandler } from "../../ts/handlers/LangDataHandler";
     import langsData from "./locales/ShareWith.json";
     
-    const props = defineProps(["link", "text"]);
+    const props = defineProps(
+    {
+        link: 
+        {
+            type: String,
+            default: '',
+        },
+        text:
+        {
+            type: String,
+            default: '',
+        }
+    });
 
     const langData : ComputedRef<JsonData> = LangDataHandler.initLangDataHandler("ShareWith", langsData).langData;
 

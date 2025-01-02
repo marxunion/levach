@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import "./scss/DropDown.scss";
-	import { ref, ComputedRef, defineProps, defineEmits, onUnmounted } from "vue";
+	import { ref, Ref, ComputedRef, defineProps, defineEmits, onUnmounted } from "vue";
 
 	import { JsonData } from "../ts/interfaces/JsonData";
 
@@ -21,12 +21,12 @@
     });
 
 	const emits = defineEmits<{
-		(e: 'update:value', payload: number): void;
+		(e: 'update', payload: number): void;
 	}>();
 
-	const selected = ref(props.versions[0]);
+	const selected : Ref<ArticleVersion> = ref(props.versions[0]);
 
-	const open = ref(false);
+	const open : Ref<boolean> = ref(false);
 
 	onUnmounted(() =>
 	{
@@ -47,7 +47,7 @@
 					selected = version;
 					open = false;
 					
-					emits('update:value', index);">
+					emits('update', index);">
 				{{ langData['version'] as string + version.version_id }}
 			</div>
         </div>
